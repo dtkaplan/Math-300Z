@@ -1,0 +1,53 @@
+---
+title: Evolving outline for Stats 300
+date: "2022-04-25"
+---
+
+Textbook: Ismay & Kim *[Statistical Inference via Data Science](https://moderndive.com/index.html)* ("SIDS" for short)
+
+Software: R, which the textbook is based on and which is used in Math 141/142Z 
+
+Supplemental readings:
+
+- Hardin & Cetinkaya-Rundel *[Introduction to Modern Statistics](https://www.openintro.org/go?id=ims_online&referrer=/book/ims/index.php)* ("IMS" for short) Out of 27 chapters, I'll suggest 3:
+    - Chapter 2 study design
+    - Chapter 4 categorical data
+    - Chapter 9 logistic regression
+- (To be developed) prediction and classification methods, incl. CART and logistic regression
+- (To be developed) introduction to decisions (context: prediction and classification), sensitivity, specificity, loss function, ROC
+- (To be developed) Covariates and causality. Multiple explanations are available: many ways to build a predictor. Minimizing prediction error versus explanation of mechanism. Study designs such as case/control. Cross-section versus longitudinal.
+- (To be developed based on *[Compact Inference](https://dtkaplan.github.io/CompactInference/)*) A much streamlined coverage of inference: build model, find R^2^ then F, see if 3 < F. For exploration, propose change to model and look at the change of F. 
+    
+## Bradley Warner's  [outline](https://usafa0-my.sharepoint.com/personal/bradley_warner_afacademy_af_edu/Documents/Microsoft%20Teams%20Chat%20Files/Bullet%20Paper%20-%20Core%20Stats.pdf?login_hint=Daniel.Kaplan%40afacademy.af.edu) from 14 Apr 2022.
+
+Four blocks to the semester, each with a QR.
+
+1. Statistical graphics, wrangling, importing. SIDS Part I (Chaps. 1, 2, 3, 4)
+    - 12 class days (including GR)
+2. Regression. SIDS Part II (Chaps. 5, 6)
+    - 8 class days (including GR)
+3. Confidence intervals. SIDS Part III (Chaps. 7, 8)
+    - 7 class days (including GR)
+4. Hypothesis testing. SIDS Part III (cont.) (Chaps. 9, 10)
+   - 11 class days (including GR)
+   
+Two end-of-semester days for case-study, more examples.
+
+## DTK comments on Warner's outline
+
+1. SIDS part I
+    - Suggest we soft pedal the histograms in favor of density, similarly violin plots instead of box-and-whiskers. 
+    - Four-five days on relational operations sounds right.
+    - Make case study about coding and cleaning data, with students transcribing data from archival records (Examples from History Dept). Also, accessing online data such as from World Bank (Political Science wants this), wide to long. 3 days.
+2. SIDS part II
+    - Time frame sounds right.
+    - Add a component about prediction and classification. CART, logistic regression
+    - Introduce decision theory here: loss function, ROC
+3. and 4. SIDS part III
+    - Eighteen days is too long to spend on p-values and CIs. I suggest we budget 6 days. 
+    - Before doing inference based on sampling variation, let's have a 6-day unit on covariates, adjustment, study design as a way to deal with unknown covariates (e.g. case control), cross-sectional versus longitudinal
+    - Then do CIs and p-values, lightly, emphasizing that they have little or nothing to say unless you get the study design right and deal with covariates.
+    - Even though I'm suggesting adding prediction and classification in Block 2, I think that techniques like cross-validation do not need to be covered. 
+    
+Overall, I think that our emphasis should be that the hard and creative work of learning from data is collecting/wrangling, visualizing, modeling, and dealing with covariates. Once the thought and creativity and hard work has been done, use p-values and CIs as a sanity check, not as a primary form of analysis. Emphasize loss functions and the trade-off between the different types of error when making conclusions.
+

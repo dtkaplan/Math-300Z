@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2022-04-25">
+
+<title>Stat-300 - Evolving outline for Stats 300</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Stat-300</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./fall2022.html">Fall 2022 Edition</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html">About</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./outline.html" aria-current="page">Evolving outline for Stats 300</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Evolving outline for Stats 300</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 25, 2022</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<p>Textbook: Ismay &amp; Kim <em><a href="https://moderndive.com/index.html">Statistical Inference via Data Science</a></em> (“SIDS” for short)</p>
+<p>Software: R, which the textbook is based on and which is used in Math 141/142Z</p>
+<p>Supplemental readings:</p>
+<ul>
+<li>Hardin &amp; Cetinkaya-Rundel <em><a href="https://www.openintro.org/go?id=ims_online&amp;referrer=/book/ims/index.php">Introduction to Modern Statistics</a></em> (“IMS” for short) Out of 27 chapters, I’ll suggest 3:
+<ul>
+<li>Chapter 2 study design</li>
+<li>Chapter 4 categorical data</li>
+<li>Chapter 9 logistic regression</li>
+</ul></li>
+<li>(To be developed) prediction and classification methods, incl.&nbsp;CART and logistic regression</li>
+<li>(To be developed) introduction to decisions (context: prediction and classification), sensitivity, specificity, loss function, ROC</li>
+<li>(To be developed) Covariates and causality. Multiple explanations are available: many ways to build a predictor. Minimizing prediction error versus explanation of mechanism. Study designs such as case/control. Cross-section versus longitudinal.</li>
+<li>(To be developed based on <em><a href="https://dtkaplan.github.io/CompactInference/">Compact Inference</a></em>) A much streamlined coverage of inference: build model, find R<sup>2</sup> then F, see if 3 &lt; F. For exploration, propose change to model and look at the change of F.</li>
+</ul>
+<section id="bradley-warners-outline-from-14-apr-2022." class="level2">
+<h2 class="anchored" data-anchor-id="bradley-warners-outline-from-14-apr-2022.">Bradley Warner’s <a href="https://usafa0-my.sharepoint.com/personal/bradley_warner_afacademy_af_edu/Documents/Microsoft%20Teams%20Chat%20Files/Bullet%20Paper%20-%20Core%20Stats.pdf?login_hint=Daniel.Kaplan%40afacademy.af.edu">outline</a> from 14 Apr 2022.</h2>
+<p>Four blocks to the semester, each with a QR.</p>
+<ol type="1">
+<li>Statistical graphics, wrangling, importing. SIDS Part I (Chaps. 1, 2, 3, 4)
+<ul>
+<li>12 class days (including GR)</li>
+</ul></li>
+<li>Regression. SIDS Part II (Chaps. 5, 6)
+<ul>
+<li>8 class days (including GR)</li>
+</ul></li>
+<li>Confidence intervals. SIDS Part III (Chaps. 7, 8)
+<ul>
+<li>7 class days (including GR)</li>
+</ul></li>
+<li>Hypothesis testing. SIDS Part III (cont.) (Chaps. 9, 10)
+<ul>
+<li>11 class days (including GR)</li>
+</ul></li>
+</ol>
+<p>Two end-of-semester days for case-study, more examples.</p>
+</section>
+<section id="dtk-comments-on-warners-outline" class="level2">
+<h2 class="anchored" data-anchor-id="dtk-comments-on-warners-outline">DTK comments on Warner’s outline</h2>
+<ol type="1">
+<li>SIDS part I
+<ul>
+<li>Suggest we soft pedal the histograms in favor of density, similarly violin plots instead of box-and-whiskers.</li>
+<li>Four-five days on relational operations sounds right.</li>
+<li>Make case study about coding and cleaning data, with students transcribing data from archival records (Examples from History Dept). Also, accessing online data such as from World Bank (Political Science wants this), wide to long. 3 days.</li>
+</ul></li>
+<li>SIDS part II
+<ul>
+<li>Time frame sounds right.</li>
+<li>Add a component about prediction and classification. CART, logistic regression</li>
+<li>Introduce decision theory here: loss function, ROC</li>
+</ul></li>
+<li>and 4. SIDS part III
+<ul>
+<li>Eighteen days is too long to spend on p-values and CIs. I suggest we budget 6 days.</li>
+<li>Before doing inference based on sampling variation, let’s have a 6-day unit on covariates, adjustment, study design as a way to deal with unknown covariates (e.g.&nbsp;case control), cross-sectional versus longitudinal</li>
+<li>Then do CIs and p-values, lightly, emphasizing that they have little or nothing to say unless you get the study design right and deal with covariates.</li>
+<li>Even though I’m suggesting adding prediction and classification in Block 2, I think that techniques like cross-validation do not need to be covered.</li>
+</ul></li>
+</ol>
+<p>Overall, I think that our emphasis should be that the hard and creative work of learning from data is collecting/wrangling, visualizing, modeling, and dealing with covariates. Once the thought and creativity and hard work has been done, use p-values and CIs as a sanity check, not as a primary form of analysis. Emphasize loss functions and the trade-off between the different types of error when making conclusions.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
