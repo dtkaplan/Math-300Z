@@ -166,5 +166,159 @@
     "title": "Learning Checks from Modern Dive",
     "section": "LC 10.2",
     "text": "LC 10.2\nRepeat the inference but this time for the correlation coefficient instead of the slope. Note the implementation of stat = \"correlation\" in the calculate() function of the infer package."
+  },
+  {
+    "objectID": "objectives-diffs.html",
+    "href": "objectives-diffs.html",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "",
+    "text": "Objectives for blocks 3 and 4."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Stat 300Z — Proposed revisions to Fall 2022 Stat 300",
+    "section": "",
+    "text": "Objectives for blocks 3 and 4."
+  },
+  {
+    "objectID": "objectives-diffs.html#lesson-21",
+    "href": "objectives-diffs.html#lesson-21",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "Lesson 21",
+    "text": "Lesson 21\n\n\n\n\n\n\n\n\nStat 300 Lesson 21\n\n\n\n1.Given a sampling scenario, discuss issues such as accuracy and precision as they relate to generalization to the population of interest.\n\n\n\n\n\n\n\n\nStat 300Z Lesson 21\n\n\n\n\nOne\nTwo\nThree"
+  },
+  {
+    "objectID": "objectives-diffs.html#lesson-24",
+    "href": "objectives-diffs.html#lesson-24",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "Lesson 24",
+    "text": "Lesson 24\n\n\n\n\n\n\n\n\nStat 300 Lesson 24\n\n\n\n\nExplain how to construct a confidence interval using both the percentile method and the standard error method including assumptions. *DK note: Unless you want to emphasize the normal distribution, this is a technical issue and shouldn’t be prioritized.\nExplain how changing the confidence level impacts the width of a confidence interval.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 24\n\n\n\n\nOne\nTwo\nThree"
+  },
+  {
+    "objectID": "objectives-diffs.html#lesson-27",
+    "href": "objectives-diffs.html#lesson-27",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "Lesson 27",
+    "text": "Lesson 27\n\n\n\n\n\n\n\n\nStat 300 Lesson 27\n\n\n\n\nCalculate, using both percentile and standard error methods, confidence intervals for a difference of two proportions.\nCalculate a normal-based, theory-based, confidence interval for a single proportion or mean.\nCorrectly use all terms and notation to include standard error, margin of error, sampling distribution, and bootstrap distribution.\nCompare and contrast sampling distribution and bootstrap distribution.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 27\n\n\n\n\nOne\nTwo\nThree"
+  },
+  {
+    "objectID": "objectives-diffs.html#lesson-25",
+    "href": "objectives-diffs.html#lesson-25",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "Lesson 25",
+    "text": "Lesson 25\n\n\n\n\n\n\n\n\nStat 300 Lesson 25\n\n\n\n\nConstruct bootstrap percentile and standard error confidence intervals for a single mean or median using the infer package.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 25\n\n\n\n\nOne\nTwo\nThree"
+  },
+  {
+    "objectID": "objectives-diffs.html#lesson-19",
+    "href": "objectives-diffs.html#lesson-19",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "Lesson 19",
+    "text": "Lesson 19\n\n\n\n\n\n\n\n\nStat 300 Lesson 19\n\n\n\n\nExplain the need for randomization in sampling.\nExplain the impact of sample size on the sample distribution and number of replications on the sampling procedure.\nUsing a sampling distribution, make decisions about the population. In other words, understanding the effect of sampling variation on our estimates.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 19\n\n\n\n\nUse and explain the terms accuracy and precision and the technical terms bias and variance.\nREWRITE: Covariates, confounders …\nREWRITE: Sampling variation"
+  },
+  {
+    "objectID": "objectives-diffs.html#lesson-20",
+    "href": "objectives-diffs.html#lesson-20",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "Lesson 20",
+    "text": "Lesson 20\n\n\n\n\n\n\n\n\nStat 300 Lesson 20\n\n\n\n\nKnow and correctly use the terminology and notation for the sampling concepts such as population, census, point estimate, biased, etc.\nExplain the impact of sample size on the sample distribution and number of replications on the sampling procedure.\nUse and explain the terms accuracy and precision in the context of sampling.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 20\n\n\n\n\nOne\nTwo\nThree"
+  },
+  {
+    "objectID": "objectives-diffs.html#lesson-22",
+    "href": "objectives-diffs.html#lesson-22",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "Lesson 22",
+    "text": "Lesson 22\n\n\n\n\n\n\n\n\nStat 300 Lesson 22\n\n\n\n\nExplain the central limit theorem.\nFor a normal distribution, use R to find probabilities and percentiles.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 22\n\n\n\n\nOne\nTwo\nThree"
+  },
+  {
+    "objectID": "objectives-diffs.html#lesson-23",
+    "href": "objectives-diffs.html#lesson-23",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "Lesson 23",
+    "text": "Lesson 23\n\n\n\n\n\n\n\n\nStat 300 Lesson 23\n\n\n\n\nExplain the concept of a bootstrap distribution using proper terminology and notation.\nUse R to find the bootstrap distribution of a sample statistic.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 23\n\n\n\n\nOne\nTwo\nThree"
+  },
+  {
+    "objectID": "objectives-diffs.html#lesson-26",
+    "href": "objectives-diffs.html#lesson-26",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "Lesson 26",
+    "text": "Lesson 26\n\n\n\n\n\n\n\n\nStat 300 Lesson 26\n\n\n\n\nCorrectly interpret a confidence interval to include identifying incorrect statements.\nExplain the factors that impact the width of a confidence interval.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 26\n\n\n\n\nOne\nTwo\nThree"
+  },
+  {
+    "objectID": "objectives-diffs.html#lesson-28",
+    "href": "objectives-diffs.html#lesson-28",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "Lesson 28",
+    "text": "Lesson 28\n\n\n\n\n\n\n\n\nStat 300 Lesson 28\n\n\n\nNo items listed.\n\n\n\n\n\n\n\n\nStat 300Z Lesson 28\n\n\n\n\nOne\nTwo\nThree"
+  },
+  {
+    "objectID": "objectives-diffs.html#lesson-29",
+    "href": "objectives-diffs.html#lesson-29",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "Lesson 29",
+    "text": "Lesson 29\n\n\n\n\n\n\n\n\nStat 300 Lesson 29\n\n\n\n\nExplain the permutation test and compare and contrast it with a bootstrap distribution.\nGenerate and interpret visualizations for data with two categorical variables.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 29\n\n\n\n\nOne\nTwo\nThree"
+  },
+  {
+    "objectID": "objectives-diffs.html#lesson-30",
+    "href": "objectives-diffs.html#lesson-30",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "Lesson 30",
+    "text": "Lesson 30\n\n\n\n\n\n\n\n\nStat 300 Lesson 30\n\n\n\n\nCorrectly use terminology and notation of hypothesis testing.\nUsing the infer package, conduct a hypothesis test and interpret the results.\nCompare and contrast confidence intervals and hypothesis tests.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 30\n\n\n\n\nOne\nTwo\nThree"
+  },
+  {
+    "objectID": "objectives-diffs.html#lesson-31",
+    "href": "objectives-diffs.html#lesson-31",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "Lesson 31",
+    "text": "Lesson 31\n\n\n\n\n\n\n\n\nStat 300 Lesson 31\n\n\n\n\nCorrectly use terminology and notation of interpreting hypothesis tests.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 31\n\n\n\n\nOne\nTwo\nThree"
+  },
+  {
+    "objectID": "objectives-diffs.html#lesson-32",
+    "href": "objectives-diffs.html#lesson-32",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "Lesson 32",
+    "text": "Lesson 32\n\n\n\n\n\n\n\n\nStat 300 Lesson 32\n\n\n\n\nConduct and interpret a hypothesis test for the difference of two means.\nCalculate and interpret a confidence interval for the difference of two means.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 32\n\n\n\n\nOne\nTwo\nThree"
+  },
+  {
+    "objectID": "objectives-diffs.html#lesson-33",
+    "href": "objectives-diffs.html#lesson-33",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "Lesson 33",
+    "text": "Lesson 33\n\n\n\n\n\n\n\n\nStat 300 Lesson 33\n\n\n\n\nStandardize a variable.\nFind percentile and probabilities for the t distribution; this includes determining the correct degrees of freedom.\nUse the infer package to conduct a theory-based hypothesis test.\nKnow and verify the assumptions of the two-sample t-test.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 33\n\n\n\n\nOne\nTwo\nThree"
+  },
+  {
+    "objectID": "objectives-diffs.html#lesson-34",
+    "href": "objectives-diffs.html#lesson-34",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "Lesson 34",
+    "text": "Lesson 34\n\n\n\n\n\n\n\n\nStat 300 Lesson 34\n\n\n\n\nBuild and interpret a regression table and use correct terminology.\nWrite the hypotheses from the regression table.\nUse the p-value from a regression table to make a decision about the relationship between the explanatory and response variables.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 34\n\n\n\n\nUse software to build regression and ANOVA tables from linear regression.\nInterpret a regression table in terms of parameters, confidence intervals, and coefficient-wise p-values.\nInterpret an ANOVA table as a whole-model summary.\nUse ANOVA for model selection among nested models."
+  },
+  {
+    "objectID": "objectives-diffs.html#lesson-35",
+    "href": "objectives-diffs.html#lesson-35",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "Lesson 35",
+    "text": "Lesson 35\n\n\n\n\n\n\n\n\nStat 300 Lesson 35\n\n\n\n\nExplain and test the assumptions for inference in a linear regression model.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 35\n\n\n\n\nOne\nTwo\nThree"
+  },
+  {
+    "objectID": "objectives-diffs.html#lesson-36",
+    "href": "objectives-diffs.html#lesson-36",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "Lesson 36",
+    "text": "Lesson 36\n\n\n\n\n\n\n\n\nStat 300 Lesson 36\n\n\n\n\nConstruct and interpret bootstrap confidence intervals, both percentile and standard error method, for regression parameters such as slope and correlation coefficient.\nConduct and interpret a permutation test on the regression slope parameter.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 36\n\n\n\n\nOne\nTwo\nThree"
+  },
+  {
+    "objectID": "objectives-diffs.html#lesson-37",
+    "href": "objectives-diffs.html#lesson-37",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "Lesson 37",
+    "text": "Lesson 37\n\n\n\n\n\n\n\n\nStat 300 Lesson 37\n\n\n\n\nUse the output of a regression table to conduct a hypothesis test and build a confidence interval for the slope parameter from a linear regression model.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 37\n\n\n\n\nOne\nTwo\nThree"
+  },
+  {
+    "objectID": "objectives-diffs.html#lesson-38",
+    "href": "objectives-diffs.html#lesson-38",
+    "title": "Stat 300 objectives vs Stat 300Z",
+    "section": "Lesson 38",
+    "text": "Lesson 38\n\n\n\n\n\n\n\n\nStat 300 Lesson 38\n\n\n\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 38\n\n\n\n\nOne\nTwo\nThree"
   }
 ]

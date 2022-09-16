@@ -1,0 +1,560 @@
+---
+title: "Stat 300 objectives vs Stat 300Z"
+author: "Daniel Kaplan"
+date: "As of Sept. 14, 2022"
+---
+
+
+
+------------------------------
+
+## Lesson 19
+
+:::: {layout-ncol=2}
+
+::: {.callout-note icon=false}
+## Stat 300 Lesson 19
+1. Explain the need for randomization in sampling.
+
+2. Explain the impact of sample size on the sample distribution and number of replications on the sampling procedure.
+
+3. Using a sampling distribution, make decisions about the population. In other words, understanding the effect of sampling variation on our estimates.
+
+:::
+
+::: {.callout-tip icon=false}
+## Stat 300Z Lesson 19
+
+1. Use and explain the terms accuracy and precision and the technical terms bias and variance. 
+
+2. Carry out (using software) a multiple regression and interpret the coefficients as marginal effects. 
+
+3. Demonstrate sampling variation using sub-sampling on simple and multiple-regression model coefficients.
+:::
+
+::::
+
+
+------------------------------
+
+## Lesson 20
+
+:::: {layout-ncol=2}
+
+::: {.callout-note icon=false}
+## Stat 300 Lesson 20
+
+1. Know and correctly use the terminology and notation for the sampling concepts such as population, census, point estimate, biased, etc.
+
+2. Explain the impact of sample size on the sample distribution and number of replications on the sampling procedure.
+
+3. Use and explain the terms accuracy and precision in the context of sampling.
+:::
+
+::: {.callout-tip icon=false}
+## Stat 300Z Lesson 20
+
+1. REWRITE: Terminology of covariates, confounders ...
+
+2. Be able to provide an example and explanation of Simpson's paradox.
+
+3. Three
+:::
+
+::::
+
+
+
+------------------------------
+
+## Lesson 21
+
+:::: {layout-ncol=2}
+
+::: {.callout-note icon=false}
+## Stat 300 Lesson 21
+
+1. Given a sampling scenario, discuss issues such as accuracy and precision as they relate to generalization to the population of interest.
+
+:::
+
+::: {.callout-tip icon=false}
+## Stat 300Z Lesson 21
+
+1. Simulating simple DAGs.
+
+2. Construct regression models on simulated data and interpret coefficients as consistent or inconsistent with the generating DAG.
+
+3. Interpret DAGs as a causal hypothesis. 
+:::
+
+::::
+
+
+
+------------------------------
+
+## Lesson 22
+
+:::: {layout-ncol=2}
+
+::: {.callout-note icon=false}
+## Stat 300 Lesson 22
+
+1. Explain the central limit theorem.
+
+2. For a normal distribution, use `R` to find probabilities and percentiles.
+
+:::
+
+::: {.callout-tip icon=false}
+## Stat 300Z Lesson 22
+
+1. One 
+
+2. Two
+
+3. Three
+:::
+
+::::
+
+
+
+------------------------------
+
+## Lesson 23
+
+:::: {layout-ncol=2}
+
+::: {.callout-note icon=false}
+## Stat 300 Lesson 23
+
+1. Explain the concept of a bootstrap distribution using proper terminology and notation.
+
+2. Use `R` to find the bootstrap distribution of a sample statistic.
+
+:::
+
+::: {.callout-tip icon=false}
+## Stat 300Z Lesson 23
+
+1. One 
+
+2. Two
+
+3. Three
+:::
+
+::::
+
+
+
+------------------------------
+
+## Lesson 24
+
+:::: {layout-ncol=2}
+
+::: {.callout-note icon=false}
+## Stat 300 Lesson 24
+
+1. Explain how to construct a confidence interval using both the percentile method and the standard error method including assumptions. *DK note: Unless you want to emphasize the normal distribution, this is a technical issue and shouldn't be prioritized.
+
+2. Explain how changing the confidence level impacts the width of a confidence interval.
+
+:::
+
+::: {.callout-tip icon=false}
+## Stat 300Z Lesson 24
+
+1. One 
+
+2. Two
+
+3. Three
+:::
+
+::::
+
+
+
+------------------------------
+
+## Lesson 25
+
+:::: {layout-ncol=2}
+
+::: {.callout-note icon=false}
+## Stat 300 Lesson 25
+
+1. Construct bootstrap percentile and standard error confidence intervals for a single mean or median using the infer package.
+:::
+
+::: {.callout-tip icon=false}
+## Stat 300Z Lesson 25
+
+1. One 
+
+2. Two
+
+3. Three
+:::
+
+::::
+
+
+
+------------------------------
+
+## Lesson 26
+
+:::: {layout-ncol=2}
+
+::: {.callout-note icon=false}
+## Stat 300 Lesson 26
+
+1. Correctly interpret a confidence interval to include identifying incorrect statements.
+
+2. Explain the factors that impact the width of a confidence interval.
+
+:::
+
+::: {.callout-tip icon=false}
+## Stat 300Z Lesson 26
+
+1. One 
+
+2. Two
+
+3. Three
+:::
+
+::::
+
+
+
+
+------------------------------
+
+## Lesson 27
+
+:::: {layout-ncol=2}
+
+::: {.callout-note icon=false}
+## Stat 300 Lesson 27
+
+1. Calculate, using both percentile and standard error methods, confidence intervals for a difference of two proportions.
+
+2. Calculate a normal-based, theory-based, confidence interval for a single proportion or mean.
+
+3. Correctly use all terms and notation to include standard error, margin of error, sampling distribution, and bootstrap distribution.
+
+4. Compare and contrast sampling distribution and bootstrap distribution.
+:::
+
+::: {.callout-tip icon=false}
+## Stat 300Z Lesson 27
+
+1. One 
+
+2. Two
+
+3. Three
+:::
+
+::::
+
+
+
+
+------------------------------
+
+## Lesson 28
+
+:::: {layout-ncol=2}
+
+::: {.callout-note icon=false}
+## Stat 300 Lesson 28
+
+No items listed.
+
+:::
+
+::: {.callout-tip icon=false}
+## Stat 300Z Lesson 28
+
+1. One 
+
+2. Two
+
+3. Three
+:::
+
+::::
+
+
+
+
+------------------------------
+
+## Lesson 29
+
+:::: {layout-ncol=2}
+
+::: {.callout-note icon=false}
+## Stat 300 Lesson 29
+
+1. Explain the permutation test and compare and contrast it with a bootstrap distribution.
+
+2. Generate and interpret visualizations for data with two categorical variables.
+:::
+
+::: {.callout-tip icon=false}
+## Stat 300Z Lesson 29
+
+1. One 
+
+2. Two
+
+3. Three
+:::
+
+::::
+
+
+
+------------------------------
+
+## Lesson 30
+
+:::: {layout-ncol=2}
+
+::: {.callout-note icon=false}
+## Stat 300 Lesson 30
+
+1. Correctly use terminology and notation of hypothesis testing.
+
+2. Using the infer package, conduct a hypothesis test and interpret the results.
+
+3. Compare and contrast confidence intervals and hypothesis tests.
+:::
+
+::: {.callout-tip icon=false}
+## Stat 300Z Lesson 30
+
+1. One 
+
+2. Two
+
+3. Three
+:::
+
+::::
+
+
+
+------------------------------
+
+## Lesson 31
+
+:::: {layout-ncol=2}
+
+::: {.callout-note icon=false}
+## Stat 300 Lesson 31
+
+1. Correctly use terminology and notation of interpreting hypothesis tests.
+:::
+
+::: {.callout-tip icon=false}
+## Stat 300Z Lesson 31
+
+1. One 
+
+2. Two
+
+3. Three
+:::
+
+::::
+
+
+
+------------------------------
+
+## Lesson 32
+
+:::: {layout-ncol=2}
+
+::: {.callout-note icon=false}
+## Stat 300 Lesson 32
+
+1. Conduct and interpret a hypothesis test for the difference of two means.
+
+2. Calculate and interpret a confidence interval for the difference of two means.
+
+:::
+
+::: {.callout-tip icon=false}
+## Stat 300Z Lesson 32
+
+1. One 
+
+2. Two
+
+3. Three
+:::
+
+::::
+
+
+
+------------------------------
+
+## Lesson 33
+
+:::: {layout-ncol=2}
+
+::: {.callout-note icon=false}
+## Stat 300 Lesson 33
+
+1. Standardize a variable.
+
+2. Find percentile and probabilities for the t distribution; this includes determining the correct degrees of freedom.
+
+3. Use the infer package to conduct a theory-based hypothesis test.
+
+4. Know and verify the assumptions of the two-sample t-test.
+:::
+
+::: {.callout-tip icon=false}
+## Stat 300Z Lesson 33
+
+1. One 
+
+2. Two
+
+3. Three
+:::
+
+::::
+
+
+
+------------------------------
+
+## Lesson 34
+
+:::: {layout-ncol=2}
+
+::: {.callout-note icon=false}
+## Stat 300 Lesson 34
+
+1. Build and interpret a regression table and use correct terminology.
+
+2. Write the hypotheses from the regression table.
+
+3. Use the p-value from a regression table to make a decision about the relationship between the explanatory and response variables.
+
+:::
+
+::: {.callout-tip icon=false}
+## Stat 300Z Lesson 34
+
+1. Use software to build regression and ANOVA tables from linear regression.
+
+2. Interpret a regression table in terms of parameters, confidence intervals, and coefficient-wise p-values.
+
+3. Interpret an ANOVA table as a whole-model summary.
+
+4. Use ANOVA for model selection among nested models.
+:::
+
+::::
+
+
+
+------------------------------
+
+## Lesson 35
+
+:::: {layout-ncol=2}
+
+::: {.callout-note icon=false}
+## Stat 300 Lesson 35
+
+1. Explain and test the assumptions for inference in a linear regression model.
+
+:::
+
+::: {.callout-tip icon=false}
+## Stat 300Z Lesson 35
+
+1. One 
+
+2. Two
+
+3. Three
+:::
+
+::::
+
+
+
+------------------------------
+
+## Lesson 36
+
+:::: {layout-ncol=2}
+
+::: {.callout-note icon=false}
+## Stat 300 Lesson 36
+
+1. Construct and interpret bootstrap confidence intervals, both percentile and standard error method, for regression parameters such as slope and correlation coefficient.
+
+2. Conduct and interpret a permutation test on the regression slope parameter.
+:::
+
+::: {.callout-tip icon=false}
+## Stat 300Z Lesson 36
+
+1. One 
+
+2. Two
+
+3. Three
+:::
+
+::::
+
+
+
+
+------------------------------
+
+## Lesson 37
+
+:::: {layout-ncol=2}
+
+::: {.callout-note icon=false}
+## Stat 300 Lesson 37
+
+1. Use the output of a regression table to conduct a hypothesis test and build a confidence interval for the slope parameter from a linear regression model.
+:::
+
+::: {.callout-tip icon=false}
+## Stat 300Z Lesson 37
+
+1. One 
+
+2. Two
+
+3. Three
+:::
+
+::::
+
+
+
+
+
