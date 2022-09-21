@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Kaplan">
+<meta name="dcterms.date" content="2022-09-20">
+
+<title>Stat-300 - Math 300Z — Continuing the improvement of Math 300</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Stat-300</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./fall2022.html">Fall 2022 Edition</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html">About</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./outline.html">Evolving outline for Stats 300</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Math 300Z — Continuing the improvement of Math 300</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Kaplan </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 20, 2022</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<p>This site holds the proposal for the Spring 2023 version of Math 300.</p>
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<p>Up through Spring 2022, Math 300 was organized around the Moore and Notz textbook: <a href="https://store.macmillanlearning.com/us/product/Statistics-Concepts-and-Controversies/p/1319109020?gclid=CjwKCAjwpqCZBhAbEiwAa7pXeccQNXB3lKxdYgzHuubs_T9TwY8nqa_NG1UDHty2E3E-XqsiSUojNBoCTvcQAvD_BwE"><em>Statistics: Concepts and controversies</em></a> 10/e. This book was designed for a non-technical audience of “consumers of statistics” but is dramatically out of date. For instance, it has absolutely no data science content and introduces only primitive statistical methods. This was deemed inappropriate for cadets going on to be officers who will inevitably have to work with modern data and methods.</p>
+<p>In Fall 2022, Math 300 switched to a very different book, Ismay and Kim, <a href="https://moderndive.com/"><em>Statistical Inference via Data Science A ModernDive into R and the Tidyverse</em></a>. The <em>ModernDive</em> book introduces computing on data in an accessible but modern way. It is the only well-known statistics text based on a data-science perspective. Nonetheless, the statistical inference portions of the book regress to the same sort of primitive statistical methods from <em>Concepts and Controversies</em>.</p>
+<p>To support the Fall 2022 course using <em>ModernDive</em>, a complete set of roughly 35 Notes to Instructors (NTI) were written, mostly by Prof.&nbsp;Bradley Warner, along with problem sets and other needed materials and deployed for the course.</p>
+<p>This proposal is to further transition Math 300, building on the Fall 2022 course but replacing the inference portions of the course with more contemporary and general-purpose inference techniques and support for concepts and methods relevant to decision making.</p>
+</section>
+<section id="sec-broad-structure" class="level2">
+<h2 class="anchored" data-anchor-id="sec-broad-structure">Broad structure of the proposed changes</h2>
+<p>In this document, we refer to the <em>proposed</em> course as <em>Math 300Z</em>. This is not meant to imply that the catalog title should also include “Z.” Indeed, the content of 300Z is arguably closer than Math 300 to the catalog description:</p>
+<blockquote class="blockquote">
+<p>Math 300. Introduction to Statistics. An introduction in probability and statistics for decision-makers. Topics include basic probability, statistical inference, prediction, data visualization, and data management. This course emphasizes critical thinking among decisionmakers, preparing future officers to be critical consumers of data.</p>
+</blockquote>
+<p>Math 300Z will retain the first 17 lessons of the Fall 2022 version of Math 300 All teaching materials for this part of the course will be used unaltered. (Exception: revisions the Fall 2022 teaching team deems appropriate. Such revisions are not part of this proposal.)</p>
+<p>The next 19 lessons will be completely refactored and based on new readings, NTIs, exams, and other materials.</p>
+<ul>
+<li>The corresponding <em>ModernDive</em> chapters will not be used.</li>
+<li>The software will the same as that used in the first half of the <em>ModernDive</em> book, specifically the <code>ggplot2</code> graphics package and the <code>tidyverse</code> data wrangling packages. However, …</li>
+<li>The <code>infer</code> package used in the second half of <em>ModernDive</em> will be completely dropped.</li>
+<li>There is a new set of day-to-day objectives. A comparison of the objectives for Math 300 versus Math 300Z is available <a href="objectives-diffs.html">here</a> for blocks 3 and 4.</li>
+</ul>
+</section>
+<section id="sec-topics" class="level2">
+<h2 class="anchored" data-anchor-id="sec-topics">Narrative description of proposed topics</h2>
+<p>The theme of the refactored 19 lessons is “informing decisions with data.” Math 300Z will introduce concepts and methods needed to predict the impact of actions. One important idea is the “effect size,” how much a change in an explanatory variable changes the output. This is intimately connected with causation and causation is connected with co-variation. Another important idea is the design and operation of “detection systems” where the primary issue is to decide when incoming data should trigger a response, as in medical screening for disease or radar operation.</p>
+<p><strong>In a traditional introductory course</strong>, the emphasis is on “statistical inference,” a technical term related to the ideas of estimation and population parameters. Typically, half of a traditional course is given over to the construction of confidence intervals in various settings and, more or less equivalently, the conversion of data into p-values. In the contemporary era, when “observational” data are collected <em>en masse</em>, p-values can become very small (“significant”) even when the the relationship under study is slight and insubstantial.</p>
+<p>Note that the number of lesson days listed here is approximate, as estimated in September 2022. GRs are not included.</p>
+<section id="accuracy-and-precision-3-lesson-days" class="level3">
+<h3 class="anchored" data-anchor-id="accuracy-and-precision-3-lesson-days">Accuracy and precision (3 lesson days)</h3>
+<p>“Accuracy” and “precision” describe two orthogonal types of uncertainty: that due to imperfection in the overall mode of measurement and description of the quantity under study and that due to imperfection in individual measurements. The same division of uncertainty is also represented by the terms “bias” and “variance.”</p>
+<p><strong>In a traditional introductory course</strong>, the bulk of quantitative content is about measuring “precision,” oriented around the notion of a “sampling distribution” of “estimators.” However, “accuracy” is depicted as being the result of random sampling of a “population” and/or random assignment in experiment applied to “unbiased estimators” of central tendency of a single variable or linear association between two variables. Causal conclusions are permitted only in the context of experiment.</p>
+<p>Many contemporary tasks with data do not involve the possibility of random sampling or interventions randomly assigned to units. In such situations, the traditional formulation can pay only lip service to quantifying uncertainty. We propose to recast the distinction between accuracy and precision in terms of models with inputs—multiple regression, a topic covered briefly in the first half of the course. This enables “accuracy” to encompass confounding and the mis-specification of covariates, as well as examining causal hypotheses in observational data.</p>
+<p>Rather than appealing to a theoretical “population,” we’ll examine the factors that lead to greater or less accuracy and precision with respect to data generated according to completely specified simulations. Topics will include random sampling and non-random sampling, confounding between explanatory variables, covariation and adjustment (though multiple regression), model mis-specification, and causal hypotheses as represented by directed acyclic graphs (DAG).</p>
+</section>
+<section id="prediction-4-lesson-days" class="level3">
+<h3 class="anchored" data-anchor-id="prediction-4-lesson-days">Prediction (4 lesson days)</h3>
+<p>In statistics, “prediction” refers to building a model based on existing data on both inputs and outputs, then using that model to calculate the output corresponding to a given set of inputs. Our concern in this section will be with models having quantitative outputs, as opposed to the categorical outputs described in the next segment of the course. In Math 141Z, we carried out the process by building a model function from data then evaluating that function with new inputs. Statistics adds to this ways to measure the accuracy and precision of the prediction.</p>
+<p><strong>In a traditional introductory course</strong>, there is little attention paid to prediction. Rather, the focus is on the estimation of “population parameters.” To illustrate, consider the task of saying something about the income of people. A traditional approach would be to estimate the average income in a population, whereas the prediction problem would deal with what we can say about the income of a single person from the population based on some data on other attributes of that person.</p>
+<p>This section in 300Z will start with the notions of prediction error and residuals. We will examine the empirical distribution of residuals and how it relates to the gaussian distribution described by the mean square residual. As in “Accuracy and Precision,” we’ll use simulation models, this time adding random noise to the output, and attempt to estimate the size of the noise from data generated by the simulation. Using out-of-sample estimation, we will demonstrate that the in-sample estimate of residual size is biased: systematically too small. We will also explore the difference between the in-sample and out-of-sample mean square residuals as the number of model inputs gets larger, culminating in in-sample false perfection as <span class="math inline">\(p \rightarrow n\)</span>.</p>
+</section>
+<section id="classifiers-4-lesson-days" class="level3">
+<h3 class="anchored" data-anchor-id="classifiers-4-lesson-days">Classifiers (4 lesson days)</h3>
+<p>Classification is a problem analogous to prediction, but where the model output is a categorical variable. As such, each individual prediction is either right or wrong and the techniques for characterizing prediction error are different than for prediction of a quantitative output.</p>
+<p><strong>In a traditional introductory course</strong>, classification is not considered directly. Instead, one examines calculations of differences in probability between two groups or the chi-squared statistic calculated on cross validation.</p>
+<p>In 300Z, this section will start by introducing logistic regression and the technique of building classifiers that are not right-or-wrong, but which provide a probability for each possible output level.</p>
+<p>Risk as the probability of a (bad) outcome, odds and log-odds as reconfiguration of probability, demonstration that log-odds is bounded between 0 and 1 and has a monotonic relationship to probability. Relative risk (ratio of probabilities), population attributable fraction.</p>
+<p>False-positive and false-negative rates, prevalence, sensitivity and specificity as good descriptors, receiver operating curves (demonstration) and decision threshold, loss functions.</p>
+</section>
+<section id="inference-7-lesson-days" class="level3">
+<h3 class="anchored" data-anchor-id="inference-7-lesson-days">Inference (7 lesson days)</h3>
+<p>This section will likely be the toughest for first-time instructors, since it differs so much from a traditional course.</p>
+<p><strong>In a traditional introductory course</strong>, “inferential reasoning” refers to deducing how precisely an estimate tells about the corresponding population parameter. There are two, almost equivalent approaches to the problem: confidence intervals and hypothesis testing. Usually, multiple “tests” are covered, such as the difference between two means or the difference between two proportions.</p>
+<p>In 300Z, however, the emphasis is on informing real-world decisions with data.</p>
+<p>Two lessons: effect size, precision of effect-size estimates via bootstrapping, calculated precision depends on the model specification, interpretation of regression tables. (Demonstration: Gradient of effect size with respect to each input value. Moving along gradient as projection of residual vector onto gradient, angles and <span class="math inline">\(\sqrt{n}\)</span>.</p>
+<p>Two lessons: R<sup>2</sup> and F statistics, significance of an F statistic, model selection based on comparing F. Interpreting ANOVA tables.</p>
+<p>Two lessons: Comparing two paradigms: hypothesis testing and Bayes. Interpreting hypothesis testing as a denial that any prior is meaningful probability of the measurement given the Null hypothesis vs probability of the model parameters given the data.</p>
+<p>One lesson: False discovery and reading research, the importance of replication, the uses of experiment to avoid confounding and “lurking” variables.</p>
+</section>
+</section>
+<section id="relationship-to-math-357-and-math-377" class="level2">
+<h2 class="anchored" data-anchor-id="relationship-to-math-357-and-math-377">Relationship to Math 357 and Math 377</h2>
+<p>DFMS offers three courses satisfying the statistics component of the Academy’s core requirements: Math 300, Math 357, and Math 377. In designing 300Z, attention should be paid to the reasons for supporting three distinct courses. The catalog copy lays out the differences in terms of intended student major, software, mathematical background, and orientation to data science.</p>
+<p><strong>Intended student major</strong>: The catalog says, “Math 300 is designed primarily for majors in the Social Sciences and Humanities.” while “Math 356 is primarily designed for cadets in engineering, science, or other technical disciplines. Math majors and Operations Research majors will take Math 377.” Math 377 is also the intended course for prospective Data Science majors, although this is not in the catalog.</p>
+<p><strong>Software</strong>: The catalog does not describe any software component for either Math 300 or Math 357, but states that, in Math 377, “modern software appropriate for data analysis will be used.” In reality, as of Fall 2022, much the same software is used in all three courses: R with the <code>dplyr</code> package for data wrangling, <code>ggplot2</code> for data visualization, and “R/Markdown” for creating computationally active documents.</p>
+<p>One difference between Math 300 and 357/377 relates to computer programming. Both 357 and 377 include content about the underlying structure of the R language, object types, the construction of functions, and arrays and iteration. In contrast, Math 300 is based on a small set of command patterns using data frames. Students see R in Math 300 more or less as an extension of what they learned in 141Z/142Z; what’s added is a few statistical and data-wrangling functions and a handful of new graphics types.</p>
+<p><strong>Students’ mathematical background</strong>: Math 377 explicitly refers to “calculus-based probability.” Math 300 and 357 share identical catalog copy, though in reality Math 357 and Math 377 use the same textbook. Calculus is indeed necessary for the probability topics in Math 357 and 377. My interpretation is that Math 300 should serve as a safe haven for those who lack confidence in their calculus skills. Both the Fall 2022 edition of Math 300 and the proposed Math 300Z serve this role as safe haven.</p>
+<p><strong>Orientation to Data Science</strong>: Starting in Fall 2022, Math 300 develops and draws on data-science skills for wrangling and visualization. In this, the new Math 300 is in line with both Math 357 and 377. Discussions I had in AY 2021-2022 with faculty in political science and history, the departments that showed the most interest in potential changes to Math 300, showed a strong interest in the sorts of data manipulation and visualization that now fall under the aegis of “data science.” Since the target audience for Math 300 and 300Z is majors in social science and humanities, the shift in Math 300 toward data science as of Fall 2022 is entirely appropriate and will be continued in Math 300Z.</p>
+<p>The above analysis indicates that Math 300 and 300Z should diverge from Math 357/377 in these ways:</p>
+<ol type="1">
+<li>Math 300Z should make little or no use of calculus operations.</li>
+<li>Math 300Z should include little consideration of probability distributions or (non-automated) calculations with any but the simplest.</li>
+<li>Math 300Z should be computational, but should not draw heavily on computer programming skills such as types of objects, arrays, indexing, and loop-style iteration. Use of R/Markdown documents should be considered as a pedagogical choice, and retained or discontinued based on how it contributes to student success in the other areas of the course.</li>
+</ol>
+<p>In addition, I suggest that …</p>
+<ol start="4" type="1">
+<li>Math 300Z include some work with assembling/curating data using spreadsheets and basic data cleaning with spreadsheets. Awareness of the ubiquity of data errors and a basic understanding of how to deal with such errors is an important component of working with data. (This is not to suggest that data <em>analysis</em>, <em>modeling</em>, and <em>graphical</em> depiction be taught using spreadsheets, which are notoriously unreliable, difficult, and limiting for such purposes. Spreadsheets are, however, appropriate for the phase where non-tabular data is transcribed into a tabular arrangement.)</li>
+</ol>
+</section>
+<section id="plan-of-work" class="level2">
+<h2 class="anchored" data-anchor-id="plan-of-work">Plan of work</h2>
+<ol type="1">
+<li><p>Early October 2022: Preliminary approval, with appropriate modifications, of the <a href="objectives-diffs.html">proposed objectives</a>.</p></li>
+<li><p>October 2022: DTK will draft new day-by-day NTIs for the second half of the course in the same style as the existing NTIs for the first half of the course. In the process of drafting, there will likely be some re-arrangement and modification of the objectives in (1).</p></li>
+<li><p>November 2022: With the draft NTIs in hand, a faculty team will make a more detailed examination of the proposed objectives. I recommend that this examination be structured as a set of hour-long discussions, one for each of the five divisions described in <a href="#sec-topics">Section&nbsp;3</a>.</p></li>
+<li><p>November/December 2022: DTK (and others, as interested) will assemble student readings to replace the second half of <em>ModernDive</em>. Much of the content already exists in the form of a draft textbook by DTK. These will be re-arranged to correspond to the day-to-day objectives as determined in (3).</p></li>
+<li><p>January/February 2023: The first 18 lessons of 300Z will be taught as a repeat of those lessons from Math 300 Fall 2022. DTK will participate mainly as an observer.</p></li>
+<li><p>January/February 2023: Revision and refinement will be made of the readings and NTIs in (3) and (4) above.</p></li>
+<li><p>March/April 2023: Teaching the new lessons. DTK will participate as an instructor for these lessons.</p></li>
+</ol>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

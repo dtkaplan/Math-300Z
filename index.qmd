@@ -1,8 +1,129 @@
 ---
-title: "Stat 300Z --- Proposed revisions to Fall 2022 Stat 300"
+title: "Math 300Z --- Continuing the improvement of Math 300"
 author: "Daniel Kaplan"
-date: "As of Sept. 14, 2022"
+date: "As of Sept. 20, 2022"
 ---
 
-[Objectives](objectives-diffs.html) for blocks 3 and 4.
+This site holds the proposal for the Spring 2023 version of Math 300.
 
+## Background
+
+Up through Spring 2022, Math 300 was organized around the Moore and Notz textbook: [*Statistics: Concepts and controversies*](https://store.macmillanlearning.com/us/product/Statistics-Concepts-and-Controversies/p/1319109020?gclid=CjwKCAjwpqCZBhAbEiwAa7pXeccQNXB3lKxdYgzHuubs_T9TwY8nqa_NG1UDHty2E3E-XqsiSUojNBoCTvcQAvD_BwE) 10/e. This book was designed for a non-technical audience of "consumers of statistics" but is dramatically out of date. For instance, it has absolutely no data science content and introduces only primitive statistical methods. This was deemed inappropriate for cadets going on to be officers who will inevitably have to work with modern data and methods.
+
+In Fall 2022, Math 300 switched to a very different book, Ismay and Kim, [*Statistical Inference via Data Science
+A ModernDive into R and the Tidyverse*](https://moderndive.com/). The 
+*ModernDive* book introduces computing on data in an accessible but modern way. It is the only well-known statistics text based on a data-science perspective. Nonetheless, the statistical inference portions of the book regress to the same sort of primitive statistical methods from *Concepts and Controversies*.
+
+To support the Fall 2022 course using *ModernDive*, a complete set of roughly 35 Notes to Instructors (NTI) were written, mostly by Prof. Bradley Warner, along with problem sets and other needed materials and deployed for the course. 
+
+This proposal is to further transition Math 300, building on the Fall 2022 course but replacing the inference portions of the course with more contemporary and general-purpose inference techniques and support for concepts and methods relevant to decision making.
+
+## Broad structure of the proposed changes {#sec-broad-structure}
+
+In this document, we refer to the *proposed* course as *Math 300Z*. This is not meant to imply that the catalog title should also include "Z." Indeed, the content of 300Z is arguably closer than Math 300 to the catalog description: 
+
+> Math 300. Introduction to Statistics. An introduction in probability and statistics for decision-makers. Topics include basic probability, statistical inference, prediction, data visualization, and data management. This course emphasizes critical thinking among decisionmakers, preparing future officers to be critical consumers of data.
+
+Math 300Z will retain the first 17 lessons of the Fall 2022 version of Math 300 All teaching materials for this part of the course will be used unaltered. (Exception:  revisions the Fall 2022 teaching team deems appropriate. Such revisions are not part of this proposal.)
+
+The next 19 lessons will be completely refactored and based on new readings, NTIs, exams, and other materials. 
+
+* The corresponding *ModernDive* chapters will not be used. 
+* The software will the same as that used in the first half of the *ModernDive* book, specifically the `ggplot2` graphics package and the `tidyverse` data wrangling packages. However, ...
+* The `infer` package used in the second half of *ModernDive* will be completely dropped. 
+* There is a new set of day-to-day objectives. A comparison of the objectives for Math 300 versus Math 300Z is available [here](objectives-diffs.html) for blocks 3 and 4.
+
+## Narrative description of proposed topics {#sec-topics}
+
+The theme of the refactored 19 lessons is "informing decisions with data." Math 300Z will introduce concepts and methods needed to predict the impact of actions. One important idea is the "effect size," how much a change in an explanatory variable changes the output. This is intimately connected with causation and causation is connected with co-variation.  Another important idea is the design and operation of "detection systems" where the primary issue is to decide when incoming data should trigger a response, as in medical screening for disease or radar operation.
+
+**In a traditional introductory course**, the emphasis is on "statistical inference," a technical term related to the ideas of estimation and population parameters. Typically, half of a traditional course is given over to the construction of confidence intervals in various settings and, more or less equivalently, the conversion of data into p-values. In the contemporary era, when "observational" data are collected *en masse*, p-values can become very small ("significant") even when the the relationship under study is slight and insubstantial.
+
+Note that the number of lesson days listed here is approximate, as estimated in September 2022. GRs are not included.
+
+### Accuracy and precision (3 lesson days)
+
+"Accuracy" and "precision" describe two orthogonal types of uncertainty: that due to imperfection in the overall mode of measurement and description of the quantity under study and that due to imperfection in individual measurements. The same division of uncertainty is also represented by the terms "bias" and "variance." 
+
+**In a traditional introductory course**, the bulk of quantitative content is about measuring "precision," oriented around the notion of a "sampling distribution" of "estimators." However, "accuracy" is depicted as being the result of random sampling of a "population" and/or random assignment in experiment applied to "unbiased estimators" of central tendency of a single variable or linear association between two variables. Causal conclusions are permitted only in the context of experiment. 
+
+Many contemporary tasks with data do not involve the possibility of random sampling or interventions randomly assigned to units. In such situations, the traditional formulation can pay only lip service to quantifying uncertainty. We propose to recast the distinction between accuracy and precision in terms of models with inputs---multiple regression, a topic covered briefly in the first half of the course. This enables "accuracy" to encompass confounding and the mis-specification of covariates, as well as examining causal hypotheses in observational data. 
+
+Rather than appealing to a theoretical "population," we'll examine the factors that lead to greater or less accuracy and precision with respect to data generated according to completely specified simulations. Topics will include random sampling and non-random sampling, confounding between explanatory variables, covariation and adjustment (though multiple regression), model mis-specification, and causal hypotheses as represented by directed acyclic graphs (DAG).
+
+### Prediction (4 lesson days)
+
+In statistics, "prediction" refers to building a model based on existing data on both inputs and outputs, then using that model to calculate the output corresponding to a given set of inputs. Our concern in this section will be with models having quantitative outputs, as opposed to the categorical outputs described in the next segment of the course. In Math 141Z, we carried out the process by building a model function from data then evaluating that function with new inputs. Statistics adds to this ways to measure the accuracy and precision of the prediction.
+
+**In a traditional introductory course**, there is little attention paid to prediction. Rather, the focus is on the estimation of "population parameters." To illustrate, consider the task of saying something about the income of people. A traditional approach would be to estimate the average income in a population, whereas the prediction problem would deal with what we can say about the income of a single person from the population based on some data on other attributes of that person.
+
+This section in 300Z will start with the notions of prediction error and residuals. We will examine the empirical distribution of residuals and how it relates to the gaussian distribution described by the mean square residual. As in "Accuracy and Precision," we'll use simulation models, this time adding random noise to the output, and attempt to estimate the size of the noise from data generated by the simulation. Using out-of-sample estimation, we will demonstrate that the in-sample estimate of residual size is biased: systematically too small. We will also explore the difference between the in-sample and out-of-sample mean square residuals as the number of model inputs gets larger, culminating in in-sample false perfection as $p \rightarrow n$.
+
+### Classifiers (4 lesson days)
+
+Classification is a problem analogous to prediction, but where the model output is a categorical variable. As such, each individual prediction is either right or wrong and the techniques for characterizing prediction error are different than for prediction of a quantitative output.
+
+**In a traditional introductory course**, classification is not considered directly. Instead, one examines calculations of differences in probability between two groups or the chi-squared statistic calculated on cross validation. 
+
+In 300Z, this section will start by introducing logistic regression and the technique of building classifiers that are not right-or-wrong, but which provide a probability for each possible output level.
+
+Risk as the probability of a (bad) outcome, odds and log-odds as reconfiguration of probability, demonstration that log-odds is bounded between 0 and 1 and has a monotonic relationship to probability. Relative risk (ratio of probabilities), population attributable fraction.
+
+False-positive and false-negative rates, prevalence, sensitivity and specificity as good descriptors, receiver operating curves (demonstration) and decision threshold, loss functions.
+
+### Inference (7 lesson days)
+
+This section will likely be the toughest for first-time instructors, since it differs so much from a traditional course. 
+
+**In a traditional introductory course**, "inferential reasoning" refers to deducing how precisely an estimate tells about the corresponding population parameter. There are two, almost equivalent approaches to the problem: confidence intervals and hypothesis testing. Usually, multiple "tests" are covered, such as the difference between two means or the difference between two proportions. 
+
+In 300Z, however, the emphasis is on informing real-world decisions with data. 
+
+Two lessons: effect size, precision of effect-size estimates via bootstrapping, calculated precision depends on the model specification, interpretation of regression tables. (Demonstration: Gradient of effect size with respect to each input value. Moving along gradient as projection of residual vector onto gradient, angles and $\sqrt{n}$.
+
+Two lessons: R^2^ and F statistics, significance of an F statistic, model selection based on comparing F. Interpreting ANOVA tables.
+
+Two lessons: Comparing two paradigms: hypothesis testing and Bayes. Interpreting hypothesis testing as a denial that any prior is meaningful probability of the measurement given the Null hypothesis vs probability of the model parameters given the data.
+
+One lesson: False discovery and reading research, the importance of replication, the uses of experiment to avoid confounding and "lurking" variables.
+
+
+## Relationship to Math 357 and Math 377
+
+DFMS offers three courses satisfying the statistics component of the Academy's core requirements: Math 300, Math 357, and Math 377. In designing 300Z, attention should be paid to the reasons for supporting three distinct courses. The catalog copy lays out the differences in terms of intended student major, software, mathematical background, and orientation to data science.
+
+**Intended student major**: The catalog says, "Math 300 is designed primarily for majors in the Social Sciences and Humanities." while "Math 356 is primarily designed for cadets in engineering, science, or other technical disciplines. Math majors and Operations Research majors will take Math 377." Math 377 is also the intended course for prospective Data Science majors, although this is not in the catalog.
+
+**Software**: The catalog does not describe any software component for either Math 300 or Math 357, but states that, in Math 377, "modern software appropriate for data analysis will be used." In reality, as of Fall 2022, much the same software is used in all three courses: R with the `dplyr` package for data wrangling, `ggplot2` for data visualization, and "R/Markdown" for creating computationally active documents.
+
+One difference between Math 300 and 357/377 relates to computer programming. Both 357 and 377 include content about the underlying structure of the R language, object types, the construction of functions, and arrays and iteration. In contrast, Math 300 is based on a small set of command patterns using data frames. Students see R in Math 300 more or less as an extension of what they learned in 141Z/142Z; what's added is a few statistical and data-wrangling functions and a handful of new graphics types.
+
+**Students' mathematical background**:  Math 377 explicitly refers to "calculus-based probability." Math 300 and 357 share identical catalog copy, though in reality Math 357 and Math 377 use the same textbook. Calculus is indeed necessary for the probability topics in Math 357 and 377. My interpretation is that Math 300 should serve as a safe haven for those who lack confidence in their calculus skills. Both the Fall 2022 edition of Math 300 and the proposed Math 300Z serve this role as safe haven.
+
+**Orientation to Data Science**: Starting in Fall 2022, Math 300 develops and draws on data-science skills for wrangling and visualization. In this, the new Math 300 is in line with both Math 357 and 377. Discussions I had in AY 2021-2022 with faculty in political science and history, the departments that showed the most interest in potential changes to Math 300, showed a strong interest in the sorts of data manipulation and visualization that now fall under the aegis of "data science." Since the target audience for Math 300 and 300Z is majors in social science and humanities, the shift in Math 300 toward data science as of Fall 2022 is entirely appropriate and will be continued in Math 300Z.
+
+The above analysis indicates that Math 300 and 300Z should diverge from Math 357/377 in these ways:
+
+1. Math 300Z should make little or no use of calculus operations. 
+2. Math 300Z should include little consideration of probability distributions or (non-automated) calculations with any but the simplest.
+3. Math 300Z should be computational, but should not draw heavily on computer programming skills such as types of objects, arrays, indexing, and loop-style iteration. Use of R/Markdown documents should be considered as a pedagogical choice, and retained or discontinued based on how it contributes to student success in the other areas of the course.
+
+In addition, I suggest that ...
+
+4. Math 300Z include some work with assembling/curating data using spreadsheets and basic data cleaning with spreadsheets. Awareness of the ubiquity of data errors and a basic understanding of how to deal with such errors is an important component of working with data. (This is not to suggest that data *analysis*, *modeling*, and *graphical* depiction be taught using spreadsheets, which are notoriously unreliable, difficult, and limiting for such purposes. Spreadsheets are, however, appropriate for the phase where non-tabular data is transcribed into a tabular arrangement.)
+
+## Plan of work
+
+1. Early October 2022: Preliminary approval, with appropriate modifications, of the [proposed objectives](objectives-diffs.html).
+
+2. October 2022: DTK will draft new day-by-day NTIs for the second half of the course in the same style as the existing NTIs for the first half of the course. In the process of drafting, there will likely be some re-arrangement and modification of the objectives in (1). 
+
+3. November 2022: With the draft NTIs in hand, a faculty team will make a more detailed examination of the proposed objectives. I recommend that this examination be structured as a set of hour-long discussions, one for each of the five divisions described in @sec-topics.
+
+4. November/December 2022: DTK (and others, as interested) will assemble student readings to replace the second half of *ModernDive*. Much of the content already exists in the form of a draft textbook by DTK. These will be re-arranged to correspond to the day-to-day objectives as determined in (3).
+
+5. January/February 2023: The first 18 lessons of 300Z will be taught as a repeat of those lessons from Math 300 Fall 2022. DTK will participate mainly as an observer.
+
+6. January/February 2023: Revision and refinement will be made of the readings and NTIs in (3) and (4) above.
+
+7. March/April 2023: Teaching the new lessons. DTK will participate as an instructor for these lessons. 
