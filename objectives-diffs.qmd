@@ -1,5 +1,5 @@
 ---
-title: "Stat 300 objectives vs Stat 300Z"
+title: "Stat 300 objectives vs Stat 300R"
 author: "Daniel Kaplan"
 date: "As of Sept. 14, 2022"
 ---
@@ -21,7 +21,7 @@ date: "As of Sept. 14, 2022"
 :::
 
 ::: {.callout-tip icon=false}
-## Stat 300Z Lesson 19
+## Stat 300R Lesson 19
 
 1. Use and explain the terms accuracy and precision and the technical terms bias and variance. 
 
@@ -50,7 +50,7 @@ date: "As of Sept. 14, 2022"
 :::
 
 ::: {.callout-tip icon=false}
-## Stat 300Z Lesson 20
+## Stat 300R Lesson 20
 
 1. REWRITE: Terminology of covariates, confounders ...
 
@@ -77,7 +77,7 @@ date: "As of Sept. 14, 2022"
 :::
 
 ::: {.callout-tip icon=false}
-## Stat 300Z Lesson 21
+## Stat 300R Lesson 21
 
 1. Simulating simple DAGs.
 
@@ -106,13 +106,13 @@ date: "As of Sept. 14, 2022"
 :::
 
 ::: {.callout-tip icon=false}
-## Stat 300Z Lesson 22
+## Stat 300R Lesson 22 Prediction 1
 
-1. One 
+#. Using software, predict the output that will correspond to an input for a given model. Interpret this in the context of a prediction interval.
 
-2. Two
+#. Graph and interpret the prediction function and prediction confidence bands on low-order linear regression models.
 
-3. Three
+
 :::
 
 ::::
@@ -135,13 +135,13 @@ date: "As of Sept. 14, 2022"
 :::
 
 ::: {.callout-tip icon=false}
-## Stat 300Z Lesson 23
+## Stat 300R Lesson 23 Prediction 2
 
-1. One 
+#. Divide prediction confidence bands into a "model uncertainty" component and a "residual" component based on shape and sample size $n$. 
 
-2. Two
+#. Calculate from model residuals the residual component of an (in-sample) prediction error from a regression model.
 
-3. Three
+#. Explain why the mean-square residual and not the mean residual is a suitable measure of the precision (variance) of a prediction from a given model.
 :::
 
 ::::
@@ -164,13 +164,14 @@ date: "As of Sept. 14, 2022"
 :::
 
 ::: {.callout-tip icon=false}
-## Stat 300Z Lesson 24
+## Stat 300R Lesson 24 Prediction 3
 
-1. One 
+#. Use provided deterministic models to generate simulated data and add noise of a specified magnitude to the output to produce simulated data containing inputs and outputs.
 
-2. Two
+#. Compare regression results on simulated data to parameters of the simulation (including the amount of noise added to the simulation.) 
 
-3. Three
+#. Show that in-sample prediction error provides a low-biased estimate of added noise.
+
 :::
 
 ::::
@@ -190,13 +191,15 @@ date: "As of Sept. 14, 2022"
 :::
 
 ::: {.callout-tip icon=false}
-## Stat 300Z Lesson 25
+## Stat 300R Lesson 25 Prediction 4
 
-1. One 
+#. Divide data into "training" and "testing" sets.
 
-2. Two
+#. Calculate out-of-sample prediction error. 
 
-3. Three
+#. Observe relationship among sample size $n$, number of parameters $p$, and the calculated in-sample prediction error.
+
+(Note in draft: Later, in hypothesis testing, return to out-of-sample prediction error as analogous to replicating results to establish significance.)
 :::
 
 ::::
@@ -219,13 +222,23 @@ date: "As of Sept. 14, 2022"
 :::
 
 ::: {.callout-tip icon=false}
-## Stat 300Z Lesson 26
+## Stat 300R Lesson 26 Classifiers 1
 
-1. One 
+#. Using software, construct a yes/no classifier based on logistic regression (with a fixed threshold, say 50%). 
 
-2. Two
 
-3. Three
+#. Cross-tabulate classifier results to calculate true and false positive and negatives. Interpret performance based on "accuracy," "false positive" and "false negative" rates, "sensitivity," and "specificity."
+
+#. Distinguish between probability of true/false given positive and the probability of positive given true/false. Identify which probability type is appropriate for a given purpose.
+
+#. Understand the role of prevalence in shaping probs of true/false given positive and of true/false given negative.
+
+#. Explain why "sensitivity" and "specificity" are independent of prevalence and why this makes them good measures of classifier performance.
+
+#. Construct a suitable loss function for a given situation (e.g. HIV testing and blood screening, etc.)
+
+
+
 :::
 
 ::::
@@ -252,7 +265,7 @@ date: "As of Sept. 14, 2022"
 :::
 
 ::: {.callout-tip icon=false}
-## Stat 300Z Lesson 27
+## Stat 300R Lesson 27 Classifiers 2
 
 1. One 
 
@@ -280,13 +293,17 @@ No items listed.
 :::
 
 ::: {.callout-tip icon=false}
-## Stat 300Z Lesson 28
+## Stat 300R Lesson 28 Classifiers 3
 
-1. One 
+#. Identify (absolute) risk as a probability.
 
-2. Two
+#. Distinguish between relative and absolute risk and, similarly, between a *difference* in absolute risk between two conditions and the **risk ratio**.
 
-3. Three
+#. Translate probability into odds and log odds, similarly translate a change in risk into an odds ratio.
+
+#. Calculate population attributable fraction and number needed to treat as summaries of risk reduction.
+
+
 :::
 
 ::::
@@ -309,13 +326,18 @@ No items listed.
 :::
 
 ::: {.callout-tip icon=false}
-## Stat 300Z Lesson 29
+## Stat 300R Lesson 29 Classifiers 4
 
-1. One 
+A choice between two ways to go:
 
-2. Two
+1. Understand the fundamental logic behind causal attribution.
 
-3. Three
+... or, perhaps more appropriate for the Air Force, ...
+
+1. Graphically interpret a receiver operator curve and understand how to compute the location of individual points on the curve.
+
+2. Select an optimal decision threshold given an ROC and a loss function.
+
 :::
 
 ::::
@@ -339,7 +361,7 @@ No items listed.
 :::
 
 ::: {.callout-tip icon=false}
-## Stat 300Z Lesson 30
+## Stat 300R Lesson 30 Inference 1
 
 1. One 
 
@@ -365,7 +387,7 @@ No items listed.
 :::
 
 ::: {.callout-tip icon=false}
-## Stat 300Z Lesson 31
+## Stat 300R Lesson 31 Inference 2
 
 1. One 
 
@@ -394,7 +416,7 @@ No items listed.
 :::
 
 ::: {.callout-tip icon=false}
-## Stat 300Z Lesson 32
+## Stat 300R Lesson 32 Inference 3
 
 1. One 
 
@@ -414,7 +436,7 @@ No items listed.
 :::: {layout-ncol=2}
 
 ::: {.callout-note icon=false}
-## Stat 300 Lesson 33
+## Stat 300 Lesson 33 
 
 1. Standardize a variable.
 
@@ -426,7 +448,7 @@ No items listed.
 :::
 
 ::: {.callout-tip icon=false}
-## Stat 300Z Lesson 33
+## Stat 300R Lesson 33 Inference 4
 
 1. One 
 
@@ -457,7 +479,7 @@ No items listed.
 :::
 
 ::: {.callout-tip icon=false}
-## Stat 300Z Lesson 34
+## Stat 300R Lesson 34 Inference 5
 
 1. Use software to build regression and ANOVA tables from linear regression.
 
@@ -486,7 +508,7 @@ No items listed.
 :::
 
 ::: {.callout-tip icon=false}
-## Stat 300Z Lesson 35
+## Stat 300R Lesson 35 Inference 6
 
 1. One 
 
@@ -514,7 +536,7 @@ No items listed.
 :::
 
 ::: {.callout-tip icon=false}
-## Stat 300Z Lesson 36
+## Stat 300R Lesson 36 Inference 7
 
 1. One 
 
@@ -541,7 +563,7 @@ No items listed.
 :::
 
 ::: {.callout-tip icon=false}
-## Stat 300Z Lesson 37
+## Stat 300R Lesson 37
 
 1. One 
 

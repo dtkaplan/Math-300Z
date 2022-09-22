@@ -1,5 +1,5 @@
 ---
-title: "Math 300Z --- Continuing the improvement of Math 300"
+title: "Math 300R --- Continuing the improvement of Math 300"
 author: "Daniel Kaplan"
 date: "As of Sept. 20, 2022"
 ---
@@ -10,8 +10,7 @@ This site holds the proposal for the Spring 2023 version of Math 300.
 
 Up through Spring 2022, Math 300 was organized around the Moore and Notz textbook: [*Statistics: Concepts and controversies*](https://store.macmillanlearning.com/us/product/Statistics-Concepts-and-Controversies/p/1319109020?gclid=CjwKCAjwpqCZBhAbEiwAa7pXeccQNXB3lKxdYgzHuubs_T9TwY8nqa_NG1UDHty2E3E-XqsiSUojNBoCTvcQAvD_BwE) 10/e. This book was designed for a non-technical audience of "consumers of statistics" but is dramatically out of date. For instance, it has absolutely no data science content and introduces only primitive statistical methods. This was deemed inappropriate for cadets going on to be officers who will inevitably have to work with modern data and methods.
 
-In Fall 2022, Math 300 switched to a very different book, Ismay and Kim, [*Statistical Inference via Data Science
-A ModernDive into R and the Tidyverse*](https://moderndive.com/). The 
+In Fall 2022, Math 300 switched to a very different book, Ismay and Kim, [*Statistical Inference via Data Science: A ModernDive into R and the Tidyverse*](https://moderndive.com/). The 
 *ModernDive* book introduces computing on data in an accessible but modern way. It is the only well-known statistics text based on a data-science perspective. Nonetheless, the statistical inference portions of the book regress to the same sort of primitive statistical methods from *Concepts and Controversies*.
 
 To support the Fall 2022 course using *ModernDive*, a complete set of roughly 35 Notes to Instructors (NTI) were written, mostly by Prof. Bradley Warner, along with problem sets and other needed materials and deployed for the course. 
@@ -20,26 +19,29 @@ This proposal is to further transition Math 300, building on the Fall 2022 cours
 
 ## Broad structure of the proposed changes {#sec-broad-structure}
 
-In this document, we refer to the *proposed* course as *Math 300Z*. This is not meant to imply that the catalog title should also include "Z." Indeed, the content of 300Z is arguably closer than Math 300 to the catalog description: 
+Since Math 300 has already undergone an almost complete transformation from Spring 2022 to Fall 2022, it will help to assign specific short names to versions of the Math 300 course.
 
-> Math 300. Introduction to Statistics. An introduction in probability and statistics for decision-makers. Topics include basic probability, statistical inference, prediction, data visualization, and data management. This course emphasizes critical thinking among decisionmakers, preparing future officers to be critical consumers of data.
+- The Fall 2022 version of the course, using the *ModernDive* book will be called *Math 300*.
+- The previous version of course, as it was taught for several years before Fall 2022, will be called *300CC*, which refers to the textbook then used, *Concepts & Controversies*.
+- The course proposed in this document, a revision of part of *Math 300*, will be called *Math 300R*. The R stands for "revised."
 
-Math 300Z will retain the first 17 lessons of the Fall 2022 version of Math 300 All teaching materials for this part of the course will be used unaltered. (Exception:  revisions the Fall 2022 teaching team deems appropriate. Such revisions are not part of this proposal.)
+
+Math 300R will retain the first 17 lessons Math 300. All teaching materials for this part of the course will be used unaltered. (Exception: revisions to Math 300 the Fall 2022 teaching team deems appropriate. Such revisions are not part of this proposal.)
 
 The next 19 lessons will be completely refactored and based on new readings, NTIs, exams, and other materials. 
 
 * The corresponding *ModernDive* chapters will not be used. 
 * The software will the same as that used in the first half of the *ModernDive* book, specifically the `ggplot2` graphics package and the `tidyverse` data wrangling packages. However, ...
 * The `infer` package used in the second half of *ModernDive* will be completely dropped. 
-* There is a new set of day-to-day objectives. A comparison of the objectives for Math 300 versus Math 300Z is available [here](objectives-diffs.html) for blocks 3 and 4.
+* There is a new set of day-to-day objectives. A comparison of the objectives for Math 300 versus Math 300R is available [here](objectives-diffs.html) for the 19 lessons to be changed.
 
 ## Narrative description of proposed topics {#sec-topics}
 
-The theme of the refactored 19 lessons is "informing decisions with data." Math 300Z will introduce concepts and methods needed to predict the impact of actions. One important idea is the "effect size," how much a change in an explanatory variable changes the output. This is intimately connected with causation and causation is connected with co-variation.  Another important idea is the design and operation of "detection systems" where the primary issue is to decide when incoming data should trigger a response, as in medical screening for disease or radar operation.
+The theme of the refactored 19 lessons is "informing decisions with data." Math 300R will introduce concepts and methods needed to predict the impact of actions. One important idea is the "effect size," how much a change in an explanatory variable changes the output. This is intimately connected with causation and causation is connected with co-variation.  Another important idea is the design and operation of "detection systems" where the primary issue is to decide when incoming data should trigger a response, as in medical screening for disease or radar operation.
 
 **In a traditional introductory course**, the emphasis is on "statistical inference," a technical term related to the ideas of estimation and population parameters. Typically, half of a traditional course is given over to the construction of confidence intervals in various settings and, more or less equivalently, the conversion of data into p-values. In the contemporary era, when "observational" data are collected *en masse*, p-values can become very small ("significant") even when the the relationship under study is slight and insubstantial.
 
-Note that the number of lesson days listed here is approximate, as estimated in September 2022. GRs are not included.
+Note that the number of lesson days listed here is approximate, estimated as of September 2022. GRs are not included.
 
 ### Accuracy and precision (3 lesson days)
 
@@ -57,7 +59,7 @@ In statistics, "prediction" refers to building a model based on existing data on
 
 **In a traditional introductory course**, there is little attention paid to prediction. Rather, the focus is on the estimation of "population parameters." To illustrate, consider the task of saying something about the income of people. A traditional approach would be to estimate the average income in a population, whereas the prediction problem would deal with what we can say about the income of a single person from the population based on some data on other attributes of that person.
 
-This section in 300Z will start with the notions of prediction error and residuals. We will examine the empirical distribution of residuals and how it relates to the gaussian distribution described by the mean square residual. As in "Accuracy and Precision," we'll use simulation models, this time adding random noise to the output, and attempt to estimate the size of the noise from data generated by the simulation. Using out-of-sample estimation, we will demonstrate that the in-sample estimate of residual size is biased: systematically too small. We will also explore the difference between the in-sample and out-of-sample mean square residuals as the number of model inputs gets larger, culminating in in-sample false perfection as $p \rightarrow n$.
+This section in 300R will start with the notions of prediction error and residuals. We will examine the empirical distribution of residuals and how it relates to the gaussian distribution described by the mean square residual. As in "Accuracy and Precision," we'll use simulation models, this time adding random noise to the output, and attempt to estimate the size of the noise from data generated by the simulation. Using out-of-sample estimation, we will demonstrate that the in-sample estimate of residual size is biased: systematically too small. We will also explore the difference between the in-sample and out-of-sample mean square residuals as the number of model inputs gets larger, culminating in in-sample false perfection as $p \rightarrow n$.
 
 ### Classifiers (4 lesson days)
 
@@ -65,7 +67,7 @@ Classification is a problem analogous to prediction, but where the model output 
 
 **In a traditional introductory course**, classification is not considered directly. Instead, one examines calculations of differences in probability between two groups or the chi-squared statistic calculated on cross validation. 
 
-In 300Z, this section will start by introducing logistic regression and the technique of building classifiers that are not right-or-wrong, but which provide a probability for each possible output level.
+In 300R, this section will start by introducing logistic regression and the technique of building classifiers that are not right-or-wrong, but which provide a probability for each possible output level.
 
 Risk as the probability of a (bad) outcome, odds and log-odds as reconfiguration of probability, demonstration that log-odds is bounded between 0 and 1 and has a monotonic relationship to probability. Relative risk (ratio of probabilities), population attributable fraction.
 
@@ -77,7 +79,7 @@ This section will likely be the toughest for first-time instructors, since it di
 
 **In a traditional introductory course**, "inferential reasoning" refers to deducing how precisely an estimate tells about the corresponding population parameter. There are two, almost equivalent approaches to the problem: confidence intervals and hypothesis testing. Usually, multiple "tests" are covered, such as the difference between two means or the difference between two proportions. 
 
-In 300Z, however, the emphasis is on informing real-world decisions with data. 
+In 300R, however, the emphasis is on informing real-world decisions with data. 
 
 Two lessons: effect size, precision of effect-size estimates via bootstrapping, calculated precision depends on the model specification, interpretation of regression tables. (Demonstration: Gradient of effect size with respect to each input value. Moving along gradient as projection of residual vector onto gradient, angles and $\sqrt{n}$.
 
@@ -88,9 +90,10 @@ Two lessons: Comparing two paradigms: hypothesis testing and Bayes. Interpreting
 One lesson: False discovery and reading research, the importance of replication, the uses of experiment to avoid confounding and "lurking" variables.
 
 
+
 ## Relationship to Math 357 and Math 377
 
-DFMS offers three courses satisfying the statistics component of the Academy's core requirements: Math 300, Math 357, and Math 377. In designing 300Z, attention should be paid to the reasons for supporting three distinct courses. The catalog copy lays out the differences in terms of intended student major, software, mathematical background, and orientation to data science.
+DFMS offers three courses satisfying the statistics component of the Academy's core requirements: Math 300, Math 357, and Math 377. In designing 300R, attention should be paid to the reasons for supporting three distinct courses. The catalog copy lays out the differences in terms of intended student major, software, mathematical background, and orientation to data science.
 
 **Intended student major**: The catalog says, "Math 300 is designed primarily for majors in the Social Sciences and Humanities." while "Math 356 is primarily designed for cadets in engineering, science, or other technical disciplines. Math majors and Operations Research majors will take Math 377." Math 377 is also the intended course for prospective Data Science majors, although this is not in the catalog.
 
@@ -98,19 +101,80 @@ DFMS offers three courses satisfying the statistics component of the Academy's c
 
 One difference between Math 300 and 357/377 relates to computer programming. Both 357 and 377 include content about the underlying structure of the R language, object types, the construction of functions, and arrays and iteration. In contrast, Math 300 is based on a small set of command patterns using data frames. Students see R in Math 300 more or less as an extension of what they learned in 141Z/142Z; what's added is a few statistical and data-wrangling functions and a handful of new graphics types.
 
-**Students' mathematical background**:  Math 377 explicitly refers to "calculus-based probability." Math 300 and 357 share identical catalog copy, though in reality Math 357 and Math 377 use the same textbook. Calculus is indeed necessary for the probability topics in Math 357 and 377. My interpretation is that Math 300 should serve as a safe haven for those who lack confidence in their calculus skills. Both the Fall 2022 edition of Math 300 and the proposed Math 300Z serve this role as safe haven.
+**Students' mathematical background**:  Math 377 explicitly refers to "calculus-based probability." Math 300 and 357 share identical catalog copy, though in reality Math 357 and Math 377 use the same textbook. Calculus is indeed necessary for the probability topics in Math 357 and 377. My interpretation is that Math 300 should serve as a safe haven for those who lack confidence in their calculus skills. Both the Fall 2022 edition of Math 300 and the proposed Math 300R serve this role as safe haven.
 
-**Orientation to Data Science**: Starting in Fall 2022, Math 300 develops and draws on data-science skills for wrangling and visualization. In this, the new Math 300 is in line with both Math 357 and 377. Discussions I had in AY 2021-2022 with faculty in political science and history, the departments that showed the most interest in potential changes to Math 300, showed a strong interest in the sorts of data manipulation and visualization that now fall under the aegis of "data science." Since the target audience for Math 300 and 300Z is majors in social science and humanities, the shift in Math 300 toward data science as of Fall 2022 is entirely appropriate and will be continued in Math 300Z.
+**Orientation to Data Science**: Starting with the Fall 2022 edition, Math 300 develops and draws on data-science skills for wrangling and visualization. In this, the new Math 300 is in line with both Math 357 and 377. 
 
-The above analysis indicates that Math 300 and 300Z should diverge from Math 357/377 in these ways:
+The above analysis indicates that Math 300 and 300R should diverge from Math 357/377 in these ways:
 
-1. Math 300Z should make little or no use of calculus operations. 
-2. Math 300Z should include little consideration of probability distributions or (non-automated) calculations with any but the simplest.
-3. Math 300Z should be computational, but should not draw heavily on computer programming skills such as types of objects, arrays, indexing, and loop-style iteration. Use of R/Markdown documents should be considered as a pedagogical choice, and retained or discontinued based on how it contributes to student success in the other areas of the course.
+1. Math 300R should make little or no use of calculus operations. 
+2. Math 300R should include little consideration of probability distributions or (non-automated) calculations with any but the simplest.
+3. Math 300R should be computational, but should not draw heavily on computer programming skills such as types of objects, arrays, indexing, and loop-style iteration. Use of R/Markdown documents should be considered as a pedagogical choice, and retained or discontinued based on how it contributes to student success in the other areas of the course.
 
 In addition, I suggest that ...
 
-4. Math 300Z include some work with assembling/curating data using spreadsheets and basic data cleaning with spreadsheets. Awareness of the ubiquity of data errors and a basic understanding of how to deal with such errors is an important component of working with data. (This is not to suggest that data *analysis*, *modeling*, and *graphical* depiction be taught using spreadsheets, which are notoriously unreliable, difficult, and limiting for such purposes. Spreadsheets are, however, appropriate for the phase where non-tabular data is transcribed into a tabular arrangement.)
+4. Math 300R include some work with assembling/curating data using spreadsheets and basic data cleaning with spreadsheets. Awareness of the ubiquity of data errors and a basic understanding of how to deal with such errors is an important component of working with data. (This is not to suggest that data *analysis*, *modeling*, and *graphical* depiction be taught using spreadsheets, which are notoriously unreliable, difficult, and limiting for such purposes. Spreadsheets are, however, appropriate for the phase where non-tabular data is transcribed into a tabular arrangement.)
+
+## Justification of proposed changes
+
+To organize the justification of accomplished and proposed changes, it helps to refer to the catalog copy for Math 300.
+
+> Math 300. Introduction to Statistics. An introduction in probability and statistics **for decision-makers**. Topics include basic probability, statistical inference, prediction, data visualization, and data management. This course emphasizes critical thinking among **decision-makers**, preparing future officers to be **critical consumers of data**. (*Emphasis added.*)
+
+I interpret the final sentence as a description of the overall objective of the course: 
+
+> **Overall objective**: *Prepare officers to **use data** to **inform decisions**.*
+
+My proposal is to interpret the topics listed in the catalog copy as ways of serving the overall objective.
+
+To lay the groundwork for this proposal, in AY 2021-22 I contacted the departments in the social sciences and humanities. Three of these---history, political science, economics---responded with interest. Discussion with groups of faculty from these departments elucidated a number of points:
+
+- The faculty most highly valued the development of data-science skills such as computing for data wrangling and data visualization.
+- The then-current version of Math 300 did not contribute to the development of such skills.
+- Math 357 is not seen as an appropriate alterative to Math 300, both because of perceived difficulty of 357 and because faculty do not value the emphasis on probability distributions seen in 357.
+
+I also closely examined the [textbook used in Math 300](https://www.macmillanlearning.com/college/us/product/Statistics-Concepts-and-Controversies/p/1319109020) up through AY 2021-2022. The book has clear deficiencies, among which are:
+
+- the material is out of date and does not reflect any of the consensus recommendations (such as [GAISE](https://www.amstat.org/docs/default-source/amstat-documents/gaisecollege_full.pdf)) developed in the last 30 years.
+- it does not use data at any level beyond hand calculation.
+- it does not deal with decision making at any serious level. (The only decision formally supported is whether or not to reject the Null hypothesis.)
+
+Based on these findings, the group of faculty planning for revisions to Math 300 made an easy decision: replace the textbook with one oriented to data science. We selected the *ModernDive* book, which is unique among introductory statistics textbooks in starting out with data wrangling and visualization. This change of textbook addresses the "use data" part of the course objective stipulated above.
+
+The other part of the objective---**inform decisions**---remains problematic even with the switch in textbook. Consider these aspects of real decision making:
+
+- Decisions ought to be informed by costs, benefits, and risk.
+- Decisions often need to be taken with the data at hand.
+
+Instead of addressing these issues, introductory statistics courses focus on a single, abstract decision: Should the null hypothesis be rejected or not? (This is often formulated in terms of confidence intervals.)
+
+Discussions I had with the *ModernDive* authors made clear that their purpose in writing the book was to provide a way to introduce data science into introductory statistics, but that they stuck to the hypothesis-testing/confidence-interval framework in order not to make the change too daunting for instructors thinking of adopting the text. In other words, they were not trying to turn the topic toward decision-making with data.
+
+Returning to the idea that the topics listed in the catalog copy ought to be interpreted as serving the overall objective of the course, let's consider those topics one at a time:
+
+1. data management
+2. data visualization
+3. prediction
+4. statistical inference
+5. basic probability 
+
+
+(1) Strictly speaking, as a term of art the phrase "data management" is business jargon describing enterprise-level activities that are unrelated to the other items on the list. It would be unheard of to include it, in this strict sense, in a statistics course. I believe the intent of the phrase to be better served by terms like "data wrangling," "data cleaning," "database querying," and such which make up an important part of "data science." Data wrangling is a major feature of Math 300  launched  and is covered using professional level computing tools well suited to both small and large data. But whatever "data management" might reasonably be taken to mean, it was utterly ignored in Math 300CC. 
+
+(2) "Data visualization" is generally taken to be the process of using graphics to discover and highlight patterns shown in data. Math 300CC included only statistical graphics such as histograms, box-and-whisker plots, and basic "scatter plots." Math 300 adds to this modern modes of graphics such as transparency, color, and faceting that make it possible to display relationships among multiple variables. The software used in Math 300 is the professional-level `ggplot2` which provides the ability to increase the sophistication and generality of data display, using for example density graphics such as violin plots. As such, Math 300 is a big step on the road to rich data visualization. Some of these will be introduced in Math 300R in the second half of the course.
+
+(3) "Prediction" is a central paradigm used in the important area of "machine learning." It is also an often used method used to inform decision making and characterize risk, for instance, by indicating the distribution of plausible outcomes. Math 300CC emphasized paradigms such as hypothesis testing and confidence intervals that are not aligned with making and interpreting predictions. Math 300 focuses on these same paradigms. Math 300R will treat prediction as a central statistical path, as well as highlighting its proper use, interpretation, and evaluation. 
+
+(4) "Statistical inference" is traditionally taken to mean the calculation and interpretation of hypothesis tests and confidence intervals in various simple settings. Such settings include the "difference between two means," the "correlation coefficient," and the "slope of a regression line." Math 300CC introduced a handful of such settings, providing distinct formulas for each of them. The "controversies" referred to in the title *Concepts and controversies* includes the problematic interpretation of "p-values" and the need to use random sampling and/or random assignment in data collection to get "correct" results. Math 300 retains the emphasis on confidence intervals and p-values in the simple settings, but emphasizes a more general and accessible methodology based on bootstrapping and permutation tests.
+
+Unfortunately, appealing to random sampling/assignment is often whistling past the graveyard, since these idealized data collection processes are rarely available. Instead, professionals include "covariates" in their data collection in order to "adjust" for the factors that would have been scrambled into insignificance by random sampling/assignment if it had been available. Math 300R incorporates covariate methods and highlights the importance of identifying appropriate covariates.
+
+(5) "Basic probability" can mean different things to different people. In most introductory statistics courses it refers to the construction, calculation, and study of named distributions such as the binomial, normal, chi-squared, t, etc. Such distributions play an important role in the statistical theory of confidence intervals and hypothesis testing. That is, they are support for statistical inference. Math 300CC followed the traditional pattern of having students memorize which distribution is relevant to which setting and using printed tables for calculation. As described earlier, Math 300 provides a much more natural route to inference through bootstrapping and permutation tests.
+
+What's left out in this conception of basic probability is the support for decision making. Essential to this is the proper use of "conditional probability." Math 300R emphasizes appropriate use and interpretation of conditional probability, seen most clearly in the "classifiers" part of the course.
+
+The transition from Math 300CC to Math 300 is a big step toward the objective of "prepar[ing] officers to use data." Math 300R will add in progress toward the overall objective of "us[ing] data to inform decisions."
+
 
 ## Plan of work
 
@@ -122,7 +186,7 @@ In addition, I suggest that ...
 
 4. November/December 2022: DTK (and others, as interested) will assemble student readings to replace the second half of *ModernDive*. Much of the content already exists in the form of a draft textbook by DTK. These will be re-arranged to correspond to the day-to-day objectives as determined in (3).
 
-5. January/February 2023: The first 18 lessons of 300Z will be taught as a repeat of those lessons from Math 300 Fall 2022. DTK will participate mainly as an observer.
+5. January/February 2023: The first 18 lessons of 300R will be taught as a repeat of those lessons from Math 300 Fall 2022. DTK will participate mainly as an observer.
 
 6. January/February 2023: Revision and refinement will be made of the readings and NTIs in (3) and (4) above.
 
