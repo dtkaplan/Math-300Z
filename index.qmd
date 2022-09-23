@@ -1,7 +1,15 @@
 ---
 title: "Math 300R --- Continuing the improvement of Math 300"
 author: "Daniel Kaplan"
-date: "As of Sept. 20, 2022"
+date: "Sept. 23, 2022"
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+    number-sections: false
+  docx:
+    number-sections: false
 ---
 
 This site holds the proposal for the Spring 2023 version of Math 300.
@@ -13,83 +21,64 @@ Up through Spring 2022, Math 300 was organized around the Moore and Notz textboo
 In Fall 2022, Math 300 switched to a very different book, Ismay and Kim, [*Statistical Inference via Data Science: A ModernDive into R and the Tidyverse*](https://moderndive.com/). The 
 *ModernDive* book introduces computing on data in an accessible but modern way. It is the only well-known statistics text based on a data-science perspective. Nonetheless, the statistical inference portions of the book regress to the same sort of primitive statistical methods from *Concepts and Controversies*.
 
-To support the Fall 2022 course using *ModernDive*, a complete set of roughly 35 Notes to Instructors (NTI) were written, mostly by Prof. Bradley Warner, along with problem sets and other needed materials and deployed for the course. 
+To support the Fall 2022 course using *ModernDive*, a complete set of roughly 35 Notes to Instructors (NTI) were written by Prof. Bradley Warner along with problem sets and other needed materials and deployed for the course. 
 
 This proposal is to further transition Math 300, building on the Fall 2022 course but replacing the inference portions of the course with more contemporary and general-purpose inference techniques and support for concepts and methods relevant to decision making.
 
-## Broad structure of the proposed changes {#sec-broad-structure}
-
-Since Math 300 has already undergone an almost complete transformation from Spring 2022 to Fall 2022, it will help to assign specific short names to versions of the Math 300 course.
+In the following, I will be making reference to three different versions of Math 300:
 
 - The Fall 2022 version of the course, using the *ModernDive* book will be called *Math 300*.
 - The previous version of course, as it was taught for several years before Fall 2022, will be called *300CC*, which refers to the textbook then used, *Concepts & Controversies*.
 - The course proposed in this document, a revision of part of *Math 300*, will be called *Math 300R*. The R stands for "revised."
 
+## Overall goals of Math 300R
+
+The design of a course revision needs to take into account several factors:
+
+- the target audience's anticipated technical ability and motivation and therefore the appropriate pedagogy and the balance between theory and practice to use in the course 
+- institutional goals as they relate to the course subject, that is, the prioritization of the many different topics that might be included in the course
+- constraints of class time and internal coherence of the course, that is, using later topics in the course to reinforce student learning of the earlier topics
+
+Later, in the [justification section](#justification) section of this document, I describe how I came to the following conclusions, but for now a simple statement of the conclusions will suffice.
+
+1. The target audience is humanities and social science majors, many of whom will not be confident in the use of calculus, but all of whom have had previous exposure to R in the core calculus course.
+2. Institutional goals (as revealed by discussion with humanities and social science departments and the wording of the catalog description of Math 300) include a substantial emphasis on *data science techniques* (data wrangling and visualization) and on the use of statistical concepts and methods to support *decision-making*.
+3. Given the class-time demands of the new emphasis on data science techniques in Math 300 (and retained in Math 300R), the statistical concepts and methods need to be taught in a more compact manner than in Math 300CC. Low-priority, legacy topics from Math 300CC should be dropped, particularly those that do not relate to decision-making. A concise, unifying framework for presenting the statistical topics should be adopted. The framework proposed for Math 300R is linear regression together with a data wrangling and visualization approach to motivating and demonstrating statistical concepts. Abstract theory will be supplanted by concrete simulations.
+
+## Regression and simulation
+
+Linear regression is already integrated into the *ModernDive* textbook used in Math 300. It was also covered extensively in the core calculus course (141Z/142Z). Regression provides a basis for almost all of the statistical "tests" covered in Math 300CC and other traditional statistics courses. It is part of the toolbox of data scientists and relates well to emerging data techniques such as machine learning.
+
+There are two distinct facets of simulation. One, familiar to many statistical educators, is the introduction to inference provided by randomization techniques: resampling, bootstrapping, and permutation tests. This approach is well established in the statistics community and considered by many to be a better pedagogy than the traditional formula-and-distribution presentation of statistical methods.
+
+The other facet of simulation is more novel and relates to the generation of synthetic data where the amount of available data is unlimited and the mechanism behind the data is explicitly stated (as opposed to the often unknown mechanisms behind real-world data).
+
+Several of the 19 lessons covered by this proposal involve "statistical inference." In frequentist inference, there is a concept of "population," which is a real or hypothetical source of data. In many of the lessons about statistical inference, we will instantiate a population via a simulation based on an instructor-stipulated directed acyclic graph (DAG) augmented with an effect size for each direct path. A sample can be drawn from the simulation, and the (in-sample) results then compared to repeated samples from the simulation or the effect sizes used in the simulation.
+
+This pedagogy is intended to develop intuition for the various statistical phenomena (such as sampling variation, prediction error, or confounding). It will also draw on and reinforce the data-wrangling, regression, and visualization skills developed in the first half of the course. It will also help us deal frankly with causality and what data can and cannot tell us about causal relationships.
+
+Care must be taken to avoid students mistakenly concluding that using simulated data allows us to draw inferences about the real world. For instance, simulations will use abstract variable names such as Y, X, A, B, C whereas real data will have genuinely descriptive names.
+
+
+## Summary of the proposed changes {#sec-broad-structure}
 
 Math 300R will retain the first 17 lessons Math 300. All teaching materials for this part of the course will be used unaltered. (Exception: revisions to Math 300 the Fall 2022 teaching team deems appropriate. Such revisions are not part of this proposal.)
 
-The next 19 lessons will be completely refactored and based on new readings, NTIs, exams, and other materials. 
+The next 19 lessons will be completely refactored and based on new readings, NTIs, exams, and other materials. Objectives for each of these 19 lessons are [itemized here](schedule-of-objectives.html).
 
 * The corresponding *ModernDive* chapters will not be used. 
 * The software will the same as that used in the first half of the *ModernDive* book, specifically the `ggplot2` graphics package and the `tidyverse` data wrangling packages. However, ...
-* The `infer` package used in the second half of *ModernDive* will be completely dropped. 
-* There is a new set of day-to-day objectives. A comparison of the objectives for Math 300 versus Math 300R is available [here](objectives-diffs.html) for the 19 lessons to be changed.
+* The `infer` package used in the second half of *ModernDive* will be dropped. 
 
-## Narrative description of proposed topics {#sec-topics}
+The theme of the refactored 19 lessons is "informing decisions with data." Math 300R will introduce concepts and methods needed to predict the impact of interventions, the prediction of individual outcomes, and the quantification and accumulation of risk. One important idea is "effect size," how much a change in an explanatory variable changes the response variable. This is intimately connected with causation and causation is connected with co-variation. Another important idea is prediction of outcomes and the quantification of uncertainty in the prediction. One important application of this is in the design and operation of "classifiers."  
 
-The theme of the refactored 19 lessons is "informing decisions with data." Math 300R will introduce concepts and methods needed to predict the impact of actions. One important idea is the "effect size," how much a change in an explanatory variable changes the output. This is intimately connected with causation and causation is connected with co-variation.  Another important idea is the design and operation of "detection systems" where the primary issue is to decide when incoming data should trigger a response, as in medical screening for disease or radar operation.
+Topics to be de-emphasized are the algebra of computing confidence intervals and p-values and the (controversial) role of p-values as a guide to practical "significance." Typically, about half of a traditional course is given over to the construction of confidence intervals in various settings and, more or less equivalently, the conversion of data into p-values. In the contemporary era, when "observational" data are collected *en masse*, p-values can become very small ("significant") even when the the relationship under study is slight and insubstantial.
 
-**In a traditional introductory course**, the emphasis is on "statistical inference," a technical term related to the ideas of estimation and population parameters. Typically, half of a traditional course is given over to the construction of confidence intervals in various settings and, more or less equivalently, the conversion of data into p-values. In the contemporary era, when "observational" data are collected *en masse*, p-values can become very small ("significant") even when the the relationship under study is slight and insubstantial.
+Confounding and methods for dealing with it (statistical adjustment, experiment) are treated substantially in Math 300R. Decision-making about interventions often relies on the understanding of causal effects; the possibility of confounding is a major source of skepticism about making causal judgments. In a world where much data is observational in nature, the sweeping principles that "correlation is not causation" and "no causation without experimentation" do not provide support for making responsible conclusions about causal connections. Decision-makers need this support.
 
-Note that the number of lesson days listed here is approximate, estimated as of September 2022. GRs are not included.
+## JUSTIFICATION
 
-### Accuracy and precision (3 lesson days)
-
-"Accuracy" and "precision" describe two orthogonal types of uncertainty: that due to imperfection in the overall mode of measurement and description of the quantity under study and that due to imperfection in individual measurements. The same division of uncertainty is also represented by the terms "bias" and "variance." 
-
-**In a traditional introductory course**, the bulk of quantitative content is about measuring "precision," oriented around the notion of a "sampling distribution" of "estimators." However, "accuracy" is depicted as being the result of random sampling of a "population" and/or random assignment in experiment applied to "unbiased estimators" of central tendency of a single variable or linear association between two variables. Causal conclusions are permitted only in the context of experiment. 
-
-Many contemporary tasks with data do not involve the possibility of random sampling or interventions randomly assigned to units. In such situations, the traditional formulation can pay only lip service to quantifying uncertainty. We propose to recast the distinction between accuracy and precision in terms of models with inputs---multiple regression, a topic covered briefly in the first half of the course. This enables "accuracy" to encompass confounding and the mis-specification of covariates, as well as examining causal hypotheses in observational data. 
-
-Rather than appealing to a theoretical "population," we'll examine the factors that lead to greater or less accuracy and precision with respect to data generated according to completely specified simulations. Topics will include random sampling and non-random sampling, confounding between explanatory variables, covariation and adjustment (though multiple regression), model mis-specification, and causal hypotheses as represented by directed acyclic graphs (DAG).
-
-### Prediction (4 lesson days)
-
-In statistics, "prediction" refers to building a model based on existing data on both inputs and outputs, then using that model to calculate the output corresponding to a given set of inputs. Our concern in this section will be with models having quantitative outputs, as opposed to the categorical outputs described in the next segment of the course. In Math 141Z, we carried out the process by building a model function from data then evaluating that function with new inputs. Statistics adds to this ways to measure the accuracy and precision of the prediction.
-
-**In a traditional introductory course**, there is little attention paid to prediction. Rather, the focus is on the estimation of "population parameters." To illustrate, consider the task of saying something about the income of people. A traditional approach would be to estimate the average income in a population, whereas the prediction problem would deal with what we can say about the income of a single person from the population based on some data on other attributes of that person.
-
-This section in 300R will start with the notions of prediction error and residuals. We will examine the empirical distribution of residuals and how it relates to the gaussian distribution described by the mean square residual. As in "Accuracy and Precision," we'll use simulation models, this time adding random noise to the output, and attempt to estimate the size of the noise from data generated by the simulation. Using out-of-sample estimation, we will demonstrate that the in-sample estimate of residual size is biased: systematically too small. We will also explore the difference between the in-sample and out-of-sample mean square residuals as the number of model inputs gets larger, culminating in in-sample false perfection as $p \rightarrow n$.
-
-### Classifiers (4 lesson days)
-
-Classification is a problem analogous to prediction, but where the model output is a categorical variable. As such, each individual prediction is either right or wrong and the techniques for characterizing prediction error are different than for prediction of a quantitative output.
-
-**In a traditional introductory course**, classification is not considered directly. Instead, one examines calculations of differences in probability between two groups or the chi-squared statistic calculated on cross validation. 
-
-In 300R, this section will start by introducing logistic regression and the technique of building classifiers that are not right-or-wrong, but which provide a probability for each possible output level.
-
-Risk as the probability of a (bad) outcome, odds and log-odds as reconfiguration of probability, demonstration that log-odds is bounded between 0 and 1 and has a monotonic relationship to probability. Relative risk (ratio of probabilities), population attributable fraction.
-
-False-positive and false-negative rates, prevalence, sensitivity and specificity as good descriptors, receiver operating curves (demonstration) and decision threshold, loss functions.
-
-### Inference (7 lesson days)
-
-This section will likely be the toughest for first-time instructors, since it differs so much from a traditional course. 
-
-**In a traditional introductory course**, "inferential reasoning" refers to deducing how precisely an estimate tells about the corresponding population parameter. There are two, almost equivalent approaches to the problem: confidence intervals and hypothesis testing. Usually, multiple "tests" are covered, such as the difference between two means or the difference between two proportions. 
-
-In 300R, however, the emphasis is on informing real-world decisions with data. 
-
-Two lessons: effect size, precision of effect-size estimates via bootstrapping, calculated precision depends on the model specification, interpretation of regression tables. (Demonstration: Gradient of effect size with respect to each input value. Moving along gradient as projection of residual vector onto gradient, angles and $\sqrt{n}$.
-
-Two lessons: R^2^ and F statistics, significance of an F statistic, model selection based on comparing F. Interpreting ANOVA tables.
-
-Two lessons: Comparing two paradigms: hypothesis testing and Bayes. Interpreting hypothesis testing as a denial that any prior is meaningful probability of the measurement given the Null hypothesis vs probability of the model parameters given the data.
-
-One lesson: False discovery and reading research, the importance of replication, the uses of experiment to avoid confounding and "lurking" variables.
-
-
+REFERRING TO THE POINTS in the introduction.
 
 ## Relationship to Math 357 and Math 377
 
@@ -115,7 +104,7 @@ In addition, I suggest that ...
 
 4. Math 300R include some work with assembling/curating data using spreadsheets and basic data cleaning with spreadsheets. Awareness of the ubiquity of data errors and a basic understanding of how to deal with such errors is an important component of working with data. (This is not to suggest that data *analysis*, *modeling*, and *graphical* depiction be taught using spreadsheets, which are notoriously unreliable, difficult, and limiting for such purposes. Spreadsheets are, however, appropriate for the phase where non-tabular data is transcribed into a tabular arrangement.)
 
-## Justification of proposed changes
+## Justification of proposed changes (#justification)
 
 To organize the justification of accomplished and proposed changes, it helps to refer to the catalog copy for Math 300.
 

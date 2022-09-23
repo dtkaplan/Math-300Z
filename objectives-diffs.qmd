@@ -23,7 +23,7 @@ date: "As of Sept. 14, 2022"
 ::: {.callout-tip icon=false}
 ## Stat 300R Lesson 19
 
-1. Use and explain the terms accuracy and precision and the technical terms bias and variance. 
+1. Correctly use and explain the terms accuracy and precision and the technical terms bias and variance. 
 
 2. Carry out (using software) a multiple regression and interpret the coefficients as marginal effects. 
 
@@ -52,11 +52,12 @@ date: "As of Sept. 14, 2022"
 ::: {.callout-tip icon=false}
 ## Stat 300R Lesson 20
 
-1. REWRITE: Terminology of covariates, confounders ...
+#. Explain the meaning of "confounding" and give story examples of it.
 
-2. Be able to provide an example and explanation of Simpson's paradox.
+#. Understand format of DAGs and interpret a DAG in terms of sets of direct causal relationships.
 
-3. Three
+#. Identify when a DAG implies confounding.
+
 :::
 
 ::::
@@ -83,7 +84,7 @@ date: "As of Sept. 14, 2022"
 
 2. Construct regression models on simulated data and interpret coefficients as consistent or inconsistent with the generating DAG.
 
-3. Interpret DAGs as a causal hypothesis. 
+
 :::
 
 ::::
@@ -197,7 +198,7 @@ date: "As of Sept. 14, 2022"
 
 #. Calculate out-of-sample prediction error. 
 
-#. Observe relationship among sample size $n$, number of parameters $p$, and the calculated in-sample prediction error.
+#. Qualitatively describe relationship among sample size $n$, number of parameters $p$, and the calculated in-sample prediction error.
 
 (Note in draft: Later, in hypothesis testing, return to out-of-sample prediction error as analogous to replicating results to establish significance.)
 :::
@@ -224,18 +225,14 @@ date: "As of Sept. 14, 2022"
 ::: {.callout-tip icon=false}
 ## Stat 300R Lesson 26 Classifiers 1
 
-#. Using software, construct a yes/no classifier based on logistic regression (with a fixed threshold, say 50%). 
+#. Identify structure of data needed to build a classifier.
 
+#. Using software, construct a yes/no classifier based on logistic regression (with a fixed threshold, say 50%). 
 
 #. Cross-tabulate classifier results to calculate true and false positive and negatives. Interpret performance based on "accuracy," "false positive" and "false negative" rates, "sensitivity," and "specificity."
 
-#. Distinguish between probability of true/false given positive and the probability of positive given true/false. Identify which probability type is appropriate for a given purpose.
 
-#. Understand the role of prevalence in shaping probs of true/false given positive and of true/false given negative.
-
-#. Explain why "sensitivity" and "specificity" are independent of prevalence and why this makes them good measures of classifier performance.
-
-#. Construct a suitable loss function for a given situation (e.g. HIV testing and blood screening, etc.)
+<!-- call measured predictive quantities M -->
 
 
 
@@ -267,11 +264,12 @@ date: "As of Sept. 14, 2022"
 ::: {.callout-tip icon=false}
 ## Stat 300R Lesson 27 Classifiers 2
 
-1. One 
 
-2. Two
+#. Distinguish between probability of D/Not given + result and the probability of + result given D/Not. Identify which probability type is appropriate for a given purpose.
 
-3. Three
+#. Understand the role of prevalence in shaping probs of true/false given positive and of true/false given negative.
+
+
 :::
 
 ::::
@@ -295,15 +293,14 @@ No items listed.
 ::: {.callout-tip icon=false}
 ## Stat 300R Lesson 28 Classifiers 3
 
-#. Identify (absolute) risk as a probability.
+Determining sensitivity and specificity clinically using known 
 
-#. Distinguish between relative and absolute risk and, similarly, between a *difference* in absolute risk between two conditions and the **risk ratio**.
+Probability inversion: Using sensitivity and specificity to update prevalence. Bayes formula written in terms of sensitivity and specificity.
 
-#. Translate probability into odds and log odds, similarly translate a change in risk into an odds ratio.
+<!-- Prior belief, $p_0(D)$ is prevalence.
 
-#. Calculate population attributable fraction and number needed to treat as summaries of risk reduction.
-
-
+Updating based on test results:  $p(D | test) = p(test result |D) p_0(+) / (normalization)$
+[Demonstration: Process for "inverting" a probability.] -->
 :::
 
 ::::
@@ -328,15 +325,13 @@ No items listed.
 ::: {.callout-tip icon=false}
 ## Stat 300R Lesson 29 Classifiers 4
 
-A choice between two ways to go:
+#. Identify (absolute) risk as a probability.
 
-1. Understand the fundamental logic behind causal attribution.
+#. Distinguish between relative and absolute risk and, similarly, between a *difference* in absolute risk between two conditions and the **risk ratio**.
 
-... or, perhaps more appropriate for the Air Force, ...
+#. Translate probability into odds and log odds, similarly translate a change in risk into an odds ratio.
 
-1. Graphically interpret a receiver operator curve and understand how to compute the location of individual points on the curve.
-
-2. Select an optimal decision threshold given an ROC and a loss function.
+#. Calculate population attributable fraction and number needed to treat as summaries of risk reduction.
 
 :::
 
@@ -363,11 +358,13 @@ A choice between two ways to go:
 ::: {.callout-tip icon=false}
 ## Stat 300R Lesson 30 Inference 1
 
-1. One 
+#. Understand "effect size" of a given input variable in terms of a model function: change in model output divided by the change in the given input: a partial derivative.
 
-2. Two
+#. Given a model function, compute effect size for any input. 
 
-3. Three
+#. Observe and understand the origin of sampling variation.
+
+#. Use bootstrapping to create a confidence interval on effect size and interpret confidence interval in terms of sampling variation.
 :::
 
 ::::
@@ -389,11 +386,15 @@ A choice between two ways to go:
 ::: {.callout-tip icon=false}
 ## Stat 300R Lesson 31 Inference 2
 
-1. One 
+#. Use software to construct a regression table for a linear regression.
 
-2. Two
+#. Correctly interpret the coefficient and standard error columns of a regression table in terms of effect size and sampling variation.
 
-3. Three
+#. Recognize that effect size can depend on the model specification.
+
+#. Give a correct story example of Simpson's paradox and summarize in terms of model specification.
+
+[Demonstration: Vector projection explanation of Simpson's paradox.]
 :::
 
 ::::
@@ -418,11 +419,13 @@ A choice between two ways to go:
 ::: {.callout-tip icon=false}
 ## Stat 300R Lesson 32 Inference 3
 
-1. One 
+#. Calculate R^2^ for a regression model and correctly interpret it in terms of the "model triangle."
 
-2. Two
+#. Explain why R^2^ will not be zero and may even be close to 1, even when the explanatory variables are unrelated to the response variable. 
 
-3. Three
+#. Given R^2^, $n$, and $p$, calculate the F statistic. 
+
+#. Understand that F near 1 indicates that the explanatory variables are unrelated to the response variable.
 :::
 
 ::::
@@ -450,11 +453,13 @@ A choice between two ways to go:
 ::: {.callout-tip icon=false}
 ## Stat 300R Lesson 33 Inference 4
 
-1. One 
+1. Identify when one model is nested in another.
 
-2. Two
+2. Use software to construct an ANOVA table and from that construct R^2^ for each nested model described in the table. 
 
-3. Three
+[Note in draft: Use augmented anova table with a leading row for the intercept.]
+
+3. Interpret the F for each row in terms of the increase in R^2^ for that row.
 :::
 
 ::::
@@ -481,13 +486,14 @@ A choice between two ways to go:
 ::: {.callout-tip icon=false}
 ## Stat 300R Lesson 34 Inference 5
 
-1. Use software to build regression and ANOVA tables from linear regression.
+Using data to update belief.
 
-2. Interpret a regression table in terms of parameters, confidence intervals, and coefficient-wise p-values.
+Operationalize "belief" in terms of effect size.
 
-3. Interpret an ANOVA table as a whole-model summary.
+Framework 1: Bayesian set up for belief function and updating with data. Updated belief is p(effect size | data)
 
-4. Use ANOVA for model selection among nested models.
+Framework 2: Null hypothesis is that effect size is nil. p-value is p(data | effect size=0)
+
 :::
 
 ::::
@@ -510,11 +516,7 @@ A choice between two ways to go:
 ::: {.callout-tip icon=false}
 ## Stat 300R Lesson 35 Inference 6
 
-1. One 
-
-2. Two
-
-3. Three
+Calculating p-values in various settings, reading from regression and ANOVA tables.
 :::
 
 ::::
@@ -538,11 +540,10 @@ A choice between two ways to go:
 ::: {.callout-tip icon=false}
 ## Stat 300R Lesson 36 Inference 7
 
-1. One 
+1. Describe factors that can lead to "false discovery."
 
-2. Two
+2. Explain how replication can be used to diagnose false discovery and why this works. 
 
-3. Three
 :::
 
 ::::
@@ -565,16 +566,29 @@ A choice between two ways to go:
 ::: {.callout-tip icon=false}
 ## Stat 300R Lesson 37
 
-1. One 
-
-2. Two
-
-3. Three
+Review and catch up.
 :::
 
 ::::
 
+------------------------------
 
+## Math 300 objectives not touched on in Math 300R
 
+1. a
+
+2. b
+
+------------------------------
+
+## Deleted objectives for 300R
+
+These are objectives that are left out for lack of class time.
+
+1. Graphically interpret a receiver operator curve (ROC) and understand how to compute the location of individual points on the curve.
+
+2. Construct a suitable loss function for a given situation (e.g. HIV testing and blood screening, etc.)
+
+3. Select an optimal decision threshold given an ROC and a loss function.
 
 
