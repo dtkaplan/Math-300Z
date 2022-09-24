@@ -18,7 +18,7 @@
     "href": "NTI/Math300R-Lesson21.html#lesson",
     "title": "Math 300R NTI Lesson 21",
     "section": "Lesson",
-    "text": "Lesson\nRemember that you will be running this more like a lab than a lecture. You want them using R and answering questions. Have them open the notes rmd and work through it together.\n\nProlog: Review notation for DAGs and noise. Show how to generate data use the run_dag() function.\n\n\n\n\n\n\n\nRunning a DAG simulation\n\n\n\n\nrun_dag(RTM)\nshow_dag(RTM)\n\n\n\n\nWork through the learning checks LCA.1 - LCA.2.\nA DAG for “regression to the mean.”\n\nAsk what “regression” means in everyday English\nProvide some history of the idea and point out that this is where the name “regression” comes from for the method of fitting a linear model linking a response variable to explanatory variable(s).\nShow this DAG and ask what students think the consequences will be: what’s the relationship between the parents’ height and the (adult) child’s height.\n\n\n\\[\\epsilon \\rightarrow parent \\longleftarrow GENES \\longrightarrow child \\leftarrow \\nu\\]\n\n\n\n\n\n\nSimulation: Regression to the mean\n\n\n\n\nrtm <- tibble(genes = 64 + rnorm(1000), \n              parent = genes + 0.5*rnorm(1000), \n              child  = genes + 0.5*rnorm(1000))\nmod <- lm(child ~ parent, data = rtm) \nmod\n\n\nCall:\nlm(formula = child ~ parent, data = rtm)\n\nCoefficients:\n(Intercept)       parent  \n    14.0152       0.7808  \n\n# Convert this to ggplot2\ngf_point(child ~ parent, data = rtm) %>%\n  gf_lm(interval=\"confidence\") %>%\n  gf_abline(intercept = 0, slope = 1, color=\"red\")\n\n\n\n\nInterpret the coefficient and the graph.\n\nWhat’s the mean for the children and for the parents? [64 inches for each]\nThe red line runs along the diagonal. It reflects the statement that the children are, on average, the same as the parents.\nThe blue line is the regression model. The children are, on average, closer to the mean than the parents.\n\n\n\n\n\nLC A.1 (Objective 2)\n[NOTE in DRAFT: These are the learning objectives from Bradley Warner’s notes, retained here simply to remind me of the format for the NTIs.]\nLC XX.XX Say you have a normal distribution with mean \\(\\mu=6\\) and standard deviation \\(\\sigma=3\\). What proportion of the area under the normal curve is less than 3? Greater than 12? Between 0 and 12?\nSolution:\n\nLess than 3: 3 is one standard deviation less than the mean of 6, since \\(\\frac{3 - \\mu}{\\sigma} = \\frac{3-6}{3} = -1\\). Thus we compute the area to the left of z = -1 in Figure A.2: 0.15% + 2.35% + 13.5% = 16%.\n\n\npnorm(3,mean=6,sd=3)\n\n[1] 0.1586553\n\n\n\nGreater than 12: 12 is two standard deviations greater than the mean of 6, since \\(\\frac{12 - \\mu}{\\sigma} = \\frac{12-6}{3} = 2\\), we compute the area to the right of z = 2 in Figure A.2: 2.35% + 0.15% = 2.5%.\n\n\npnorm(12,mean=6,sd=3,lower.tail = FALSE)\n\n[1] 0.02275013\n\n\n\nBetween 0 and 12: 0 is two standard deviations less than the mean of 6, since \\(\\frac{0 - \\mu}{\\sigma} = \\frac{0-6}{3} = -2\\). Thus we compute the area between z = -2 and z = +2 in Figure A.2: 13.5% + 34% + 34% + 13.5% = 95%.\n\n\npnorm(12,mean=6,sd=3)-pnorm(0,mean=6,sd=3)\n\n[1] 0.9544997\n\n\n\n\nLC A.2 (Objective 2)\n`r LC XX.YY (Same normal distribution.) What is the 2.5th percentile of the area under the normal curve? The 97.5th percentile? The 100th percentile?\nSolution:\n\n2.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% = 2.5%, the 2.5th percentile is z = - 2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations lower than the mean: \\(\\mu - 2 \\cdot\\sigma = 6 - 2 \\cdot 3 = 0\\).\n\n\nqnorm(.025,mean=6,sd=3)\n\n[1] 0.120108\n\n\nThis is not 0 since the figure is an approximation.\n\n97.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% + 13.5% + 34% + 34% + 13.5% = 97.5%, the 97.5th percentile is z = +2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations higher than the mean: \\(\\mu + 2 \\cdot\\sigma = 6 + 2 \\cdot 3 = 12\\).\n\n\nqnorm(.975,mean=6,sd=3)\n\n[1] 11.87989\n\n\n\n100th percentile: \\(+\\infty\\). In other words, 100% of values will be less than positive infinity.\n\n\nqnorm(1,mean=6,sd=3)\n\n[1] Inf"
+    "text": "Lesson\nRemember that you will be running this more like a lab than a lecture. You want them using R and answering questions. Have them open the notes rmd and work through it together.\n\nProlog: Review notation for DAGs and noise. Show how to generate data use the run_dag() function.\n\n\n\n\n\n\n\nRunning a DAG simulation\n\n\n\n\nrun_dag(RTM)\nshow_dag(RTM)\n\n\n\n\nWork through the learning checks LCA.1 - LCA.2.\nA DAG for “regression to the mean.”\n\nAsk what “regression” means in everyday English\nProvide some history of the idea and point out that this is where the name “regression” comes from for the method of fitting a linear model linking a response variable to explanatory variable(s).\nShow this DAG and ask what students think the consequences will be: what’s the relationship between the parents’ height and the (adult) child’s height.\n\n\n\\[\\epsilon \\rightarrow parent \\longleftarrow GENES \\longrightarrow child \\leftarrow \\nu\\]\n\n\n\n\n\n\nSimulation: Regression to the mean\n\n\n\n\nrtm <- tibble(genes = 64 + rnorm(1000), \n              parent = genes + 0.5*rnorm(1000), \n              child  = genes + 0.5*rnorm(1000))\nmod <- lm(child ~ parent, data = rtm) \nmod\n\n\nCall:\nlm(formula = child ~ parent, data = rtm)\n\nCoefficients:\n(Intercept)       parent  \n    11.1719       0.8258  \n\n# Convert this to ggplot2\ngf_point(child ~ parent, data = rtm) %>%\n  gf_lm(interval=\"confidence\") %>%\n  gf_abline(intercept = 0, slope = 1, color=\"red\")\n\n\n\n\nInterpret the coefficient and the graph.\n\nWhat’s the mean for the children and for the parents? [64 inches for each]\nThe red line runs along the diagonal. It reflects the statement that the children are, on average, the same as the parents.\nThe blue line is the regression model. The children are, on average, closer to the mean than the parents.\n\n\n\n\n\nLC A.1 (Objective 2)\n[NOTE in DRAFT: These are the learning objectives from Bradley Warner’s notes, retained here simply to remind me of the format for the NTIs.]\nLC XX.XX Say you have a normal distribution with mean \\(\\mu=6\\) and standard deviation \\(\\sigma=3\\). What proportion of the area under the normal curve is less than 3? Greater than 12? Between 0 and 12?\nSolution:\n\nLess than 3: 3 is one standard deviation less than the mean of 6, since \\(\\frac{3 - \\mu}{\\sigma} = \\frac{3-6}{3} = -1\\). Thus we compute the area to the left of z = -1 in Figure A.2: 0.15% + 2.35% + 13.5% = 16%.\n\n\npnorm(3,mean=6,sd=3)\n\n[1] 0.1586553\n\n\n\nGreater than 12: 12 is two standard deviations greater than the mean of 6, since \\(\\frac{12 - \\mu}{\\sigma} = \\frac{12-6}{3} = 2\\), we compute the area to the right of z = 2 in Figure A.2: 2.35% + 0.15% = 2.5%.\n\n\npnorm(12,mean=6,sd=3,lower.tail = FALSE)\n\n[1] 0.02275013\n\n\n\nBetween 0 and 12: 0 is two standard deviations less than the mean of 6, since \\(\\frac{0 - \\mu}{\\sigma} = \\frac{0-6}{3} = -2\\). Thus we compute the area between z = -2 and z = +2 in Figure A.2: 13.5% + 34% + 34% + 13.5% = 95%.\n\n\npnorm(12,mean=6,sd=3)-pnorm(0,mean=6,sd=3)\n\n[1] 0.9544997\n\n\n\n\nLC A.2 (Objective 2)\n`r LC XX.YY (Same normal distribution.) What is the 2.5th percentile of the area under the normal curve? The 97.5th percentile? The 100th percentile?\nSolution:\n\n2.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% = 2.5%, the 2.5th percentile is z = - 2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations lower than the mean: \\(\\mu - 2 \\cdot\\sigma = 6 - 2 \\cdot 3 = 0\\).\n\n\nqnorm(.025,mean=6,sd=3)\n\n[1] 0.120108\n\n\nThis is not 0 since the figure is an approximation.\n\n97.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% + 13.5% + 34% + 34% + 13.5% = 97.5%, the 97.5th percentile is z = +2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations higher than the mean: \\(\\mu + 2 \\cdot\\sigma = 6 + 2 \\cdot 3 = 12\\).\n\n\nqnorm(.975,mean=6,sd=3)\n\n[1] 11.87989\n\n\n\n100th percentile: \\(+\\infty\\). In other words, 100% of values will be less than positive infinity.\n\n\nqnorm(1,mean=6,sd=3)\n\n[1] Inf"
   },
   {
     "objectID": "NTI/Math300R-Lesson21.html#documenting-software",
@@ -39,7 +39,7 @@
     "href": "NTI/Math300R-Lesson20.html#lesson",
     "title": "Math 300R NTI Lesson 20",
     "section": "Lesson",
-    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Sat Sep 24 16:42:04 2022\"\n\n\n\n\nThis is just a template."
+    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Sat Sep 24 16:44:39 2022\"\n\n\n\n\nThis is just a template."
   },
   {
     "objectID": "NTI/Math300R-Lesson20.html#learning-challenges",
@@ -67,7 +67,7 @@
     "href": "NTI/Math300R-Lesson22.html#lesson",
     "title": "Math 300R NTI Lesson 22",
     "section": "Lesson",
-    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Sat Sep 24 16:42:06 2022\"\n\n\n\n\nThis is just a template."
+    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Sat Sep 24 16:44:42 2022\"\n\n\n\n\nThis is just a template."
   },
   {
     "objectID": "NTI/Math300R-Lesson22.html#learning-challenges",
@@ -95,7 +95,7 @@
     "href": "NTI/Math300R-Lesson23.html#lesson",
     "title": "Math 300R NTI Lesson 23",
     "section": "Lesson",
-    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Sat Sep 24 16:42:09 2022\"\n\n\n\n\nThis is just a template."
+    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Sat Sep 24 16:44:44 2022\"\n\n\n\n\nThis is just a template."
   },
   {
     "objectID": "NTI/Math300R-Lesson23.html#learning-challenges",
@@ -123,7 +123,7 @@
     "href": "NTI/Math300R-Lesson24.html#lesson",
     "title": "Math 300R NTI Lesson 24",
     "section": "Lesson",
-    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Sat Sep 24 16:42:11 2022\"\n\n\n\n\nThis is just a template."
+    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Sat Sep 24 16:44:46 2022\"\n\n\n\n\nThis is just a template."
   },
   {
     "objectID": "NTI/Math300R-Lesson24.html#learning-challenges",
@@ -151,7 +151,7 @@
     "href": "NTI/Math300R-Lesson25.html#lesson",
     "title": "Math 300R NTI Lesson 25",
     "section": "Lesson",
-    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Sat Sep 24 16:42:13 2022\"\n\n\n\n\nThis is just a template."
+    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Sat Sep 24 16:44:49 2022\"\n\n\n\n\nThis is just a template."
   },
   {
     "objectID": "NTI/Math300R-Lesson25.html#learning-challenges",
@@ -350,11 +350,11 @@
     "text": "Lesson 19: Decisions with data (nti)\n\nDistinguish between the two settings for decision-making:\n\nPrediction: predict an outcome for an individual\nRelationship: characterize a relationship with an eye toward intervention or a better understanding of how a mechanism works.\n\nGiven a research question, identify whether it corresponds to a prediction setting or a relationship setting."
   },
   {
-    "objectID": "schedule-of-objectives.html#lesson-20-reality-versus-gaming-gaming-intro-nti",
-    "href": "schedule-of-objectives.html#lesson-20-reality-versus-gaming-gaming-intro-nti",
+    "objectID": "schedule-of-objectives.html#gaming-intro",
+    "href": "schedule-of-objectives.html#gaming-intro",
     "title": "Day-by-day Objectives for Math 300R",
-    "section": "Lesson 20: Reality versus gaming {#gaming-intro} (nti)",
-    "text": "Lesson 20: Reality versus gaming {#gaming-intro} (nti)\n\nUnderstand that gaming is a way of improving our skills and identifying potential opportunities and problems.\nEnumerate the four stages of the games we will use and identify which ones correspond to non-gaming, real-world work with data.\n\n\n\n\n\n\n\nThe Four Stages (to be moved to NTI)\n\n\n\n\nbuilding the deck: Instructors provide a simulation of a mechanism that generates rows of a data frame.\nthe deal: Some of these rows will be dealt to you, constituting the data you have to work with. [real-world]\nthe play: Build models and extract results. [real-world]\nthe reveal: Compare your results from (iii) either to the mechanism given in (i) or to more data generated by the simulation.\n\n\n\n\nDistinguish between a sample, a row, and a sample of samples."
+    "section": "Lesson 20: Reality versus gaming (nti)",
+    "text": "Lesson 20: Reality versus gaming (nti)\n\nUnderstand that gaming is a way of improving our skills and identifying potential opportunities and problems.\nEnumerate the four stages of the games we will use and identify which ones correspond to non-gaming, real-world work with data.\n\n\n\n\n\n\n\nThe Four Stages (to be moved to NTI)\n\n\n\n\nbuilding the deck: Instructors provide a simulation of a mechanism that generates rows of a data frame.\nthe deal: Some of these rows will be dealt to you, constituting the data you have to work with. [real-world]\nthe play: Build models and extract results. [real-world]\nthe reveal: Compare your results from (iii) either to the mechanism given in (i) or to more data generated by the simulation.\n\n\n\n\nDistinguish between a sample, a row, and a sample of samples."
   },
   {
     "objectID": "schedule-of-objectives.html#lesson-21-dags-noise-and-simulation-nti",
@@ -488,12 +488,5 @@
     "title": "Day-by-day Objectives for Math 300R",
     "section": "Alternative 2",
     "text": "Alternative 2\nTheme: Accumulating risk: Logistic regression"
-  },
-  {
-    "objectID": "schedule-of-objectives.html#gaming-intro",
-    "href": "schedule-of-objectives.html#gaming-intro",
-    "title": "Day-by-day Objectives for Math 300R",
-    "section": "Lesson 20: Reality versus gaming (nti)",
-    "text": "Lesson 20: Reality versus gaming (nti)\n\nUnderstand that gaming is a way of improving our skills and identifying potential opportunities and problems.\nEnumerate the four stages of the games we will use and identify which ones correspond to non-gaming, real-world work with data.\n\n\n\n\n\n\n\nThe Four Stages (to be moved to NTI)\n\n\n\n\nbuilding the deck: Instructors provide a simulation of a mechanism that generates rows of a data frame.\nthe deal: Some of these rows will be dealt to you, constituting the data you have to work with. [real-world]\nthe play: Build models and extract results. [real-world]\nthe reveal: Compare your results from (iii) either to the mechanism given in (i) or to more data generated by the simulation.\n\n\n\n\nDistinguish between a sample, a row, and a sample of samples."
   }
 ]
