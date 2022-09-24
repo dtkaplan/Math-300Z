@@ -9,7 +9,7 @@
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
 <meta name="dcterms.date" content="2022-09-24">
 
-<title>Proposal for Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 21)</title>
+<title>Proposal for Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 19)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -163,8 +163,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Math 300R NTI Lesson 21</h1>
-<p class="subtitle lead">DAGs, noise, and simulation</p>
+<h1 class="title">Math 300R NTI Lesson 19</h1>
+<p class="subtitle lead">Decisions with data</p>
 </div>
 
 
@@ -192,14 +192,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="objectives" class="level2">
 <h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
-<p>[Note in draft: Replace these with reference to a central repo for objectives.]</p>
 <ol>
-<li><p>Determine whether a proposed graph is directed and acyclic.</p></li>
-<li><p>Read notation to identify response variable, explanatory variable, covariates, and effect sizes.</p></li>
-<li><p>Characterize the magnitude of random noise.</p></li>
-<li><p>Generate data from simulations and summarize variables individually.</p></li>
+<li><p>Distinguish between the two settings for decision-making:</p>
+<ol type="a">
+<li><strong>Prediction</strong>: predict an outcome for an individual</li>
+<li><strong>Relationship</strong>: characterize a relationship with an eye toward intervention or a better understanding of how a mechanism works.</li>
+</ol></li>
+<li><p>Given a research question, identify whether it corresponds to a prediction setting or a relationship setting.</p></li>
 </ol>
-<!-- noise sources for simulation, normal, two-sided exponential, dicotomizer. Maybe use a pipe for the added noise, e.g. children |> epsilon(0.5) -->
 </section>
 <section id="reading" class="level2">
 <h2 class="anchored" data-anchor-id="reading">Reading</h2>
@@ -207,144 +207,138 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="lesson" class="level2">
 <h2 class="anchored" data-anchor-id="lesson">Lesson</h2>
-<p><em>Remember that you will be running this more like a lab than a lecture. You want them using <code>R</code> and answering questions. Have them open the notes rmd and work through it together.</em></p>
-<ul>
-<li>Prolog: Review notation for DAGs and noise. Show how to generate data use the <code>run_dag()</code> function.</li>
-</ul>
-<div class="callout-note callout callout-style-default callout-captioned">
+<p><em>This lesson marks the beginning of a new phase of the course. Thus far, we’ve worked with </em>techniques* for data wrangling, graphics, and regression modeling. Now we address the question of what a regression model (and other information that we might have) can tell us about the real world.*</p>
+<div class="callout-tip callout callout-style-default no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Running a DAG simulation
+Setup
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">run_dag</span>(RTM)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">show_dag</span>(RTM)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaicData)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-</div>
-<ul>
-<li><p>Work through the learning checks LCA.1 - LCA.2.</p></li>
-<li><p>A DAG for “regression to the mean.”</p>
-<ul>
-<li>Ask what “regression” means in everyday English</li>
-<li>Provide some history of the idea and point out that this is where the name “regression” comes from for the method of fitting a linear model linking a response variable to explanatory variable(s).</li>
-<li>Show this DAG and ask what students think the consequences will be: what’s the relationship between the parents’ height and the (adult) child’s height.</li>
-</ul></li>
-</ul>
-<p><span class="math display">\[\epsilon \rightarrow parent \longleftarrow GENES \longrightarrow child \leftarrow \nu\]</span></p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Simulation: Regression to the mean
+Guided activity: House prices
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p><em>Have students do the calculations for the first model, answering the questions that follow. After this is complete, have students do the calculations for the second model and answer those questions.</em></p>
+<p>The <code>mosaicData::SaratogaHouses</code> data frame contains information about the sales price and various attributes of about 1700 houses. (See <code>?SaratogaHouses</code> for a detailed description.)</p>
+<p>Do a regression of <code>price ~ bedrooms</code> and explain what the regression coefficients mean.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>rtm <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">genes =</span> <span class="dv">64</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>), </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">parent =</span> genes <span class="sc">+</span> <span class="fl">0.5</span><span class="sc">*</span><span class="fu">rnorm</span>(<span class="dv">1000</span>), </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">child  =</span> genes <span class="sc">+</span> <span class="fl">0.5</span><span class="sc">*</span><span class="fu">rnorm</span>(<span class="dv">1000</span>))</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(child <span class="sc">~</span> parent, <span class="at">data =</span> rtm) </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>mod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(price <span class="sc">~</span> bedrooms, <span class="at">data=</span>SaratogaHouses) <span class="sc">|&gt;</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = child ~ parent, data = rtm)
-
-Coefficients:
-(Intercept)       parent  
-    14.0152       0.7808  </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert this to ggplot2</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(child <span class="sc">~</span> parent, <span class="at">data =</span> rtm) <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lm</span>(<span class="at">interval=</span><span class="st">"confidence"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Math300R-Lesson21_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<pre><code>(Intercept)    bedrooms 
+   59862.96    48217.81 </code></pre>
 </div>
 </div>
-<p>Interpret the coefficient and the graph.</p>
-<ol type="a">
-<li>What’s the mean for the children and for the parents? [64 inches for each]</li>
-<li>The red line runs along the diagonal. It reflects the statement that the children are, on average, the same as the parents.</li>
-<li>The blue line is the regression model. The children are, on average, closer to the mean than the parents.</li>
+<ol type="1">
+<li><p>What are the units of the intercept and of the <code>bedrooms</code> coefficient? *Intercept in dollars, <code>bedrooms</code> in dollars per bedroom.</p></li>
+<li><p>Interpret what the coefficients indicate about the price of houses and bedrooms. <em>Each additional bedroom adds about $50000 to the value of a house.</em></p></li>
+<li><p>According to the model, predict what would be the sales price (at the time the data was collected, 2006) of a house with two bedrooms? <em><span class="math inline">\(59863 + 2\times 48218\)</span></em></p></li>
+</ol>
+<p>Of course, bedrooms are not the only important thing about a house. Let’s include <code>livingArea</code> along with <code>bedrooms</code> in the model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(price <span class="sc">~</span> livingArea <span class="sc">+</span> bedrooms, <span class="at">data=</span>SaratogaHouses) <span class="sc">|&gt;</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)  livingArea    bedrooms 
+  36667.895     125.405  -14196.769 </code></pre>
+</div>
+</div>
+<ol type="1">
+<li>What are the units of the <code>livingArea</code> coefficient? <em>dollars per square foot</em></li>
+<li>What does this model say about the value of adding a bedroom? <em>It seems to reduce the value of the house by about $15,000.</em></li>
+</ol>
+<p>Based on exactly the same data, the two models seem to give contradictory statements about the value of an additional bedroom.</p>
+<ol type="i">
+<li>Is one model right and the other wrong? If so, which one is right? (Explain your reasoning.) <em>Both models are mathematically correct. But they need to be interpreted in different ways. Each is telling us something different about the real world.</em></li>
+<li>Could both models be right? If so, explain why the <code>bedroom</code> coefficients have opposite signs. <em>We will need to develop some additional tools and concepts before we can take on this question.</em></li>
+</ol>
+<p>Learning how to interpret models in terms of what they say about the world is a major theme of this second half of Math 300.</p>
+<p>Another, more technical question that we will address has to do with the <em>precision</em> of coefficients like 125.40 dollars per square foot. Might it actually be $200/ft<sup>2</sup>? How about $500/ft<sup>2</sup>? And how seriously should we take the sales value that we calculate by setting numbers for <code>bedrooms</code> and <code>livingArea</code> into the model?</p>
+</div>
+</div>
+</section>
+<section id="learning-challenges" class="level2">
+<h2 class="anchored" data-anchor-id="learning-challenges">Learning Challenges</h2>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+LC 19.1 (Objective 2)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What are the two settings for decision making that we cover in this course?</p>
+<p>Give an example of each.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="i">
+<li>Prediction and (ii) Relationship</li>
+</ol>
+<ol type="i">
+<li><p>What will be the sales price of this house? <em>“This house” is a shorthand way of saying “a house with these attributes.” The sales price will be the output of a prediction function that takes the various attributes as input and produces a sales price as output.</em></p></li>
+<li><p>If I look for a house with an additional bathroom, how much will that change the sales price? <em>This asks for the relationship between number of bathrooms and sales price.</em></p></li>
 </ol>
 </div>
 </div>
-<hr>
-<section id="lc-a.1-objective-2" class="level3">
-<h3 class="anchored" data-anchor-id="lc-a.1-objective-2">LC A.1 (Objective 2)</h3>
-<p>[NOTE in DRAFT: These are the learning objectives from Bradley Warner’s notes, retained here simply to remind me of the format for the NTIs.]</p>
-<p><strong>LC XX.XX</strong> Say you have a normal distribution with mean <span class="math inline">\(\mu=6\)</span> and standard deviation <span class="math inline">\(\sigma=3\)</span>. What proportion of the area under the normal curve is less than 3? Greater than 12? Between 0 and 12?</p>
-<p><strong>Solution:</strong></p>
-<ul>
-<li>Less than 3: 3 is one standard deviation less than the mean of 6, since <span class="math inline">\(\frac{3 - \mu}{\sigma} = \frac{3-6}{3} = -1\)</span>. Thus we compute the area to the left of z = -1 in Figure A.2: 0.15% + 2.35% + 13.5% = 16%.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">3</span>,<span class="at">mean=</span><span class="dv">6</span>,<span class="at">sd=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1586553</code></pre>
 </div>
 </div>
-<ul>
-<li>Greater than 12: 12 is two standard deviations greater than the mean of 6, since <span class="math inline">\(\frac{12 - \mu}{\sigma} = \frac{12-6}{3} = 2\)</span>, we compute the area to the right of z = 2 in Figure A.2: 2.35% + 0.15% = 2.5%.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">12</span>,<span class="at">mean=</span><span class="dv">6</span>,<span class="at">sd=</span><span class="dv">3</span>,<span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.02275013</code></pre>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+LC 19.2 (Objective 2)
 </div>
 </div>
-<ul>
-<li>Between 0 and 12: 0 is two standard deviations less than the mean of 6, since <span class="math inline">\(\frac{0 - \mu}{\sigma} = \frac{0-6}{3} = -2\)</span>. Thus we compute the area between z = -2 and z = +2 in Figure A.2: 13.5% + 34% + 34% + 13.5% = 95%.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">12</span>,<span class="at">mean=</span><span class="dv">6</span>,<span class="at">sd=</span><span class="dv">3</span>)<span class="sc">-</span><span class="fu">pnorm</span>(<span class="dv">0</span>,<span class="at">mean=</span><span class="dv">6</span>,<span class="at">sd=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9544997</code></pre>
+<div class="callout-body-container callout-body">
+<p>For each of these research questions, say whether it is a prediction setting or a relationship setting.</p>
+<ol type="i">
+<li>What’s the risk of falling ill?</li>
+<li>How will the risk of falling ill change if we eat more broccholi?</li>
+<li>Is there any reason to believe, based on the evidence at hand, that we should look more deeply into the possible benefits of broccholi?</li>
+</ol>
 </div>
 </div>
-</section>
-<section id="lc-a.2-objective-2" class="level3">
-<h3 class="anchored" data-anchor-id="lc-a.2-objective-2">LC A.2 (Objective 2)</h3>
-<p><strong>`r LC XX.YY</strong> (Same normal distribution.) What is the 2.5th percentile of the area under the normal curve? The 97.5th percentile? The 100th percentile?</p>
-<p><strong>Solution:</strong></p>
-<ul>
-<li>2.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% = 2.5%, the 2.5th percentile is z = - 2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations lower than the mean: <span class="math inline">\(\mu - 2 \cdot\sigma = 6 - 2 \cdot 3 = 0\)</span>.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(.<span class="dv">025</span>,<span class="at">mean=</span><span class="dv">6</span>,<span class="at">sd=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.120108</code></pre>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
 </div>
 </div>
-<p>This is not 0 since the figure is an approximation.</p>
-<ul>
-<li>97.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% + 13.5% + 34% + 34% + 13.5% = 97.5%, the 97.5th percentile is z = +2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations higher than the mean: <span class="math inline">\(\mu + 2 \cdot\sigma = 6 + 2 \cdot 3 = 12\)</span>.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(.<span class="dv">975</span>,<span class="at">mean=</span><span class="dv">6</span>,<span class="at">sd=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 11.87989</code></pre>
+<div class="callout-body-container callout-body">
+<ol type="i">
+<li>Prediction</li>
+<li>Relationship</li>
+<li>Relationship</li>
+</ol>
 </div>
 </div>
-<ul>
-<li>100th percentile: <span class="math inline">\(+\infty\)</span>. In other words, 100% of values will be less than positive infinity.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="dv">1</span>,<span class="at">mean=</span><span class="dv">6</span>,<span class="at">sd=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] Inf</code></pre>
-</div>
-</div>
-</section>
+<p>::::</p>
 </section>
 <section id="documenting-software" class="level2">
 <h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>

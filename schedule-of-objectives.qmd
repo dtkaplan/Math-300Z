@@ -14,7 +14,7 @@ format:
 
 As done in Fall 2020. Possible revisions to those lessons is not a topic of this proposal.
 
-## Lesson 19: Decisions with data
+## Lesson 19: Decisions with data ([nti](NTI/Math300R-Lesson19.html))
 
 #. Distinguish between the two settings for decision-making: 
 
@@ -23,15 +23,7 @@ As done in Fall 2020. Possible revisions to those lessons is not a topic of this
     
 #. Given a research question, identify whether it corresponds to a prediction setting or a relationship setting.
 
-::: {.callout-note icon=false}
-## Examples (to be moved to NTI)
-
-i. What's the risk of falling ill? [Prediction]
-ii. How will the risk of falling ill change if we eat more broccholi? [Relationship]
-iii. Is there any reason to believe, based on the evidence at hand, that we should look more deeply into the possible benefits of broccholi? [Relationship]
-:::
-
-## Lesson 20: Reality versus gaming {#gaming-intro}
+## Lesson 20: Reality versus gaming ([nti](NTI/Math300R-Lesson20.html)) {#gaming-intro} 
 
 #. Understand that gaming is a way of improving our skills and identifying potential opportunities and problems. 
 
@@ -47,7 +39,7 @@ iv. the reveal: Compare your results from (iii) either to the mechanism given in
     
 #. Distinguish between a sample, a row, and a sample of samples.
 
-## Lesson 21: DAGs, noise, and simulation [NTI](NTI/Math300R-Lesson21.html)
+## Lesson 21: DAGs, noise, and simulation ([nti](NTI/Math300R-Lesson21.html))
 
 #. Determine whether a proposed graph is directed and acyclic.
 
@@ -59,7 +51,7 @@ iv. the reveal: Compare your results from (iii) either to the mechanism given in
 
 <!-- noise sources for simulation, normal, two-sided exponential, dicotomizer. Maybe use a pipe for the added noise, e.g. children |> epsilon(0.5) -->
 
-## Lesson 22: Sampling variation 
+## Lesson 22: Sampling variation ([nti](NTI/Math300R-Lesson22.html))
 
 #. Implement on the computer a procedure to generate a sample, calculate a regression model, and produce a summary.
 
@@ -67,13 +59,13 @@ iv. the reveal: Compare your results from (iii) either to the mechanism given in
 
 #. Graphically display the distribution of summaries and generate a compact numerical description ("confidence interval") of the sampling distribution.
 
-## Lesson 23: Estimate sampling variation from a single sample
+## Lesson 23: Estimate sampling variation from a single sample ([nti](NTI/Math300R-Lesson23.html))
 
 #. Use bootstrapping to estimate sampling variation.
 
 #. Infer sampling variation from a regression table.
 
-## Lesson 24: Effect size
+## Lesson 24: Effect size ([nti](NTI/Math300R-Lesson24.html))
 
 #. Estimate an effect size from a regression model of the two variables.
 
@@ -83,7 +75,7 @@ iv. the reveal: Compare your results from (iii) either to the mechanism given in
 
 #. Understand and use scaling of confidence interval length as a function of $n$.
 
-## Lesson 25: Mechanics of prediction
+## Lesson 25: Mechanics of prediction ([nti](NTI/Math300R-Lesson25.html))
 
 #. Given a sample from a  DAG simulation, construct a predictor function for a specified response variable.
 

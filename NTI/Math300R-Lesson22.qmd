@@ -1,0 +1,75 @@
+---
+title: "Math 300R NTI Lesson `r (lesson <- 22)`"
+subtitle: "DAGs, noise, and simulation"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+library(ggformula) # Change plots to ggplot2
+library(tibble)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+
+
+## Reading
+
+TBD
+
+
+## Lesson
+
+:::: {.callout-note icon=false}
+## In-class example
+
+```{r}
+3 + 2
+```
+::::
+
+
+:::: {.callout-important icon=false}
+## In-class activity
+
+```{r}
+date()
+```
+::::
+
+This is just a template.
+
+## Learning Challenges
+
+:::: {.callout-note icon=false}
+## LC 19.1 (Objective 2)
+
+This is just a template.
+
+::: {.callout-tip}
+## Solution
+
+
+The solution will go here.
+:::
+::::
+
+## Documenting software
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+

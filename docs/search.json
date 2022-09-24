@@ -18,12 +18,187 @@
     "href": "NTI/Math300R-Lesson21.html#lesson",
     "title": "Math 300R NTI Lesson 21",
     "section": "Lesson",
-    "text": "Lesson\nRemember that you will be running this more like a lab than a lecture. You want them using R and answering questions. Have them open the notes rmd and work through it together.\n\nProlog: Review notation for DAGs and noise. Show how to generate data use the run_dag() function.\n\n\n\n\n\n\n\nRunning a DAG simulation\n\n\n\n\nrun_dag(RTM)\nshow_dag(RTM)\n\n\n\n\nWork through the learning checks LCA.1 - LCA.2.\nA DAG for “regression to the mean.”\n\nAsk what “regression” means in everyday English\nProvide some history of the idea and point out that this is where the name “regression” comes from for the method of fitting a linear model linking a response variable to explanatory variable(s).\nShow this DAG and ask what students think the consequences will be: what’s the relationship between the parents’ height and the (adult) child’s height.\n\n\n\\[\\epsilon \\rightarrow parent \\longleftarrow GENES \\longrightarrow child \\leftarrow \\nu\\]\n\n\n\n\n\n\nSimulation: Regression to the mean\n\n\n\n\nrtm <- tibble(genes = 64 + rnorm(1000), \n              parent = genes + 0.5*rnorm(1000), \n              child  = genes + 0.5*rnorm(1000))\nmod <- lm(child ~ parent, data = rtm) \nmod\n\n\nCall:\nlm(formula = child ~ parent, data = rtm)\n\nCoefficients:\n(Intercept)       parent  \n    14.3499       0.7758  \n\n# Convert this to ggplot2\ngf_point(child ~ parent, data = rtm) %>%\n  gf_lm(interval=\"confidence\") %>%\n  gf_abline(intercept = 0, slope = 1, color=\"red\")\n\n\n\n\nInterpret the coefficient and the graph.\n\nWhat’s the mean for the children and for the parents? [64 inches for each]\nThe red line runs along the diagonal. It reflects the statement that the children are, on average, the same as the parents.\nThe blue line is the regression model. The children are, on average, closer to the mean than the parents.\n\n\n\n\n\nLC A.1 (Objective 2)\n[NOTE in DRAFT: These are the learning objectives from Bradley Warner’s notes, retained here simply to remind me of the format for the NTIs.]\nLC XX.XX Say you have a normal distribution with mean \\(\\mu=6\\) and standard deviation \\(\\sigma=3\\). What proportion of the area under the normal curve is less than 3? Greater than 12? Between 0 and 12?\nSolution:\n\nLess than 3: 3 is one standard deviation less than the mean of 6, since \\(\\frac{3 - \\mu}{\\sigma} = \\frac{3-6}{3} = -1\\). Thus we compute the area to the left of z = -1 in Figure A.2: 0.15% + 2.35% + 13.5% = 16%.\n\n\npnorm(3,mean=6,sd=3)\n\n[1] 0.1586553\n\n\n\nGreater than 12: 12 is two standard deviations greater than the mean of 6, since \\(\\frac{12 - \\mu}{\\sigma} = \\frac{12-6}{3} = 2\\), we compute the area to the right of z = 2 in Figure A.2: 2.35% + 0.15% = 2.5%.\n\n\npnorm(12,mean=6,sd=3,lower.tail = FALSE)\n\n[1] 0.02275013\n\n\n\nBetween 0 and 12: 0 is two standard deviations less than the mean of 6, since \\(\\frac{0 - \\mu}{\\sigma} = \\frac{0-6}{3} = -2\\). Thus we compute the area between z = -2 and z = +2 in Figure A.2: 13.5% + 34% + 34% + 13.5% = 95%.\n\n\npnorm(12,mean=6,sd=3)-pnorm(0,mean=6,sd=3)\n\n[1] 0.9544997\n\n\n\n\nLC A.2 (Objective 2)\n`r LC XX.YY (Same normal distribution.) What is the 2.5th percentile of the area under the normal curve? The 97.5th percentile? The 100th percentile?\nSolution:\n\n2.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% = 2.5%, the 2.5th percentile is z = - 2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations lower than the mean: \\(\\mu - 2 \\cdot\\sigma = 6 - 2 \\cdot 3 = 0\\).\n\n\nqnorm(.025,mean=6,sd=3)\n\n[1] 0.120108\n\n\nThis is not 0 since the figure is an approximation.\n\n97.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% + 13.5% + 34% + 34% + 13.5% = 97.5%, the 97.5th percentile is z = +2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations higher than the mean: \\(\\mu + 2 \\cdot\\sigma = 6 + 2 \\cdot 3 = 12\\).\n\n\nqnorm(.975,mean=6,sd=3)\n\n[1] 11.87989\n\n\n\n100th percentile: \\(+\\infty\\). In other words, 100% of values will be less than positive infinity.\n\n\nqnorm(1,mean=6,sd=3)\n\n[1] Inf"
+    "text": "Lesson\nRemember that you will be running this more like a lab than a lecture. You want them using R and answering questions. Have them open the notes rmd and work through it together.\n\nProlog: Review notation for DAGs and noise. Show how to generate data use the run_dag() function.\n\n\n\n\n\n\n\nRunning a DAG simulation\n\n\n\n\nrun_dag(RTM)\nshow_dag(RTM)\n\n\n\n\nWork through the learning checks LCA.1 - LCA.2.\nA DAG for “regression to the mean.”\n\nAsk what “regression” means in everyday English\nProvide some history of the idea and point out that this is where the name “regression” comes from for the method of fitting a linear model linking a response variable to explanatory variable(s).\nShow this DAG and ask what students think the consequences will be: what’s the relationship between the parents’ height and the (adult) child’s height.\n\n\n\\[\\epsilon \\rightarrow parent \\longleftarrow GENES \\longrightarrow child \\leftarrow \\nu\\]\n\n\n\n\n\n\nSimulation: Regression to the mean\n\n\n\n\nrtm <- tibble(genes = 64 + rnorm(1000), \n              parent = genes + 0.5*rnorm(1000), \n              child  = genes + 0.5*rnorm(1000))\nmod <- lm(child ~ parent, data = rtm) \nmod\n\n\nCall:\nlm(formula = child ~ parent, data = rtm)\n\nCoefficients:\n(Intercept)       parent  \n    14.0152       0.7808  \n\n# Convert this to ggplot2\ngf_point(child ~ parent, data = rtm) %>%\n  gf_lm(interval=\"confidence\") %>%\n  gf_abline(intercept = 0, slope = 1, color=\"red\")\n\n\n\n\nInterpret the coefficient and the graph.\n\nWhat’s the mean for the children and for the parents? [64 inches for each]\nThe red line runs along the diagonal. It reflects the statement that the children are, on average, the same as the parents.\nThe blue line is the regression model. The children are, on average, closer to the mean than the parents.\n\n\n\n\n\nLC A.1 (Objective 2)\n[NOTE in DRAFT: These are the learning objectives from Bradley Warner’s notes, retained here simply to remind me of the format for the NTIs.]\nLC XX.XX Say you have a normal distribution with mean \\(\\mu=6\\) and standard deviation \\(\\sigma=3\\). What proportion of the area under the normal curve is less than 3? Greater than 12? Between 0 and 12?\nSolution:\n\nLess than 3: 3 is one standard deviation less than the mean of 6, since \\(\\frac{3 - \\mu}{\\sigma} = \\frac{3-6}{3} = -1\\). Thus we compute the area to the left of z = -1 in Figure A.2: 0.15% + 2.35% + 13.5% = 16%.\n\n\npnorm(3,mean=6,sd=3)\n\n[1] 0.1586553\n\n\n\nGreater than 12: 12 is two standard deviations greater than the mean of 6, since \\(\\frac{12 - \\mu}{\\sigma} = \\frac{12-6}{3} = 2\\), we compute the area to the right of z = 2 in Figure A.2: 2.35% + 0.15% = 2.5%.\n\n\npnorm(12,mean=6,sd=3,lower.tail = FALSE)\n\n[1] 0.02275013\n\n\n\nBetween 0 and 12: 0 is two standard deviations less than the mean of 6, since \\(\\frac{0 - \\mu}{\\sigma} = \\frac{0-6}{3} = -2\\). Thus we compute the area between z = -2 and z = +2 in Figure A.2: 13.5% + 34% + 34% + 13.5% = 95%.\n\n\npnorm(12,mean=6,sd=3)-pnorm(0,mean=6,sd=3)\n\n[1] 0.9544997\n\n\n\n\nLC A.2 (Objective 2)\n`r LC XX.YY (Same normal distribution.) What is the 2.5th percentile of the area under the normal curve? The 97.5th percentile? The 100th percentile?\nSolution:\n\n2.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% = 2.5%, the 2.5th percentile is z = - 2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations lower than the mean: \\(\\mu - 2 \\cdot\\sigma = 6 - 2 \\cdot 3 = 0\\).\n\n\nqnorm(.025,mean=6,sd=3)\n\n[1] 0.120108\n\n\nThis is not 0 since the figure is an approximation.\n\n97.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% + 13.5% + 34% + 34% + 13.5% = 97.5%, the 97.5th percentile is z = +2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations higher than the mean: \\(\\mu + 2 \\cdot\\sigma = 6 + 2 \\cdot 3 = 12\\).\n\n\nqnorm(.975,mean=6,sd=3)\n\n[1] 11.87989\n\n\n\n100th percentile: \\(+\\infty\\). In other words, 100% of values will be less than positive infinity.\n\n\nqnorm(1,mean=6,sd=3)\n\n[1] Inf"
   },
   {
     "objectID": "NTI/Math300R-Lesson21.html#documenting-software",
     "href": "NTI/Math300R-Lesson21.html#documenting-software",
     "title": "Math 300R NTI Lesson 21",
+    "section": "Documenting software",
+    "text": "Documenting software\n\nFile creation date: 2022-09-24\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson20.html#reading",
+    "href": "NTI/Math300R-Lesson20.html#reading",
+    "title": "Math 300R NTI Lesson 20",
+    "section": "Reading",
+    "text": "Reading\nTBD"
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson20.html#lesson",
+    "href": "NTI/Math300R-Lesson20.html#lesson",
+    "title": "Math 300R NTI Lesson 20",
+    "section": "Lesson",
+    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Sat Sep 24 16:42:04 2022\"\n\n\n\n\nThis is just a template."
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson20.html#learning-challenges",
+    "href": "NTI/Math300R-Lesson20.html#learning-challenges",
+    "title": "Math 300R NTI Lesson 20",
+    "section": "Learning Challenges",
+    "text": "Learning Challenges\n\n\n\n\n\n\nLC 20.1 (Objective 2)\n\n\n\nThis is just a template.\n\n\n\n\n\n\nSolution\n\n\n\nThe solution will go here."
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson20.html#documenting-software",
+    "href": "NTI/Math300R-Lesson20.html#documenting-software",
+    "title": "Math 300R NTI Lesson 20",
+    "section": "Documenting software",
+    "text": "Documenting software\n\nFile creation date: 2022-09-24\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson22.html#reading",
+    "href": "NTI/Math300R-Lesson22.html#reading",
+    "title": "Math 300R NTI Lesson 22",
+    "section": "Reading",
+    "text": "Reading\nTBD"
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson22.html#lesson",
+    "href": "NTI/Math300R-Lesson22.html#lesson",
+    "title": "Math 300R NTI Lesson 22",
+    "section": "Lesson",
+    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Sat Sep 24 16:42:06 2022\"\n\n\n\n\nThis is just a template."
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson22.html#learning-challenges",
+    "href": "NTI/Math300R-Lesson22.html#learning-challenges",
+    "title": "Math 300R NTI Lesson 22",
+    "section": "Learning Challenges",
+    "text": "Learning Challenges\n\n\n\n\n\n\nLC 19.1 (Objective 2)\n\n\n\nThis is just a template.\n\n\n\n\n\n\nSolution\n\n\n\nThe solution will go here."
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson22.html#documenting-software",
+    "href": "NTI/Math300R-Lesson22.html#documenting-software",
+    "title": "Math 300R NTI Lesson 22",
+    "section": "Documenting software",
+    "text": "Documenting software\n\nFile creation date: 2022-09-24\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson23.html#reading",
+    "href": "NTI/Math300R-Lesson23.html#reading",
+    "title": "Math 300R NTI Lesson 23",
+    "section": "Reading",
+    "text": "Reading\nTBD"
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson23.html#lesson",
+    "href": "NTI/Math300R-Lesson23.html#lesson",
+    "title": "Math 300R NTI Lesson 23",
+    "section": "Lesson",
+    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Sat Sep 24 16:42:09 2022\"\n\n\n\n\nThis is just a template."
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson23.html#learning-challenges",
+    "href": "NTI/Math300R-Lesson23.html#learning-challenges",
+    "title": "Math 300R NTI Lesson 23",
+    "section": "Learning Challenges",
+    "text": "Learning Challenges\n\n\n\n\n\n\nLC 19.1 (Objective 2)\n\n\n\nThis is just a template.\n\n\n\n\n\n\nSolution\n\n\n\nThe solution will go here."
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson23.html#documenting-software",
+    "href": "NTI/Math300R-Lesson23.html#documenting-software",
+    "title": "Math 300R NTI Lesson 23",
+    "section": "Documenting software",
+    "text": "Documenting software\n\nFile creation date: 2022-09-24\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson24.html#reading",
+    "href": "NTI/Math300R-Lesson24.html#reading",
+    "title": "Math 300R NTI Lesson 24",
+    "section": "Reading",
+    "text": "Reading\nTBD"
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson24.html#lesson",
+    "href": "NTI/Math300R-Lesson24.html#lesson",
+    "title": "Math 300R NTI Lesson 24",
+    "section": "Lesson",
+    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Sat Sep 24 16:42:11 2022\"\n\n\n\n\nThis is just a template."
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson24.html#learning-challenges",
+    "href": "NTI/Math300R-Lesson24.html#learning-challenges",
+    "title": "Math 300R NTI Lesson 24",
+    "section": "Learning Challenges",
+    "text": "Learning Challenges\n\n\n\n\n\n\nLC 19.1 (Objective 2)\n\n\n\nThis is just a template.\n\n\n\n\n\n\nSolution\n\n\n\nThe solution will go here."
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson24.html#documenting-software",
+    "href": "NTI/Math300R-Lesson24.html#documenting-software",
+    "title": "Math 300R NTI Lesson 24",
+    "section": "Documenting software",
+    "text": "Documenting software\n\nFile creation date: 2022-09-24\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson25.html#reading",
+    "href": "NTI/Math300R-Lesson25.html#reading",
+    "title": "Math 300R NTI Lesson 25",
+    "section": "Reading",
+    "text": "Reading\nTBD"
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson25.html#lesson",
+    "href": "NTI/Math300R-Lesson25.html#lesson",
+    "title": "Math 300R NTI Lesson 25",
+    "section": "Lesson",
+    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Sat Sep 24 16:42:13 2022\"\n\n\n\n\nThis is just a template."
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson25.html#learning-challenges",
+    "href": "NTI/Math300R-Lesson25.html#learning-challenges",
+    "title": "Math 300R NTI Lesson 25",
+    "section": "Learning Challenges",
+    "text": "Learning Challenges\n\n\n\n\n\n\nLC 19.1 (Objective 2)\n\n\n\nThis is just a template.\n\n\n\n\n\n\nSolution\n\n\n\nThe solution will go here."
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson25.html#documenting-software",
+    "href": "NTI/Math300R-Lesson25.html#documenting-software",
+    "title": "Math 300R NTI Lesson 25",
+    "section": "Documenting software",
+    "text": "Documenting software\n\nFile creation date: 2022-09-24\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson19.html",
+    "href": "NTI/Math300R-Lesson19.html",
+    "title": "Math 300R NTI Lesson 19",
+    "section": "",
+    "text": "Distinguish between the two settings for decision-making:\n\nPrediction: predict an outcome for an individual\nRelationship: characterize a relationship with an eye toward intervention or a better understanding of how a mechanism works.\n\nGiven a research question, identify whether it corresponds to a prediction setting or a relationship setting."
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson19.html#reading",
+    "href": "NTI/Math300R-Lesson19.html#reading",
+    "title": "Math 300R NTI Lesson 19",
+    "section": "Reading",
+    "text": "Reading\nTBD"
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson19.html#lesson",
+    "href": "NTI/Math300R-Lesson19.html#lesson",
+    "title": "Math 300R NTI Lesson 19",
+    "section": "Lesson",
+    "text": "Lesson\nThis lesson marks the beginning of a new phase of the course. Thus far, we’ve worked with techniques* for data wrangling, graphics, and regression modeling. Now we address the question of what a regression model (and other information that we might have) can tell us about the real world.*\n\n\n\n\n\n\nSetup\n\n\n\nlibrary(mosaicData)\n\n\n\n\n\n\n\n\nGuided activity: House prices\n\n\n\nHave students do the calculations for the first model, answering the questions that follow. After this is complete, have students do the calculations for the second model and answer those questions.\nThe mosaicData::SaratogaHouses data frame contains information about the sales price and various attributes of about 1700 houses. (See ?SaratogaHouses for a detailed description.)\nDo a regression of price ~ bedrooms and explain what the regression coefficients mean.\n\nlm(price ~ bedrooms, data=SaratogaHouses) |> coefficients()\n\n(Intercept)    bedrooms \n   59862.96    48217.81 \n\n\n\nWhat are the units of the intercept and of the bedrooms coefficient? *Intercept in dollars, bedrooms in dollars per bedroom.\nInterpret what the coefficients indicate about the price of houses and bedrooms. Each additional bedroom adds about $50000 to the value of a house.\nAccording to the model, predict what would be the sales price (at the time the data was collected, 2006) of a house with two bedrooms? \\(59863 + 2\\times 48218\\)\n\nOf course, bedrooms are not the only important thing about a house. Let’s include livingArea along with bedrooms in the model.\n\nlm(price ~ livingArea + bedrooms, data=SaratogaHouses) |> coefficients()\n\n(Intercept)  livingArea    bedrooms \n  36667.895     125.405  -14196.769 \n\n\n\nWhat are the units of the livingArea coefficient? dollars per square foot\nWhat does this model say about the value of adding a bedroom? It seems to reduce the value of the house by about $15,000.\n\nBased on exactly the same data, the two models seem to give contradictory statements about the value of an additional bedroom.\n\nIs one model right and the other wrong? If so, which one is right? (Explain your reasoning.) Both models are mathematically correct. But they need to be interpreted in different ways. Each is telling us something different about the real world.\nCould both models be right? If so, explain why the bedroom coefficients have opposite signs. We will need to develop some additional tools and concepts before we can take on this question.\n\nLearning how to interpret models in terms of what they say about the world is a major theme of this second half of Math 300.\nAnother, more technical question that we will address has to do with the precision of coefficients like 125.40 dollars per square foot. Might it actually be $200/ft2? How about $500/ft2? And how seriously should we take the sales value that we calculate by setting numbers for bedrooms and livingArea into the model?"
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson19.html#learning-challenges",
+    "href": "NTI/Math300R-Lesson19.html#learning-challenges",
+    "title": "Math 300R NTI Lesson 19",
+    "section": "Learning Challenges",
+    "text": "Learning Challenges\n\n\n\n\n\n\nLC 19.1 (Objective 2)\n\n\n\nWhat are the two settings for decision making that we cover in this course?\nGive an example of each.\n\n\n\n\n\n\nSolution\n\n\n\n\nPrediction and (ii) Relationship\n\n\nWhat will be the sales price of this house? “This house” is a shorthand way of saying “a house with these attributes.” The sales price will be the output of a prediction function that takes the various attributes as input and produces a sales price as output.\nIf I look for a house with an additional bathroom, how much will that change the sales price? This asks for the relationship between number of bathrooms and sales price.\n\n\n\n\n\n\n\n\n\n\n\nLC 19.2 (Objective 2)\n\n\n\nFor each of these research questions, say whether it is a prediction setting or a relationship setting.\n\nWhat’s the risk of falling ill?\nHow will the risk of falling ill change if we eat more broccholi?\nIs there any reason to believe, based on the evidence at hand, that we should look more deeply into the possible benefits of broccholi?\n\n\n\n\n\n\n\n\n\nSolution\n\n\n\n\nPrediction\nRelationship\nRelationship\n\n\n\n::::"
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson19.html#documenting-software",
+    "href": "NTI/Math300R-Lesson19.html#documenting-software",
+    "title": "Math 300R NTI Lesson 19",
     "section": "Documenting software",
     "text": "Documenting software\n\nFile creation date: 2022-09-24\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
   },
@@ -168,53 +343,53 @@
     "text": "As done in Fall 2020. Possible revisions to those lessons is not a topic of this proposal."
   },
   {
-    "objectID": "schedule-of-objectives.html#lesson-19-decisions-with-data",
-    "href": "schedule-of-objectives.html#lesson-19-decisions-with-data",
+    "objectID": "schedule-of-objectives.html#lesson-19-decisions-with-data-nti",
+    "href": "schedule-of-objectives.html#lesson-19-decisions-with-data-nti",
     "title": "Day-by-day Objectives for Math 300R",
-    "section": "Lesson 19: Decisions with data",
-    "text": "Lesson 19: Decisions with data\n\nDistinguish between the two settings for decision-making:\n\nPrediction: predict an outcome for an individual\nRelationship: characterize a relationship with an eye toward intervention or a better understanding of how a mechanism works.\n\nGiven a research question, identify whether it corresponds to a prediction setting or a relationship setting.\n\n\n\n\n\n\n\nExamples (to be moved to NTI)\n\n\n\n\nWhat’s the risk of falling ill? [Prediction]\nHow will the risk of falling ill change if we eat more broccholi? [Relationship]\nIs there any reason to believe, based on the evidence at hand, that we should look more deeply into the possible benefits of broccholi? [Relationship]"
+    "section": "Lesson 19: Decisions with data (nti)",
+    "text": "Lesson 19: Decisions with data (nti)\n\nDistinguish between the two settings for decision-making:\n\nPrediction: predict an outcome for an individual\nRelationship: characterize a relationship with an eye toward intervention or a better understanding of how a mechanism works.\n\nGiven a research question, identify whether it corresponds to a prediction setting or a relationship setting."
   },
   {
-    "objectID": "schedule-of-objectives.html#gaming-intro",
-    "href": "schedule-of-objectives.html#gaming-intro",
+    "objectID": "schedule-of-objectives.html#lesson-20-reality-versus-gaming-gaming-intro-nti",
+    "href": "schedule-of-objectives.html#lesson-20-reality-versus-gaming-gaming-intro-nti",
     "title": "Day-by-day Objectives for Math 300R",
-    "section": "Lesson 20: Reality versus gaming",
-    "text": "Lesson 20: Reality versus gaming\n\nUnderstand that gaming is a way of improving our skills and identifying potential opportunities and problems.\nEnumerate the four stages of the games we will use and identify which ones correspond to non-gaming, real-world work with data.\n\n\n\n\n\n\n\nThe Four Stages (to be moved to NTI)\n\n\n\n\nbuilding the deck: Instructors provide a simulation of a mechanism that generates rows of a data frame.\nthe deal: Some of these rows will be dealt to you, constituting the data you have to work with. [real-world]\nthe play: Build models and extract results. [real-world]\nthe reveal: Compare your results from (iii) either to the mechanism given in (i) or to more data generated by the simulation.\n\n\n\n\nDistinguish between a sample, a row, and a sample of samples."
+    "section": "Lesson 20: Reality versus gaming {#gaming-intro} (nti)",
+    "text": "Lesson 20: Reality versus gaming {#gaming-intro} (nti)\n\nUnderstand that gaming is a way of improving our skills and identifying potential opportunities and problems.\nEnumerate the four stages of the games we will use and identify which ones correspond to non-gaming, real-world work with data.\n\n\n\n\n\n\n\nThe Four Stages (to be moved to NTI)\n\n\n\n\nbuilding the deck: Instructors provide a simulation of a mechanism that generates rows of a data frame.\nthe deal: Some of these rows will be dealt to you, constituting the data you have to work with. [real-world]\nthe play: Build models and extract results. [real-world]\nthe reveal: Compare your results from (iii) either to the mechanism given in (i) or to more data generated by the simulation.\n\n\n\n\nDistinguish between a sample, a row, and a sample of samples."
   },
   {
     "objectID": "schedule-of-objectives.html#lesson-21-dags-noise-and-simulation-nti",
     "href": "schedule-of-objectives.html#lesson-21-dags-noise-and-simulation-nti",
     "title": "Day-by-day Objectives for Math 300R",
-    "section": "Lesson 21: DAGs, noise, and simulation NTI",
-    "text": "Lesson 21: DAGs, noise, and simulation NTI\n\nDetermine whether a proposed graph is directed and acyclic.\nRead notation to identify response variable, explanatory variable, covariates, and effect sizes.\nCharacterize the magnitude of random noise.\nGenerate data from simulations and summarize variables individually."
+    "section": "Lesson 21: DAGs, noise, and simulation (nti)",
+    "text": "Lesson 21: DAGs, noise, and simulation (nti)\n\nDetermine whether a proposed graph is directed and acyclic.\nRead notation to identify response variable, explanatory variable, covariates, and effect sizes.\nCharacterize the magnitude of random noise.\nGenerate data from simulations and summarize variables individually."
   },
   {
-    "objectID": "schedule-of-objectives.html#lesson-22-sampling-variation",
-    "href": "schedule-of-objectives.html#lesson-22-sampling-variation",
+    "objectID": "schedule-of-objectives.html#lesson-22-sampling-variation-nti",
+    "href": "schedule-of-objectives.html#lesson-22-sampling-variation-nti",
     "title": "Day-by-day Objectives for Math 300R",
-    "section": "Lesson 22: Sampling variation",
-    "text": "Lesson 22: Sampling variation\n\nImplement on the computer a procedure to generate a sample, calculate a regression model, and produce a summary.\nIterate the procedure and collect the summaries across iterations.\nGraphically display the distribution of summaries and generate a compact numerical description (“confidence interval”) of the sampling distribution."
+    "section": "Lesson 22: Sampling variation (nti)",
+    "text": "Lesson 22: Sampling variation (nti)\n\nImplement on the computer a procedure to generate a sample, calculate a regression model, and produce a summary.\nIterate the procedure and collect the summaries across iterations.\nGraphically display the distribution of summaries and generate a compact numerical description (“confidence interval”) of the sampling distribution."
   },
   {
-    "objectID": "schedule-of-objectives.html#lesson-23-estimate-sampling-variation-from-a-single-sample",
-    "href": "schedule-of-objectives.html#lesson-23-estimate-sampling-variation-from-a-single-sample",
+    "objectID": "schedule-of-objectives.html#lesson-23-estimate-sampling-variation-from-a-single-sample-nti",
+    "href": "schedule-of-objectives.html#lesson-23-estimate-sampling-variation-from-a-single-sample-nti",
     "title": "Day-by-day Objectives for Math 300R",
-    "section": "Lesson 23: Estimate sampling variation from a single sample",
-    "text": "Lesson 23: Estimate sampling variation from a single sample\n\nUse bootstrapping to estimate sampling variation.\nInfer sampling variation from a regression table."
+    "section": "Lesson 23: Estimate sampling variation from a single sample (nti)",
+    "text": "Lesson 23: Estimate sampling variation from a single sample (nti)\n\nUse bootstrapping to estimate sampling variation.\nInfer sampling variation from a regression table."
   },
   {
-    "objectID": "schedule-of-objectives.html#lesson-24-effect-size",
-    "href": "schedule-of-objectives.html#lesson-24-effect-size",
+    "objectID": "schedule-of-objectives.html#lesson-24-effect-size-nti",
+    "href": "schedule-of-objectives.html#lesson-24-effect-size-nti",
     "title": "Day-by-day Objectives for Math 300R",
-    "section": "Lesson 24: Effect size",
-    "text": "Lesson 24: Effect size\n\nEstimate an effect size from a regression model of the two variables.\nConstruct a confidence interval on the effect size.\nEvaluate whether confidence interval indicates that estimated effect size is consistent with simulation.\nUnderstand and use scaling of confidence interval length as a function of \\(n\\)."
+    "section": "Lesson 24: Effect size (nti)",
+    "text": "Lesson 24: Effect size (nti)\n\nEstimate an effect size from a regression model of the two variables.\nConstruct a confidence interval on the effect size.\nEvaluate whether confidence interval indicates that estimated effect size is consistent with simulation.\nUnderstand and use scaling of confidence interval length as a function of \\(n\\)."
   },
   {
-    "objectID": "schedule-of-objectives.html#lesson-25-mechanics-of-prediction",
-    "href": "schedule-of-objectives.html#lesson-25-mechanics-of-prediction",
+    "objectID": "schedule-of-objectives.html#lesson-25-mechanics-of-prediction-nti",
+    "href": "schedule-of-objectives.html#lesson-25-mechanics-of-prediction-nti",
     "title": "Day-by-day Objectives for Math 300R",
-    "section": "Lesson 25: Mechanics of prediction",
-    "text": "Lesson 25: Mechanics of prediction\n\nGiven a sample from a DAG simulation, construct a predictor function for a specified response variable.\nUse the predictor function to estimate prediction error on a given DAG sample and summarize with root mean square (RMS) error.\nDistinguish between in-sample and out-of-sample prediction estimates of prediction error."
+    "section": "Lesson 25: Mechanics of prediction (nti)",
+    "text": "Lesson 25: Mechanics of prediction (nti)\n\nGiven a sample from a DAG simulation, construct a predictor function for a specified response variable.\nUse the predictor function to estimate prediction error on a given DAG sample and summarize with root mean square (RMS) error.\nDistinguish between in-sample and out-of-sample prediction estimates of prediction error."
   },
   {
     "objectID": "schedule-of-objectives.html#lesson-26-constructing-a-prediction-interval",
@@ -313,5 +488,12 @@
     "title": "Day-by-day Objectives for Math 300R",
     "section": "Alternative 2",
     "text": "Alternative 2\nTheme: Accumulating risk: Logistic regression"
+  },
+  {
+    "objectID": "schedule-of-objectives.html#gaming-intro",
+    "href": "schedule-of-objectives.html#gaming-intro",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Lesson 20: Reality versus gaming (nti)",
+    "text": "Lesson 20: Reality versus gaming (nti)\n\nUnderstand that gaming is a way of improving our skills and identifying potential opportunities and problems.\nEnumerate the four stages of the games we will use and identify which ones correspond to non-gaming, real-world work with data.\n\n\n\n\n\n\n\nThe Four Stages (to be moved to NTI)\n\n\n\n\nbuilding the deck: Instructors provide a simulation of a mechanism that generates rows of a data frame.\nthe deal: Some of these rows will be dealt to you, constituting the data you have to work with. [real-world]\nthe play: Build models and extract results. [real-world]\nthe reveal: Compare your results from (iii) either to the mechanism given in (i) or to more data generated by the simulation.\n\n\n\n\nDistinguish between a sample, a row, and a sample of samples."
   }
 ]
