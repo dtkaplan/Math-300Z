@@ -24,7 +24,7 @@ As done in Fall 2020. Possible revisions to those lessons is not a topic of this
 #. Given a research question, identify whether it corresponds to a prediction setting or a relationship setting.
 
 ::: {.callout-note icon=false}
-## Examples
+## Examples (to be moved to NTI)
 
 i. What's the risk of falling ill? [Prediction]
 ii. How will the risk of falling ill change if we eat more broccholi? [Relationship]
@@ -38,7 +38,7 @@ iii. Is there any reason to believe, based on the evidence at hand, that we shou
 #. Enumerate the four stages of the games we will use and identify which ones correspond to non-gaming, real-world work with data.
 
 ::: {.callout-note icon=false}
-## The Four Stages
+## The Four Stages (to be moved to NTI)
 i. building the deck: Instructors provide a simulation of a mechanism that generates rows of a data frame.
 ii. the deal: Some of these rows will be dealt to you, constituting the data you have to work with. [real-world]
 iii. the play: Build models and extract results. [real-world]
@@ -47,7 +47,7 @@ iv. the reveal: Compare your results from (iii) either to the mechanism given in
     
 #. Distinguish between a sample, a row, and a sample of samples.
 
-## Lesson 21: DAGs, noise, and simulation
+## Lesson 21: DAGs, noise, and simulation [NTI](NTI/Math300R-Lesson21.html)
 
 #. Determine whether a proposed graph is directed and acyclic.
 
@@ -55,9 +55,9 @@ iv. the reveal: Compare your results from (iii) either to the mechanism given in
 
 #. Characterize the magnitude of random noise.
 
-<!-- normal, two-sided exponential, dicotomizer -->
-
 #. Generate data from simulations and summarize variables individually.
+
+<!-- noise sources for simulation, normal, two-sided exponential, dicotomizer. Maybe use a pipe for the added noise, e.g. children |> epsilon(0.5) -->
 
 ## Lesson 22: Sampling variation 
 

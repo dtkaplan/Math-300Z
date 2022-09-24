@@ -1,0 +1,153 @@
+---
+title: "Math 300R NTI Lesson 21"
+subtitle: "DAGs, noise, and simulation"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+library(ggformula) # Change plots to ggplot2
+library(tibble)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+[Note in draft: Replace these with reference to a central repo for objectives.]
+
+#. Determine whether a proposed graph is directed and acyclic.
+
+#. Read notation to identify response variable, explanatory variable, covariates, and effect sizes.
+
+#. Characterize the magnitude of random noise.
+
+#. Generate data from simulations and summarize variables individually.
+
+<!-- noise sources for simulation, normal, two-sided exponential, dicotomizer. Maybe use a pipe for the added noise, e.g. children |> epsilon(0.5) -->
+
+## Reading
+
+TBD
+
+
+## Lesson
+
+*Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions. Have them open the notes rmd and work through it together.*
+
++ Prolog: Review notation for DAGs and noise. Show how to generate data use the `run_dag()` function.
+
+::: {.callout-note}
+## Running a DAG simulation
+
+```{r eval=FALSE}
+run_dag(RTM)
+show_dag(RTM)
+```
+:::
+
++ Work through the learning checks LCA.1 - LCA.2.
+
++ A DAG for "regression to the mean."
+    - Ask what "regression" means in everyday English
+    - Provide some history of the idea and point out that this is where the name "regression" comes from for the method of fitting a linear model linking a response variable to explanatory variable(s).
+    - Show this DAG and ask what students think the consequences will be: what's the relationship between the parents' height and the (adult) child's height.
+$$\epsilon \rightarrow parent \longleftarrow GENES \longrightarrow child \leftarrow \nu$$
+
+::: {.callout-note}
+## Simulation: Regression to the mean
+
+```{r warning=FALSE}
+rtm <- tibble(genes = 64 + rnorm(1000), 
+              parent = genes + 0.5*rnorm(1000), 
+              child  = genes + 0.5*rnorm(1000))
+mod <- lm(child ~ parent, data = rtm) 
+mod
+# Convert this to ggplot2
+gf_point(child ~ parent, data = rtm) %>%
+  gf_lm(interval="confidence") %>%
+  gf_abline(intercept = 0, slope = 1, color="red")
+```
+
+Interpret the coefficient and the graph.
+
+a. What's the mean for the children and for the parents? [64 inches for each]
+b. The red line runs along the diagonal. It reflects the statement that the children are, on average, the same as the parents.
+c. The blue line is the regression model. The children are, on average, closer to the mean than the parents.
+
+:::
+
+
+***
+
+### LC A.1 (Objective 2)
+
+[NOTE in DRAFT: These are the learning objectives from Bradley Warner's notes, retained here simply to remind me of the format for the NTIs.]
+
+**LC XX.XX** Say you have a normal distribution with mean $\mu=6$ and standard deviation $\sigma=3$. What proportion of the area under the normal curve is less than 3? Greater than 12? Between 0 and 12?
+
+**Solution:**
+
+* Less than 3: 3 is one standard deviation less than the mean of 6, since $\frac{3 - \mu}{\sigma} = \frac{3-6}{3} = -1$. Thus we compute the area to the left of z = -1 in Figure A.2: 0.15% + 2.35% + 13.5% = 16%.
+
+```{r}
+pnorm(3,mean=6,sd=3)
+```
+
+
+* Greater than 12: 12 is two standard deviations greater than the mean of 6, since $\frac{12 - \mu}{\sigma} = \frac{12-6}{3} = 2$, we compute the area to the right of z = 2 in Figure A.2: 2.35% + 0.15% = 2.5%.
+
+```{r}
+pnorm(12,mean=6,sd=3,lower.tail = FALSE)
+```
+
+
+* Between 0 and 12: 0 is two standard deviations less than the mean of 6, since $\frac{0 - \mu}{\sigma} = \frac{0-6}{3} = -2$. Thus we compute the area between z = -2 and z = +2 in Figure A.2: 13.5% + 34% + 34% + 13.5% = 95%.
+
+
+```{r}
+pnorm(12,mean=6,sd=3)-pnorm(0,mean=6,sd=3)
+```
+
+### LC A.2 (Objective 2)
+
+**`r LC XX.YY** (Same normal distribution.) What is the 2.5th percentile of the area under the normal curve? The 97.5th percentile? The 100th percentile?
+
+**Solution:**
+
+* 2.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% = 2.5%, the 2.5th percentile is z = - 2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations lower than the mean: $\mu - 2 \cdot\sigma = 6 - 2 \cdot 3 = 0$.
+
+```{r}
+qnorm(.025,mean=6,sd=3)
+```
+This is not 0 since the figure is an approximation.
+
+* 97.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% + 13.5% + 34% + 34% + 13.5% = 97.5%, the 97.5th percentile is z = +2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations higher than the mean: $\mu + 2 \cdot\sigma = 6 + 2 \cdot 3 = 12$.
+
+```{r}
+qnorm(.975,mean=6,sd=3)
+```
+
+
+* 100th percentile: $+\infty$. In other words, 100% of values will be less than positive infinity.
+
+```{r}
+qnorm(1,mean=6,sd=3)
+```
+
+## Documenting software
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+

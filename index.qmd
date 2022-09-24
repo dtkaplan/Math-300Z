@@ -1,18 +1,19 @@
 ---
-title: "Math 300R --- Continuing the improvement of Math 300"
+title: "Math 300R: Additional improvement of Math 300"
 author: "Daniel Kaplan"
-date: "Sept. 23, 2022"
+date: "Sept. 24, 2022"
 format:
   html:
     theme: cosmo
   pdf:
     documentclass: scrreprt
-    number-sections: false
   docx:
     number-sections: false
 ---
 
+
 This site holds the proposal for the Spring 2023 version of Math 300.
+
 
 ## Background
 
@@ -23,7 +24,7 @@ In Fall 2022, Math 300 switched to a very different book, Ismay and Kim, [*Stati
 
 To support the Fall 2022 course using *ModernDive*, a complete set of roughly 35 Notes to Instructors (NTI) were written by Prof. Bradley Warner along with problem sets and other needed materials and deployed for the course. 
 
-This proposal is to further transition Math 300, building on the Fall 2022 course but replacing the inference portions of the course with more contemporary and general-purpose inference techniques and support for concepts and methods relevant to decision making.
+This proposal is to further transition Math 300, building on the Fall 2022 course but replacing the statistical inference portions of the course with more contemporary and general-purpose inference techniques and support for concepts and methods relevant to decision making.
 
 In the following, I will be making reference to three different versions of Math 300:
 
@@ -39,28 +40,34 @@ The design of a course revision needs to take into account several factors:
 - institutional goals as they relate to the course subject, that is, the prioritization of the many different topics that might be included in the course
 - constraints of class time and internal coherence of the course, that is, using later topics in the course to reinforce student learning of the earlier topics
 
-Later, in the [justification section](#justification) section of this document, I describe how I came to the following conclusions, but for now a simple statement of the conclusions will suffice.
+Later, in the [rationale section](#justification) section of this document, I describe how I came to the following conclusions, but for now a simple statement of the conclusions will suffice.
 
-1. The target audience is humanities and social science majors, many of whom will not be confident in the use of calculus, but all of whom have had previous exposure to R in the core calculus course.
+1. The target audience is humanities and social science majors, many of whom will not be confident in the use of calculus but all of whom have had previous exposure to R in the core calculus course.
 2. Institutional goals (as revealed by discussion with humanities and social science departments and the wording of the catalog description of Math 300) include a substantial emphasis on *data science techniques* (data wrangling and visualization) and on the use of statistical concepts and methods to support *decision-making*.
-3. Given the class-time demands of the new emphasis on data science techniques in Math 300 (and retained in Math 300R), the statistical concepts and methods need to be taught in a more compact manner than in Math 300CC. Low-priority, legacy topics from Math 300CC should be dropped, particularly those that do not relate to decision-making. A concise, unifying framework for presenting the statistical topics should be adopted. The framework proposed for Math 300R is linear regression together with a data wrangling and visualization approach to motivating and demonstrating statistical concepts. Abstract theory will be supplanted by concrete simulations.
 
-## Regression and simulation
+## Statistical topics and framework
 
-Linear regression is already integrated into the *ModernDive* textbook used in Math 300. It was also covered extensively in the core calculus course (141Z/142Z). Regression provides a basis for almost all of the statistical "tests" covered in Math 300CC and other traditional statistics courses. It is part of the toolbox of data scientists and relates well to emerging data techniques such as machine learning.
+The transition from Math 300CC to Math 300---supported in part by the development of Math 141Z/142Z---has already accomplished many of the goals with respect to data science techniques. The challenge motivating this proposal centers on the statistical topics/methods to be covered and the path through the topics. 
 
-There are two distinct facets of simulation. One, familiar to many statistical educators, is the introduction to inference provided by randomization techniques: resampling, bootstrapping, and permutation tests. This approach is well established in the statistics community and considered by many to be a better pedagogy than the traditional formula-and-distribution presentation of statistical methods.
+The class-time demands of the new emphasis on data science techniques in Math 300 (and retained in Math 300R) dictate that the statistical concepts and methods need to be taught in a more compact manner than in Math 300CC. Low-priority, legacy topics from Math 300CC should be dropped, particularly those that do not relate to decision-making. Some guidance here is provided by discussions in the statistical education community and the broad agreement with recommendations of the [GAISE report](https://www.amstat.org/docs/default-source/amstat-documents/gaisecollege_full.pdf).
 
-The other facet of simulation is more novel and relates to the generation of synthetic data where the amount of available data is unlimited and the mechanism behind the data is explicitly stated (as opposed to the often unknown mechanisms behind real-world data).
+A traditional path for statistical methods starts with descriptive statistics (e.g. standard deviation) then presents "1-sample" statistics (e.g. mean, proportion) and inferential techniques (confidence interval, hypothesis test) in that context. Next comes the inferential techniques for the analogous "2-sample" statistics (difference in mean, difference in proportion) followed by inference techniques for regression. 
 
-Several of the 19 lessons covered by this proposal involve "statistical inference." In frequentist inference, there is a concept of "population," which is a real or hypothetical source of data. In many of the lessons about statistical inference, we will instantiate a population via a simulation based on an instructor-stipulated directed acyclic graph (DAG) augmented with an effect size for each direct path. A sample can be drawn from the simulation, and the (in-sample) results then compared to repeated samples from the simulation or the effect sizes used in the simulation.
+For students who have already seen regression, as in Math 141Z/142Z, this path is unnecessarily long: all of the methods in the traditional path are encompassed by regression.^[The chi-square test is an exception, but this is beneficially replaced by logistic regression.] Framing statistical inference in the context of regression avoids the need to teach method-specific calculations or cover the variety of formats for non-regression test results. Regression is part of the toolbox of data scientists and relates well to more advanced data techniques such as machine learning. It is already integrated into the *ModernDive* textbook used in Math 300.
 
-This pedagogy is intended to develop intuition for the various statistical phenomena (such as sampling variation, prediction error, or confounding). It will also draw on and reinforce the data-wrangling, regression, and visualization skills developed in the first half of the course. It will also help us deal frankly with causality and what data can and cannot tell us about causal relationships.
+Additional streamlining comes from motivating statistical inference using a simulation approach. This is based on two conceptually simple data operations: resampling and permutation (shuffling). This approach is well established in the statistics community and considered by many to be a better pedagogy than the traditional formula-and-distribution presentation of statistical methods. Since Math 300 (and 300R) students will already have worked with wrangling and visualization, they will be well prepared to work with the data generated by repeated trials of simulation.
 
-Care must be taken to avoid students mistakenly concluding that using simulated data allows us to draw inferences about the real world. For instance, simulations will use abstract variable names such as Y, X, A, B, C whereas real data will have genuinely descriptive names.
+Additional concepts and techniques important to supporting decision making relate to *risk*, *prediction* and its close cousin *classification*, as well as *causality* and *confounding*. These are treated minimally in traditional statistics courses, but are an important part of Math 300R. A model for teaching about risk, causation, and confounding is provided by introductory epidemiology courses. I've drawn the pedagogy for Math 300R from the [epidemiology course I introduced at Macalester](https://github.com/dtkaplan/liberal-arts-epidemiology). In addition, I have more than a decade of experience teaching causality as part of an introductory course. (See the [causation chapter](https://dtkaplan.github.io/SM2-bookdown/causation.html) of my *Statistical Modeling* text.) 
+
+An important part of the *Statistical Modeling* pedagogy for causality is simulation based on directed acyclic graphs (DAG). Unlike resampling and permutation, which re-arrange existing data, the DAG simulations generate synthetic data with specified properties (such as effect sizes). This allows a concrete demonstration of the extent to which regression techniques can and cannot recover causal information from data. 
+
+The DAG-simulation approach lends itself naturally to the demonstration of statistical phenomena such as sampling variation and estimation of prediction error. As an example, consider the statistical fallacy of regression to the mean, as with Galton's finding that heights of children regress to the mean compared to the heights of their parents. The natural hypothesis that heights are determined by genetic and other factors is represented by this DAG:
+
+$$\epsilon \rightarrow parent \longleftarrow GENES \longrightarrow child \leftarrow \nu$$
+In this DAG there is no causal mechanism included for "regression to the mean." However, Galton's empirical finding is replicated by data from the DAG-simulation.
 
 
-## Summary of the proposed changes {#sec-broad-structure}
+## Scope of the proposed changes {#sec-broad-structure}
 
 Math 300R will retain the first 17 lessons Math 300. All teaching materials for this part of the course will be used unaltered. (Exception: revisions to Math 300 the Fall 2022 teaching team deems appropriate. Such revisions are not part of this proposal.)
 
@@ -76,11 +83,9 @@ Topics to be de-emphasized are the algebra of computing confidence intervals and
 
 Confounding and methods for dealing with it (statistical adjustment, experiment) are treated substantially in Math 300R. Decision-making about interventions often relies on the understanding of causal effects; the possibility of confounding is a major source of skepticism about making causal judgments. In a world where much data is observational in nature, the sweeping principles that "correlation is not causation" and "no causation without experimentation" do not provide support for making responsible conclusions about causal connections. Decision-makers need this support.
 
-## JUSTIFICATION
+## Rationale for course revisions {#rationale}
 
-REFERRING TO THE POINTS in the introduction.
-
-## Relationship to Math 357 and Math 377
+### Relationship to Math 357 and Math 377
 
 DFMS offers three courses satisfying the statistics component of the Academy's core requirements: Math 300, Math 357, and Math 377. In designing 300R, attention should be paid to the reasons for supporting three distinct courses. The catalog copy lays out the differences in terms of intended student major, software, mathematical background, and orientation to data science.
 
@@ -104,40 +109,15 @@ In addition, I suggest that ...
 
 4. Math 300R include some work with assembling/curating data using spreadsheets and basic data cleaning with spreadsheets. Awareness of the ubiquity of data errors and a basic understanding of how to deal with such errors is an important component of working with data. (This is not to suggest that data *analysis*, *modeling*, and *graphical* depiction be taught using spreadsheets, which are notoriously unreliable, difficult, and limiting for such purposes. Spreadsheets are, however, appropriate for the phase where non-tabular data is transcribed into a tabular arrangement.)
 
-## Justification of proposed changes (#justification)
+### Institutional goals
 
-To organize the justification of accomplished and proposed changes, it helps to refer to the catalog copy for Math 300.
+It can be difficult to translate broadly stated institutional goals to apply them to a single course. However, catalog descriptions of programs and individual courses provide some assistance. Here is the catalog copy for Math 300 (which is identical to the catalog description of Math 357).
 
 > Math 300. Introduction to Statistics. An introduction in probability and statistics **for decision-makers**. Topics include basic probability, statistical inference, prediction, data visualization, and data management. This course emphasizes critical thinking among **decision-makers**, preparing future officers to be **critical consumers of data**. (*Emphasis added.*)
 
 I interpret the final sentence as a description of the overall objective of the course: 
 
 > **Overall objective**: *Prepare officers to **use data** to **inform decisions**.*
-
-My proposal is to interpret the topics listed in the catalog copy as ways of serving the overall objective.
-
-To lay the groundwork for this proposal, in AY 2021-22 I contacted the departments in the social sciences and humanities. Three of these---history, political science, economics---responded with interest. Discussion with groups of faculty from these departments elucidated a number of points:
-
-- The faculty most highly valued the development of data-science skills such as computing for data wrangling and data visualization.
-- The then-current version of Math 300 did not contribute to the development of such skills.
-- Math 357 is not seen as an appropriate alterative to Math 300, both because of perceived difficulty of 357 and because faculty do not value the emphasis on probability distributions seen in 357.
-
-I also closely examined the [textbook used in Math 300](https://www.macmillanlearning.com/college/us/product/Statistics-Concepts-and-Controversies/p/1319109020) up through AY 2021-2022. The book has clear deficiencies, among which are:
-
-- the material is out of date and does not reflect any of the consensus recommendations (such as [GAISE](https://www.amstat.org/docs/default-source/amstat-documents/gaisecollege_full.pdf)) developed in the last 30 years.
-- it does not use data at any level beyond hand calculation.
-- it does not deal with decision making at any serious level. (The only decision formally supported is whether or not to reject the Null hypothesis.)
-
-Based on these findings, the group of faculty planning for revisions to Math 300 made an easy decision: replace the textbook with one oriented to data science. We selected the *ModernDive* book, which is unique among introductory statistics textbooks in starting out with data wrangling and visualization. This change of textbook addresses the "use data" part of the course objective stipulated above.
-
-The other part of the objective---**inform decisions**---remains problematic even with the switch in textbook. Consider these aspects of real decision making:
-
-- Decisions ought to be informed by costs, benefits, and risk.
-- Decisions often need to be taken with the data at hand.
-
-Instead of addressing these issues, introductory statistics courses focus on a single, abstract decision: Should the null hypothesis be rejected or not? (This is often formulated in terms of confidence intervals.)
-
-Discussions I had with the *ModernDive* authors made clear that their purpose in writing the book was to provide a way to introduce data science into introductory statistics, but that they stuck to the hypothesis-testing/confidence-interval framework in order not to make the change too daunting for instructors thinking of adopting the text. In other words, they were not trying to turn the topic toward decision-making with data.
 
 Returning to the idea that the topics listed in the catalog copy ought to be interpreted as serving the overall objective of the course, let's consider those topics one at a time:
 
@@ -162,7 +142,29 @@ Unfortunately, appealing to random sampling/assignment is often whistling past t
 
 What's left out in this conception of basic probability is the support for decision making. Essential to this is the proper use of "conditional probability." Math 300R emphasizes appropriate use and interpretation of conditional probability, seen most clearly in the "classifiers" part of the course.
 
-The transition from Math 300CC to Math 300 is a big step toward the objective of "prepar[ing] officers to use data." Math 300R will add in progress toward the overall objective of "us[ing] data to inform decisions."
+### Faculty opinions
+
+Insofar as faculty internalize the goals of the institution, their views can point to ways that existing courses do and do not reflect those goals. 
+
+Within DFMS and other departments, there is a general discontent that Math 300CC was not doing what it ought to. Reasons for this can be seen by examining the [textbook used in Math 300CC](https://www.macmillanlearning.com/college/us/product/Statistics-Concepts-and-Controversies/p/1319109020). The book has clear deficiencies, among which are:
+
+- the material is out of date and does not reflect any of the consensus recommendations (such as [GAISE](https://www.amstat.org/docs/default-source/amstat-documents/gaisecollege_full.pdf)) developed in the last 30 years.
+- it does not use data at any level beyond hand calculation.
+- it does not deal with decision making at any serious level. (The only decision formally supported is whether or not to reject the Null hypothesis.)
+
+The opinions of faculty *outside* DFMS can also be an important guide to institutional priorities.
+In AY 2021-22 I contacted the departments in the social sciences and humanities. Three of these---history, political science, economics---responded with interest. Discussion with groups of faculty from these departments elucidated a number of points:
+
+- The faculty most highly valued the development of data-science skills such as computing for data wrangling and data visualization.
+- The then-current version of Math 300 did not contribute to the development of such skills.
+- Math 357 is not seen as an appropriate alterative to Math 300, both because of perceived difficulty of 357 and because faculty do not value the emphasis on probability distributions seen in 357.
+
+From my experience at Macalester and in conducting reviews at many colleges, I am often wary of the motivation of faculty in other departments. These can represent a desire for service courses like Math 300 to cover discipline-specific techniques. However, the faculty I spoke to also had an eye on what their students will need for their post-graduation jobs. Particularly the USAF officers drew on their field experience in areas such as military intelligence.
+
+Based on these findings, the group of faculty planning for revisions to Math 300 made an easy decision: replace the textbook with one oriented to data science. We selected the *ModernDive* book, which is unique among introductory statistics textbooks in starting out with data wrangling and visualization. This change of textbook addresses the "use data" part of the course objective stipulated above.
+
+The other part of the objective---**inform decisions**---remains problematic even with the switch in the Math 300 textbook. Discussions I had with the *ModernDive* authors made clear that their purpose in writing the book was to provide a way to introduce data science into introductory statistics, but that they stuck to the traditional hypothesis-testing/confidence-interval framework in order not to make the change too daunting for instructors thinking of adopting the text. In other words, they were not trying to turn the topic toward decision-making with data, the motivation of the ideas presented in this proposal for Math 300R.
+
 
 
 ## Plan of work

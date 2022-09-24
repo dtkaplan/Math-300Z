@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Daniel Kaplan">
-<meta name="dcterms.date" content="2022-09-20">
+<meta name="dcterms.date" content="2022-09-24">
 
-<title>Stat-300 - Math 300Z — Continuing the improvement of Math 300</title>
+<title>Proposal for Math 300 Revisions - Math 300R: Additional improvement of Math 300</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -68,7 +68,7 @@ ul.task-list{list-style: none;}
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Stat-300</span>
+    <span class="navbar-title">Proposal for Math 300 Revisions</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
@@ -79,13 +79,10 @@ ul.task-list{list-style: none;}
     <a class="nav-link active" href="./index.html" aria-current="page">Home</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./fall2022.html">Fall 2022 Edition</a>
+    <a class="nav-link" href="./schedule-of-objectives.html">Objectives</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">About</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./outline.html">Evolving outline for Stats 300</a>
+    <a class="nav-link" href="./NTIs.html">NTIs</a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -103,7 +100,7 @@ ul.task-list{list-style: none;}
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Math 300Z — Continuing the improvement of Math 300</h1>
+<h1 class="title">Math 300R: Additional improvement of Math 300</h1>
 </div>
 
 
@@ -120,7 +117,7 @@ ul.task-list{list-style: none;}
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 20, 2022</p>
+      <p class="date">September 24, 2022</p>
     </div>
   </div>
     
@@ -133,89 +130,135 @@ ul.task-list{list-style: none;}
 <section id="background" class="level2">
 <h2 class="anchored" data-anchor-id="background">Background</h2>
 <p>Up through Spring 2022, Math 300 was organized around the Moore and Notz textbook: <a href="https://store.macmillanlearning.com/us/product/Statistics-Concepts-and-Controversies/p/1319109020?gclid=CjwKCAjwpqCZBhAbEiwAa7pXeccQNXB3lKxdYgzHuubs_T9TwY8nqa_NG1UDHty2E3E-XqsiSUojNBoCTvcQAvD_BwE"><em>Statistics: Concepts and controversies</em></a> 10/e. This book was designed for a non-technical audience of “consumers of statistics” but is dramatically out of date. For instance, it has absolutely no data science content and introduces only primitive statistical methods. This was deemed inappropriate for cadets going on to be officers who will inevitably have to work with modern data and methods.</p>
-<p>In Fall 2022, Math 300 switched to a very different book, Ismay and Kim, <a href="https://moderndive.com/"><em>Statistical Inference via Data Science A ModernDive into R and the Tidyverse</em></a>. The <em>ModernDive</em> book introduces computing on data in an accessible but modern way. It is the only well-known statistics text based on a data-science perspective. Nonetheless, the statistical inference portions of the book regress to the same sort of primitive statistical methods from <em>Concepts and Controversies</em>.</p>
-<p>To support the Fall 2022 course using <em>ModernDive</em>, a complete set of roughly 35 Notes to Instructors (NTI) were written, mostly by Prof.&nbsp;Bradley Warner, along with problem sets and other needed materials and deployed for the course.</p>
-<p>This proposal is to further transition Math 300, building on the Fall 2022 course but replacing the inference portions of the course with more contemporary and general-purpose inference techniques and support for concepts and methods relevant to decision making.</p>
+<p>In Fall 2022, Math 300 switched to a very different book, Ismay and Kim, <a href="https://moderndive.com/"><em>Statistical Inference via Data Science: A ModernDive into R and the Tidyverse</em></a>. The <em>ModernDive</em> book introduces computing on data in an accessible but modern way. It is the only well-known statistics text based on a data-science perspective. Nonetheless, the statistical inference portions of the book regress to the same sort of primitive statistical methods from <em>Concepts and Controversies</em>.</p>
+<p>To support the Fall 2022 course using <em>ModernDive</em>, a complete set of roughly 35 Notes to Instructors (NTI) were written by Prof.&nbsp;Bradley Warner along with problem sets and other needed materials and deployed for the course.</p>
+<p>This proposal is to further transition Math 300, building on the Fall 2022 course but replacing the statistical inference portions of the course with more contemporary and general-purpose inference techniques and support for concepts and methods relevant to decision making.</p>
+<p>In the following, I will be making reference to three different versions of Math 300:</p>
+<ul>
+<li>The Fall 2022 version of the course, using the <em>ModernDive</em> book will be called <em>Math 300</em>.</li>
+<li>The previous version of course, as it was taught for several years before Fall 2022, will be called <em>300CC</em>, which refers to the textbook then used, <em>Concepts &amp; Controversies</em>.</li>
+<li>The course proposed in this document, a revision of part of <em>Math 300</em>, will be called <em>Math 300R</em>. The R stands for “revised.”</li>
+</ul>
+</section>
+<section id="overall-goals-of-math-300r" class="level2">
+<h2 class="anchored" data-anchor-id="overall-goals-of-math-300r">Overall goals of Math 300R</h2>
+<p>The design of a course revision needs to take into account several factors:</p>
+<ul>
+<li>the target audience’s anticipated technical ability and motivation and therefore the appropriate pedagogy and the balance between theory and practice to use in the course</li>
+<li>institutional goals as they relate to the course subject, that is, the prioritization of the many different topics that might be included in the course</li>
+<li>constraints of class time and internal coherence of the course, that is, using later topics in the course to reinforce student learning of the earlier topics</li>
+</ul>
+<p>Later, in the <a href="#justification">rationale section</a> section of this document, I describe how I came to the following conclusions, but for now a simple statement of the conclusions will suffice.</p>
+<ol type="1">
+<li>The target audience is humanities and social science majors, many of whom will not be confident in the use of calculus but all of whom have had previous exposure to R in the core calculus course.</li>
+<li>Institutional goals (as revealed by discussion with humanities and social science departments and the wording of the catalog description of Math 300) include a substantial emphasis on <em>data science techniques</em> (data wrangling and visualization) and on the use of statistical concepts and methods to support <em>decision-making</em>.</li>
+</ol>
+</section>
+<section id="statistical-topics-and-framework" class="level2">
+<h2 class="anchored" data-anchor-id="statistical-topics-and-framework">Statistical topics and framework</h2>
+<p>The transition from Math 300CC to Math 300—supported in part by the development of Math 141Z/142Z—has already accomplished many of the goals with respect to data science techniques. The challenge motivating this proposal centers on the statistical topics/methods to be covered and the path through the topics.</p>
+<p>The class-time demands of the new emphasis on data science techniques in Math 300 (and retained in Math 300R) dictate that the statistical concepts and methods need to be taught in a more compact manner than in Math 300CC. Low-priority, legacy topics from Math 300CC should be dropped, particularly those that do not relate to decision-making. Some guidance here is provided by discussions in the statistical education community and the broad agreement with recommendations of the <a href="https://www.amstat.org/docs/default-source/amstat-documents/gaisecollege_full.pdf">GAISE report</a>.</p>
+<p>A traditional path for statistical methods starts with descriptive statistics (e.g.&nbsp;standard deviation) then presents “1-sample” statistics (e.g.&nbsp;mean, proportion) and inferential techniques (confidence interval, hypothesis test) in that context. Next comes the inferential techniques for the analogous “2-sample” statistics (difference in mean, difference in proportion) followed by inference techniques for regression.</p>
+<p>For students who have already seen regression, as in Math 141Z/142Z, this path is unnecessarily long: all of the methods in the traditional path are encompassed by regression.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Framing statistical inference in the context of regression avoids the need to teach method-specific calculations or cover the variety of formats for non-regression test results. Regression is part of the toolbox of data scientists and relates well to more advanced data techniques such as machine learning. It is already integrated into the <em>ModernDive</em> textbook used in Math 300.</p>
+<p>Additional streamlining comes from motivating statistical inference using a simulation approach. This is based on two conceptually simple data operations: resampling and permutation (shuffling). This approach is well established in the statistics community and considered by many to be a better pedagogy than the traditional formula-and-distribution presentation of statistical methods. Since Math 300 (and 300R) students will already have worked with wrangling and visualization, they will be well prepared to work with the data generated by repeated trials of simulation.</p>
+<p>Additional concepts and techniques important to supporting decision making relate to <em>risk</em>, <em>prediction</em> and its close cousin <em>classification</em>, as well as <em>causality</em> and <em>confounding</em>. These are treated minimally in traditional statistics courses, but are an important part of Math 300R. A model for teaching about risk, causation, and confounding is provided by introductory epidemiology courses. I’ve drawn the pedagogy for Math 300R from the <a href="https://github.com/dtkaplan/liberal-arts-epidemiology">epidemiology course I introduced at Macalester</a>. In addition, I have more than a decade of experience teaching causality as part of an introductory course. (See the <a href="https://dtkaplan.github.io/SM2-bookdown/causation.html">causation chapter</a> of my <em>Statistical Modeling</em> text.)</p>
+<p>An important part of the <em>Statistical Modeling</em> pedagogy for causality is simulation based on directed acyclic graphs (DAG). Unlike resampling and permutation, which re-arrange existing data, the DAG simulations generate synthetic data with specified properties (such as effect sizes). This allows a concrete demonstration of the extent to which regression techniques can and cannot recover causal information from data.</p>
+<p>The DAG-simulation approach lends itself naturally to the demonstration of statistical phenomena such as sampling variation and estimation of prediction error. As an example, consider the statistical fallacy of regression to the mean, as with Galton’s finding that heights of children regress to the mean compared to the heights of their parents. The natural hypothesis that heights are determined by genetic and other factors is represented by this DAG:</p>
+<p><span class="math display">\[\epsilon \rightarrow parent \longleftarrow GENES \longrightarrow child \leftarrow \nu\]</span></p>
+<p>In this DAG there is no causal mechanism included for “regression to the mean.” However, Galton’s empirical finding is replicated by data from the DAG-simulation.</p>
 </section>
 <section id="sec-broad-structure" class="level2">
-<h2 class="anchored" data-anchor-id="sec-broad-structure">Broad structure of the proposed changes</h2>
-<p>In this document, we refer to the <em>proposed</em> course as <em>Math 300Z</em>. This is not meant to imply that the catalog title should also include “Z.” Indeed, the content of 300Z is arguably closer than Math 300 to the catalog description:</p>
-<blockquote class="blockquote">
-<p>Math 300. Introduction to Statistics. An introduction in probability and statistics for decision-makers. Topics include basic probability, statistical inference, prediction, data visualization, and data management. This course emphasizes critical thinking among decisionmakers, preparing future officers to be critical consumers of data.</p>
-</blockquote>
-<p>Math 300Z will retain the first 17 lessons of the Fall 2022 version of Math 300 All teaching materials for this part of the course will be used unaltered. (Exception: revisions the Fall 2022 teaching team deems appropriate. Such revisions are not part of this proposal.)</p>
-<p>The next 19 lessons will be completely refactored and based on new readings, NTIs, exams, and other materials.</p>
+<h2 class="anchored" data-anchor-id="sec-broad-structure">Scope of the proposed changes</h2>
+<p>Math 300R will retain the first 17 lessons Math 300. All teaching materials for this part of the course will be used unaltered. (Exception: revisions to Math 300 the Fall 2022 teaching team deems appropriate. Such revisions are not part of this proposal.)</p>
+<p>The next 19 lessons will be completely refactored and based on new readings, NTIs, exams, and other materials. Objectives for each of these 19 lessons are <a href="schedule-of-objectives.html">itemized here</a>.</p>
 <ul>
 <li>The corresponding <em>ModernDive</em> chapters will not be used.</li>
 <li>The software will the same as that used in the first half of the <em>ModernDive</em> book, specifically the <code>ggplot2</code> graphics package and the <code>tidyverse</code> data wrangling packages. However, …</li>
-<li>The <code>infer</code> package used in the second half of <em>ModernDive</em> will be completely dropped.</li>
-<li>There is a new set of day-to-day objectives. A comparison of the objectives for Math 300 versus Math 300Z is available <a href="objectives-diffs.html">here</a> for blocks 3 and 4.</li>
+<li>The <code>infer</code> package used in the second half of <em>ModernDive</em> will be dropped.</li>
 </ul>
+<p>The theme of the refactored 19 lessons is “informing decisions with data.” Math 300R will introduce concepts and methods needed to predict the impact of interventions, the prediction of individual outcomes, and the quantification and accumulation of risk. One important idea is “effect size,” how much a change in an explanatory variable changes the response variable. This is intimately connected with causation and causation is connected with co-variation. Another important idea is prediction of outcomes and the quantification of uncertainty in the prediction. One important application of this is in the design and operation of “classifiers.”</p>
+<p>Topics to be de-emphasized are the algebra of computing confidence intervals and p-values and the (controversial) role of p-values as a guide to practical “significance.” Typically, about half of a traditional course is given over to the construction of confidence intervals in various settings and, more or less equivalently, the conversion of data into p-values. In the contemporary era, when “observational” data are collected <em>en masse</em>, p-values can become very small (“significant”) even when the the relationship under study is slight and insubstantial.</p>
+<p>Confounding and methods for dealing with it (statistical adjustment, experiment) are treated substantially in Math 300R. Decision-making about interventions often relies on the understanding of causal effects; the possibility of confounding is a major source of skepticism about making causal judgments. In a world where much data is observational in nature, the sweeping principles that “correlation is not causation” and “no causation without experimentation” do not provide support for making responsible conclusions about causal connections. Decision-makers need this support.</p>
 </section>
-<section id="sec-topics" class="level2">
-<h2 class="anchored" data-anchor-id="sec-topics">Narrative description of proposed topics</h2>
-<p>The theme of the refactored 19 lessons is “informing decisions with data.” Math 300Z will introduce concepts and methods needed to predict the impact of actions. One important idea is the “effect size,” how much a change in an explanatory variable changes the output. This is intimately connected with causation and causation is connected with co-variation. Another important idea is the design and operation of “detection systems” where the primary issue is to decide when incoming data should trigger a response, as in medical screening for disease or radar operation.</p>
-<p><strong>In a traditional introductory course</strong>, the emphasis is on “statistical inference,” a technical term related to the ideas of estimation and population parameters. Typically, half of a traditional course is given over to the construction of confidence intervals in various settings and, more or less equivalently, the conversion of data into p-values. In the contemporary era, when “observational” data are collected <em>en masse</em>, p-values can become very small (“significant”) even when the the relationship under study is slight and insubstantial.</p>
-<p>Note that the number of lesson days listed here is approximate, as estimated in September 2022. GRs are not included.</p>
-<section id="accuracy-and-precision-3-lesson-days" class="level3">
-<h3 class="anchored" data-anchor-id="accuracy-and-precision-3-lesson-days">Accuracy and precision (3 lesson days)</h3>
-<p>“Accuracy” and “precision” describe two orthogonal types of uncertainty: that due to imperfection in the overall mode of measurement and description of the quantity under study and that due to imperfection in individual measurements. The same division of uncertainty is also represented by the terms “bias” and “variance.”</p>
-<p><strong>In a traditional introductory course</strong>, the bulk of quantitative content is about measuring “precision,” oriented around the notion of a “sampling distribution” of “estimators.” However, “accuracy” is depicted as being the result of random sampling of a “population” and/or random assignment in experiment applied to “unbiased estimators” of central tendency of a single variable or linear association between two variables. Causal conclusions are permitted only in the context of experiment.</p>
-<p>Many contemporary tasks with data do not involve the possibility of random sampling or interventions randomly assigned to units. In such situations, the traditional formulation can pay only lip service to quantifying uncertainty. We propose to recast the distinction between accuracy and precision in terms of models with inputs—multiple regression, a topic covered briefly in the first half of the course. This enables “accuracy” to encompass confounding and the mis-specification of covariates, as well as examining causal hypotheses in observational data.</p>
-<p>Rather than appealing to a theoretical “population,” we’ll examine the factors that lead to greater or less accuracy and precision with respect to data generated according to completely specified simulations. Topics will include random sampling and non-random sampling, confounding between explanatory variables, covariation and adjustment (though multiple regression), model mis-specification, and causal hypotheses as represented by directed acyclic graphs (DAG).</p>
-</section>
-<section id="prediction-4-lesson-days" class="level3">
-<h3 class="anchored" data-anchor-id="prediction-4-lesson-days">Prediction (4 lesson days)</h3>
-<p>In statistics, “prediction” refers to building a model based on existing data on both inputs and outputs, then using that model to calculate the output corresponding to a given set of inputs. Our concern in this section will be with models having quantitative outputs, as opposed to the categorical outputs described in the next segment of the course. In Math 141Z, we carried out the process by building a model function from data then evaluating that function with new inputs. Statistics adds to this ways to measure the accuracy and precision of the prediction.</p>
-<p><strong>In a traditional introductory course</strong>, there is little attention paid to prediction. Rather, the focus is on the estimation of “population parameters.” To illustrate, consider the task of saying something about the income of people. A traditional approach would be to estimate the average income in a population, whereas the prediction problem would deal with what we can say about the income of a single person from the population based on some data on other attributes of that person.</p>
-<p>This section in 300Z will start with the notions of prediction error and residuals. We will examine the empirical distribution of residuals and how it relates to the gaussian distribution described by the mean square residual. As in “Accuracy and Precision,” we’ll use simulation models, this time adding random noise to the output, and attempt to estimate the size of the noise from data generated by the simulation. Using out-of-sample estimation, we will demonstrate that the in-sample estimate of residual size is biased: systematically too small. We will also explore the difference between the in-sample and out-of-sample mean square residuals as the number of model inputs gets larger, culminating in in-sample false perfection as <span class="math inline">\(p \rightarrow n\)</span>.</p>
-</section>
-<section id="classifiers-4-lesson-days" class="level3">
-<h3 class="anchored" data-anchor-id="classifiers-4-lesson-days">Classifiers (4 lesson days)</h3>
-<p>Classification is a problem analogous to prediction, but where the model output is a categorical variable. As such, each individual prediction is either right or wrong and the techniques for characterizing prediction error are different than for prediction of a quantitative output.</p>
-<p><strong>In a traditional introductory course</strong>, classification is not considered directly. Instead, one examines calculations of differences in probability between two groups or the chi-squared statistic calculated on cross validation.</p>
-<p>In 300Z, this section will start by introducing logistic regression and the technique of building classifiers that are not right-or-wrong, but which provide a probability for each possible output level.</p>
-<p>Risk as the probability of a (bad) outcome, odds and log-odds as reconfiguration of probability, demonstration that log-odds is bounded between 0 and 1 and has a monotonic relationship to probability. Relative risk (ratio of probabilities), population attributable fraction.</p>
-<p>False-positive and false-negative rates, prevalence, sensitivity and specificity as good descriptors, receiver operating curves (demonstration) and decision threshold, loss functions.</p>
-</section>
-<section id="inference-7-lesson-days" class="level3">
-<h3 class="anchored" data-anchor-id="inference-7-lesson-days">Inference (7 lesson days)</h3>
-<p>This section will likely be the toughest for first-time instructors, since it differs so much from a traditional course.</p>
-<p><strong>In a traditional introductory course</strong>, “inferential reasoning” refers to deducing how precisely an estimate tells about the corresponding population parameter. There are two, almost equivalent approaches to the problem: confidence intervals and hypothesis testing. Usually, multiple “tests” are covered, such as the difference between two means or the difference between two proportions.</p>
-<p>In 300Z, however, the emphasis is on informing real-world decisions with data.</p>
-<p>Two lessons: effect size, precision of effect-size estimates via bootstrapping, calculated precision depends on the model specification, interpretation of regression tables. (Demonstration: Gradient of effect size with respect to each input value. Moving along gradient as projection of residual vector onto gradient, angles and <span class="math inline">\(\sqrt{n}\)</span>.</p>
-<p>Two lessons: R<sup>2</sup> and F statistics, significance of an F statistic, model selection based on comparing F. Interpreting ANOVA tables.</p>
-<p>Two lessons: Comparing two paradigms: hypothesis testing and Bayes. Interpreting hypothesis testing as a denial that any prior is meaningful probability of the measurement given the Null hypothesis vs probability of the model parameters given the data.</p>
-<p>One lesson: False discovery and reading research, the importance of replication, the uses of experiment to avoid confounding and “lurking” variables.</p>
-</section>
-</section>
-<section id="relationship-to-math-357-and-math-377" class="level2">
-<h2 class="anchored" data-anchor-id="relationship-to-math-357-and-math-377">Relationship to Math 357 and Math 377</h2>
-<p>DFMS offers three courses satisfying the statistics component of the Academy’s core requirements: Math 300, Math 357, and Math 377. In designing 300Z, attention should be paid to the reasons for supporting three distinct courses. The catalog copy lays out the differences in terms of intended student major, software, mathematical background, and orientation to data science.</p>
+<section id="rationale" class="level2">
+<h2 class="anchored" data-anchor-id="rationale">Rationale for course revisions</h2>
+<section id="relationship-to-math-357-and-math-377" class="level3">
+<h3 class="anchored" data-anchor-id="relationship-to-math-357-and-math-377">Relationship to Math 357 and Math 377</h3>
+<p>DFMS offers three courses satisfying the statistics component of the Academy’s core requirements: Math 300, Math 357, and Math 377. In designing 300R, attention should be paid to the reasons for supporting three distinct courses. The catalog copy lays out the differences in terms of intended student major, software, mathematical background, and orientation to data science.</p>
 <p><strong>Intended student major</strong>: The catalog says, “Math 300 is designed primarily for majors in the Social Sciences and Humanities.” while “Math 356 is primarily designed for cadets in engineering, science, or other technical disciplines. Math majors and Operations Research majors will take Math 377.” Math 377 is also the intended course for prospective Data Science majors, although this is not in the catalog.</p>
 <p><strong>Software</strong>: The catalog does not describe any software component for either Math 300 or Math 357, but states that, in Math 377, “modern software appropriate for data analysis will be used.” In reality, as of Fall 2022, much the same software is used in all three courses: R with the <code>dplyr</code> package for data wrangling, <code>ggplot2</code> for data visualization, and “R/Markdown” for creating computationally active documents.</p>
 <p>One difference between Math 300 and 357/377 relates to computer programming. Both 357 and 377 include content about the underlying structure of the R language, object types, the construction of functions, and arrays and iteration. In contrast, Math 300 is based on a small set of command patterns using data frames. Students see R in Math 300 more or less as an extension of what they learned in 141Z/142Z; what’s added is a few statistical and data-wrangling functions and a handful of new graphics types.</p>
-<p><strong>Students’ mathematical background</strong>: Math 377 explicitly refers to “calculus-based probability.” Math 300 and 357 share identical catalog copy, though in reality Math 357 and Math 377 use the same textbook. Calculus is indeed necessary for the probability topics in Math 357 and 377. My interpretation is that Math 300 should serve as a safe haven for those who lack confidence in their calculus skills. Both the Fall 2022 edition of Math 300 and the proposed Math 300Z serve this role as safe haven.</p>
-<p><strong>Orientation to Data Science</strong>: Starting in Fall 2022, Math 300 develops and draws on data-science skills for wrangling and visualization. In this, the new Math 300 is in line with both Math 357 and 377. Discussions I had in AY 2021-2022 with faculty in political science and history, the departments that showed the most interest in potential changes to Math 300, showed a strong interest in the sorts of data manipulation and visualization that now fall under the aegis of “data science.” Since the target audience for Math 300 and 300Z is majors in social science and humanities, the shift in Math 300 toward data science as of Fall 2022 is entirely appropriate and will be continued in Math 300Z.</p>
-<p>The above analysis indicates that Math 300 and 300Z should diverge from Math 357/377 in these ways:</p>
+<p><strong>Students’ mathematical background</strong>: Math 377 explicitly refers to “calculus-based probability.” Math 300 and 357 share identical catalog copy, though in reality Math 357 and Math 377 use the same textbook. Calculus is indeed necessary for the probability topics in Math 357 and 377. My interpretation is that Math 300 should serve as a safe haven for those who lack confidence in their calculus skills. Both the Fall 2022 edition of Math 300 and the proposed Math 300R serve this role as safe haven.</p>
+<p><strong>Orientation to Data Science</strong>: Starting with the Fall 2022 edition, Math 300 develops and draws on data-science skills for wrangling and visualization. In this, the new Math 300 is in line with both Math 357 and 377.</p>
+<p>The above analysis indicates that Math 300 and 300R should diverge from Math 357/377 in these ways:</p>
 <ol type="1">
-<li>Math 300Z should make little or no use of calculus operations.</li>
-<li>Math 300Z should include little consideration of probability distributions or (non-automated) calculations with any but the simplest.</li>
-<li>Math 300Z should be computational, but should not draw heavily on computer programming skills such as types of objects, arrays, indexing, and loop-style iteration. Use of R/Markdown documents should be considered as a pedagogical choice, and retained or discontinued based on how it contributes to student success in the other areas of the course.</li>
+<li>Math 300R should make little or no use of calculus operations.</li>
+<li>Math 300R should include little consideration of probability distributions or (non-automated) calculations with any but the simplest.</li>
+<li>Math 300R should be computational, but should not draw heavily on computer programming skills such as types of objects, arrays, indexing, and loop-style iteration. Use of R/Markdown documents should be considered as a pedagogical choice, and retained or discontinued based on how it contributes to student success in the other areas of the course.</li>
 </ol>
 <p>In addition, I suggest that …</p>
 <ol start="4" type="1">
-<li>Math 300Z include some work with assembling/curating data using spreadsheets and basic data cleaning with spreadsheets. Awareness of the ubiquity of data errors and a basic understanding of how to deal with such errors is an important component of working with data. (This is not to suggest that data <em>analysis</em>, <em>modeling</em>, and <em>graphical</em> depiction be taught using spreadsheets, which are notoriously unreliable, difficult, and limiting for such purposes. Spreadsheets are, however, appropriate for the phase where non-tabular data is transcribed into a tabular arrangement.)</li>
+<li>Math 300R include some work with assembling/curating data using spreadsheets and basic data cleaning with spreadsheets. Awareness of the ubiquity of data errors and a basic understanding of how to deal with such errors is an important component of working with data. (This is not to suggest that data <em>analysis</em>, <em>modeling</em>, and <em>graphical</em> depiction be taught using spreadsheets, which are notoriously unreliable, difficult, and limiting for such purposes. Spreadsheets are, however, appropriate for the phase where non-tabular data is transcribed into a tabular arrangement.)</li>
 </ol>
+</section>
+<section id="institutional-goals" class="level3">
+<h3 class="anchored" data-anchor-id="institutional-goals">Institutional goals</h3>
+<p>It can be difficult to translate broadly stated institutional goals to apply them to a single course. However, catalog descriptions of programs and individual courses provide some assistance. Here is the catalog copy for Math 300 (which is identical to the catalog description of Math 357).</p>
+<blockquote class="blockquote">
+<p>Math 300. Introduction to Statistics. An introduction in probability and statistics <strong>for decision-makers</strong>. Topics include basic probability, statistical inference, prediction, data visualization, and data management. This course emphasizes critical thinking among <strong>decision-makers</strong>, preparing future officers to be <strong>critical consumers of data</strong>. (<em>Emphasis added.</em>)</p>
+</blockquote>
+<p>I interpret the final sentence as a description of the overall objective of the course:</p>
+<blockquote class="blockquote">
+<p><strong>Overall objective</strong>: <em>Prepare officers to <strong>use data</strong> to <strong>inform decisions</strong>.</em></p>
+</blockquote>
+<p>Returning to the idea that the topics listed in the catalog copy ought to be interpreted as serving the overall objective of the course, let’s consider those topics one at a time:</p>
+<ol type="1">
+<li>data management</li>
+<li>data visualization</li>
+<li>prediction</li>
+<li>statistical inference</li>
+<li>basic probability</li>
+</ol>
+<ol type="1">
+<li><p>Strictly speaking, as a term of art the phrase “data management” is business jargon describing enterprise-level activities that are unrelated to the other items on the list. It would be unheard of to include it, in this strict sense, in a statistics course. I believe the intent of the phrase to be better served by terms like “data wrangling,” “data cleaning,” “database querying,” and such which make up an important part of “data science.” Data wrangling is a major feature of Math 300 launched and is covered using professional level computing tools well suited to both small and large data. But whatever “data management” might reasonably be taken to mean, it was utterly ignored in Math 300CC.</p></li>
+<li><p>“Data visualization” is generally taken to be the process of using graphics to discover and highlight patterns shown in data. Math 300CC included only statistical graphics such as histograms, box-and-whisker plots, and basic “scatter plots.” Math 300 adds to this modern modes of graphics such as transparency, color, and faceting that make it possible to display relationships among multiple variables. The software used in Math 300 is the professional-level <code>ggplot2</code> which provides the ability to increase the sophistication and generality of data display, using for example density graphics such as violin plots. As such, Math 300 is a big step on the road to rich data visualization. Some of these will be introduced in Math 300R in the second half of the course.</p></li>
+<li><p>“Prediction” is a central paradigm used in the important area of “machine learning.” It is also an often used method used to inform decision making and characterize risk, for instance, by indicating the distribution of plausible outcomes. Math 300CC emphasized paradigms such as hypothesis testing and confidence intervals that are not aligned with making and interpreting predictions. Math 300 focuses on these same paradigms. Math 300R will treat prediction as a central statistical path, as well as highlighting its proper use, interpretation, and evaluation.</p></li>
+<li><p>“Statistical inference” is traditionally taken to mean the calculation and interpretation of hypothesis tests and confidence intervals in various simple settings. Such settings include the “difference between two means,” the “correlation coefficient,” and the “slope of a regression line.” Math 300CC introduced a handful of such settings, providing distinct formulas for each of them. The “controversies” referred to in the title <em>Concepts and controversies</em> includes the problematic interpretation of “p-values” and the need to use random sampling and/or random assignment in data collection to get “correct” results. Math 300 retains the emphasis on confidence intervals and p-values in the simple settings, but emphasizes a more general and accessible methodology based on bootstrapping and permutation tests.</p></li>
+</ol>
+<p>Unfortunately, appealing to random sampling/assignment is often whistling past the graveyard, since these idealized data collection processes are rarely available. Instead, professionals include “covariates” in their data collection in order to “adjust” for the factors that would have been scrambled into insignificance by random sampling/assignment if it had been available. Math 300R incorporates covariate methods and highlights the importance of identifying appropriate covariates.</p>
+<ol start="5" type="1">
+<li>“Basic probability” can mean different things to different people. In most introductory statistics courses it refers to the construction, calculation, and study of named distributions such as the binomial, normal, chi-squared, t, etc. Such distributions play an important role in the statistical theory of confidence intervals and hypothesis testing. That is, they are support for statistical inference. Math 300CC followed the traditional pattern of having students memorize which distribution is relevant to which setting and using printed tables for calculation. As described earlier, Math 300 provides a much more natural route to inference through bootstrapping and permutation tests.</li>
+</ol>
+<p>What’s left out in this conception of basic probability is the support for decision making. Essential to this is the proper use of “conditional probability.” Math 300R emphasizes appropriate use and interpretation of conditional probability, seen most clearly in the “classifiers” part of the course.</p>
+</section>
+<section id="faculty-opinions" class="level3">
+<h3 class="anchored" data-anchor-id="faculty-opinions">Faculty opinions</h3>
+<p>Insofar as faculty internalize the goals of the institution, their views can point to ways that existing courses do and do not reflect those goals.</p>
+<p>Within DFMS and other departments, there is a general discontent that Math 300CC was not doing what it ought to. Reasons for this can be seen by examining the <a href="https://www.macmillanlearning.com/college/us/product/Statistics-Concepts-and-Controversies/p/1319109020">textbook used in Math 300CC</a>. The book has clear deficiencies, among which are:</p>
+<ul>
+<li>the material is out of date and does not reflect any of the consensus recommendations (such as <a href="https://www.amstat.org/docs/default-source/amstat-documents/gaisecollege_full.pdf">GAISE</a>) developed in the last 30 years.</li>
+<li>it does not use data at any level beyond hand calculation.</li>
+<li>it does not deal with decision making at any serious level. (The only decision formally supported is whether or not to reject the Null hypothesis.)</li>
+</ul>
+<p>The opinions of faculty <em>outside</em> DFMS can also be an important guide to institutional priorities. In AY 2021-22 I contacted the departments in the social sciences and humanities. Three of these—history, political science, economics—responded with interest. Discussion with groups of faculty from these departments elucidated a number of points:</p>
+<ul>
+<li>The faculty most highly valued the development of data-science skills such as computing for data wrangling and data visualization.</li>
+<li>The then-current version of Math 300 did not contribute to the development of such skills.</li>
+<li>Math 357 is not seen as an appropriate alterative to Math 300, both because of perceived difficulty of 357 and because faculty do not value the emphasis on probability distributions seen in 357.</li>
+</ul>
+<p>From my experience at Macalester and in conducting reviews at many colleges, I am often wary of the motivation of faculty in other departments. These can represent a desire for service courses like Math 300 to cover discipline-specific techniques. However, the faculty I spoke to also had an eye on what their students will need for their post-graduation jobs. Particularly the USAF officers drew on their field experience in areas such as military intelligence.</p>
+<p>Based on these findings, the group of faculty planning for revisions to Math 300 made an easy decision: replace the textbook with one oriented to data science. We selected the <em>ModernDive</em> book, which is unique among introductory statistics textbooks in starting out with data wrangling and visualization. This change of textbook addresses the “use data” part of the course objective stipulated above.</p>
+<p>The other part of the objective—<strong>inform decisions</strong>—remains problematic even with the switch in the Math 300 textbook. Discussions I had with the <em>ModernDive</em> authors made clear that their purpose in writing the book was to provide a way to introduce data science into introductory statistics, but that they stuck to the traditional hypothesis-testing/confidence-interval framework in order not to make the change too daunting for instructors thinking of adopting the text. In other words, they were not trying to turn the topic toward decision-making with data, the motivation of the ideas presented in this proposal for Math 300R.</p>
+</section>
 </section>
 <section id="plan-of-work" class="level2">
 <h2 class="anchored" data-anchor-id="plan-of-work">Plan of work</h2>
 <ol type="1">
 <li><p>Early October 2022: Preliminary approval, with appropriate modifications, of the <a href="objectives-diffs.html">proposed objectives</a>.</p></li>
 <li><p>October 2022: DTK will draft new day-by-day NTIs for the second half of the course in the same style as the existing NTIs for the first half of the course. In the process of drafting, there will likely be some re-arrangement and modification of the objectives in (1).</p></li>
-<li><p>November 2022: With the draft NTIs in hand, a faculty team will make a more detailed examination of the proposed objectives. I recommend that this examination be structured as a set of hour-long discussions, one for each of the five divisions described in <a href="#sec-topics">Section&nbsp;3</a>.</p></li>
+<li><p>November 2022: With the draft NTIs in hand, a faculty team will make a more detailed examination of the proposed objectives. I recommend that this examination be structured as a set of hour-long discussions, one for each of the five divisions described in <strong>?@sec-topics</strong>.</p></li>
 <li><p>November/December 2022: DTK (and others, as interested) will assemble student readings to replace the second half of <em>ModernDive</em>. Much of the content already exists in the form of a draft textbook by DTK. These will be re-arranged to correspond to the day-to-day objectives as determined in (3).</p></li>
-<li><p>January/February 2023: The first 18 lessons of 300Z will be taught as a repeat of those lessons from Math 300 Fall 2022. DTK will participate mainly as an observer.</p></li>
+<li><p>January/February 2023: The first 18 lessons of 300R will be taught as a repeat of those lessons from Math 300 Fall 2022. DTK will participate mainly as an observer.</p></li>
 <li><p>January/February 2023: Revision and refinement will be made of the readings and NTIs in (3) and (4) above.</p></li>
 <li><p>March/April 2023: Teaching the new lessons. DTK will participate as an instructor for these lessons.</p></li>
 </ol>
@@ -223,7 +266,13 @@ ul.task-list{list-style: none;}
 
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1" role="doc-endnote"><p>The chi-square test is an exception, but this is beneficially replaced by logistic regression.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

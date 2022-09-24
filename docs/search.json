@@ -1,5 +1,33 @@
 [
   {
+    "objectID": "NTI/Math300R-Lesson21.html",
+    "href": "NTI/Math300R-Lesson21.html",
+    "title": "Math 300R NTI Lesson 21",
+    "section": "",
+    "text": "[Note in draft: Replace these with reference to a central repo for objectives.]\n\nDetermine whether a proposed graph is directed and acyclic.\nRead notation to identify response variable, explanatory variable, covariates, and effect sizes.\nCharacterize the magnitude of random noise.\nGenerate data from simulations and summarize variables individually."
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson21.html#reading",
+    "href": "NTI/Math300R-Lesson21.html#reading",
+    "title": "Math 300R NTI Lesson 21",
+    "section": "Reading",
+    "text": "Reading\nTBD"
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson21.html#lesson",
+    "href": "NTI/Math300R-Lesson21.html#lesson",
+    "title": "Math 300R NTI Lesson 21",
+    "section": "Lesson",
+    "text": "Lesson\nRemember that you will be running this more like a lab than a lecture. You want them using R and answering questions. Have them open the notes rmd and work through it together.\n\nProlog: Review notation for DAGs and noise. Show how to generate data use the run_dag() function.\n\n\n\n\n\n\n\nRunning a DAG simulation\n\n\n\n\nrun_dag(RTM)\nshow_dag(RTM)\n\n\n\n\nWork through the learning checks LCA.1 - LCA.2.\nA DAG for “regression to the mean.”\n\nAsk what “regression” means in everyday English\nProvide some history of the idea and point out that this is where the name “regression” comes from for the method of fitting a linear model linking a response variable to explanatory variable(s).\nShow this DAG and ask what students think the consequences will be: what’s the relationship between the parents’ height and the (adult) child’s height.\n\n\n\\[\\epsilon \\rightarrow parent \\longleftarrow GENES \\longrightarrow child \\leftarrow \\nu\\]\n\n\n\n\n\n\nSimulation: Regression to the mean\n\n\n\n\nrtm <- tibble(genes = 64 + rnorm(1000), \n              parent = genes + 0.5*rnorm(1000), \n              child  = genes + 0.5*rnorm(1000))\nmod <- lm(child ~ parent, data = rtm) \nmod\n\n\nCall:\nlm(formula = child ~ parent, data = rtm)\n\nCoefficients:\n(Intercept)       parent  \n    14.3499       0.7758  \n\n# Convert this to ggplot2\ngf_point(child ~ parent, data = rtm) %>%\n  gf_lm(interval=\"confidence\") %>%\n  gf_abline(intercept = 0, slope = 1, color=\"red\")\n\n\n\n\nInterpret the coefficient and the graph.\n\nWhat’s the mean for the children and for the parents? [64 inches for each]\nThe red line runs along the diagonal. It reflects the statement that the children are, on average, the same as the parents.\nThe blue line is the regression model. The children are, on average, closer to the mean than the parents.\n\n\n\n\n\nLC A.1 (Objective 2)\n[NOTE in DRAFT: These are the learning objectives from Bradley Warner’s notes, retained here simply to remind me of the format for the NTIs.]\nLC XX.XX Say you have a normal distribution with mean \\(\\mu=6\\) and standard deviation \\(\\sigma=3\\). What proportion of the area under the normal curve is less than 3? Greater than 12? Between 0 and 12?\nSolution:\n\nLess than 3: 3 is one standard deviation less than the mean of 6, since \\(\\frac{3 - \\mu}{\\sigma} = \\frac{3-6}{3} = -1\\). Thus we compute the area to the left of z = -1 in Figure A.2: 0.15% + 2.35% + 13.5% = 16%.\n\n\npnorm(3,mean=6,sd=3)\n\n[1] 0.1586553\n\n\n\nGreater than 12: 12 is two standard deviations greater than the mean of 6, since \\(\\frac{12 - \\mu}{\\sigma} = \\frac{12-6}{3} = 2\\), we compute the area to the right of z = 2 in Figure A.2: 2.35% + 0.15% = 2.5%.\n\n\npnorm(12,mean=6,sd=3,lower.tail = FALSE)\n\n[1] 0.02275013\n\n\n\nBetween 0 and 12: 0 is two standard deviations less than the mean of 6, since \\(\\frac{0 - \\mu}{\\sigma} = \\frac{0-6}{3} = -2\\). Thus we compute the area between z = -2 and z = +2 in Figure A.2: 13.5% + 34% + 34% + 13.5% = 95%.\n\n\npnorm(12,mean=6,sd=3)-pnorm(0,mean=6,sd=3)\n\n[1] 0.9544997\n\n\n\n\nLC A.2 (Objective 2)\n`r LC XX.YY (Same normal distribution.) What is the 2.5th percentile of the area under the normal curve? The 97.5th percentile? The 100th percentile?\nSolution:\n\n2.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% = 2.5%, the 2.5th percentile is z = - 2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations lower than the mean: \\(\\mu - 2 \\cdot\\sigma = 6 - 2 \\cdot 3 = 0\\).\n\n\nqnorm(.025,mean=6,sd=3)\n\n[1] 0.120108\n\n\nThis is not 0 since the figure is an approximation.\n\n97.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% + 13.5% + 34% + 34% + 13.5% = 97.5%, the 97.5th percentile is z = +2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations higher than the mean: \\(\\mu + 2 \\cdot\\sigma = 6 + 2 \\cdot 3 = 12\\).\n\n\nqnorm(.975,mean=6,sd=3)\n\n[1] 11.87989\n\n\n\n100th percentile: \\(+\\infty\\). In other words, 100% of values will be less than positive infinity.\n\n\nqnorm(1,mean=6,sd=3)\n\n[1] Inf"
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson21.html#documenting-software",
+    "href": "NTI/Math300R-Lesson21.html#documenting-software",
+    "title": "Math 300R NTI Lesson 21",
+    "section": "Documenting software",
+    "text": "Documenting software\n\nFile creation date: 2022-09-24\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
+  },
+  {
     "objectID": "LC/Learning-checks.html",
     "href": "LC/Learning-checks.html",
     "title": "Learning Checks from Modern Dive",
@@ -79,239 +107,211 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Math 300Z — Continuing the improvement of Math 300",
+    "title": "Math 300R: Additional improvement of Math 300",
     "section": "",
     "text": "This site holds the proposal for the Spring 2023 version of Math 300."
   },
   {
     "objectID": "index.html#background",
     "href": "index.html#background",
-    "title": "Math 300Z — Continuing the improvement of Math 300",
+    "title": "Math 300R: Additional improvement of Math 300",
     "section": "Background",
-    "text": "Background\nUp through Spring 2022, Math 300 was organized around the Moore and Notz textbook: Statistics: Concepts and controversies 10/e. This book was designed for a non-technical audience of “consumers of statistics” but is dramatically out of date. For instance, it has absolutely no data science content and introduces only primitive statistical methods. This was deemed inappropriate for cadets going on to be officers who will inevitably have to work with modern data and methods.\nIn Fall 2022, Math 300 switched to a very different book, Ismay and Kim, Statistical Inference via Data Science A ModernDive into R and the Tidyverse. The ModernDive book introduces computing on data in an accessible but modern way. It is the only well-known statistics text based on a data-science perspective. Nonetheless, the statistical inference portions of the book regress to the same sort of primitive statistical methods from Concepts and Controversies.\nTo support the Fall 2022 course using ModernDive, a complete set of roughly 35 Notes to Instructors (NTI) were written, mostly by Prof. Bradley Warner, along with problem sets and other needed materials and deployed for the course.\nThis proposal is to further transition Math 300, building on the Fall 2022 course but replacing the inference portions of the course with more contemporary and general-purpose inference techniques and support for concepts and methods relevant to decision making."
+    "text": "Background\nUp through Spring 2022, Math 300 was organized around the Moore and Notz textbook: Statistics: Concepts and controversies 10/e. This book was designed for a non-technical audience of “consumers of statistics” but is dramatically out of date. For instance, it has absolutely no data science content and introduces only primitive statistical methods. This was deemed inappropriate for cadets going on to be officers who will inevitably have to work with modern data and methods.\nIn Fall 2022, Math 300 switched to a very different book, Ismay and Kim, Statistical Inference via Data Science: A ModernDive into R and the Tidyverse. The ModernDive book introduces computing on data in an accessible but modern way. It is the only well-known statistics text based on a data-science perspective. Nonetheless, the statistical inference portions of the book regress to the same sort of primitive statistical methods from Concepts and Controversies.\nTo support the Fall 2022 course using ModernDive, a complete set of roughly 35 Notes to Instructors (NTI) were written by Prof. Bradley Warner along with problem sets and other needed materials and deployed for the course.\nThis proposal is to further transition Math 300, building on the Fall 2022 course but replacing the statistical inference portions of the course with more contemporary and general-purpose inference techniques and support for concepts and methods relevant to decision making.\nIn the following, I will be making reference to three different versions of Math 300:\n\nThe Fall 2022 version of the course, using the ModernDive book will be called Math 300.\nThe previous version of course, as it was taught for several years before Fall 2022, will be called 300CC, which refers to the textbook then used, Concepts & Controversies.\nThe course proposed in this document, a revision of part of Math 300, will be called Math 300R. The R stands for “revised.”"
+  },
+  {
+    "objectID": "index.html#overall-goals-of-math-300r",
+    "href": "index.html#overall-goals-of-math-300r",
+    "title": "Math 300R: Additional improvement of Math 300",
+    "section": "Overall goals of Math 300R",
+    "text": "Overall goals of Math 300R\nThe design of a course revision needs to take into account several factors:\n\nthe target audience’s anticipated technical ability and motivation and therefore the appropriate pedagogy and the balance between theory and practice to use in the course\ninstitutional goals as they relate to the course subject, that is, the prioritization of the many different topics that might be included in the course\nconstraints of class time and internal coherence of the course, that is, using later topics in the course to reinforce student learning of the earlier topics\n\nLater, in the rationale section section of this document, I describe how I came to the following conclusions, but for now a simple statement of the conclusions will suffice.\n\nThe target audience is humanities and social science majors, many of whom will not be confident in the use of calculus but all of whom have had previous exposure to R in the core calculus course.\nInstitutional goals (as revealed by discussion with humanities and social science departments and the wording of the catalog description of Math 300) include a substantial emphasis on data science techniques (data wrangling and visualization) and on the use of statistical concepts and methods to support decision-making."
+  },
+  {
+    "objectID": "index.html#statistical-topics-and-framework",
+    "href": "index.html#statistical-topics-and-framework",
+    "title": "Math 300R: Additional improvement of Math 300",
+    "section": "Statistical topics and framework",
+    "text": "Statistical topics and framework\nThe transition from Math 300CC to Math 300—supported in part by the development of Math 141Z/142Z—has already accomplished many of the goals with respect to data science techniques. The challenge motivating this proposal centers on the statistical topics/methods to be covered and the path through the topics.\nThe class-time demands of the new emphasis on data science techniques in Math 300 (and retained in Math 300R) dictate that the statistical concepts and methods need to be taught in a more compact manner than in Math 300CC. Low-priority, legacy topics from Math 300CC should be dropped, particularly those that do not relate to decision-making. Some guidance here is provided by discussions in the statistical education community and the broad agreement with recommendations of the GAISE report.\nA traditional path for statistical methods starts with descriptive statistics (e.g. standard deviation) then presents “1-sample” statistics (e.g. mean, proportion) and inferential techniques (confidence interval, hypothesis test) in that context. Next comes the inferential techniques for the analogous “2-sample” statistics (difference in mean, difference in proportion) followed by inference techniques for regression.\nFor students who have already seen regression, as in Math 141Z/142Z, this path is unnecessarily long: all of the methods in the traditional path are encompassed by regression.1 Framing statistical inference in the context of regression avoids the need to teach method-specific calculations or cover the variety of formats for non-regression test results. Regression is part of the toolbox of data scientists and relates well to more advanced data techniques such as machine learning. It is already integrated into the ModernDive textbook used in Math 300.\nAdditional streamlining comes from motivating statistical inference using a simulation approach. This is based on two conceptually simple data operations: resampling and permutation (shuffling). This approach is well established in the statistics community and considered by many to be a better pedagogy than the traditional formula-and-distribution presentation of statistical methods. Since Math 300 (and 300R) students will already have worked with wrangling and visualization, they will be well prepared to work with the data generated by repeated trials of simulation.\nAdditional concepts and techniques important to supporting decision making relate to risk, prediction and its close cousin classification, as well as causality and confounding. These are treated minimally in traditional statistics courses, but are an important part of Math 300R. A model for teaching about risk, causation, and confounding is provided by introductory epidemiology courses. I’ve drawn the pedagogy for Math 300R from the epidemiology course I introduced at Macalester. In addition, I have more than a decade of experience teaching causality as part of an introductory course. (See the causation chapter of my Statistical Modeling text.)\nAn important part of the Statistical Modeling pedagogy for causality is simulation based on directed acyclic graphs (DAG). Unlike resampling and permutation, which re-arrange existing data, the DAG simulations generate synthetic data with specified properties (such as effect sizes). This allows a concrete demonstration of the extent to which regression techniques can and cannot recover causal information from data.\nThe DAG-simulation approach lends itself naturally to the demonstration of statistical phenomena such as sampling variation and estimation of prediction error. As an example, consider the statistical fallacy of regression to the mean, as with Galton’s finding that heights of children regress to the mean compared to the heights of their parents. The natural hypothesis that heights are determined by genetic and other factors is represented by this DAG:\n\\[\\epsilon \\rightarrow parent \\longleftarrow GENES \\longrightarrow child \\leftarrow \\nu\\]\nIn this DAG there is no causal mechanism included for “regression to the mean.” However, Galton’s empirical finding is replicated by data from the DAG-simulation."
   },
   {
     "objectID": "index.html#sec-broad-structure",
     "href": "index.html#sec-broad-structure",
-    "title": "Math 300Z — Continuing the improvement of Math 300",
-    "section": "Broad structure of the proposed changes",
-    "text": "Broad structure of the proposed changes\nIn this document, we refer to the proposed course as Math 300Z. This is not meant to imply that the catalog title should also include “Z.” Indeed, the content of 300Z is arguably closer than Math 300 to the catalog description:\n\nMath 300. Introduction to Statistics. An introduction in probability and statistics for decision-makers. Topics include basic probability, statistical inference, prediction, data visualization, and data management. This course emphasizes critical thinking among decisionmakers, preparing future officers to be critical consumers of data.\n\nMath 300Z will retain the first 17 lessons of the Fall 2022 version of Math 300 All teaching materials for this part of the course will be used unaltered. (Exception: revisions the Fall 2022 teaching team deems appropriate. Such revisions are not part of this proposal.)\nThe next 19 lessons will be completely refactored and based on new readings, NTIs, exams, and other materials.\n\nThe corresponding ModernDive chapters will not be used.\nThe software will the same as that used in the first half of the ModernDive book, specifically the ggplot2 graphics package and the tidyverse data wrangling packages. However, …\nThe infer package used in the second half of ModernDive will be completely dropped.\nThere is a new set of day-to-day objectives. A comparison of the objectives for Math 300 versus Math 300Z is available here for blocks 3 and 4."
+    "title": "Math 300R: Additional improvement of Math 300",
+    "section": "Scope of the proposed changes",
+    "text": "Scope of the proposed changes\nMath 300R will retain the first 17 lessons Math 300. All teaching materials for this part of the course will be used unaltered. (Exception: revisions to Math 300 the Fall 2022 teaching team deems appropriate. Such revisions are not part of this proposal.)\nThe next 19 lessons will be completely refactored and based on new readings, NTIs, exams, and other materials. Objectives for each of these 19 lessons are itemized here.\n\nThe corresponding ModernDive chapters will not be used.\nThe software will the same as that used in the first half of the ModernDive book, specifically the ggplot2 graphics package and the tidyverse data wrangling packages. However, …\nThe infer package used in the second half of ModernDive will be dropped.\n\nThe theme of the refactored 19 lessons is “informing decisions with data.” Math 300R will introduce concepts and methods needed to predict the impact of interventions, the prediction of individual outcomes, and the quantification and accumulation of risk. One important idea is “effect size,” how much a change in an explanatory variable changes the response variable. This is intimately connected with causation and causation is connected with co-variation. Another important idea is prediction of outcomes and the quantification of uncertainty in the prediction. One important application of this is in the design and operation of “classifiers.”\nTopics to be de-emphasized are the algebra of computing confidence intervals and p-values and the (controversial) role of p-values as a guide to practical “significance.” Typically, about half of a traditional course is given over to the construction of confidence intervals in various settings and, more or less equivalently, the conversion of data into p-values. In the contemporary era, when “observational” data are collected en masse, p-values can become very small (“significant”) even when the the relationship under study is slight and insubstantial.\nConfounding and methods for dealing with it (statistical adjustment, experiment) are treated substantially in Math 300R. Decision-making about interventions often relies on the understanding of causal effects; the possibility of confounding is a major source of skepticism about making causal judgments. In a world where much data is observational in nature, the sweeping principles that “correlation is not causation” and “no causation without experimentation” do not provide support for making responsible conclusions about causal connections. Decision-makers need this support."
   },
   {
-    "objectID": "index.html#sec-topics",
-    "href": "index.html#sec-topics",
-    "title": "Math 300Z — Continuing the improvement of Math 300",
-    "section": "Narrative description of proposed topics",
-    "text": "Narrative description of proposed topics\nThe theme of the refactored 19 lessons is “informing decisions with data.” Math 300Z will introduce concepts and methods needed to predict the impact of actions. One important idea is the “effect size,” how much a change in an explanatory variable changes the output. This is intimately connected with causation and causation is connected with co-variation. Another important idea is the design and operation of “detection systems” where the primary issue is to decide when incoming data should trigger a response, as in medical screening for disease or radar operation.\nIn a traditional introductory course, the emphasis is on “statistical inference,” a technical term related to the ideas of estimation and population parameters. Typically, half of a traditional course is given over to the construction of confidence intervals in various settings and, more or less equivalently, the conversion of data into p-values. In the contemporary era, when “observational” data are collected en masse, p-values can become very small (“significant”) even when the the relationship under study is slight and insubstantial.\nNote that the number of lesson days listed here is approximate, as estimated in September 2022. GRs are not included.\n\nAccuracy and precision (3 lesson days)\n“Accuracy” and “precision” describe two orthogonal types of uncertainty: that due to imperfection in the overall mode of measurement and description of the quantity under study and that due to imperfection in individual measurements. The same division of uncertainty is also represented by the terms “bias” and “variance.”\nIn a traditional introductory course, the bulk of quantitative content is about measuring “precision,” oriented around the notion of a “sampling distribution” of “estimators.” However, “accuracy” is depicted as being the result of random sampling of a “population” and/or random assignment in experiment applied to “unbiased estimators” of central tendency of a single variable or linear association between two variables. Causal conclusions are permitted only in the context of experiment.\nMany contemporary tasks with data do not involve the possibility of random sampling or interventions randomly assigned to units. In such situations, the traditional formulation can pay only lip service to quantifying uncertainty. We propose to recast the distinction between accuracy and precision in terms of models with inputs—multiple regression, a topic covered briefly in the first half of the course. This enables “accuracy” to encompass confounding and the mis-specification of covariates, as well as examining causal hypotheses in observational data.\nRather than appealing to a theoretical “population,” we’ll examine the factors that lead to greater or less accuracy and precision with respect to data generated according to completely specified simulations. Topics will include random sampling and non-random sampling, confounding between explanatory variables, covariation and adjustment (though multiple regression), model mis-specification, and causal hypotheses as represented by directed acyclic graphs (DAG).\n\n\nPrediction (4 lesson days)\nIn statistics, “prediction” refers to building a model based on existing data on both inputs and outputs, then using that model to calculate the output corresponding to a given set of inputs. Our concern in this section will be with models having quantitative outputs, as opposed to the categorical outputs described in the next segment of the course. In Math 141Z, we carried out the process by building a model function from data then evaluating that function with new inputs. Statistics adds to this ways to measure the accuracy and precision of the prediction.\nIn a traditional introductory course, there is little attention paid to prediction. Rather, the focus is on the estimation of “population parameters.” To illustrate, consider the task of saying something about the income of people. A traditional approach would be to estimate the average income in a population, whereas the prediction problem would deal with what we can say about the income of a single person from the population based on some data on other attributes of that person.\nThis section in 300Z will start with the notions of prediction error and residuals. We will examine the empirical distribution of residuals and how it relates to the gaussian distribution described by the mean square residual. As in “Accuracy and Precision,” we’ll use simulation models, this time adding random noise to the output, and attempt to estimate the size of the noise from data generated by the simulation. Using out-of-sample estimation, we will demonstrate that the in-sample estimate of residual size is biased: systematically too small. We will also explore the difference between the in-sample and out-of-sample mean square residuals as the number of model inputs gets larger, culminating in in-sample false perfection as \\(p \\rightarrow n\\).\n\n\nClassifiers (4 lesson days)\nClassification is a problem analogous to prediction, but where the model output is a categorical variable. As such, each individual prediction is either right or wrong and the techniques for characterizing prediction error are different than for prediction of a quantitative output.\nIn a traditional introductory course, classification is not considered directly. Instead, one examines calculations of differences in probability between two groups or the chi-squared statistic calculated on cross validation.\nIn 300Z, this section will start by introducing logistic regression and the technique of building classifiers that are not right-or-wrong, but which provide a probability for each possible output level.\nRisk as the probability of a (bad) outcome, odds and log-odds as reconfiguration of probability, demonstration that log-odds is bounded between 0 and 1 and has a monotonic relationship to probability. Relative risk (ratio of probabilities), population attributable fraction.\nFalse-positive and false-negative rates, prevalence, sensitivity and specificity as good descriptors, receiver operating curves (demonstration) and decision threshold, loss functions.\n\n\nInference (7 lesson days)\nThis section will likely be the toughest for first-time instructors, since it differs so much from a traditional course.\nIn a traditional introductory course, “inferential reasoning” refers to deducing how precisely an estimate tells about the corresponding population parameter. There are two, almost equivalent approaches to the problem: confidence intervals and hypothesis testing. Usually, multiple “tests” are covered, such as the difference between two means or the difference between two proportions.\nIn 300Z, however, the emphasis is on informing real-world decisions with data.\nTwo lessons: effect size, precision of effect-size estimates via bootstrapping, calculated precision depends on the model specification, interpretation of regression tables. (Demonstration: Gradient of effect size with respect to each input value. Moving along gradient as projection of residual vector onto gradient, angles and \\(\\sqrt{n}\\).\nTwo lessons: R2 and F statistics, significance of an F statistic, model selection based on comparing F. Interpreting ANOVA tables.\nTwo lessons: Comparing two paradigms: hypothesis testing and Bayes. Interpreting hypothesis testing as a denial that any prior is meaningful probability of the measurement given the Null hypothesis vs probability of the model parameters given the data.\nOne lesson: False discovery and reading research, the importance of replication, the uses of experiment to avoid confounding and “lurking” variables."
-  },
-  {
-    "objectID": "index.html#relationship-to-math-357-and-math-377",
-    "href": "index.html#relationship-to-math-357-and-math-377",
-    "title": "Math 300Z — Continuing the improvement of Math 300",
-    "section": "Relationship to Math 357 and Math 377",
-    "text": "Relationship to Math 357 and Math 377\nDFMS offers three courses satisfying the statistics component of the Academy’s core requirements: Math 300, Math 357, and Math 377. In designing 300Z, attention should be paid to the reasons for supporting three distinct courses. The catalog copy lays out the differences in terms of intended student major, software, mathematical background, and orientation to data science.\nIntended student major: The catalog says, “Math 300 is designed primarily for majors in the Social Sciences and Humanities.” while “Math 356 is primarily designed for cadets in engineering, science, or other technical disciplines. Math majors and Operations Research majors will take Math 377.” Math 377 is also the intended course for prospective Data Science majors, although this is not in the catalog.\nSoftware: The catalog does not describe any software component for either Math 300 or Math 357, but states that, in Math 377, “modern software appropriate for data analysis will be used.” In reality, as of Fall 2022, much the same software is used in all three courses: R with the dplyr package for data wrangling, ggplot2 for data visualization, and “R/Markdown” for creating computationally active documents.\nOne difference between Math 300 and 357/377 relates to computer programming. Both 357 and 377 include content about the underlying structure of the R language, object types, the construction of functions, and arrays and iteration. In contrast, Math 300 is based on a small set of command patterns using data frames. Students see R in Math 300 more or less as an extension of what they learned in 141Z/142Z; what’s added is a few statistical and data-wrangling functions and a handful of new graphics types.\nStudents’ mathematical background: Math 377 explicitly refers to “calculus-based probability.” Math 300 and 357 share identical catalog copy, though in reality Math 357 and Math 377 use the same textbook. Calculus is indeed necessary for the probability topics in Math 357 and 377. My interpretation is that Math 300 should serve as a safe haven for those who lack confidence in their calculus skills. Both the Fall 2022 edition of Math 300 and the proposed Math 300Z serve this role as safe haven.\nOrientation to Data Science: Starting in Fall 2022, Math 300 develops and draws on data-science skills for wrangling and visualization. In this, the new Math 300 is in line with both Math 357 and 377. Discussions I had in AY 2021-2022 with faculty in political science and history, the departments that showed the most interest in potential changes to Math 300, showed a strong interest in the sorts of data manipulation and visualization that now fall under the aegis of “data science.” Since the target audience for Math 300 and 300Z is majors in social science and humanities, the shift in Math 300 toward data science as of Fall 2022 is entirely appropriate and will be continued in Math 300Z.\nThe above analysis indicates that Math 300 and 300Z should diverge from Math 357/377 in these ways:\n\nMath 300Z should make little or no use of calculus operations.\nMath 300Z should include little consideration of probability distributions or (non-automated) calculations with any but the simplest.\nMath 300Z should be computational, but should not draw heavily on computer programming skills such as types of objects, arrays, indexing, and loop-style iteration. Use of R/Markdown documents should be considered as a pedagogical choice, and retained or discontinued based on how it contributes to student success in the other areas of the course.\n\nIn addition, I suggest that …\n\nMath 300Z include some work with assembling/curating data using spreadsheets and basic data cleaning with spreadsheets. Awareness of the ubiquity of data errors and a basic understanding of how to deal with such errors is an important component of working with data. (This is not to suggest that data analysis, modeling, and graphical depiction be taught using spreadsheets, which are notoriously unreliable, difficult, and limiting for such purposes. Spreadsheets are, however, appropriate for the phase where non-tabular data is transcribed into a tabular arrangement.)"
+    "objectID": "index.html#rationale",
+    "href": "index.html#rationale",
+    "title": "Math 300R: Additional improvement of Math 300",
+    "section": "Rationale for course revisions",
+    "text": "Rationale for course revisions\n\nRelationship to Math 357 and Math 377\nDFMS offers three courses satisfying the statistics component of the Academy’s core requirements: Math 300, Math 357, and Math 377. In designing 300R, attention should be paid to the reasons for supporting three distinct courses. The catalog copy lays out the differences in terms of intended student major, software, mathematical background, and orientation to data science.\nIntended student major: The catalog says, “Math 300 is designed primarily for majors in the Social Sciences and Humanities.” while “Math 356 is primarily designed for cadets in engineering, science, or other technical disciplines. Math majors and Operations Research majors will take Math 377.” Math 377 is also the intended course for prospective Data Science majors, although this is not in the catalog.\nSoftware: The catalog does not describe any software component for either Math 300 or Math 357, but states that, in Math 377, “modern software appropriate for data analysis will be used.” In reality, as of Fall 2022, much the same software is used in all three courses: R with the dplyr package for data wrangling, ggplot2 for data visualization, and “R/Markdown” for creating computationally active documents.\nOne difference between Math 300 and 357/377 relates to computer programming. Both 357 and 377 include content about the underlying structure of the R language, object types, the construction of functions, and arrays and iteration. In contrast, Math 300 is based on a small set of command patterns using data frames. Students see R in Math 300 more or less as an extension of what they learned in 141Z/142Z; what’s added is a few statistical and data-wrangling functions and a handful of new graphics types.\nStudents’ mathematical background: Math 377 explicitly refers to “calculus-based probability.” Math 300 and 357 share identical catalog copy, though in reality Math 357 and Math 377 use the same textbook. Calculus is indeed necessary for the probability topics in Math 357 and 377. My interpretation is that Math 300 should serve as a safe haven for those who lack confidence in their calculus skills. Both the Fall 2022 edition of Math 300 and the proposed Math 300R serve this role as safe haven.\nOrientation to Data Science: Starting with the Fall 2022 edition, Math 300 develops and draws on data-science skills for wrangling and visualization. In this, the new Math 300 is in line with both Math 357 and 377.\nThe above analysis indicates that Math 300 and 300R should diverge from Math 357/377 in these ways:\n\nMath 300R should make little or no use of calculus operations.\nMath 300R should include little consideration of probability distributions or (non-automated) calculations with any but the simplest.\nMath 300R should be computational, but should not draw heavily on computer programming skills such as types of objects, arrays, indexing, and loop-style iteration. Use of R/Markdown documents should be considered as a pedagogical choice, and retained or discontinued based on how it contributes to student success in the other areas of the course.\n\nIn addition, I suggest that …\n\nMath 300R include some work with assembling/curating data using spreadsheets and basic data cleaning with spreadsheets. Awareness of the ubiquity of data errors and a basic understanding of how to deal with such errors is an important component of working with data. (This is not to suggest that data analysis, modeling, and graphical depiction be taught using spreadsheets, which are notoriously unreliable, difficult, and limiting for such purposes. Spreadsheets are, however, appropriate for the phase where non-tabular data is transcribed into a tabular arrangement.)\n\n\n\nInstitutional goals\nIt can be difficult to translate broadly stated institutional goals to apply them to a single course. However, catalog descriptions of programs and individual courses provide some assistance. Here is the catalog copy for Math 300 (which is identical to the catalog description of Math 357).\n\nMath 300. Introduction to Statistics. An introduction in probability and statistics for decision-makers. Topics include basic probability, statistical inference, prediction, data visualization, and data management. This course emphasizes critical thinking among decision-makers, preparing future officers to be critical consumers of data. (Emphasis added.)\n\nI interpret the final sentence as a description of the overall objective of the course:\n\nOverall objective: Prepare officers to use data to inform decisions.\n\nReturning to the idea that the topics listed in the catalog copy ought to be interpreted as serving the overall objective of the course, let’s consider those topics one at a time:\n\ndata management\ndata visualization\nprediction\nstatistical inference\nbasic probability\n\n\nStrictly speaking, as a term of art the phrase “data management” is business jargon describing enterprise-level activities that are unrelated to the other items on the list. It would be unheard of to include it, in this strict sense, in a statistics course. I believe the intent of the phrase to be better served by terms like “data wrangling,” “data cleaning,” “database querying,” and such which make up an important part of “data science.” Data wrangling is a major feature of Math 300 launched and is covered using professional level computing tools well suited to both small and large data. But whatever “data management” might reasonably be taken to mean, it was utterly ignored in Math 300CC.\n“Data visualization” is generally taken to be the process of using graphics to discover and highlight patterns shown in data. Math 300CC included only statistical graphics such as histograms, box-and-whisker plots, and basic “scatter plots.” Math 300 adds to this modern modes of graphics such as transparency, color, and faceting that make it possible to display relationships among multiple variables. The software used in Math 300 is the professional-level ggplot2 which provides the ability to increase the sophistication and generality of data display, using for example density graphics such as violin plots. As such, Math 300 is a big step on the road to rich data visualization. Some of these will be introduced in Math 300R in the second half of the course.\n“Prediction” is a central paradigm used in the important area of “machine learning.” It is also an often used method used to inform decision making and characterize risk, for instance, by indicating the distribution of plausible outcomes. Math 300CC emphasized paradigms such as hypothesis testing and confidence intervals that are not aligned with making and interpreting predictions. Math 300 focuses on these same paradigms. Math 300R will treat prediction as a central statistical path, as well as highlighting its proper use, interpretation, and evaluation.\n“Statistical inference” is traditionally taken to mean the calculation and interpretation of hypothesis tests and confidence intervals in various simple settings. Such settings include the “difference between two means,” the “correlation coefficient,” and the “slope of a regression line.” Math 300CC introduced a handful of such settings, providing distinct formulas for each of them. The “controversies” referred to in the title Concepts and controversies includes the problematic interpretation of “p-values” and the need to use random sampling and/or random assignment in data collection to get “correct” results. Math 300 retains the emphasis on confidence intervals and p-values in the simple settings, but emphasizes a more general and accessible methodology based on bootstrapping and permutation tests.\n\nUnfortunately, appealing to random sampling/assignment is often whistling past the graveyard, since these idealized data collection processes are rarely available. Instead, professionals include “covariates” in their data collection in order to “adjust” for the factors that would have been scrambled into insignificance by random sampling/assignment if it had been available. Math 300R incorporates covariate methods and highlights the importance of identifying appropriate covariates.\n\n“Basic probability” can mean different things to different people. In most introductory statistics courses it refers to the construction, calculation, and study of named distributions such as the binomial, normal, chi-squared, t, etc. Such distributions play an important role in the statistical theory of confidence intervals and hypothesis testing. That is, they are support for statistical inference. Math 300CC followed the traditional pattern of having students memorize which distribution is relevant to which setting and using printed tables for calculation. As described earlier, Math 300 provides a much more natural route to inference through bootstrapping and permutation tests.\n\nWhat’s left out in this conception of basic probability is the support for decision making. Essential to this is the proper use of “conditional probability.” Math 300R emphasizes appropriate use and interpretation of conditional probability, seen most clearly in the “classifiers” part of the course.\n\n\nFaculty opinions\nInsofar as faculty internalize the goals of the institution, their views can point to ways that existing courses do and do not reflect those goals.\nWithin DFMS and other departments, there is a general discontent that Math 300CC was not doing what it ought to. Reasons for this can be seen by examining the textbook used in Math 300CC. The book has clear deficiencies, among which are:\n\nthe material is out of date and does not reflect any of the consensus recommendations (such as GAISE) developed in the last 30 years.\nit does not use data at any level beyond hand calculation.\nit does not deal with decision making at any serious level. (The only decision formally supported is whether or not to reject the Null hypothesis.)\n\nThe opinions of faculty outside DFMS can also be an important guide to institutional priorities. In AY 2021-22 I contacted the departments in the social sciences and humanities. Three of these—history, political science, economics—responded with interest. Discussion with groups of faculty from these departments elucidated a number of points:\n\nThe faculty most highly valued the development of data-science skills such as computing for data wrangling and data visualization.\nThe then-current version of Math 300 did not contribute to the development of such skills.\nMath 357 is not seen as an appropriate alterative to Math 300, both because of perceived difficulty of 357 and because faculty do not value the emphasis on probability distributions seen in 357.\n\nFrom my experience at Macalester and in conducting reviews at many colleges, I am often wary of the motivation of faculty in other departments. These can represent a desire for service courses like Math 300 to cover discipline-specific techniques. However, the faculty I spoke to also had an eye on what their students will need for their post-graduation jobs. Particularly the USAF officers drew on their field experience in areas such as military intelligence.\nBased on these findings, the group of faculty planning for revisions to Math 300 made an easy decision: replace the textbook with one oriented to data science. We selected the ModernDive book, which is unique among introductory statistics textbooks in starting out with data wrangling and visualization. This change of textbook addresses the “use data” part of the course objective stipulated above.\nThe other part of the objective—inform decisions—remains problematic even with the switch in the Math 300 textbook. Discussions I had with the ModernDive authors made clear that their purpose in writing the book was to provide a way to introduce data science into introductory statistics, but that they stuck to the traditional hypothesis-testing/confidence-interval framework in order not to make the change too daunting for instructors thinking of adopting the text. In other words, they were not trying to turn the topic toward decision-making with data, the motivation of the ideas presented in this proposal for Math 300R."
   },
   {
     "objectID": "index.html#plan-of-work",
     "href": "index.html#plan-of-work",
-    "title": "Math 300Z — Continuing the improvement of Math 300",
+    "title": "Math 300R: Additional improvement of Math 300",
     "section": "Plan of work",
-    "text": "Plan of work\n\nEarly October 2022: Preliminary approval, with appropriate modifications, of the proposed objectives.\nOctober 2022: DTK will draft new day-by-day NTIs for the second half of the course in the same style as the existing NTIs for the first half of the course. In the process of drafting, there will likely be some re-arrangement and modification of the objectives in (1).\nNovember 2022: With the draft NTIs in hand, a faculty team will make a more detailed examination of the proposed objectives. I recommend that this examination be structured as a set of hour-long discussions, one for each of the five divisions described in Section 3.\nNovember/December 2022: DTK (and others, as interested) will assemble student readings to replace the second half of ModernDive. Much of the content already exists in the form of a draft textbook by DTK. These will be re-arranged to correspond to the day-to-day objectives as determined in (3).\nJanuary/February 2023: The first 18 lessons of 300Z will be taught as a repeat of those lessons from Math 300 Fall 2022. DTK will participate mainly as an observer.\nJanuary/February 2023: Revision and refinement will be made of the readings and NTIs in (3) and (4) above.\nMarch/April 2023: Teaching the new lessons. DTK will participate as an instructor for these lessons."
+    "text": "Plan of work\n\nEarly October 2022: Preliminary approval, with appropriate modifications, of the proposed objectives.\nOctober 2022: DTK will draft new day-by-day NTIs for the second half of the course in the same style as the existing NTIs for the first half of the course. In the process of drafting, there will likely be some re-arrangement and modification of the objectives in (1).\nNovember 2022: With the draft NTIs in hand, a faculty team will make a more detailed examination of the proposed objectives. I recommend that this examination be structured as a set of hour-long discussions, one for each of the five divisions described in ?@sec-topics.\nNovember/December 2022: DTK (and others, as interested) will assemble student readings to replace the second half of ModernDive. Much of the content already exists in the form of a draft textbook by DTK. These will be re-arranged to correspond to the day-to-day objectives as determined in (3).\nJanuary/February 2023: The first 18 lessons of 300R will be taught as a repeat of those lessons from Math 300 Fall 2022. DTK will participate mainly as an observer.\nJanuary/February 2023: Revision and refinement will be made of the readings and NTIs in (3) and (4) above.\nMarch/April 2023: Teaching the new lessons. DTK will participate as an instructor for these lessons."
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "NTIs.html",
+    "href": "NTIs.html",
+    "title": "Notes to Instructors",
     "section": "",
-    "text": "1 + 1\n\n[1] 2"
+    "text": "Links to NTIs will go here and in the day-to-day objectives."
   },
   {
-    "objectID": "outline.html",
-    "href": "outline.html",
-    "title": "Evolving outline for Stats 300",
+    "objectID": "schedule-of-objectives.html",
+    "href": "schedule-of-objectives.html",
+    "title": "Day-by-day Objectives for Math 300R",
     "section": "",
-    "text": "Textbook: Ismay & Kim Statistical Inference via Data Science (“SIDS” for short)\nSoftware: R, which the textbook is based on and which is used in Math 141/142Z\nSupplemental readings:"
+    "text": "As done in Fall 2020. Possible revisions to those lessons is not a topic of this proposal."
   },
   {
-    "objectID": "outline.html#bradley-warners-outline-from-14-apr-2022.",
-    "href": "outline.html#bradley-warners-outline-from-14-apr-2022.",
-    "title": "Evolving outline for Stats 300",
-    "section": "Bradley Warner’s outline from 14 Apr 2022.",
-    "text": "Bradley Warner’s outline from 14 Apr 2022.\nFour blocks to the semester, each with a QR.\n\nStatistical graphics, wrangling, importing. SIDS Part I (Chaps. 1, 2, 3, 4)\n\n12 class days (including GR)\n\nRegression. SIDS Part II (Chaps. 5, 6)\n\n8 class days (including GR)\n\nConfidence intervals. SIDS Part III (Chaps. 7, 8)\n\n7 class days (including GR)\n\nHypothesis testing. SIDS Part III (cont.) (Chaps. 9, 10)\n\n11 class days (including GR)\n\n\nTwo end-of-semester days for case-study, more examples."
+    "objectID": "schedule-of-objectives.html#lesson-19-decisions-with-data",
+    "href": "schedule-of-objectives.html#lesson-19-decisions-with-data",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Lesson 19: Decisions with data",
+    "text": "Lesson 19: Decisions with data\n\nDistinguish between the two settings for decision-making:\n\nPrediction: predict an outcome for an individual\nRelationship: characterize a relationship with an eye toward intervention or a better understanding of how a mechanism works.\n\nGiven a research question, identify whether it corresponds to a prediction setting or a relationship setting.\n\n\n\n\n\n\n\nExamples (to be moved to NTI)\n\n\n\n\nWhat’s the risk of falling ill? [Prediction]\nHow will the risk of falling ill change if we eat more broccholi? [Relationship]\nIs there any reason to believe, based on the evidence at hand, that we should look more deeply into the possible benefits of broccholi? [Relationship]"
   },
   {
-    "objectID": "outline.html#dtk-comments-on-warners-outline",
-    "href": "outline.html#dtk-comments-on-warners-outline",
-    "title": "Evolving outline for Stats 300",
-    "section": "DTK comments on Warner’s outline",
-    "text": "DTK comments on Warner’s outline\n\nSIDS part I\n\nSuggest we soft pedal the histograms in favor of density, similarly violin plots instead of box-and-whiskers.\nFour-five days on relational operations sounds right.\nMake case study about coding and cleaning data, with students transcribing data from archival records (Examples from History Dept). Also, accessing online data such as from World Bank (Political Science wants this), wide to long. 3 days.\n\nSIDS part II\n\nTime frame sounds right.\nAdd a component about prediction and classification. CART, logistic regression\nIntroduce decision theory here: loss function, ROC\n\nand 4. SIDS part III\n\nEighteen days is too long to spend on p-values and CIs. I suggest we budget 6 days.\nBefore doing inference based on sampling variation, let’s have a 6-day unit on covariates, adjustment, study design as a way to deal with unknown covariates (e.g. case control), cross-sectional versus longitudinal\nThen do CIs and p-values, lightly, emphasizing that they have little or nothing to say unless you get the study design right and deal with covariates.\nEven though I’m suggesting adding prediction and classification in Block 2, I think that techniques like cross-validation do not need to be covered.\n\n\nOverall, I think that our emphasis should be that the hard and creative work of learning from data is collecting/wrangling, visualizing, modeling, and dealing with covariates. Once the thought and creativity and hard work has been done, use p-values and CIs as a sanity check, not as a primary form of analysis. Emphasize loss functions and the trade-off between the different types of error when making conclusions."
+    "objectID": "schedule-of-objectives.html#gaming-intro",
+    "href": "schedule-of-objectives.html#gaming-intro",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Lesson 20: Reality versus gaming",
+    "text": "Lesson 20: Reality versus gaming\n\nUnderstand that gaming is a way of improving our skills and identifying potential opportunities and problems.\nEnumerate the four stages of the games we will use and identify which ones correspond to non-gaming, real-world work with data.\n\n\n\n\n\n\n\nThe Four Stages (to be moved to NTI)\n\n\n\n\nbuilding the deck: Instructors provide a simulation of a mechanism that generates rows of a data frame.\nthe deal: Some of these rows will be dealt to you, constituting the data you have to work with. [real-world]\nthe play: Build models and extract results. [real-world]\nthe reveal: Compare your results from (iii) either to the mechanism given in (i) or to more data generated by the simulation.\n\n\n\n\nDistinguish between a sample, a row, and a sample of samples."
   },
   {
-    "objectID": "fall2022.html",
-    "href": "fall2022.html",
-    "title": "Fall 2022 Edition",
-    "section": "",
-    "text": "Explanation This is an annotated schedule of the Fall 2022 edition of Math 300, the first semester when it’s being taught from the Modern Dive textbook. The annotations refer to proposed changes for Spring 2023.\nThis schedule, based on this Teams file, is current as of Sept 9, 2022. This document will be updated to reflect any re-arrangement of the Math 300 Fall 2022 schedule."
+    "objectID": "schedule-of-objectives.html#lesson-21-dags-noise-and-simulation-nti",
+    "href": "schedule-of-objectives.html#lesson-21-dags-noise-and-simulation-nti",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Lesson 21: DAGs, noise, and simulation NTI",
+    "text": "Lesson 21: DAGs, noise, and simulation NTI\n\nDetermine whether a proposed graph is directed and acyclic.\nRead notation to identify response variable, explanatory variable, covariates, and effect sizes.\nCharacterize the magnitude of random noise.\nGenerate data from simulations and summarize variables individually."
   },
   {
-    "objectID": "fall2022.html#block-1-data-graphics-and-wrangling",
-    "href": "fall2022.html#block-1-data-graphics-and-wrangling",
-    "title": "Fall 2022 Edition",
-    "section": "Block 1: Data, Graphics, and Wrangling",
-    "text": "Block 1: Data, Graphics, and Wrangling\n\nData with R\n\nReading: MD1 Chapter 1\nHomework: LC2 1.1 - 1.7\n\n\nScatterplots\n\nReading: MD §2 - 2.3\n\nHomework: LC 2.1 - 2.8\n\n\nLinegraphs, Histograms, and Facets\n\nReading: MD §2.4 - 2.6\n\nHomework: LC 2.9 -2.21\n\n\nBoxplots and Barcharts\n\nReading: §2.7 - 2.9\n\nHomework: LC 2.22 - 2.37\n\n\nfilter and summarize\n\nReading: MD §3 - 3.3\n\nHomework:\n\nLC 3.1 - 3.4,\nProblem Set 1\n\n\ngroup_by, mutate, and arrange\n\nReading: MD §3.4 - 3.6\n\nHomework LC 3.5 - 3.12\n\n\njoin, select, rename, and top_n\n\nReading: MD §3.7 - 3.9\n\nHomework: LC 3.13 - 3.20\n\n\nImporting Data\n\nReading: MD §4 - 4.2\n\nHomework: LC 4.1 - 4.3\n\n\nCase Study/ Review\n\nReading: 4.3 - 4.5\n\nHomework:\n\nLC 4.4 - 4.5\nProblem Set 2\n\n\nGR 1 (Chapters 1-4)"
+    "objectID": "schedule-of-objectives.html#lesson-22-sampling-variation",
+    "href": "schedule-of-objectives.html#lesson-22-sampling-variation",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Lesson 22: Sampling variation",
+    "text": "Lesson 22: Sampling variation\n\nImplement on the computer a procedure to generate a sample, calculate a regression model, and produce a summary.\nIterate the procedure and collect the summaries across iterations.\nGraphically display the distribution of summaries and generate a compact numerical description (“confidence interval”) of the sampling distribution."
   },
   {
-    "objectID": "fall2022.html#block-2-regression",
-    "href": "fall2022.html#block-2-regression",
-    "title": "Fall 2022 Edition",
-    "section": "Block 2: Regression",
-    "text": "Block 2: Regression\n\nSLR3 - Continuous x\n\nReading: §5 - 5.1\nHomework: LC 5.1 - 5.3\n\n\nSLR - Discrete x\n\nReading: §5.2\nHomework: LC 5.4 - 5.7\n\n\nSLR - Related Topics\n\nReading: §5.3 - 5.4\nHomework: LC 5.8\n\n\nMultiple Regression - Numerical & Discrete\n\nReading: §6 - 6.1\nHomework:\n\nLC 6.1\n\nProblem Set 3\n\n\nMultiple Regression - Two Numerical\n\nReading: §6.2\nHomework: LC 6.2 - 6.3\n\n\nMultiple Regression - Related Topics\n\nReading: §6.3\n\n\nMultiple Regression Conclusion/Review\n\nReading: §6.4\n\nHomework: PS 4\n\nGR 2 (Chapters 5-6) GR 2"
+    "objectID": "schedule-of-objectives.html#lesson-23-estimate-sampling-variation-from-a-single-sample",
+    "href": "schedule-of-objectives.html#lesson-23-estimate-sampling-variation-from-a-single-sample",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Lesson 23: Estimate sampling variation from a single sample",
+    "text": "Lesson 23: Estimate sampling variation from a single sample\n\nUse bootstrapping to estimate sampling variation.\nInfer sampling variation from a regression table."
   },
   {
-    "objectID": "fall2022.html#block-3-sampling-variability-and-confidence-intervals",
-    "href": "fall2022.html#block-3-sampling-variability-and-confidence-intervals",
-    "title": "Fall 2022 Edition",
-    "section": "Block 3: Sampling variability and confidence intervals",
-    "text": "Block 3: Sampling variability and confidence intervals\n\nSampling\n\nReading: §7 - 7.2\nHomework: LC 7.1 - 7.7\n\n\nSampling Framework\n\nReading: §7.3\nHomework: LC 7.8 - 7.20\n\n\nCase Study\n\nReading: §7.4\nHomework: LC 7.21 - 7.24\n\n\nCLT, Normal Distribution\n\nReading: §A.2, 7.5 - 7.6\n\nHomework: LCA.1, LCA.2\n\n\nBootstrap Intro\n\nReading: §8 - 8.2\nHomework:\n\nLC 8.1 - 8.2\n\nProblem Set 5\n\n\nUnderstanding CI\n\nReading: §8.3\nHomework: LC 8.3 - 8.4\n\n\nConstructing CI\n\nReading: §8.4\nHomework: LC 8.5\n\n\nInterpreting CI\n\nReading: §8.5\n\n\nCase Study\n\nReading: §8.6\n\nHomework: Problem Set 6\n\nGR 3 (Chapters 7-8) GR3"
+    "objectID": "schedule-of-objectives.html#lesson-24-effect-size",
+    "href": "schedule-of-objectives.html#lesson-24-effect-size",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Lesson 24: Effect size",
+    "text": "Lesson 24: Effect size\n\nEstimate an effect size from a regression model of the two variables.\nConstruct a confidence interval on the effect size.\nEvaluate whether confidence interval indicates that estimated effect size is consistent with simulation.\nUnderstand and use scaling of confidence interval length as a function of \\(n\\)."
   },
   {
-    "objectID": "fall2022.html#block-4-hypothesis-tests",
-    "href": "fall2022.html#block-4-hypothesis-tests",
-    "title": "Fall 2022 Edition",
-    "section": "Block 4: Hypothesis tests",
-    "text": "Block 4: Hypothesis tests\n\nPermutation Tests\n\nReading: §9 - 9.1\n\n\nConducting Hypothesis Tests\n\nReading: §9.2 - 9.3\n\nHomework: LC 9.1 - 9.4\n\n\nInterpreting Hypothesis Tests\n\nReading: §9.4\nHomework: LC 9.5 - 9.8\n\n\nCase Study\n\nReading: §9.5\nHomework: LC 9.9 - 9.15\n\n\nMore on Hypothesis Tests\n\nReading: §9.6\n\n\nInterpreting Regression Tables\n\nReading: §10 - 10.2\n\nHomework: Problem Set 7\n\nRegression Assumptions\n\nReading: §10.3\n\nHomework: LC 10.1\n\nRegression Inference via Simulation\n\nReading: §10.4\n\nHomework: LC 10.2\n\nSummary\n\nReading: §10.5\n\nHomework: PS 8\n\nGR 4 (Chapters 9-10) GR 4\nCase Study\n\nReading: §11 - 11.2\n\nHomework: LC 11.1\n\nInference Examples\n\nReading: B (???)"
+    "objectID": "schedule-of-objectives.html#lesson-25-mechanics-of-prediction",
+    "href": "schedule-of-objectives.html#lesson-25-mechanics-of-prediction",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Lesson 25: Mechanics of prediction",
+    "text": "Lesson 25: Mechanics of prediction\n\nGiven a sample from a DAG simulation, construct a predictor function for a specified response variable.\nUse the predictor function to estimate prediction error on a given DAG sample and summarize with root mean square (RMS) error.\nDistinguish between in-sample and out-of-sample prediction estimates of prediction error."
   },
   {
-    "objectID": "objectives-diffs.html#lesson-19",
-    "href": "objectives-diffs.html#lesson-19",
-    "title": "Stat 300 objectives vs Stat 300Z",
-    "section": "Lesson 19",
-    "text": "Lesson 19\n\n\n\n\n\n\n\n\nStat 300 Lesson 19\n\n\n\n\nExplain the need for randomization in sampling.\nExplain the impact of sample size on the sample distribution and number of replications on the sampling procedure.\nUsing a sampling distribution, make decisions about the population. In other words, understanding the effect of sampling variation on our estimates.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 19\n\n\n\n\nUse and explain the terms accuracy and precision and the technical terms bias and variance.\nCarry out (using software) a multiple regression and interpret the coefficients as marginal effects.\nDemonstrate sampling variation using sub-sampling on simple and multiple-regression model coefficients."
+    "objectID": "schedule-of-objectives.html#lesson-26-constructing-a-prediction-interval",
+    "href": "schedule-of-objectives.html#lesson-26-constructing-a-prediction-interval",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Lesson 26: Constructing a prediction interval",
+    "text": "Lesson 26: Constructing a prediction interval\n\nIdentify the two components that make up a prediction error, one that scales with \\(n\\) and the other that doesn’t."
   },
   {
-    "objectID": "objectives-diffs.html#lesson-20",
-    "href": "objectives-diffs.html#lesson-20",
-    "title": "Stat 300 objectives vs Stat 300Z",
-    "section": "Lesson 20",
-    "text": "Lesson 20\n\n\n\n\n\n\n\n\nStat 300 Lesson 20\n\n\n\n\nKnow and correctly use the terminology and notation for the sampling concepts such as population, census, point estimate, biased, etc.\nExplain the impact of sample size on the sample distribution and number of replications on the sampling procedure.\nUse and explain the terms accuracy and precision in the context of sampling.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 20\n\n\n\n\nREWRITE: Terminology of covariates, confounders …\nBe able to provide an example and explanation of Simpson’s paradox.\nThree"
+    "objectID": "schedule-of-objectives.html#lesson-27-covariates",
+    "href": "schedule-of-objectives.html#lesson-27-covariates",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Lesson 27: Covariates",
+    "text": "Lesson 27: Covariates\n\nShow that including covariates in a prediction model always reduces in-sample mean square residual, but may not reduce residuals out-of-sample.\nGiven regression coefficients, calculate model degrees of freedom and residual degrees of freedom.\nCalculate amount of in-sample mean square error reduction to be expected with a useless (random) covariate. (Residual sum of squares divided by residual degrees of freedom.)"
   },
   {
-    "objectID": "objectives-diffs.html#lesson-21",
-    "href": "objectives-diffs.html#lesson-21",
-    "title": "Stat 300 objectives vs Stat 300Z",
-    "section": "Lesson 21",
-    "text": "Lesson 21\n\n\n\n\n\n\n\n\nStat 300 Lesson 21\n\n\n\n\nGiven a sampling scenario, discuss issues such as accuracy and precision as they relate to generalization to the population of interest.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 21\n\n\n\n\nSimulating simple DAGs.\nConstruct regression models on simulated data and interpret coefficients as consistent or inconsistent with the generating DAG.\nInterpret DAGs as a causal hypothesis."
+    "objectID": "schedule-of-objectives.html#lesson-28-covariates-eat-variance",
+    "href": "schedule-of-objectives.html#lesson-28-covariates-eat-variance",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Lesson 28: Covariates eat variance",
+    "text": "Lesson 28: Covariates eat variance\n\nConstruct F statistic as ratio of incremental increase in model mean square due to model term(s) divided by residual mean square.\nUse software to construct ANOVA report and correctly interpret F statistics for prediction model term selection."
   },
   {
-    "objectID": "objectives-diffs.html#lesson-22",
-    "href": "objectives-diffs.html#lesson-22",
-    "title": "Stat 300 objectives vs Stat 300Z",
-    "section": "Lesson 22",
-    "text": "Lesson 22\n\n\n\n\n\n\n\n\nStat 300 Lesson 22\n\n\n\n\nExplain the central limit theorem.\nFor a normal distribution, use R to find probabilities and percentiles.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 22\n\n\n\n\nOne\nTwo\nThree"
+    "objectID": "schedule-of-objectives.html#lesson-29-confounding",
+    "href": "schedule-of-objectives.html#lesson-29-confounding",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Lesson 29: Confounding",
+    "text": "Lesson 29: Confounding\n\nIdentify confounding in a DAG\nChoose whether to include covariate depending on form of DAG"
   },
   {
-    "objectID": "objectives-diffs.html#lesson-23",
-    "href": "objectives-diffs.html#lesson-23",
-    "title": "Stat 300 objectives vs Stat 300Z",
-    "section": "Lesson 23",
-    "text": "Lesson 23\n\n\n\n\n\n\n\n\nStat 300 Lesson 23\n\n\n\n\nExplain the concept of a bootstrap distribution using proper terminology and notation.\nUse R to find the bootstrap distribution of a sample statistic.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 23\n\n\n\n\nOne\nTwo\nThree"
+    "objectID": "schedule-of-objectives.html#lesson-30-non-causal-correlation",
+    "href": "schedule-of-objectives.html#lesson-30-non-causal-correlation",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Lesson 30: Non-causal correlation",
+    "text": "Lesson 30: Non-causal correlation\n\nDistinguish “common cause” and “collider” forms of DAG.\nConstruct appropriate DAG to match a narrative hypothesis."
   },
   {
-    "objectID": "objectives-diffs.html#lesson-24",
-    "href": "objectives-diffs.html#lesson-24",
-    "title": "Stat 300 objectives vs Stat 300Z",
-    "section": "Lesson 24",
-    "text": "Lesson 24\n\n\n\n\n\n\n\n\nStat 300 Lesson 24\n\n\n\n\nExplain how to construct a confidence interval using both the percentile method and the standard error method including assumptions. *DK note: Unless you want to emphasize the normal distribution, this is a technical issue and shouldn’t be prioritized.\nExplain how changing the confidence level impacts the width of a confidence interval.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 24\n\n\n\n\nOne\nTwo\nThree"
+    "objectID": "schedule-of-objectives.html#lesson-31-experiment-and-random-assignment",
+    "href": "schedule-of-objectives.html#lesson-31-experiment-and-random-assignment",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Lesson 31: Experiment and random assignment",
+    "text": "Lesson 31: Experiment and random assignment\n\nProperly use nomenclature of experiment.\nCorrectly re-draw DAG for an ideal experimental intervention.\nUse blocking to set assignment to treatment or control."
   },
   {
-    "objectID": "objectives-diffs.html#lesson-25",
-    "href": "objectives-diffs.html#lesson-25",
-    "title": "Stat 300 objectives vs Stat 300Z",
-    "section": "Lesson 25",
-    "text": "Lesson 25\n\n\n\n\n\n\n\n\nStat 300 Lesson 25\n\n\n\n\nConstruct bootstrap percentile and standard error confidence intervals for a single mean or median using the infer package.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 25\n\n\n\n\nOne\nTwo\nThree"
+    "objectID": "schedule-of-objectives.html#lesson-32-measuring-and-accumulating-risk",
+    "href": "schedule-of-objectives.html#lesson-32-measuring-and-accumulating-risk",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Lesson 32: Measuring and accumulating risk",
+    "text": "Lesson 32: Measuring and accumulating risk\n\nDistinguish between absolute and relative risk and identify when a change in risk is being presented as absolute or relative.\nCalculate and correctly interpret other presentations of differences in risk: population attributable fraction, NTT, odds ratio.\nInterpret effect size as stated in log odds."
   },
   {
-    "objectID": "objectives-diffs.html#lesson-26",
-    "href": "objectives-diffs.html#lesson-26",
-    "title": "Stat 300 objectives vs Stat 300Z",
-    "section": "Lesson 26",
-    "text": "Lesson 26\n\n\n\n\n\n\n\n\nStat 300 Lesson 26\n\n\n\n\nCorrectly interpret a confidence interval to include identifying incorrect statements.\nExplain the factors that impact the width of a confidence interval.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 26\n\n\n\n\nOne\nTwo\nThree"
+    "objectID": "schedule-of-objectives.html#lesson-33-constructing-a-classifier",
+    "href": "schedule-of-objectives.html#lesson-33-constructing-a-classifier",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Lesson 33: Constructing a classifier",
+    "text": "Lesson 33: Constructing a classifier\n\nBuild a classifier from case-control data.\nCross-tabulate classifier results versus true state. Evaluate false-positive rate, false-negative rate, accuracy.\nCalculate different forms of conditional probability: p(A|B) versus p(B|A) and identify which form of conditional probability is useful for prediction of an individual’s outcome."
   },
   {
-    "objectID": "objectives-diffs.html#lesson-27",
-    "href": "objectives-diffs.html#lesson-27",
-    "title": "Stat 300 objectives vs Stat 300Z",
-    "section": "Lesson 27",
-    "text": "Lesson 27\n\n\n\n\n\n\n\n\nStat 300 Lesson 27\n\n\n\n\nCalculate, using both percentile and standard error methods, confidence intervals for a difference of two proportions.\nCalculate a normal-based, theory-based, confidence interval for a single proportion or mean.\nCorrectly use all terms and notation to include standard error, margin of error, sampling distribution, and bootstrap distribution.\nCompare and contrast sampling distribution and bootstrap distribution.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 27\n\n\n\n\nOne\nTwo\nThree"
+    "objectID": "schedule-of-objectives.html#lesson-34-accounting-for-prevalence",
+    "href": "schedule-of-objectives.html#lesson-34-accounting-for-prevalence",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Lesson 34: Accounting for prevalence",
+    "text": "Lesson 34: Accounting for prevalence\n\nExplain why case-control data may not give an proper measure of “prevalence.”\nConvert"
   },
   {
-    "objectID": "objectives-diffs.html#lesson-28",
-    "href": "objectives-diffs.html#lesson-28",
-    "title": "Stat 300 objectives vs Stat 300Z",
-    "section": "Lesson 28",
-    "text": "Lesson 28\n\n\n\n\n\n\n\n\nStat 300 Lesson 28\n\n\n\nNo items listed.\n\n\n\n\n\n\n\n\nStat 300Z Lesson 28\n\n\n\n\nOne\nTwo\nThree"
+    "objectID": "schedule-of-objectives.html#lesson-35-hypothesis-testing",
+    "href": "schedule-of-objectives.html#lesson-35-hypothesis-testing",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Lesson 35: Hypothesis testing",
+    "text": "Lesson 35: Hypothesis testing\n\nUnderstand and use properly hypothesis testing nomenclature: test statistic, sampling distribution under the null, Type-1 and Type-2 error, rejection threshold, p-value\nContrast hypothesis testing versus Bayesian framework."
   },
   {
-    "objectID": "objectives-diffs.html#lesson-29",
-    "href": "objectives-diffs.html#lesson-29",
-    "title": "Stat 300 objectives vs Stat 300Z",
-    "section": "Lesson 29",
-    "text": "Lesson 29\n\n\n\n\n\n\n\n\nStat 300 Lesson 29\n\n\n\n\nExplain the permutation test and compare and contrast it with a bootstrap distribution.\nGenerate and interpret visualizations for data with two categorical variables.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 29\n\n\n\n\nOne\nTwo\nThree"
+    "objectID": "schedule-of-objectives.html#lesson-36-calculating-a-p-value",
+    "href": "schedule-of-objectives.html#lesson-36-calculating-a-p-value",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Lesson 36: Calculating a p-value",
+    "text": "Lesson 36: Calculating a p-value\n\nThe permutation test\nInterpret correctly from regression/ANOVA reports\nTraditional names for hypothesis tests in different “textbook” settings.\nDistinguish between p-value and effect size, that is, “significance” and “substance.”"
   },
   {
-    "objectID": "objectives-diffs.html#lesson-30",
-    "href": "objectives-diffs.html#lesson-30",
-    "title": "Stat 300 objectives vs Stat 300Z",
-    "section": "Lesson 30",
-    "text": "Lesson 30\n\n\n\n\n\n\n\n\nStat 300 Lesson 30\n\n\n\n\nCorrectly use terminology and notation of hypothesis testing.\nUsing the infer package, conduct a hypothesis test and interpret the results.\nCompare and contrast confidence intervals and hypothesis tests.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 30\n\n\n\n\nOne\nTwo\nThree"
+    "objectID": "schedule-of-objectives.html#lesson-37-false-discovery-with-hypothesis-testing",
+    "href": "schedule-of-objectives.html#lesson-37-false-discovery-with-hypothesis-testing",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Lesson 37: False discovery with hypothesis testing",
+    "text": "Lesson 37: False discovery with hypothesis testing\n\nIdentify signs of false discovery in a research paper.\nEstimate how overall p-value should change when study is replicated."
   },
   {
-    "objectID": "objectives-diffs.html#lesson-31",
-    "href": "objectives-diffs.html#lesson-31",
-    "title": "Stat 300 objectives vs Stat 300Z",
-    "section": "Lesson 31",
-    "text": "Lesson 31\n\n\n\n\n\n\n\n\nStat 300 Lesson 31\n\n\n\n\nCorrectly use terminology and notation of interpreting hypothesis tests.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 31\n\n\n\n\nOne\nTwo\nThree"
+    "objectID": "schedule-of-objectives.html#alternative-1",
+    "href": "schedule-of-objectives.html#alternative-1",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Alternative 1",
+    "text": "Alternative 1\nTheme: Classifiers: ROC and loss function"
   },
   {
-    "objectID": "objectives-diffs.html#lesson-32",
-    "href": "objectives-diffs.html#lesson-32",
-    "title": "Stat 300 objectives vs Stat 300Z",
-    "section": "Lesson 32",
-    "text": "Lesson 32\n\n\n\n\n\n\n\n\nStat 300 Lesson 32\n\n\n\n\nConduct and interpret a hypothesis test for the difference of two means.\nCalculate and interpret a confidence interval for the difference of two means.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 32\n\n\n\n\nOne\nTwo\nThree"
-  },
-  {
-    "objectID": "objectives-diffs.html#lesson-33",
-    "href": "objectives-diffs.html#lesson-33",
-    "title": "Stat 300 objectives vs Stat 300Z",
-    "section": "Lesson 33",
-    "text": "Lesson 33\n\n\n\n\n\n\n\n\nStat 300 Lesson 33\n\n\n\n\nStandardize a variable.\nFind percentile and probabilities for the t distribution; this includes determining the correct degrees of freedom.\nUse the infer package to conduct a theory-based hypothesis test.\nKnow and verify the assumptions of the two-sample t-test.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 33\n\n\n\n\nOne\nTwo\nThree"
-  },
-  {
-    "objectID": "objectives-diffs.html#lesson-34",
-    "href": "objectives-diffs.html#lesson-34",
-    "title": "Stat 300 objectives vs Stat 300Z",
-    "section": "Lesson 34",
-    "text": "Lesson 34\n\n\n\n\n\n\n\n\nStat 300 Lesson 34\n\n\n\n\nBuild and interpret a regression table and use correct terminology.\nWrite the hypotheses from the regression table.\nUse the p-value from a regression table to make a decision about the relationship between the explanatory and response variables.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 34\n\n\n\n\nUse software to build regression and ANOVA tables from linear regression.\nInterpret a regression table in terms of parameters, confidence intervals, and coefficient-wise p-values.\nInterpret an ANOVA table as a whole-model summary.\nUse ANOVA for model selection among nested models."
-  },
-  {
-    "objectID": "objectives-diffs.html#lesson-35",
-    "href": "objectives-diffs.html#lesson-35",
-    "title": "Stat 300 objectives vs Stat 300Z",
-    "section": "Lesson 35",
-    "text": "Lesson 35\n\n\n\n\n\n\n\n\nStat 300 Lesson 35\n\n\n\n\nExplain and test the assumptions for inference in a linear regression model.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 35\n\n\n\n\nOne\nTwo\nThree"
-  },
-  {
-    "objectID": "objectives-diffs.html#lesson-36",
-    "href": "objectives-diffs.html#lesson-36",
-    "title": "Stat 300 objectives vs Stat 300Z",
-    "section": "Lesson 36",
-    "text": "Lesson 36\n\n\n\n\n\n\n\n\nStat 300 Lesson 36\n\n\n\n\nConstruct and interpret bootstrap confidence intervals, both percentile and standard error method, for regression parameters such as slope and correlation coefficient.\nConduct and interpret a permutation test on the regression slope parameter.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 36\n\n\n\n\nOne\nTwo\nThree"
-  },
-  {
-    "objectID": "objectives-diffs.html#lesson-37",
-    "href": "objectives-diffs.html#lesson-37",
-    "title": "Stat 300 objectives vs Stat 300Z",
-    "section": "Lesson 37",
-    "text": "Lesson 37\n\n\n\n\n\n\n\n\nStat 300 Lesson 37\n\n\n\n\nUse the output of a regression table to conduct a hypothesis test and build a confidence interval for the slope parameter from a linear regression model.\n\n\n\n\n\n\n\n\n\nStat 300Z Lesson 37\n\n\n\n\nOne\nTwo\nThree"
+    "objectID": "schedule-of-objectives.html#alternative-2",
+    "href": "schedule-of-objectives.html#alternative-2",
+    "title": "Day-by-day Objectives for Math 300R",
+    "section": "Alternative 2",
+    "text": "Alternative 2\nTheme: Accumulating risk: Logistic regression"
   }
 ]

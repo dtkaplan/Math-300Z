@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2022-04-25">
 
-<title>Stat-300 - Evolving outline for Stats 300</title>
+<title>Proposal for Math 300 Revisions - Notes to Instructors</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,7 +65,7 @@ ul.task-list{list-style: none;}
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Stat-300</span>
+    <span class="navbar-title">Proposal for Math 300 Revisions</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
@@ -77,13 +76,10 @@ ul.task-list{list-style: none;}
     <a class="nav-link" href="./index.html">Home</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./fall2022.html">Fall 2022 Edition</a>
+    <a class="nav-link" href="./schedule-of-objectives.html">Objectives</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">About</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="./outline.html" aria-current="page">Evolving outline for Stats 300</a>
+    <a class="nav-link active" href="./NTIs.html" aria-current="page">NTIs</a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -101,7 +97,7 @@ ul.task-list{list-style: none;}
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Evolving outline for Stats 300</h1>
+<h1 class="title">Notes to Instructors</h1>
 </div>
 
 
@@ -109,83 +105,15 @@ ul.task-list{list-style: none;}
 <div class="quarto-title-meta">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">April 25, 2022</p>
-    </div>
-  </div>
     
   </div>
   
 
 </header>
 
-<p>Textbook: Ismay &amp; Kim <em><a href="https://moderndive.com/index.html">Statistical Inference via Data Science</a></em> (“SIDS” for short)</p>
-<p>Software: R, which the textbook is based on and which is used in Math 141/142Z</p>
-<p>Supplemental readings:</p>
-<ul>
-<li>Hardin &amp; Cetinkaya-Rundel <em><a href="https://www.openintro.org/go?id=ims_online&amp;referrer=/book/ims/index.php">Introduction to Modern Statistics</a></em> (“IMS” for short) Out of 27 chapters, I’ll suggest 3:
-<ul>
-<li>Chapter 2 study design</li>
-<li>Chapter 4 categorical data</li>
-<li>Chapter 9 logistic regression</li>
-</ul></li>
-<li>(To be developed) prediction and classification methods, incl.&nbsp;CART and logistic regression</li>
-<li>(To be developed) introduction to decisions (context: prediction and classification), sensitivity, specificity, loss function, ROC</li>
-<li>(To be developed) Covariates and causality. Multiple explanations are available: many ways to build a predictor. Minimizing prediction error versus explanation of mechanism. Study designs such as case/control. Cross-section versus longitudinal.</li>
-<li>(To be developed based on <em><a href="https://dtkaplan.github.io/CompactInference/">Compact Inference</a></em>) A much streamlined coverage of inference: build model, find R<sup>2</sup> then F, see if 3 &lt; F. For exploration, propose change to model and look at the change of F.</li>
-</ul>
-<section id="bradley-warners-outline-from-14-apr-2022." class="level2">
-<h2 class="anchored" data-anchor-id="bradley-warners-outline-from-14-apr-2022.">Bradley Warner’s <a href="https://usafa0-my.sharepoint.com/personal/bradley_warner_afacademy_af_edu/Documents/Microsoft%20Teams%20Chat%20Files/Bullet%20Paper%20-%20Core%20Stats.pdf?login_hint=Daniel.Kaplan%40afacademy.af.edu">outline</a> from 14 Apr 2022.</h2>
-<p>Four blocks to the semester, each with a QR.</p>
-<ol type="1">
-<li>Statistical graphics, wrangling, importing. SIDS Part I (Chaps. 1, 2, 3, 4)
-<ul>
-<li>12 class days (including GR)</li>
-</ul></li>
-<li>Regression. SIDS Part II (Chaps. 5, 6)
-<ul>
-<li>8 class days (including GR)</li>
-</ul></li>
-<li>Confidence intervals. SIDS Part III (Chaps. 7, 8)
-<ul>
-<li>7 class days (including GR)</li>
-</ul></li>
-<li>Hypothesis testing. SIDS Part III (cont.) (Chaps. 9, 10)
-<ul>
-<li>11 class days (including GR)</li>
-</ul></li>
-</ol>
-<p>Two end-of-semester days for case-study, more examples.</p>
-</section>
-<section id="dtk-comments-on-warners-outline" class="level2">
-<h2 class="anchored" data-anchor-id="dtk-comments-on-warners-outline">DTK comments on Warner’s outline</h2>
-<ol type="1">
-<li>SIDS part I
-<ul>
-<li>Suggest we soft pedal the histograms in favor of density, similarly violin plots instead of box-and-whiskers.</li>
-<li>Four-five days on relational operations sounds right.</li>
-<li>Make case study about coding and cleaning data, with students transcribing data from archival records (Examples from History Dept). Also, accessing online data such as from World Bank (Political Science wants this), wide to long. 3 days.</li>
-</ul></li>
-<li>SIDS part II
-<ul>
-<li>Time frame sounds right.</li>
-<li>Add a component about prediction and classification. CART, logistic regression</li>
-<li>Introduce decision theory here: loss function, ROC</li>
-</ul></li>
-<li>and 4. SIDS part III
-<ul>
-<li>Eighteen days is too long to spend on p-values and CIs. I suggest we budget 6 days.</li>
-<li>Before doing inference based on sampling variation, let’s have a 6-day unit on covariates, adjustment, study design as a way to deal with unknown covariates (e.g.&nbsp;case control), cross-sectional versus longitudinal</li>
-<li>Then do CIs and p-values, lightly, emphasizing that they have little or nothing to say unless you get the study design right and deal with covariates.</li>
-<li>Even though I’m suggesting adding prediction and classification in Block 2, I think that techniques like cross-validation do not need to be covered.</li>
-</ul></li>
-</ol>
-<p>Overall, I think that our emphasis should be that the hard and creative work of learning from data is collecting/wrangling, visualizing, modeling, and dealing with covariates. Once the thought and creativity and hard work has been done, use p-values and CIs as a sanity check, not as a primary form of analysis. Emphasize loss functions and the trade-off between the different types of error when making conclusions.</p>
+<p>Links to NTIs will go here and in the day-to-day objectives.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
