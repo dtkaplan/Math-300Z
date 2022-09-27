@@ -18,28 +18,35 @@
     "href": "NTI/Math300R-Lesson21.html#lesson",
     "title": "Math 300R NTI Lesson 21",
     "section": "Lesson",
-    "text": "Lesson\nRemember that you will be running this more like a lab than a lecture. You want them using R and answering questions. Have them open the notes rmd and work through it together.\n\nProlog: Review notation for DAGs and noise. Show how to generate data use the run_dag() function.\n\n\n\n\n\n\n\nRunning a DAG simulation\n\n\n\n\nrun_dag(RTM)\nshow_dag(RTM)\n\n\n\n\nWork through the learning checks LCA.1 - LCA.2.\nA DAG for “regression to the mean.”\n\nAsk what “regression” means in everyday English\nProvide some history of the idea and point out that this is where the name “regression” comes from for the method of fitting a linear model linking a response variable to explanatory variable(s).\nShow this DAG and ask what students think the consequences will be: what’s the relationship between the parents’ height and the (adult) child’s height.\n\n\n\\[\\epsilon \\rightarrow parent \\longleftarrow GENES \\longrightarrow child \\leftarrow \\nu\\]\n\n\n\n\n\n\nSimulation: Regression to the mean\n\n\n\n\nrtm <- tibble(genes = 64 + rnorm(1000), \n              parent = genes + 0.5*rnorm(1000), \n              child  = genes + 0.5*rnorm(1000))\nmod <- lm(child ~ parent, data = rtm) \nmod\n\n\nCall:\nlm(formula = child ~ parent, data = rtm)\n\nCoefficients:\n(Intercept)       parent  \n    11.1719       0.8258  \n\n# Convert this to ggplot2\ngf_point(child ~ parent, data = rtm) %>%\n  gf_lm(interval=\"confidence\") %>%\n  gf_abline(intercept = 0, slope = 1, color=\"red\")\n\n\n\n\nInterpret the coefficient and the graph.\n\nWhat’s the mean for the children and for the parents? [64 inches for each]\nThe red line runs along the diagonal. It reflects the statement that the children are, on average, the same as the parents.\nThe blue line is the regression model. The children are, on average, closer to the mean than the parents.\n\n\n\n\n\nLC A.1 (Objective 2)\n[NOTE in DRAFT: These are the learning objectives from Bradley Warner’s notes, retained here simply to remind me of the format for the NTIs.]\nLC XX.XX Say you have a normal distribution with mean \\(\\mu=6\\) and standard deviation \\(\\sigma=3\\). What proportion of the area under the normal curve is less than 3? Greater than 12? Between 0 and 12?\nSolution:\n\nLess than 3: 3 is one standard deviation less than the mean of 6, since \\(\\frac{3 - \\mu}{\\sigma} = \\frac{3-6}{3} = -1\\). Thus we compute the area to the left of z = -1 in Figure A.2: 0.15% + 2.35% + 13.5% = 16%.\n\n\npnorm(3,mean=6,sd=3)\n\n[1] 0.1586553\n\n\n\nGreater than 12: 12 is two standard deviations greater than the mean of 6, since \\(\\frac{12 - \\mu}{\\sigma} = \\frac{12-6}{3} = 2\\), we compute the area to the right of z = 2 in Figure A.2: 2.35% + 0.15% = 2.5%.\n\n\npnorm(12,mean=6,sd=3,lower.tail = FALSE)\n\n[1] 0.02275013\n\n\n\nBetween 0 and 12: 0 is two standard deviations less than the mean of 6, since \\(\\frac{0 - \\mu}{\\sigma} = \\frac{0-6}{3} = -2\\). Thus we compute the area between z = -2 and z = +2 in Figure A.2: 13.5% + 34% + 34% + 13.5% = 95%.\n\n\npnorm(12,mean=6,sd=3)-pnorm(0,mean=6,sd=3)\n\n[1] 0.9544997\n\n\n\n\nLC A.2 (Objective 2)\n`r LC XX.YY (Same normal distribution.) What is the 2.5th percentile of the area under the normal curve? The 97.5th percentile? The 100th percentile?\nSolution:\n\n2.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% = 2.5%, the 2.5th percentile is z = - 2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations lower than the mean: \\(\\mu - 2 \\cdot\\sigma = 6 - 2 \\cdot 3 = 0\\).\n\n\nqnorm(.025,mean=6,sd=3)\n\n[1] 0.120108\n\n\nThis is not 0 since the figure is an approximation.\n\n97.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% + 13.5% + 34% + 34% + 13.5% = 97.5%, the 97.5th percentile is z = +2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations higher than the mean: \\(\\mu + 2 \\cdot\\sigma = 6 + 2 \\cdot 3 = 12\\).\n\n\nqnorm(.975,mean=6,sd=3)\n\n[1] 11.87989\n\n\n\n100th percentile: \\(+\\infty\\). In other words, 100% of values will be less than positive infinity.\n\n\nqnorm(1,mean=6,sd=3)\n\n[1] Inf"
+    "text": "Lesson\nRemember that you will be running this more like a lab than a lecture. You want them using R and answering questions. Have them open the notes rmd and work through it together.\n\nProlog: Review notation for DAGs and noise. Show how to generate data use the run_dag() function.\n\n\n\n\n\n\n\nRunning a DAG simulation\n\n\n\n\nrun_dag(RTM)\nshow_dag(RTM)\n\n\n\n\nWork through the learning checks LCA.1 - LCA.2.\nA DAG for “regression to the mean.”\n\nAsk what “regression” means in everyday English\nProvide some history of the idea and point out that this is where the name “regression” comes from for the method of fitting a linear model linking a response variable to explanatory variable(s).\nShow this DAG and ask what students think the consequences will be: what’s the relationship between the parents’ height and the (adult) child’s height.\n\n\n\\[\\epsilon \\rightarrow parent \\longleftarrow GENES \\longrightarrow child \\leftarrow \\nu\\]\n\n\n\n\n\n\nSimulation: Regression to the mean\n\n\n\n\nrtm <- tibble(genes = 64 + rnorm(1000), \n              parent = genes + 0.5*rnorm(1000), \n              child  = genes + 0.5*rnorm(1000))\nmod <- lm(child ~ parent, data = rtm) \nmod\n\n\nCall:\nlm(formula = child ~ parent, data = rtm)\n\nCoefficients:\n(Intercept)       parent  \n    12.5539       0.8039  \n\n# Convert this to ggplot2\ngf_point(child ~ parent, data = rtm) %>%\n  gf_lm(interval=\"confidence\") %>%\n  gf_abline(intercept = 0, slope = 1, color=\"red\")\n\n\n\n\nInterpret the coefficient and the graph.\n\nWhat’s the mean for the children and for the parents? [64 inches for each]\nThe red line runs along the diagonal. It reflects the statement that the children are, on average, the same as the parents.\nThe blue line is the regression model. The children are, on average, closer to the mean than the parents.\n\n\n\n\n\nLC A.1 (Objective 2)\n[NOTE in DRAFT: These are the learning objectives from Bradley Warner’s notes, retained here simply to remind me of the format for the NTIs.]\nLC XX.XX Say you have a normal distribution with mean \\(\\mu=6\\) and standard deviation \\(\\sigma=3\\). What proportion of the area under the normal curve is less than 3? Greater than 12? Between 0 and 12?\nSolution:\n\nLess than 3: 3 is one standard deviation less than the mean of 6, since \\(\\frac{3 - \\mu}{\\sigma} = \\frac{3-6}{3} = -1\\). Thus we compute the area to the left of z = -1 in Figure A.2: 0.15% + 2.35% + 13.5% = 16%.\n\n\npnorm(3,mean=6,sd=3)\n\n[1] 0.1586553\n\n\n\nGreater than 12: 12 is two standard deviations greater than the mean of 6, since \\(\\frac{12 - \\mu}{\\sigma} = \\frac{12-6}{3} = 2\\), we compute the area to the right of z = 2 in Figure A.2: 2.35% + 0.15% = 2.5%.\n\n\npnorm(12,mean=6,sd=3,lower.tail = FALSE)\n\n[1] 0.02275013\n\n\n\nBetween 0 and 12: 0 is two standard deviations less than the mean of 6, since \\(\\frac{0 - \\mu}{\\sigma} = \\frac{0-6}{3} = -2\\). Thus we compute the area between z = -2 and z = +2 in Figure A.2: 13.5% + 34% + 34% + 13.5% = 95%.\n\n\npnorm(12,mean=6,sd=3)-pnorm(0,mean=6,sd=3)\n\n[1] 0.9544997\n\n\n\n\nLC A.2 (Objective 2)\n`r LC XX.YY (Same normal distribution.) What is the 2.5th percentile of the area under the normal curve? The 97.5th percentile? The 100th percentile?\nSolution:\n\n2.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% = 2.5%, the 2.5th percentile is z = - 2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations lower than the mean: \\(\\mu - 2 \\cdot\\sigma = 6 - 2 \\cdot 3 = 0\\).\n\n\nqnorm(.025,mean=6,sd=3)\n\n[1] 0.120108\n\n\nThis is not 0 since the figure is an approximation.\n\n97.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% + 13.5% + 34% + 34% + 13.5% = 97.5%, the 97.5th percentile is z = +2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations higher than the mean: \\(\\mu + 2 \\cdot\\sigma = 6 + 2 \\cdot 3 = 12\\).\n\n\nqnorm(.975,mean=6,sd=3)\n\n[1] 11.87989\n\n\n\n100th percentile: \\(+\\infty\\). In other words, 100% of values will be less than positive infinity.\n\n\nqnorm(1,mean=6,sd=3)\n\n[1] Inf"
   },
   {
     "objectID": "NTI/Math300R-Lesson21.html#documenting-software",
     "href": "NTI/Math300R-Lesson21.html#documenting-software",
     "title": "Math 300R NTI Lesson 21",
     "section": "Documenting software",
-    "text": "Documenting software\n\nFile creation date: 2022-09-24\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
+    "text": "Documenting software\n\nFile creation date: 2022-09-27\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson20.html",
+    "href": "NTI/Math300R-Lesson20.html",
+    "title": "Math 300R NTI Lesson 20",
+    "section": "",
+    "text": "Understand that gaming is a way of improving our skills and identifying potential opportunities and problems.\nExamine a graph to determine if it is a directed acyclic graph (DAG).\nDistinguish between a sample, a summary of a sample, and a sample of summaries of samples."
   },
   {
     "objectID": "NTI/Math300R-Lesson20.html#reading",
     "href": "NTI/Math300R-Lesson20.html#reading",
     "title": "Math 300R NTI Lesson 20",
     "section": "Reading",
-    "text": "Reading\nTBD"
+    "text": "Reading\nTBD\nReading note sketches"
   },
   {
     "objectID": "NTI/Math300R-Lesson20.html#lesson",
     "href": "NTI/Math300R-Lesson20.html#lesson",
     "title": "Math 300R NTI Lesson 20",
     "section": "Lesson",
-    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Sat Sep 24 16:44:39 2022\"\n\n\n\n\nThis is just a template."
+    "text": "Lesson\n\n\n\n\n\n\nSetup\n\n\n\nThe software for generating the simulations, and which contains a library of different scenarios, is in the package {dagsim}.\n\nlibrary(dagsim)\nlibrary(mosaic)\n\n\n\n\nIntroduce the idea of a directed acyclic graph (DAG), starting with simple networks, for instance\n\n\\[ Y \\longleftarrow X\\ \\ \\ \\ \\ \\text{or}\\ \\ \\ \\ \\ \\ C \\longrightarrow Y \\longleftarrow X\\]\n\nShow a graph that isn’t a DAG, that is, is cyclic.\nHave students generate some data from a DAG from the {dagsim} library.\n\n\n\n\n\n\n\nExample\n\n\n\n\ndag02\n\n[[1]]\nx ~ eps()\n\n[[2]]\na ~ eps()\n\n[[3]]\ny ~ x + a + eps()\n\ndagsim(dag02, nrow=6)\n\n# A tibble: 6 × 3\n        x      a      y\n    <dbl>  <dbl>  <dbl>\n1  0.864   0.288  2.41 \n2 -0.0267 -0.983 -0.579\n3 -0.514  -2.24  -2.08 \n4  2.50   -0.543  1.01 \n5 -0.409   0.258 -0.561\n6 -2.28   -0.398 -2.63 \n\nlm(y ~ x, data = dagsim(dag02, nrow=100)) %>% coefficients()\n\n(Intercept)           x \n-0.03335752  0.83781025 \n\n\n\n\n\n\n\n\n\n\nActivity\n\n\n\n\nWhat happens when you use the model y ~ x + a? Interpret those coefficients. Are they consistent with the DAG?\nAre x and a related to one another? What does the DAG say about this? What does the model a ~ x say.\n\n\n\nSometimes we are going to have to generate many simulations. The do() syntax is useful for this:\n\ndo(5) * 1\n\n  result\n1      1\n2      1\n3      1\n4      1\n5      1\n\n# a sample of 3 dice outcomes\nsample(1:6, 3, replace=TRUE)\n\n[1] 6 2 4\n\n# summarizing the sample\nsample(1:6, 3, replace=TRUE) %>% sum()\n\n[1] 11\n\n# generate 5 rolls of 2 dice, adding up the dice\n# that is, sample the summaries of the simulation\ndo(5) * {sample(1:6, 2, replace=TRUE) %>% sum()}\n\n  result\n1      5\n2     11\n3      5\n4      2\n5      9\n\n\n\n\n\n\n\n\nExample\n\n\n\n\nGenerate 1000 rolls of the sum of two dice. How often does each possible result appear?\n\n\n{do(1000) * {sum(sample(1:6, 2, replace=TRUE))}} %>% \n  dplyr::group_by(result) %>%\n  summarize(frac = n()/nrow(.)) %>% \n  print.data.frame()\n\n   result  frac\n1       2 0.030\n2       3 0.060\n3       4 0.085\n4       5 0.114\n5       6 0.118\n6       7 0.161\n7       8 0.146\n8       9 0.119\n9      10 0.082\n10     11 0.057\n11     12 0.028\n\n\n\nDo the same but for summing 6 dice.\n\nQuestion: What do your results tell you about the possible results when summing 6 dice? Do the data show you that it is possible to get a result of 36?\nThis illustrates something about “inference”: the data do not always point you directly to the truth.\nQuestion: How would you modify the simulation to get a better handle on the truth."
   },
   {
     "objectID": "NTI/Math300R-Lesson20.html#learning-challenges",
@@ -53,7 +60,7 @@
     "href": "NTI/Math300R-Lesson20.html#documenting-software",
     "title": "Math 300R NTI Lesson 20",
     "section": "Documenting software",
-    "text": "Documenting software\n\nFile creation date: 2022-09-24\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
+    "text": "Documenting software\n\nFile creation date: 2022-09-27\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
   },
   {
     "objectID": "NTI/Math300R-Lesson22.html#reading",
@@ -67,7 +74,7 @@
     "href": "NTI/Math300R-Lesson22.html#lesson",
     "title": "Math 300R NTI Lesson 22",
     "section": "Lesson",
-    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Sat Sep 24 16:44:42 2022\"\n\n\n\n\nThis is just a template."
+    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Tue Sep 27 10:13:00 2022\"\n\n\n\n\nThis is just a template."
   },
   {
     "objectID": "NTI/Math300R-Lesson22.html#learning-challenges",
@@ -81,7 +88,7 @@
     "href": "NTI/Math300R-Lesson22.html#documenting-software",
     "title": "Math 300R NTI Lesson 22",
     "section": "Documenting software",
-    "text": "Documenting software\n\nFile creation date: 2022-09-24\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
+    "text": "Documenting software\n\nFile creation date: 2022-09-27\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
   },
   {
     "objectID": "NTI/Math300R-Lesson23.html#reading",
@@ -95,7 +102,7 @@
     "href": "NTI/Math300R-Lesson23.html#lesson",
     "title": "Math 300R NTI Lesson 23",
     "section": "Lesson",
-    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Sat Sep 24 16:44:44 2022\"\n\n\n\n\nThis is just a template."
+    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Tue Sep 27 10:13:03 2022\"\n\n\n\n\nThis is just a template."
   },
   {
     "objectID": "NTI/Math300R-Lesson23.html#learning-challenges",
@@ -109,7 +116,7 @@
     "href": "NTI/Math300R-Lesson23.html#documenting-software",
     "title": "Math 300R NTI Lesson 23",
     "section": "Documenting software",
-    "text": "Documenting software\n\nFile creation date: 2022-09-24\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
+    "text": "Documenting software\n\nFile creation date: 2022-09-27\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
   },
   {
     "objectID": "NTI/Math300R-Lesson24.html#reading",
@@ -123,7 +130,7 @@
     "href": "NTI/Math300R-Lesson24.html#lesson",
     "title": "Math 300R NTI Lesson 24",
     "section": "Lesson",
-    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Sat Sep 24 16:44:46 2022\"\n\n\n\n\nThis is just a template."
+    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Tue Sep 27 10:13:05 2022\"\n\n\n\n\nThis is just a template."
   },
   {
     "objectID": "NTI/Math300R-Lesson24.html#learning-challenges",
@@ -137,7 +144,7 @@
     "href": "NTI/Math300R-Lesson24.html#documenting-software",
     "title": "Math 300R NTI Lesson 24",
     "section": "Documenting software",
-    "text": "Documenting software\n\nFile creation date: 2022-09-24\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
+    "text": "Documenting software\n\nFile creation date: 2022-09-27\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
   },
   {
     "objectID": "NTI/Math300R-Lesson25.html#reading",
@@ -151,7 +158,7 @@
     "href": "NTI/Math300R-Lesson25.html#lesson",
     "title": "Math 300R NTI Lesson 25",
     "section": "Lesson",
-    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Sat Sep 24 16:44:49 2022\"\n\n\n\n\nThis is just a template."
+    "text": "Lesson\n\n\n\n\n\n\nIn-class example\n\n\n\n\n3 + 2\n\n[1] 5\n\n\n\n\n\n\n\n\n\n\nIn-class activity\n\n\n\n\ndate()\n\n[1] \"Tue Sep 27 10:13:07 2022\"\n\n\n\n\nThis is just a template."
   },
   {
     "objectID": "NTI/Math300R-Lesson25.html#learning-challenges",
@@ -165,7 +172,7 @@
     "href": "NTI/Math300R-Lesson25.html#documenting-software",
     "title": "Math 300R NTI Lesson 25",
     "section": "Documenting software",
-    "text": "Documenting software\n\nFile creation date: 2022-09-24\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
+    "text": "Documenting software\n\nFile creation date: 2022-09-27\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
   },
   {
     "objectID": "NTI/Math300R-Lesson19.html",
@@ -200,7 +207,7 @@
     "href": "NTI/Math300R-Lesson19.html#documenting-software",
     "title": "Math 300R NTI Lesson 19",
     "section": "Documenting software",
-    "text": "Documenting software\n\nFile creation date: 2022-09-24\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
+    "text": "Documenting software\n\nFile creation date: 2022-09-27\nR version 4.2.1 (2022-06-23)\ntidyverse package version: 1.3.2"
   },
   {
     "objectID": "LC/Learning-checks.html",
@@ -329,6 +336,13 @@
     "text": "Plan of work\n\nEarly October 2022: Preliminary approval, with appropriate modifications, of the proposed objectives.\nOctober 2022: DTK will draft new day-by-day NTIs for the second half of the course in the same style as the existing NTIs for the first half of the course. In the process of drafting, there will likely be some re-arrangement and modification of the objectives in (1).\nNovember 2022: With the draft NTIs in hand, a faculty team will make a more detailed examination of the proposed objectives. I recommend that this examination be structured as a set of hour-long discussions, one for each of the five divisions described in ?@sec-topics.\nNovember/December 2022: DTK (and others, as interested) will assemble student readings to replace the second half of ModernDive. Much of the content already exists in the form of a draft textbook by DTK. These will be re-arranged to correspond to the day-to-day objectives as determined in (3).\nJanuary/February 2023: The first 18 lessons of 300R will be taught as a repeat of those lessons from Math 300 Fall 2022. DTK will participate mainly as an observer.\nJanuary/February 2023: Revision and refinement will be made of the readings and NTIs in (3) and (4) above.\nMarch/April 2023: Teaching the new lessons. DTK will participate as an instructor for these lessons."
   },
   {
+    "objectID": "Reading-notes/Reading-notes-lesson-20.html",
+    "href": "Reading-notes/Reading-notes-lesson-20.html",
+    "title": "Math 300R Lesson 20 Reading Notes",
+    "section": "",
+    "text": "Figure 1: Schematic diagram illustrating a path for data exploration. From Wickham & Grolemund, R for Data Science\n\n\n\n\nYou’ve been to all the stepping stones on this path (with “transform” meaning “wrangling”), except the one on the far right: “Communicate.” I’d prefer if “communicate” were replaced with “inform.” One of the main uses of data science is to extract from data information that is useful for decision-making. The best information is that which reflects the true state of the world.\nStatistical inference is the body of concepts and techniques that help us be careful and responsible that our statistical results do actually reflect the true state of the world insofar as the data can tell us about it.\nExample: Imagine a salesperson bargaining with a customer. Successful salespeople want to have some idea about how much money the customer would be willing to spend. They try to predict this based on observations they can make about the customer. These might include the kind of car the customer drives, how the customer is dressed, age of the customer, etc. You might think that the prediction takes the form of a quantity: the amount of money. But it’s better if the prediction is in the form of a range. After all, the relationship between willingness to pay and the observed customer attributes is weak and uncertain. It’s not good if the prediction suggests more precision than is actually warranted.\nExample: Nutritionists are interested in helping people to make diet choices that will increase health. Often they do this by collecting data on what people eat and their health outcomes. A regression model might indicate, for instance, that “organic” food is associated with a reduction in risk of an illness by, say, 20%. Skeptics could point out that “correlation is not causation,” and that other factors, say family income, account for the association. To inform the consumers decision about spending on food, it’s helpful if the data modeling is structured in a way that can provide confidence that the link between food and health is causal.\nSince inference involves the relationship between the resulted gleaned from models and the state of the world, it’s helpful to have situations where the state of the world is well known. We are going to provide such situations in a simple, sure way: by simulation.\nTo emphasize that the simulation is only for developing an understanding of inference, and not for depicting the real world, we’ll use the word “gaming” to refer to using such simulations. The full process of gaming has four stages.\n\n\n\n\n\n\nThe Four Stages\n\n\n\n\nbuilding the deck: Instructors provide a simulation of a mechanism that generates rows of a data frame.\nthe deal: Some of these rows will be dealt to you, constituting the data you have to work with. [real-world]\nthe play: Build models and extract results. [real-world]\nthe reveal: Compare your results from (iii) either to the mechanism given in (i) or to more data generated by the simulation.\n\n\n\nWE’RE GOING TO USE SIMPLE NAMES like X, Y, A, B, C just to remind you that this is a simulation. Real-world data will usually have descriptive variable names, like height, age, score."
+  },
+  {
     "objectID": "NTIs.html",
     "href": "NTIs.html",
     "title": "Notes to Instructors",
@@ -354,7 +368,7 @@
     "href": "schedule-of-objectives.html#gaming-intro",
     "title": "Day-by-day Objectives for Math 300R",
     "section": "Lesson 20: Reality versus gaming (nti)",
-    "text": "Lesson 20: Reality versus gaming (nti)\n\nUnderstand that gaming is a way of improving our skills and identifying potential opportunities and problems.\nEnumerate the four stages of the games we will use and identify which ones correspond to non-gaming, real-world work with data.\n\n\n\n\n\n\n\nThe Four Stages (to be moved to NTI)\n\n\n\n\nbuilding the deck: Instructors provide a simulation of a mechanism that generates rows of a data frame.\nthe deal: Some of these rows will be dealt to you, constituting the data you have to work with. [real-world]\nthe play: Build models and extract results. [real-world]\nthe reveal: Compare your results from (iii) either to the mechanism given in (i) or to more data generated by the simulation.\n\n\n\n\nDistinguish between a sample, a row, and a sample of samples."
+    "text": "Lesson 20: Reality versus gaming (nti)\n\nUnderstand that gaming is a way of improving our skills and identifying potential opportunities and problems.\nExamine a graph to determine if it is a directed acyclic graph (DAG).\nDistinguish between a sample, a summary of a sample, and a sample of summaries of samples."
   },
   {
     "objectID": "schedule-of-objectives.html#lesson-21-dags-noise-and-simulation-nti",

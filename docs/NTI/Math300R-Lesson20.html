@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-09-24">
+<meta name="dcterms.date" content="2022-09-27">
 
 <title>Proposal for Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 20)</title>
 <style>
@@ -119,6 +119,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -180,7 +181,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 24, 2022</p>
+      <p class="date">September 27, 2022</p>
     </div>
   </div>
     
@@ -191,10 +192,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="objectives" class="level2">
 <h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
+<ol>
+<li><p>Understand that gaming is a way of improving our skills and identifying potential opportunities and problems.</p></li>
+<li><p>Examine a graph to determine if it is a directed acyclic graph (DAG).</p></li>
+<li><p>Distinguish between a sample, a summary of a sample, and a sample of summaries of samples.</p></li>
+</ol>
 </section>
 <section id="reading" class="level2">
 <h2 class="anchored" data-anchor-id="reading">Reading</h2>
 <p>TBD</p>
+<p><a href="../Reading-notes/Reading-notes-lesson-20.html">Reading note sketches</a></p>
 </section>
 <section id="lesson" class="level2">
 <h2 class="anchored" data-anchor-id="lesson">Lesson</h2>
@@ -204,37 +211,157 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-In-class example
+Setup
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p>The software for generating the simulations, and which contains a library of different scenarios, is in the package <code>{dagsim}</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">+</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 5</code></pre>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dagsim)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="callout-important callout callout-style-default no-icon callout-captioned">
+<ol type="1">
+<li>Introduce the idea of a directed acyclic graph (DAG), starting with simple networks, for instance</li>
+</ol>
+<p><span class="math display">\[ Y \longleftarrow X\ \ \ \ \ \text{or}\ \ \ \ \ \ C \longrightarrow Y \longleftarrow X\]</span></p>
+<ol start="2" type="1">
+<li><p>Show a graph that isn’t a DAG, that is, is cyclic.</p></li>
+<li><p>Have students generate some data from a DAG from the <code>{dagsim}</code> library.</p></li>
+</ol>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-In-class activity
+Example
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dag02</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Sat Sep 24 16:44:39 2022"</code></pre>
+<pre><code>[[1]]
+x ~ eps()
+
+[[2]]
+a ~ eps()
+
+[[3]]
+y ~ x + a + eps()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dagsim</span>(dag02, <span class="at">nrow=</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+        x      a      y
+    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1  0.864   0.288  2.41 
+2 -0.0267 -0.983 -0.579
+3 -0.514  -2.24  -2.08 
+4  2.50   -0.543  1.01 
+5 -0.409   0.258 -0.561
+6 -2.28   -0.398 -2.63 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> <span class="fu">dagsim</span>(dag02, <span class="at">nrow=</span><span class="dv">100</span>)) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)           x 
+-0.03335752  0.83781025 </code></pre>
 </div>
 </div>
 </div>
 </div>
-<p>This is just a template.</p>
+<div class="callout-tip callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Activity
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>What happens when you use the model <code>y ~ x + a</code>? Interpret those coefficients. Are they consistent with the DAG?</p></li>
+<li><p>Are <code>x</code> and <code>a</code> related to one another? What does the DAG say about this? What does the model <code>a ~ x</code> say.</p></li>
+</ol>
+</div>
+</div>
+<p>Sometimes we are going to have to generate many simulations. The <code>do()</code> syntax is useful for this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">5</span>) <span class="sc">*</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  result
+1      1
+2      1
+3      1
+4      1
+5      1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># a sample of 3 dice outcomes</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">3</span>, <span class="at">replace=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6 2 4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># summarizing the sample</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">3</span>, <span class="at">replace=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="fu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 11</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate 5 rolls of 2 dice, adding up the dice</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># that is, sample the summaries of the simulation</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">5</span>) <span class="sc">*</span> {<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">2</span>, <span class="at">replace=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="fu">sum</span>()}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  result
+1      5
+2     11
+3      5
+4      2
+5      9</code></pre>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Generate 1000 rolls of the sum of two dice. How often does each possible result appear?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>{<span class="fu">do</span>(<span class="dv">1000</span>) <span class="sc">*</span> {<span class="fu">sum</span>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">2</span>, <span class="at">replace=</span><span class="cn">TRUE</span>))}} <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(result) <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">frac =</span> <span class="fu">n</span>()<span class="sc">/</span><span class="fu">nrow</span>(.)) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print.data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   result  frac
+1       2 0.030
+2       3 0.060
+3       4 0.085
+4       5 0.114
+5       6 0.118
+6       7 0.161
+7       8 0.146
+8       9 0.119
+9      10 0.082
+10     11 0.057
+11     12 0.028</code></pre>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Do the same but for summing 6 dice.</li>
+</ol>
+<p>Question: What do your results tell you about the possible results when summing 6 dice? Do the data show you that it is possible to get a result of 36?</p>
+<p>This illustrates something about “inference”: the data do not always point you directly to the truth.</p>
+<p>Question: How would you modify the simulation to get a better handle on the truth.</p>
+</div>
+</div>
 </section>
 <section id="learning-challenges" class="level2">
 <h2 class="anchored" data-anchor-id="learning-challenges">Learning Challenges</h2>
@@ -268,7 +395,7 @@ Solution
 <section id="documenting-software" class="level2">
 <h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>
 <ul>
-<li>File creation date: 2022-09-24</li>
+<li>File creation date: 2022-09-27</li>
 <li>R version 4.2.1 (2022-06-23)</li>
 <li><code>tidyverse</code> package version: 1.3.2</li>
 </ul>

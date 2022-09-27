@@ -24,33 +24,95 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Objectives
 
+#. Understand that gaming is a way of improving our skills and identifying potential opportunities and problems. 
 
+#. Examine a graph to determine if it is a directed acyclic graph (DAG).
+
+#. Distinguish between a sample, a summary of a sample, and a sample of summaries of samples.
 
 ## Reading
 
 TBD
 
+[Reading note sketches](../Reading-notes/Reading-notes-lesson-20.qmd)
+
+
+
 
 ## Lesson
 
-:::: {.callout-note icon=false}
-## In-class example
+::: {.callout-note icon=false}
+## Setup
+
+The software for generating the simulations, and which contains a library of different scenarios, is in the package `{dagsim}`.
+
+```{r message=FALSE, warning=FALSE}
+library(dagsim)
+library(mosaic)
+```
+:::
+
+
+1. Introduce the idea of a directed acyclic graph (DAG), starting with simple networks, for instance 
+$$ Y \longleftarrow X\ \ \ \ \ \text{or}\ \ \ \ \ \ C \longrightarrow Y \longleftarrow X$$
+
+2. Show a graph that isn't a DAG, that is, is cyclic. 
+
+3. Have students generate some data from a DAG from the `{dagsim}` library.
+
+::: {.callout-note icon=false}
+## Example
+```{r}
+dag02
+dagsim(dag02, nrow=6)
+lm(y ~ x, data = dagsim(dag02, nrow=100)) %>% coefficients()
+```
+:::
+
+::: {.callout-tip icon=false}
+## Activity
+
+1. What happens when you use the model `y ~ x + a`? Interpret those coefficients. Are they consistent with the DAG?
+
+2. Are `x` and `a` related to one another? What does the DAG say about this? What does the model `a ~ x` say.
+:::
+
+
+
+Sometimes we are going to have to generate many simulations. The `do()` syntax is useful for this:
 
 ```{r}
-3 + 2
+do(5) * 1
+# a sample of 3 dice outcomes
+sample(1:6, 3, replace=TRUE)
+# summarizing the sample
+sample(1:6, 3, replace=TRUE) %>% sum()
+# generate 5 rolls of 2 dice, adding up the dice
+# that is, sample the summaries of the simulation
+do(5) * {sample(1:6, 2, replace=TRUE) %>% sum()}
 ```
-::::
 
-
-:::: {.callout-important icon=false}
-## In-class activity
+::: {.callout-tip icon=false}
+## Example
+1. Generate 1000 rolls of the sum of two dice. How often does each possible result appear?
 
 ```{r}
-date()
+{do(1000) * {sum(sample(1:6, 2, replace=TRUE))}} %>% 
+  dplyr::group_by(result) %>%
+  summarize(frac = n()/nrow(.)) %>% 
+  print.data.frame()
 ```
-::::
 
-This is just a template.
+2. Do the same but for summing 6 dice. 
+
+Question: What do your results tell you about the possible results when summing 6 dice? Do the data show you that it is possible to get a result of 36?  
+
+This illustrates something about "inference": the data do not always point you directly to the truth.
+
+Question: How would you modify the simulation to get a better handle on the truth. 
+:::
+
+
 
 ## Learning Challenges
 
