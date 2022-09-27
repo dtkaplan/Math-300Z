@@ -9,26 +9,12 @@
 #' @param nrow Number of rows in the data frame
 #' @param seed Set the random number seed. Useful for reproducibility.
 #'
-#' @details Some random number generators are built in, and can be used in the DAG.
-#' - `eps(sd=1)` --- normally distributed with the given standard deviation
-#' - `unif(min=0, max=1)` --- uniformly distributed
-#' - `tdist(df=3, ncp=0)` --- t-distributed (long tails)
-#' - `roll(levels=1:6, weights=1)` --- generate samples from a vector
-#' - `each(tilde)` --- run the same instructions anew for each row
-#' Also,
-#' - `seq()` --- sequence from 1 to nrow
-#' - `binom(input)` --- generates a 0/1 variable based on the magnitude of the input. Probability of 1 is a logistic transformation
-#' of the input.
 #'
-#' @examples
-#' dagsim(list(x ~ eps(0.5), y ~ x + eps(0.5)))
-#' dagsim(list(.genes ~ eps(), x ~ .genes + eps(), y ~ .genes + eps()))
-#' dagsim(list(x ~ c("a", "b", "c"), y ~ 2), nrow=5) # e.g. for blocking
-#' dagsim(list(x ~ roll(c("a", "b", "c"))), nrow=5)
+
 #'
 #' @importFrom tibble as_tibble
 #' @export
-dagsim <- function(DAG, nrow=10, seed=NULL) {
+dagsim <- function(DAG, size=10, seed=NULL) {
   # check that DAG is a list of formulas
   if (!is.list(DAG)) stop("DAG must be a list of formulas")
   if (!all(unlist(lapply(DAG, function(x) inherits(x, "formula")))))
@@ -89,4 +75,10 @@ dagsim <- function(DAG, nrow=10, seed=NULL) {
 
 }
 
-
+#' @importFrom mosaic sample
+#' @rdname dagsim
+#' @export
+sample.dagsystem <- function(x, size, replace = FALSE, ...) {
+  if (missing(size)) size=5
+  dagsim(x, nrow=size, seed=...)
+}

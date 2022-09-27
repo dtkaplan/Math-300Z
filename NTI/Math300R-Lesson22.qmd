@@ -26,7 +26,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #. Implement on the computer a procedure to generate a sample, calculate a regression model, and produce a summary.
 
-#. Iterate the procedure and collect the summaries across iterations.
+#. Iterate the procedure and collect the summaries across iterations. This collection is called the "sampling distribution."
 
 #. Graphically display the distribution of summaries and generate a compact numerical description ("confidence interval") of the sampling distribution.
 
@@ -39,6 +39,7 @@ TBD
 
 ## Lesson
 
+In the lesson, establish
 
 ::: {.callout-tip icon=false}
 ## Setup
@@ -62,8 +63,8 @@ We'll work with a simple example: `dag01`
 3. Generate simulated data with `nrow=25` and find the regression coefficients.
 
 ```{r}
-Sim <- dagsim(dag01, nrow=25)
-lm(y ~ x, data = Sim) %>% coefficients()
+Sample <- sample(dag01, size=25)
+lm(y ~ x, data = Sample) %>% coefficients()
 ```
 
 Inference task: Given a report like the one above, say what the coefficient on `x` is likely to be in the underlying data generation mechanism.
@@ -89,7 +90,7 @@ To automate the procedure, put all the steps in one block of code, surrounded by
 
 ```{r}
 proc01 <- function() {
-  lm(y ~ x, data = dagsim(dag01, nrow=25)) %>% coefficients()
+  lm(y ~ x, data = sample(dag01, size=25)) %>% coefficients()
 }
 proc01()
 ```
@@ -114,6 +115,8 @@ Question: How does the sampling distribution change if the sample size in each t
 
 
 
+
+
 ## Learning Challenges
 
 :::: {.callout-note icon=false}
@@ -122,9 +125,9 @@ Question: How does the sampling distribution change if the sample size in each t
 Consider these three data frames:
 
 ```{r}
-One <- dagsim(dag01, nrow=25)
+One <- sample(dag01, size=25)
 Two <- do(10) * {
-  lm(y ~ x, data = dagsim(dag01, nrow=25)) %>%
+  lm(y ~ x, data = sample(dag01, size=25)) %>%
     coefficients()
   }
 Three <- Two %>% 

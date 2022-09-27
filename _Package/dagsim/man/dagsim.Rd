@@ -2,41 +2,23 @@
 % Please edit documentation in R/dagsim.R
 \name{dagsim}
 \alias{dagsim}
+\alias{sample.dagsystem}
 \title{Generate data from a DAG}
 \usage{
-dagsim(DAG, nrow = 10, seed = NULL)
+dagsim(DAG, size = 10, seed = NULL)
+
+\method{sample}{dagsystem}(x, size, replace = FALSE, ...)
 }
 \arguments{
 \item{DAG}{list of formulas. Variables must be listed before they
 can be used to create other variables.}
 
-\item{nrow}{Number of rows in the data frame}
-
 \item{seed}{Set the random number seed. Useful for reproducibility.}
+
+\item{nrow}{Number of rows in the data frame}
 }
 \description{
 A DAG is represented as a list of formulas. The right-hand side
 gives the name of the variable. Variables starting with dots will not be
 printed.
-}
-\details{
-Some random number generators are built in, and can be used in the DAG.
-\itemize{
-\item \code{eps(sd=1)} --- normally distributed with the given standard deviation
-\item \code{unif(min=0, max=1)} --- uniformly distributed
-\item \code{tdist(df=3, ncp=0)} --- t-distributed (long tails)
-\item \code{roll(levels=1:6, weights=1)} --- generate samples from a vector
-\item \code{each(tilde)} --- run the same instructions anew for each row
-Also,
-\item \code{seq()} --- sequence from 1 to nrow
-\item \code{binom(input)} --- generates a 0/1 variable based on the magnitude of the input. Probability of 1 is a logistic transformation
-of the input.
-}
-}
-\examples{
-dagsim(list(x ~ eps(0.5), y ~ x + eps(0.5)))
-dagsim(list(.genes ~ eps(), x ~ .genes + eps(), y ~ .genes + eps()))
-dagsim(list(x ~ c("a", "b", "c"), y ~ 2), nrow=5) # e.g. for blocking
-dagsim(list(x ~ roll(c("a", "b", "c"))), nrow=5)
-
 }

@@ -53,16 +53,18 @@ library(mosaic)
 ## Example
 1. Roll a die 1000 times. How often does each possible result appear?
 ```{r}
-Sim <- dagsim(list(x ~ each(sample(1:6))), nrow=1000)
-Sim  %>% group_by(x) %>% summarize(count = n())
+Sim <- makeDag(x ~ each(sample(1:6)))
+Samp <- sample(Sim, size=100)
+Samp %>% group_by(x) %>% summarize(count = n())
 ```
 
 
 1. Generate 1000 rolls of the sum of two dice. How often does each possible result appear?
 
 ```{r}
-Sim <- dagsim(list(x ~ each(sum(sample(1:6, 2, replace=TRUE)))), nrow=100)
-Sim %>%  
+Sim <- makeDag(x ~ each(sum(sample(1:6, 2, replace=TRUE))))
+Samp <- sample(Sim, size=100)
+Samp %>%  
   dplyr::group_by(x) %>%
   summarize(frac = n()/nrow(.)) %>% 
   print.data.frame()
@@ -84,8 +86,9 @@ Question: How would you modify the simulation to get a better handle on the trut
 Create a DAG where the X variable is simply noise: `eps()`
 
 ```{r}
-Sim <- dagsim(list(x ~ eps()), nrow=100)
-Sim %>% summarize(sd(x), mean(x))
+Sim <- makeDag(x ~ eps())
+Samp <- sample(Sim, size=100)
+Samp %>% summarize(sd(x), mean(x))
 ```
 
 - The argument to `eps()` sets the size of the noise. Confirm that this claim is true.
@@ -95,12 +98,13 @@ Sometimes we will want to repeat a simulation over and over again, collecting th
 
 ```{r}
 # one trial
-dagsim(list(x ~ eps()), nrow=100) %>% 
+Sim <- makeDag(x ~ eps())
+sample(Sim, size=100) %>% 
   summarize(sd(x), mean(x))
 
 # five trials
 do(5) *
-  {dagsim(list(x ~ eps()), nrow=100) %>% 
+  {sample(Sim, size=100) %>% 
   summarize(s = sd(x), m = mean(x))}
 ```
 
