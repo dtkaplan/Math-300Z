@@ -26,15 +26,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #. Understand that gaming is a way of improving our skills and identifying potential opportunities and problems. 
 
-#. Examine a graph to determine if it is a directed acyclic graph (DAG).
+#. Characterize the magnitude of random noise.
 
 #. Distinguish between a sample, a summary of a sample, and a sample of summaries of samples.
 
 ## Reading
 
 TBD
-
-[Reading note sketches](../Reading-notes/Reading-notes-lesson-20.qmd)
 
 
 
@@ -44,64 +42,33 @@ TBD
 ::: {.callout-note icon=false}
 ## Setup
 
-The software for generating the simulations, and which contains a library of different scenarios, is in the package `{dagsim}`.
+The software for generating the simulations, and which contains a library of different scenarios, is in the package `{dagsim}`. The `{mosaic}` package contains functions for calculating statistics and **iteration**. 
 
 ```{r message=FALSE, warning=FALSE}
 library(dagsim)
 library(mosaic)
 ```
-:::
-
-
-1. Introduce the idea of a directed acyclic graph (DAG), starting with simple networks, for instance 
-$$ Y \longleftarrow X\ \ \ \ \ \text{or}\ \ \ \ \ \ C \longrightarrow Y \longleftarrow X$$
-
-2. Show a graph that isn't a DAG, that is, is cyclic. 
-
-3. Have students generate some data from a DAG from the `{dagsim}` library.
-
-::: {.callout-note icon=false}
-## Example
-```{r}
-dag02
-dagsim(dag02, nrow=6)
-lm(y ~ x, data = dagsim(dag02, nrow=100)) %>% coefficients()
-```
-:::
-
-::: {.callout-tip icon=false}
-## Activity
-
-1. What happens when you use the model `y ~ x + a`? Interpret those coefficients. Are they consistent with the DAG?
-
-2. Are `x` and `a` related to one another? What does the DAG say about this? What does the model `a ~ x` say.
-:::
-
-
-
-Sometimes we are going to have to generate many simulations. The `do()` syntax is useful for this:
-
-```{r}
-do(5) * 1
-# a sample of 3 dice outcomes
-sample(1:6, 3, replace=TRUE)
-# summarizing the sample
-sample(1:6, 3, replace=TRUE) %>% sum()
-# generate 5 rolls of 2 dice, adding up the dice
-# that is, sample the summaries of the simulation
-do(5) * {sample(1:6, 2, replace=TRUE) %>% sum()}
-```
 
 ::: {.callout-tip icon=false}
 ## Example
+1. Roll a die 1000 times. How often does each possible result appear?
+```{r}
+Sim <- dagsim(list(x ~ each(sample(1:6))), nrow=1000)
+Sim  %>% group_by(x) %>% summarize(count = n())
+```
+
+
 1. Generate 1000 rolls of the sum of two dice. How often does each possible result appear?
 
 ```{r}
-{do(1000) * {sum(sample(1:6, 2, replace=TRUE))}} %>% 
-  dplyr::group_by(result) %>%
+Sim <- dagsim(list(x ~ each(sum(sample(1:6, 2, replace=TRUE)))), nrow=100)
+Sim %>%  
+  dplyr::group_by(x) %>%
   summarize(frac = n()/nrow(.)) %>% 
   print.data.frame()
 ```
+
+Question: What do your results tell you about the possible results when summing 2 dice? 
 
 2. Do the same but for summing 6 dice. 
 
@@ -112,7 +79,35 @@ This illustrates something about "inference": the data do not always point you d
 Question: How would you modify the simulation to get a better handle on the truth. 
 :::
 
+::: {.callout-note icon=false}
+## Measuring noise
+Create a DAG where the X variable is simply noise: `eps()`
 
+```{r}
+Sim <- dagsim(list(x ~ eps()), nrow=100)
+Sim %>% summarize(sd(x), mean(x))
+```
+
+- The argument to `eps()` sets the size of the noise. Confirm that this claim is true.
+:::
+
+Sometimes we will want to repeat a simulation over and over again, collecting the results. Use `do()` for this:
+
+```{r}
+# one trial
+dagsim(list(x ~ eps()), nrow=100) %>% 
+  summarize(sd(x), mean(x))
+
+# five trials
+do(5) *
+  {dagsim(list(x ~ eps()), nrow=100) %>% 
+  summarize(s = sd(x), m = mean(x))}
+```
+
+- Not all the rows are the same. Why not?
+- None of the standard deviations are exactly 1. Does this mean the simulation is not working? 
+
+A typical problem in statistical inference is to determine, from just one trial, whether the results are consistent or not with a proposed mechanism.
 
 ## Learning Challenges
 

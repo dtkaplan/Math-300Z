@@ -28,32 +28,57 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #. Determine whether a proposed graph is directed and acyclic.
 
-#. Read notation to identify response variable, explanatory variable, covariates, and effect sizes.
+#. Having selected a response and one or more explanatory variables, identify other DAG notes as covariates. 
 
-#. Characterize the magnitude of random noise.
+#. Generate data from simulations and use the data to model the relationships.
 
-#. Generate data from simulations and summarize variables individually.
-
-<!-- noise sources for simulation, normal, two-sided exponential, dicotomizer. Maybe use a pipe for the added noise, e.g. children |> epsilon(0.5) -->
 
 ## Reading
 
 TBD
+
+[Reading note sketches](../Reading-notes/Reading-notes-lesson-21.qmd)
+
 
 
 ## Lesson
 
 *Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions. Have them open the notes rmd and work through it together.*
 
-+ Prolog: Review notation for DAGs and noise. Show how to generate data use the `run_dag()` function.
+
+```{r message=FALSE, warning=FALSE}
+library(dagsim)
+library(mosaic)
+```
+:::
+
+Introduce DAGs with multiple variables.
+
+Generate data from them.
+
+Use the data to summarize the relationships. 
+
+
+
+
+::: {.callout-tip icon=false}
+## Activity
+
+1. What happens when you use the model `y ~ x + a`? Interpret those coefficients. Are they consistent with the DAG?
+
+2. Are `x` and `a` related to one another? What does the DAG say about this? What does the model `a ~ x` say.
+:::
+
+
+
+
 
 ::: {.callout-note}
-## Running a DAG simulation
+## Inference example: Regression to the mean
 
-```{r eval=FALSE}
-run_dag(RTM)
-show_dag(RTM)
-```
+Construct the Galton height DAG, simulate, and show that Galton's finding is replicated. 
+
+
 :::
 
 + Work through the learning checks LCA.1 - LCA.2.

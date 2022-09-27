@@ -4,7 +4,7 @@ test_that("dagsim generates data", {
   expect_equal(names(Foo), c("x", "y"))
 })
 
-test_that("nrows is used", {
+test_that("nrow is used", {
   Foo <- dagsim(list(x ~ eps(.5), y ~ x + eps(.5)), nrow=10000)
   expect_equal(nrow(Foo), 10000)
   expect_equal(sum(is.na(Foo$y)), 0)
@@ -35,7 +35,24 @@ test_that("seq() generates a sequence", {
   expect_equal(Foo$x, 1:100)
 })
 
-test_that("Constant patterns are replicated to have nrows", {
+test_that("roll() draws a series of values from a set of levels.", {
+  Foo <- dagsim(list(x ~ roll(1:6)), nrow=5000)
+  expect_gt(mean(Foo$x == 6), 1/8)
+  expect_gt(mean(Foo$x == 5), 1/8)
+  expect_gt(mean(Foo$x == 4), 1/8)
+  expect_gt(mean(Foo$x == 3), 1/8)
+  expect_gt(mean(Foo$x == 2), 1/8)
+  expect_gt(mean(Foo$x == 1), 1/8)
+})
+
+test_that("each() runs the expression independently for each row", {
+  Foo <- dagsim(list(x ~ each(sum(runif(2)))), nrow=1000)
+  # Should generate a triangular distribution between 0 and 2
+  expect_lt(mean(Foo$x < 0.5), 1/6) # about 1/8 of samples should be here
+  expect_lt(mean(Foo$x > 1.5), 1/6)
+})
+
+test_that("Constant patterns are replicated to have nrow", {
   Foo <- dagsim(list(x ~ 3), nrow=10)
   expect_equal(nrow(Foo), 10)
   Foo2 <- dagsim(list(x ~ 1:3), nrow=10)
