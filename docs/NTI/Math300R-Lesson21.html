@@ -192,39 +192,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="objectives" class="level2">
 <h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
-<p>[Note in draft: Replace these with reference to a central repo for objectives.]</p>
 <ol>
 <li><p>Determine whether a proposed graph is directed and acyclic.</p></li>
-<li><p>Read notation to identify response variable, explanatory variable, covariates, and effect sizes.</p></li>
-<li><p>Characterize the magnitude of random noise.</p></li>
-<li><p>Generate data from simulations and summarize variables individually.</p></li>
+<li><p>Having selected a response and one or more explanatory variables, identify other DAG notes as covariates.</p></li>
+<li><p>Generate data from simulations and use the data to model the relationships.</p></li>
 </ol>
-<!-- noise sources for simulation, normal, two-sided exponential, dicotomizer. Maybe use a pipe for the added noise, e.g. children |> epsilon(0.5) -->
 </section>
 <section id="reading" class="level2">
 <h2 class="anchored" data-anchor-id="reading">Reading</h2>
 <p>TBD</p>
+<p><a href="../Reading-notes/Reading-notes-lesson-21.html">Reading note sketches</a></p>
 </section>
 <section id="lesson" class="level2">
 <h2 class="anchored" data-anchor-id="lesson">Lesson</h2>
 <p><em>Remember that you will be running this more like a lab than a lecture. You want them using <code>R</code> and answering questions. Have them open the notes rmd and work through it together.</em></p>
-<ul>
-<li>Prolog: Review notation for DAGs and noise. Show how to generate data use the <code>run_dag()</code> function.</li>
-</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dagsim)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>:::</p>
+<p>Introduce DAGs with multiple variables.</p>
+<p>Generate data from them.</p>
+<p>Use the data to summarize the relationships.</p>
+<div class="callout-tip callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Activity
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>What happens when you use the model <code>y ~ x + a</code>? Interpret those coefficients. Are they consistent with the DAG?</p></li>
+<li><p>Are <code>x</code> and <code>a</code> related to one another? What does the DAG say about this? What does the model <code>a ~ x</code> say.</p></li>
+</ol>
+</div>
+</div>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Running a DAG simulation
+Inference example: Regression to the mean
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">run_dag</span>(RTM)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">show_dag</span>(RTM)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p>Construct the Galton height DAG, simulate, and show that Galton’s finding is replicated.</p>
 </div>
 </div>
 <ul>
@@ -260,7 +276,7 @@ lm(formula = child ~ parent, data = rtm)
 
 Coefficients:
 (Intercept)       parent  
-    12.5539       0.8039  </code></pre>
+    14.1712       0.7786  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert this to ggplot2</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(child <span class="sc">~</span> parent, <span class="at">data =</span> rtm) <span class="sc">%&gt;%</span></span>
@@ -278,73 +294,9 @@ Coefficients:
 </ol>
 </div>
 </div>
-<hr>
-<section id="lc-a.1-objective-2" class="level3">
-<h3 class="anchored" data-anchor-id="lc-a.1-objective-2">LC A.1 (Objective 2)</h3>
-<p>[NOTE in DRAFT: These are the learning objectives from Bradley Warner’s notes, retained here simply to remind me of the format for the NTIs.]</p>
-<p><strong>LC XX.XX</strong> Say you have a normal distribution with mean <span class="math inline">\(\mu=6\)</span> and standard deviation <span class="math inline">\(\sigma=3\)</span>. What proportion of the area under the normal curve is less than 3? Greater than 12? Between 0 and 12?</p>
-<p><strong>Solution:</strong></p>
-<ul>
-<li>Less than 3: 3 is one standard deviation less than the mean of 6, since <span class="math inline">\(\frac{3 - \mu}{\sigma} = \frac{3-6}{3} = -1\)</span>. Thus we compute the area to the left of z = -1 in Figure A.2: 0.15% + 2.35% + 13.5% = 16%.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">3</span>,<span class="at">mean=</span><span class="dv">6</span>,<span class="at">sd=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1586553</code></pre>
-</div>
-</div>
-<ul>
-<li>Greater than 12: 12 is two standard deviations greater than the mean of 6, since <span class="math inline">\(\frac{12 - \mu}{\sigma} = \frac{12-6}{3} = 2\)</span>, we compute the area to the right of z = 2 in Figure A.2: 2.35% + 0.15% = 2.5%.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">12</span>,<span class="at">mean=</span><span class="dv">6</span>,<span class="at">sd=</span><span class="dv">3</span>,<span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.02275013</code></pre>
-</div>
-</div>
-<ul>
-<li>Between 0 and 12: 0 is two standard deviations less than the mean of 6, since <span class="math inline">\(\frac{0 - \mu}{\sigma} = \frac{0-6}{3} = -2\)</span>. Thus we compute the area between z = -2 and z = +2 in Figure A.2: 13.5% + 34% + 34% + 13.5% = 95%.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(<span class="dv">12</span>,<span class="at">mean=</span><span class="dv">6</span>,<span class="at">sd=</span><span class="dv">3</span>)<span class="sc">-</span><span class="fu">pnorm</span>(<span class="dv">0</span>,<span class="at">mean=</span><span class="dv">6</span>,<span class="at">sd=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9544997</code></pre>
-</div>
-</div>
 </section>
-<section id="lc-a.2-objective-2" class="level3">
-<h3 class="anchored" data-anchor-id="lc-a.2-objective-2">LC A.2 (Objective 2)</h3>
-<p><strong>`r LC XX.YY</strong> (Same normal distribution.) What is the 2.5th percentile of the area under the normal curve? The 97.5th percentile? The 100th percentile?</p>
-<p><strong>Solution:</strong></p>
-<ul>
-<li>2.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% = 2.5%, the 2.5th percentile is z = - 2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations lower than the mean: <span class="math inline">\(\mu - 2 \cdot\sigma = 6 - 2 \cdot 3 = 0\)</span>.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(.<span class="dv">025</span>,<span class="at">mean=</span><span class="dv">6</span>,<span class="at">sd=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.120108</code></pre>
-</div>
-</div>
-<p>This is not 0 since the figure is an approximation.</p>
-<ul>
-<li>97.5th percentile: Starting from the left of Figure A.2, since 0.15% + 2.35% + 13.5% + 34% + 34% + 13.5% = 97.5%, the 97.5th percentile is z = +2. However, this is in standard units. Thus we need the value in the normal distribution that is two standard deviations higher than the mean: <span class="math inline">\(\mu + 2 \cdot\sigma = 6 + 2 \cdot 3 = 12\)</span>.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(.<span class="dv">975</span>,<span class="at">mean=</span><span class="dv">6</span>,<span class="at">sd=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 11.87989</code></pre>
-</div>
-</div>
-<ul>
-<li>100th percentile: <span class="math inline">\(+\infty\)</span>. In other words, 100% of values will be less than positive infinity.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="dv">1</span>,<span class="at">mean=</span><span class="dv">6</span>,<span class="at">sd=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] Inf</code></pre>
-</div>
-</div>
-</section>
+<section id="learning-checks" class="level2">
+<h2 class="anchored" data-anchor-id="learning-checks">Learning Checks</h2>
 </section>
 <section id="documenting-software" class="level2">
 <h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>

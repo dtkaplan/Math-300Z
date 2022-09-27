@@ -25,6 +25,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Objectives
 
 
+#. Use bootstrapping to estimate sampling variation.
+
+#. Infer sampling variation from a regression table.
 
 ## Reading
 
@@ -32,6 +35,8 @@ TBD
 
 
 ## Lesson
+
+The point of today's lesson is to show how some properties of the sampling distribution can be estimated from a single sample, rather than the many trials of sample-then-summarize that we used in Lesson 22.
 
 :::: {.callout-note icon=false}
 ## In-class example

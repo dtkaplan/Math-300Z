@@ -119,6 +119,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -191,6 +192,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="objectives" class="level2">
 <h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
+<ol>
+<li><p>Implement on the computer a procedure to generate a sample, calculate a regression model, and produce a summary.</p></li>
+<li><p>Iterate the procedure and collect the summaries across iterations.</p></li>
+<li><p>Graphically display the distribution of summaries and generate a compact numerical description (“confidence interval”) of the sampling distribution.</p></li>
+</ol>
 </section>
 <section id="reading" class="level2">
 <h2 class="anchored" data-anchor-id="reading">Reading</h2>
@@ -198,23 +204,95 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="lesson" class="level2">
 <h2 class="anchored" data-anchor-id="lesson">Lesson</h2>
+<div class="callout-tip callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Setup
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dagsim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 <div class="callout-note callout callout-style-default no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-In-class example
+Example: A simple DAG
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p>We’ll work with a simple example: <code>dag01</code></p>
+<ol type="1">
+<li><p>Give <code>dag01</code> as a command to view the DAG. Draw it as a diagram.</p></li>
+<li><p>Based on <code>dag01</code>, what should be the coefficients on the regression model <code>y ~ x</code>.</p></li>
+<li><p>Generate simulated data with <code>nrow=25</code> and find the regression coefficients.</p></li>
+</ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">+</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Sim <span class="ot">&lt;-</span> <span class="fu">dagsim</span>(dag01, <span class="at">nrow=</span><span class="dv">25</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Sim) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 5</code></pre>
+<pre><code>(Intercept)           x 
+   4.287658    1.423334 </code></pre>
+</div>
+</div>
+<p>Inference task: Given a report like the one above, say what the coefficient on <code>x</code> is likely to be in the underlying data generation mechanism.</p>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Activity
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>How would you represent “is likely to be”?</li>
+<li>Take your best guess and report your representation.</li>
+</ul>
 </div>
 </div>
 </div>
+</div>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Automating the procedure
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the previous example, we</p>
+<ol type="i">
+<li>generated (simulated) data,</li>
+<li>used it to build a regression model,</li>
+<li>summarized it</li>
+</ol>
+<p>To automate the procedure, put all the steps in one block of code, surrounded by curly braces.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>proc01 <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> <span class="fu">dagsim</span>(dag01, <span class="at">nrow=</span><span class="dv">25</span>)) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">proc01</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)           x 
+   4.149135    1.674918 </code></pre>
+</div>
+</div>
+<p>Now that the procedure is automated, we can see what happens if we carry out many trials:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">100</span>) <span class="sc">*</span> <span class="fu">proc01</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout-important callout callout-style-default no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -222,20 +300,17 @@ In-class example
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-In-class activity
+Activity: Simulating the sampling distribution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Tue Sep 27 10:13:00 2022"</code></pre>
+<ol type="1">
+<li><p>Generate the 100 trials. each involving a simple of size <span class="math inline">\(n=25\)</span> from <code>dag01</code>. The <code>x</code> column gives the regression coefficient on the simulation’s <code>x</code> variable <code>x</code> for each of the 100 trials.</p></li>
+<li><p>Summarize the <code>x</code> coefficient in the trials, graphically and numerically.</p></li>
+<li><p>Compare the distribution of <code>x</code> in <code>Trials</code> to the corresponding coefficient in <code>dag01</code>.</p></li>
+</ol>
 </div>
 </div>
-</div>
-</div>
-<p>This is just a template.</p>
-</section>
 <section id="learning-challenges" class="level2">
 <h2 class="anchored" data-anchor-id="learning-challenges">Learning Challenges</h2>
 <div class="callout-note callout callout-style-default no-icon callout-captioned">
@@ -244,24 +319,30 @@ In-class activity
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-LC 19.1 (Objective 2)
+LC 22.1 (<strong>Obj 20.3</strong>)
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This is just a template.</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<p>Consider these three data frames:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>One <span class="ot">&lt;-</span> <span class="fu">dagsim</span>(dag01, <span class="at">nrow=</span><span class="dv">25</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Two <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">10</span>) <span class="sc">*</span> {</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> <span class="fu">dagsim</span>(dag01, <span class="at">nrow=</span><span class="dv">25</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coefficients</span>()</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>Three <span class="ot">&lt;-</span> Two <span class="sc">%&gt;%</span> </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mx =</span> <span class="fu">mean</span>(x), <span class="at">sx =</span> <span class="fu">sd</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout-caption-container flex-fill">
-Solution
+<ol type="1">
+<li><p>Both <code>One</code> and <code>Two</code> have columns called <code>x</code>, but they stand for different things. Explain what the unit of observation is and what the values in <code>x</code> represent..</p></li>
+<li><p><code>Three</code> does not have a column named <code>x</code>, but it is a summary of the <code>x</code> column from <code>Two</code>. What kind of summary. ::: {.callout-tip} ## Solution</p></li>
+<li><p>In <code>One</code>, the <code>x</code> column contains the simulated of the <code>x</code> variable from <code>dag01</code>. The unit of observation is a single case, for instance a person for whom observations were made of <code>x</code> and <code>y</code>. The simulation involves generating 25 rows of data: one row for each of 25 people.</p></li>
+<li><p>In <code>Two</code>, the <code>x</code> column is the regression coefficient on <code>x</code> from the simulation. Each row of <code>Two</code> corresponds to one trial in which regression is being performed on a sample of size 25 of simulated data from <code>dag01</code>.</p></li>
+<li><p><code>Three</code> is a summary of the 10 trials in <code>Two</code>. The columns, named <code>mx</code> and <code>sx</code>, tell about the distribution of <code>x</code> across all the trials.</p></li>
+</ol>
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<p>The solution will go here.</p>
-</div>
-</div>
+</section>
 </div>
 </div>
 </section>
