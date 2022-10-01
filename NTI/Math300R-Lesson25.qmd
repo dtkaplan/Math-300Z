@@ -1,6 +1,6 @@
 ---
 title: "Math 300R NTI Lesson `r (lesson <- 25)`"
-subtitle: "DAGs, noise, and simulation"
+subtitle: "Mechanics of prediction"
 author: "Prof. Danny Kaplan"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
@@ -15,15 +15,16 @@ output:
 
 
 ```{r setup, include=FALSE}
-library(knitr)
-library(kableExtra)
-library(ggformula) # Change plots to ggplot2
-library(tibble)
-knitr::opts_chunk$set(echo = TRUE)
+source("../_startup.R")
 ```
 
 ## Objectives
 
+#. Given a sample from a  DAG simulation, construct a predictor function for a specified response variable.
+
+#. Use the predictor function to estimate prediction error on a given DAG sample and summarize with root mean square (RMS) error.
+
+#. Distinguish between in-sample and out-of-sample prediction estimates of prediction error. 
 
 
 ## Reading
@@ -33,43 +34,138 @@ TBD
 
 ## Lesson
 
-:::: {.callout-note icon=false}
-## In-class example
+Review mathematical/computational notation for functions. 
+
+* $f(x,y,z)$ has three inputs ("arguments") that are separated by commas inside the function parentheses.
+
+* You can create such a function using `makeFun()` (as in Math 141Z/142Z).
 
 ```{r}
-3 + 2
+set.seed(103)
 ```
-::::
-
-
-:::: {.callout-important icon=false}
-## In-class activity
 
 ```{r}
-date()
+Samp <- sample(dag03, size=100)
+Mod <- lm(y ~ x, data = Samp)
 ```
-::::
 
-This is just a template.
+Show that `Mod` is not yet in the form of a function. 
+
+```{r error=TRUE}
+Mod(x=1)
+```
+
+But we can turn it into one with `makeFun()`:
+```{r}
+f <- makeFun(Mod)
+f(x=1)
+```
+
+The function notation was invented long before statistics was a field. It turns out not to be very convenient for working in statistics. The reason: We have many variables stored in **data frames**. We'd like the input to our model functions to be in the form of a data frame. Even better, we'd like the output also to be in that form.
+
+The `mod_eval()` function let's us do this.
+
+```{r}
+Output <- mod_eval(Mod, data = sample(dag03, size=1000))
+```
+
+* Note that we built the model with `g ~ x + y`, so the model outputs a `g`-like thing.
+* The inputs are `x` and `y` which are drawn from the `data=` frame.
+* The output calculated from the model is called `model_output`.
+
+This output is often called a **prediction**, what the model tells us to expect for the response variable when the inputs are given.
+
+### Prediction error
+
+The prediction made by the model is not perfect. We can calculate the **error**, that is the difference between model output and the actual output for the given set of inputs.
+
+```{r}
+Output <- Output %>% 
+  mutate(error = y - model_output)
+gf_density(~ error, data = Output)
+gf_point(error ~ x, data = Output)
+```
+
+
+* The errors have a bell-shaped distribution.
+* Note that the error is centered on zero; sometimes the model is high and sometimes low. Only occasionally is it right on target.
+* I've plotted the error versus the actual value. In this case, there seems to be no systematic deviation from being centered on zero. 
+
+We can quantify the average size of the error with the **root mean square error**:
+
+```{r}
+Output %>% summarize(rms_error = sqrt(mean(error^2)))
+```
+
+This number is intended to be used to quantify the **uncertainty** in predictions from the model. 
+
+BUT THERE IS A CATCH. Notice that something funny is going on in this pair of commands:
+
+```{r}
+Mod <- lm(y ~ x, data = Samp)
+Output <- mod_eval(Mod, data = Samp)
+```
+
+The prediction being made here is called an **in-sample prediction**; the same data are used to construct the model and to calculate the prediction error. 
+
+In contrast, here is an **out-of-sample prediction**, where "new" data is used for the data input to `mod_eval()`. The new data is called **testing** data, while the data used to construct the model is called **training** data.
+
+```{r}
+OOS <- mod_eval(Mod, data = sample(dag03, size=10000))
+OOS %>% 
+  mutate(error = y - model_output) %>%
+  summarize(rms = sqrt(mean((error^2))))
+```
+
+::: {.callout_important icon=false}
+## Activity
+
+Which of these is in-sample and which out-of-sample prediction error.
+:::
+
+### To be honest ...
+
+We knew that the out-of-sample error will be bigger than the in-sample error. But that should really be "bigger on average." Sometimes, just by luck the in-sample error will be bigger than the out-of-sample error.
+
+To show "on average," we need to run many trials of the insample and many trials of the out-of-sample errors. Doing this requires considerable technical skill. This is just to demonstrate what's going on. It's the conclusion, rather than the method, that we want you to understand.
+
+
+```{r}
+trial <- function(n=100) {
+  Samp <- sample(dag03, size=n)
+  Mod <- lm(y ~ x, data = Samp)
+  Res1 <- mod_eval(Mod, data = Samp) %>%
+    mutate(in_error = y - model_output) %>%
+    summarize(in_rms = sqrt(mean(in_error^2))) 
+  Res2 <- mod_eval(Mod, data = sample(dag03, size=1000)) %>%
+    mutate(out_error = y - model_output) %>%
+    summarize(out_rms = sqrt(mean(out_error^2))) 
+  bind_cols(Res1, Res2)
+}
+```
+
+Note: We used `size=1000` for the out-of-sample prediction. We can get any amount of out-of-sample data we like from the simulation, so we used "a lot" in order to get more reliable estimates.
+
+Now repeat the trial many times and summarize the result:
+
+```{r}
+Expt <- do(1000)* trial(n = 50) %>%
+  mutate(difference = (out_rms - in_rms)/out_rms)
+gf_violin(difference ~ 1, data = Expt)
+gf_violin(out_rms ~ 1, data = Expt, color="blue", alpha=0.5) %>%
+  gf_violin(in_rms ~ 2, data = Expt, color="red", alpha=0.5) %>%
+  gf_refine(scale_y_log10())
+df_stats(~ out_rms, data = Expt, ci.mean())
+df_stats(~ in_rms, data = Expt, ci.mean())
+```
+
+TO DO: PUT THESE INTO Narrow format so that you can plot out the distributions or use color.
 
 ## Learning Challenges
 
-:::: {.callout-note icon=false}
-## LC 19.1 (Objective 2)
 
-This is just a template.
-
-::: {.callout-tip}
-## Solution
-
-
-The solution will go here.
-:::
-::::
 
 ## Documenting software
 
-  * File creation date: `r Sys.Date()`
-  * `r R.version.string`
-  * `tidyverse` package version: `r packageVersion("tidyverse")`
+  
 

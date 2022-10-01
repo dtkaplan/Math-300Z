@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-09-27">
+<meta name="dcterms.date" content="2022-10-01">
 
 <title>Proposal for Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 25)</title>
 <style>
@@ -119,6 +119,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -163,7 +164,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Math 300R NTI Lesson 25</h1>
-<p class="subtitle lead">DAGs, noise, and simulation</p>
+<p class="subtitle lead">Mechanics of prediction</p>
 </div>
 
 
@@ -180,7 +181,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 27, 2022</p>
+      <p class="date">October 1, 2022</p>
     </div>
   </div>
     
@@ -191,6 +192,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="objectives" class="level2">
 <h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
+<ol>
+<li><p>Given a sample from a DAG simulation, construct a predictor function for a specified response variable.</p></li>
+<li><p>Use the predictor function to estimate prediction error on a given DAG sample and summarize with root mean square (RMS) error.</p></li>
+<li><p>Distinguish between in-sample and out-of-sample prediction estimates of prediction error.</p></li>
+</ol>
 </section>
 <section id="reading" class="level2">
 <h2 class="anchored" data-anchor-id="reading">Reading</h2>
@@ -198,80 +204,146 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="lesson" class="level2">
 <h2 class="anchored" data-anchor-id="lesson">Lesson</h2>
-<div class="callout-note callout callout-style-default no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-In-class example
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<p>Review mathematical/computational notation for functions.</p>
+<ul>
+<li><p><span class="math inline">\(f(x,y,z)\)</span> has three inputs (“arguments”) that are separated by commas inside the function parentheses.</p></li>
+<li><p>You can create such a function using <code>makeFun()</code> (as in Math 141Z/142Z).</p></li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">+</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 5</code></pre>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">103</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</div>
-</div>
-<div class="callout-important callout callout-style-default no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-In-class activity
-</div>
-</div>
-<div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag03, <span class="at">size=</span><span class="dv">100</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Samp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Show that <code>Mod</code> is not yet in the form of a function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Mod</span>(<span class="at">x=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in Mod(x = 1): supplied argument name 'x' does not match 'z'</code></pre>
+</div>
+</div>
+<p>But we can turn it into one with <code>makeFun()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(Mod)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(<span class="at">x=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Tue Sep 27 10:13:07 2022"</code></pre>
+<pre><code>        1 
+0.5453583 </code></pre>
 </div>
 </div>
+<p>The function notation was invented long before statistics was a field. It turns out not to be very convenient for working in statistics. The reason: We have many variables stored in <strong>data frames</strong>. We’d like the input to our model functions to be in the form of a data frame. Even better, we’d like the output also to be in that form.</p>
+<p>The <code>mod_eval()</code> function let’s us do this.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Output <span class="ot">&lt;-</span> <span class="fu">mod_eval</span>(Mod, <span class="at">data =</span> <span class="fu">sample</span>(dag03, <span class="at">size=</span><span class="dv">1000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Note that we built the model with <code>g ~ x + y</code>, so the model outputs a <code>g</code>-like thing.</li>
+<li>The inputs are <code>x</code> and <code>y</code> which are drawn from the <code>data=</code> frame.</li>
+<li>The output calculated from the model is called <code>model_output</code>.</li>
+</ul>
+<p>This output is often called a <strong>prediction</strong>, what the model tells us to expect for the response variable when the inputs are given.</p>
+<section id="prediction-error" class="level3">
+<h3 class="anchored" data-anchor-id="prediction-error">Prediction error</h3>
+<p>The prediction made by the model is not perfect. We can calculate the <strong>error</strong>, that is the difference between model output and the actual output for the given set of inputs.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Output <span class="ot">&lt;-</span> Output <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">error =</span> y <span class="sc">-</span> model_output)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_density</span>(<span class="sc">~</span> error, <span class="at">data =</span> Output)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Math300R-Lesson25_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(error <span class="sc">~</span> x, <span class="at">data =</span> Output)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Math300R-Lesson25_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>This is just a template.</p>
+<ul>
+<li>The errors have a bell-shaped distribution.</li>
+<li>Note that the error is centered on zero; sometimes the model is high and sometimes low. Only occasionally is it right on target.</li>
+<li>I’ve plotted the error versus the actual value. In this case, there seems to be no systematic deviation from being centered on zero.</li>
+</ul>
+<p>We can quantify the average size of the error with the <strong>root mean square error</strong>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Output <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">rms_error =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(error<span class="sc">^</span><span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  rms_error
+      &lt;dbl&gt;
+1      1.21</code></pre>
+</div>
+</div>
+<p>This number is intended to be used to quantify the <strong>uncertainty</strong> in predictions from the model.</p>
+<p>BUT THERE IS A CATCH. Notice that something funny is going on in this pair of commands:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Samp)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Output <span class="ot">&lt;-</span> <span class="fu">mod_eval</span>(Mod, <span class="at">data =</span> Samp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The prediction being made here is called an <strong>in-sample prediction</strong>; the same data are used to construct the model and to calculate the prediction error.</p>
+<p>In contrast, here is an <strong>out-of-sample prediction</strong>, where “new” data is used for the data input to <code>mod_eval()</code>. The new data is called <strong>testing</strong> data, while the data used to construct the model is called <strong>training</strong> data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>OOS <span class="ot">&lt;-</span> <span class="fu">mod_eval</span>(Mod, <span class="at">data =</span> <span class="fu">sample</span>(dag03, <span class="at">size=</span><span class="dv">10000</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>OOS <span class="sc">%&gt;%</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">error =</span> y <span class="sc">-</span> model_output) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rms =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((error<span class="sc">^</span><span class="dv">2</span>))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+    rms
+  &lt;dbl&gt;
+1  1.23</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="activity" class="level2 callout_important" data-icon="false">
+<h2 class="anchored" data-anchor-id="activity">Activity</h2>
+<p>Which of these is in-sample and which out-of-sample prediction error.</p>
+</section>
+<section id="to-be-honest" class="level3">
+<h3 class="anchored" data-anchor-id="to-be-honest">To be honest …</h3>
+<p>We knew that the out-of-sample error will be bigger than the in-sample error. But that should really be “bigger on average.” Sometimes, just by luck the in-sample error will be bigger than the out-of-sample error.</p>
+<p>To show “on average,” we need to run many trials of the insample and many trials of the out-of-sample errors. Doing this requires considerable technical skill.</p>
+<p>Here are two functions that do the calculation of the RMS error.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>trial <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n=</span><span class="dv">100</span>) {</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag03, <span class="at">size=</span>n)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  Mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Samp)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  Res1 <span class="ot">&lt;-</span> <span class="fu">mod_eval</span>(Mod, <span class="at">data =</span> Samp) <span class="sc">%&gt;%</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">in_error =</span> y <span class="sc">-</span> model_output) <span class="sc">%&gt;%</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">in_rms =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(in_error<span class="sc">^</span><span class="dv">2</span>))) </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  Res2 <span class="ot">&lt;-</span> <span class="fu">mod_eval</span>(Mod, <span class="at">data =</span> <span class="fu">sample</span>(dag03, <span class="at">size=</span><span class="dv">1000</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">out_error =</span> y <span class="sc">-</span> model_output) <span class="sc">%&gt;%</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">out_rms =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(out_error<span class="sc">^</span><span class="dv">2</span>))) </span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(Res1, Res2)</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now repeat the trial many times and summarize the result:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Expt <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">1000</span>)<span class="sc">*</span> <span class="fu">trial</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_violin</span>(out_rms <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> Expt, <span class="at">color=</span><span class="st">"blue"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_violin</span>(in_rms <span class="sc">~</span> <span class="dv">2</span>, <span class="at">data =</span> Expt, <span class="at">color=</span><span class="st">"red"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(<span class="fu">scale_y_log10</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Math300R-Lesson25_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(<span class="sc">~</span> out_rms, <span class="at">data =</span> Expt, <span class="fu">ci.mean</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  response    lower    upper
+1  out_rms 1.359601 1.379741</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(<span class="sc">~</span> in_rms, <span class="at">data =</span> Expt, <span class="fu">ci.mean</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  response    lower    upper
+1   in_rms 1.047408 1.081448</code></pre>
+</div>
+</div>
+<p>TO DO: PUT THESE INTO Narrow format so that you can plot out the distributions or use color.</p>
 </section>
 <section id="learning-challenges" class="level2">
 <h2 class="anchored" data-anchor-id="learning-challenges">Learning Challenges</h2>
-<div class="callout-note callout callout-style-default no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-LC 19.1 (Objective 2)
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This is just a template.</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Solution
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The solution will go here.</p>
-</div>
-</div>
-</div>
-</div>
 </section>
 <section id="documenting-software" class="level2">
 <h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>
-<ul>
-<li>File creation date: 2022-09-27</li>
-<li>R version 4.2.1 (2022-06-23)</li>
-<li><code>tidyverse</code> package version: 1.3.2</li>
-</ul>
 
 
 </section>

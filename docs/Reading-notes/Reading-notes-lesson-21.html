@@ -9,7 +9,7 @@
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
 <meta name="dcterms.date" content="2022-09-28">
 
-<title>Proposal for Math 300 Revisions - Math 300R Lesson r (lesson &lt;- 20) Reading Notes</title>
+<title>Proposal for Math 300 Revisions - Math 300R Lesson r (lesson &lt;- 21) Reading Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -99,7 +99,7 @@ ul.task-list{list-style: none;}
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Math 300R Lesson 20 Reading Notes</h1>
+<h1 class="title">Math 300R Lesson 21 Reading Notes</h1>
 <p class="subtitle lead">title goes here</p>
 </div>
 
@@ -126,13 +126,44 @@ ul.task-list{list-style: none;}
 
 </header>
 
-<section id="using-do" class="level2">
-<h2 class="anchored" data-anchor-id="using-do">Using do( )</h2>
-<p>THERE’s a matter of the order of precedence of the operations in a pipe. Use the CURLY BRACES in the same way you would use parentheses in an arithmetic expression.</p>
-<p>WHY CURLY BRACES? Because parentheses mean something else in R: either application of a function to arguments or the usual arithmetic meaning.</p>
+<p>The theme of this second half of the course is one word: “inference.” To illustrate how inference is distinct from the data science methods—wrangling, visualization, modeling—you have been learning, consider <a href="#fig-hadley-r4ds-diagram">Figure&nbsp;1</a>, copied from a well-regarded data-science text.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-hadley-r4ds-diagram" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="www/data-science-explore.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<p></p><figcaption class="figure-caption">Figure 1: Schematic diagram illustrating a path for data exploration. From Wickham &amp; Grolemund, <a href="https://r4ds.had.co.nz/explore-intro.html"><em>R for Data Science</em></a></figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You’ve been to all the stepping stones on this path (with “transform” meaning “wrangling”), except the one on the far right: “Communicate.” I’d prefer if “communicate” were replaced with “inform.” One of the main uses of data science is to extract from data information that is useful for decision-making. The best information is that which reflects the true state of the world.</p>
+<p><strong>Statistical inference</strong> is the body of concepts and techniques that help us be careful and responsible that our statistical results do actually reflect the true state of the world insofar as the data can tell us about it.</p>
+<p>Example: Imagine a salesperson bargaining with a customer. Successful salespeople want to have some idea about how much money the customer would be willing to spend. They try to predict this based on observations they can make about the customer. These might include the kind of car the customer drives, how the customer is dressed, age of the customer, etc. You might think that the prediction takes the form of a <strong>quantity</strong>: the amount of money. But it’s better if the prediction is in the form of a <strong>range</strong>. After all, the relationship between willingness to pay and the observed customer attributes is weak and uncertain. It’s not good if the prediction suggests more precision than is actually warranted.</p>
+<p>Example: Nutritionists are interested in helping people to make diet choices that will increase health. Often they do this by collecting data on what people eat and their health outcomes. A regression model might indicate, for instance, that “organic” food is associated with a reduction in risk of an illness by, say, 20%. Skeptics could point out that “correlation is not causation,” and that other factors, say family income, account for the association. To inform the consumers decision about spending on food, it’s helpful if the data modeling is structured in a way that can provide confidence that the link between food and health is causal.</p>
+<p>Since inference involves the relationship between the resulted gleaned from models and the state of the world, it’s helpful to have situations where the state of the world is well known. We are going to provide such situations in a simple, sure way: by simulation.</p>
+<p>To emphasize that the simulation is only for developing an understanding of inference, and <strong>not for depicting the real world</strong>, we’ll use the word “gaming” to refer to using such simulations. The full process of gaming has four stages.</p>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+The Four Stages
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="i">
+<li>building the deck: Instructors provide a simulation of a mechanism that generates rows of a data frame.</li>
+<li>the deal: Some of these rows will be dealt to you, constituting the data you have to work with. [real-world]</li>
+<li>the play: Build models and extract results. [real-world]</li>
+<li>the reveal: Compare your results from (iii) either to the mechanism given in (i) or to more data generated by the simulation.</li>
+</ol>
+</div>
+</div>
+<p>WE’RE GOING TO USE SIMPLE NAMES like X, Y, A, B, C just to remind you that this is a simulation. Real-world data will usually have descriptive variable names, like <code>height</code>, <code>age</code>, <code>score</code>.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

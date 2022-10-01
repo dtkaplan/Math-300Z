@@ -1,0 +1,53 @@
+---
+title: "Math 300R NTI Lesson `r (lesson <- 33)`"
+subtitle: "Constructing a classifier"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+library(ggformula) # Change plots to ggplot2
+library(tibble)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Objectives
+
+#. Build a classifier from case-control data.
+
+#. Cross-tabulate classifier results versus true state. Evaluate false-positive rate, false-negative rate, accuracy.
+
+#. Calculate different forms of conditional probability: p(A|B) versus p(B|A) and identify which form of conditional probability is useful for prediction of an individual's outcome.
+
+
+## Reading
+
+TBD
+
+
+## Lesson
+
+
+
+
+
+## Learning Challenges
+
+
+
+## Documenting software
+
+  
+

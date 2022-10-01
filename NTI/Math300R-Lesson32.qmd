@@ -1,0 +1,53 @@
+---
+title: "Math 300R NTI Lesson `r (lesson <- 32)`"
+subtitle: "Measuring and accumulating risk"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+library(ggformula) # Change plots to ggplot2
+library(tibble)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Objectives
+
+#. Distinguish between absolute and relative risk and identify when a change in risk is being presented as absolute or relative.
+
+#. Calculate and correctly interpret other presentations of differences in risk: population attributable fraction, NTT, odds ratio.
+
+#. Interpret effect size as stated in log odds.
+
+
+## Reading
+
+TBD
+
+
+## Lesson
+
+
+
+
+
+## Learning Challenges
+
+
+
+## Documenting software
+
+  
+

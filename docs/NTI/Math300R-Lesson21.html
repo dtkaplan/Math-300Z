@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-09-27">
+<meta name="dcterms.date" content="2022-09-28">
 
 <title>Proposal for Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 21)</title>
 <style>
@@ -119,7 +119,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -181,7 +180,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 27, 2022</p>
+      <p class="date">September 28, 2022</p>
     </div>
   </div>
     
@@ -206,11 +205,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="lesson" class="level2">
 <h2 class="anchored" data-anchor-id="lesson">Lesson</h2>
 <p><em>Remember that you will be running this more like a lab than a lecture. You want them using <code>R</code> and answering questions. Have them open the notes rmd and work through it together.</em></p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Setup
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dagsim)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>:::</p>
+</div>
+</div>
 <p>Introduce DAGs with multiple variables.</p>
 <p>Generate data from them.</p>
 <p>Use the data to summarize the relationships.</p>
@@ -230,70 +240,8 @@ Activity
 </ol>
 </div>
 </div>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Inference example: Regression to the mean
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<p>::: {.callout-note} ## Inference example: Regression to the mean</p>
 <p>Construct the Galton height DAG, simulate, and show that Galton’s finding is replicated.</p>
-</div>
-</div>
-<ul>
-<li><p>Work through the learning checks LCA.1 - LCA.2.</p></li>
-<li><p>A DAG for “regression to the mean.”</p>
-<ul>
-<li>Ask what “regression” means in everyday English</li>
-<li>Provide some history of the idea and point out that this is where the name “regression” comes from for the method of fitting a linear model linking a response variable to explanatory variable(s).</li>
-<li>Show this DAG and ask what students think the consequences will be: what’s the relationship between the parents’ height and the (adult) child’s height.</li>
-</ul></li>
-</ul>
-<p><span class="math display">\[\epsilon \rightarrow parent \longleftarrow GENES \longrightarrow child \leftarrow \nu\]</span></p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Simulation: Regression to the mean
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>rtm <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">genes =</span> <span class="dv">64</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>), </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">parent =</span> genes <span class="sc">+</span> <span class="fl">0.5</span><span class="sc">*</span><span class="fu">rnorm</span>(<span class="dv">1000</span>), </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">child  =</span> genes <span class="sc">+</span> <span class="fl">0.5</span><span class="sc">*</span><span class="fu">rnorm</span>(<span class="dv">1000</span>))</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(child <span class="sc">~</span> parent, <span class="at">data =</span> rtm) </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>mod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = child ~ parent, data = rtm)
-
-Coefficients:
-(Intercept)       parent  
-    14.1712       0.7786  </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert this to ggplot2</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_point</span>(child <span class="sc">~</span> parent, <span class="at">data =</span> rtm) <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lm</span>(<span class="at">interval=</span><span class="st">"confidence"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">color=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Math300R-Lesson21_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Interpret the coefficient and the graph.</p>
-<ol type="a">
-<li>What’s the mean for the children and for the parents? [64 inches for each]</li>
-<li>The red line runs along the diagonal. It reflects the statement that the children are, on average, the same as the parents.</li>
-<li>The blue line is the regression model. The children are, on average, closer to the mean than the parents.</li>
-</ol>
-</div>
-</div>
 </section>
 <section id="learning-checks" class="level2">
 <h2 class="anchored" data-anchor-id="learning-checks">Learning Checks</h2>
@@ -301,9 +249,11 @@ Coefficients:
 <section id="documenting-software" class="level2">
 <h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>
 <ul>
-<li>File creation date: 2022-09-27</li>
+<li>File creation date: 2022-09-28</li>
 <li>R version 4.2.1 (2022-06-23)</li>
 <li><code>tidyverse</code> package version: 1.3.2</li>
+<li><code>mosaic</code> package version: 1.8.4</li>
+<li><code>dagsim</code> package version: 0.0.0.9000</li>
 </ul>
 
 

@@ -1,0 +1,54 @@
+---
+title: "Math 300R NTI Lesson `r (lesson <- 34)`"
+subtitle: "Accounting for prevalence"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+library(ggformula) # Change plots to ggplot2
+library(tibble)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Objectives
+
+#. Explain why case-control data may not give an proper measure of "prevalence."
+
+#. Understand sensitivity and specificity as conditional probabilities.
+
+#. Calculate false-positive and false-negative rates for a given prevalence.
+
+
+
+## Reading
+
+TBD
+
+
+## Lesson
+
+
+
+
+
+## Learning Challenges
+
+
+
+## Documenting software
+
+  
+

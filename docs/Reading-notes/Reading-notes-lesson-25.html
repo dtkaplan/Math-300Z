@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-09-28">
+<meta name="dcterms.date" content="2022-10-01">
 
-<title>Proposal for Math 300 Revisions - Math 300R Lesson r (lesson &lt;- 20) Reading Notes</title>
+<title>Proposal for Math 300 Revisions - Math 300R Lesson r (lesson &lt;- 25) Reading Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -99,8 +99,8 @@ ul.task-list{list-style: none;}
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Math 300R Lesson 20 Reading Notes</h1>
-<p class="subtitle lead">title goes here</p>
+<h1 class="title">Math 300R Lesson 25 Reading Notes</h1>
+<p class="subtitle lead">Mechanics of prediction</p>
 </div>
 
 
@@ -117,7 +117,7 @@ ul.task-list{list-style: none;}
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 28, 2022</p>
+      <p class="date">October 1, 2022</p>
     </div>
   </div>
     
@@ -126,10 +126,18 @@ ul.task-list{list-style: none;}
 
 </header>
 
-<section id="using-do" class="level2">
-<h2 class="anchored" data-anchor-id="using-do">Using do( )</h2>
-<p>THERE’s a matter of the order of precedence of the operations in a pipe. Use the CURLY BRACES in the same way you would use parentheses in an arithmetic expression.</p>
-<p>WHY CURLY BRACES? Because parentheses mean something else in R: either application of a function to arguments or the usual arithmetic meaning.</p>
+<p>Use <code>mod_eval()</code></p>
+<section id="a-model-as-function" class="level2">
+<h2 class="anchored" data-anchor-id="a-model-as-function">A model as function</h2>
+<p>Inconvenient because functions don’t know how to translate from the individual arguments to values taken from a data frame.</p>
+</section>
+<section id="feeding-inputs-into-a-model" class="level2">
+<h2 class="anchored" data-anchor-id="feeding-inputs-into-a-model">Feeding inputs into a model</h2>
+</section>
+<section id="drawing-a-model-function" class="level2">
+<h2 class="anchored" data-anchor-id="drawing-a-model-function">Drawing a model function</h2>
+<p>Evaluate the model at many inputs, then plot out <code>model_output</code> versus input.</p>
+<p><code>mod_plot()</code> automates this.</p>
 
 
 </section>

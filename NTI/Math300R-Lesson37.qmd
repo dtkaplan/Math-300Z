@@ -1,0 +1,51 @@
+---
+title: "Math 300R NTI Lesson `r (lesson <- 37)`"
+subtitle: "False discovery"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+library(ggformula) # Change plots to ggplot2
+library(tibble)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Objectives
+
+#. Identify signs of false discovery in a research paper.
+
+#. Estimate how overall p-value should change when study is replicated.
+
+
+## Reading
+
+TBD
+
+
+## Lesson
+
+Many planets picture
+
+
+
+## Learning Challenges
+
+
+
+## Documenting software
+
+  
+

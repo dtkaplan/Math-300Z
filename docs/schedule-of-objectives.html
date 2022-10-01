@@ -137,7 +137,7 @@ ul.task-list{list-style: none;}
 <section id="gaming-intro" class="level2">
 <h2 class="anchored" data-anchor-id="gaming-intro">Lesson 20: Reality versus gaming (<a href="NTI/Math300R-Lesson20.html">nti</a>)</h2>
 <ol>
-<li><p>Understand that gaming is a way of improving our skills and identifying potential opportunities and problems.</p></li>
+<li><p>Gaming: Understand that gaming is a way of improving our skills and identifying potential opportunities and problems.</p></li>
 <li><p>Distinguish between a sample, a summary of a sample, and a sample of summaries of samples.</p></li>
 </ol>
 </section>
@@ -147,23 +147,25 @@ ul.task-list{list-style: none;}
 <li><p>Determine whether a proposed graph is directed and acyclic.</p></li>
 <li><p>Read notation to identify response variable, explanatory variable, covariates, and effect sizes.</p></li>
 <li><p>Characterize the magnitude of random noise.</p></li>
-<li><p>Generate data from simulations and use the data to model the relationships.</p></li>
+<li><p>Gaming: Generate data from simulations and use the data to model the relationships.</p></li>
 </ol>
 <!-- noise sources for simulation, normal, two-sided exponential, dicotomizer. Maybe use a pipe for the added noise, e.g. children |> epsilon(0.5) -->
 </section>
 <section id="lesson-22-sampling-variation-nti" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-22-sampling-variation-nti">Lesson 22: Sampling variation (<a href="NTI/Math300R-Lesson22.html">nti</a>)</h2>
 <ol>
-<li><p>Implement on the computer a procedure to generate a sample, calculate a regression model, and produce a summary.</p></li>
-<li><p>Iterate the procedure and collect the summaries across iterations.</p></li>
+<li><p>Gaming: Implement on the computer a procedure to generate a sample, calculate a regression model, and produce a summary.</p></li>
+<li><p>Gaming: Iterate the procedure and collect the summaries across iterations. This collection is called the “sampling distribution.”</p></li>
 <li><p>Graphically display the distribution of summaries and generate a compact numerical description (“confidence interval”) of the sampling distribution.</p></li>
+<li><p>Understand and use scaling of confidence interval length as a function of <span class="math inline">\(n\)</span>.</p></li>
 </ol>
 </section>
 <section id="lesson-23-estimate-sampling-variation-from-a-single-sample-nti" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-23-estimate-sampling-variation-from-a-single-sample-nti">Lesson 23: Estimate sampling variation from a single sample (<a href="NTI/Math300R-Lesson23.html">nti</a>)</h2>
 <ol>
 <li><p>Use bootstrapping to estimate sampling variation.</p></li>
-<li><p>Infer sampling variation from a regression table.</p></li>
+<li><p>Infer sampling variation from a regression table: “standard error” of a model coefficient.</p></li>
+<li><p>Construct and interpret confidence intervals on a model coefficient.</p></li>
 </ol>
 </section>
 <section id="lesson-24-effect-size-nti" class="level2">
@@ -171,8 +173,7 @@ ul.task-list{list-style: none;}
 <ol>
 <li><p>Estimate an effect size from a regression model of the two variables.</p></li>
 <li><p>Construct a confidence interval on the effect size.</p></li>
-<li><p>Evaluate whether confidence interval indicates that estimated effect size is consistent with simulation.</p></li>
-<li><p>Understand and use scaling of confidence interval length as a function of <span class="math inline">\(n\)</span>.</p></li>
+<li><p>Gaming: Evaluate whether confidence interval indicates that estimated effect size is consistent with simulation.</p></li>
 </ol>
 </section>
 <section id="lesson-25-mechanics-of-prediction-nti" class="level2">
@@ -183,81 +184,82 @@ ul.task-list{list-style: none;}
 <li><p>Distinguish between in-sample and out-of-sample prediction estimates of prediction error.</p></li>
 </ol>
 </section>
-<section id="lesson-26-constructing-a-prediction-interval" class="level2">
-<h2 class="anchored" data-anchor-id="lesson-26-constructing-a-prediction-interval">Lesson 26: Constructing a prediction interval</h2>
+<section id="lesson-26-constructing-a-prediction-interval-nti" class="level2">
+<h2 class="anchored" data-anchor-id="lesson-26-constructing-a-prediction-interval-nti">Lesson 26: Constructing a prediction interval (<a href="NTI/Math300R-Lesson26.html">nti</a>)</h2>
 <ol>
 <li>Identify the two components that make up a prediction error, one that scales with <span class="math inline">\(n\)</span> and the other that doesn’t.</li>
 </ol>
 </section>
-<section id="lesson-27-covariates" class="level2">
-<h2 class="anchored" data-anchor-id="lesson-27-covariates">Lesson 27: Covariates</h2>
+<section id="lesson-27-covariates-nti" class="level2">
+<h2 class="anchored" data-anchor-id="lesson-27-covariates-nti">Lesson 27: Covariates (<a href="NTI/Math300R-Lesson2y.html">nti</a>)</h2>
 <ol>
 <li><p>Show that including covariates in a prediction model always reduces in-sample mean square residual, but may not reduce residuals out-of-sample.</p></li>
 <li><p>Given regression coefficients, calculate model degrees of freedom and residual degrees of freedom.</p></li>
 <li><p>Calculate amount of in-sample mean square error reduction to be expected with a useless (random) covariate. (Residual sum of squares divided by residual degrees of freedom.)</p></li>
 </ol>
 </section>
-<section id="lesson-28-covariates-eat-variance" class="level2">
-<h2 class="anchored" data-anchor-id="lesson-28-covariates-eat-variance">Lesson 28: Covariates eat variance</h2>
+<section id="lesson-28-covariates-eat-variance-nti" class="level2">
+<h2 class="anchored" data-anchor-id="lesson-28-covariates-eat-variance-nti">Lesson 28: Covariates eat variance (<a href="NTI/Math300R-Lesson28.html">nti</a>)</h2>
 <ol>
 <li><p>Construct F statistic as ratio of incremental increase in model mean square due to model term(s) divided by residual mean square.</p></li>
 <li><p>Use software to construct ANOVA report and correctly interpret F statistics for prediction model term selection.</p></li>
 </ol>
 </section>
-<section id="lesson-29-confounding" class="level2">
-<h2 class="anchored" data-anchor-id="lesson-29-confounding">Lesson 29: Confounding</h2>
+<section id="lesson-29-confounding-nti" class="level2">
+<h2 class="anchored" data-anchor-id="lesson-29-confounding-nti">Lesson 29: Confounding (<a href="NTI/Math300R-Lesson29.html">nti</a>)</h2>
 <ol>
 <li><p>Identify confounding in a DAG</p></li>
 <li><p>Choose whether to include covariate depending on form of DAG</p></li>
 </ol>
 </section>
-<section id="lesson-30-non-causal-correlation" class="level2">
-<h2 class="anchored" data-anchor-id="lesson-30-non-causal-correlation">Lesson 30: Non-causal correlation</h2>
+<section id="lesson-30-non-causal-correlation-nti" class="level2">
+<h2 class="anchored" data-anchor-id="lesson-30-non-causal-correlation-nti">Lesson 30: Non-causal correlation (<a href="NTI/Math300R-Lesson30.html">nti</a>)</h2>
 <ol>
 <li><p>Distinguish “common cause” and “collider” forms of DAG.</p></li>
 <li><p>Construct appropriate DAG to match a narrative hypothesis.</p></li>
 </ol>
 </section>
-<section id="lesson-31-experiment-and-random-assignment" class="level2">
-<h2 class="anchored" data-anchor-id="lesson-31-experiment-and-random-assignment">Lesson 31: Experiment and random assignment</h2>
+<section id="lesson-31-experiment-and-random-assignment-nti" class="level2">
+<h2 class="anchored" data-anchor-id="lesson-31-experiment-and-random-assignment-nti">Lesson 31: Experiment and random assignment (<a href="NTI/Math300R-Lesson31.html">nti</a>)</h2>
 <ol>
 <li><p>Properly use nomenclature of experiment.</p></li>
 <li><p>Correctly re-draw DAG for an ideal experimental intervention.</p></li>
 <li><p>Use blocking to set assignment to treatment or control.</p></li>
 </ol>
 </section>
-<section id="lesson-32-measuring-and-accumulating-risk" class="level2">
-<h2 class="anchored" data-anchor-id="lesson-32-measuring-and-accumulating-risk">Lesson 32: Measuring and accumulating risk</h2>
+<section id="lesson-32-measuring-and-accumulating-risk-nti" class="level2">
+<h2 class="anchored" data-anchor-id="lesson-32-measuring-and-accumulating-risk-nti">Lesson 32: Measuring and accumulating risk (<a href="NTI/Math300R-Lesson32.html">nti</a>)</h2>
 <ol>
 <li><p>Distinguish between absolute and relative risk and identify when a change in risk is being presented as absolute or relative.</p></li>
 <li><p>Calculate and correctly interpret other presentations of differences in risk: population attributable fraction, NTT, odds ratio.</p></li>
 <li><p>Interpret effect size as stated in log odds.</p></li>
 </ol>
 </section>
-<section id="lesson-33-constructing-a-classifier" class="level2">
-<h2 class="anchored" data-anchor-id="lesson-33-constructing-a-classifier">Lesson 33: Constructing a classifier</h2>
+<section id="lesson-33-constructing-a-classifier-nti" class="level2">
+<h2 class="anchored" data-anchor-id="lesson-33-constructing-a-classifier-nti">Lesson 33: Constructing a classifier (<a href="NTI/Math300R-Lesson33.html">nti</a>)</h2>
 <ol>
 <li><p>Build a classifier from case-control data.</p></li>
 <li><p>Cross-tabulate classifier results versus true state. Evaluate false-positive rate, false-negative rate, accuracy.</p></li>
 <li><p>Calculate different forms of conditional probability: p(A|B) versus p(B|A) and identify which form of conditional probability is useful for prediction of an individual’s outcome.</p></li>
 </ol>
 </section>
-<section id="lesson-34-accounting-for-prevalence" class="level2">
-<h2 class="anchored" data-anchor-id="lesson-34-accounting-for-prevalence">Lesson 34: Accounting for prevalence</h2>
+<section id="lesson-34-accounting-for-prevalence-nti" class="level2">
+<h2 class="anchored" data-anchor-id="lesson-34-accounting-for-prevalence-nti">Lesson 34: Accounting for prevalence (<a href="NTI/Math300R-Lesson34.html">nti</a>)</h2>
 <ol>
 <li><p>Explain why case-control data may not give an proper measure of “prevalence.”</p></li>
-<li><p>Convert</p></li>
+<li><p>Understand sensitivity and specificity as conditional probabilities.</p></li>
+<li><p>Calculate false-positive and false-negative rates for a given prevalence.</p></li>
 </ol>
 </section>
-<section id="lesson-35-hypothesis-testing" class="level2">
-<h2 class="anchored" data-anchor-id="lesson-35-hypothesis-testing">Lesson 35: Hypothesis testing</h2>
+<section id="lesson-35-hypothesis-testing-nti" class="level2">
+<h2 class="anchored" data-anchor-id="lesson-35-hypothesis-testing-nti">Lesson 35: Hypothesis testing (<a href="NTI/Math300R-Lesson35.html">nti</a>)</h2>
 <ol>
 <li><p>Understand and use properly hypothesis testing nomenclature: test statistic, sampling distribution under the null, Type-1 and Type-2 error, rejection threshold, p-value</p></li>
 <li><p>Contrast hypothesis testing versus Bayesian framework.</p></li>
 </ol>
 </section>
-<section id="lesson-36-calculating-a-p-value" class="level2">
-<h2 class="anchored" data-anchor-id="lesson-36-calculating-a-p-value">Lesson 36: Calculating a p-value</h2>
+<section id="lesson-36-calculating-a-p-value-nti" class="level2">
+<h2 class="anchored" data-anchor-id="lesson-36-calculating-a-p-value-nti">Lesson 36: Calculating a p-value (<a href="NTI/Math300R-Lesson36.html">nti</a>)</h2>
 <ol>
 <li><p>The permutation test</p></li>
 <li><p>Interpret correctly from regression/ANOVA reports</p></li>
@@ -265,8 +267,8 @@ ul.task-list{list-style: none;}
 <li><p>Distinguish between p-value and effect size, that is, “significance” and “substance.”</p></li>
 </ol>
 </section>
-<section id="lesson-37-false-discovery-with-hypothesis-testing" class="level2">
-<h2 class="anchored" data-anchor-id="lesson-37-false-discovery-with-hypothesis-testing">Lesson 37: False discovery with hypothesis testing</h2>
+<section id="lesson-37-false-discovery-with-hypothesis-testing-nti" class="level2">
+<h2 class="anchored" data-anchor-id="lesson-37-false-discovery-with-hypothesis-testing-nti">Lesson 37: False discovery with hypothesis testing (<a href="NTI/Math300R-Lesson37.html">nti</a>)</h2>
 <ol>
 <li><p>Identify signs of false discovery in a research paper.</p></li>
 <li><p>Estimate how overall p-value should change when study is replicated.</p></li>
