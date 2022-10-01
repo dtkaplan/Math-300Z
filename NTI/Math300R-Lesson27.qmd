@@ -1,0 +1,52 @@
+---
+title: "Math 300R NTI Lesson `r (lesson <- 27)`"
+subtitle: "Covariates"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+library(ggformula) # Change plots to ggplot2
+library(tibble)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objectives
+
+#. Show that including covariates in a prediction model always reduces in-sample mean square residual, but may not reduce residuals out-of-sample. 
+
+#. Given regression coefficients, calculate model degrees of freedom and residual degrees of freedom.
+
+#. Calculate amount of in-sample mean square error reduction to be expected with a useless (random) covariate. (Residual sum of squares divided by residual degrees of freedom.)
+
+
+## Reading
+
+TBD
+
+
+## Lesson
+
+
+
+
+
+## Learning Challenges
+
+
+
+## Documenting software
+
+  
+

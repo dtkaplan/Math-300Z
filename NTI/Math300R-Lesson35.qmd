@@ -1,0 +1,51 @@
+---
+title: "Math 300R NTI Lesson `r (lesson <- 35)`"
+subtitle: "Hypothesis testing"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+library(ggformula) # Change plots to ggplot2
+library(tibble)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Objectives
+
+#. Understand and use properly hypothesis testing nomenclature: test statistic, sampling distribution under the null, Type-1 and Type-2 error, rejection threshold, p-value
+
+#. Contrast hypothesis testing versus Bayesian framework. 
+
+
+## Reading
+
+TBD
+
+
+## Lesson
+
+
+
+
+
+## Learning Challenges
+
+
+
+## Documenting software
+
+  
+

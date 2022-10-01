@@ -9,7 +9,7 @@
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
 <meta name="dcterms.date" content="2022-09-28">
 
-<title>Proposal for Math 300 Revisions - Math 300R Lesson r (lesson &lt;- 20) Reading Notes</title>
+<title>Proposal for Math 300 Revisions - Math 300R Lesson r (lesson &lt;- 23) Reading Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -56,6 +56,7 @@ ul.task-list{list-style: none;}
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -99,7 +100,7 @@ ul.task-list{list-style: none;}
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Math 300R Lesson 20 Reading Notes</h1>
+<h1 class="title">Math 300R Lesson 23 Reading Notes</h1>
 <p class="subtitle lead">title goes here</p>
 </div>
 
@@ -126,10 +127,80 @@ ul.task-list{list-style: none;}
 
 </header>
 
-<section id="using-do" class="level2">
-<h2 class="anchored" data-anchor-id="using-do">Using do( )</h2>
-<p>THERE’s a matter of the order of precedence of the operations in a pipe. Use the CURLY BRACES in the same way you would use parentheses in an arithmetic expression.</p>
-<p>WHY CURLY BRACES? Because parentheses mean something else in R: either application of a function to arguments or the usual arithmetic meaning.</p>
+<section id="review" class="level3">
+<h3 class="anchored" data-anchor-id="review">Review</h3>
+<ul>
+<li>Case : a row in a data frame</li>
+<li>Sample: a data frame.</li>
+<li>Summarized sample: lm(model, data=dataframe) %&gt;% summary()</li>
+</ul>
+<p>This is as far as we can go with real data. DAG simulation (gaming) let us go further:</p>
+<ul>
+<li>Sample: a draw of <span class="math inline">\(n\)</span> cases from the DAG: sample(DAG, size=50)</li>
+<li>Trial: a summarized sample: <code>r trial &lt;- function(n=50) {   lm(tilde, data=sample(DAG, size=n) %&gt;% summary() }</code></li>
+<li>Repeated trials to see <strong>sampling:distribution</strong>: <code>do(100) * trial()</code></li>
+<li>Summarize the repeated trials: e.g.&nbsp;standard deviation of trial-by-trial coefficients <code>r     do(100) * trial() %&gt;% summarize(sd = sd(coef_on_x))</code> We found that the standard deviation of trial-by-trial coefficient</li>
+</ul>
+<ol type="i">
+<li>Is smaller if <span class="math inline">\(n\)</span> is bigger.</li>
+<li>Specifically, is proportional to <span class="math inline">\(\frac{1}{\sqrt{n}}\)</span>.</li>
+</ol>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Formulas for sampling distributions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Statistics textbooks often give formulas for the standard deviation of the sampling distribution. The formulas have been constructed for many of the standard situations. To give you an idea of how this is done, let’s go over the very simplest situation.</p>
+<p>System: <span class="math inline">\(\epsilon \longrightarrow y\)</span> with tilde <code>xy~ 1</code>.</p>
+<p>Interpretation: The coefficient on <code>1</code>, that is, the “intercept” is an estimate of the mean of <span class="math inline">\(y\)</span>.</p>
+<p>THIS IS JUST A SKETCH.</p>
+<p>When <span class="math inline">\(n=1\)</span>, that is, the mean of a sample of size <span class="math inline">\(n=1\)</span>, the standard deviation of the sampling distribution is just <span class="math inline">\(sd(y)\)</span>. Of course, we can’t estimate this from a single sample of size <span class="math inline">\(n=1\)</span> because we need at least <span class="math inline">\(n=2\)</span> to calculate a standard deviation. If we knew the DAG behind the data, we could read <span class="math inline">\(sd(y)\)</span> from the DAG. Let’s imagine that we do and use the name <span class="math inline">\(\sigmal\)</span> for the standard deviation from many trials on the DAG. But if we have <span class="math inline">\(n &gt; 1\)</span>, we could calculate the SD from the sample. Let’s call that <span class="math inline">\(s\)</span>, our estimate of sigma.</p>
+<p>We also know that the SD of the sampling distribution scales as <span class="math inline">\(\frac{1}{n}\)</span>.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Sample size</th>
+<th>SD of <code>Intercept</code> coefficient</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(n=1\)</span></td>
+<td><span class="math inline">\(\sigma\)</span> as stipulated</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(n=2\)</span></td>
+<td><span class="math inline">\(\sigma/\sqrt{2}\)</span> estimated by <span class="math inline">\(s/\sqrt{2}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(n=3\)</span></td>
+<td><span class="math inline">\(\sigma/\sqrt{3}\)</span> estimated by <span class="math inline">\(s/\sqrt{3}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(n\)</span></td>
+<td><span class="math inline">\(\sigma/\sqrt{n}\)</span> estimated by <span class="math inline">\(s/\sqrt{n}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>GIVE FORMULAS for <code>y ~ 1</code>, <code>y ~ yesno</code>, <code>y ~ x</code></p>
+<p>The challenge faced by the traditional statistics student is to look up the correct formula for the situation at hand. But the computer can figure out the right formula directly from the tilde model.</p>
+</div>
+</div>
+</section>
+<section id="bootstrapping" class="level2">
+<h2 class="anchored" data-anchor-id="bootstrapping">Bootstrapping</h2>
+</section>
+<section id="regression-table" class="level2">
+<h2 class="anchored" data-anchor-id="regression-table">Regression table</h2>
 
 
 </section>

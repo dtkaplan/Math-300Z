@@ -1,0 +1,55 @@
+---
+title: "Math 300R NTI Lesson `r (lesson <- 36)`"
+subtitle: "Calculating a p-value"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+library(ggformula) # Change plots to ggplot2
+library(tibble)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Objectives
+
+#. The permutation test
+
+#. Interpret correctly from regression/ANOVA reports
+
+#. Traditional names for hypothesis tests in different "textbook" settings.
+
+#. Distinguish between p-value and effect size, that is, "significance" and "substance."
+
+
+## Reading
+
+TBD
+
+
+## Lesson
+
+Many planets picture
+
+
+
+## Learning Challenges
+
+
+
+## Documenting software
+
+  
+

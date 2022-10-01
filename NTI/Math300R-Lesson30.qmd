@@ -1,0 +1,52 @@
+---
+title: "Math 300R NTI Lesson `r (lesson <- 30)`"
+subtitle: "Spurious correlation"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+library(ggformula) # Change plots to ggplot2
+library(tibble)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+By which I mean correlations that are not just statistical noise but do not represent a causal path between two variables.
+
+
+## Objectives
+
+#. Distinguish "common cause" and "collider" forms of DAG.
+
+#. Construct appropriate DAG to match a narrative hypothesis.
+
+## Reading
+
+TBD
+
+
+## Lesson
+
+
+
+
+
+## Learning Challenges
+
+
+
+## Documenting software
+
+  
+
