@@ -1,0 +1,74 @@
+---
+title: "Math 300R Lesson `r (lesson <- 23)` Reading Notes"
+subtitle: "title goes here"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+### Review 
+
+- Case : a row in a data frame
+- Sample: a data frame.
+- Summarized sample: lm(model, data=dataframe) %>% summary()
+
+This is as far as we can go with real data. DAG simulation (gaming) let us go further:
+
+- Sample: a draw of $n$ cases from the DAG: sample(DAG, size=50) 
+- Trial: a summarized sample: 
+    ```r
+trial <- function(n=50) {
+  lm(tilde, data=sample(DAG, size=n) %>% summary()
+}
+    ```
+- Repeated trials to see **sampling:distribution**: `do(100) * trial()`
+- Summarize the repeated trials: e.g. standard deviation of trial-by-trial coefficients
+    ```r
+    do(100) * trial() %>% summarize(sd = sd(coef_on_x))
+    ```
+We found that the standard deviation of trial-by-trial coefficient
+
+i. Is smaller if $n$ is bigger.
+ii. Specifically, is proportional to $\frac{1}{\sqrt{n}}$.
+
+::: {.callout-note icon=false}
+## Formulas for sampling distributions
+
+Statistics textbooks often give formulas for the standard deviation of the sampling distribution. The formulas have been constructed for many of the standard situations. To give you an idea of how this is done, let's go over the very simplest situation.
+
+System: $\epsilon \longrightarrow y$ with tilde `xy~ 1`.
+
+Interpretation: The coefficient on `1`, that is, the "intercept" is an estimate of the mean of $y$.
+
+THIS IS JUST A SKETCH.
+
+When $n=1$, that is, the mean of a sample of size $n=1$, the standard deviation of the sampling distribution is just $sd(y)$. Of course, we can't estimate this from a single sample of size $n=1$ because we need at least $n=2$ to calculate a standard deviation. If we knew the DAG behind the data, we could read $sd(y)$ from the DAG. Let's imagine that we do and use the name $\sigmal$ for the standard deviation from many trials on the DAG. But if we have $n > 1$, we could calculate the SD from the sample. Let's call that $s$, our estimate of sigma.
+
+We also know that the SD of the sampling distribution scales as $\frac{1}{n}$.
+
+Sample size | SD of `Intercept` coefficient
+------------|------------------------------
+$n=1$       | $\sigma$ as stipulated
+$n=2$       | $\sigma/\sqrt{2}$ estimated by $s/\sqrt{2}$
+$n=3$       | $\sigma/\sqrt{3}$ estimated by $s/\sqrt{3}$
+$\vdots$    | $\vdots$
+$n$         | $\sigma/\sqrt{n}$ estimated by $s/\sqrt{n}$
+
+GIVE FORMULAS for `y ~ 1`, `y ~ yesno`, `y ~ x`
+
+The challenge faced by the traditional statistics student is to look up the correct formula for the situation at hand. But the computer can figure out the right formula directly from the tilde model. 
+:::
+
+## Bootstrapping
+
+
+
+## Regression table
+

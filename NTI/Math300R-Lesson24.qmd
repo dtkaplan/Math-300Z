@@ -1,6 +1,6 @@
 ---
 title: "Math 300R NTI Lesson `r (lesson <- 24)`"
-subtitle: "DAGs, noise, and simulation"
+subtitle: "Effect size"
 author: "Prof. Danny Kaplan"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
@@ -24,6 +24,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Objectives
 
+#. Estimate an effect size from a regression model of one and two variables.
+
+#. Construct a confidence interval on the effect size.
+
+#. Gaming: Evaluate whether confidence interval indicates that estimated effect size is consistent with simulation.
 
 
 ## Reading

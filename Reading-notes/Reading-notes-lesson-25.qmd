@@ -1,0 +1,29 @@
+---
+title: "Math 300R Lesson `r (lesson <- 25)` Reading Notes"
+subtitle: "Mechanics of prediction"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+Use `mod_eval()`
+
+## A model as function
+
+Inconvenient because functions don't know how to translate from the individual arguments to values taken from a data frame.
+
+## Feeding inputs into a model
+
+## Drawing a model function
+
+Evaluate the model at many inputs, then plot out `model_output` versus input.
+
+`mod_plot()` automates this.
+

@@ -1,0 +1,20 @@
+---
+title: "Math 300R Lesson `r (lesson <- 20)` Reading Notes"
+subtitle: "title goes here"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+## Using do( )
+
+THERE's a matter of the order of precedence of the operations in a pipe. Use the CURLY BRACES in the same way you would use parentheses in an arithmetic expression.
+
+WHY CURLY BRACES? Because parentheses mean something else in R: either application of a function to arguments or the usual arithmetic meaning.

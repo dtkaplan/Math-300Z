@@ -1,0 +1,22 @@
+---
+title: "Math 300R Lesson `r (lesson <- 24)` Reading Notes"
+subtitle: "Effect size"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+A regression model can be formulated as a function that takes the explanatory variables as inputs and produces a value for the response variable as output.
+
+SHOW `makeFun()` applied to a model producing a **model function**.
+
+Effect size of an input is partial derivative of model function with respect to that input.
+
+Effect size is a **rate**: the change in output per unit change in input. It's a measure of the size of a relationship.

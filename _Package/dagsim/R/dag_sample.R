@@ -6,15 +6,15 @@
 #'
 #' @param DAG list of formulas. Variables must be listed before they
 #' can be used to create other variables.
-#' @param nrow Number of rows in the data frame
+#' @param size size of the sample, that is, the number of rows to be put in the data frame
 #' @param seed Set the random number seed. Useful for reproducibility.
 #'
-#'
-
+#' @examples
+#' dag_sample(dag03)
 #'
 #' @importFrom tibble as_tibble
 #' @export
-dagsim <- function(DAG, size=10, seed=NULL) {
+dag_sample <- function(DAG, size=10, seed=NULL) {
   # check that DAG is a list of formulas
   if (!is.list(DAG)) stop("DAG must be a list of formulas")
   if (!all(unlist(lapply(DAG, function(x) inherits(x, "formula")))))
@@ -22,29 +22,29 @@ dagsim <- function(DAG, size=10, seed=NULL) {
 
   # random noise generators
   eps <- function(sd = 1) {
-    rnorm(nrow, mean=0, sd=sd)
+    rnorm(size, mean=0, sd=sd)
   }
   tdist <- function(df=3, ncp=0) {
-    rt(nrow, df=df, ncp=ncp)
+    rt(size, df=df, ncp=ncp)
   }
   unif <- function(min=0, max=1) {
-    runif(nrow, min=min, max=max)
+    runif(size, min=min, max=max)
   }
   roll <- function(levels=1:6, weight=rep(1, length(levels))) {
-    replicate(nrow, sample(levels, size=1, prob=weight))
+    replicate(size, sample(levels, size=1, prob=weight))
   }
   each <- function(expr) {
     expr <- substitute(expr)
-    replicate(nrow, eval(expr))
+    replicate(size, eval(expr))
   }
 
   #transformations
-  binom <- function(x) {
+  binom <- function(x=0) {
     # 1 or 0 output with logistic input
     prob <- exp(x)/(1+exp(x))
-    as.numeric(runif(nrow) < prob)
+    as.numeric(runif(size) < prob)
   }
-  seq <- function() 1:nrow
+  seq <- function() 1:size
 
   # set random number generator seed, if called for
   if (!is.null(seed)) set.seed(seed)
@@ -60,7 +60,7 @@ dagsim <- function(DAG, size=10, seed=NULL) {
     rhs <- rlang::f_rhs(DAG[[k]])
 
     this <- eval(rhs, envir = Res)
-    if (length(this) != nrow) this <- rep_len(this, nrow)
+    if (length(this) != size) this <- rep_len(this, size)
 
     Res[[vnames[k]]] <- this # make it available for successive formulas.
   }
@@ -76,9 +76,9 @@ dagsim <- function(DAG, size=10, seed=NULL) {
 }
 
 #' @importFrom mosaic sample
-#' @rdname dagsim
 #' @export
 sample.dagsystem <- function(x, size, replace = FALSE, ...) {
   if (missing(size)) size=5
-  dagsim(x, nrow=size, seed=...)
+  dagsim(x, size=size, seed=...)
 }
+

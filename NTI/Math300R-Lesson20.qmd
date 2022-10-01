@@ -45,13 +45,15 @@ TBD
 The software for generating the simulations, and which contains a library of different scenarios, is in the package `{dagsim}`. The `{mosaic}` package contains functions for calculating statistics and **iteration**. 
 
 ```{r message=FALSE, warning=FALSE}
-library(dagsim)
 library(mosaic)
+library(dagsim)
 ```
+:::
 
 ::: {.callout-tip icon=false}
 ## Example
 1. Roll a die 1000 times. How often does each possible result appear?
+
 ```{r}
 Sim <- makeDag(x ~ each(sample(1:6)))
 Samp <- sample(Sim, size=100)
@@ -59,12 +61,12 @@ Samp %>% group_by(x) %>% summarize(count = n())
 ```
 
 
-1. Generate 1000 rolls of the sum of two dice. How often does each possible result appear?
+2. Generate 1000 rolls of the sum of two dice. How often does each possible result appear?
 
 ```{r}
 Sim <- makeDag(x ~ each(sum(sample(1:6, 2, replace=TRUE))))
-Samp <- sample(Sim, size=100)
-Samp %>%  
+Sample <- sample(Sim, size=1000)
+Sample %>%  
   dplyr::group_by(x) %>%
   summarize(frac = n()/nrow(.)) %>% 
   print.data.frame()
@@ -72,7 +74,7 @@ Samp %>%
 
 Question: What do your results tell you about the possible results when summing 2 dice? 
 
-2. Do the same but for summing 6 dice. 
+3. Do the same but for summing 6 dice. 
 
 Question: What do your results tell you about the possible results when summing 6 dice? Do the data show you that it is possible to get a result of 36?  
 
@@ -87,8 +89,8 @@ Create a DAG where the X variable is simply noise: `eps()`
 
 ```{r}
 Sim <- makeDag(x ~ eps())
-Samp <- sample(Sim, size=100)
-Samp %>% summarize(sd(x), mean(x))
+Sample <- sample(Sim, size=100)
+Sample %>% summarize(sd(x), mean(x))
 ```
 
 - The argument to `eps()` sets the size of the noise. Confirm that this claim is true.
@@ -130,7 +132,9 @@ The solution will go here.
 
 ## Documenting software
 
-  * File creation date: `r Sys.Date()`
-  * `r R.version.string`
-  * `tidyverse` package version: `r packageVersion("tidyverse")`
+* File creation date: `r Sys.Date()`
+* `r R.version.string`
+* `tidyverse` package version: `r packageVersion("tidyverse")`
+* `mosaic` package version: `r packageVersion("mosaic")`
+* `dagsim` package version: `r packageVersion("dagsim")`
 

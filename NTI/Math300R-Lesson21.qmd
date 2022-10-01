@@ -44,6 +44,10 @@ TBD
 *Remember that you will be running this more like a lab than a lecture. You want them using `R` and answering questions. Have them open the notes rmd and work through it together.*
 
 
+
+::: {.callout-tip icon=FALSE}
+## Setup 
+
 ```{r message=FALSE, warning=FALSE}
 library(dagsim)
 library(mosaic)
@@ -77,38 +81,6 @@ Use the data to summarize the relationships.
 Construct the Galton height DAG, simulate, and show that Galton's finding is replicated. 
 
 
-:::
-
-+ Work through the learning checks LCA.1 - LCA.2.
-
-+ A DAG for "regression to the mean."
-    - Ask what "regression" means in everyday English
-    - Provide some history of the idea and point out that this is where the name "regression" comes from for the method of fitting a linear model linking a response variable to explanatory variable(s).
-    - Show this DAG and ask what students think the consequences will be: what's the relationship between the parents' height and the (adult) child's height.
-$$\epsilon \rightarrow parent \longleftarrow GENES \longrightarrow child \leftarrow \nu$$
-
-::: {.callout-note}
-## Simulation: Regression to the mean
-
-```{r warning=FALSE}
-rtm <- tibble(genes = 64 + rnorm(1000), 
-              parent = genes + 0.5*rnorm(1000), 
-              child  = genes + 0.5*rnorm(1000))
-mod <- lm(child ~ parent, data = rtm) 
-mod
-# Convert this to ggplot2
-gf_point(child ~ parent, data = rtm) %>%
-  gf_lm(interval="confidence") %>%
-  gf_abline(intercept = 0, slope = 1, color="red")
-```
-
-Interpret the coefficient and the graph.
-
-a. What's the mean for the children and for the parents? [64 inches for each]
-b. The red line runs along the diagonal. It reflects the statement that the children are, on average, the same as the parents.
-c. The blue line is the regression model. The children are, on average, closer to the mean than the parents.
-
-:::
 
 
 ## Learning Checks
@@ -120,4 +92,6 @@ c. The blue line is the regression model. The children are, on average, closer t
   * File creation date: `r Sys.Date()`
   * `r R.version.string`
   * `tidyverse` package version: `r packageVersion("tidyverse")`
+  * `mosaic` package version: `r packageVersion("mosaic")`
+  * `dagsim` package version: `r packageVersion("dagsim")`
 
