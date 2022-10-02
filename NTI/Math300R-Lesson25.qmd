@@ -66,7 +66,7 @@ The function notation was invented long before statistics was a field. It turns 
 The `mod_eval()` function let's us do this.
 
 ```{r}
-Output <- mod_eval(Mod, data = sample(dag03, size=1000))
+Output <- mod_eval(Mod, data = Samp)
 ```
 
 * Note that we built the model with `g ~ x + y`, so the model outputs a `g`-like thing.
@@ -128,7 +128,6 @@ Which of these is in-sample and which out-of-sample prediction error.
 We knew that the out-of-sample error will be bigger than the in-sample error. But that should really be "bigger on average." Sometimes, just by luck the in-sample error will be bigger than the out-of-sample error.
 
 To show "on average," we need to run many trials of the insample and many trials of the out-of-sample errors. Doing this requires considerable technical skill. This is just to demonstrate what's going on. It's the conclusion, rather than the method, that we want you to understand.
-
 
 ```{r}
 trial <- function(n=100) {
