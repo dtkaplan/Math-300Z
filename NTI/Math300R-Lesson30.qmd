@@ -15,11 +15,7 @@ output:
 
 
 ```{r setup, include=FALSE}
-library(knitr)
-library(kableExtra)
-library(ggformula) # Change plots to ggplot2
-library(tibble)
-knitr::opts_chunk$set(echo = TRUE)
+source("../_startup.R")
 ```
 
 By which I mean correlations that are not just statistical noise but do not represent a causal path between two variables.

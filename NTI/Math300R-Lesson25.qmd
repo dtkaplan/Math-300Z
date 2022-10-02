@@ -41,11 +41,11 @@ Review mathematical/computational notation for functions.
 * You can create such a function using `makeFun()` (as in Math 141Z/142Z).
 
 ```{r}
-set.seed(103)
+set.seed(358549)
 ```
 
 ```{r}
-Samp <- sample(dag03, size=100)
+Samp <- sample(dag03, size=10)
 Mod <- lm(y ~ x, data = Samp)
 ```
 
@@ -131,7 +131,9 @@ To show "on average," we need to run many trials of the insample and many trials
 
 ```{r}
 trial <- function(n=100) {
-  Samp <- sample(dag03, size=n)
+  # Get a random seed based on the fractional seconds of the clock
+  seed <- nanotime::nanotime(Sys.time()) %>% as.character() %>% substr(21,26) %>% as.integer()
+  Samp <- sample(dag03, size=n, seed=seed)
   Mod <- lm(y ~ x, data = Samp)
   Res1 <- mod_eval(Mod, data = Samp) %>%
     mutate(in_error = y - model_output) %>%
@@ -139,7 +141,7 @@ trial <- function(n=100) {
   Res2 <- mod_eval(Mod, data = sample(dag03, size=1000)) %>%
     mutate(out_error = y - model_output) %>%
     summarize(out_rms = sqrt(mean(out_error^2))) 
-  bind_cols(Res1, Res2)
+  bind_cols(Res1, Res2,data.frame(seed = seed))
 }
 ```
 
@@ -149,8 +151,8 @@ Now repeat the trial many times and summarize the result:
 
 ```{r}
 Expt <- do(1000)* trial(n = 50) %>%
-  mutate(difference = (out_rms - in_rms)/out_rms)
-gf_violin(difference ~ 1, data = Expt)
+  mutate(perc_diff = 100*(out_rms - in_rms)/out_rms)
+gf_violin(perc_diff ~ 1, data = Expt)
 gf_violin(out_rms ~ 1, data = Expt, color="blue", alpha=0.5) %>%
   gf_violin(in_rms ~ 2, data = Expt, color="red", alpha=0.5) %>%
   gf_refine(scale_y_log10())
@@ -158,7 +160,7 @@ df_stats(~ out_rms, data = Expt, ci.mean())
 df_stats(~ in_rms, data = Expt, ci.mean())
 ```
 
-TO DO: PUT THESE INTO Narrow format so that you can plot out the distributions or use color.
+
 
 ## Learning Challenges
 

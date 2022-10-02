@@ -25,7 +25,7 @@ dag_to_igraph <- function(DAG) {
 }
 
 dag_sort <- function(DAG) {
-  new_order <- dag_to_igraph(DAG) %>% topo_sort()
+  new_order <- dag_to_igraph(DAG) %>% igraph::topo_sort()
 
   res <- DAG[new_order]
   class(res) <- c(class(res), "dagsystem")
@@ -52,7 +52,7 @@ source_nodes <- function(DAG) {
 
 # make sure all nodes used on the right side of formulas
 # appear on the left-hand side of one of the formulas.
-check_complete <- function(DAG) {
+dag_check <- function(DAG) {
   all(source_nodes(DAG) %in% node_names(DAG))
 }
 

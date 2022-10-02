@@ -44,10 +44,7 @@ TBD
 ## Setup 
 
 ```{r message=FALSE, warning=FALSE}
-library(dagsim)
-library(mosaic)
-library(moderndive)
-library(broom)
+source("../_startup.R")
 ```
 :::
 

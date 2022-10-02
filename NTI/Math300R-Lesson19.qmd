@@ -15,12 +15,8 @@ output:
 
 
 ```{r setup, include=FALSE}
-library(knitr)
-library(kableExtra)
-library(ggformula) # Change plots to ggplot2
-library(tibble)
+source("../_startup.R")
 library(mosaicData)
-knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Objectives
