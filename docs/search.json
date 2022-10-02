@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "NTI/Math300R-Lesson25.html",
+    "href": "NTI/Math300R-Lesson25.html",
+    "title": "Math 300R NTI Lesson 25",
+    "section": "",
+    "text": "Given a sample from a DAG simulation, construct a predictor function for a specified response variable.\nUse the predictor function to estimate prediction error on a given DAG sample and summarize with root mean square (RMS) error.\nDistinguish between in-sample and out-of-sample prediction estimates of prediction error."
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson25.html#reading",
+    "href": "NTI/Math300R-Lesson25.html#reading",
+    "title": "Math 300R NTI Lesson 25",
+    "section": "Reading",
+    "text": "Reading\nTBD"
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson25.html#lesson",
+    "href": "NTI/Math300R-Lesson25.html#lesson",
+    "title": "Math 300R NTI Lesson 25",
+    "section": "Lesson",
+    "text": "Lesson\nReview mathematical/computational notation for functions.\n\n\\(f(x,y,z)\\) has three inputs (“arguments”) that are separated by commas inside the function parentheses.\nYou can create such a function using makeFun() (as in Math 141Z/142Z).\n\n\nset.seed(103)\n\n\nSamp <- sample(dag03, size=100)\nMod <- lm(y ~ x, data = Samp)\n\nShow that Mod is not yet in the form of a function.\n\nMod(x=1)\n\nError in Mod(x = 1): supplied argument name 'x' does not match 'z'\n\n\nBut we can turn it into one with makeFun():\n\nf <- makeFun(Mod)\nf(x=1)\n\n        1 \n0.5453583 \n\n\nThe function notation was invented long before statistics was a field. It turns out not to be very convenient for working in statistics. The reason: We have many variables stored in data frames. We’d like the input to our model functions to be in the form of a data frame. Even better, we’d like the output also to be in that form.\nThe mod_eval() function let’s us do this.\n\nOutput <- mod_eval(Mod, data = Samp)\n\n\nNote that we built the model with g ~ x + y, so the model outputs a g-like thing.\nThe inputs are x and y which are drawn from the data= frame.\nThe output calculated from the model is called model_output.\n\nThis output is often called a prediction, what the model tells us to expect for the response variable when the inputs are given.\n\nPrediction error\nThe prediction made by the model is not perfect. We can calculate the error, that is the difference between model output and the actual output for the given set of inputs.\n\nOutput <- Output %>% \n  mutate(error = y - model_output)\ngf_density(~ error, data = Output)\n\n\n\ngf_point(error ~ x, data = Output)\n\n\n\n\n\nThe errors have a bell-shaped distribution.\nNote that the error is centered on zero; sometimes the model is high and sometimes low. Only occasionally is it right on target.\nI’ve plotted the error versus the actual value. In this case, there seems to be no systematic deviation from being centered on zero.\n\nWe can quantify the average size of the error with the root mean square error:\n\nOutput %>% summarize(rms_error = sqrt(mean(error^2)))\n\n# A tibble: 1 × 1\n  rms_error\n      <dbl>\n1      1.24\n\n\nThis number is intended to be used to quantify the uncertainty in predictions from the model.\nBUT THERE IS A CATCH. Notice that something funny is going on in this pair of commands:\n\nMod <- lm(y ~ x, data = Samp)\nOutput <- mod_eval(Mod, data = Samp)\n\nThe prediction being made here is called an in-sample prediction; the same data are used to construct the model and to calculate the prediction error.\nIn contrast, here is an out-of-sample prediction, where “new” data is used for the data input to mod_eval(). The new data is called testing data, while the data used to construct the model is called training data.\n\nOOS <- mod_eval(Mod, data = sample(dag03, size=10000))\nOOS %>% \n  mutate(error = y - model_output) %>%\n  summarize(rms = sqrt(mean((error^2))))\n\n# A tibble: 1 × 1\n    rms\n  <dbl>\n1  1.22"
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson25.html#activity",
+    "href": "NTI/Math300R-Lesson25.html#activity",
+    "title": "Math 300R NTI Lesson 25",
+    "section": "Activity",
+    "text": "Activity\nWhich of these is in-sample and which out-of-sample prediction error."
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson25.html#learning-challenges",
+    "href": "NTI/Math300R-Lesson25.html#learning-challenges",
+    "title": "Math 300R NTI Lesson 25",
+    "section": "Learning Challenges",
+    "text": "Learning Challenges"
+  },
+  {
+    "objectID": "NTI/Math300R-Lesson25.html#documenting-software",
+    "href": "NTI/Math300R-Lesson25.html#documenting-software",
+    "title": "Math 300R NTI Lesson 25",
+    "section": "Documenting software",
+    "text": "Documenting software"
+  }
+]
