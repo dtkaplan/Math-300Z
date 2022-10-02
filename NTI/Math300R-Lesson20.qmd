@@ -51,7 +51,7 @@ library(dagsim)
 1. Roll a die 1000 times. How often does each possible result appear?
 
 ```{r}
-Sim <- makeDag(x ~ each(sample(1:6)))
+Sim <- dag_make(x ~ each(sample(1:6)))
 Samp <- sample(Sim, size=100)
 Samp %>% group_by(x) %>% summarize(count = n())
 ```
@@ -60,7 +60,7 @@ Samp %>% group_by(x) %>% summarize(count = n())
 2. Generate 1000 rolls of the sum of two dice. How often does each possible result appear?
 
 ```{r}
-Sim <- makeDag(x ~ each(sum(sample(1:6, 2, replace=TRUE))))
+Sim <- dag_make(x ~ each(sum(sample(1:6, 2, replace=TRUE))))
 Sample <- sample(Sim, size=1000)
 Sample %>%  
   dplyr::group_by(x) %>%
@@ -84,7 +84,7 @@ Question: How would you modify the simulation to get a better handle on the trut
 Create a DAG where the X variable is simply noise: `eps()`
 
 ```{r}
-Sim <- makeDag(x ~ eps())
+Sim <- dag_make(x ~ eps())
 Sample <- sample(Sim, size=100)
 Sample %>% summarize(sd(x), mean(x))
 ```
@@ -96,7 +96,7 @@ Sometimes we will want to repeat a simulation over and over again, collecting th
 
 ```{r}
 # one trial
-Sim <- makeDag(x ~ eps())
+Sim <- dag_make(x ~ eps())
 sample(Sim, size=100) %>% 
   summarize(sd(x), mean(x))
 

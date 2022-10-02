@@ -9,7 +9,8 @@ Encoding: UTF-8
 Depends: R (> 3.5)
 LazyData: true
 Imports: rlang,
-         tibble
+         tibble,
+         igraph
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
 Suggests: 

@@ -16,9 +16,9 @@ dag_to_igraph <- function(DAG) {
 
   }
 
-  g <- make_empty_graph(n=length(nnames), directed=TRUE) %>%
-    add_edges(edges) %>%
-    set_vertex_attr("label", value=nnames)
+  g <- igraph::make_empty_graph(n=length(nnames), directed=TRUE) %>%
+    igraph::add_edges(edges) %>%
+    igraph::set_vertex_attr("label", value=nnames)
 
 
   g

@@ -79,6 +79,6 @@ dag_sample <- function(DAG, size=10, seed=NULL) {
 #' @export
 sample.dagsystem <- function(x, size, replace = FALSE, ...) {
   if (missing(size)) size=5
-  dag_sample(x, size=size, seed=...)
+  dag_sample(x, size=size, ...)
 }
 

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-09-28">
+<meta name="dcterms.date" content="2022-10-02">
 
 <title>Proposal for Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 20)</title>
 <style>
@@ -180,7 +180,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 28, 2022</p>
+      <p class="date">October 2, 2022</p>
     </div>
   </div>
     
@@ -234,26 +234,26 @@ Example
 <li>Roll a die 1000 times. How often does each possible result appear?</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Sim <span class="ot">&lt;-</span> <span class="fu">makeDag</span>(x <span class="sc">~</span> <span class="fu">each</span>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)))</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Sim <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(x <span class="sc">~</span> <span class="fu">each</span>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(Sim, <span class="at">size=</span><span class="dv">100</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Samp <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(x) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 2
       x count
   &lt;int&gt; &lt;int&gt;
-1     1    16
+1     1    17
 2     2    17
-3     3    16
+3     3    17
 4     4    17
-5     5    17
-6     6    17</code></pre>
+5     5    16
+6     6    16</code></pre>
 </div>
 </div>
 <ol start="2" type="1">
 <li>Generate 1000 rolls of the sum of two dice. How often does each possible result appear?</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Sim <span class="ot">&lt;-</span> <span class="fu">makeDag</span>(x <span class="sc">~</span> <span class="fu">each</span>(<span class="fu">sum</span>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">2</span>, <span class="at">replace=</span><span class="cn">TRUE</span>))))</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Sim <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(x <span class="sc">~</span> <span class="fu">each</span>(<span class="fu">sum</span>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">2</span>, <span class="at">replace=</span><span class="cn">TRUE</span>))))</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(Sim, <span class="at">size=</span><span class="dv">1000</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Sample <span class="sc">%&gt;%</span>  </span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(x) <span class="sc">%&gt;%</span></span>
@@ -261,17 +261,17 @@ Example
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print.data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    x  frac
-1   2 0.024
-2   3 0.062
-3   4 0.090
-4   5 0.110
-5   6 0.122
-6   7 0.165
-7   8 0.142
-8   9 0.114
-9  10 0.080
-10 11 0.061
-11 12 0.030</code></pre>
+1   2 0.033
+2   3 0.055
+3   4 0.082
+4   5 0.117
+5   6 0.129
+6   7 0.160
+7   8 0.130
+8   9 0.126
+9  10 0.083
+10 11 0.056
+11 12 0.029</code></pre>
 </div>
 </div>
 <p>Question: What do your results tell you about the possible results when summing 2 dice?</p>
@@ -295,14 +295,14 @@ Measuring noise
 <div class="callout-body-container callout-body">
 <p>Create a DAG where the X variable is simply noise: <code>eps()</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Sim <span class="ot">&lt;-</span> <span class="fu">makeDag</span>(x <span class="sc">~</span> <span class="fu">eps</span>())</span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Sim <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(x <span class="sc">~</span> <span class="fu">eps</span>())</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>Sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(Sim, <span class="at">size=</span><span class="dv">100</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>Sample <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="fu">sd</span>(x), <span class="fu">mean</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   `sd(x)` `mean(x)`
     &lt;dbl&gt;     &lt;dbl&gt;
-1    1.06   -0.0639</code></pre>
+1   0.945    -0.157</code></pre>
 </div>
 </div>
 <ul>
@@ -313,14 +313,14 @@ Measuring noise
 <p>Sometimes we will want to repeat a simulation over and over again, collecting the results. Use <code>do()</code> for this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># one trial</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>Sim <span class="ot">&lt;-</span> <span class="fu">makeDag</span>(x <span class="sc">~</span> <span class="fu">eps</span>())</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>Sim <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(x <span class="sc">~</span> <span class="fu">eps</span>())</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(Sim, <span class="at">size=</span><span class="dv">100</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">sd</span>(x), <span class="fu">mean</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   `sd(x)` `mean(x)`
     &lt;dbl&gt;     &lt;dbl&gt;
-1    1.01    0.0556</code></pre>
+1    1.06   -0.0553</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># five trials</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">5</span>) <span class="sc">*</span></span>
@@ -328,13 +328,13 @@ Measuring noise
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">s =</span> <span class="fu">sd</span>(x), <span class="at">m =</span> <span class="fu">mean</span>(x))}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 4
-      s       m  .row .index
-  &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt;
-1 1.00  -0.106      1      1
-2 1.08  -0.209      1      2
-3 0.926 -0.0205     1      3
-4 0.951 -0.188      1      4
-5 0.967  0.0262     1      5</code></pre>
+      s      m  .row .index
+  &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt;
+1 0.892 0.0566     1      1
+2 1.01  0.0453     1      2
+3 1.07  0.154      1      3
+4 0.985 0.0621     1      4
+5 0.858 0.0469     1      5</code></pre>
 </div>
 </div>
 <ul>
@@ -375,7 +375,7 @@ Solution
 <section id="documenting-software" class="level2">
 <h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>
 <ul>
-<li>File creation date: 2022-09-28</li>
+<li>File creation date: 2022-10-02</li>
 <li>R version 4.2.1 (2022-06-23)</li>
 <li><code>tidyverse</code> package version: 1.3.2</li>
 <li><code>mosaic</code> package version: 1.8.4</li>

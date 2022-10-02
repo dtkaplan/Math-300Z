@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-10-01">
+<meta name="dcterms.date" content="2022-10-02">
 
 <title>Proposal for Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 25)</title>
 <style>
@@ -181,7 +181,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 1, 2022</p>
+      <p class="date">October 2, 2022</p>
     </div>
   </div>
     
@@ -210,10 +210,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>You can create such a function using <code>makeFun()</code> (as in Math 141Z/142Z).</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">103</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">358549</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag03, <span class="at">size=</span><span class="dv">100</span>)</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag03, <span class="at">size=</span><span class="dv">10</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Samp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Show that <code>Mod</code> is not yet in the form of a function.</p>
@@ -228,8 +228,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(Mod)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(<span class="at">x=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>        1 
-0.5453583 </code></pre>
+<pre><code>       1 
+1.368519 </code></pre>
 </div>
 </div>
 <p>The function notation was invented long before statistics was a field. It turns out not to be very convenient for working in statistics. The reason: We have many variables stored in <strong>data frames</strong>. We’d like the input to our model functions to be in the form of a data frame. Even better, we’d like the output also to be in that form.</p>
@@ -270,7 +270,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 1 × 1
   rms_error
       &lt;dbl&gt;
-1      1.24</code></pre>
+1     0.960</code></pre>
 </div>
 </div>
 <p>This number is intended to be used to quantify the <strong>uncertainty</strong> in predictions from the model.</p>
@@ -290,7 +290,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 1 × 1
     rms
   &lt;dbl&gt;
-1  1.22</code></pre>
+1  1.47</code></pre>
 </div>
 </div>
 </section>
@@ -304,45 +304,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We knew that the out-of-sample error will be bigger than the in-sample error. But that should really be “bigger on average.” Sometimes, just by luck the in-sample error will be bigger than the out-of-sample error.</p>
 <p>To show “on average,” we need to run many trials of the insample and many trials of the out-of-sample errors. Doing this requires considerable technical skill. This is just to demonstrate what’s going on. It’s the conclusion, rather than the method, that we want you to understand.</p>
 <div class="cell">
+
+</div>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>trial <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">n=</span><span class="dv">100</span>) {</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag03, <span class="at">size=</span>n)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  Mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Samp)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  Res1 <span class="ot">&lt;-</span> <span class="fu">mod_eval</span>(Mod, <span class="at">data =</span> Samp) <span class="sc">%&gt;%</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">in_error =</span> y <span class="sc">-</span> model_output) <span class="sc">%&gt;%</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">in_rms =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(in_error<span class="sc">^</span><span class="dv">2</span>))) </span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  Res2 <span class="ot">&lt;-</span> <span class="fu">mod_eval</span>(Mod, <span class="at">data =</span> <span class="fu">sample</span>(dag03, <span class="at">size=</span><span class="dv">1000</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">out_error =</span> y <span class="sc">-</span> model_output) <span class="sc">%&gt;%</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">out_rms =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(out_error<span class="sc">^</span><span class="dv">2</span>))) </span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(Res1, Res2)</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get a random seed based on the fractional seconds of the clock</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  seed <span class="ot">&lt;-</span> <span class="fu">new_seed_from_time</span>()</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag03, <span class="at">size=</span>n, <span class="at">seed=</span>seed)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  Mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Samp)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  Res1 <span class="ot">&lt;-</span> <span class="fu">mod_eval</span>(Mod, <span class="at">data =</span> Samp) <span class="sc">%&gt;%</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">in_error =</span> y <span class="sc">-</span> model_output) <span class="sc">%&gt;%</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">in_rms =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(in_error<span class="sc">^</span><span class="dv">2</span>))) </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  Res2 <span class="ot">&lt;-</span> <span class="fu">mod_eval</span>(Mod, <span class="at">data =</span> <span class="fu">sample</span>(dag03, <span class="at">size=</span><span class="dv">1000</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">out_error =</span> y <span class="sc">-</span> model_output) <span class="sc">%&gt;%</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">out_rms =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(out_error<span class="sc">^</span><span class="dv">2</span>))) </span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(Res1, Res2,<span class="fu">data.frame</span>(<span class="at">seed =</span> seed))</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Note: We used <code>size=1000</code> for the out-of-sample prediction. We can get any amount of out-of-sample data we like from the simulation, so we used “a lot” in order to get more reliable estimates.</p>
 <p>Now repeat the trial many times and summarize the result:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Expt <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">1000</span>)<span class="sc">*</span> <span class="fu">trial</span>(<span class="at">n =</span> <span class="dv">50</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference =</span> (out_rms <span class="sc">-</span> in_rms)<span class="sc">/</span>out_rms)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_violin</span>(difference <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> Expt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Expt <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">1000</span>)<span class="sc">*</span> {<span class="fu">trial</span>(<span class="at">n =</span> <span class="dv">50</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">perc_diff =</span> <span class="dv">100</span><span class="sc">*</span>(out_rms <span class="sc">-</span> in_rms)<span class="sc">/</span>out_rms)}</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_violin</span>(perc_diff <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> Expt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Math300R-Lesson25_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<p><img src="Math300R-Lesson25_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_violin</span>(out_rms <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> Expt, <span class="at">color=</span><span class="st">"blue"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_violin</span>(in_rms <span class="sc">~</span> <span class="dv">2</span>, <span class="at">data =</span> Expt, <span class="at">color=</span><span class="st">"red"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(<span class="fu">scale_y_log10</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Math300R-Lesson25_files/figure-html/unnamed-chunk-11-2.png" class="img-fluid" width="672"></p>
+<p><img src="Math300R-Lesson25_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid" width="672"></p>
 </div>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(<span class="sc">~</span> out_rms, <span class="at">data =</span> Expt, <span class="fu">ci.mean</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  response    lower    upper
-1  out_rms 1.247118 1.251677</code></pre>
+1  out_rms 1.247777 1.252388</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(<span class="sc">~</span> in_rms, <span class="at">data =</span> Expt, <span class="fu">ci.mean</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  response    lower    upper
-1   in_rms 1.187485 1.202417</code></pre>
+1   in_rms 1.188748 1.204525</code></pre>
 </div>
 </div>
-<p>TO DO: PUT THESE INTO Narrow format so that you can plot out the distributions or use color.</p>
 </section>
 <section id="learning-challenges" class="level2">
 <h2 class="anchored" data-anchor-id="learning-challenges">Learning Challenges</h2>

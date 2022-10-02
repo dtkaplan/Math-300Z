@@ -6,11 +6,11 @@ date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
   html_document:
     theme: lumen
-    toc: yes
-    toc_float: yes
+    toc: true
+    toc_float: true
     css: NTI.css
   pdf_document:
-    toc: yes
+    toc: true
 ---
 
 
@@ -129,10 +129,21 @@ We knew that the out-of-sample error will be bigger than the in-sample error. Bu
 
 To show "on average," we need to run many trials of the insample and many trials of the out-of-sample errors. Doing this requires considerable technical skill. This is just to demonstrate what's going on. It's the conclusion, rather than the method, that we want you to understand.
 
+```{r echo=FALSE}
+# Generate a seed that I can keep track of
+# Sometimes an NA is generated
+new_seed_from_time <- function() {
+  res <- nanotime::nanotime(Sys.time()) %>% as.character() %>% substr(21,26) %>% as.integer()
+  if (is.na(res)) res <- new_seed_from_time()
+  
+  res
+}
+```
+
 ```{r}
 trial <- function(n=100) {
   # Get a random seed based on the fractional seconds of the clock
-  seed <- nanotime::nanotime(Sys.time()) %>% as.character() %>% substr(21,26) %>% as.integer()
+  seed <- new_seed_from_time()
   Samp <- sample(dag03, size=n, seed=seed)
   Mod <- lm(y ~ x, data = Samp)
   Res1 <- mod_eval(Mod, data = Samp) %>%
@@ -150,8 +161,8 @@ Note: We used `size=1000` for the out-of-sample prediction. We can get any amoun
 Now repeat the trial many times and summarize the result:
 
 ```{r}
-Expt <- do(1000)* trial(n = 50) %>%
-  mutate(perc_diff = 100*(out_rms - in_rms)/out_rms)
+Expt <- do(1000)* {trial(n = 50) %>%
+  mutate(perc_diff = 100*(out_rms - in_rms)/out_rms)}
 gf_violin(perc_diff ~ 1, data = Expt)
 gf_violin(out_rms ~ 1, data = Expt, color="blue", alpha=0.5) %>%
   gf_violin(in_rms ~ 2, data = Expt, color="red", alpha=0.5) %>%
