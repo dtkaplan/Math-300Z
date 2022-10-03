@@ -6,7 +6,8 @@ Authors@R:
 Description: Creates data from DAGs.
 License: `use_mit_license()`
 Encoding: UTF-8
-Depends: R (> 3.5)
+Depends: R (> 3.5),
+    mosaic,
 LazyData: true
 Imports: rlang,
          tibble,

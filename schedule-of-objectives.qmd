@@ -93,9 +93,13 @@ As done in Fall 2020. Possible revisions to those lessons is not a topic of this
 
 ## Lesson 28: Covariates eat variance ([nti](NTI/Math300R-Lesson28.html))
 
-#. Construct F statistic as ratio of incremental increase in model mean square due to model term(s) divided by residual mean square. 
+#. Correctly define "covariate".
 
-#. Use software to construct ANOVA report and correctly interpret F statistics for prediction model term selection.
+#. Understand why including covariates---even spurious ones---always improves the appearance of model performance in in-sample testing.
+
+#. Read a DAG to anticipate when using spurious covariates will improve or will worsen model performance on out-of-sample prediction.
+
+
 
 
 ## Lesson 29: Confounding ([nti](NTI/Math300R-Lesson29.html))
@@ -169,14 +173,24 @@ As done in Fall 2020. Possible revisions to those lessons is not a topic of this
 #. Estimate how overall p-value should change when study is replicated.
 
 
-
-
-
-
 ## Alternative 1
+
+Theme: ANOVA and the F statistic
+
+#. Correctly define "covariate".
+
+#. Understand why including covariates---even spurious ones---always improves the appearance of model performance in in-sample testing.
+
+#. Read a DAG to anticipate when using spurious covariates will improve or will worsen model performance on out-of-sample prediction.
+
+
+
+
+
+## Alternative 2
 
 Theme: Classifiers: ROC and loss function
 
-## Alternative 2
+## Alternative 3
 
 Theme: Accumulating risk: Logistic regression

@@ -18,7 +18,35 @@ dag03 <- dag_make(
   y ~ 1.0*g + eps()
 )
 
-save(dag01, dag02, dag03,
+dag04 <- dag_make(
+  a ~ eps(),
+  b ~ eps(),
+  c ~ eps(),
+  d ~ a + b + c + eps()
+)
+
+dag05 <- dag_make(
+  a ~ eps(),
+  b ~ a + eps(),
+  c ~ b + eps(),
+  d ~ c + eps()
+)
+
+dag06 <- dag_make(
+  a ~ eps(),
+  b ~ a + eps(),
+  c ~ b + eps(),
+  d ~ c + a + eps()
+)
+
+dag07 <- dag_make(
+  a ~ eps(),
+  b ~ eps() - a,
+  c ~ a - b + eps(),
+  d ~ eps()
+)
+
+save(dag01, dag02, dag03, dag04, dag05, dag06, dag07,
      file = "data/daglib.rda")
 
 # An experiment

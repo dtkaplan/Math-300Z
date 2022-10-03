@@ -20,16 +20,11 @@ source("../_startup.R")
 
 ## Objectives
 
-#. Construct F statistic as ratio of incremental increase in model mean square due to model term(s) divided by residual mean square. 
+#. Correctly define "covariate".
 
-#. Use software to construct ANOVA report and correctly interpret F statistics for prediction model term selection.
+#. Understand why including covariates---even spurious ones---always improves the appearance of model performance in in-sample testing.
 
-
-#. Show that including covariates in a prediction model always reduces in-sample mean square residual, but may not reduce residuals out-of-sample. 
-
-#. Given regression coefficients, calculate model degrees of freedom and residual degrees of freedom.
-
-#. Calculate amount of in-sample mean square error reduction to be expected with a useless (random) covariate. (Residual sum of squares divided by residual degrees of freedom.)
+#. Read a DAG to anticipate when using spurious covariates will improve or will worsen model performance on out-of-sample prediction.
 
 
 ## Reading
@@ -40,11 +35,112 @@ TBD
 ## Lesson
 
 
+::: {.callout-note icon=false}
+## Summary
+
+Including covariates in a model can help, or can hurt. These are the conclusions we're working toward:
+
+i. In-sample, including covariates in a model always reduces the (in-sample) prediction error. The pattern is stronger the smaller the training data set.
+
+ii. Out-of-sample, including covariates may or may not reduce prediction error. It depends on whether the covariates are genuinely connected to the response variable.
+
+iii. Irrelevant covariates make (out-of-sample) prediction worse. This effect is strongest for small training data sets.
+
+Remember, since some of the conclusions depend on what variables are connected to what, we need to demonstrate the phenomena using a system where we know the structure.
+
+We'll come back to this topic, as a basis for ANOVA, when we do hypothesis testing. There we'll look at the sum of squares, mean square, F and such.
+
+:::
+
+
+Today, we'll work mostly with **in-sample** modeling. This reflects the case in the real world, where you have a data set but not usually an easy way to collect more data for testing.^[There is a technique that let's you get many of the benefits of out-of-sample testing with only one dataset. It's called **cross-validation**. Perhaps later in the course, but we have bigger fish to fry right now.]
+
+Let's work with `dag04`,`dag05`, and `dag07` to illustrate some points about covariates.
+
+```{r}
+dag_draw(dag04)
+dag_draw(dag05)
+dag_draw(dag07)
+```
+
+Start with `dag04`, where variables `a`, `b`, and `c` all contribute to the formation of `d`. 
+
+```{r}
+compare_rms_error(dag04, d ~ c, d~ b + c, d ~ a + b + c, n=50, in_sample = TRUE)
+```
+
+Prediction error gets smaller, the more covariates are included.
+
+The situation can be different. In `dag05`, `a`, `b`, and `c` all contribute to `d`, but **not separately**. `a` and `b` communicate with `d`  only via `c`. If `c` is in the model, `a` and `b` contribute nothing to reducing prediction error.
+
+```{r}
+compare_rms_error(dag05, d ~ c, d~ b + c, d ~ a + b + c, n=50, in_sample = TRUE)
+```
+
+`dag07` is a case where we have covariates, but they aren't actually connected to `d`. Will they reduce prediction error? We'll use a very small sample size, $n=4$, to make the situation obvious.
+
+```{r}
+compare_rms_error(dag07, d ~ 1, d ~ c, d~ b + c, d ~ a + b + c, n=4, in_sample = TRUE)
+```
+
+::: {.callout-note icon=false}
+## Pattern shown by `dag07` model
+
+Confirm these by running many simulations.
+
+1. The prediction error gets smaller the more covariates are included in the model.
+2. The last prediction error, with 4 terms in the model (don't forget `1`!) is zero. A perfect model?
+
+:::
+
+### A change in accounting
+
+We've been using RMS prediction error to quantify how well the response variable has een
 
 
 
 ## Learning Challenges
 
+::: {.callout-note icon=false}
+## LC 28.1
+
+In `dag04`, build models to predict `c` from the other variables. Does one of those variables "block" the others? 
+
+- Explain how you know this from your models. Try to give an answer in everyday language as well.
+- Repeat but use a very small sample size, say $n=5$. Has your conclusion about blocking changed? Explain why.
+
+SOLUTION:
+
+```{r}
+compare_rms_error(dag04, c~ 1, c ~ d, c~ b + d, c ~ a + b + d, n=50, in_sample = TRUE)
+```
+
+`d` seems to block effect of `a` and `b` on `c`.
+
+
+```{r}
+compare_rms_error(dag04, c~ 1, c ~ d, c~ b + d, c ~ a + b + d, n=5, in_sample = TRUE)
+```
+:::
+
+::: {.callout-note icon=false}
+## LC 28.2
+
+We are using in-sample testing because that is often the case in the model-building stage. However, in the model-**using** stage, things are different. You will be making predictions of new cases, that is, out-of-sample.
+
+For out-of-sample, when working with new data, it's not just a matter of being tricked into thinking covariates are useful when they're not. Using irrelevant covariates can be genuinely harmful to the predictions.
+
+Compare these in-sample and out-of-sample results. 
+
+```{r}
+set.seed(101)
+compare_rms_error(dag07, d ~ 1, d ~ c, d~ b + c, d ~ a + b + c, n=4, in_sample = TRUE)
+set.seed(101)
+compare_rms_error(dag07, d ~ 1, d ~ c, d~ b + c, d ~ a + b + c, n=4, in_sample = FALSE)
+```
+
+What do you see in the results that tells you that incorporating irrelevant covariates hurts the out-of-sample predictions?
+:::
 
 
 ## Documenting software
