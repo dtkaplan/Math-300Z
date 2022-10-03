@@ -10,7 +10,6 @@
 #'
 #' @export
 
-
 compare_rms_error <- function(DAG, ...,  n=500, in_sample=FALSE) {
   # collect the models
   models <- list(...)

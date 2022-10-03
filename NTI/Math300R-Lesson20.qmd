@@ -38,11 +38,11 @@ TBD
 ::: {.callout-note icon=false}
 ## Setup
 
-The software for generating the simulations, and which contains a library of different scenarios, is in the package `{dagsim}`. The `{mosaic}` package contains functions for calculating statistics and **iteration**. 
+The software for generating the simulations, and which contains a library of different scenarios, is in the package `{math300}`. The `{mosaic}` package contains functions for calculating statistics and **iteration**. 
 
 ```{r message=FALSE, warning=FALSE}
 library(mosaic)
-library(dagsim)
+library(math300)
 ```
 :::
 
@@ -132,5 +132,5 @@ The solution will go here.
 * `r R.version.string`
 * `tidyverse` package version: `r packageVersion("tidyverse")`
 * `mosaic` package version: `r packageVersion("mosaic")`
-* `dagsim` package version: `r packageVersion("dagsim")`
+* `math300` package version: `r packageVersion("math300")`
 

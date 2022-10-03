@@ -45,7 +45,7 @@ TBD
 ## Setup 
 
 ```{r message=FALSE, warning=FALSE}
-library(dagsim)
+library(math300)
 library(mosaic)
 ```
 :::
@@ -89,5 +89,5 @@ Construct the Galton height DAG, simulate, and show that Galton's finding is rep
   * `r R.version.string`
   * `tidyverse` package version: `r packageVersion("tidyverse")`
   * `mosaic` package version: `r packageVersion("mosaic")`
-  * `dagsim` package version: `r packageVersion("dagsim")`
+  * `math300` package version: `r packageVersion("math300")`
 

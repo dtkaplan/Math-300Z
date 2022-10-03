@@ -46,7 +46,13 @@ dag07 <- dag_make(
   d ~ eps()
 )
 
-save(dag01, dag02, dag03, dag04, dag05, dag06, dag07,
+dag08 <- dag_make(
+  c ~ eps(),
+  x ~ c + eps(),
+  y ~ x + c + 3 + eps()
+)
+
+save(dag01, dag02, dag03, dag04, dag05, dag06, dag07, dag08,
      file = "data/daglib.rda")
 
 # An experiment

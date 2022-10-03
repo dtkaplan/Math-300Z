@@ -1,0 +1,35 @@
+---
+title: "Math 300R Lesson `r (lesson <- 29)` Reading Notes"
+subtitle: "Confounding"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+source("../_startup.R")
+```
+
+::: {.callout-note icon=false}
+## Causal Caution
+
+Just because you've calculated an effect size doesn't mean that you have captured any sort of causal relationship between the variables. To illustrate, use `dag01` and fit two different models: `y ~ x` and `x ~ y`.
+
+```{r}
+Sample <- sample(dag01, size=500)
+lm(y ~ x, data = Sample)
+lm(x ~ y, data = Sample)
+```
+
+You can't tell from these coefficients whether `x` causes `y` or vice versa (or something entirely different). The words "correlation" or "association" are used when we don't want to claim that there is a causal connection. Many statisticians will only use those words unless the data come from an **experiment**. 
+
+We're going to use causal language ("relationship", "effect," etc.) because that is often the matter of concern to decision making. But using language doesn't doesn't make the connection causal.
+
+:::

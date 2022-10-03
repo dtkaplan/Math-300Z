@@ -95,6 +95,19 @@ compare_rms_error(dag05, n=500, d ~ c, d ~ b, d ~ a, d ~ a + b + c, in_sample=FA
 ```
 ## Learning Challenges
 
+::: {.callout-note icon=false}
+## LX 27.1
+
+Consider `dag01`, which shows a simple causal relationship between two variable.
+
+```{r}
+dag_draw(dag01)
+```
+
+So far as the size of prediction error is concerned, does it matter whether `x` is used to predict `y` or vice versa? Show the models and the results you use to come to your conclusion.
+:::
+
+
 
 
 ## Documenting software
