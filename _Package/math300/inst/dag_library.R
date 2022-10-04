@@ -52,7 +52,12 @@ dag08 <- dag_make(
   y ~ x + c + 3 + eps()
 )
 
-save(dag01, dag02, dag03, dag04, dag05, dag06, dag07, dag08,
+dag09 <- dag_make(
+  a ~ eps(),
+  b ~ eps(),
+  c ~ binom(2*a+ 3*b)
+)
+save(dag01, dag02, dag03, dag04, dag05, dag06, dag07, dag08, dag09,
      file = "data/daglib.rda")
 
 # An experiment
