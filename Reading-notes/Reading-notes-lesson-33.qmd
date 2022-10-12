@@ -37,13 +37,13 @@ yes   | 0.2 days  | 90 miles  |  +
 
 It's understandable that a classifier may not have perfect performance. After all, it iss trying to make a prediction based on limited data, and randomness may play a role. 
 
-There are different ways of making a mistake, and these different ways  have very different consequences. One kind of mistake, called a `r sds_newword("false positive")`, involves a classifier output that's positive (i.e. the classifier indicates fraud) but which is wrong. The consequence of this sort of mistake in the present example is a customer who has to find another way to pay for gasoline.
+There are different ways of making a mistake, and these different ways  have very different consequences. One kind of mistake, called a "**false positive**", involves a classifier output that's positive (i.e. the classifier indicates fraud) but which is wrong. The consequence of this sort of mistake in the present example is a customer who has to find another way to pay for gasoline.
 
-The other kind of mistake is called a `r sds_newword("false negative")`. Here, the classifer output is that the transaction is not fraudulent, but in actuality it was. The consequence of this kind of mistake is different: a successful theft.
+The other kind of mistake is called a "**false negative**". Here, the classifer output is that the transaction is not fraudulent, but in actuality it was. The consequence of this kind of mistake is different: a successful theft.
 
 The nomenclature signals that a mistake has been made with the word "false." The kind of mistake is either "positive" or "negative", corresponding to the output of the classifier.
 
-When the classifier gets things right, that is a "true" result. As with the false results, a true result is possible both for a "positive" and a "negative" classifier output. So the two ways of getting things right are called `r sds_newword("true positive")` and `r sds_newword("true negative")`. 
+When the classifier gets things right, that is a "true" result. As with the false results, a true result is possible both for a "positive" and a "negative" classifier output. So the two ways of getting things right are called "**true positive**" and "**true negative**". 
 
 Tabulating all 6000 rows of the testing data might produce something like this:
 
