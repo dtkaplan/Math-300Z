@@ -36,13 +36,92 @@ TBD
 
 ## Lesson
 
+In [Lesson 33](Math300R-Lesson33.html) we built a classifier based on simulated data from `dag10`. 
+
+- A classifier is a function of the variables deemed relevant by the designer and that produces a yes/no output.
+- Discovering a suitable function requires insight and usually trial and error.  
 
 
 
+Here's a classifier relevant to `dag10`:
+
+```{r}
+C1 <- make_classifier(c1 ~ b < 0)
+```
+
+`C1` is a function taking a data frame as input. The calculation is whether `b` is less than 0. If so, the function output is a 1. The output will be added as column `c1` to the input data
+
+To evaluate it, create a dataframe from `dag10` and run the classifier on it. `r set.seed(101)`
+
+```{r}
+Sample <- sample(dag10, size=1000) %>% C1()
+with(Sample, table(y, c1))
+```
+
+The false-positive rate is 125/1000, the false-negative rate is 131/1000. The "accuracy" is (368+376)/1000, about 74%.
+
+We designed classifier `C1()` using where the disease state is 1 about half the time, as appropriate for a **case-control** design.
+
+```{r}
+Sample %>% summarize(yesses = mean(y))
+```
+
+Now we want to deploy the classifier in a realistic setting, where the **base rate** is only, say, 10%. To simulate this, we'll keep all of the 0s from the simulation, but only 11% of the 1s. `r set.seed(201)`
+
+
+```{r}
+Field_results <- sample(dag10, size=2000) %>% 
+  mutate(prob = ifelse(y==1, 0.11, 1.00), rand = runif(nrow(.))) %>%
+  filter(rand <= prob) %>% C1()
+with(Field_results, table(y, c1))
+```
+
+The false negative rate is now close to zero: 19/1000. But the false positive rate is 31%, much higher than with the case-control data used to design the classifier. 
+
+What's gone wrong? Why did the false positive rate change? 
+
+The reason is that the "**base rate**" (or **prevalence**) for the disease is 10.1% in `dag10b` compared to the 50% in `dag10`. Same classifier, but a different false positive rate.
+
+We would like to have a way to characterize a classifier that is independent of the base rate.
+
+The false positive rate is a probability: p(0 & +). Similarly, the false negative rate is p(1 & -). We can read these off the table. 
+
+The quantities of interest to the patient and doctor are different probabilities: 
+
+- p(0 | -) --- probability you don't have the disease given a negative test result
+- p(1 | +) --- probability you have the disease given a positive test result
+
+Calculate these probabilities from the classifer test results for the two base rates we've looked at: 50% for `dag10` and 21% for `dag10b`.
+
+
+- Case/control --- p(0 | -) is 368/(368 + 131) = 73%
+- Field -- p(0 | -) is 759/(746 + 29) = 96%
+
+- Case/control --- p(1 | +) is 376/(376 + 125) = 75%
+- Field -- p(1 | +) is 88/(248+88) = 26%
+
+These patient-centered probabilities change as the base rate changes. It turns out that the proper way to characterize the classifier is with two different probabilities:
+
+- Sensitivity: Probability of a + test if you have the disease: p(+ | 1)
+- Specificity: Probability of a - test if you do not have the disease: p(- | 1)
+
+Note that these are not probabilities of direct interest to the patient or doctor. But they do come out the same regardless of the base rate of the disease.
+
+- Case/control --- p(+ | 1) is 376/(376+131) = 74%
+- Field -- p(+ | 1) is 88/(29+88) = 75%
+
+- Case/control --- p(- | 0) is 368/(368 + 125) = 75%
+- Field -- p(- | 0) is 746/(746+248)= 75%
+
+Given the sensitivity/specificity and the base rate, we can calculate the probability of interest to the patient
+
+p(1 | +) = p(+ | 1) p(1) / (p(+ | 1)p(1) + p(-|0)p(0))
+
+In statistics, the sensitivity/specificity is called the "likelihood function", the probability of the observed data under the actual values in the world. THIS IS WEAK.
 
 ## Learning Challenges
 
-
+1. Given some classifier summaries, calculate the false-positive and false-negative rates as well as the sensitivity and specificity
 
 ## Documenting software
 

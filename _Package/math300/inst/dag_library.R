@@ -57,7 +57,24 @@ dag09 <- dag_make(
   b ~ eps(),
   c ~ binom(2*a+ 3*b)
 )
-save(dag01, dag02, dag03, dag04, dag05, dag06, dag07, dag08, dag09,
+
+
+# a case-control style data source. There are roughly
+# even numbers of 0s and 1s. Only a, b, c have an impact on y
+dag10 <- dag_make(
+  a ~ eps(),
+  b ~ eps(),
+  c ~ eps(),
+  d ~ eps(),
+  e ~ eps(),
+  f ~ 2*binom() - 1,
+  y ~ binom(2*a - 3*b + c + 0*d + 0*e + 0*f)
+)
+
+
+
+
+save(dag01, dag02, dag03, dag04, dag05, dag06, dag07, dag08, dag09, dag10,
      file = "data/daglib.rda")
 
 # An experiment
