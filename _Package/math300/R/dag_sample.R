@@ -8,17 +8,28 @@
 #' can be used to create other variables.
 #' @param size size of the sample, that is, the number of rows to be put in the data frame
 #' @param seed Set the random number seed. Useful for reproducibility.
+#' @param survive one-sided tilde expression that generates a boolean/logical from the
+#' oDAG variables indicating whether to keep the case in the output.
+#' @param .size_multiplier number (default 10) by which to increase the
+#' number of rows initiially generated so that the output size will be that nominally
+#' specified by `size=`. Note: If `.size_multiplier` isn't big enough, the output size
+#' will be too small.
+#' that
 #'
 #' @examples
 #' dag_sample(dag03)
-#'
+#' dag_sample(dag03, survive= ~ g > 0)
 #' @importFrom tibble as_tibble
 #' @export
-dag_sample <- function(DAG, size=10, seed=NULL) {
+dag_sample <- function(DAG, size=10, seed=NULL, survive=NULL, .size_multiplier=10) {
   # check that DAG is a list of formulas
   if (!is.list(DAG)) stop("DAG must be a list of formulas")
   if (!all(unlist(lapply(DAG, function(x) inherits(x, "formula")))))
     stop("All the components of DAG must be formulas.")
+
+  out_size <- size
+  survived <- TRUE # a boolean TRUE (default: keep all the rows)
+  size <- ifelse(!is.null(survive), .size_multiplier*out_size, out_size)
 
   # random noise generators
   eps <- function(sd = 1) {
@@ -60,9 +71,16 @@ dag_sample <- function(DAG, size=10, seed=NULL) {
     rhs <- rlang::f_rhs(DAG[[k]])
 
     this <- eval(rhs, envir = Res)
+
+    # next line is to handle constants, e.g. x ~ 3
     if (length(this) != size) this <- rep_len(this, size)
 
     Res[[vnames[k]]] <- this # make it available for successive formulas.
+  }
+
+  if (!is.null(survive)) {
+    rhs <- rlang::f_rhs(survive)
+    survived <- eval(rhs, envir=Res)
   }
 
   # Post-process: take out the items whose names start with dots
@@ -71,7 +89,10 @@ dag_sample <- function(DAG, size=10, seed=NULL) {
   Res <- Res[keepers]
 
 
-  tibble::as_tibble(Res)
+  tibble::as_tibble(Res) %>%
+    filter(survived) %>%
+    slice_sample(n=min(out_size, nrow(.)))
+
 
 }
 

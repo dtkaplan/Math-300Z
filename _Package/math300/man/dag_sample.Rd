@@ -4,7 +4,7 @@
 \alias{dag_sample}
 \title{Generate data from a DAG}
 \usage{
-dag_sample(DAG, size = 10, seed = NULL)
+dag_sample(DAG, size = 10, seed = NULL, survive = NULL, .size_multiplier = 10)
 }
 \arguments{
 \item{DAG}{list of formulas. Variables must be listed before they
@@ -13,6 +13,15 @@ can be used to create other variables.}
 \item{size}{size of the sample, that is, the number of rows to be put in the data frame}
 
 \item{seed}{Set the random number seed. Useful for reproducibility.}
+
+\item{survive}{one-sided tilde expression that generates a boolean/logical from the
+oDAG variables indicating whether to keep the case in the output.}
+
+\item{.size_multiplier}{number (default 10) by which to increase the
+number of rows initiially generated so that the output size will be that nominally
+specified by \verb{size=}. Note: If \code{.size_multiplier} isn't big enough, the output size
+will be too small.
+that}
 }
 \description{
 A DAG is represented as a list of formulas. The right-hand side
@@ -21,5 +30,5 @@ printed.
 }
 \examples{
 dag_sample(dag03)
-
+dag_sample(dag03, survive= ~ g > 0)
 }

@@ -69,10 +69,10 @@ Sample %>% summarize(yesses = mean(y))
 Now we want to deploy the classifier in a realistic setting, where the **base rate** is only, say, 10%. To simulate this, we'll keep all of the 0s from the simulation, but only 11% of the 1s. `r set.seed(201)`
 
 
-```{r}
-Field_results <- sample(dag10, size=2000) %>% 
-  mutate(prob = ifelse(y==1, 0.11, 1.00), rand = runif(nrow(.))) %>%
-  filter(rand <= prob) %>% C1()
+```{r} 
+Field_results <- sample(dag10, 
+                        size=1000, 
+                        survive=~ifelse(y==1, unif() < 0.11, TRUE)) %>% C1()
 with(Field_results, table(y, c1))
 ```
 
