@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-10-14">
 
-<title>Spring 2023 Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 34)</title>
+<title>Spring 2023 Math 300 Revisions - Learning Checks Lesson 21</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -165,135 +163,131 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Math 300R NTI Lesson 34</h1>
-<p class="subtitle lead">Accounting for prevalence</p>
+<h1 class="title">Learning Checks Lesson 21</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Prof.&nbsp;Danny Kaplan </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">October 14, 2022</p>
-    </div>
-  </div>
     
   </div>
   
 
 </header>
 
-<section id="objectives" class="level2">
-<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
-<ol>
-<li><p>Explain why case-control data may not give an proper measure of “prevalence.”</p></li>
-<li><p>Understand sensitivity and specificity as conditional probabilities.</p></li>
-<li><p>Calculate false-positive and false-negative rates for a given prevalence.</p></li>
-</ol>
-</section>
-<section id="reading" class="level2">
-<h2 class="anchored" data-anchor-id="reading">Reading</h2>
-<p>TBD</p>
-</section>
-<section id="lesson" class="level2">
-<h2 class="anchored" data-anchor-id="lesson">Lesson</h2>
-<p>In <a href="Math300R-Lesson33.html">Lesson 33</a> we built a classifier based on simulated data from <code>dag10</code>.</p>
-<ul>
-<li>A classifier is a function of the variables deemed relevant by the designer and that produces a yes/no output.</li>
-<li>Discovering a suitable function requires insight and usually trial and error.</li>
-</ul>
-<p>Here’s a classifier relevant to <code>dag10</code>:</p>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section">21.1</h2>
+<p>The following command will generate a data frame with 1000 rows from <code>dag00</code> and calculate the variance of the <code>x</code> and <code>y</code> variables:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>C1 <span class="ot">&lt;-</span> <span class="fu">make_classifier</span>(c1 <span class="sc">~</span> b <span class="sc">&lt;</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><code>C1</code> is a function taking a data frame as input. The calculation is whether <code>b</code> is less than 0. If so, the function output is a 1. The output will be added as column <code>c1</code> to the input data</p>
-<p>To evaluate it, create a dataframe from <code>dag10</code> and run the classifier on it.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag10, <span class="at">size=</span><span class="dv">1000</span>) <span class="sc">%&gt;%</span> <span class="fu">C1</span>()</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(Sample, <span class="fu">table</span>(y, c1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag00, <span class="at">size=</span><span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">vx =</span> <span class="fu">var</span>(x), <span class="at">vy =</span> <span class="fu">var</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   c1
-y     -   +
-  0 368 125
-  1 131 376</code></pre>
+<pre><code># A tibble: 1 × 2
+     vx    vy
+  &lt;dbl&gt; &lt;dbl&gt;
+1  3.97  1.03</code></pre>
 </div>
 </div>
-<p>The false-positive rate is 125/1000, the false-negative rate is 131/1000. The “accuracy” is (368+376)/1000, about 74%.</p>
-<p>We designed classifier <code>C1()</code> using where the disease state is 1 about half the time, as appropriate for a <strong>case-control</strong> design.</p>
+<p>Compare this result to the DAG tilde expressions</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Sample <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">yesses =</span> <span class="fu">mean</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dag00</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 1
-  yesses
-   &lt;dbl&gt;
-1  0.507</code></pre>
+<pre><code>[[1]]
+x ~ eps(2) + 5
+
+[[2]]
+y ~ eps(1) - 7
+
+attr(,"class")
+[1] "list"      "dagsystem"</code></pre>
 </div>
 </div>
-<p>Now we want to deploy the classifier in a realistic setting, where the <strong>base rate</strong> is only, say, 10%. To simulate this, we’ll keep all of the 0s from the simulation, but only 11% of the 1s.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Field_results <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag10, </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">size=</span><span class="dv">1000</span>, </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">survive=</span><span class="sc">~</span><span class="fu">ifelse</span>(y<span class="sc">==</span><span class="dv">1</span>, <span class="fu">unif</span>() <span class="sc">&lt;</span> <span class="fl">0.11</span>, <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> <span class="fu">C1</span>()</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(Field_results, <span class="fu">table</span>(y, c1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   c1
-y     -   +
-  0 683 225
-  1  23  69</code></pre>
-</div>
-</div>
-<p>The false negative rate is now close to zero: 19/1000. But the false positive rate is 31%, much higher than with the case-control data used to design the classifier.</p>
-<p>What’s gone wrong? Why did the false positive rate change?</p>
-<p>The reason is that the “<strong>base rate</strong>” (or <strong>prevalence</strong>) for the disease is 10.1% in <code>dag10b</code> compared to the 50% in <code>dag10</code>. Same classifier, but a different false positive rate.</p>
-<p>We would like to have a way to characterize a classifier that is independent of the base rate.</p>
-<p>The false positive rate is a probability: p(0 &amp; +). Similarly, the false negative rate is p(1 &amp; -). We can read these off the table.</p>
-<p>The quantities of interest to the patient and doctor are different probabilities:</p>
-<ul>
-<li>p(0 | -) — probability you don’t have the disease given a negative test result</li>
-<li>p(1 | +) — probability you have the disease given a positive test result</li>
-</ul>
-<p>Calculate these probabilities from the classifer test results for the two base rates we’ve looked at: 50% for <code>dag10</code> and 21% for <code>dag10b</code>.</p>
-<ul>
-<li><p>Case/control — p(0 | -) is 368/(368 + 131) = 73%</p></li>
-<li><p>Field – p(0 | -) is 759/(746 + 29) = 96%</p></li>
-<li><p>Case/control — p(1 | +) is 376/(376 + 125) = 75%</p></li>
-<li><p>Field – p(1 | +) is 88/(248+88) = 26%</p></li>
-</ul>
-<p>These patient-centered probabilities change as the base rate changes. It turns out that the proper way to characterize the classifier is with two different probabilities:</p>
-<ul>
-<li>Sensitivity: Probability of a + test if you have the disease: p(+ | 1)</li>
-<li>Specificity: Probability of a - test if you do not have the disease: p(- | 1)</li>
-</ul>
-<p>Note that these are not probabilities of direct interest to the patient or doctor. But they do come out the same regardless of the base rate of the disease.</p>
-<ul>
-<li><p>Case/control — p(+ | 1) is 376/(376+131) = 74%</p></li>
-<li><p>Field – p(+ | 1) is 88/(29+88) = 75%</p></li>
-<li><p>Case/control — p(- | 0) is 368/(368 + 125) = 75%</p></li>
-<li><p>Field – p(- | 0) is 746/(746+248)= 75%</p></li>
-</ul>
-<p>Given the sensitivity/specificity and the base rate, we can calculate the probability of interest to the patient</p>
-<p>p(1 | +) = p(+ | 1) p(1) / (p(+ | 1)p(1) + p(-|0)p(0))</p>
-<p>In statistics, the sensitivity/specificity is called the “likelihood function”, the probability of the observed data under the actual values in the world. THIS IS WEAK.</p>
-</section>
-<section id="learning-challenges" class="level2">
-<h2 class="anchored" data-anchor-id="learning-challenges">Learning Challenges</h2>
+<p>In the tilde expressions, <code>eps(2)</code> means to generate noise of magnitude 2.0.</p>
 <ol type="1">
-<li>Given some classifier summaries, calculate the false-positive and false-negative rates as well as the sensitivity and specificity</li>
+<li>Is the argument to <code>eps()</code> specified in terms of the variance or the standard deviation?</li>
+<li>The tilde expression for <code>x</code> specifies that the constant <code>5</code> is to be added to <code>eps(2)</code>. Similarly, the constant <code>-7</code> is added to <code>y</code>. How do these constants relate to the calculated magnitudes of <code>x</code> and <code>y</code>?</li>
 </ol>
+<section id="solution" class="level3">
+<h3 class="anchored" data-anchor-id="solution">Solution</h3>
+<ol type="1">
+<li>The standard deviation. For instance, <code>x</code> has noise of magnitude 2. The variance of <code>x</code> is 4, the square of 2.</li>
+<li>The standard deviation (and therefore the variance) ignore such added constants.</li>
+</ol>
+<hr>
 </section>
-<section id="documenting-software" class="level2">
-<h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1">21.2</h2>
+<p><strong>?@sec-signal-and-noise</strong> introduces the idea that variables consist of components. A simple breakdown is into two components: i. the part of the variable that is determined by other variables in the system (“signal”) and ii. the random part of the variable (“noise”). The section uses <code>dag01</code> as an illustration of how a variable can be partly determined and partly random noise.</p>
+<ol type="i">
+<li><p>Write and execute a command that will generate 500 rows of simulated data from <code>dag01</code> and will calculate the standard deviation of <code>x</code> and of <code>y</code>.</p></li>
+<li><p>What’s the magnitude of <code>x</code> in the simulated data? What’s the magnitude of <code>y</code>?</p></li>
+<li><p>Does this change if you use data with 1000 or 20000 rows?</p></li>
+</ol>
+<section id="solution-1" class="level3">
+<h3 class="anchored" data-anchor-id="solution-1">Solution</h3>
+<ol type="i">
+<li><code>sample(dag01, size=500) %&gt;% summarize(sx = sd(x), sy=sd(y))</code></li>
+<li>The standard deviation of <code>x</code> is about 1, the standard deviation of <code>y</code> is about 1.8.</li>
+<li>No, the values are roughly the same regardless of the size of the sample.</li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="section-2" class="level2">
+<h2 class="anchored" data-anchor-id="section-2">21.3</h2>
+<p>[DRAW several DAG-like graphs, one of which should be undirected in all edges, one should be undirected on one or two edges (but not all), and one should be cyclic and another acyclic.]</p>
+<p>Referring to the graphs in the figure, say which ones are DAGs. If a graph is not a DAG, say whether that’s because it’s not <strong>directed</strong> or because it’s not <strong>cyclic</strong>.</p>
+<section id="solution-2" class="level3">
+<h3 class="anchored" data-anchor-id="solution-2">Solution</h3>
+<hr>
+</section>
+</section>
+<section id="section-3" class="level2">
+<h2 class="anchored" data-anchor-id="section-3">21.4</h2>
+<p>Generate simulated data from <code>dag01</code> with 1000 rows. Fit the regression model <code>y ~ x</code> to the data and examine the coefficients.</p>
+<ol type="1">
+<li><p>How do the coefficients relate to the tilde expressions that define <code>dag01</code>?</p></li>
+<li><p>Instead of using the regression model <code>y ~ x</code>, where <code>y</code> is the response variable, try the regression model <code>x ~ y</code>. Do the coefficients from <code>x ~ y</code> correspond in any simple way to the tilde expressions that define <code>dag01</code>?</p></li>
+</ol>
+<section id="solution-3" class="level3">
+<h3 class="anchored" data-anchor-id="solution-3">Solution</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> .)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x, data = .)
+
+Coefficients:
+(Intercept)            x  
+      4.033        1.532  </code></pre>
+</div>
+</div>
+<p>The intercept corresponds to the additive constant (4) in the <code>y</code> tilde expression. The <code>x</code> coefficient corresponds to the multiplier on <code>x</code> in the tilde expression.</p>
+<p>The formula for <code>x</code> isn’t reflected by the coefficients.</p>
+<p>Using <code>x</code> as the response variable:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(x <span class="sc">~</span> y, <span class="at">data =</span> .)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = x ~ y, data = .)
+
+Coefficients:
+(Intercept)            y  
+    -1.8642       0.4645  </code></pre>
+</div>
+</div>
+<p>These coefficients do not appear in the <code>dag01</code> tilde expressions.</p>
+<hr>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-10-03">
+<meta name="dcterms.date" content="2022-10-14">
 
-<title>Proposal for Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 27)</title>
+<title>Spring 2023 Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 27)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -130,7 +130,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Proposal for Math 300 Revisions</span>
+    <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
@@ -138,7 +138,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">Home</a>
+    <a class="nav-link" href="../index.html">Proposal</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../layout.html">Home</a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../schedule-of-objectives.html">Objectives</a>
@@ -180,7 +183,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 3, 2022</p>
+      <p class="date">October 14, 2022</p>
     </div>
   </div>
     
@@ -223,7 +226,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 1 × 1
     rms
   &lt;dbl&gt;
-1  1.73</code></pre>
+1  1.70</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(mod2, <span class="at">data =</span> Testing) <span class="sc">%&gt;%</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rms =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((d <span class="sc">-</span> model_output)<span class="sc">^</span><span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -231,7 +234,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 1 × 1
     rms
   &lt;dbl&gt;
-1 0.987</code></pre>
+1 0.961</code></pre>
 </div>
 </div>
 <p>Using the covariates reduces prediction error.</p>
@@ -247,7 +250,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag05, <span class="at">n=</span><span class="dv">500</span>, d <span class="sc">~</span> c, d <span class="sc">~</span> b, d <span class="sc">~</span> a, d <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">in_sample=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.038232 1.486125 1.786600 1.037728</code></pre>
+<pre><code>[1] 0.9964960 1.3613627 1.7447563 0.9948077</code></pre>
 </div>
 </div>
 <div class="callout-note callout callout-style-default no-icon callout-captioned">
@@ -276,7 +279,7 @@ Discussion
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag05, <span class="at">n=</span><span class="dv">500</span>, d <span class="sc">~</span> c, d <span class="sc">~</span> b, d <span class="sc">~</span> a, d <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">in_sample=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9845339 1.4427940 1.7215871 0.9844817</code></pre>
+<pre><code>[1] 0.9906537 1.4092149 1.6916262 0.9912996</code></pre>
 </div>
 </div>
 </section>

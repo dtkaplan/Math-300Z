@@ -86,46 +86,13 @@ Another, more technical question that we will address has to do with the *precis
 
 
 
-## Learning Challenges
+## Learning Checks
 
-:::: {.callout-note icon=false}
-## LC 19.1 (Objective 2)
-What are the two settings for decision making that we cover in this course?
-
-Give an example of each.
-
-::: {.callout-tip}
-## Solution
-
-(i) Prediction and (ii) Relationship
-
-i. What will be the sales price of this house? *"This house" is a shorthand way of saying "a house with these attributes." The sales price will be the output of a prediction function that takes the various attributes as input and produces a sales price as output.*
-
-ii. If I look for a house with an additional bathroom, how much will that change the sales price? *This asks for the relationship between number of bathrooms and sales price.*
-:::
-::::
+{{< include ../LC/LC-lesson19.qmd >}}
 
 
 
 
-:::: {.callout-note icon=false}
-## LC 19.2 (Objective 2)
-For each of these research questions, say whether it is a prediction setting or a relationship setting.
-
-i. What's the risk of falling ill? 
-ii. How will the risk of falling ill change if we eat more broccholi? 
-iii. Is there any reason to believe, based on the evidence at hand, that we should look more deeply into the possible benefits of broccholi?
-:::
-
-
-::: {.callout-tip}
-## Solution
-
-i. Prediction
-ii. Relationship
-iii. Relationship
-:::
-::::
 
 ## Documenting software
 

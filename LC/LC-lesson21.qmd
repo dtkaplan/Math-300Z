@@ -1,0 +1,102 @@
+---
+title: "Learning Checks Lesson 21"
+---
+
+```{r include=FALSE}
+source("../_startup.R")
+```
+
+## 21.1
+
+The following command will generate a data frame with 1000 rows from `dag00` and calculate the variance of the `x` and `y` variables:
+
+```{r}
+sample(dag00, size=1000) %>%
+  summarize(vx = var(x), vy = var(y))
+```
+
+Compare this result to the DAG tilde expressions
+
+```{r}
+dag00
+```
+
+In the tilde expressions, `eps(2)` means to generate noise of magnitude 2.0.
+
+1. Is the argument to `eps()` specified in terms of the variance or the standard deviation?
+2. The tilde expression for `x` specifies that the constant `5` is to be added to `eps(2)`. Similarly, the constant `-7` is added to `y`.  How do these constants relate to the calculated magnitudes of `x` and `y`?
+
+### Solution
+
+1. The standard deviation. For instance, `x` has noise of magnitude 2. The variance of `x` is 4, the square of 2.
+2. The standard deviation (and therefore the variance) ignore such added constants.
+
+--------
+
+
+
+## 21.2
+
+@sec-signal-and-noise introduces the idea that variables consist of components. A simple breakdown is into two components: i. the part of the variable that is determined by other variables in the system ("signal") and ii. the random part of the variable ("noise"). The section uses `dag01` as an illustration of how a variable can be partly determined and partly random noise.
+
+i. Write and execute a command that will generate 500 rows of simulated data from `dag01` and will calculate the standard deviation of `x` and of `y`. 
+
+ii. What's the magnitude of `x` in the simulated data? What's the magnitude of `y`?
+
+iii. Does this change if you use data with 1000 or 20000 rows?
+
+
+
+
+### Solution
+
+i. `sample(dag01, size=500) %>% summarize(sx = sd(x), sy=sd(y))`
+ii. The standard deviation of `x` is about 1, the standard deviation of `y` is about 1.8.
+iii. No, the values are roughly the same regardless of the size of the sample.
+
+----------
+
+
+
+## 21.3
+
+[DRAW several DAG-like graphs, one of which should be undirected in all edges, one should be undirected on one or two edges (but not all), and one should be cyclic and another acyclic.]
+
+Referring to the graphs in the figure, say which ones are DAGs. If a graph is not a DAG, say whether that's because it's not **directed** or because it's not **cyclic**.
+
+### Solution
+
+
+
+----------
+
+## 21.4
+
+Generate simulated data from `dag01` with 1000 rows. Fit the regression model `y ~ x` to the data and examine the coefficients. 
+
+1. How do the coefficients relate to the tilde expressions that define `dag01`?
+
+2. Instead of using the regression model `y ~ x`, where `y` is the response variable, try the regression model `x ~ y`. Do the coefficients from `x ~ y` correspond in any simple way to the tilde expressions that define `dag01`?
+
+### Solution
+
+```{r}
+sample(dag01, size=1000) %>%
+  lm(y ~ x, data = .)
+```
+
+The intercept corresponds to the additive constant (4) in the `y` tilde expression. The `x` coefficient corresponds to the multiplier on `x` in the tilde expression. 
+
+The formula for `x` isn't reflected by the coefficients.
+
+
+Using `x` as the response variable:
+
+```{r}
+sample(dag01, size=10000) %>%
+  lm(x ~ y, data = .)
+```
+
+These coefficients do not appear in the `dag01` tilde expressions.
+
+--------

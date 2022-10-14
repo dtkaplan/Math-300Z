@@ -1,5 +1,15 @@
 #' A library of DAGS. These are available in data/.
 #'
+#'
+#'
+library(math300)
+
+
+dag00 <- dag_make(
+  x ~ eps(2) + 5,
+  y ~ eps(1) - 7
+)
+
 dag01 <- dag_make(
   x ~ eps(),
   y ~ 1.5*x + 4.0 + eps()
@@ -74,7 +84,7 @@ dag10 <- dag_make(
 
 
 
-save(dag01, dag02, dag03, dag04, dag05, dag06, dag07, dag08, dag09, dag10,
+save(dag00, dag01, dag02, dag03, dag04, dag05, dag06, dag07, dag08, dag09, dag10,
      file = "data/daglib.rda")
 
 # An experiment

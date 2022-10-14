@@ -13,6 +13,11 @@ output:
     toc: yes
 ---
 
+```{r include=FALSE}
+source("../_startup.R")
+```
+
+
 The theme of this second half of the course is one word: "inference." To illustrate how inference is distinct from the data science methods---wrangling, visualization, modeling---you have been learning, consider @fig-hadley-r4ds-diagram, copied from a well-regarded data-science text.
 
 ```{r echo=FALSE, out.width="60%"}
@@ -43,4 +48,39 @@ iv. the reveal: Compare your results from (iii) either to the mechanism given in
 
 WE'RE GOING TO USE SIMPLE NAMES like X, Y, A, B, C just to remind you that this is a simulation. Real-world data will usually have descriptive variable names, like `height`, `age`, `score`.
 
+## Signal and noise {#sec-signal-and-noise}
+
+A useful distinction is made in statistics---as it is in engineering---between **signal** and **noise**. For instance, it is usually assumed that response variables consist of a part that stems deterministically from the rest of the system ("signal") and a random part ("noise").
+
+An important task in statistical modeling is to estimate the **size** of the noise. We'll need to develop some statistical techniques to do this with real world data, but we can illustrate the ideas with DAG games.  
+
+Consider the mechanism represented by `dag01`:
+
+```{r}
+dag01
+dag_draw(dag01)
+```
+
+`dag01` has two variables, `x` and `y`. The tilde expression `x ~ eps()` means that `x` is generated entirely as random noise; that's what the `eps()` function does.  In contrast, the tilde expression `y ~ 1.5 * x + 4 + eps()` means that variable `y` will be composed of a part that depends on `x` and another part that is random noise. 
+
+- "depends on `x`": `1.5*x + 4`
+- "random noise": `eps()`
+
+In contrast, the `dag00` system involves two variables that are not connected in any way.
+
+```{r}
+dag00
+dag_draw(dag00)
+```
+
+::: {.callout-tip}
+## `eps()` is a process
+The idea of randomness is central to statistics. In simulating data from a DAG, we use a variety of **random number generators**. One of the most often used generators appears in the tilde expressions as `eps()`.
+
+From the notation, you can see that `eps()` is an R function. By default, it is used without an input, just the bare `()` with nothing inside. So what could the output be? 
+
+A random number generator, like `eps()`, produces its output as if from nothing. (There's a lot of sophisticated mathematics behind this "nothing" but that doesn't concern us here.) Each time `eps()` is used, it makes a new set of random numbers that are not connected to any previous output created by `eps()`. It's best to think about random number generators like `eps()` as a process, for instance, rolls of dice or spins of a lottery wheel.
+
+By default, the "size" of the random noise produced by `eps()` is 1. Some DAGs, such as `dag01`, explicitly specify the size of the noise. For instance, `eps(2)` means the noise will have size 2, `eps(0.17)` means the noise will have size 0.17.
+:::
 

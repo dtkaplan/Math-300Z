@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-10-12">
+<meta name="dcterms.date" content="2022-10-14">
 
-<title>Proposal for Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 31)</title>
+<title>Spring 2023 Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 31)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -131,7 +131,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Proposal for Math 300 Revisions</span>
+    <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
@@ -139,7 +139,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">Home</a>
+    <a class="nav-link" href="../index.html">Proposal</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../layout.html">Home</a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../schedule-of-objectives.html">Objectives</a>
@@ -181,7 +184,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 12, 2022</p>
+      <p class="date">October 14, 2022</p>
     </div>
   </div>
     
@@ -271,13 +274,13 @@ attr(,"class")
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Sample) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)           x 
-   3.000250    1.495085 </code></pre>
+   3.037270    1.540183 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Sample) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               2.5 %   97.5 %
-(Intercept) 2.923659 3.076841
-x           1.441070 1.549099</code></pre>
+(Intercept) 2.960676 3.113863
+x           1.484062 1.596304</code></pre>
 </div>
 </div>
 <p>The coefficient we observe is 1.5, not 1.0. So this approach to data analysis is not revealing the true mechanism. (It’s legitimate to wonder whether 1.5 is really that different from 1.0, given the random factors involved in the mechanism. The confidence interval guides us here. By using <code>size=1000</code>, we narrowed the confidence interval to the extent that the interval on the observed coefficient has no overlap with the DAG specified coefficient of 1.0).</p>
@@ -316,8 +319,8 @@ attr(,"class")
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Exp_sample) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                2.5 %   97.5 %
-(Intercept) 2.8878725 3.137770
-x           0.8456628 1.196969</code></pre>
+(Intercept) 2.8936996 3.133661
+x           0.7297525 1.082028</code></pre>
 </div>
 </div>
 <p>The confidence interval on the coefficient on <code>x</code> is 0.88 to 1.21, completely consistent with the (known) mechanism linking <code>x</code> and <code>y</code>. In other words, the experimental intervention correctly reveals the true mechanism.</p>
@@ -336,9 +339,9 @@ Covariates eat variance
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x <span class="sc">+</span> c, <span class="at">data =</span> Exp_sample) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                2.5 %   97.5 %
-(Intercept) 2.8975366 3.072067
-x           0.8592653 1.104621
-c           0.9375971 1.058490</code></pre>
+(Intercept) 2.9297279 3.095727
+x           0.8176551 1.061383
+c           0.9485364 1.068510</code></pre>
 </div>
 </div>
 <p>The confidence interval on the <code>x</code> coefficient is smaller: 0.92 to 1.17.</p>
@@ -362,8 +365,8 @@ c           0.9375971 1.058490</code></pre>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Expb_sample) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               2.5 %   97.5 %
-(Intercept) 2.362316 2.548876
-x           1.883692 2.092367</code></pre>
+(Intercept) 2.309146 2.502374
+x           1.913673 2.132676</code></pre>
 </div>
 </div>
 <p>The confidence interval on the coefficient on <code>x</code> shows that we have not correctly revealed the mechanism of <code>x -&gt; y</code> of the DAG.</p>
@@ -386,8 +389,8 @@ x           1.883692 2.092367</code></pre>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Expc_sample) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               2.5 %   97.5 %
-(Intercept) 2.517757 2.708332
-x           1.828796 2.049339</code></pre>
+(Intercept) 2.382165 2.568453
+x           1.963901 2.177022</code></pre>
 </div>
 </div>
 <p>Still a wrong result. The improvement comes when we ignore the actual value of <code>x</code> and look at the relationship between the experimentally perfect <code>z</code> and <code>y</code>:</p>
@@ -395,8 +398,8 @@ x           1.828796 2.049339</code></pre>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> z, <span class="at">data =</span> Expc_sample) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                2.5 %   97.5 %
-(Intercept) 3.0786814 3.382163
-z           0.6165533 1.051432</code></pre>
+(Intercept) 2.7776108 3.105563
+z           0.8626444 1.327369</code></pre>
 </div>
 </div>
 <p>Back on target! This method is called “<strong>intent to treat</strong>” because we are looking at how our experimental intentions play out to <code>y</code>.</p>

@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-10-12">
+<meta name="dcterms.date" content="2022-10-14">
 
-<title>Proposal for Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 30)</title>
+<title>Spring 2023 Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 30)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -130,7 +130,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Proposal for Math 300 Revisions</span>
+    <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
@@ -138,7 +138,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">Home</a>
+    <a class="nav-link" href="../index.html">Proposal</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../layout.html">Home</a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../schedule-of-objectives.html">Objectives</a>
@@ -180,7 +183,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 12, 2022</p>
+      <p class="date">October 14, 2022</p>
     </div>
   </div>
     
@@ -244,7 +247,7 @@ lm(formula = a ~ b, data = Sample)
 
 Coefficients:
 (Intercept)            b  
-   -0.02381      0.03248  </code></pre>
+    0.03422     -0.07772  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(a <span class="sc">~</span> b, <span class="at">data =</span> Sample <span class="sc">%&gt;%</span> <span class="fu">filter</span>(c<span class="sc">==</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -254,7 +257,7 @@ lm(formula = a ~ b, data = Sample %&gt;% filter(c == 1))
 
 Coefficients:
 (Intercept)            b  
-     0.5459      -0.3509  </code></pre>
+     0.6598      -0.4969  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(a <span class="sc">~</span> b, <span class="at">data =</span> Sample <span class="sc">%&gt;%</span> <span class="fu">filter</span>(c<span class="sc">==</span><span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -264,7 +267,7 @@ lm(formula = a ~ b, data = Sample %&gt;% filter(c == 0))
 
 Coefficients:
 (Intercept)            b  
-    -0.6142      -0.3081  </code></pre>
+    -0.5712      -0.3902  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(a <span class="sc">~</span> b, <span class="at">data =</span> Sample) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -273,17 +276,19 @@ Call:
 lm(formula = a ~ b, data = Sample)
 
 Residuals:
-    Min      1Q  Median      3Q     Max 
--2.6645 -0.6503  0.0016  0.6271  3.7940 
+     Min       1Q   Median       3Q      Max 
+-2.44791 -0.62102  0.03529  0.59693  2.60926 
 
 Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept) -0.02381    0.04376  -0.544    0.587
-b            0.03248    0.04541   0.715    0.475
+            Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)  0.03422    0.04359   0.785   0.4328  
+b           -0.07772    0.04423  -1.757   0.0795 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.9737 on 498 degrees of freedom
-Multiple R-squared:  0.001026,  Adjusted R-squared:  -0.0009797 
-F-statistic: 0.5116 on 1 and 498 DF,  p-value: 0.4748</code></pre>
+Residual standard error: 0.9747 on 498 degrees of freedom
+Multiple R-squared:  0.006162,  Adjusted R-squared:  0.004166 
+F-statistic: 3.088 on 1 and 498 DF,  p-value: 0.0795</code></pre>
 </div>
 </div>
 </div>

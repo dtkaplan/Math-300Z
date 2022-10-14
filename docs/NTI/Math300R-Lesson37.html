@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-10-13">
+<meta name="dcterms.date" content="2022-10-14">
 
-<title>Proposal for Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 37)</title>
+<title>Spring 2023 Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 37)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -131,7 +131,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Proposal for Math 300 Revisions</span>
+    <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
@@ -139,7 +139,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">Home</a>
+    <a class="nav-link" href="../index.html">Proposal</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../layout.html">Home</a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../schedule-of-objectives.html">Objectives</a>
@@ -181,7 +184,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 13, 2022</p>
+      <p class="date">October 14, 2022</p>
     </div>
   </div>
     
@@ -199,10 +202,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="reading" class="level2">
 <h2 class="anchored" data-anchor-id="reading">Reading</h2>
-<p>One or both of these articles:</p>
+<p>One or more of these articles:</p>
 <ul>
 <li><a href="www/false-discovery-significance.pdf">A review of false discovery</a></li>
 <li><a href="www/cereal_and_sex_determination.pdf">Diet and sex determination</a></li>
+<li><a href="www/most-publication-findings-false.pdf">Most research findings false</a></li>
 </ul>
 </section>
 <section id="lesson" class="level2">
@@ -254,16 +258,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>All_groups <span class="sc">%&gt;%</span> </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 7 × 7
-  term  estimate std.error statistic  p.value  .row .index
-  &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt;
-1 b        0.267    0.0858      3.12 0.00309      1     16
-2 b       -0.258    0.112      -2.29 0.0265       1     19
-3 b        0.260    0.105       2.47 0.0171       1     28
-4 b        0.200    0.0930      2.14 0.0371       1     43
-5 b       -0.236    0.104      -2.28 0.0274       1     49
-6 b       -0.243    0.101      -2.39 0.0206       1     65
-7 b        0.341    0.0933      3.66 0.000628     1     76</code></pre>
+<pre><code># A tibble: 4 × 7
+  term  estimate std.error statistic p.value  .row .index
+  &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt;
+1 b        0.298    0.105       2.84 0.00651     1     42
+2 b       -0.199    0.0889     -2.24 0.0297      1     76
+3 b        0.232    0.0934      2.48 0.0166      1     78
+4 b       -0.211    0.0989     -2.14 0.0375      1     99</code></pre>
 </div>
 </div>
 <p>In the context of 100 trials being done, it’s understandable that some of the groups happened to get a p-value &lt; 0.05. But suppose that only the groups with small p-values publish their results? Then it looks as if they found a “significant” result.</p>
@@ -294,7 +295,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 1 × 5
   term  estimate std.error statistic p.value
   &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
-1 a         1.85     0.552      3.35  0.0442</code></pre>
+1 a         1.63     0.968      1.68   0.191</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(c <span class="sc">~</span> a, <span class="at">data =</span> <span class="fu">sample</span>(dag07, <span class="at">size=</span><span class="dv">10</span>)) <span class="sc">%&gt;%</span> broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">'a'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -302,7 +303,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 1 × 5
   term  estimate std.error statistic p.value
   &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
-1 a         1.75     0.471      3.72 0.00585</code></pre>
+1 a        0.957     0.585      1.64   0.141</code></pre>
 </div>
 </div>
 <p>Let’s re-run the simulation with <span class="math inline">\(n\)</span> doubled, that is, <code>size=100</code> compared to the previous <code>size=50</code></p>

@@ -22,7 +22,7 @@ source("../_startup.R")
 
 #. Understand that gaming is a way of improving our skills and identifying potential opportunities and problems. 
 
-#. Characterize the magnitude of random noise.
+#. Characterize the "size" of a variable or of random noise using variance (or, equivalently, "standard deviation").
 
 #. Distinguish between a sample, a summary of a sample, and a sample of summaries of samples.
 
@@ -111,20 +111,9 @@ do(5) *
 
 A typical problem in statistical inference is to determine, from just one trial, whether the results are consistent or not with a proposed mechanism.
 
-## Learning Challenges
+## Learning Checks
 
-:::: {.callout-note icon=false}
-## LC 20.1 (Objective 2)
-
-This is just a template.
-
-::: {.callout-tip}
-## Solution
-
-
-The solution will go here.
-:::
-::::
+{{< include ../LC/LC-lesson20.qmd >}}
 
 ## Documenting software
 

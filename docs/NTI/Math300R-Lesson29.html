@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-10-03">
+<meta name="dcterms.date" content="2022-10-14">
 
-<title>Proposal for Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 29)</title>
+<title>Spring 2023 Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 29)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -130,7 +130,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Proposal for Math 300 Revisions</span>
+    <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
@@ -138,7 +138,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">Home</a>
+    <a class="nav-link" href="../index.html">Proposal</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../layout.html">Home</a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../schedule-of-objectives.html">Objectives</a>
@@ -180,7 +183,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 3, 2022</p>
+      <p class="date">October 14, 2022</p>
     </div>
   </div>
     
@@ -241,17 +244,17 @@ attr(,"class")
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Sample) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)           x 
-   5.159495    3.079150 </code></pre>
+   5.040816    2.945743 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> a, <span class="at">data =</span> Sample) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)           a 
-   4.961841   -1.486494 </code></pre>
+   5.264931   -1.223602 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> a <span class="sc">+</span> x, <span class="at">data =</span> Sample) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)           a           x 
-   5.036723   -1.478864    3.075793 </code></pre>
+   4.992753   -1.456713    3.056914 </code></pre>
 </div>
 </div>
 <p>Conclusion: Ignoring one of the explanatory variables prevents us (of course!) from seeing that variable’s relationship with <code>y</code>. But the other variable’s connection shows up correctly. Using both explanatory variables let’s us capture the correct mechanism behind <code>y</code>.</p>
@@ -284,17 +287,17 @@ attr(,"class")
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Sample) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)           x 
-   2.982172    1.460886 </code></pre>
+   2.899307    1.491574 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> c, <span class="at">data =</span> Sample) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)           c 
-   3.061109    2.049559 </code></pre>
+   2.978408    1.979607 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> c <span class="sc">+</span> x, <span class="at">data =</span> Sample) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)           c           x 
-  3.0358445   1.0680113   0.9470464 </code></pre>
+   2.926603    1.004931    0.998856 </code></pre>
 </div>
 </div>
 <p>Here we need to include both <code>c</code> and <code>x</code> in the model to see the correct causal relationships. If we leave out either <code>x</code> or <code>c</code> the other variable will “inherit” some of the causal connection between the left-out variable and the response.</p>

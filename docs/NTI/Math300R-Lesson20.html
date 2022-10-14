@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-10-03">
+<meta name="dcterms.date" content="2022-10-14">
 
-<title>Proposal for Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 20)</title>
+<title>Spring 2023 Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 20)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -130,7 +130,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Proposal for Math 300 Revisions</span>
+    <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
@@ -138,7 +138,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">Home</a>
+    <a class="nav-link" href="../index.html">Proposal</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../layout.html">Home</a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../schedule-of-objectives.html">Objectives</a>
@@ -162,7 +165,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Math 300R NTI Lesson 20</h1>
+<h1 class="title">Learning Checks Lesson 20</h1>
 <p class="subtitle lead">title goes here</p>
 </div>
 
@@ -180,7 +183,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 3, 2022</p>
+      <p class="date">October 14, 2022</p>
     </div>
   </div>
     
@@ -193,7 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
 <ol>
 <li><p>Understand that gaming is a way of improving our skills and identifying potential opportunities and problems.</p></li>
-<li><p>Characterize the magnitude of random noise.</p></li>
+<li><p>Characterize the “size” of a variable or of random noise using variance (or, equivalently, “standard deviation”).</p></li>
 <li><p>Distinguish between a sample, a summary of a sample, and a sample of summaries of samples.</p></li>
 </ol>
 </section>
@@ -241,11 +244,11 @@ Example
 <pre><code># A tibble: 6 × 2
       x count
   &lt;int&gt; &lt;int&gt;
-1     1    17
+1     1    16
 2     2    17
 3     3    17
 4     4    16
-5     5    16
+5     5    17
 6     6    17</code></pre>
 </div>
 </div>
@@ -261,17 +264,17 @@ Example
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print.data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    x  frac
-1   2 0.029
-2   3 0.050
-3   4 0.087
-4   5 0.098
-5   6 0.144
-6   7 0.174
-7   8 0.131
-8   9 0.120
+1   2 0.024
+2   3 0.054
+3   4 0.085
+4   5 0.117
+5   6 0.156
+6   7 0.179
+7   8 0.123
+8   9 0.090
 9  10 0.083
-10 11 0.054
-11 12 0.030</code></pre>
+10 11 0.070
+11 12 0.019</code></pre>
 </div>
 </div>
 <p>Question: What do your results tell you about the possible results when summing 2 dice?</p>
@@ -302,7 +305,7 @@ Measuring noise
 <pre><code># A tibble: 1 × 2
   `sd(x)` `mean(x)`
     &lt;dbl&gt;     &lt;dbl&gt;
-1    1.01   -0.0137</code></pre>
+1   0.940   -0.0743</code></pre>
 </div>
 </div>
 <ul>
@@ -320,7 +323,7 @@ Measuring noise
 <pre><code># A tibble: 1 × 2
   `sd(x)` `mean(x)`
     &lt;dbl&gt;     &lt;dbl&gt;
-1    1.01    0.0264</code></pre>
+1    1.06    -0.105</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># five trials</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">5</span>) <span class="sc">*</span></span>
@@ -328,13 +331,13 @@ Measuring noise
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">s =</span> <span class="fu">sd</span>(x), <span class="at">m =</span> <span class="fu">mean</span>(x))}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 4
-      s       m  .row .index
-  &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt;
-1 0.976 -0.0467     1      1
-2 0.926  0.0821     1      2
-3 0.957  0.0561     1      3
-4 0.962 -0.138      1      4
-5 1.06  -0.0509     1      5</code></pre>
+      s        m  .row .index
+  &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt;
+1 1.09   0.0824      1      1
+2 1.09   0.00758     1      2
+3 0.925 -0.0365      1      3
+4 1.01   0.0283      1      4
+5 0.910 -0.0763      1      5</code></pre>
 </div>
 </div>
 <ul>
@@ -343,39 +346,33 @@ Measuring noise
 </ul>
 <p>A typical problem in statistical inference is to determine, from just one trial, whether the results are consistent or not with a proposed mechanism.</p>
 </section>
-<section id="learning-challenges" class="level2">
-<h2 class="anchored" data-anchor-id="learning-challenges">Learning Challenges</h2>
-<div class="callout-note callout callout-style-default no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-LC 20.1 (Objective 2)
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This is just a template.</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Solution
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The solution will go here.</p>
-</div>
-</div>
-</div>
-</div>
+<section id="learning-checks" class="level2">
+<h2 class="anchored" data-anchor-id="learning-checks">Learning Checks</h2>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section">20.1</h2>
+<p><strong>?@sec-size-of-variable</strong> describes two very closely related summary quantities used to measures of the “size” of a variable: i. the variance and ii. the “standard deviation” (which is the square root of the variance.</p>
+<ol type="i">
+<li>Using software, what is the variance of the XXX variable in the YYY data frame? Make sure to include the <em>units</em>.</li>
+<li>What is the “standard deviation” of the XXX variable? Calculate this in two different ways: i. “by-hand” taking of the square root of the variance; ii. using the <code>sd()</code> software directly.</li>
+</ol>
+<p>[Repeat for a number of variables from different data frames.]</p>
+<section id="solution" class="level3">
+<h3 class="anchored" data-anchor-id="solution">Solution</h3>
+<hr>
+</section>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1">20.2</h2>
+<section id="solution-1" class="level3">
+<h3 class="anchored" data-anchor-id="solution-1">Solution</h3>
+<hr>
+</section>
 </section>
 <section id="documenting-software" class="level2">
 <h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>
 <ul>
-<li>File creation date: 2022-10-03</li>
+<li>File creation date: 2022-10-14</li>
 <li>R version 4.2.1 (2022-06-23)</li>
 <li><code>tidyverse</code> package version: 1.3.2</li>
 <li><code>mosaic</code> package version: 1.8.4</li>

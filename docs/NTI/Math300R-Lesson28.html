@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-10-03">
+<meta name="dcterms.date" content="2022-10-14">
 
-<title>Proposal for Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 28)</title>
+<title>Spring 2023 Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 28)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -131,7 +131,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Proposal for Math 300 Revisions</span>
+    <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
   </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
@@ -139,7 +139,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">Home</a>
+    <a class="nav-link" href="../index.html">Proposal</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../layout.html">Home</a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../schedule-of-objectives.html">Objectives</a>
@@ -181,7 +184,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 3, 2022</p>
+      <p class="date">October 14, 2022</p>
     </div>
   </div>
     
@@ -244,7 +247,7 @@ Summary
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag04, d <span class="sc">~</span> c, d<span class="sc">~</span> b <span class="sc">+</span> c, d <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">n=</span><span class="dv">50</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.461752 1.295572 0.882840</code></pre>
+<pre><code>[1] 1.6078678 1.1820169 0.8172672</code></pre>
 </div>
 </div>
 <p>Prediction error gets smaller, the more covariates are included.</p>
@@ -252,14 +255,14 @@ Summary
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag05, d <span class="sc">~</span> c, d<span class="sc">~</span> b <span class="sc">+</span> c, d <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">n=</span><span class="dv">50</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9691658 0.9604861 0.9437216</code></pre>
+<pre><code>[1] 0.9343436 0.9343405 0.9334211</code></pre>
 </div>
 </div>
 <p><code>dag07</code> is a case where we have covariates, but they aren’t actually connected to <code>d</code>. Will they reduce prediction error? We’ll use a very small sample size, <span class="math inline">\(n=4\)</span>, to make the situation obvious.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag07, d <span class="sc">~</span> <span class="dv">1</span>, d <span class="sc">~</span> c, d<span class="sc">~</span> b <span class="sc">+</span> c, d <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">n=</span><span class="dv">4</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.469892e+00 9.593830e-01 8.243392e-01 1.787597e-15</code></pre>
+<pre><code>[1] 8.818567e-01 4.671809e-01 2.674724e-01 1.816029e-15</code></pre>
 </div>
 </div>
 <div class="callout-note callout callout-style-default no-icon callout-captioned">
@@ -305,14 +308,14 @@ LC 28.1
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag04, c<span class="sc">~</span> <span class="dv">1</span>, c <span class="sc">~</span> d, c<span class="sc">~</span> b <span class="sc">+</span> d, c <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> d, <span class="at">n=</span><span class="dv">50</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9703865 0.9367075 0.8835904 0.7341184</code></pre>
+<pre><code>[1] 1.0585398 0.9351161 0.9138859 0.8254094</code></pre>
 </div>
 </div>
 <p><code>d</code> seems to block effect of <code>a</code> and <code>b</code> on <code>c</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag04, c<span class="sc">~</span> <span class="dv">1</span>, c <span class="sc">~</span> d, c<span class="sc">~</span> b <span class="sc">+</span> d, c <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> d, <span class="at">n=</span><span class="dv">5</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.99826100 0.95057738 0.67284527 0.08759434</code></pre>
+<pre><code>[1] 0.5901418 0.5687664 0.3819379 0.1533925</code></pre>
 </div>
 </div>
 </div>
@@ -334,12 +337,12 @@ LC 28.2
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag07, d <span class="sc">~</span> <span class="dv">1</span>, d <span class="sc">~</span> c, d<span class="sc">~</span> b <span class="sc">+</span> c, d <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">n=</span><span class="dv">4</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4.689275e-01 4.188891e-01 3.603896e-01 2.574881e-16</code></pre>
+<pre><code>[1] 4.689275e-01 4.188891e-01 3.603896e-01 1.416962e-16</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag07, d <span class="sc">~</span> <span class="dv">1</span>, d <span class="sc">~</span> c, d<span class="sc">~</span> b <span class="sc">+</span> c, d <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">n=</span><span class="dv">4</span>, <span class="at">in_sample =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.7322754 0.8462358 1.0214724 1.1412268</code></pre>
+<pre><code>[1] 0.965495 1.434434 1.641881 1.591050</code></pre>
 </div>
 </div>
 <p>What do you see in the results that tells you that incorporating irrelevant covariates hurts the out-of-sample predictions?</p>

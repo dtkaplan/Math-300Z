@@ -85,7 +85,7 @@ gf_point(y ~ x, data = Pts2, size = 0.5) %>%
 
 ## Example: Falsely discovering purchasing habits {.example}
 
-You are a data scientist for an internet retailer, Potomac.com, which has just bought a national grocery chain, Austin Foods. You're part of the team that is connecting the customer loyalty card data from Austin Foods with Potomac's own large record of purchases. This is accomplished by offering a 10% discount for an item on Potomac to people who enter their Austin loyalty card number.
+You are a data scientist for an internet retailer, Potomac.com, which has just bought a national grocery chain, Austin Foods. You're part of the team that is connecting the customer loyalty card data from Austin Foods with Potomac's own large record of purchases. This is accomplished by offering a 10% Xdiscount for an item on Potomac to people who enter their Austin loyalty card number.
 
 Potomac's management wants to create a cross-marketing program in which a customer shopping at Potomac will be offered coupons for Austin products. The hope is that the coupon discount will attract new customers to start shopping at Austin's. In order for this to work, it's best if the coupons are for products that the customer finds attractive.
 

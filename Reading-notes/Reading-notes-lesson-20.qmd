@@ -13,6 +13,46 @@ output:
     toc: yes
 ---
 
+```{r include=FALSE}
+source("../_startup.R")
+```
+
+
+## The "size" of a variable {#sec-size-of-variable}
+
+A common task in statistical modeling is to break down a variable into components. For instance, a person's height or intelligence or charm is presumably a combination of genetics and environment. In doing this breaking down, it's convenient to be able to characterize the **size** of each component.
+
+There are many possible ways to measure "size." In this course, we will emphasize two, intimately related measures:
+
+i. *variance*
+ii. *standard deviation*, which is simply the square root of variance.
+
+Both variance and standard deviation are **quantities**, that is, a single number with associated units. The standard deviation of any variable has units that are exactly the same as the variable itself. For instance, the measured heights of a group of people is often measured in cm. So the units of the standard deviation of height will also be in cm.
+
+In contrast, the variance, being the square of standard deviation, has units of the square of the units of the variable. The variance of height, for instance, will be measured in cm^2^. This will seem odd at first glance, but you have to get used to it: the variance of a variable has units that are the square of the units of the variable itself.
+
+Keep in mind also that variance and standard deviation are *summaries* of a variable. A variable in a data frame consists of multiple values, one for each row of the data frame. The variance or standard deviation of that variable will be just a single number, summarizing all of the values in the variable. 
+
+Almost always, people use software to do the calculations. The relevant R functions are `sd()` and `var()`. You can use these functions in a `summarize()` statement, for instance
+
+```{r}
+mtcars %>%
+  summarize(v = var(hp))
+mtcars %>% 
+  summarize(s = sd(hp))
+```
+Regrettably, the software does not indicate the units of the quantity. For that, you need to determine the units of the variable itself, typically by reading the documentation for the data frame.
+
+::: {.callout-warning}
+## Note in draft
+
+Variance and standard deviation are about the average distance between values of the variable.
+
+Another way to think about variance is as the average distance from the mean.
+:::
+
+
+
 ## Using do( )
 
 THERE's a matter of the order of precedence of the operations in a pipe. Use the CURLY BRACES in the same way you would use parentheses in an arithmetic expression.
