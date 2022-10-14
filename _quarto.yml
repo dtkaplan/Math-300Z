@@ -9,12 +9,14 @@ website:
     left:
       - href: index.qmd
         text: Proposal
+      - href: lessons.qmd
+        text: Lessons
       - href: layout.qmd
-        text: Home
-      - href: schedule-of-objectives.qmd
+        text: Site layout
+      - href: objective-list.qmd
         text: Objectives
-      - href: NTIs.qmd
-        text: NTIs
+      - href: LC-list.qmd
+        text: LCs
 format:
   html:
     theme: cosmo

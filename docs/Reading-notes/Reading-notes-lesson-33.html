@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-10-12">
+<meta name="dcterms.date" content="2022-10-14">
 
 <title>Spring 2023 Math 300 Revisions - Math 300R Lesson r (lesson &lt;- 33) Reading Notes</title>
 <style>
@@ -78,6 +78,9 @@ ul.task-list{list-style: none;}
     <a class="nav-link" href="../index.html">Proposal</a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../lessons.html">Lessons</a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../layout.html">Home</a>
   </li>  
   <li class="nav-item">
@@ -103,7 +106,7 @@ ul.task-list{list-style: none;}
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Math 300R Lesson 33 Reading Notes</h1>
-<p class="subtitle lead">Constructing a classifier</p>
+<p class="subtitle lead">Measuring and accumulating risk</p>
 </div>
 
 
@@ -120,7 +123,7 @@ ul.task-list{list-style: none;}
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 12, 2022</p>
+      <p class="date">October 14, 2022</p>
     </div>
   </div>
     
@@ -129,100 +132,17 @@ ul.task-list{list-style: none;}
 
 </header>
 
-<p>We all face many yes/no situations. A patient has a disease or does not. A credit card transaction is genuine or fraudulent. A <strong>classifier</strong> is a statistical model designed to <em>predict</em> the unknown outcome of a yes/no situation from information that is already available.</p>
-<p>Consider a credit-card company might building a classifier to predict at the time of the transaction whether a purchase of gasoline is fraudulent. The company knows how often and how much gasoline the individual cardholders buys, where the cardholder lives, whether the cardholder travels extensively, typical times of day for a purchase, and so on. <strong>Feature engineering</strong> is the process of using existing data—including, in our example, whether the purchase turned out to be fraudulent—to develop potential markers or signals of the outcome. For simplicity, imagine the features selected are the number of days since the last gasoline purchase and the distance from the last place of purchase.</p>
-<p>Once potential features have been proposed, the engineers building the classifier assemble training and testing data sets. Suppose, for the purpose of illustration, that the training data has 2000 fraudulent transactions and 4000 non-fraudulent ones, and the testing set is about the same.</p>
-<p>The word “assemble” was used intentionally to describe how the testing and training data were collected: a <strong>case-control study</strong>. Since the objective is to detect fraud, it is reasonable to have a lot of “yes” cases in the data. The “no” cases serve as a kind of control; they were included specifically to have balance in the data. If data had been collected as a simple random sample of credit card transactions, there would have been many, many more “no” cases than “yes.”</p>
-<p>With such training data it is easy to build a statistical model with <code>Fraud</code> as the response variable. That model can then be evaluated on the testing data to produce a model output for each row:</p>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Fraud</th>
-<th>Feature 1</th>
-<th>Feature 2</th>
-<th>Model output</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>no</td>
-<td>6 days</td>
-<td>5 miles</td>
-<td>-</td>
-</tr>
-<tr class="even">
-<td>no</td>
-<td>1 day</td>
-<td>250 miles</td>
-<td>+</td>
-</tr>
-<tr class="odd">
-<td>yes</td>
-<td>120 days</td>
-<td>75 miles</td>
-<td>-</td>
-</tr>
-<tr class="even">
-<td>no</td>
-<td>5 days</td>
-<td>0 miles</td>
-<td>-</td>
-</tr>
-<tr class="odd">
-<td>yes</td>
-<td>0.2 days</td>
-<td>90 miles</td>
-<td>+</td>
-</tr>
-</tbody>
-</table>
-<p>It’s understandable that a classifier may not have perfect performance. After all, it iss trying to make a prediction based on limited data, and randomness may play a role.</p>
-<p>There are different ways of making a mistake, and these different ways have very different consequences. One kind of mistake, called a “<strong>false positive</strong>”, involves a classifier output that’s positive (i.e.&nbsp;the classifier indicates fraud) but which is wrong. The consequence of this sort of mistake in the present example is a customer who has to find another way to pay for gasoline.</p>
-<p>The other kind of mistake is called a “<strong>false negative</strong>”. Here, the classifer output is that the transaction is not fraudulent, but in actuality it was. The consequence of this kind of mistake is different: a successful theft.</p>
-<p>The nomenclature signals that a mistake has been made with the word “false.” The kind of mistake is either “positive” or “negative”, corresponding to the output of the classifier.</p>
-<p>When the classifier gets things right, that is a “true” result. As with the false results, a true result is possible both for a “positive” and a “negative” classifier output. So the two ways of getting things right are called “<strong>true positive</strong>” and “<strong>true negative</strong>”.</p>
-<p>Tabulating all 6000 rows of the testing data might produce something like this:</p>
-<table class="table">
-<thead>
-<tr class="header">
-<th>.</th>
-<th>+</th>
-<th>-</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>yes</td>
-<td>1900</td>
-<td>100</td>
-</tr>
-<tr class="even">
-<td>no</td>
-<td>50</td>
-<td>3950</td>
-</tr>
-</tbody>
-</table>
-<section id="incidence" class="level2">
-<h2 class="anchored" data-anchor-id="incidence">Incidence</h2>
-</section>
-<section id="sensitivity-and-specificity" class="level2">
-<h2 class="anchored" data-anchor-id="sensitivity-and-specificity">Sensitivity and specificity</h2>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Example: Accuracy of airport security screening
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Airplane passengers have, for decades, gone through a security screening process involving identity checks, “no fly” lists, metal detection, imaging of baggage, random pat-downs, and such. How accurate is such screening? Almost certainly, the accuracy is not as good as an extremely simple, no-input, alternative process: automatically identify every passenger as “not a security problem.” We can estimate the accuracy of the “not a security problem” classifier by guessing what fraction of airplane passengers are indeed a threat to aircraft. In the US alone, there are about 2.5 million airplane passengers each day and security problems of any sort rarely happen. So the accuracy of the no-input classifier is something like 99.999%.</p>
-<p>The actual screening system, using metal detectors, baggage x-rays, etc. will have a lower accuracy. We know this since it regularly mis-identifies innocent people as security problems.</p>
-<p>The problem here is not with airport security screening, but with the flawed use of <em>accuracy</em> as a measure of performance. Indeed, achieving super-high accuracy is not the objective of the security screening process. Instead, the objective is to <em>deter</em> security problems by convincing potential terrorists that they are likely to get caught before they can get on a plane. This has to do with the <em>sensitivity</em> of the system. The <em>specificity</em> of the system, although important to the everyday traveller, is not what deters the terrorist.</p>
-</div>
-</div>
+<section id="irrationality" class="level2">
+<h2 class="anchored" data-anchor-id="irrationality">“Irrationality”</h2>
+<p>[From <em>The Model Thinker</em>, p.&nbsp;52]</p>
+<p><strong>Gain Framing</strong>: You have two options</p>
+<p>Option A) Win $400 for certain</p>
+<p>Option B) Win $1000 if a fair coin comes up heads and $0 if tails</p>
+<p><strong>Loss Framing</strong>: You are given $1000 and have two options:</p>
+<p>Option a) Lose $600 for certain</p>
+<p>Option b) Lose $0 if a fair coin comes up heads and lose $1000 if tails.</p>
+<p><strong>Hyperbolic discounting</strong>: see pp 52-43</p>
+<p>“Prospect theory”, Kahneman and Tversky (1979) “Prospect theory: an analysis of decisions under risk,” <em>Econometrica</em> 47(2):263-291 <a href="www/kahneman-tversky-79.pdf">link to paper</a></p>
 
 
 </section>

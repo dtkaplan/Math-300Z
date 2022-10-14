@@ -1,0 +1,123 @@
+---
+title: "Math 300R NTI Lesson `r (lesson <- 20)`"
+subtitle: "title goes here"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+source("../_startup.R")
+```
+
+## Objectives
+
+```{r child=Obj_file(lesson)}
+```
+
+## Reading
+
+TBD
+
+
+
+
+## Lesson
+
+::: {.callout-note icon=false}
+## Setup
+
+The software for generating the simulations, and which contains a library of different scenarios, is in the package `{math300}`. The `{mosaic}` package contains functions for calculating statistics and **iteration**. 
+
+```{r message=FALSE, warning=FALSE}
+library(mosaic)
+library(math300)
+```
+:::
+
+::: {.callout-tip icon=false}
+## Example
+1. Roll a die 1000 times. How often does each possible result appear?
+
+```{r}
+Sim <- dag_make(x ~ each(sample(1:6)))
+Samp <- sample(Sim, size=100)
+Samp %>% group_by(x) %>% summarize(count = n())
+```
+
+
+2. Generate 1000 rolls of the sum of two dice. How often does each possible result appear?
+
+```{r}
+Sim <- dag_make(x ~ each(sum(sample(1:6, 2, replace=TRUE))))
+Sample <- sample(Sim, size=1000)
+Sample %>%  
+  dplyr::group_by(x) %>%
+  summarize(frac = n()/nrow(.)) %>% 
+  print.data.frame()
+```
+
+Question: What do your results tell you about the possible results when summing 2 dice? 
+
+3. Do the same but for summing 6 dice. 
+
+Question: What do your results tell you about the possible results when summing 6 dice? Do the data show you that it is possible to get a result of 36?  
+
+This illustrates something about "inference": the data do not always point you directly to the truth.
+
+Question: How would you modify the simulation to get a better handle on the truth. 
+:::
+
+::: {.callout-note icon=false}
+## Measuring noise
+Create a DAG where the X variable is simply noise: `eps()`
+
+```{r}
+Sim <- dag_make(x ~ eps())
+Sample <- sample(Sim, size=100)
+Sample %>% summarize(sd(x), mean(x))
+```
+
+- The argument to `eps()` sets the size of the noise. Confirm that this claim is true.
+:::
+
+Sometimes we will want to repeat a simulation over and over again, collecting the results. Use `do()` for this:
+
+```{r}
+# one trial
+Sim <- dag_make(x ~ eps())
+sample(Sim, size=100) %>% 
+  summarize(sd(x), mean(x))
+
+# five trials
+do(5) *
+  {sample(Sim, size=100) %>% 
+  summarize(s = sd(x), m = mean(x))}
+```
+
+- Not all the rows are the same. Why not?
+- None of the standard deviations are exactly 1. Does this mean the simulation is not working? 
+
+A typical problem in statistical inference is to determine, from just one trial, whether the results are consistent or not with a proposed mechanism.
+
+## Learning Checks
+
+```{r child=LC_file(lesson)}
+```
+
+## Documenting software
+
+* File creation date: `r Sys.Date()`
+* `r R.version.string`
+* `tidyverse` package version: `r packageVersion("tidyverse")`
+* `mosaic` package version: `r packageVersion("mosaic")`
+* `math300` package version: `r packageVersion("math300")`
+

@@ -1,0 +1,35 @@
+---
+title: "Learning Checks Lesson 22"
+---
+
+```{r include=FALSE}
+source("../_startup.R")
+```
+
+## 22.1 (**Obj 20.3**)
+
+Consider these three data frames:
+
+```{r}
+One <- sample(dag01, size=25)
+Two <- do(10) * {
+  lm(y ~ x, data = sample(dag01, size=25)) %>%
+    coefficients()
+  }
+Three <- Two %>% 
+  summarize(mx = mean(x), sx = sd(x))
+```
+
+1. Both `One` and `Two` have columns called `x`, but they stand for different things. Explain what the unit of observation is and what the values in `x` represent..
+2. `Three` does not have a column named `x`, but it is a summary of the `x` column from `Two`. What kind of summary.
+
+::: {.callout-tip}
+## Solution
+
+1. In `One`, the `x` column contains the simulated of the `x` variable from `dag01`. The unit of observation is a single case, for instance a person for whom observations were made of `x` and `y`. The simulation involves generating 25 rows of data: one row for each of 25 people.
+2. In `Two`, the `x` column is the regression coefficient on `x` from the simulation. Each row of `Two` corresponds to one trial in which regression is being performed on a sample of size 25 of simulated data from `dag01`. 
+3. `Three` is a summary of the 10 trials in `Two`. The columns, named `mx` and `sx`, tell about the distribution of `x` across all the trials. 
+:::
+
+
+--------

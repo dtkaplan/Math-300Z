@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Prof.&nbsp;Danny Kaplan">
+<meta name="dcterms.date" content="2022-10-14">
+
+<title>Spring 2023 Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 32)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html">Proposal</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../lessons.html">Lessons</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../layout.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule-of-objectives.html">Objectives</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../NTIs.html">NTIs</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Math 300R NTI Lesson 32</h1>
+<p class="subtitle lead">Experiment and random assignment</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Prof.&nbsp;Danny Kaplan </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 14, 2022</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="objectives" class="level2">
+<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
+<ol>
+<li><p>Properly use nomenclature of experiment.</p></li>
+<li><p>Correctly re-draw DAG for an ideal experimental intervention.</p></li>
+<li><p>Use blocking to set assignment to treatment or control.</p></li>
+</ol>
+</section>
+<section id="reading" class="level2">
+<h2 class="anchored" data-anchor-id="reading">Reading</h2>
+<p>TBD</p>
+</section>
+<section id="lesson" class="level2">
+<h2 class="anchored" data-anchor-id="lesson">Lesson</h2>
+<p>Short discussion about the words “hypothesis” and “theory.” Try to establish a simple, concrete definition of hypothesis: “A statement about the world that might or might not be correct.”</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Defining “hypothesis”
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="i">
+<li>A supposition or proposed explanation made on the basis of limited evidence as a starting point for further investigation: professional astronomers attacked him for popularizing an unconfirmed hypothesis.</li>
+<li>Philosophy a proposition made as a basis for reasoning, without any assumption of its truth: [with clause] : the hypothesis that every event has a cause.</li>
+</ol>
+<p>ORIGIN: late 16th century: via late Latin from Greek hupothesis ‘foundation’, from hupo ‘under’ + thesis ‘placing’.</p>
+<p>Source: <em>New Oxford American Dictionary</em></p>
+</div>
+</div>
+<p>A DAG is merely a hypothesis about how mechanisms function. One of the prime objectives of “science,” be it a natural science like chemistry or a social science like economics, is to provide evidence for an against relevant hypotheses.</p>
+<p>It’s a common view of science, at least in sciences such as chemistry or physics or molecular genetics, that the theories (say, <span class="math inline">\(F = ma\)</span> or the translation of DNA triples into amino acids) are a complete and truthful description of the world. The word “theory” itself aids in this perception and often one studies “theory” in order to be able to calculate the outcomes in various situations, for instance the speed over time of a rocket accelerating upward as it burns fuel. We don’t talk about the “hypothesis of relativity” or “quantum hypothesis.” The word “hypothesis” suggests doubt. There was certainly substantial doubt in the early days of relativity or quantum mechanics or even Newton’s theory of universal gravitation. But evidence has been adduced to such an extent that the doubt is practically dispelled and what were once hypotheses are now considered theories. (There’s also a pattern of using “theory” to promote hypotheses into being regarded as more substantial. An example is “string theory,” which is not a generally accepted way of describing nature. The “theory of dark matter” is similar.)</p>
+<section id="evidence-for-or-against-hypotheses" class="level3">
+<h3 class="anchored" data-anchor-id="evidence-for-or-against-hypotheses">Evidence for or against hypotheses</h3>
+<ol type="1">
+<li><strong>Prediction and observation</strong>.</li>
+</ol>
+<p>Particularly noteworthy are predictions that go against other hypotheses. For example, Newtonian gravitation isn’t a wave phenomenon, but general relativity (Einstein’s theory of gravity) does predict wave-like behavior. In (Lesson 26)[Math300R-Lesson26.html] we discussed techniques for making predictions that incorporate uncertainty. This provides a means to refine judgements about the extent to which a prediction is supported by observation.</p>
+<p>For instance, General Relativity supports a prediction that gravity propagates like a wave. This prediction can be quantified: a wave that might be observable by an incredibly delicate apparatus would be generated by, say, a supernova. Apparatus is built, the predicted phenomena is observed, and confidence in the theory increases accordingly. Often, predictions are not followed by observation. This unhappy situation is often followed by attempts to tweak the theory to make improved predictions that correspond to the (lack of) observation.</p>
+<ol start="2" type="1">
+<li><strong>Experiment</strong>, which is closely associated with the “scientific method.”</li>
+</ol>
+<p>The hallmark of experiment is <strong>intervention</strong>. For instance, an important theory of plant growth involves a chemical called “auxin.” The theory holds that exposing plant tissue to light inhibits the generation of auxin. The auxin in turn, facilitates tissue growth and expansion. The result of the differential growth in on the lit and shaded side of a plant is growth toward the source of light. <a href="https://www.holganix.com/blog/what-are-plant-auxins-and-how-do-they-affect-plant-growth#:~:text=Auxins%20are%20a%20powerful%20growth,response%20to%20sunlight%20and%20gravity.">Illustration</a>.</p>
+<p>Much of the experimentalist’s intervention involves <strong>standardizing the conditions</strong> of the experiment. For instance, a plant growth study will provide a standard soil mixture, temperature, and watering amount for all the plants being studied.</p>
+<p>But experiment always involves another aspect: one or more of the conditions is made to vary from one experimental unit to another. For instance, some plants might be lit from the North and others from the South. Seeing the same pattern of light-associated plant growth from both directions provides evidence that the Earth’s magnetic field is not a factor in determining plant orientation.</p>
+</section>
+<section id="simulating-experiment-with-dags" class="level3">
+<h3 class="anchored" data-anchor-id="simulating-experiment-with-dags">Simulating experiment with DAGs</h3>
+<p>Experiment is hard work and good experimental technique is paramount. Our goal here is to enhance the understanding of how experiment works generally. We’re going to do this by simulation/gaming.</p>
+<p>We’ll start with a DAG that provides the rules of the game for how different factors are connected. We’ll generate samples from the DAG and do some data analysis to illuminate the conditions in which data analysis can reveal—or not—the DAG mechanism. Then we’ll simulate the intervention of experiment and see whether this can improve our ability to reveal the mechanism. (Of course, in real science, we don’t have this ability to look immediately at the mechanism and see how it’s structured. Our goal, however, is not to do science but to illustrate how scientific technique works.)</p>
+<p>Consider this DAG:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>dag08</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+c ~ eps()
+
+[[2]]
+x ~ c + eps()
+
+[[3]]
+y ~ x + c + 3 + eps()
+
+attr(,"class")
+[1] "list"      "dagsystem"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag08)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="NTI-Lesson32_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>You can see from the DAG formulas that the value of <code>y</code> increases or decreases exactly with the value of <code>x</code>. (The “coefficient” on <code>x</code> is 1.0)</p>
+<p>As we’ve done before, we can simulate data from <code>dag08</code> and use regression to observe the relationship between <code>x</code> and <code>y</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag08, <span class="at">size=</span><span class="dv">1000</span>) <span class="co"># big, so that the noise is not a strong issue</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Sample) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)           x 
+   2.906423    1.520879 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Sample) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               2.5 %   97.5 %
+(Intercept) 2.829930 2.982917
+x           1.468156 1.573602</code></pre>
+</div>
+</div>
+<p>The coefficient we observe is 1.5, not 1.0. So this approach to data analysis is not revealing the true mechanism. (It’s legitimate to wonder whether 1.5 is really that different from 1.0, given the random factors involved in the mechanism. The confidence interval guides us here. By using <code>size=1000</code>, we narrowed the confidence interval to the extent that the interval on the observed coefficient has no overlap with the DAG specified coefficient of 1.0).</p>
+<p>In <a href="Math300R-Lesson27.html">Lesson 27</a> we discussed using <strong>covariates</strong> in a model in order to get a more accurate view of the true mechanism. This is a valuable technique, but using it requires that we know what are the covariates and can record their values in data. In this lesson, we’ll imagine that we know how to do an experiment but don’t have any reliable knowledge about covariates.</p>
+</section>
+<section id="intervening-in-a-dag" class="level3">
+<h3 class="anchored" data-anchor-id="intervening-in-a-dag">Intervening in a DAG</h3>
+<p>Carrying out an experiment means <strong>intervening</strong> in the workings of the system. The intervention we’re going to make in this example is to experimentally “control” or “set” the values of <code>x</code>.</p>
+<p>In practice, this means we are creating a <em>new DAG</em> that represents our intervention in the system.</p>
+<p>The <code>dag_intervene()</code> function is convenient for constructing the new DAG. The function works by letting us create a new formula for any variable in the DAG. For an ideal experiment, the new formula will just involve setting the values of <code>x</code> as we will.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dag08</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+c ~ eps()
+
+[[2]]
+x ~ c + eps()
+
+[[3]]
+y ~ x + c + 3 + eps()
+
+attr(,"class")
+[1] "list"      "dagsystem"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>exp08 <span class="ot">&lt;-</span> <span class="fu">dag_intervene</span>(dag08, x <span class="sc">~</span> <span class="fu">binom</span>())</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(exp08)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="NTI-Lesson32_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Notice that the experimental intervention has <strong>disconnected</strong> all the inputs from <code>x</code>.</p>
+<p>Sample data from <code>exp08</code> and do an appropriate data analysis:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Exp_sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(exp08, <span class="at">size=</span><span class="dv">1000</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Exp_sample) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                2.5 %   97.5 %
+(Intercept) 2.8774544 3.123241
+x           0.7981715 1.152565</code></pre>
+</div>
+</div>
+<p>The confidence interval on the coefficient on <code>x</code> is 0.88 to 1.21, completely consistent with the (known) mechanism linking <code>x</code> and <code>y</code>. In other words, the experimental intervention correctly reveals the true mechanism.</p>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Covariates eat variance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If we have access to covariates, it’s perfectly legitimate to include them in our models as explanatory variables. The advantage of doing so is that the amount of noise in <code>y</code> is reduced, because we are accounting for it by using the covariate.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x <span class="sc">+</span> c, <span class="at">data =</span> Exp_sample) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                2.5 %   97.5 %
+(Intercept) 2.9587005 3.129360
+x           0.8872702 1.133259
+c           0.9474298 1.068057</code></pre>
+</div>
+</div>
+<p>The confidence interval on the <code>x</code> coefficient is smaller: 0.92 to 1.17.</p>
+</div>
+</div>
+</section>
+<section id="imperfect-experiment" class="level3">
+<h3 class="anchored" data-anchor-id="imperfect-experiment">Imperfect experiment</h3>
+<p>An imperfect experiment, in the sense we mean here, is an experiment where the intervention attenuates the inputs to the variable of interest, but doesn’t utterly eliminate them. Here’s an example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>exp08b <span class="ot">&lt;-</span> <span class="fu">dag_intervene</span>(dag08, x <span class="sc">~</span> c<span class="sc">/</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">binom</span>())</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(exp08b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="NTI-Lesson32_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Imperfect experiments are the rule in, say, clinical drug trials. For instance, people who are still sick may drop out of the trial or stop taking the assigned medicine.</p>
+<p>Let’s look at the impact of the imperfection in <code>exp08b</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Expb_sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(exp08b, <span class="at">size=</span><span class="dv">1000</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Expb_sample) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               2.5 %   97.5 %
+(Intercept) 2.460069 2.653130
+x           1.906437 2.133859</code></pre>
+</div>
+</div>
+<p>The confidence interval on the coefficient on <code>x</code> shows that we have not correctly revealed the mechanism of <code>x -&gt; y</code> of the DAG.</p>
+<p>There is a technique to improve results in experimental trial. We’ll make yet another DAG, which will be the same as <code>exp08b</code> but where we record the experimenter’s intended setting for the <code>x</code> variable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>exp08c <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  c <span class="sc">~</span> <span class="fu">eps</span>(),</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  z <span class="sc">~</span> <span class="fu">binom</span>(),</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">~</span> c<span class="sc">/</span><span class="dv">2</span> <span class="sc">+</span> z,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">~</span> x <span class="sc">+</span> c <span class="sc">+</span> <span class="dv">3</span> <span class="sc">+</span> <span class="fu">eps</span>()</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(exp08c)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="NTI-Lesson32_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Let’s see what data analysis reveals for this DAG.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>Expc_sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(exp08c, <span class="at">size=</span><span class="dv">1000</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Expc_sample) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               2.5 %   97.5 %
+(Intercept) 2.430078 2.621672
+x           1.882310 2.099708</code></pre>
+</div>
+</div>
+<p>Still a wrong result. The improvement comes when we ignore the actual value of <code>x</code> and look at the relationship between the experimentally perfect <code>z</code> and <code>y</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> z, <span class="at">data =</span> Expc_sample) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                2.5 %   97.5 %
+(Intercept) 2.8159131 3.142339
+z           0.8306938 1.293256</code></pre>
+</div>
+</div>
+<p>Back on target! This method is called “<strong>intent to treat</strong>” because we are looking at how our experimental intentions play out to <code>y</code>.</p>
+</section>
+</section>
+<section id="learning-checks" class="level2">
+<h2 class="anchored" data-anchor-id="learning-checks">Learning Checks</h2>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section">32.1</h2>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<hr>
+</section>
+<section id="documenting-software" class="level2">
+<h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

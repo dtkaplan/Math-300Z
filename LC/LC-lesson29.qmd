@@ -1,0 +1,51 @@
+---
+title: "Learning Checks Lesson 29"
+---
+
+```{r include=FALSE}
+source("../_startup.R")
+```
+
+
+## LC 29.1
+
+In `dag04`, build models to predict `c` from the other variables. Does one of those variables "block" the others? 
+
+- Explain how you know this from your models. Try to give an answer in everyday language as well.
+- Repeat but use a very small sample size, say $n=5$. Has your conclusion about blocking changed? Explain why.
+
+::: {.callout-note}
+## Solution
+```{r}
+compare_rms_error(dag04, c~ 1, c ~ d, c~ b + d, c ~ a + b + d, n=50, in_sample = TRUE)
+```
+
+`d` seems to block effect of `a` and `b` on `c`.
+
+
+```{r}
+compare_rms_error(dag04, c~ 1, c ~ d, c~ b + d, c ~ a + b + d, n=5, in_sample = TRUE)
+```
+:::
+
+## LC 29.2
+
+We are using in-sample testing because that is often the case in the model-building stage. However, in the model-**using** stage, things are different. You will be making predictions of new cases, that is, out-of-sample.
+
+For out-of-sample, when working with new data, it's not just a matter of being tricked into thinking covariates are useful when they're not. Using irrelevant covariates can be genuinely harmful to the predictions.
+
+Compare these in-sample and out-of-sample results. 
+
+```{r}
+set.seed(101)
+compare_rms_error(dag07, d ~ 1, d ~ c, d~ b + c, d ~ a + b + c, n=4, in_sample = TRUE)
+set.seed(101)
+compare_rms_error(dag07, d ~ 1, d ~ c, d~ b + c, d ~ a + b + c, n=4, in_sample = FALSE)
+```
+
+What do you see in the results that tells you that incorporating irrelevant covariates hurts the out-of-sample predictions?
+
+
+
+
+--------

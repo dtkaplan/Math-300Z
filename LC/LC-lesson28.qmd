@@ -1,0 +1,23 @@
+---
+title: "Learning Checks Lesson 28"
+---
+
+```{r include=FALSE}
+source("../_startup.R")
+```
+
+## 28.1
+
+Consider `dag01`, which shows a simple causal relationship between two variable.
+
+```{r}
+dag_draw(dag01)
+```
+
+So far as the size of prediction error is concerned, does it matter whether `x` is used to predict `y` or vice versa? Show the models and the results you use to come to your conclusion.
+::: {.callout-note}
+## Solution
+
+:::
+
+--------

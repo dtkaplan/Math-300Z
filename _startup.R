@@ -10,4 +10,10 @@ library(mosaicModel)
 library(math300)
 knitr::opts_chunk$set(echo = TRUE)
 
-
+# Functions for transcluding content
+LC_file <- function(n) {
+  glue::glue("../LC/LC-lesson{n}.qmd")
+}
+Obj_file <- function(n) {
+  glue::glue("../Objectives/Obj-lesson-{n}.qmd")
+}

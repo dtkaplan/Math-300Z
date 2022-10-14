@@ -1,0 +1,84 @@
+---
+title: "Math 300R NTI Lesson `r (lesson <- 31)`"
+subtitle: "Spurious correlation"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+source("../_startup.R")
+```
+
+By which I mean correlations that are not just statistical noise but do not represent a causal path between two variables.
+
+
+## Objectives
+
+```{r child=Obj_file(lesson)}
+```
+
+## Reading
+
+TBD
+
+
+## Lesson
+
+Statisticians are often careful in their use of language about relationships. They will say two variables are "correlated" or "associated" rather than casually using words like "connected" or "related." There is even a proverb, "Correlation is not causation." 
+
+```{r echo=FALSE}
+#| label: fig-xkcd-correlation
+#| fig.cap: "[XKCD's take](https://xkcd.com/552/) on correlation and causation."
+knitr::include_graphics("www/xkcd-correlation.png")
+```
+
+Traditionally, statistics courses have emphasized disputing any causal interpretation of correlations found in data. The response "Well, maybe," in the last panel of the cartoon shows a student correctly having assimilated this lesson.
+
+Another formulation might be more enlightening for statistics students: "Correlation is the sign in data of causal connections in mechanisms." If two variables `a` and `b` are correlated, then either `a` causes `b` (perhaps indirectly), `b` causes `a` (also perhaps indirectly), or both `a` and `b` are caused by other factors. There's another possibility as well, most easily seen with a corresponding DAG in hand. It's important to consider all of these possibilities, rather than jumping to a conclusion of what causes what. 
+
+In this lesson, we're going to look at only those correlations that would be supported by out-of-sample testing. Later, we'll also need to deal with correlations that are an illusion of sampling fluctuation or due to a systematic hunt.
+
+We'll use the term "spurious correlation" to refer to those correlations created by mechanisms other than a causal path between two variables in a DAG.  
+
+::: {.callout-note icon=false}
+## Paths in DAGS
+
+Examples and exercises classifying causal and correlating paths in DAGs.
+
+Selection on a collider or using it as a covariate.
+```{r}
+
+dag_draw(dag09)
+Sample <- sample(dag09, size=500)
+lm(a ~ b, data = Sample)
+lm(a ~ b, data = Sample %>% filter(c==1))
+lm(a ~ b, data = Sample %>% filter(c==0))
+lm(a ~ b, data = Sample) %>% summary()
+```
+:::
+
+::: {.callout-note icon=false}
+## Regression to mediocrity
+
+An unusually large deviation is likely to be followed by one not so unusually large.
+:::
+
+
+## Learning Checks
+
+```{r child=LC_file(lesson)}
+```
+
+## Documenting software
+
+  
+

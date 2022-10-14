@@ -1,0 +1,123 @@
+---
+title: "Math 300R NTI Lesson `r (lesson <- 22)`"
+subtitle: "DAGs, noise, and simulation"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+source("../_startup.R")
+```
+
+## Objectives
+
+```{r child=Obj_file(lesson)}
+```
+
+## Reading
+
+TBD
+
+
+## Lesson
+
+In the lesson, establish
+
+::: {.callout-tip icon=false}
+## Setup
+
+```{r message=FALSE, warning=FALSE}
+library(mosaic)
+library(math300)
+```
+:::
+
+
+:::: {.callout-note icon=false}
+## Example: A simple DAG
+
+We'll work with a simple example: `dag01`
+
+1. Give `dag01` as a command to view the DAG. Draw it as a diagram.
+
+2. Based on `dag01`, what should be the coefficients on the regression model `y ~ x`.
+
+3. Generate simulated data with `nrow=25` and find the regression coefficients.
+
+```{r}
+Sample <- sample(dag01, size=25)
+lm(y ~ x, data = Sample) %>% coefficients()
+```
+
+Inference task: Given a report like the one above, say what the coefficient on `x` is likely to be in the underlying data generation mechanism.
+
+::: {.callout-important icon=false}
+## Activity
+- How would you represent "is likely to be"?
+- Take your best guess and report your representation. 
+:::
+::::
+
+
+::: {.callout-note icon=false}
+## Automating the procedure
+
+In the previous example, we 
+
+i. generated (simulated) data, 
+ii. used it to build a regression model, 
+iii. summarized it
+
+To automate the procedure, put all the steps in one block of code, surrounded by curly braces.
+
+```{r}
+proc01 <- function() {
+  lm(y ~ x, data = sample(dag01, size=25)) %>% coefficients()
+}
+proc01()
+```
+
+Now that the procedure is automated, we can see what happens if we carry out many trials:
+
+```{r}
+Trials <- do(100) * proc01()
+```
+
+::: {.callout-important icon=false}
+## Activity: Simulating the sampling distribution
+
+1. Generate the 100 trials. each involving a simple of size $n=25$ from `dag01`. The `x` column gives the regression coefficient on the simulation's `x` variable `x` for each of the 100 trials.
+
+2. Summarize the `x` coefficient in the trials, graphically and numerically.
+
+3. Compare the distribution of `x` in `Trials` to the corresponding coefficient in `dag01`.
+:::
+
+Question: How does the sampling distribution change if the sample size in each trial is changed to $n=100$ from $n=25$?
+
+
+
+
+
+## Learning Checks
+
+```{r child=LC_file(lesson)}
+```
+
+
+
+## Documenting software
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+

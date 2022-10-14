@@ -1,0 +1,63 @@
+---
+title: "Math 300R NTI Lesson `r (lesson <- 24)`"
+subtitle: "Effect size"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup, include=FALSE}
+source("../_startup.R")
+```
+
+## Objectives
+
+```{r child=Obj_file(lesson)}
+```
+
+## Reading
+
+TBD
+
+
+## Lesson
+
+:::: {.callout-note icon=false}
+## In-class example
+
+```{r}
+3 + 2
+```
+::::
+
+
+:::: {.callout-important icon=false}
+## In-class activity
+
+```{r}
+date()
+```
+::::
+
+This is just a template.
+
+## Learning Checks
+
+```{r child=LC_file(lesson)}
+```
+
+
+## Documenting software
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+
