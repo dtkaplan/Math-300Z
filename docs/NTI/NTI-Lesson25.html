@@ -145,13 +145,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="nav-link" href="../lessons.html">Lessons</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../layout.html">Home</a>
+    <a class="nav-link" href="../layout.html">Site layout</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../schedule-of-objectives.html">Objectives</a>
+    <a class="nav-link" href="../objective-list.html">Objectives</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../NTIs.html">NTIs</a>
+    <a class="nav-link" href="../LC-list.html">LCs</a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -329,30 +329,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Now repeat the trial many times and summarize the result:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Expt <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">1000</span>)<span class="sc">*</span> {<span class="fu">trial</span>(<span class="at">n =</span> <span class="dv">50</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">perc_diff =</span> <span class="dv">100</span><span class="sc">*</span>(out_rms <span class="sc">-</span> in_rms)<span class="sc">/</span>out_rms)}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in nanotime::nanotime(Sys.time()) %&gt;% as.character() %&gt;% substr(21, :
-NAs introduced by coercion</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_violin</span>(perc_diff <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> Expt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">perc_diff =</span> <span class="dv">100</span><span class="sc">*</span>(out_rms <span class="sc">-</span> in_rms)<span class="sc">/</span>out_rms)}</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_violin</span>(perc_diff <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> Expt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="NTI-Lesson25_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_violin</span>(out_rms <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> Expt, <span class="at">color=</span><span class="st">"blue"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_violin</span>(in_rms <span class="sc">~</span> <span class="dv">2</span>, <span class="at">data =</span> Expt, <span class="at">color=</span><span class="st">"red"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(<span class="fu">scale_y_log10</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_violin</span>(out_rms <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> Expt, <span class="at">color=</span><span class="st">"blue"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_violin</span>(in_rms <span class="sc">~</span> <span class="dv">2</span>, <span class="at">data =</span> Expt, <span class="at">color=</span><span class="st">"red"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(<span class="fu">scale_y_log10</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="NTI-Lesson25_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(<span class="sc">~</span> out_rms, <span class="at">data =</span> Expt, <span class="fu">ci.mean</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  response   lower    upper
-1  out_rms 1.24719 1.251682</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(<span class="sc">~</span> in_rms, <span class="at">data =</span> Expt, <span class="fu">ci.mean</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(<span class="sc">~</span> out_rms, <span class="at">data =</span> Expt, <span class="fu">ci.mean</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  response    lower    upper
-1   in_rms 1.190826 1.205964</code></pre>
+1  out_rms 1.248984 1.253729</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(<span class="sc">~</span> in_rms, <span class="at">data =</span> Expt, <span class="fu">ci.mean</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  response    lower    upper
+1   in_rms 1.188597 1.202789</code></pre>
 </div>
 </div>
 </section>

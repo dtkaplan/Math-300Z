@@ -143,13 +143,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="nav-link" href="../lessons.html">Lessons</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../layout.html">Home</a>
+    <a class="nav-link" href="../layout.html">Site layout</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../schedule-of-objectives.html">Objectives</a>
+    <a class="nav-link" href="../objective-list.html">Objectives</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../NTIs.html">NTIs</a>
+    <a class="nav-link" href="../LC-list.html">LCs</a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -201,14 +201,14 @@ Solution
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag04, c<span class="sc">~</span> <span class="dv">1</span>, c <span class="sc">~</span> d, c<span class="sc">~</span> b <span class="sc">+</span> d, c <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> d, <span class="at">n=</span><span class="dv">50</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9737827 0.8065225 0.7714315 0.6134316</code></pre>
+<pre><code>[1] 0.8580525 0.8220923 0.7443196 0.7114751</code></pre>
 </div>
 </div>
 <p><code>d</code> seems to block effect of <code>a</code> and <code>b</code> on <code>c</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag04, c<span class="sc">~</span> <span class="dv">1</span>, c <span class="sc">~</span> d, c<span class="sc">~</span> b <span class="sc">+</span> d, c <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> d, <span class="at">n=</span><span class="dv">5</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.5354520 0.5288178 0.1654746 0.1249414</code></pre>
+<pre><code>[1] 0.508412550 0.253164615 0.130851042 0.007047309</code></pre>
 </div>
 </div>
 </div>

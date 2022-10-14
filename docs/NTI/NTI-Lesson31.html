@@ -144,13 +144,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="nav-link" href="../lessons.html">Lessons</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../layout.html">Home</a>
+    <a class="nav-link" href="../layout.html">Site layout</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../schedule-of-objectives.html">Objectives</a>
+    <a class="nav-link" href="../objective-list.html">Objectives</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../NTIs.html">NTIs</a>
+    <a class="nav-link" href="../LC-list.html">LCs</a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -248,7 +248,7 @@ lm(formula = a ~ b, data = Sample)
 
 Coefficients:
 (Intercept)            b  
-   -0.03765     -0.01874  </code></pre>
+    0.00996     -0.01017  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(a <span class="sc">~</span> b, <span class="at">data =</span> Sample <span class="sc">%&gt;%</span> <span class="fu">filter</span>(c<span class="sc">==</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -258,7 +258,7 @@ lm(formula = a ~ b, data = Sample %&gt;% filter(c == 1))
 
 Coefficients:
 (Intercept)            b  
-     0.6080      -0.4141  </code></pre>
+     0.6576      -0.4080  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(a <span class="sc">~</span> b, <span class="at">data =</span> Sample <span class="sc">%&gt;%</span> <span class="fu">filter</span>(c<span class="sc">==</span><span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -268,7 +268,7 @@ lm(formula = a ~ b, data = Sample %&gt;% filter(c == 0))
 
 Coefficients:
 (Intercept)            b  
-    -0.6491      -0.4410  </code></pre>
+    -0.5680      -0.3422  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(a <span class="sc">~</span> b, <span class="at">data =</span> Sample) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -278,16 +278,16 @@ lm(formula = a ~ b, data = Sample)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
--3.7564 -0.6780  0.0248  0.6398  3.3231 
+-3.0229 -0.7115  0.0057  0.6907  3.2052 
 
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept) -0.03765    0.04228  -0.890    0.374
-b           -0.01874    0.04671  -0.401    0.688
+(Intercept)  0.00996    0.04637   0.215    0.830
+b           -0.01017    0.04606  -0.221    0.825
 
-Residual standard error: 0.9386 on 498 degrees of freedom
-Multiple R-squared:  0.0003231, Adjusted R-squared:  -0.001684 
-F-statistic: 0.1609 on 1 and 498 DF,  p-value: 0.6885</code></pre>
+Residual standard error: 1.037 on 498 degrees of freedom
+Multiple R-squared:  9.786e-05, Adjusted R-squared:  -0.00191 
+F-statistic: 0.04874 on 1 and 498 DF,  p-value: 0.8254</code></pre>
 </div>
 </div>
 </div>

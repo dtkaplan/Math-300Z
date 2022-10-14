@@ -144,13 +144,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="nav-link" href="../lessons.html">Lessons</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../layout.html">Home</a>
+    <a class="nav-link" href="../layout.html">Site layout</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../schedule-of-objectives.html">Objectives</a>
+    <a class="nav-link" href="../objective-list.html">Objectives</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../NTIs.html">NTIs</a>
+    <a class="nav-link" href="../LC-list.html">LCs</a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -197,11 +197,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="objectives" class="level2">
 <h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
-<ul>
-<li><p>20.1. Understand that gaming is a way of improving our skills and identifying potential opportunities and problems.</p></li>
-<li><p>20.2 Characterize the “size” of a variable or of random noise using variance (or, equivalently, “standard deviation”).</p></li>
-<li><p>20.3 Distinguish between a sample, a summary of a sample, and a sample of summaries of samples.</p></li>
-</ul>
+<p>20.1. Understand that gaming is a way of improving our skills and identifying potential opportunities and problems.</p>
+<p>20.2 Characterize the “size” of a variable or of random noise using variance (or, equivalently, “standard deviation”).</p>
+<p>20.3 Distinguish between a sample, a summary of a sample, and a sample of summaries of samples.</p>
 </section>
 <section id="reading" class="level2">
 <h2 class="anchored" data-anchor-id="reading">Reading</h2>
@@ -247,12 +245,12 @@ Example
 <pre><code># A tibble: 6 × 2
       x count
   &lt;int&gt; &lt;int&gt;
-1     1    16
+1     1    17
 2     2    17
-3     3    16
+3     3    17
 4     4    17
-5     5    17
-6     6    17</code></pre>
+5     5    16
+6     6    16</code></pre>
 </div>
 </div>
 <ol start="2" type="1">
@@ -267,17 +265,17 @@ Example
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print.data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    x  frac
-1   2 0.027
-2   3 0.054
-3   4 0.098
-4   5 0.114
-5   6 0.121
-6   7 0.153
-7   8 0.146
-8   9 0.126
-9  10 0.091
-10 11 0.042
-11 12 0.028</code></pre>
+1   2 0.023
+2   3 0.066
+3   4 0.085
+4   5 0.116
+5   6 0.136
+6   7 0.144
+7   8 0.159
+8   9 0.115
+9  10 0.073
+10 11 0.056
+11 12 0.027</code></pre>
 </div>
 </div>
 <p>Question: What do your results tell you about the possible results when summing 2 dice?</p>
@@ -308,7 +306,7 @@ Measuring noise
 <pre><code># A tibble: 1 × 2
   `sd(x)` `mean(x)`
     &lt;dbl&gt;     &lt;dbl&gt;
-1    1.03    -0.126</code></pre>
+1   0.939    0.0259</code></pre>
 </div>
 </div>
 <ul>
@@ -326,7 +324,7 @@ Measuring noise
 <pre><code># A tibble: 1 × 2
   `sd(x)` `mean(x)`
     &lt;dbl&gt;     &lt;dbl&gt;
-1    1.01     0.134</code></pre>
+1   0.916    0.0519</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># five trials</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">5</span>) <span class="sc">*</span></span>
@@ -336,11 +334,11 @@ Measuring noise
 <pre><code># A tibble: 5 × 4
       s       m  .row .index
   &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt;
-1 1.04  -0.0506     1      1
-2 0.926 -0.0768     1      2
-3 0.995  0.0436     1      3
-4 0.925  0.211      1      4
-5 1.02  -0.172      1      5</code></pre>
+1 0.951  0.0872     1      1
+2 0.923  0.0318     1      2
+3 0.996  0.293      1      3
+4 1.03  -0.0484     1      4
+5 1.03  -0.0852     1      5</code></pre>
 </div>
 </div>
 <ul>

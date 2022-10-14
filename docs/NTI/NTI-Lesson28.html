@@ -144,13 +144,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="nav-link" href="../lessons.html">Lessons</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../layout.html">Home</a>
+    <a class="nav-link" href="../layout.html">Site layout</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../schedule-of-objectives.html">Objectives</a>
+    <a class="nav-link" href="../objective-list.html">Objectives</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../NTIs.html">NTIs</a>
+    <a class="nav-link" href="../LC-list.html">LCs</a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -227,7 +227,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 1 × 1
     rms
   &lt;dbl&gt;
-1  1.75</code></pre>
+1  1.74</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(mod2, <span class="at">data =</span> Testing) <span class="sc">%&gt;%</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rms =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((d <span class="sc">-</span> model_output)<span class="sc">^</span><span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -235,7 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 1 × 1
     rms
   &lt;dbl&gt;
-1  1.03</code></pre>
+1  1.01</code></pre>
 </div>
 </div>
 <p>Using the covariates reduces prediction error.</p>
@@ -260,7 +260,7 @@ Automating model comparison
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag05, <span class="at">n=</span><span class="dv">500</span>, d <span class="sc">~</span> c, d <span class="sc">~</span> b, d <span class="sc">~</span> a, d <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">in_sample=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.011925 1.407708 1.697207 1.011901</code></pre>
+<pre><code>[1] 0.9937855 1.4066611 1.7067076 0.9918937</code></pre>
 </div>
 </div>
 <div class="callout-note callout callout-style-default no-icon callout-captioned">
@@ -289,7 +289,7 @@ Discussion
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag05, <span class="at">n=</span><span class="dv">500</span>, d <span class="sc">~</span> c, d <span class="sc">~</span> b, d <span class="sc">~</span> a, d <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">in_sample=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9977221 1.4083284 1.7354470 1.0032275</code></pre>
+<pre><code>[1] 0.9932812 1.4725469 1.7431287 0.9963097</code></pre>
 </div>
 </div>
 <section id="learning-checks" class="level2">

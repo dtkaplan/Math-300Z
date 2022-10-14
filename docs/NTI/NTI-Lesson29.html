@@ -145,13 +145,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="nav-link" href="../lessons.html">Lessons</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../layout.html">Home</a>
+    <a class="nav-link" href="../layout.html">Site layout</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../schedule-of-objectives.html">Objectives</a>
+    <a class="nav-link" href="../objective-list.html">Objectives</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../NTIs.html">NTIs</a>
+    <a class="nav-link" href="../LC-list.html">LCs</a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -248,7 +248,7 @@ Summary
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag04, d <span class="sc">~</span> c, d<span class="sc">~</span> b <span class="sc">+</span> c, d <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">n=</span><span class="dv">50</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.680281 1.422157 1.031973</code></pre>
+<pre><code>[1] 1.6451623 1.3087042 0.9822509</code></pre>
 </div>
 </div>
 <p>Prediction error gets smaller, the more covariates are included.</p>
@@ -256,14 +256,14 @@ Summary
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag05, d <span class="sc">~</span> c, d<span class="sc">~</span> b <span class="sc">+</span> c, d <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">n=</span><span class="dv">50</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.040377 1.039477 1.031562</code></pre>
+<pre><code>[1] 1.105785 1.072284 1.071079</code></pre>
 </div>
 </div>
 <p><code>dag07</code> is a case where we have covariates, but they aren’t actually connected to <code>d</code>. Will they reduce prediction error? We’ll use a very small sample size, <span class="math inline">\(n=4\)</span>, to make the situation obvious.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag07, d <span class="sc">~</span> <span class="dv">1</span>, d <span class="sc">~</span> c, d<span class="sc">~</span> b <span class="sc">+</span> c, d <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">n=</span><span class="dv">4</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 5.243426e-01 5.243426e-01 5.241801e-01 1.023200e-15</code></pre>
+<pre><code>[1] 3.735770e-01 3.647958e-01 1.571500e-01 3.295792e-16</code></pre>
 </div>
 </div>
 <div class="callout-note callout callout-style-default no-icon callout-captioned">
@@ -311,14 +311,14 @@ Solution
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag04, c<span class="sc">~</span> <span class="dv">1</span>, c <span class="sc">~</span> d, c<span class="sc">~</span> b <span class="sc">+</span> d, c <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> d, <span class="at">n=</span><span class="dv">50</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.0346760 0.8653756 0.8122083 0.6307275</code></pre>
+<pre><code>[1] 0.9247414 0.8672282 0.8056896 0.6919363</code></pre>
 </div>
 </div>
 <p><code>d</code> seems to block effect of <code>a</code> and <code>b</code> on <code>c</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag04, c<span class="sc">~</span> <span class="dv">1</span>, c <span class="sc">~</span> d, c<span class="sc">~</span> b <span class="sc">+</span> d, c <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> d, <span class="at">n=</span><span class="dv">5</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.4560326 0.9100387 0.9096126 0.8900302</code></pre>
+<pre><code>[1] 1.1122452 1.0902534 0.8655307 0.2677090</code></pre>
 </div>
 </div>
 </div>
