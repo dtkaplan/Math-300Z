@@ -82,9 +82,23 @@ dag10 <- dag_make(
 )
 
 
+dag_school1 <- dag_make(
+  expenditure ~ unif(7000, 18000),
+  participation ~ unif(1,100),
+  outcome ~ 1100 + 0.01*expenditure - 4*participation + eps(50)
+)
 
+dag_school2 <- dag_make(
+  culture ~ unif(-1, 1),
+  expenditure ~ 12000 + 4000 * culture + eps(1000),
+  participation ~ (50 + 30 * culture + eps(15)) %>%
+    pmax(0) %>% pmin(100),
+  outcome ~ 1100 + 0.01*expenditure - 4*participation + eps(50)
+)
 
-save(dag00, dag01, dag02, dag03, dag04, dag05, dag06, dag07, dag08, dag09, dag10,
+save(dag00, dag01, dag02, dag03, dag04, dag05,
+     dag06, dag07, dag08, dag09, dag10,
+     dag_school1, dag_school2,
      file = "data/daglib.rda")
 
 # An experiment
