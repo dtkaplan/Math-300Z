@@ -117,6 +117,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -190,7 +191,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 1 × 2
      vx    vy
   &lt;dbl&gt; &lt;dbl&gt;
-1  4.06  1.00</code></pre>
+1  4.04  1.02</code></pre>
 </div>
 </div>
 <p>Compare this result to the DAG tilde expressions</p>
@@ -267,7 +268,7 @@ lm(formula = y ~ x, data = .)
 
 Coefficients:
 (Intercept)            x  
-      4.009        1.503  </code></pre>
+      3.974        1.495  </code></pre>
 </div>
 </div>
 <p>The intercept corresponds to the additive constant (4) in the <code>y</code> tilde expression. The <code>x</code> coefficient corresponds to the multiplier on <code>x</code> in the tilde expression.</p>
@@ -283,14 +284,38 @@ lm(formula = x ~ y, data = .)
 
 Coefficients:
 (Intercept)            y  
-    -1.8431       0.4615  </code></pre>
+    -1.8473       0.4636  </code></pre>
 </div>
 </div>
 <p>These coefficients do not appear in the <code>dag01</code> tilde expressions.</p>
 <hr>
-
-
 </section>
+</section>
+<section id="objective-21.2" class="level2">
+<h2 class="anchored" data-anchor-id="objective-21.2">21.5 (Objective 21.2)</h2>
+<p>You are trying to understand why automobile fuel economy varies from model to model. Using the <code>mtcars</code> data frame (documentation at <code>help("mtcars")</code>) …</p>
+<ol type="i">
+<li>What’s an appropriate choice of a response variable?</li>
+<li>Pick two explanatory variables of interest to you. Build an appropriate model from the data, extracting the <code>coefficients()</code> of the model. Explain what the coefficients mean in everyday terms that your cylinder-head uncle would approve of.</li>
+<li>Which of the other variables are covariates? iv.Pick a covariate that your intuition suggests would be important. Include that covariate in the model from (ii) and say whether the covariate shows up as important in the model coefficients.</li>
+</ol>
+<p>::: {.callout-note} ## Solution</p>
+<ol start="3" type="i">
+<li>All of the other variables are covariates. A covariate is merely a potential explanatory variable that you are not directly interested in. Of course, not all covariates play an important role in the system.</li>
+</ol>
+<hr>
+</section>
+<section id="obj-21.3" class="level2">
+<h2 class="anchored" data-anchor-id="obj-21.3">21.6 (Obj 21.3)</h2>
+<p>Generate a sample of size <span class="math inline">\(n=100\)</span> from <code>dag03</code>. Use the data to construct a model of <code>y</code> versus <code>x</code>. But instead of using <code>coefficients()</code> to look at the model coefficients, use <code>confint()</code>. While <code>coefficients()</code> reports a single value for each coefficient, <code>confint()</code> reports a plausible interval for coefficients that is consistent with the data.</p>
+<ol type="i">
+<li>For <span class="math inline">\(n=100\)</span>, how wide is the interval reported by <code>confint()</code> on the <code>x</code> coefficient.</li>
+<li>Repeat the process of sampling and modeling, but this time use <span class="math inline">\(n=400\)</span>. How wide is the interval reported by <code>confint()</code> on the <code>x</code> coefficient.</li>
+<li>Again repeat the process of sampling and modeling, this time using <span class="math inline">\(n=1600\)</span>. iv. Does the interval reported depend systematically on the size <span class="math inline">\(n\)</span> of the sample? Describe what pattern you see.</li>
+</ol>
+<hr>
+
+
 </section>
 
 </main> <!-- /main -->

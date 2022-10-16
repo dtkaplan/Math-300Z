@@ -16,3 +16,164 @@ Vocabulary: Sampling distribution, standard error, sampling variability, sample 
 :::
 
 --------
+
+
+## 23.2
+
+In LC 22.2, using `do(100)`, you displayed the sampling distribution on the `x` coefficient of the model `y ~ x` applied to data simulated from `dag01`. Among other things, you calculated the standard deviation of the sampling distribution. Copy over the `proc1()` you wrote for LC 22.2 into your Rmd document for this lesson.
+
+Calculate the standard deviation of the sampling distribution in each of these situations.
+
+Number of trials  |  Sample size
+------------------|---------------
+`do(100)`         | `size=25`
+`do(100)`         | `size=100`
+`do(100)`         | `size=400`
+`do(500)`         | `size=25`
+`do(500)`         | `size=100`
+`do(500)`         | `size=400`
+
+In each case, the standard deviation is somewhat random, since new simulated data is collected from `dag01` each time. Nonetheless, there is a systematic pattern to how the standard deviation varies with the number of trials and with the sample size.
+
+1. Describe how the standard deviation of the sampling distribution of the `x` coefficient varies with sample size. The general trend should be easy to see.
+
+2. Does the standard deviation of the sampling distribution depend on the number of trials?
+
+3. Going back to your results from (1), try to find a simple quantitative relationship that describes how the standard deviation depends on sample size. State that relationship in words.
+
+-----------
+
+## 23.3
+
+We're going to build models of prices of books based on the `moderndive::amazon_books` data frame. For each model, you will calculate the confidence interval of one or more coefficients in two ways:
+
+i. Directly, using `confint()`.
+ii. Indirectly, using `broom::tidy()`
+
+**Model 1**. 
+
+1. Model `list_price` versus `amazon_price`. Calculate the confidence intervals on the intercept and on the `amazon_price` coefficient.
+
+2. Interpret the `amazon_price` coefficient in everyday words.
+
+::: {.callout-note}
+## Solution to part 1.
+
+```{r}
+lm(list_price ~ amazon_price, data = amazon_books) %>% confint()
+lm(list_price ~ amazon_price, data = amazon_books) %>% broom::tidy()
+```
+
+1. You can read the confidence interval directly from the `confint()` report. For the regression report, calculate the confidence interval as the estimate $\pm 2$ times the "standard error."
+
+2. Just to look at the `amazon_price()` coefficient, the list price is about 8% higher than the Amazon price. Here, "about" means 5% to 13%. But don't forget the intercept. The list price is, on average, about $4.50 higher than the 1.08 multiplier on the Amazon price.
+
+
+**Model 2**.
+
+3. Model `list_price` versus `amazon_price`, including `hard_paper` as a covariate.
+
+::: {.callout-note}
+## Solution
+
+```{r}
+lm(list_price ~ amazon_price + hard_paper, data = amazon_books) %>% confint()
+lm(list_price ~ amazon_price + hard_paper, data = amazon_books) %>% broom::tidy()
+```
+
+A hardcover costs about $2 to $4 more than a paperback.
+
+
+::: {.callout-warning}
+## Note in draft
+Return to this example in the prediction lesson, to show how the confidence interval and the prediction interval are different.
+
+Maybe also use it in one of the side-exercises on interaction terms. (The plan is not to strongly emphasize interaction terms but to refer to them in the occasional exercise.)
+:::
+
+-------------
+
+## 23.4 (Objective 23.1)
+
+We're going to work with a very short dataset so that you can see directly what **resampling** a data frame does. (Ordinarily, you use resampling on an entire dataset, but here we are trying to make a point about the mechanism of resampling.)
+
+1. Create a data frame `Five` that consists of the first five rows of `moderndive::mythbusters_yawn`. (Hint: Use `head()`.) Put the code for doing this into your Rmd homework paper. Note that `Five` contains the data from subjects 1 through 5.
+
+::: {.callout-note}
+## Solution
+
+```{r}
+Five <- mythbusters_yawn %>% head(5)
+```
+:::
+
+2. Use `resample()` to generate a new data frame from `Five`. At this point, you are just going to look at the result, processing it "by eye." How many distinct human subjects are reported in the resampled data? (Your answer will likely differ from your classmates', since resampling is done at random.)
+
+3. Repeat (2) ten times. Each time, count the number of distinct human subjects. 
+
+    i. Report those ten numbers on your write-up.
+    ii. There will usually be one or more subjects repeated in the output. Look at these repeats carefully to check whether the variables have the same value for all the repeats or whether sometimes a repeated subject has different values for `group` or `yawn`. 
+    
+::: {.callout-note}
+## Solution
+
+Most of the time there will be 2, 3, or 4 distinct subject. The balance of the five rows will be repeats of other subjects. When a subject is repeated, the entire row is identical for all instances of that subject.
+:::
+
+**Going further** (optional). It's pretty easy to automate the process of generating the resample and counting the number of distinct human subjects. Like this:
+
+```{r}
+{resample(Five) %>% unique() %>% nrow()}
+```
+
+Using `do(1000)`, carry out 1000 trials of this process, saving the overall results in a data frame named `Trials`. What is the mean number of unique human subjects across the 1000 trials? What fraction is this of the five subjects.
+
+Do the same again, but instead of using `Five`, use the whole `mythbusters_yawn` data frame (which has `r nrow(mythbusters_yawn)` rows).  What fraction of the `r nrow(mythbusters_yawn)` human subjects, on average, shows up in the resamples?
+
+::: {.callout-note}
+## Solution
+
+```{r}
+Trials <- do(1000) * {resample(mythbusters_yawn) %>% unique() %>% nrow()}
+Trials %>% summarize(mn = mean(result)/nrow(mythbusters_yawn))
+```
+:::
+
+
+-------------
+
+## 23.5 (Objective 23.1)
+
+Return to the `amazon_books` data frame and the model `list_price ~ amazon_price`. In Exercise 23.3 you used the regression report to calculate the confidence intervals on the intercept and on the `amazon_price` coefficient. Now you are going to repeat the calculation in a different way, using randomization, a process called "**bootstrapping**".
+
+The basic process is to train a model using *resampled* data, like this:
+
+```{r}
+lm(list_price ~ amazon_price, data = resample(amazon_books)) %>% coefficients()
+```
+
+Then, using `do(500)`, carry out 500 trials, saving the result in a data frame named `Trials`.
+
+Process `Trials` to calculate both the mean and the standard deviation of the intercept and `amazon_price` columns. How do those results compare to the "standard error" results from the same model (without resampling) as you found in LC 23.3?
+
+::: {.callout-note}
+## Solution
+
+SOMETHING IS WRONG HERE. The means are about the same as from the regression report (as they should be) but the standard deviations are 3-4 times larger. WHAT GIVES?
+
+THE PROBLEM IS a handful of books where the Amazon price is very different from the list price, because the book itself is very expensive (e.g. $100). Remedy
+
+1. Switch to another data example, maybe doing both the regression report and the bootstrapping in one exercise.
+2. This is an object lesson in outliers. Since the dollar discount is presumably *proportional* to the price, we should have used log transforms.
+
+```{r}
+Trials <- do(500) * {lm(list_price ~ amazon_price, data = resample(amazon_books)) %>% coefficients()}
+Trials %>% summarize(m1 = mean(Intercept), 
+                     m2 = mean(amazon_price), 
+                     sintercept = sd(Intercept), 
+                     samazon_price = sd(amazon_price))
+```
+
+:::
+
+-------------

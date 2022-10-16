@@ -6,6 +6,26 @@ title: "Learning Checks Lesson 24"
 source("../_startup.R")
 ```
 
+::: {.callout-warning}
+## Just to help when writing problems
+
+24.1 Estimate an effect size from a regression model of one and two variables.
+
+24.2 Construct a confidence interval on the effect size.
+
+24.3. Gaming: Evaluate whether confidence interval indicates that estimated effect size is consistent with simulation.
+:::
+
+
+a. Use `mod_plot()` and look at the slope of lines and offsets. Compare to the model coefficients.
+
+b. Generate data from a DAG and look at the confidence interval on the effect size. Then make new samples and see if the effect size in those samples is consistent with the confidence interval. 
+
+c. In text, maybe look at the confidence intervals across new samples and show that they tend to overlap. Only a few of them don't touch a common line. This is basically just a review of confidence intervals, but why not?
+
+d. Interaction. Show that when there is an interaction term, the effect size (as calculated by `mod_effect()`) is not constant, as it is for models with purely linear terms. 
+
+
 ## 24.1
 
 ::: {.callout-note}

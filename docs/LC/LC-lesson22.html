@@ -214,8 +214,95 @@ Solution
 </div>
 </div>
 <hr>
+</section>
+<section id="obj-21.3" class="level2">
+<h2 class="anchored" data-anchor-id="obj-21.3">22.2 (Obj 21.3)</h2>
+<p><strong>Part 1</strong></p>
+<p>You are going to write a <em>procedure</em> that automates the following process:</p>
+<ol type="i">
+<li>sampling from a DAG, specifically <code>dag01</code>, using <code>sample()</code> with a size of 25.</li>
+<li>fitting a model <code>y ~ x</code> using <code>lm()</code></li>
+<li>reporting the coefficient on <code>x</code> using <code>coefficients()</code>.</li>
+</ol>
+<p>Call the procedure <code>proc1()</code>.</p>
+<p>To do this fill in the following template in your Rmd document:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>proc1 <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># your statements go here</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once you have <code>proc1()</code> ready, you can carry out the procedure by giving a simple command:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc1</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Part 2</strong></p>
+<p>Now that you have <code>proc1()</code> ready and have tried it out, you are going to run the procedure 100 times repeatedly and look at the distribution in the <code>x</code> coefficient.</p>
+<p>Of course, you could laboriously give the command <code>proc1()</code> 5 times, and write down the <code>x</code> coefficient each time. Far better, though, to automate the process of repeating and collecting the <code>x</code> coefficient.</p>
+<p>You can do this easily by using <code>do(5)</code> in conjunction with <code>proc1()</code>.</p>
+<ol type="1">
+<li><p>What’s the form in which the coefficients are collected when using <code>do()</code>?</p></li>
+<li><p>Is the <code>x</code> coefficient the same from trial to trial? Explain why or why not.</p></li>
+<li><p>Change your statement to run 100 trials rather than just 5, and to store the collected results in a data frame called <code>Trials</code>. Use appropriate graphics to display the distribution of the <code>x</code> coefficient. Summarize the distribution in a sentence or two.</p></li>
+<li><p>Create a consise summary of the <code>x</code> column of <code>Trials</code> using <code>summarize()</code> with <code>sd(x)</code> to calculate the standard deviation. Compare the size of the standard deviation to the graphical display in (3).</p></li>
+</ol>
+<section id="solution-1" class="level3">
+<h3 class="anchored" data-anchor-id="solution-1">Solution</h3>
+<p><strong>Part 1</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>proc1 <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  Dat <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">25</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  Mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Dat)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>(Mod)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>or, more concisely</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>proc1 <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">25</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coefficients</span>()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Part 2</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">5</span>) <span class="sc">*</span> <span class="fu">proc1</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Intercept        x
+1  3.993889 1.823723
+2  3.781726 1.192576
+3  4.152893 1.328287
+4  3.663743 1.329055
+5  3.718211 1.620334</code></pre>
+</div>
+</div>
+<ol type="1">
+<li><p>The results of the five trials are collected into a data frame.</p></li>
+<li><p>The <code>x</code> coefficients varies from trial to trial.</p></li>
+</ol>
+<p>Collect 100 trials</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">100</span>) <span class="sc">*</span> <span class="fu">proc1</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="1">
+<li>An appropriate graphical display of the trials:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Trials, <span class="fu">aes</span>(x)) <span class="sc">+</span> <span class="fu">geom_density</span>(<span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">alpha=</span><span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="LC-lesson22_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The <code>x</code> coefficient varies from near 0.5 to near 2.5 in a bell-shaped form.</p>
+<ol start="4" type="1">
+<li>Summarize the trials by the standard deviation.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">s =</span> <span class="fu">sd</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          s
+1 0.2005022</code></pre>
+</div>
+</div>
+<p>The standard deviation is about 1/4 the width of the distribution.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

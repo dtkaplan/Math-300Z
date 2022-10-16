@@ -8,6 +8,8 @@ library(dplyr)
 library(mosaic)
 library(mosaicModel)
 library(math300)
+library(moderndive)
+
 knitr::opts_chunk$set(echo = TRUE)
 
 # Functions for transcluding content

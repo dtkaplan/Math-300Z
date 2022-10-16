@@ -27,3 +27,15 @@ Evaluate the model at many inputs, then plot out `model_output` versus input.
 
 `mod_plot()` automates this.
 
+## An example extracting information from residuals
+
+Amazon discounts it's books, but the discount is a smaller percentage for low-priced books.  You can see this by building a model of log prices, extracting the most negative residuals, then looking at the prices of these negative-residual books. 
+
+In the PREDICTION lessons, build a model of list price versus amazon price, possibly using logarithms. Are the books with the most negative residuals different in some way from the others? (I think that they are mostly low-price books.)
+
+```{r}
+offsets <- lm(log(list_price) ~ log(amazon_price), data = amazon_books) %>% residuals()
+bad_deals <- which(offsets < 0.4)
+amazon_books$list_price[inds]
+```
+

@@ -33,3 +33,97 @@ Three <- Two %>%
 
 
 --------
+
+## 22.2 (Obj 21.3)
+
+**Part 1**
+
+You are going to write a *procedure* that automates the following process:
+
+i. sampling from a DAG, specifically `dag01`, using `sample()` with a size of 25.
+ii. fitting a model `y ~ x` using `lm()`
+iii. reporting the coefficient on `x` using `coefficients()`.
+
+Call the procedure `proc1()`.
+
+To do this fill in the following template in your Rmd document:
+
+```r
+proc1 <- function() {
+  # your statements go here
+}
+```
+
+Once you have `proc1()` ready, you can carry out the procedure by giving a simple command:
+
+```r
+proc1()
+```
+
+**Part 2**
+
+Now that you have `proc1()` ready and have tried it out, you are going to run the procedure 100 times repeatedly and look at the distribution in the `x` coefficient.
+
+Of course, you could laboriously give the command `proc1()` 5 times, and write down the `x` coefficient each time. Far better, though, to automate the process of repeating and collecting the `x` coefficient.
+
+You can do this easily by using `do(5)` in conjunction with `proc1()`. 
+
+1. What's the form in which the coefficients are collected when using `do()`?
+
+2. Is the `x` coefficient the same from trial to trial? Explain why or why not.
+
+3. Change your statement to run 100 trials rather than just 5, and to store the collected results in a data frame called `Trials`. Use appropriate graphics to display the distribution of the `x` coefficient. Summarize the distribution in a sentence or two.
+
+4. Create a consise summary of the `x` column of `Trials` using `summarize()` with `sd(x)` to calculate the standard deviation. Compare the size of the standard deviation to the graphical display in (3).
+
+### Solution
+
+**Part 1**
+
+```{r}
+proc1 <- function() {
+  Dat <- sample(dag01, size=25)
+  Mod <- lm(y ~ x, data = Dat)
+  coefficients(Mod)
+}
+```
+or, more concisely
+```{r}
+proc1 <- function() {
+  sample(dag01, size=25) %>%
+    lm(y ~ x, data = .) %>%
+    coefficients()
+}
+```
+
+**Part 2**
+
+```{r}
+do(5) * proc1()
+```
+
+1. The results of the five trials are collected into a data frame.
+
+2. The `x` coefficients varies from trial to trial.
+
+Collect 100 trials
+
+```{r}
+Trials <- do(100) * proc1()
+```
+
+3. An appropriate graphical display of the trials:
+
+```{r}
+ggplot(Trials, aes(x)) + geom_density(fill="blue", alpha=0.3)
+```
+
+The `x` coefficient varies from near 0.5 to near 2.5 in a bell-shaped form.
+
+4. Summarize the trials by the standard deviation.
+
+```{r}
+Trials %>% summarize(s = sd(x))
+```
+
+The standard deviation is about 1/4 the width of the distribution.

@@ -117,6 +117,27 @@ ul.task-list{list-style: none;}
 
 </header>
 
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Just to help when writing problems
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>24.1 Estimate an effect size from a regression model of one and two variables.</p>
+<p>24.2 Construct a confidence interval on the effect size.</p>
+<p>24.3. Gaming: Evaluate whether confidence interval indicates that estimated effect size is consistent with simulation.</p>
+</div>
+</div>
+<ol type="a">
+<li><p>Use <code>mod_plot()</code> and look at the slope of lines and offsets. Compare to the model coefficients.</p></li>
+<li><p>Generate data from a DAG and look at the confidence interval on the effect size. Then make new samples and see if the effect size in those samples is consistent with the confidence interval.</p></li>
+<li><p>In text, maybe look at the confidence intervals across new samples and show that they tend to overlap. Only a few of them don’t touch a common line. This is basically just a review of confidence intervals, but why not?</p></li>
+<li><p>Interaction. Show that when there is an interaction term, the effect size (as calculated by <code>mod_effect()</code>) is not constant, as it is for models with purely linear terms.</p></li>
+</ol>
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section">24.1</h2>
 <div class="callout-note callout callout-style-default callout-captioned">
