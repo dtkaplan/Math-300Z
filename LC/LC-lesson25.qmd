@@ -6,11 +6,72 @@ title: "Learning Checks Lesson 25"
 source("../_startup.R")
 ```
 
-## 25.1
+::: {.callout-warning}
+## Just while in draft
+
+25.1 Given a data frame, construct a predictor function for a specified response variable.
+
+25.2 Use the predictor function to estimate prediction error on a given DAG sample and summarize with root mean square (RMS) error. Relate this to a predition interval.
+
+25.3 Distinguish between in-sample and out-of-sample prediction estimates of prediction error. 
+:::
+
+## 25.2
+
+The data frame `moderndive::house_prices` lists the sales prices of 21,613 houses in King County, Washington (which includes Seattle) sold from May 2014 and May 2015. Often, with price or income data, economists work with the *logarithm* of the price or income or income-related quantity such as house living area.  We are going to do here, but this problem is not about logarithms, so once you create the "logged" data frame, you'll just be modeling the data using the usual methods.
+
+To create the "logged" data, add these two new variables to the data frame, which we will call `Seattle`.
+
+```{r}
+Seattle <- moderndive::house_prices %>% 
+  mutate(log_price = log10(price),
+         log_area = log10(sqft_living))
+```
+
+1. Build a model of `log_price ~ log_area` using the `Seattle` data. Store the model under the name `pmod`.
 
 ::: {.callout-note}
 ## Solution
 
+```{r}
+pmod <- lm(log_price ~ log_area, data = Seattle)
+```
+:::
+
+2. Imagine that you are moving to Seattle in August 2014. Housing is expensive in the Seattle area, so you might decide to live in a small house, say 750 square feet. The `log_area` of such a house is 2.87. Using `mod_eval()`, predict the `log_price` of such a house. (Note that `mod_eval()` puts the model output in a column named `model_output`, not `log_price`.) In your Rmd file, give the command and show the output. If you're curious about what the predicted price is in dollars (rather than log-dollars), simply raise 10 to the log-dollar amount. For instance, if the `model_output` were 5, the dollar amount will be $10^5 = \$100,000$.
+
+::: {.callout-note}
+## Solution
+
+```{r}
+mod_eval(pmod, log_area = 2.87)
+```
+In dollar terms, the predicted price is 10^5.324^ = `r 10^5.324`.
+:::
+
+3. Repeat (2), but for a house with lots of space: 1500 square feet. The `log_area` of such a house is 3.18. As in (2), give the command and show the output in your Rmd file.
+
+4. Your budget is $200,000. In log dollars this budget is `log10(200000)` = 5.3. The predicted price of a 750 square-foot house is somewhat beyond your budget. But you figure that some 750-square foot house will be within your budget. To see if this is likely, look at the **prediction interval** of the house price. You can do this by adding the `interval="prediction"` to the `mod_eval()` command. Is your budget (5.3 log dollars) within the prediction interval? Show your command and the result in your Rmd file and also give a sentence stating your conclusion.
+
+::: {.callout-note}
+## Solution
+
+```{r}
+mod_eval(pmod, log_area = 2.87, interval="prediction")
+```
+Yeah! Your budget of 5.3 log dollars is near the center of the prediction interval. 
+:::
+
+5. On a hunch, you decide to see whether you might find a 1500 square foot (`log_area` = 3.18) might also fall within the prediction interval. Will it? Show your command, the result, and a sentence interpreting the result.
+
+::: {.callout-note}
+## Solution
+
+```{r}
+mod_eval(pmod, log_area = 3.18, interval="prediction")
+```
+Strictly speaking, your budget (5.3 log dollars) is within the prediction interval. But it is very close to the lower bound of 5.25 log dollars. So there will likely be few houses of 1500 square feet within your budget. So plan that the house you will end up purchasing will be somewhere in the range 750-1500 square feet.
 :::
 
 --------
+

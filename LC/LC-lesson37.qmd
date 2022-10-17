@@ -6,6 +6,14 @@ title: "Learning Checks Lesson 37"
 source("../_startup.R")
 ```
 
+
+Ideas:
+
+- Use the `openintro::mlbbat10` baseball data to look at on-base performace as a function of hitting position. How many p-values are being reported from the regression report? Bonferroni adjustment. Compare to ANOVA format which looks at the term as a whole.  Also look at the large number of indicators of batting performance. How many different tests could we perform?
+
+
+
+
 ## 37.1
 
 ::: {.callout-note}

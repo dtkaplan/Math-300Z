@@ -17,6 +17,68 @@ Ideas
 
 ## 26.1
 
+The `openintro::bac` data frame records an experiment with sixteen student volunteers at Ohio State University who each drank a randomly assigned number of cans of beer (`beers`). These students were evenly divided between men and women, and they differed in weight and drinking habits. Thirty minutes later, a police officer measured their blood alcohol content (`bac`) in grams of alcohol per deciliter of blood. 
+
+Construct a model of `bac ~ beers` using the `openintro::bac` data.
+
+```{r}
+mod <- lm(bac ~ beers, data = openintro::bac)
+```
+
+1. Federal and state laws typically specify a legal upper limit for blood alcohol content of a driver of 0.08%. According to the model function, how many beers corresponds to this upper limit?
+
+::: {.content-note}
+## Solution
+
+One way to calculate this is to guess at the number of beers, then modify your guess according to whether it's high or low.
+
+```{r}
+mod_eval(mod, beers=4) # too low
+mod_eval(mod, beers=6) # too high
+# next guess should be around 5
+```
+
+Another way, for the avid calculus student, is to turn the model into a function, then use `Zeros()` to find where the output is 0.08.
+
+```{r}
+f <- makeFun(mod)
+mosaicCalc::Zeros(f(beers) - 0.08 ~ beers, mosaicCalc::bounds(beers=0:10))
+```
+
+Simplest of all, just graph the model function and read backwards from the vertical axis. 
+:::
+
+2. It's hard to believe that the volunteers in a beer-drinking study who are willing to risk being randomly assigned to drink five or more beers will be representative of a broader group of people. So, we'll just consider the results to apply to "volunteers."
+
+At the number of beers you found in (1), what fraction of volunteers will be above the 0.08 level?
+
+::: {.callout-note}
+## Solution
+
+It's a good assumption that about half the time the actual value for an individual person will be above the model output. This means that five beers should not be taken as an appropriate guideline---half of the people who follow that guideline will be above the legal limit.
+:::
+
+3. A proper guideline should take into account that the goal is to entirely avoid people who follow it being at or above the 0.08 level. To accomplish this absolutely means finding a number of beers with the 100% prediction interval is entirely below 0.08. Unfortunately a prediction interval at a 100% level stretches to infinity, so eliminating *any* cases having a BAC of 0.08 means an absolute prohibition on drinking. That might be a good idea but, historically, such policies have not been successful in the US.
+
+To have a non-zero guideline, we have to allow that the guideline will put a *small fraction* of people above the 0.08 BAC level. Suppose that we decide to use the standard 95% level for the prediction interval. Construct the 95% prediction interval on BAC for each of the inputs 1 to 5 beers. Which number of beers will keep the upper limit of the prediction interval below the 0.08 BAC limit? 
+
+::: {.callout-note}
+## Solution
+
+```{r}
+mod_eval(mod, interval="prediction", level=1, beers = 1:5)
+```
+
+Two beers has the upper limit of the prediction interval below 0.08.
+:::
+
+4. It turns out that 2.55 beers has a prediction interval whose upper limit is at 0.08. Using 2.55 beers as the guideline for staying below 0.08 BAC, what fraction of people who drink 2.55 beers will nonetheless have a BAC above 0.08?
+
+::: {.callout-note}
+## Solution
+
+The 95% prediction interval contains 95% of the results. That puts a fraction of 0.025 above the top of the interval and another 0.025 below the bottom of the interval. We're concerned only about BAC being too high. So, about 0.025 of people who stick to a limit of 2.55 beers will end up with a DAC above the 0.08 limit. 
+:::
 
 ::: {.callout-note}
 ## Solution

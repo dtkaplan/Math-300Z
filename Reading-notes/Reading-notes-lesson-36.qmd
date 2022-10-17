@@ -17,7 +17,7 @@ output:
 source("../_startup.R")
 ```
 
-Use this from Section 19.4.1 of *Computational Probability and Statistics*?
+Use this from Section 19.4 of *Computational Probability and Statistics*?
 
 > A US court considers two possible claims about a defendant: she is either innocent or guilty. Imagine you are the prosecutor. If we set these claims up in a hypothesis framework, the null hypothesis is that the defendant is innocent and the alternative hypothesis is that the defendant is guilty. Your job as the prosecutor is to use evidence to demonstrate to the jury that the alternative hypothesis is the reasonable conclusion.
 
@@ -28,4 +28,24 @@ Use this from Section 19.4.1 of *Computational Probability and Statistics*?
 > This is also the case with hypothesis testing: even if we fail to reject the null hypothesis, we typically do not accept the null hypothesis as truth. Failing to find strong evidence for the alternative hypothesis is not equivalent to providing evidence that the null hypothesis is true.
 
 > There are two types of mistakes possible in this scenario, letting a guilty person go free and sending an innocent person to jail. The criteria for making the decision, reasonable doubt, establishes the likelihood of those errors. 
+
+> Hypothesis tests are not flawless. Just think of the court system: innocent people are sometimes wrongly convicted and the guilty sometimes walk free. Similarly, data can point to the wrong conclusion. However, what distinguishes statistical hypothesis tests from a court system is that our framework allows us to quantify and control how often the data lead us to the incorrect conclusion.
+
+> There are two competing hypotheses: the null and the alternative. In a hypothesis test, we make a statement about which one might be true, but we might choose incorrectly. There are four possible scenarios in a hypothesis test, which are summarized below.
+
+$$
+\begin{array}{cc|cc} & & \textbf{Test Conclusion} &\\ 
+& & \text{do not reject } H_0 &  \text{reject } H_0 \text{ in favor of }H_A  \\
+\textbf{Truth} & \hline H_0 \text{ true} & \text{Correct Decision} &  \text{Type 1 Error}  \\
+& H_A \text{true} & \text{Type 2 Error} & \text{Correct Decision}  \\
+\end{array} 
+$$
+
+> A **Type 1 error**, also called a **false positive**, is rejecting the null hypothesis when $H_0$ is actually true. Since we rejected the null hypothesis in the gender discrimination (from the Case Study) and the commercial length studies, it is possible that we made a Type 1 error in one or both of those studies. A **Type 2 error**, also called a **false negative**, is failing to reject the null hypothesis when the alternative is actually true. A Type 2 error was not possible in the gender discrimination or commercial length studies because we rejected the null hypothesis.  
+
+::: {.callout-warning}
+## In DRAFT
+
+Recast the previous paragraph to tie it to classifiers. Point out that in a hypothesis test, unlike a court, we never "accept the Null hypothesis." Neither is there any definite notion of "true," since neither the Null nor the Alternative are strictly speaking correct: they are both models of the world.
+:::
 

@@ -16,6 +16,7 @@ source("../_startup.R")
 24.3. Gaming: Evaluate whether confidence interval indicates that estimated effect size is consistent with simulation.
 :::
 
+SOME IDEAS FOR EXERCISE MODES
 
 a. Use `mod_plot()` and look at the slope of lines and offsets. Compare to the model coefficients.
 
@@ -25,8 +26,79 @@ c. In text, maybe look at the confidence intervals across new samples and show t
 
 d. Interaction. Show that when there is an interaction term, the effect size (as calculated by `mod_effect()`) is not constant, as it is for models with purely linear terms. 
 
+## LC 24.1
 
-## 24.1
+The [*Computational Probability and Statistics*](https://github.com/DS-USAFA/Computational-Probability-and-Statistics/blob/main/data/Stanford_heart_study.csv) text describes an early study on human-to-human heart transplantation:
+
+> "The Stanford University Heart Transplant Study was conducted to determine whether an experimental heart transplant program increased lifespan. Each patient entering the program was designated an official heart transplant candidate, meaning that he was gravely ill and would most likely benefit from a new heart. Some patients got a transplant and some did not. The variable indicates which group the patients were in; patients in the treatment group got a transplant and those in the control group did not. [[Not in data set: Another variable called [MISSING] was used to indicate whether or not the patient was alive at the end of the study.]]"
+
+The data frame is called `Transplants`. [NEED TO MOVE TO PACKAGE]
+
+```{r echo=FALSE}
+Transplants <- read.csv("data/Stanford_hear_study.csv")
+```
+
+You're going to build a model of `outcome` vs `group` based on the data in `Transplants`. The `outcome` variable has levels `"Dead"` and `"Alive"`, that is, it is a two-level categorical variable. Consequently, the model output will be the **probability** that the transplant candidate was alive at the end of the study.
+
+1. Build a model `outcome == "Alive" ~ group` from the `Transplants` data. Pay close attention to the left-hand side of the tilde expression: it is a calculation that produces a 1 if `outcome` is `"Alive"` and zero otherwise. Notice the **double equal signs** and the quotes around `"Alive"`.
+
+::: {.callout-note}
+## Solution
+
+```{r}
+mod <- lm(outcome == "Alive" ~ group, data = Transplants)
+```
+:::
+
+2. The sole explanatory variable here, `group` also is categorical. It has levels `"Control"` and `"Treatment"`. 
+
+    i. Using `eval_mod()`, find the probability of being alive at the end of the study for the Control group and for the treatment group.
+    ii. The two probabilities in (ii) do not add up to zero. Explain why.
+
+::: {.callout-note}
+## Solution
+
+```{r}
+mod_eval(mod, group="Treatment")
+mod_eval(mod, group="Control")
+```
+:::
+  
+    
+3. Find the effect size of the treatment. All you need is your results from (2)? 
+
+4. Use `mod_effect(`modelname`, ~ group)` to calculate the effect size. 
+
+    i. Is the result consistent with what you found in (3).
+    ii. Explain in everyday language what this effect size means.
+    
+::: {.callout-note}
+## Solution
+
+```{r}
+mod_effect(mod, ~ group)
+```
+:::
+
+
+
+
+
+
+--------
+
+## 24.2
+
+In very simple settings, you don't need access to the original data: a simple summary will do.  
+
+::: {.callout-warning}
+## In draft
+
+Use the `data/bloodthinner.csv` data from *CPS* chapter 19. Create the table of counts and calculate the effect size/probabilities from that.
+:::
+
+--------
+
 
 ::: {.callout-note}
 ## Solution

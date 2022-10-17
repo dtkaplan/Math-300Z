@@ -49,3 +49,36 @@ What do you see in the results that tells you that incorporating irrelevant cova
 
 
 --------
+
+## LC 29.3
+
+::: {.callout-warning}
+## In draft
+
+`openintro::teacher`. What's the `base` pay difference between a teacher with an MA and a BA degree? What's a confidence interval on this effect size? How does the confidence interval change if you include `years` as a covariate.
+:::
+
+--------
+
+## LC 29.4
+
+::: {.callout-warning}
+## In draft
+
+`openintro::census` Predict log personal income based on other variables. Eat variance using the `total_family_income` variable.
+
+```{r}
+mod <- lm(log10(total_personal_income) ~ log10(age) + sex + marital_status + log10(total_family_income), data = openintro::census %>% filter(total_personal_income > 0, total_family_income > 0))
+anova(mod)
+gf_jitter(total_personal_income ~ total_family_income | sex, 
+         data =openintro::census %>% filter(total_personal_income > 3000),
+         color=~marital_status, alpha=0.3) %>% 
+  gf_refine(scale_y_log10(), scale_x_log10())
+```
+
+
+```
+
+:::
+
+

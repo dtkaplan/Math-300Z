@@ -15,6 +15,69 @@ span.underline{text-decoration: underline;}
 div.column{display: inline-block; vertical-align: top; width: 50%;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -131,6 +194,105 @@ ul.task-list{list-style: none;}
 </ol>
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section">26.1</h2>
+<p>The <code>openintro::bac</code> data frame records an experiment with sixteen student volunteers at Ohio State University who each drank a randomly assigned number of cans of beer (<code>beers</code>). These students were evenly divided between men and women, and they differed in weight and drinking habits. Thirty minutes later, a police officer measured their blood alcohol content (<code>bac</code>) in grams of alcohol per deciliter of blood.</p>
+<p>Construct a model of <code>bac ~ beers</code> using the <code>openintro::bac</code> data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(bac <span class="sc">~</span> beers, <span class="at">data =</span> openintro<span class="sc">::</span>bac)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="1">
+<li>Federal and state laws typically specify a legal upper limit for blood alcohol content of a driver of 0.08%. According to the model function, how many beers corresponds to this upper limit?</li>
+</ol>
+</section>
+<section id="solution" class="level2 content-note">
+<h2 class="anchored" data-anchor-id="solution">Solution</h2>
+<p>One way to calculate this is to guess at the number of beers, then modify your guess according to whether it’s high or low.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(mod, <span class="at">beers=</span><span class="dv">4</span>) <span class="co"># too low</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  beers model_output
+1     4   0.05915444</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(mod, <span class="at">beers=</span><span class="dv">6</span>) <span class="co"># too high</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  beers model_output
+1     6   0.09508197</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># next guess should be around 5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Another way, for the avid calculus student, is to turn the model into a function, then use <code>Zeros()</code> to find where the output is 0.08.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(mod)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>mosaicCalc<span class="sc">::</span><span class="fu">Zeros</span>(<span class="fu">f</span>(beers) <span class="sc">-</span> <span class="fl">0.08</span> <span class="sc">~</span> beers, mosaicCalc<span class="sc">::</span><span class="fu">bounds</span>(<span class="at">beers=</span><span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  beers .output.
+  &lt;dbl&gt;    &lt;dbl&gt;
+1  5.16        0</code></pre>
+</div>
+</div>
+<p>Simplest of all, just graph the model function and read backwards from the vertical axis.</p>
+</section>
+<ol start="2" type="1">
+<li>It’s hard to believe that the volunteers in a beer-drinking study who are willing to risk being randomly assigned to drink five or more beers will be representative of a broader group of people. So, we’ll just consider the results to apply to “volunteers.”</li>
+</ol>
+<p>At the number of beers you found in (1), what fraction of volunteers will be above the 0.08 level?</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It’s a good assumption that about half the time the actual value for an individual person will be above the model output. This means that five beers should not be taken as an appropriate guideline—half of the people who follow that guideline will be above the legal limit.</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>A proper guideline should take into account that the goal is to entirely avoid people who follow it being at or above the 0.08 level. To accomplish this absolutely means finding a number of beers with the 100% prediction interval is entirely below 0.08. Unfortunately a prediction interval at a 100% level stretches to infinity, so eliminating <em>any</em> cases having a BAC of 0.08 means an absolute prohibition on drinking. That might be a good idea but, historically, such policies have not been successful in the US.</li>
+</ol>
+<p>To have a non-zero guideline, we have to allow that the guideline will put a <em>small fraction</em> of people above the 0.08 BAC level. Suppose that we decide to use the standard 95% level for the prediction interval. Construct the 95% prediction interval on BAC for each of the inputs 1 to 5 beers. Which number of beers will keep the upper limit of the prediction interval below the 0.08 BAC limit?</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(mod, <span class="at">interval=</span><span class="st">"prediction"</span>, <span class="at">level=</span><span class="dv">1</span>, <span class="at">beers =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  beers model_output        lower      upper
+1     1  0.005263158 -0.044010412 0.05453673
+2     2  0.023226920 -0.024229326 0.07068317
+3     3  0.041190682 -0.004954462 0.08733583
+4     4  0.059154443  0.013770285 0.10453860
+5     5  0.077118205  0.031917122 0.12231929</code></pre>
+</div>
+</div>
+<p>Two beers has the upper limit of the prediction interval below 0.08.</p>
+</div>
+</div>
+<ol start="4" type="1">
+<li>It turns out that 2.55 beers has a prediction interval whose upper limit is at 0.08. Using 2.55 beers as the guideline for staying below 0.08 BAC, what fraction of people who drink 2.55 beers will nonetheless have a BAC above 0.08?</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The 95% prediction interval contains 95% of the results. That puts a fraction of 0.025 above the top of the interval and another 0.025 below the bottom of the interval. We’re concerned only about BAC being too high. So, about 0.025 of people who stick to a limit of 2.55 beers will end up with a DAC above the 0.08 limit.</p>
+</div>
+</div>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -147,7 +309,6 @@ Solution
 <hr>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

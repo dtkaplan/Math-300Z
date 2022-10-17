@@ -1390,7 +1390,7 @@
     "href": "LC/LC-lesson24.html",
     "title": "Learning Checks Lesson 24",
     "section": "",
-    "text": "Just to help when writing problems\n\n\n\n24.1 Estimate an effect size from a regression model of one and two variables.\n24.2 Construct a confidence interval on the effect size.\n24.3. Gaming: Evaluate whether confidence interval indicates that estimated effect size is consistent with simulation."
+    "text": "Just to help when writing problems\n\n\n\n24.1 Estimate an effect size from a regression model of one and two variables.\n24.2 Construct a confidence interval on the effect size.\n24.3. Gaming: Evaluate whether confidence interval indicates that estimated effect size is consistent with simulation.\nSOME IDEAS FOR EXERCISE MODES"
   },
   {
     "objectID": "LC/LC-lesson32.html",
@@ -1404,14 +1404,14 @@
     "href": "LC/LC-lesson26.html",
     "title": "Learning Checks Lesson 26",
     "section": "",
-    "text": "Ideas"
+    "text": "Ideas\nAt the number of beers you found in (1), what fraction of volunteers will be above the 0.08 level?\nTo have a non-zero guideline, we have to allow that the guideline will put a small fraction of people above the 0.08 BAC level. Suppose that we decide to use the standard 95% level for the prediction interval. Construct the 95% prediction interval on BAC for each of the inputs 1 to 5 beers. Which number of beers will keep the upper limit of the prediction interval below the 0.08 BAC limit?"
   },
   {
     "objectID": "LC/LC-lesson26.html#section",
     "href": "LC/LC-lesson26.html#section",
     "title": "Learning Checks Lesson 26",
     "section": "26.1",
-    "text": "26.1\n\n\n\n\n\n\nSolution"
+    "text": "26.1\nThe openintro::bac data frame records an experiment with sixteen student volunteers at Ohio State University who each drank a randomly assigned number of cans of beer (beers). These students were evenly divided between men and women, and they differed in weight and drinking habits. Thirty minutes later, a police officer measured their blood alcohol content (bac) in grams of alcohol per deciliter of blood.\nConstruct a model of bac ~ beers using the openintro::bac data.\n\nmod <- lm(bac ~ beers, data = openintro::bac)\n\n\nFederal and state laws typically specify a legal upper limit for blood alcohol content of a driver of 0.08%. According to the model function, how many beers corresponds to this upper limit?"
   },
   {
     "objectID": "LC/LC-lesson27.html",
@@ -2026,7 +2026,21 @@
     "objectID": "LC/LC-lesson24.html#section",
     "href": "LC/LC-lesson24.html#section",
     "title": "Learning Checks Lesson 24",
-    "section": "24.1",
-    "text": "24.1\n\n\n\n\n\n\nSolution"
+    "section": "24.2",
+    "text": "24.2\n\n\n\n\n\n\nSolution"
+  },
+  {
+    "objectID": "LC/LC-lesson24.html#lc-24.1",
+    "href": "LC/LC-lesson24.html#lc-24.1",
+    "title": "Learning Checks Lesson 24",
+    "section": "LC 24.1",
+    "text": "LC 24.1\nThe Computational Probability and Statistics text describes an early study on human-to-human heart transplantation:\n\n“The Stanford University Heart Transplant Study was conducted to determine whether an experimental heart transplant program increased lifespan. Each patient entering the program was designated an official heart transplant candidate, meaning that he was gravely ill and would most likely benefit from a new heart. Some patients got a transplant and some did not. The variable indicates which group the patients were in; patients in the treatment group got a transplant and those in the control group did not. [[Not in data set: Another variable called [MISSING] was used to indicate whether or not the patient was alive at the end of the study.]]”\n\nThe data frame is called Transplants. [NEED TO MOVE TO PACKAGE]\n\n\n\nYou’re going to build a model of outcome vs group based on the data in Transplants. The outcome variable has levels \"Dead\" and \"Alive\", that is, it is a two-level categorical variable. Consequently, the model output will be the probability that the transplant candidate was alive at the end of the study.\n\nBuild a model outcome == \"Alive\" ~ group from the Transplants data. Pay close attention to the left-hand side of the tilde expression: it is a calculation that produces a 1 if outcome is \"Alive\" and zero otherwise. Notice the double equal signs and the quotes around \"Alive\".\n\n\n\n\n\n\n\nSolution\n\n\n\n\nmod <- lm(outcome == \"Alive\" ~ group, data = Transplants)\n\n\n\n\nThe sole explanatory variable here, group also is categorical. It has levels \"Control\" and \"Treatment\".\n\nUsing eval_mod(), find the probability of being alive at the end of the study for the Control group and for the treatment group.\nThe two probabilities in (ii) do not add up to zero. Explain why.\n\n\n\n\n\n\n\n\nSolution\n\n\n\n\nmod_eval(mod, group=\"Treatment\")\n\n      group model_output\n1 Treatment    0.3478261\n\nmod_eval(mod, group=\"Control\")\n\n    group model_output\n1 Control    0.1176471\n\n\n\n\n\nFind the effect size of the treatment. All you need is your results from (2).\nUse mod_effect(modelname, ~ group) to calculate the effect size. Is the result consistent with what you found in (3).\n\n\n\n\n\n\n\nSolution\n\n\n\n\nmod_effect(mod, ~ group)\n\n     change     group to_group\n1 -0.230179 Treatment  Control"
+  },
+  {
+    "objectID": "LC/LC-lesson26.html#solution",
+    "href": "LC/LC-lesson26.html#solution",
+    "title": "Learning Checks Lesson 26",
+    "section": "Solution",
+    "text": "Solution\nOne way to calculate this is to guess at the number of beers, then modify your guess according to whether it’s high or low.\n\nmod_eval(mod, beers=4) # too low\n\n  beers model_output\n1     4   0.05915444\n\nmod_eval(mod, beers=6) # too high\n\n  beers model_output\n1     6   0.09508197\n\n# next guess should be around 5\n\nAnother way, for the avid calculus student, is to turn the model into a function, then use Zeros() to find where the output is 0.08.\n\nf <- makeFun(mod)\nmosaicCalc::Zeros(f(beers) - 0.08 ~ beers, mosaicCalc::bounds(beers=0:10))\n\n# A tibble: 1 × 2\n  beers .output.\n  <dbl>    <dbl>\n1  5.16        0\n\n\nSimplest of all, just graph the model function and read backwards from the vertical axis."
   }
 ]

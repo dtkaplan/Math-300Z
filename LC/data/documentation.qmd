@@ -1,0 +1,7 @@
+---
+title: "Documentation for data sets"
+---
+
+- `Stanford_heart_study.csv`: From [*Computational Probability and Statistics*](https://github.com/DS-USAFA/Computational-Probability-and-Statistics/blob/main/data/Stanford_heart_study.csv) (*CPS*): "The Stanford University Heart Transplant Study was conducted to determine whether an experimental heart transplant program increased lifespan. Each patient entering the program was designated an official heart transplant candidate, meaning that he was gravely ill and would most likely benefit from a new heart. Some patients got a transplant and some did not. The variable indicates which group the patients were in; patients in the treatment group got a transplant and those in the control group did not. Another variable called [MISSING] was used to indicate whether or not the patient was alive at the end of the study."
+
+- `blood_thinner.csv" : From *CPS*. "Patients who underwent CPR for a heart attack and were subsequently admitted to a hospital^["Efficacy and safety of thrombolytic therapy after initially unsuccessful cardiopulmonary resuscitation: a prospective clinical trial." The Lancet, 2001.] were randomly assigned to either receive a blood thinner (treatment group) or not receive a blood thinner (control group). The outcome variable of interest was whether the patient survived for at least 24 hours. There were 50 patients in the experiment who did not receive a blood thinner and 40 patients who did."

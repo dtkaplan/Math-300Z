@@ -4,6 +4,12 @@ title: "List of learning checks"
 
 This list is assembled from the individual-lesson learning check files in the LC/ directory. Make any changes in that directory.
 
+::: {.callout-note}
+## In draft: Data, temporarily
+
+Several of the problems refer to datasets in the `LC/data` subdirectory and documented in `LC/data/explain.qmd`. These should eventually be moved to the `math300` package.
+:::
+
 ## Lesson 19
 
 ```{r child="LC/LC-lesson19.qmd"}
