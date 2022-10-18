@@ -263,8 +263,12 @@ Solution
 </div>
 </div>
 <ol start="3" type="1">
-<li><p>Find the effect size of the treatment. All you need is your results from (2).</p></li>
-<li><p>Use <code>mod_effect(</code>modelname<code>, ~ group)</code> to calculate the effect size. Is the result consistent with what you found in (3).</p></li>
+<li><p>Find the effect size of the treatment. All you need is your results from (2)?</p></li>
+<li><p>Use <code>mod_effect(</code>modelname<code>, ~ group)</code> to calculate the effect size.</p>
+<ol type="i">
+<li>Is the result consistent with what you found in (3).</li>
+<li>Explain in everyday language what this effect size means.</li>
+</ol></li>
 </ol>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -289,6 +293,101 @@ Solution
 </section>
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section">24.2</h2>
+<p>Effect sizes generally come with <em>units</em> and you have to take into account the units in order to know if the effect is important or not.</p>
+<p>::: {.callout-warning} ## In draft</p>
+<p>Move the <code>Loans</code> data into the <code>math300</code> package. But for now …</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Loans <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"data/loans.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 10000 Columns: 55
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (13): emp_title, state, homeownership, verified_income, verification_inc...
+dbl (42): emp_length, annual_income, debt_to_income, annual_income_joint, de...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<p>A case in point is provided by the <code>Loans</code> data frame, which records dozens of variables on each of 10,000 loans made through the Lending Club. The interest rate at which the loans are made varies substantially from loan to loan. Presumably, higher interest rates reflect a higher perception of risk of default (which would lead to the lender losing his or her money).</p>
+<p>Here’s a model of the interest rate. (This is for the borrowers who have a low debt-to-income percent; we won’t worry about the few very high debt-to-income cases.) We’re only interested in this problem with the effect size, which is the same as the coefficients on the model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(interest_rate <span class="sc">~</span> homeownership <span class="sc">+</span> debt_to_income <span class="sc">+</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>            account_never_delinq_percent <span class="sc">+</span> verified_income, </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">data =</span> Loans <span class="sc">%&gt;%</span> <span class="fu">filter</span>(debt_to_income<span class="sc">&lt;</span><span class="dv">50</span>))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>mod <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                     2.5 %      97.5 %
+(Intercept)                    15.31467948 17.26502804
+homeownershipOWN                0.16056412  0.73009641
+homeownershipRENT               1.01571903  1.41695574
+debt_to_income                  0.09565833  0.11523598
+account_never_delinq_percent   -0.09149666 -0.07122369
+verified_incomeSource Verified  1.37798985  1.79909554
+verified_incomeVerified         2.88724295  3.39001806</code></pre>
+</div>
+</div>
+<p>There are two <em>quantitative</em> explanatory variables—<code>debt_to_income</code> and <code>account_never_delinq_percent</code>—both of which are measured in percent.</p>
+<p>There are two <em>categorical</em> explanatory variables: <code>homeownership</code> and <code>verified_income</code>. The levels for <code>homeownership</code> are “MORTGAGE” (meaning money is still owed on the house), “OWN” (without a mortgage), and “RENT” (meaning the borrower rents rather than owning a home). The levels for <code>verified_income</code> are “Not Verified”, “Verified”, “Source Verified”.</p>
+<p>For the categorical explanatory variables (and the intercept) the effect-size units are “percent interest.” For the quantitative explanatory variables, the effect-size units are “percent interest per percent,” so that when multiplied by the <code>debt_to_income</code> percent or the <code>account_never_delinq_percent</code> the result will be in “percent interest.”</p>
+<ol type="1">
+<li>According to the model, who pays the higher interest rate (on average): people who OWN their home, people who RENT, or people who have a mortgage on their home? How much higher than the lowest-interest rate category.</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>People who rent pay the highest interest rate, a little more than 1 percentage point higher than people who have mortgages. It’s interesting that people who own their homes outright pay (on average) pay about 0.45 percentage points more than people who own outright. This might be because having a mortgage means you also have a credit history.</p>
+</div>
+</div>
+<ol start="2" type="1">
+<li>According to the model, who pays the higher interest rate (on average): people whose income is “not verified,” people whose income is “verified,” or people who have the source of income verified (level: “source verified”)?</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>People whose income is verified pay about 3 percentage points higher interest than people whose income is “not verified.” This seems surprising, but it may be that people who have higher perceived default risk are also the people who are asked to verify their income. Things get complicated when explanatory variables are linked to each other.</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>The coefficients on <code>debt_to_income</code> and <code>account_never_delinq_percent</code> are the smallest numerically. Does this mean that the effects of <code>debt_to_income</code> and <code>account_never_delinq_percent</code> are smaller than the other two explanatory variables in the model? Explain why or why not. (Hint: Look at the distribution of <code>debt_to_income</code> and <code>account_never_delinq_percent</code> to get an idea for the range of values these variables take on.)</li>
+</ol>
+</section>
+<section id="solution-5" class="level2 {callout-note}">
+<h2 class="anchored" data-anchor-id="solution-5">Solution</h2>
+<p><code>debt_to_income</code> varies over about 25 percentage points. The variation in <code>account_never_delinq_percent</code> is about the same, varying from about 80 to 100 percentage points. The effect of the variables (in percent interest) is determined by multiplying the coefficients by the amount of variation in the variables. So, from one extreme to the other, the effect of <code>debt_to_income</code> is about 2 perentage points of interest, and roughly the same for <code>debt_to_income</code>.</p>
+</section>
+<hr>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1">24.3</h2>
+<p>In very simple settings, you don’t need access to the original data: a simple summary will do.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+In draft
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the <code>data/bloodthinner.csv</code> data from <em>CPS</em> chapter 19. Create the table of counts and calculate the effect size/probabilities from that.</p>
+</div>
+</div>
+<hr>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

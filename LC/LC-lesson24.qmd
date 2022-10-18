@@ -80,14 +80,67 @@ mod_effect(mod, ~ group)
 ```
 :::
 
+--------
 
+## 24.2
 
+Effect sizes generally come with *units* and you have to take into account the units in order to know if the effect is important or not.
+
+::: {.callout-warning}
+## In draft
+
+Move the `Loans` data into the `math300` package. But for now ...
+
+```{r}
+Loans <- readr::read_csv("data/loans.csv")
+```
+
+A case in point is provided by the `Loans` data frame, which records dozens of variables on each of 10,000 loans made through the Lending Club. The interest rate at which the loans are made varies substantially from loan to loan. Presumably, higher interest rates reflect a higher perception of risk of default (which would lead to the lender losing his or her money).
+
+Here's a model of the interest rate. (This is for the borrowers who have a low debt-to-income percent; we won't worry about the few very high debt-to-income cases.) We're only interested in this problem with the effect size, which is the same as the coefficients on the model.
+
+```{r}
+mod <- lm(interest_rate ~ homeownership + debt_to_income + 
+            account_never_delinq_percent + verified_income, 
+          data = Loans %>% filter(debt_to_income<50))
+mod %>% confint()
+```
+
+There are two *quantitative* explanatory variables---`debt_to_income` and `account_never_delinq_percent`---both of which are measured in percent. 
+
+There are two *categorical* explanatory variables: `homeownership` and `verified_income`. The levels for `homeownership` are "MORTGAGE" (meaning money is still owed on the house), "OWN" (without a mortgage), and "RENT" (meaning the borrower rents rather than owning a home). The levels for `verified_income` are "Not Verified", "Verified", "Source Verified". 
+
+For the categorical explanatory variables (and the intercept) the effect-size units are "percent interest." For the quantitative explanatory variables, the effect-size units are "percent interest per percent," so that when multiplied by the `debt_to_income` percent or the `account_never_delinq_percent` the result will be in "percent interest."
+
+1. According to the model, who pays the higher interest rate (on average): people who OWN their home, people who RENT, or people who have a mortgage on their home? How much higher than the lowest-interest rate category.
+
+::: {.callout-note}
+## Solution
+
+People who rent pay the highest interest rate, a little more than 1 percentage point higher than people who have mortgages. It's interesting that people who own their homes outright pay (on average) pay about 0.45 percentage points more than people who own outright. This might be because having a mortgage means you also have a credit history.
+:::
+
+2. According to the model, who pays the higher interest rate (on average): people whose income is "not verified," people whose income is "verified," or people who have the source of income verified (level: "source verified")?
+
+::: {.callout-note}
+## Solution
+
+People whose income is verified pay about 3 percentage points higher interest than people whose income is "not verified." This seems surprising, but it may be that people who have higher perceived default risk are also the people who are asked to verify their income. Things get complicated when explanatory variables are linked to each other.
+:::
+
+3. The coefficients on `debt_to_income` and `account_never_delinq_percent` are the smallest numerically. Does this mean that the effects of `debt_to_income` and `account_never_delinq_percent` are smaller than the other two explanatory variables in the model? Explain why or why not. (Hint: Look at the distribution of `debt_to_income` and `account_never_delinq_percent` to get an idea for the range of values these variables take on.)
+
+::: {callout-note}
+## Solution
+
+`debt_to_income` varies over about 25 percentage points. The variation in `account_never_delinq_percent` is about the same, varying from about 80 to 100 percentage points. The effect of the variables (in percent interest) is determined by multiplying the coefficients by the amount of variation in the variables. So, from one extreme to the other, the effect of `debt_to_income` is about 2 perentage points of interest, and roughly the same for `debt_to_income`.
+:::
 
 
 
 --------
 
-## 24.2
+## 24.3
 
 In very simple settings, you don't need access to the original data: a simple summary will do.  
 
