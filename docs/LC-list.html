@@ -182,6 +182,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 
 <p>This list is assembled from the individual-lesson learning check files in the LC/ directory. Make any changes in that directory.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+In draft: Data, temporarily
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Several of the problems refer to datasets in the <code>LC/data</code> subdirectory and documented in <code>LC/data/explain.qmd</code>. These should eventually be moved to the <code>math300</code> package. [Actually, not so many. Several of the examples from <em>CSP</em> refer to csv files, but those data are also available through the <code>openintro</code> or other packages.]</p>
+</div>
+</div>
+<section id="non-technical-resources" class="level2">
+<h2 class="anchored" data-anchor-id="non-technical-resources">Non-technical resources</h2>
+<p>These are resources that can be used for an essay/reading exercise or class discussion.</p>
+<section id="pudding.cool" class="level3">
+<h3 class="anchored" data-anchor-id="pudding.cool"><code>pudding.cool</code></h3>
+<p>Examples:</p>
+<ul>
+<li><a href="https://pudding.cool/2022/08/censorship/">Chinese censorship of the <em>Big Bang Theory</em></a></li>
+<li><a href="https://pudding.cool/2018/08/pockets/">Comparing pocket sizes on women’s and men’s clothing</a></li>
+<li><a href="https://pudding.cool/2022/06/streaming/">How artists get paid from music streaming</a></li>
+<li><a href="https://pudding.cool/2022/04/random/">Randomness and age</a>. Perhaps suitable for Lesson 38 on “false discovery.”</li>
+<li><a href="https://journal-doi.org/10.731/pcbi.1007742/">Coughing and the Academy awards</a> (The link was through &lt;pudding.cool&gt;.)</li>
+<li><a href="https://pudding.cool/2022/02/redraft/">NBA draft</a></li>
+<li><a href="https://pudding.cool/2022/02/plain/">Writing plainly</a></li>
+<li>many others!</li>
+</ul>
+</section>
+<section id="nyt-whats-going-on-with-this-graph" class="level3">
+<h3 class="anchored" data-anchor-id="nyt-whats-going-on-with-this-graph">NYT “What’s going on with this graph?”</h3>
+<p><a href="https://www.nytimes.com/column/whats-going-on-in-this-graph">Link to index</a></p>
+<ul>
+<li><a href="https://www.nytimes.com/2022/10/06/learning/whats-going-on-in-this-graph-oct-19-2022.html">Foreign born people as a fraction of the US Population</a></li>
+<li><a href="https://www.nytimes.com/2022/09/15/learning/whats-going-on-in-this-graph-sept-21-2022.html">Tree rings and droughts</a></li>
+<li>many others!</li>
+</ul>
+</section>
+</section>
 <section id="lesson-19" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-19">Lesson 19</h2>
 </section>
@@ -333,7 +373,7 @@ Attaching package: 'mosaic'</code></pre>
 <pre><code># A tibble: 1 × 2
      vx    vy
   &lt;dbl&gt; &lt;dbl&gt;
-1  3.97  1.03</code></pre>
+1  4.13 0.994</code></pre>
 </div>
 </div>
 <p>Compare this result to the DAG tilde expressions</p>
@@ -410,7 +450,7 @@ lm(formula = y ~ x, data = .)
 
 Coefficients:
 (Intercept)            x  
-      4.004        1.502  </code></pre>
+      4.059        1.486  </code></pre>
 </div>
 </div>
 <p>The intercept corresponds to the additive constant (4) in the <code>y</code> tilde expression. The <code>x</code> coefficient corresponds to the multiplier on <code>x</code> in the tilde expression.</p>
@@ -426,12 +466,44 @@ lm(formula = x ~ y, data = .)
 
 Coefficients:
 (Intercept)            y  
-    -1.8508       0.4638  </code></pre>
+    -1.8453       0.4615  </code></pre>
 </div>
 </div>
 <p>These coefficients do not appear in the <code>dag01</code> tilde expressions.</p>
 <hr>
 </section>
+</section>
+<section id="objective-21.2" class="level2">
+<h2 class="anchored" data-anchor-id="objective-21.2">21.5 (Objective 21.2)</h2>
+<p>You are trying to understand why automobile fuel economy varies from model to model. Using the <code>mtcars</code> data frame (documentation at <code>help("mtcars")</code>) …</p>
+<ol type="i">
+<li>What’s an appropriate choice of a response variable?</li>
+<li>Pick two explanatory variables of interest to you. Build an appropriate model from the data, extracting the <code>coefficients()</code> of the model. Explain what the coefficients mean in everyday terms that your cylinder-head uncle would approve of.</li>
+<li>Which of the other variables are covariates? iv.Pick a covariate that your intuition suggests would be important. Include that covariate in the model from (ii) and say whether the covariate shows up as important in the model coefficients.</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol start="3" type="i">
+<li>All of the other variables are covariates. A covariate is merely a potential explanatory variable that you are not directly interested in. Of course, not all covariates play an important role in the system.</li>
+</ol>
+<hr>
+<section id="obj-21.3" class="level2">
+<h2 class="anchored" data-anchor-id="obj-21.3">21.6 (Obj 21.3)</h2>
+<p>Generate a sample of size <span class="math inline">\(n=100\)</span> from <code>dag03</code>. Use the data to construct a model of <code>y</code> versus <code>x</code>. But instead of using <code>coefficients()</code> to look at the model coefficients, use <code>confint()</code>. While <code>coefficients()</code> reports a single value for each coefficient, <code>confint()</code> reports a plausible interval for coefficients that is consistent with the data.</p>
+<ol type="i">
+<li>For <span class="math inline">\(n=100\)</span>, how wide is the interval reported by <code>confint()</code> on the <code>x</code> coefficient.</li>
+<li>Repeat the process of sampling and modeling, but this time use <span class="math inline">\(n=400\)</span>. How wide is the interval reported by <code>confint()</code> on the <code>x</code> coefficient.</li>
+<li>Again repeat the process of sampling and modeling, this time using <span class="math inline">\(n=1600\)</span>. iv. Does the interval reported depend systematically on the size <span class="math inline">\(n\)</span> of the sample? Describe what pattern you see.</li>
+</ol>
+<hr>
 </section>
 <section id="lesson-22" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-22">Lesson 22</h2>
@@ -471,6 +543,94 @@ Solution
 </div>
 <hr>
 </section>
+<section id="obj-21.3-1" class="level2">
+<h2 class="anchored" data-anchor-id="obj-21.3-1">22.2 (Obj 21.3)</h2>
+<p><strong>Part 1</strong></p>
+<p>You are going to write a <em>procedure</em> that automates the following process:</p>
+<ol type="i">
+<li>sampling from a DAG, specifically <code>dag01</code>, using <code>sample()</code> with a size of 25.</li>
+<li>fitting a model <code>y ~ x</code> using <code>lm()</code></li>
+<li>reporting the coefficient on <code>x</code> using <code>coefficients()</code>.</li>
+</ol>
+<p>Call the procedure <code>proc1()</code>.</p>
+<p>To do this fill in the following template in your Rmd document:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>proc1 <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># your statements go here</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once you have <code>proc1()</code> ready, you can carry out the procedure by giving a simple command:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc1</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Part 2</strong></p>
+<p>Now that you have <code>proc1()</code> ready and have tried it out, you are going to run the procedure 100 times repeatedly and look at the distribution in the <code>x</code> coefficient.</p>
+<p>Of course, you could laboriously give the command <code>proc1()</code> 5 times, and write down the <code>x</code> coefficient each time. Far better, though, to automate the process of repeating and collecting the <code>x</code> coefficient.</p>
+<p>You can do this easily by using <code>do(5)</code> in conjunction with <code>proc1()</code>.</p>
+<ol type="1">
+<li><p>What’s the form in which the coefficients are collected when using <code>do()</code>?</p></li>
+<li><p>Is the <code>x</code> coefficient the same from trial to trial? Explain why or why not.</p></li>
+<li><p>Change your statement to run 100 trials rather than just 5, and to store the collected results in a data frame called <code>Trials</code>. Use appropriate graphics to display the distribution of the <code>x</code> coefficient. Summarize the distribution in a sentence or two.</p></li>
+<li><p>Create a consise summary of the <code>x</code> column of <code>Trials</code> using <code>summarize()</code> with <code>sd(x)</code> to calculate the standard deviation. Compare the size of the standard deviation to the graphical display in (3).</p></li>
+</ol>
+<section id="solution-12" class="level3">
+<h3 class="anchored" data-anchor-id="solution-12">Solution</h3>
+<p><strong>Part 1</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>proc1 <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  Dat <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">25</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  Mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Dat)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>(Mod)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>or, more concisely ::: {.cell}</p>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>proc1 <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">25</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coefficients</span>()</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+</div>
+</div>
+<p><strong>Part 2</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">5</span>) <span class="sc">*</span> <span class="fu">proc1</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Intercept        x
+1  3.873558 1.652985
+2  3.948463 1.318059
+3  4.283925 1.326251
+4  3.942071 1.442837
+5  4.183535 1.446654</code></pre>
+</div>
+</div>
+<ol type="1">
+<li><p>The results of the five trials are collected into a data frame.</p></li>
+<li><p>The <code>x</code> coefficients varies from trial to trial.</p></li>
+</ol>
+<p>Collect 100 trials</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">100</span>) <span class="sc">*</span> <span class="fu">proc1</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="1">
+<li>An appropriate graphical display of the trials:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Trials, <span class="fu">aes</span>(x)) <span class="sc">+</span> <span class="fu">geom_density</span>(<span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">alpha=</span><span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="LC-list_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The <code>x</code> coefficient varies from near 0.5 to near 2.5 in a bell-shaped form.</p>
+<ol start="4" type="1">
+<li>Summarize the trials by the standard deviation.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">s =</span> <span class="fu">sd</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          s
+1 0.2122227</code></pre>
+</div>
+</div>
+<p>The standard deviation is about 1/4 the width of the distribution.</p>
+</section>
 <section id="lesson-23" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-23">Lesson 23</h2>
 </section>
@@ -492,11 +652,381 @@ Solution
 </div>
 <hr>
 </section>
+<section id="section-9" class="level2">
+<h2 class="anchored" data-anchor-id="section-9">23.2</h2>
+<p>In LC 22.2, using <code>do(100)</code>, you displayed the sampling distribution on the <code>x</code> coefficient of the model <code>y ~ x</code> applied to data simulated from <code>dag01</code>. Among other things, you calculated the standard deviation of the sampling distribution. Copy over the <code>proc1()</code> you wrote for LC 22.2 into your Rmd document for this lesson.</p>
+<p>Calculate the standard deviation of the sampling distribution in each of these situations.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Number of trials</th>
+<th>Sample size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>do(100)</code></td>
+<td><code>size=25</code></td>
+</tr>
+<tr class="even">
+<td><code>do(100)</code></td>
+<td><code>size=100</code></td>
+</tr>
+<tr class="odd">
+<td><code>do(100)</code></td>
+<td><code>size=400</code></td>
+</tr>
+<tr class="even">
+<td><code>do(500)</code></td>
+<td><code>size=25</code></td>
+</tr>
+<tr class="odd">
+<td><code>do(500)</code></td>
+<td><code>size=100</code></td>
+</tr>
+<tr class="even">
+<td><code>do(500)</code></td>
+<td><code>size=400</code></td>
+</tr>
+</tbody>
+</table>
+<p>In each case, the standard deviation is somewhat random, since new simulated data is collected from <code>dag01</code> each time. Nonetheless, there is a systematic pattern to how the standard deviation varies with the number of trials and with the sample size.</p>
+<ol type="1">
+<li><p>Describe how the standard deviation of the sampling distribution of the <code>x</code> coefficient varies with sample size. The general trend should be easy to see.</p></li>
+<li><p>Does the standard deviation of the sampling distribution depend on the number of trials?</p></li>
+<li><p>Going back to your results from (1), try to find a simple quantitative relationship that describes how the standard deviation depends on sample size. State that relationship in words.</p></li>
+</ol>
+<hr>
+</section>
+<section id="section-10" class="level2">
+<h2 class="anchored" data-anchor-id="section-10">23.3</h2>
+<p>We’re going to build models of prices of books based on the <code>moderndive::amazon_books</code> data frame. For each model, you will calculate the confidence interval of one or more coefficients in two ways:</p>
+<ol type="i">
+<li>Directly, using <code>confint()</code>.</li>
+<li>Indirectly, using <code>broom::tidy()</code></li>
+</ol>
+<p><strong>Model 1</strong>.</p>
+<ol type="1">
+<li><p>Model <code>list_price</code> versus <code>amazon_price</code>. Calculate the confidence intervals on the intercept and on the <code>amazon_price</code> coefficient.</p></li>
+<li><p>Interpret the <code>amazon_price</code> coefficient in everyday words.</p></li>
+</ol>
+<p>::: {.callout-note} ## Solution to part 1.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(list_price <span class="sc">~</span> amazon_price, <span class="at">data =</span> amazon_books) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                2.5 %   97.5 %
+(Intercept)  3.716532 5.122737
+amazon_price 1.049308 1.127471</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(list_price <span class="sc">~</span> amazon_price, <span class="at">data =</span> amazon_books) <span class="sc">%&gt;%</span> broom<span class="sc">::</span><span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  term         estimate std.error statistic   p.value
+  &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)      4.42    0.357       12.4 5.22e- 29
+2 amazon_price     1.09    0.0199      54.8 2.82e-165</code></pre>
+</div>
+</div>
+<ol type="1">
+<li><p>You can read the confidence interval directly from the <code>confint()</code> report. For the regression report, calculate the confidence interval as the estimate <span class="math inline">\(\pm 2\)</span> times the “standard error.”</p></li>
+<li><p>Just to look at the <code>amazon_price()</code> coefficient, the list price is about 8% higher than the Amazon price. Here, “about” means 5% to 13%. But don’t forget the intercept. The list price is, on average, about $4.50 higher than the 1.08 multiplier on the Amazon price.</p></li>
+</ol>
+<p><strong>Model 2</strong>.</p>
+<ol start="3" type="1">
+<li>Model <code>list_price</code> versus <code>amazon_price</code>, including <code>hard_paper</code> as a covariate.</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(list_price <span class="sc">~</span> amazon_price <span class="sc">+</span> hard_paper, <span class="at">data =</span> amazon_books) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                2.5 %   97.5 %
+(Intercept)  3.028400 4.466996
+amazon_price 1.042536 1.117826
+hard_paperH  1.786977 3.882884</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(list_price <span class="sc">~</span> amazon_price <span class="sc">+</span> hard_paper, <span class="at">data =</span> amazon_books) <span class="sc">%&gt;%</span> broom<span class="sc">::</span><span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  term         estimate std.error statistic   p.value
+  &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)      3.75    0.366      10.3  1.62e- 21
+2 amazon_price     1.08    0.0191     56.5  9.65e-169
+3 hard_paperH      2.83    0.533       5.32 1.93e-  7</code></pre>
+</div>
+</div>
+<p>A hardcover costs about $2 to $4 more than a paperback.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note in draft
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Return to this example in the prediction lesson, to show how the confidence interval and the prediction interval are different.</p>
+<p>Maybe also use it in one of the side-exercises on interaction terms. (The plan is not to strongly emphasize interaction terms but to refer to them in the occasional exercise.)</p>
+</div>
+</div>
+<hr>
+<section id="objective-23.1" class="level2">
+<h2 class="anchored" data-anchor-id="objective-23.1">23.4 (Objective 23.1)</h2>
+<p>We’re going to work with a very short dataset so that you can see directly what <strong>resampling</strong> a data frame does. (Ordinarily, you use resampling on an entire dataset, but here we are trying to make a point about the mechanism of resampling.)</p>
+<ol type="1">
+<li>Create a data frame <code>Five</code> that consists of the first five rows of <code>moderndive::mythbusters_yawn</code>. (Hint: Use <code>head()</code>.) Put the code for doing this into your Rmd homework paper. Note that <code>Five</code> contains the data from subjects 1 through 5.</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>Five <span class="ot">&lt;-</span> mythbusters_yawn <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<ol start="2" type="1">
+<li><p>Use <code>resample()</code> to generate a new data frame from <code>Five</code>. At this point, you are just going to look at the result, processing it “by eye.” How many distinct human subjects are reported in the resampled data? (Your answer will likely differ from your classmates’, since resampling is done at random.)</p></li>
+<li><p>Repeat (2) ten times. Each time, count the number of distinct human subjects.</p>
+<ol type="i">
+<li>Report those ten numbers on your write-up.</li>
+<li>There will usually be one or more subjects repeated in the output. Look at these repeats carefully to check whether the variables have the same value for all the repeats or whether sometimes a repeated subject has different values for <code>group</code> or <code>yawn</code>.</li>
+</ol></li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Most of the time there will be 2, 3, or 4 distinct subject. The balance of the five rows will be repeats of other subjects. When a subject is repeated, the entire row is identical for all instances of that subject.</p>
+</div>
+</div>
+<p><strong>Going further</strong> (optional). It’s pretty easy to automate the process of generating the resample and counting the number of distinct human subjects. Like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>{<span class="fu">resample</span>(Five) <span class="sc">%&gt;%</span> <span class="fu">unique</span>() <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div>
+<p>Using <code>do(1000)</code>, carry out 1000 trials of this process, saving the overall results in a data frame named <code>Trials</code>. What is the mean number of unique human subjects across the 1000 trials? What fraction is this of the five subjects.</p>
+<p>Do the same again, but instead of using <code>Five</code>, use the whole <code>mythbusters_yawn</code> data frame (which has 50 rows). What fraction of the 50 human subjects, on average, shows up in the resamples?</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">1000</span>) <span class="sc">*</span> {<span class="fu">resample</span>(mythbusters_yawn) <span class="sc">%&gt;%</span> <span class="fu">unique</span>() <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()}</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>Trials <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">mn =</span> <span class="fu">mean</span>(result)<span class="sc">/</span><span class="fu">nrow</span>(mythbusters_yawn))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       mn
+1 0.63454</code></pre>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="objective-23.1-1" class="level2">
+<h2 class="anchored" data-anchor-id="objective-23.1-1">23.5 (Objective 23.1)</h2>
+<p>Return to the <code>amazon_books</code> data frame and the model <code>list_price ~ amazon_price</code>. In Exercise 23.3 you used the regression report to calculate the confidence intervals on the intercept and on the <code>amazon_price</code> coefficient. Now you are going to repeat the calculation in a different way, using randomization, a process called “<strong>bootstrapping</strong>”.</p>
+<p>The basic process is to train a model using <em>resampled</em> data, like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(list_price <span class="sc">~</span> amazon_price, <span class="at">data =</span> <span class="fu">resample</span>(amazon_books)) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> (Intercept) amazon_price 
+    2.929949     1.204105 </code></pre>
+</div>
+</div>
+<p>Then, using <code>do(500)</code>, carry out 500 trials, saving the result in a data frame named <code>Trials</code>.</p>
+<p>Process <code>Trials</code> to calculate both the mean and the standard deviation of the intercept and <code>amazon_price</code> columns. How do those results compare to the “standard error” results from the same model (without resampling) as you found in LC 23.3?</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>SOMETHING IS WRONG HERE. The means are about the same as from the regression report (as they should be) but the standard deviations are 3-4 times larger. WHAT GIVES?</p>
+<p>THE PROBLEM IS a handful of books where the Amazon price is very different from the list price, because the book itself is very expensive (e.g.&nbsp;$100). Remedy</p>
+<ol type="1">
+<li>Switch to another data example, maybe doing both the regression report and the bootstrapping in one exercise.</li>
+<li>This is an object lesson in outliers. Since the dollar discount is presumably <em>proportional</em> to the price, we should have used log transforms.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">500</span>) <span class="sc">*</span> {<span class="fu">lm</span>(list_price <span class="sc">~</span> amazon_price, <span class="at">data =</span> <span class="fu">resample</span>(amazon_books)) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()}</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>Trials <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">m1 =</span> <span class="fu">mean</span>(Intercept), </span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">m2 =</span> <span class="fu">mean</span>(amazon_price), </span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">sintercept =</span> <span class="fu">sd</span>(Intercept), </span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">samazon_price =</span> <span class="fu">sd</span>(amazon_price))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        m1       m2 sintercept samazon_price
+1 4.200364 1.106109  0.9378858    0.08167178</code></pre>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</section>
 <section id="lesson-24" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-24">Lesson 24</h2>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Just to help when writing problems
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>24.1 Estimate an effect size from a regression model of one and two variables.</p>
+<p>24.2 Construct a confidence interval on the effect size.</p>
+<p>24.3. Gaming: Evaluate whether confidence interval indicates that estimated effect size is consistent with simulation.</p>
+</div>
+</div>
+<p>SOME IDEAS FOR EXERCISE MODES</p>
+<ol type="a">
+<li><p>Use <code>mod_plot()</code> and look at the slope of lines and offsets. Compare to the model coefficients.</p></li>
+<li><p>Generate data from a DAG and look at the confidence interval on the effect size. Then make new samples and see if the effect size in those samples is consistent with the confidence interval.</p></li>
+<li><p>In text, maybe look at the confidence intervals across new samples and show that they tend to overlap. Only a few of them don’t touch a common line. This is basically just a review of confidence intervals, but why not?</p></li>
+<li><p>Interaction. Show that when there is an interaction term, the effect size (as calculated by <code>mod_effect()</code>) is not constant, as it is for models with purely linear terms.</p></li>
+</ol>
 </section>
-<section id="section-9" class="level2">
-<h2 class="anchored" data-anchor-id="section-9">24.1</h2>
+<section id="lc-24.1" class="level2">
+<h2 class="anchored" data-anchor-id="lc-24.1">LC 24.1</h2>
+<p>The <a href="https://github.com/DS-USAFA/Computational-Probability-and-Statistics/blob/main/data/Stanford_heart_study.csv"><em>Computational Probability and Statistics</em></a> text describes an early study on human-to-human heart transplantation:</p>
+<blockquote class="blockquote">
+<p>“The Stanford University Heart Transplant Study was conducted to determine whether an experimental heart transplant program increased lifespan. Each patient entering the program was designated an official heart transplant candidate, meaning that he was gravely ill and would most likely benefit from a new heart. Some patients got a transplant and some did not. The variable indicates which group the patients were in; patients in the treatment group got a transplant and those in the control group did not. [[Not in data set: Another variable called [MISSING] was used to indicate whether or not the patient was alive at the end of the study.]]”</p>
+</blockquote>
+<p>The data frame is called <code>Transplants</code>. [NEED TO MOVE TO PACKAGE]</p>
+<div class="cell">
+
+</div>
+<p>You’re going to build a model of <code>outcome</code> vs <code>group</code> based on the data in <code>Transplants</code>. The <code>outcome</code> variable has levels <code>"Dead"</code> and <code>"Alive"</code>, that is, it is a two-level categorical variable. Consequently, the model output will be the <strong>probability</strong> that the transplant candidate was alive at the end of the study.</p>
+<ol type="1">
+<li>Build a model <code>outcome == "Alive" ~ group</code> from the <code>Transplants</code> data. Pay close attention to the left-hand side of the tilde expression: it is a calculation that produces a 1 if <code>outcome</code> is <code>"Alive"</code> and zero otherwise. Notice the <strong>double equal signs</strong> and the quotes around <code>"Alive"</code>.</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(outcome <span class="sc">==</span> <span class="st">"Alive"</span> <span class="sc">~</span> group, <span class="at">data =</span> Transplants)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<ol start="2" type="1">
+<li><p>The sole explanatory variable here, <code>group</code> also is categorical. It has levels <code>"Control"</code> and <code>"Treatment"</code>.</p>
+<ol type="i">
+<li>Using <code>eval_mod()</code>, find the probability of being alive at the end of the study for the Control group and for the treatment group.</li>
+<li>The two probabilities in (ii) do not add up to zero. Explain why.</li>
+</ol></li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(mod, <span class="at">group=</span><span class="st">"Treatment"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      group model_output
+1 Treatment    0.3478261</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(mod, <span class="at">group=</span><span class="st">"Control"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    group model_output
+1 Control    0.1176471</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ol start="3" type="1">
+<li><p>Find the effect size of the treatment. All you need is your results from (2)?</p></li>
+<li><p>Use <code>mod_effect(</code>modelname<code>, ~ group)</code> to calculate the effect size.</p>
+<ol type="i">
+<li>Is the result consistent with what you found in (3).</li>
+<li>Explain in everyday language what this effect size means.</li>
+</ol></li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_effect</span>(mod, <span class="sc">~</span> group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     change     group to_group
+1 -0.230179 Treatment  Control</code></pre>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="section-11" class="level2">
+<h2 class="anchored" data-anchor-id="section-11">24.2</h2>
+<p>In very simple settings, you don’t need access to the original data: a simple summary will do.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+In draft
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the <code>data/bloodthinner.csv</code> data from <em>CPS</em> chapter 19. Create the table of counts and calculate the effect size/probabilities from that.</p>
+</div>
+</div>
+<hr>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -514,9 +1044,34 @@ Solution
 </section>
 <section id="lesson-25" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-25">Lesson 25</h2>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Just while in draft
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>25.1 Given a data frame, construct a predictor function for a specified response variable.</p>
+<p>25.2 Use the predictor function to estimate prediction error on a given DAG sample and summarize with root mean square (RMS) error. Relate this to a predition interval.</p>
+<p>25.3 Distinguish between in-sample and out-of-sample prediction estimates of prediction error.</p>
+</div>
+</div>
 </section>
-<section id="section-10" class="level2">
-<h2 class="anchored" data-anchor-id="section-10">25.1</h2>
+<section id="section-12" class="level2">
+<h2 class="anchored" data-anchor-id="section-12">25.2</h2>
+<p>The data frame <code>moderndive::house_prices</code> lists the sales prices of 21,613 houses in King County, Washington (which includes Seattle) sold from May 2014 and May 2015. Often, with price or income data, economists work with the <em>logarithm</em> of the price or income or income-related quantity such as house living area. We are going to do here, but this problem is not about logarithms, so once you create the “logged” data frame, you’ll just be modeling the data using the usual methods.</p>
+<p>To create the “logged” data, add these two new variables to the data frame, which we will call <code>Seattle</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>Seattle <span class="ot">&lt;-</span> moderndive<span class="sc">::</span>house_prices <span class="sc">%&gt;%</span> </span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log_price =</span> <span class="fu">log10</span>(price),</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">log_area =</span> <span class="fu">log10</span>(sqft_living))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="1">
+<li>Build a model of <code>log_price ~ log_area</code> using the <code>Seattle</code> data. Store the model under the name <code>pmod</code>.</li>
+</ol>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -527,7 +1082,79 @@ Solution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>pmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_price <span class="sc">~</span> log_area, <span class="at">data =</span> Seattle)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Imagine that you are moving to Seattle in August 2014. Housing is expensive in the Seattle area, so you might decide to live in a small house, say 750 square feet. The <code>log_area</code> of such a house is 2.87. Using <code>mod_eval()</code>, predict the <code>log_price</code> of such a house. (Note that <code>mod_eval()</code> puts the model output in a column named <code>model_output</code>, not <code>log_price</code>.) In your Rmd file, give the command and show the output. If you’re curious about what the predicted price is in dollars (rather than log-dollars), simply raise 10 to the log-dollar amount. For instance, if the <code>model_output</code> were 5, the dollar amount will be <span class="math inline">\(10^5 = \$100,000\)</span>.</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(pmod, <span class="at">log_area =</span> <span class="fl">2.87</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  log_area model_output
+1     2.87     5.324298</code></pre>
+</div>
+</div>
+<p>In dollar terms, the predicted price is 10<sup>5.324</sup> = 2.1086281^{5}.</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li><p>Repeat (2), but for a house with lots of space: 1500 square feet. The <code>log_area</code> of such a house is 3.18. As in (2), give the command and show the output in your Rmd file.</p></li>
+<li><p>Your budget is $200,000. In log dollars this budget is <code>log10(200000)</code> = 5.3. The predicted price of a 750 square-foot house is somewhat beyond your budget. But you figure that some 750-square foot house will be within your budget. To see if this is likely, look at the <strong>prediction interval</strong> of the house price. You can do this by adding the <code>interval="prediction"</code> to the <code>mod_eval()</code> command. Is your budget (5.3 log dollars) within the prediction interval? Show your command and the result in your Rmd file and also give a sentence stating your conclusion.</p></li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(pmod, <span class="at">log_area =</span> <span class="fl">2.87</span>, <span class="at">interval=</span><span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  log_area model_output    lower   upper
+1     2.87     5.324298 4.993416 5.65518</code></pre>
+</div>
+</div>
+<p>Yeah! Your budget of 5.3 log dollars is near the center of the prediction interval.</p>
+</div>
+</div>
+<ol start="5" type="1">
+<li>On a hunch, you decide to see whether you might find a 1500 square foot (<code>log_area</code> = 3.18) might also fall within the prediction interval. Will it? Show your command, the result, and a sentence interpreting the result.</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(pmod, <span class="at">log_area =</span> <span class="fl">3.18</span>, <span class="at">interval=</span><span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  log_area model_output    lower    upper
+1     3.18     5.583697 5.252851 5.914543</code></pre>
+</div>
+</div>
+<p>Strictly speaking, your budget (5.3 log dollars) is within the prediction interval. But it is very close to the lower bound of 5.25 log dollars. So there will likely be few houses of 1500 square feet within your budget. So plan that the house you will end up purchasing will be somewhere in the range 750-1500 square feet.</p>
 </div>
 </div>
 <hr>
@@ -546,8 +1173,107 @@ Solution
 <li>For small <span class="math inline">\(n\)</span> (say, <span class="math inline">\(n=5\)</span>), how is the prediction band different than for large <span class="math inline">\(n\)</span>?</li>
 </ol>
 </section>
-<section id="section-11" class="level2">
-<h2 class="anchored" data-anchor-id="section-11">26.1</h2>
+<section id="section-13" class="level2">
+<h2 class="anchored" data-anchor-id="section-13">26.1</h2>
+<p>The <code>openintro::bac</code> data frame records an experiment with sixteen student volunteers at Ohio State University who each drank a randomly assigned number of cans of beer (<code>beers</code>). These students were evenly divided between men and women, and they differed in weight and drinking habits. Thirty minutes later, a police officer measured their blood alcohol content (<code>bac</code>) in grams of alcohol per deciliter of blood.</p>
+<p>Construct a model of <code>bac ~ beers</code> using the <code>openintro::bac</code> data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(bac <span class="sc">~</span> beers, <span class="at">data =</span> openintro<span class="sc">::</span>bac)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="1">
+<li>Federal and state laws typically specify a legal upper limit for blood alcohol content of a driver of 0.08%. According to the model function, how many beers corresponds to this upper limit?</li>
+</ol>
+</section>
+<section id="solution-27" class="level2 content-note">
+<h2 class="anchored" data-anchor-id="solution-27">Solution</h2>
+<p>One way to calculate this is to guess at the number of beers, then modify your guess according to whether it’s high or low.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(mod, <span class="at">beers=</span><span class="dv">4</span>) <span class="co"># too low</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  beers model_output
+1     4   0.05915444</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(mod, <span class="at">beers=</span><span class="dv">6</span>) <span class="co"># too high</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  beers model_output
+1     6   0.09508197</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># next guess should be around 5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Another way, for the avid calculus student, is to turn the model into a function, then use <code>Zeros()</code> to find where the output is 0.08.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(mod)</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>mosaicCalc<span class="sc">::</span><span class="fu">Zeros</span>(<span class="fu">f</span>(beers) <span class="sc">-</span> <span class="fl">0.08</span> <span class="sc">~</span> beers, mosaicCalc<span class="sc">::</span><span class="fu">bounds</span>(<span class="at">beers=</span><span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  beers .output.
+  &lt;dbl&gt;    &lt;dbl&gt;
+1  5.16        0</code></pre>
+</div>
+</div>
+<p>Simplest of all, just graph the model function and read backwards from the vertical axis.</p>
+</section>
+<ol start="2" type="1">
+<li>It’s hard to believe that the volunteers in a beer-drinking study who are willing to risk being randomly assigned to drink five or more beers will be representative of a broader group of people. So, we’ll just consider the results to apply to “volunteers.”</li>
+</ol>
+<p>At the number of beers you found in (1), what fraction of volunteers will be above the 0.08 level?</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It’s a good assumption that about half the time the actual value for an individual person will be above the model output. This means that five beers should not be taken as an appropriate guideline—half of the people who follow that guideline will be above the legal limit.</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>A proper guideline should take into account that the goal is to entirely avoid people who follow it being at or above the 0.08 level. To accomplish this absolutely means finding a number of beers with the 100% prediction interval is entirely below 0.08. Unfortunately a prediction interval at a 100% level stretches to infinity, so eliminating <em>any</em> cases having a BAC of 0.08 means an absolute prohibition on drinking. That might be a good idea but, historically, such policies have not been successful in the US.</li>
+</ol>
+<p>To have a non-zero guideline, we have to allow that the guideline will put a <em>small fraction</em> of people above the 0.08 BAC level. Suppose that we decide to use the standard 95% level for the prediction interval. Construct the 95% prediction interval on BAC for each of the inputs 1 to 5 beers. Which number of beers will keep the upper limit of the prediction interval below the 0.08 BAC limit?</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(mod, <span class="at">interval=</span><span class="st">"prediction"</span>, <span class="at">level=</span><span class="dv">1</span>, <span class="at">beers =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  beers model_output        lower      upper
+1     1  0.005263158 -0.044010412 0.05453673
+2     2  0.023226920 -0.024229326 0.07068317
+3     3  0.041190682 -0.004954462 0.08733583
+4     4  0.059154443  0.013770285 0.10453860
+5     5  0.077118205  0.031917122 0.12231929</code></pre>
+</div>
+</div>
+<p>Two beers has the upper limit of the prediction interval below 0.08.</p>
+</div>
+</div>
+<ol start="4" type="1">
+<li>It turns out that 2.55 beers has a prediction interval whose upper limit is at 0.08. Using 2.55 beers as the guideline for staying below 0.08 BAC, what fraction of people who drink 2.55 beers will nonetheless have a BAC above 0.08?</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The 95% prediction interval contains 95% of the results. That puts a fraction of 0.025 above the top of the interval and another 0.025 below the bottom of the interval. We’re concerned only about BAC being too high. So, about 0.025 of people who stick to a limit of 2.55 beers will end up with a DAC above the 0.08 limit.</p>
+</div>
+</div>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -562,13 +1288,12 @@ Solution
 </div>
 </div>
 <hr>
-</section>
 <section id="lesson-27" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-27">Lesson 27</h2>
 <p>This is a QR day.</p>
 </section>
-<section id="section-12" class="level2">
-<h2 class="anchored" data-anchor-id="section-12">27.1</h2>
+<section id="section-14" class="level2">
+<h2 class="anchored" data-anchor-id="section-14">27.1</h2>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -587,17 +1312,19 @@ Solution
 <section id="lesson-28" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-28">Lesson 28</h2>
 </section>
-<section id="section-13" class="level2">
-<h2 class="anchored" data-anchor-id="section-13">28.1</h2>
+<section id="section-15" class="level2">
+<h2 class="anchored" data-anchor-id="section-15">28.1</h2>
 <p>Consider <code>dag01</code>, which shows a simple causal relationship between two variable.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="LC-list_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid" width="672"></p>
+<p><img src="LC-list_files/figure-html/unnamed-chunk-61-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>So far as the size of prediction error is concerned, does it matter whether <code>x</code> is used to predict <code>y</code> or vice versa? Show the models and the results you use to come to your conclusion. ::: {.callout-note} ## Solution</p>
-<p>:::</p>
+</section>
+</div>
+</div>
 <hr>
 </section>
 <section id="lesson-29" class="level2">
@@ -621,16 +1348,16 @@ Solution
 </div>
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag04, c<span class="sc">~</span> <span class="dv">1</span>, c <span class="sc">~</span> d, c<span class="sc">~</span> b <span class="sc">+</span> d, c <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> d, <span class="at">n=</span><span class="dv">50</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag04, c<span class="sc">~</span> <span class="dv">1</span>, c <span class="sc">~</span> d, c<span class="sc">~</span> b <span class="sc">+</span> d, c <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> d, <span class="at">n=</span><span class="dv">50</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.8470443 0.6628943 0.6408581 0.5688379</code></pre>
+<pre><code>[1] 0.9960393 0.7959089 0.7787474 0.6119449</code></pre>
 </div>
 </div>
 <p><code>d</code> seems to block effect of <code>a</code> and <code>b</code> on <code>c</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag04, c<span class="sc">~</span> <span class="dv">1</span>, c <span class="sc">~</span> d, c<span class="sc">~</span> b <span class="sc">+</span> d, c <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> d, <span class="at">n=</span><span class="dv">5</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag04, c<span class="sc">~</span> <span class="dv">1</span>, c <span class="sc">~</span> d, c<span class="sc">~</span> b <span class="sc">+</span> d, c <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> d, <span class="at">n=</span><span class="dv">5</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.4806412 0.5652314 0.5373352 0.4960967</code></pre>
+<pre><code>[1] 0.7334065 0.5090518 0.5074424 0.4193203</code></pre>
 </div>
 </div>
 </div>
@@ -642,13 +1369,13 @@ Solution
 <p>For out-of-sample, when working with new data, it’s not just a matter of being tricked into thinking covariates are useful when they’re not. Using irrelevant covariates can be genuinely harmful to the predictions.</p>
 <p>Compare these in-sample and out-of-sample results.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag07, d <span class="sc">~</span> <span class="dv">1</span>, d <span class="sc">~</span> c, d<span class="sc">~</span> b <span class="sc">+</span> c, d <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">n=</span><span class="dv">4</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag07, d <span class="sc">~</span> <span class="dv">1</span>, d <span class="sc">~</span> c, d<span class="sc">~</span> b <span class="sc">+</span> c, d <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">n=</span><span class="dv">4</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4.689275e-01 4.188891e-01 3.603896e-01 1.416962e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag07, d <span class="sc">~</span> <span class="dv">1</span>, d <span class="sc">~</span> c, d<span class="sc">~</span> b <span class="sc">+</span> c, d <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">n=</span><span class="dv">4</span>, <span class="at">in_sample =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag07, d <span class="sc">~</span> <span class="dv">1</span>, d <span class="sc">~</span> c, d<span class="sc">~</span> b <span class="sc">+</span> c, d <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">n=</span><span class="dv">4</span>, <span class="at">in_sample =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.965495 1.434434 1.641881 1.591050</code></pre>
 </div>
@@ -656,11 +1383,75 @@ Solution
 <p>What do you see in the results that tells you that incorporating irrelevant covariates hurts the out-of-sample predictions?</p>
 <hr>
 </section>
+<section id="lc-29.3" class="level2">
+<h2 class="anchored" data-anchor-id="lc-29.3">LC 29.3</h2>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+In draft
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>openintro::teacher</code>. What’s the <code>base</code> pay difference between a teacher with an MA and a BA degree? What’s a confidence interval on this effect size? How does the confidence interval change if you include <code>years</code> as a covariate.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="lc-29.4" class="level2">
+<h2 class="anchored" data-anchor-id="lc-29.4">LC 29.4</h2>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+In draft
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>openintro::census</code> Predict log personal income based on other variables. Eat variance using the <code>total_family_income</code> variable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log10</span>(total_personal_income) <span class="sc">~</span> <span class="fu">log10</span>(age) <span class="sc">+</span> sex <span class="sc">+</span> marital_status <span class="sc">+</span> <span class="fu">log10</span>(total_family_income), <span class="at">data =</span> openintro<span class="sc">::</span>census <span class="sc">%&gt;%</span> <span class="fu">filter</span>(total_personal_income <span class="sc">&gt;</span> <span class="dv">0</span>, total_family_income <span class="sc">&gt;</span> <span class="dv">0</span>))</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Response: log10(total_personal_income)
+                            Df Sum Sq Mean Sq  F value    Pr(&gt;F)    
+log10(age)                   1  5.938  5.9383  35.6102 6.660e-09 ***
+sex                          1  5.976  5.9758  35.8351 6.006e-09 ***
+marital_status               5  4.302  0.8604   5.1596 0.0001464 ***
+log10(total_family_income)   1 17.620 17.6198 105.6615 &lt; 2.2e-16 ***
+Residuals                  306 51.028  0.1668                       
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_jitter</span>(total_personal_income <span class="sc">~</span> total_family_income <span class="sc">|</span> sex, </span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span>openintro<span class="sc">::</span>census <span class="sc">%&gt;%</span> <span class="fu">filter</span>(total_personal_income <span class="sc">&gt;</span> <span class="dv">3000</span>),</span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">color=</span><span class="sc">~</span>marital_status, <span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(<span class="fu">scale_y_log10</span>(), <span class="fu">scale_x_log10</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 20 rows containing missing values (geom_point).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="LC-list_files/figure-html/unnamed-chunk-66-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>```</p>
+</div>
+</div>
+</section>
 <section id="lesson-30" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-30">Lesson 30</h2>
 </section>
-<section id="section-14" class="level2">
-<h2 class="anchored" data-anchor-id="section-14">30.1</h2>
+<section id="section-16" class="level2">
+<h2 class="anchored" data-anchor-id="section-16">30.1</h2>
 <p>Dags with longer confounding pathways. Is there mixing when leaving out an element in the pathway. Mix up the directions of the arrows and show that the mixing occurs when the covariate is <em>included</em> in the model.</p>
 <p>Regression to the mean example.</p>
 <p>Collider?</p>
@@ -682,8 +1473,8 @@ Solution
 <section id="lesson-31" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-31">Lesson 31</h2>
 </section>
-<section id="section-15" class="level2">
-<h2 class="anchored" data-anchor-id="section-15">31.1</h2>
+<section id="section-17" class="level2">
+<h2 class="anchored" data-anchor-id="section-17">31.1</h2>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -702,8 +1493,8 @@ Solution
 <section id="lesson-32" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-32">Lesson 32</h2>
 </section>
-<section id="section-16" class="level2">
-<h2 class="anchored" data-anchor-id="section-16">32.1</h2>
+<section id="section-18" class="level2">
+<h2 class="anchored" data-anchor-id="section-18">32.1</h2>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -722,8 +1513,8 @@ Solution
 <section id="lesson-33" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-33">Lesson 33</h2>
 </section>
-<section id="section-17" class="level2">
-<h2 class="anchored" data-anchor-id="section-17">33.1</h2>
+<section id="section-19" class="level2">
+<h2 class="anchored" data-anchor-id="section-19">33.1</h2>
 <ol type="1">
 <li>Convert probability to odds and log odds, and vice versa.</li>
 </ol>
@@ -745,8 +1536,8 @@ Solution
 <section id="lesson-34" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-34">Lesson 34</h2>
 </section>
-<section id="section-18" class="level2">
-<h2 class="anchored" data-anchor-id="section-18">34.1</h2>
+<section id="section-20" class="level2">
+<h2 class="anchored" data-anchor-id="section-20">34.1</h2>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -765,8 +1556,8 @@ Solution
 <section id="lesson-35" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-35">Lesson 35</h2>
 </section>
-<section id="section-19" class="level2">
-<h2 class="anchored" data-anchor-id="section-19">35.1</h2>
+<section id="section-21" class="level2">
+<h2 class="anchored" data-anchor-id="section-21">35.1</h2>
 <p>Given some classifier summaries, calculate the false-positive and false-negative rates as well as the sensitivity and specificity</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -786,8 +1577,8 @@ Solution
 <section id="lesson-36" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-36">Lesson 36</h2>
 </section>
-<section id="section-20" class="level2">
-<h2 class="anchored" data-anchor-id="section-20">36.1</h2>
+<section id="section-22" class="level2">
+<h2 class="anchored" data-anchor-id="section-22">36.1</h2>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -805,9 +1596,13 @@ Solution
 </section>
 <section id="lesson-37" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-37">Lesson 37</h2>
+<p>Ideas:</p>
+<ul>
+<li>Use the <code>openintro::mlbbat10</code> baseball data to look at on-base performace as a function of hitting position. How many p-values are being reported from the regression report? Bonferroni adjustment. Compare to ANOVA format which looks at the term as a whole. Also look at the large number of indicators of batting performance. How many different tests could we perform?</li>
+</ul>
 </section>
-<section id="section-21" class="level2">
-<h2 class="anchored" data-anchor-id="section-21">37.1</h2>
+<section id="section-23" class="level2">
+<h2 class="anchored" data-anchor-id="section-23">37.1</h2>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -826,8 +1621,8 @@ Solution
 <section id="lesson-38" class="level2">
 <h2 class="anchored" data-anchor-id="lesson-38">Lesson 38</h2>
 </section>
-<section id="section-22" class="level2">
-<h2 class="anchored" data-anchor-id="section-22">38.1</h2>
+<section id="section-24" class="level2">
+<h2 class="anchored" data-anchor-id="section-24">38.1</h2>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
