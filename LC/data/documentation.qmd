@@ -7,3 +7,27 @@ title: "Documentation for data sets"
 - `blood_thinner.csv" : From *CPS*. "Patients who underwent CPR for a heart attack and were subsequently admitted to a hospital^["Efficacy and safety of thrombolytic therapy after initially unsuccessful cardiopulmonary resuscitation: a prospective clinical trial." The Lancet, 2001.] were randomly assigned to either receive a blood thinner (treatment group) or not receive a blood thinner (control group). The outcome variable of interest was whether the patient survived for at least 24 hours. There were 50 patients in the experiment who did not receive a blood thinner and 40 patients who did."
 
 - `loans.csv` From *CPS* §30.5.1: "The Lending Club data set represents thousands of loans made through the Lending Club platform, which is a platform that allows individuals to lend to other individuals. Of course, not all loans are created equal. Someone who is essentially a sure bet to pay back a loan will have an easier time getting a loan with a low interest rate than someone who appears to be riskier. And for people who are very risky? They may not even get a loan offer, or they may not have accepted the loan offer due to a high interest rate. It is important to keep that last part in mind, since this data set only represents loans actually made, i.e. do not mistake this data for loan applications!"
+
+- `medGPA.csv` [actually, from `Stat2Data` package] from CPS §32.6: "The file MedGPA.csv in the data folder has information on medical school admission status and GPA and standardized test scores gathered on 55 medical school applicants from a liberal arts college in the Midwest."
+
+The variables are:
+
+- Accept Status: A=accepted to medical school or D=denied admission
+- Acceptance: Indicator for Accept: 1=accepted or 0=denied
+- Sex: F=female or M=male
+- BCPM: Bio/Chem/Physics/Math grade point average
+- GPA: College grade point average
+- VR: Verbal reasoning (subscore)
+- PS: Physical sciences (subscore)
+- WS: Writing sample (subcore)
+- BS: Biological sciences (subscore)
+- MCAT: Score on the MCAT exam (sum of CR+PS+WS+BS)
+- Apps: Number of medical schools applied to
+
+1. Build a logistic regression model to predict if a student where denied admission from GPA and Sex.
+2. Generate a 95% confidence interval for the coefficient associated with GPA.
+3. Fit a model with a polynomial of degree 2 in the GPA. Drop Sex from the model. 4. Does a quadratic fit improve the model?
+5. Fit a model with just GPA and interpret the coefficient.
+6. Try to add different predictors to come up with your best model.
+7. Generate a confusion matrix for the best model you have developed.
+8. Find a 95% confidence interval for the probability a female student with a 3.5 GPA, a BCPM of 3.8, a verbal reasoning score of 10, a physical sciences score of 9, a writing sample score of 8, a biological score of 10, a MCAT score of 40, and who applied to 5 medical schools."
