@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Kaplan">
+
+<title>Spring 2023 Math 300 Revisions - Additional LC for first half of course</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html">Proposal</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../lessons.html">Lessons</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../layout.html">Site layout</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../objective-list.html">Objectives</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../LC-list.html">LCs</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Additional LC for first half of course</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Kaplan </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="tidying-data" class="level2">
+<h2 class="anchored" data-anchor-id="tidying-data">Tidying data</h2>
+<p>The US Department of Transportation has a program called the Fatality Analysis Reporting System. FARS has a web site which publishes data. Figure <a href="#fig-bear-ride-pants-1">Figure&nbsp;1</a> shows partial screen shot of their web page.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-bear-ride-pants-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/fars-1.png" class="img-fluid figure-img" width="368"></p>
+<p></p><figcaption class="figure-caption">Figure 1: National statistics from the US on motor0-vehicle accident-related fatalities. Source: <a href="https://www-fars.nhtsa.dot.gov/Main/index.aspx" class="uri">https://www-fars.nhtsa.dot.gov/Main/index.aspx</a>.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>For several reasons, the table is not in tidy form.</p>
+<ol type="1">
+<li><p>Some of the rows serve as headers for the next several rows, but don’t contain any data. Identify several of those headers. -A- “Motor vehicle traffic crashes”, “Traffic crash fatalities”, “Vehicle occupants”, “Non-motorists”, “Other national statistics”, “National rates: fatalities”</p></li>
+<li><p>In tidy data, all the entries in a column should describe the same kind of quantity. You can see that all of the columns contain numbers. But the numbers are not all the same kind of quantity. Referring to the 2016 column:</p>
+<ol type="a">
+<li>What kind of thing is the number 34,439? -A- A number of crashes</li>
+<li>What kind of thing is 18,610? -A- A number of drivers</li>
+<li>What kind of thing is 1.18? -A- A rate: fatalities per 100-million miles.</li>
+</ol></li>
+<li><p>In tidy data, there is a definite unit of observation that is the same kind of thing for every row. Give an example of two rows that are not the same kind of thing. -A- For example, “Registered vehicles” and “Licensed drivers”. The first is a count of cars, the second a count of drivers.</p></li>
+<li><p>Identify a few rows that are summaries of other rows. Such summaries are not themselves a unit of observation. -A- “Sub Total1”, “Sub Total2”, “Total**”</p></li>
+</ol>
+<hr>
+</section>
+<section id="graphics" class="level2">
+<h2 class="anchored" data-anchor-id="graphics">Graphics</h2>
+<p>The three graphs below show the distribution of weights broken down by sex. The violin layer is the same in each graph. Each graph has a coverage interval at one of these levels: 25% 50%, 80%, 95%. Which graph has which coverage interval? Which of the listed coverage intervals is not shown in any graph?</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'mosaic':
+  method                           from   
+  fortify.SpatialPolygonsDataFrame ggplot2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+The 'mosaic' package masks several functions from core packages in order to add 
+additional features.  The original behavior of these functions should not be affected by this.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'mosaic'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:Matrix':
+
+    mean</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:ggplot2':
+
+    stat</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:dplyr':
+
+    count, do, tally</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    binom.test, cor, cor.test, cov, fivenum, IQR, median, prop.test,
+    quantile, sd, t.test, var</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    max, mean, min, prod, range, sample, sum</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="first-half-LC_files/figure-html/bee-sell-blanket-1-1.png" class="img-fluid" style="width:30.0%"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="first-half-LC_files/figure-html/bee-sell-blanket-1-2.png" class="img-fluid" style="width:30.0%"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="first-half-LC_files/figure-html/bee-sell-blanket-1-3.png" class="img-fluid" style="width:30.0%"></p>
+</div>
+</div>
+<hr>
+</section>
+<section id="violin-plots" class="level2">
+<h2 class="anchored" data-anchor-id="violin-plots">Violin plots</h2>
+<p>The graph below is a violin plot. Using a pencil and your intuition, add a few dozen dots to the graphic as they would appear in a data layer superimposed on the violin layer. The dots should be jittered and be consistent with the shape of the violins.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="first-half-LC_files/figure-html/cheetah-hit-plate-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Where the violin is wider, there is a greater concentration of dots. In a jittered plot, the exact horizontal position of the dots has no significance.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="first-half-LC_files/figure-html/cheetah-hit-plate-answer-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="untidy-data" class="level2">
+<h2 class="anchored" data-anchor-id="untidy-data">Untidy data</h2>
+<p>List what’s not tidy about this table.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="images/planet-info.png" class="img-fluid" width="680"></p>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Units ought to be in the codebook.</li>
+<li>The “length of year” variable is in a mixture of units. Some rows are (Earth) days, others are (Earth) years.</li>
+<li>The numbers have commas, which are intended for human consumption. Data tables are for machine consumption and the commas are a nuisancwe.</li>
+<li>The <span class="math inline">\(\frac{1}{4}\)</span> in the “length of year” column is not a standard computer numeral. Write 365.25 instead.</li>
+</ul>
+</div>
+</div>
+<hr>
+</section>
+<section id="calculating-new-variables-from-old." class="level2">
+<h2 class="anchored" data-anchor-id="calculating-new-variables-from-old.">Calculating new variables from old.</h2>
+<p>TITLE GOES HERE: Often, a data scientist needs to calculate some new quantity from the quantities already available in a data table. Proper data computing software makes this easy to do in a manner that is clear even to an inexperienced reader. For example, the following statement will take a data frame named <code>Fatality_data</code> with the structure of <span class="citation" data-cites="tab-pine-hit-pants">@tab-pine-hit-pants</span> and augment it with a new variable <code>total_fatalities</code> that gives the total number of fatalities in each year</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>FARS <span class="ot">&lt;-</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  FARS <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">total_fatalities =</span> drivers <span class="sc">+</span> passengers <span class="sc">+</span> unknown)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 14%">
+<col style="width: 10%">
+<col style="width: 7%">
+<col style="width: 17%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">year</th>
+<th style="text-align: right;">crashes</th>
+<th style="text-align: right;">drivers</th>
+<th style="text-align: right;">passengers</th>
+<th style="text-align: right;">unknown</th>
+<th style="text-align: right;">miles</th>
+<th style="text-align: right;">resident_pop</th>
+<th style="text-align: right;">total_fatalities</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2016</td>
+<td style="text-align: right;">34439</td>
+<td style="text-align: right;">18610</td>
+<td style="text-align: right;">6407</td>
+<td style="text-align: right;">79</td>
+<td style="text-align: right;">3174</td>
+<td style="text-align: right;">323128</td>
+<td style="text-align: right;">25096</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2015</td>
+<td style="text-align: right;">32539</td>
+<td style="text-align: right;">17613</td>
+<td style="text-align: right;">6213</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">3095</td>
+<td style="text-align: right;">320897</td>
+<td style="text-align: right;">23897</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2014</td>
+<td style="text-align: right;">30056</td>
+<td style="text-align: right;">16470</td>
+<td style="text-align: right;">5766</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">3026</td>
+<td style="text-align: right;">318563</td>
+<td style="text-align: right;">22307</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The <code>mutate()</code> function does the work of creating the new variable. The text between the opening parenthesis and the corresponding closing parenthesis is the <em>argument</em> to <code>mutate()</code>, which gives the specifics of what to do.</p>
+<p>For each of the following, write the argument for a <code>mutate()</code> statement that will produce the desired new variable. You can assume that <code>total_fatalities</code> is already one of the existing variables. (We created it above!)</p>
+<ol type="a">
+<li>Fatalities per crash. ::: {.callout-note} ##Solution</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fatalities_per_crash <span class="ot">=</span> total_fatalities <span class="sc">/</span> crash</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>:::</p>
+<ol start="2" type="a">
+<li>Fatalities per <em>million</em> vehicle miles. ::: {.callout-note} ##Solution</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fatalities_per_distance <span class="ot">=</span> total_fatalities <span class="sc">/</span> (miles <span class="sc">*</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Divide the total number of fatalities by the number of vehicle miles travelled.</p>
+<p>Why the multiplication by <code>1000</code>? Recall that <code>miles</code> is in <em>billions</em> of vehicle miles, while we want the units of <code>fatalities_per_distance</code> to be fatalities per <em>million</em> vehicle miles. The <code>1000</code> performs the conversion from billions to millions. :::</p>
+<ol start="3" type="a">
+<li>Number of crashes per <em>million</em> vehicle miles. ::: {.callout-note} ##Solution</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>crashes_per_distance <span class="ot">=</span> crashes <span class="sc">/</span> (miles <span class="sc">*</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>::: d.&nbsp;Referring back to the original data shown in Figure @ref(fig:bear-ride-pants-1), you can see that the calculation of total fatalities in the introduction to this problem left out the number of motorcyclist and nonmotorist fatalities. Modify the calculation of total fatalities to include these, assuming they are represented by <code>motorcyclist</code> and <code>nonmotorist</code> respectively. ::: {.callout-note} ##Solution</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>total_fatalities <span class="ot">=</span> drivers <span class="sc">+</span> passengers <span class="sc">+</span> unknown <span class="sc">+</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  motorcyclist <span class="sc">+</span> nonmotorist</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>:::</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

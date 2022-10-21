@@ -75,3 +75,70 @@ Strictly speaking, your budget (5.3 log dollars) is within the prediction interv
 
 --------
 
+## 25.XX
+
+You are a bus dispatcher in New York City. The Department of Education bus logistics office has called to say that a school bus has broken down and the students need to be offloaded onto a functioning bus to take them to school. Unfortunately, the DOE officer didn't tell you how many students are on the bus. You need to make a quick prediction in order to decide what kind and how many busses you will need for the pickup.
+
+You go to the NYC OpenData site bus breakdown page to get the historical data on how many students are on the bus. There are more than 200,000 bus events listed, each one of them including the number of students. You make a jitter/violin plot of the number of students on each of the 200,000 busses.
+
+```{r cheetah-lose-saucer-1, echo = FALSE}
+Simple <- math300::Bus_delays %>% 
+  select(nstudents = Number_Of_Students_On_The_Bus) %>%
+  mutate(pos = " ") 
+Simple2 <- Simple %>%  
+  filter(nstudents > 0) %>%
+  mutate(nstudents = ifelse(nstudents > 20, 21, nstudents))
+gf_violin(nstudents ~ pos, data = Simple, fill = "black", alpha = 0.3 ) %>%
+  gf_labs(y = "Number of students on bus", x = "", title = "Raw data") %>%
+  gf_jitter(nstudents ~ pos, data = Simple %>% filter(nstudents > 30), alpha = 0.6, size = 0.5, width = 0.1)
+```
+
+a. The violin plot looks like an upside-down T. Explain what's going on. (Hint: How many students fit on a school bus?) -A- As very often happens, the data file contains data-entry or other mistakes producing outliers. Almost all of the 200,000 bus incidents fall into the horizontal line near zero. There are only 164 with a number above 100 students. In the US, the legal maximum capacity for a school bus is 72 students.
+
+
+One of the ways of handling outliers is to delete them from the data. A softer way is to trim the outliers, giving them a value that is distinct but not so far from the mass of values. The figure below shows a violin plot where any record where the number of students is greater than 20 is trimmed to 21. 
+```{r cheetah-lose-saucer-2, echo = FALSE}
+gf_violin(nstudents ~ pos, data = Simple2, fill = "black", bw = 0.1 ) %>%
+  gf_labs(y = "Number on bus", x = "", title = "Trimmed data")
+```
+
+b. If you sent a small school bus (capacity 14), what fraction of the time would you be able to handle all the students on the school bus? -A- Only about 5% of the area of the violin plot is above 14.
+
+c. If you sent one 14-passenger school bus with another on stand-by (just in case the first bus doesn't have sufficient capacity), what fraction of the time could you handle all the students?
+
+-A- It's tempting to say that the 2 x 14 = 28 passenger capacity could handle all the cases, but remember, the cases at 21 stand for "21 or more passengers." We can't tell from the violin plot how many of those have more than 28 students on board.
+
+d. Notice that the violin plot is jagged. Explain why. -A- The number of passengers is an integer, e.g. 1, 2, 3, .... It can't be a number like 4.5. 
+
+--------
+
+## 25.YYY
+
+At a very large ballroom dance class, you are to be teamed up with a randomly selected partner. There are 200 potential partners. The figure below shows their heights.
+
+From the data plotted, calculate a 95% prediction interval on the height of your eventual partner. (Hint: You can do this by counting.)
+
+```{r fish-eat-vase-1, echo = FALSE}
+set.seed(101)
+Data <- data.frame(height = rnorm(200, mean = 67, 4 ), pos = " ")
+gf_jitter(height ~ pos, data = Data, width = 0.2, alpha = 0.6, seed = 200) %>%
+  gf_violin(height ~ pos, fill = "blue", alpha = 0.2, color = NA) %>%
+  gf_labs(y = "Height (inches)", x  = "")
+```
+
+::: {.callout-note}
+## Solution
+59 to 74 inches.
+
+Since there are 200 points, a 95% interval should exclude the top five cases and the bottom five cases. So draw the bottom boundary of  the interval just above the bottom five points, and the top boundary just below the top five points.
+
+```{r fish-eat-vase-2, echo = FALSE}
+Stats <- df_stats(height ~ pos, data = Data, coverage(0.95))
+gf_jitter(height ~ pos, data = Data, width = 0.2, alpha = 0.6, seed = 200) %>%
+  gf_violin(height ~ pos, fill = "blue", alpha = 0.2, color = NA) %>%
+  gf_errorbar(lower + upper ~ pos, data = Stats, inherit=FALSE) %>%
+  gf_labs(y = "Height (inches)", x  = "")
+```
+:::
+
+--------

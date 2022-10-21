@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-10-14">
+<meta name="dcterms.date" content="2022-10-20">
 
 <title>Spring 2023 Math 300 Revisions - Math 300R Lesson r (lesson &lt;- 21) Reading Notes</title>
 <style>
@@ -119,6 +119,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -169,7 +170,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Math 300R Lesson 21 Reading Notes</h1>
-<p class="subtitle lead">title goes here</p>
+<p class="subtitle lead">DAGs, noise, and simulation</p>
 </div>
 
 
@@ -186,7 +187,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 14, 2022</p>
+      <p class="date">October 20, 2022</p>
     </div>
   </div>
     
@@ -292,6 +293,52 @@ attr(,"class")
 <p>By default, the “size” of the random noise produced by <code>eps()</code> is 1. Some DAGs, such as <code>dag01</code>, explicitly specify the size of the noise. For instance, <code>eps(2)</code> means the noise will have size 2, <code>eps(0.17)</code> means the noise will have size 0.17.</p>
 </div>
 </div>
+</section>
+<section id="simple-dags" class="level2">
+<h2 class="anchored" data-anchor-id="simple-dags">Simple DAGs</h2>
+<p>A DAG is a <strong>hypothesis</strong>, a statement that might or might not be true. DAGs are part of the statistical apparatus for thinking responsibly about <strong>causality</strong>. You use a DAG—or, potentially, multiple DAGs—when the issue of what causes what is relevant to your work.</p>
+<p>When there are only two variables involved in the system under consideration—we’ll call them X and Y for simplicity—there are only two possible DAGs:</p>
+<p><span class="math display">\[X \rightarrow Y\ \ \ \ \ \text{and}\ \ \ \ \ X \leftarrow Y\]</span></p>
+<p>But there are additional DAG possibilities once we accept that there might be other factors that positioned in the middle of the relationship between X and Y, for instance a variable C.</p>
+<p><span class="math display">\[X \rightarrow C \rightarrow Y \ \ \ \ \ \text{and}\ \ \ \ \
+X \leftarrow C \leftarrow Y \ \ \ \ \ \text{and}\ \ \ \ \
+X \leftarrow C \rightarrow Y \ \ \ \ \ \text{and}\ \ \ \ \
+X \rightarrow C \leftarrow Y\]</span></p>
+<p>Actually, there are many other configurations of DAGs involving three variables. To keep things simple, we’ll restrict things to DAGs where X might or might not cause Y, but Y never causes X. (We don’t lose anything from this restriction because you get to make the choice of what real-world variable correspond to X and which one to Y.) <a href="#fig-ten-triples">Figure&nbsp;2</a> shows the 10 configurations of 3-variable DAGs where Y doesn’t cause X.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-ten-triples" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="www/ten-triples.png" class="img-fluid figure-img" width="167"></p>
+<p></p><figcaption class="figure-caption">Figure 2: Ten DAG configurations involving three variables X, Y, and C and where there is no causal arrow between Y and X.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This enumeration of the ten configurations is useful for two reasons. First, the appropriate ways of analyzing data to quantify the causal links depends on which DAGs are hypothesized to be relevant. (We’ll get to this matter in Lesson 30.) Second, however strong may be your conviction that a particular DAG describes the way the world works, it’s worthwhile to look at each of the other DAGs as possibilities and try to imagine scenarios where they might be an appropriate choice. This exercise can reveal alternative reasonable hypotheses about the real-world connections among variables.</p>
+<p>The behavior of such three-variable DAGs is sufficiently rich that we won’t have to systematically enumerate the possibilities for four- and higher-variable DAGs. On the other hand, in framing hypotheses about connections in the real world, you will often have occasion to connect multiple factors.</p>
+<p>Always keep in mind that DAGs never involve loops (“cycles”). <strong>?@fig-two-cycles</strong> shows examples of connections that have cycles. The middle A or DAG stands for “acyclic,” that is, without cycles.</p>
+<div class="cell quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-two-cycles-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="www/three-RLR.png" class="img-fluid figure-img" width="99"></p>
+<p></p><figcaption class="figure-caption">Figure 3: Examples of networks with cycles. These are <strong>not</strong> DAGs.</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-two-cycles-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="www/three-CX-loop.png" class="img-fluid figure-img" width="99"></p>
+<p></p><figcaption class="figure-caption">Figure 4: Examples of networks with cycles. These are <strong>not</strong> DAGs.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>What about systems that involve feedback, for instance an economic model where today’s prices determine tomorrow’s supply which in turn shapes the prices on the next day? Keep in mind that “today’s prices” and “the next day’s prices” are different variables and therefore not the same node in a directed graph.</p>
 
 
 </section>

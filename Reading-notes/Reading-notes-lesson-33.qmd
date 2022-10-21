@@ -41,3 +41,51 @@ Option b) Lose $0 if a fair coin comes up heads and lose $1000 if tails.
 "Prospect theory", Kahneman and Tversky (1979) "Prospect theory: an analysis of decisions under risk," *Econometrica* 47(2):263-291 [link to paper](www/kahneman-tversky-79.pdf)
 
 
+::: {.callout-note}
+## Example
+
+A subtle modification to the linear model architecture allows the modeller to guarantee that the output will be between zero and one. The modified architecture, called "**logistic regression**", is therefore well suited to modeling categorical response variables, where the model output will be interpreted as a probability.
+
+@fig-w-logistic shows a logistic model of survival as a function of age and smoking status. Notice that in the logistic model, the effect of smoking on survival is negative, particularly for people around age 50. The logistic architecture provides an intrinsic flexibility which avoids the undue influence of the very young and very old, for whom survival is close to 100% or 0 respectively *regardless* of smoking status.
+
+```{r echo = FALSE}
+#| label: fig-w-logistic
+#| fig-cap: A simple logistic model of survival versus age and smoking status. 
+wmod_glm1 <- glm(outcome=="Alive" ~ age + smoker, data = mosaicData::Whickham, family = binomial)
+mod_plot(wmod_glm1) %>%
+  gf_lims(y = c(-.1,1.1)) %>%
+  gf_refine(scale_y_continuous(breaks=c(0,.2,.4,.6,.8,1.0))) %>%
+  gf_labs(y = "Probability of survival for 20 years") %>%
+  gf_jitter(as.numeric(outcome=="Alive") ~ age, color = ~ smoker, data = mosaicData::Whickham, alpha = 0.2, height = 0.1)
+```
+
+:::
+
+
+::: {.callout-note}
+## Example: Fraction attributable
+
+US Federal law forbids employment discrimination based on age. (There are some exceptions, such as air-traffic controllers, whose mandatory retirement age is 56). In a discrimination lawsuit, data on who was and who was not laid-off was used to construct a model of the probability of layoff. The effect size is, as usual for a probability model, expressed in log odds.
+
+- baseline: risk of 20%, so log odds of of -1.4.
+- age over 50, add log odds of 1 ± 0.3
+- software engineer, subtract log odds of 0.5 ± 0.25
+- paid different from company average, subtract log odds of 0.2 ± 0.1 per $10,000 high than company average.
+
+These estimates come from a logistic regression model `laid_off ~ over50 +  software_engineer + pay_above_average`.
+
+1. For a laid-off employee over 50, what is the fraction attributable to age?
+
+::: {.callout-note} 
+## Solution
+The baseline risk of being laid off is 20%. For the employee aged over 50 years, the log odds of the risk is -1.4 + 1 ± 0.3, or -0.7 to -0.1. Translating these log odds into probabilities gives a risk of  33% to 47%, with the range reflecting the uncertainty in the  effect size from the model. The estimated relative risk (risk ratio) for the employees over 50 ranges from 33/20 to 47/20, that is, from 1.65 to 2.35. The attributable fraction is $(RR - 1) / RR$ and therefore ranges from (1.65 - 1)/1.65 to (2.35 - 1) / 2.35 or 40% to 57%. 
+:::
+
+2. What fraction of all layoffs can be attributed to age over 50? (Population attributable fraction.) Assume that one-third of the employees are over 50.
+
+::: {.callout-note}
+## Solution
+
+:::
+
+:::

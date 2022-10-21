@@ -126,3 +126,27 @@ ii. Repeat the process of sampling and modeling, but this time use $n=400$. How 
 iii. Again repeat the process of sampling and modeling, this time using $n=1600$. iv. Does the interval reported depend systematically on the size $n$ of the sample? Describe what pattern you see.
 
 --------
+
+## 21.7
+
+A short report from the British Broadcasting Company (BBC) was headlined "[Millennials' pay 'scarred' by the 2008 banking crisis](https://www.bbc.com/news/business-47106711)."
+
+> Pay for workers in their 30s is still 7% below the level at which it peaked before the 2008 banking crisis, research has suggested. The Resolution Foundation think tank said people who were in their 20s at the height of the recession a decade ago were worst hit by the pay squeeze. It suggested the crisis had a lasting "scarring" effect on their earnings.
+
+> The foundation said people in their 30s who wanted to earn more should move to a different employer. The research found those who stayed in the same job in 2018 had real wage growth of 0.5%, whereas those who found a different employer saw an average increase of 4.5%.
+
+The phrase "should move" in the second paragraph of the report suggests causation. A corresponding DAG would look like this:
+
+- move_to_new_employer $\rightarrow$ higher_wage
+
+For the sake of discussion, let's add two more variables to the DAG:
+
+- effectiveness---standing for how productive the employee is.
+- qualifications---standing for whether the employee is a good candidate attractive to potential new employers.
+
+Construct a DAG with all four variables that represent plausible causal connections between them. The DAG should not contain a direct causal connection  between move_to_new_employer and higher_wage.
+
+
+If the world worked this way, would it necessarily be good advice to switch to a new employer with the aim of earning a higher wage?
+
+

@@ -11,10 +11,164 @@ source("../_startup.R")
 
 ## 34.1
 
+```{r ant-take-room-default, include = FALSE}
+library(tibble)
+Our_data <- tribble(
+  ~ species, ~ size, ~ color,
+  "A", "large", "reddish",
+  "B", "large", "brownish",
+  "B", "small", "brownish",
+  "A", "large", "brownish", 
+)
+Table1 <- tribble(
+  ~ size, ~ prop_of_A,
+  "large", "",
+  "small", "",
+)
+Table2 <- tribble(
+  ~ color, ~ prop_of_A,
+  "reddish", "", 
+  "brownish", "", 
+)
+Table3 <- tribble(
+  ~ color, ~ size, ~ prop_of_A,
+  "reddish", "large", "", 
+  "reddish", "small", "", 
+  "brownish", "large", "", 
+  "brownish", "small", "", 
+)
+```
+
+To illustrate how stratification is used to build a classifier, consider this very simple, unrealistically small, made-up data frame listing observations of animals:
+
+
+```{r ant-take-room-1, echo = FALSE}
+knitr::kable(Our_data)
+```
+
+You are going to build classifiers using the data. The output of the classifier will be the probability that the species is A. The classifier itself will be a simple table: each row lists the different levels of the explanatory variable(s) the the classifier output (as a probability that the species is A).
+
+1. Use just `size` as an explanatory variable. Since there are two levels for size, the classifier can take the form of a simple table, giving the proportion of rows for each of the two sizes. Fill in the table to reflect the data. 
+
+
+```{r ant-take-room-2, echo = FALSE}
+knitr::kable(Table1)
+```
 ::: {.callout-note}
 ## Solution
+There are three rows where the size is large, of which one is species A. The classifier output is thus 2/3 for large.
 
+Similarly, there is only one row where the size is small, none of which are species A. The classifier output is 0/1 for small.
 :::
+
+2. Repeat (1), but instead of "size", use just "color" as an explanatory variable.
+```{r ant-take-room-3, echo = FALSE}
+knitr::kable(Table2)
+```
+
+::: {.callout-note}
+## Solution
+There are three rows where the color is brownish, of which two are species A. The classifier output is thus 1/3 for brownish.
+
+There is only one row where the color is reddish, and it is species A. The classifier output is 1/1 for reddish.
+:::
+
+3. Again build a classifier, but use both color and size as explanatory variables.
+
+```{r ant-take-room-4, echo = FALSE}
+knitr::kable(Table3)
+```
+
+::: {.callout-note}
+## Solution
+There is just one row in which color is reddish and size is large, and it is species A. The classifier output is thus 1/1.
+
+There are two rows in which color is brownish and size is large, one of which is species A. The classifier output is thus 1/2.
+
+There is one row in which color is brownish and size is small. It is species B. The classifier output is 1/1.
+
+There are no rows in which color is reddish and size is small. A classifier output of 0/0 is meaningless. So our classifier has nothing to say for these inputs. 
+:::
+
+4. Finally, build the "null model", a no-input classifier. This means there is just one group, which has all four rows. -A- Of the four rows, two are species A, so the classifier output is 2/4.
+
+
+--------
+
+## 34.2
+
+The graph below shows data on marital status versus age from National Health and Nutrition Evaluation Survey data. You can see that the probability of the various possibilities are a function of age.
+
+```{r echo=FALSE}
+library(kernlab)
+library(NHANES)
+
+NHANES_small <- 
+  NHANES %>%
+  dplyr::select(Age, Gender, MaritalStatus) %>%  
+  mutate(MaritalStatus = as.character(MaritalStatus)) %>% 
+  mutate(MaritalStatus = 
+           ifelse(is.na(MaritalStatus), "NeverMarried", MaritalStatus))  %>%
+  mutate(MaritalStatus = 
+           factor(MaritalStatus, 
+                  levels = c("NeverMarried", "LivePartner",
+                             "Married", "Separated", "Divorced", "Widowed"))) 
+gf_jitter(MaritalStatus ~ Age | Gender, 
+          data = NHANES_small %>% filter(MaritalStatus %in% c("Widowed", "NeverMarried", "Married")), 
+          alpha=0.1)
+```
+
+A very simple classifier can be constructed just by indicating at each age which marital status is the most likely, as seen in the figure below.
+
+
+```{r ash-chew-kitchen-0, echo = FALSE, cache=TRUE, message=FALSE}
+mod1 <- kernlab::ksvm(MaritalStatus ~ Age + Gender, data = NHANES_small, prob.model = TRUE)
+Eval_at <- unique(NHANES_small)
+Eval_at$response <- predict(mod1, newdata = Eval_at)
+gf_line(response ~ Age | Gender, data = Eval_at, size = 2) %>%
+  gf_labs(y = "Model output: Marital Status")
+```
+
+A classifier output should be a probability, not a categorical level. On the blank graph below, sketch out a plausible form for probability vs age for each of three categorical levels shown in the above plot.  (Hint: At an age where, say, "NeverMarried" is the categorical output, the probability for "NeverMarried" will be higher than the other categories.)
+
+```{r ash-chew-kitchen-1, echo = FALSE}
+Probs <- data.frame(predict(mod1, newdata = Eval_at , type  = "probabilities"))
+Probs$Age <- Eval_at$Age
+Probs$Gender <- Eval_at$Gender
+gf_blank(NeverMarried ~ Age | Gender, data = Probs) %>%
+  gf_lims(y = c(0,1)) %>%
+  gf_labs(y = "Probability")
+```
+
+<!--answer-start-->
+
+Presumably the probability output for each category varies somewhat smoothly. There are two constraints:
+
+1. At any age/sex, one probability will be the highest of the three. That one should correspond to the category shown in the first graph.
+2. The probabilities should add up to 1. 
+
+Here's one possibility. Note that for females, the highest probability around age 80 is "widowed".
+
+```{r ash-chew-kitchen-2, echo = FALSE}
+Labels <- tribble(
+  ~ Age, ~ Prob, ~  Gender, ~ Label, ~ Color,
+  20, .7, "female", "Never Married", "black",
+  45, 0.0, "female", "Widowed", "red",
+  55, .35, "female", "Married", "blue",
+  
+)
+gf_line(NeverMarried~ Age | Gender, data = Probs) %>%
+  gf_line(Married ~ Age, color = "blue") %>%
+  gf_line(Widowed ~ Age, color = "red") %>%
+  gf_label(Prob ~ Age | Gender, color = ~ Color, label = ~ Label,  data = Labels) %>%
+  gf_refine(scale_color_manual(values = c("black", "blue", "red"))) %>%
+  gf_theme(legend.position = "none")  %>%
+  gf_labs(y = "Probability")
+
+```
+
+<!--answer-end-->
+
 
 --------
 

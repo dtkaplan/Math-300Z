@@ -24,3 +24,20 @@ Maybe space shuttle Challenger o-ring data.
 :::
 
 --------
+
+## 33.XXX
+
+A major company in big trouble is planning to lay off 20% of its employees. You work in the personnel office and have constructed a multivariate model of the probability of an individual being laid off. The effect size of the different input factors in the model are as follows:
+
+- age over 50 years: change in log-odds 1
+- software engineer: change in log-odds -0.5
+- pay level: change in log-odd rate 0.2 per $10,000 above the company average of $40K
+
+1. What are the odds of being laid off for an employee for whom you have no information about age, engineering capabilities, or pay level. -A- The risk of being laid off is 20% so the probability of not being laid off is 80%. The odds are therefore 20/80 = 0.25.
+
+2. What are the log odds of an employee in (1) being laid off? -A- Simply the logarithm of the odds, so $\log(0.25) = -1.4$. 
+
+3. Consider a 30-year old software engineer making $50,000 per year. 
+    - What are the log odds of her being laid off? -A- At baseline, her log odds is -1.4. Being a software engineer, her log odds are lower by 0.5. But she makes more than the average pay by $10,000, which adds 0.2  to her log odds. Altogether, -1.4 - 0.5 + 0.2  = -1.7.
+    - Translate the log odds into an absolute risk of her being laid off. -A- Undoing the logarithm on -1.7 gives an odds of 0.18, which corresponds to a probability of 0.18/(1 + 0.18) or 15%. 
+

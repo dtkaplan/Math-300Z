@@ -13,6 +13,10 @@ output:
     toc: yes
 ---
 
+```{r include=FALSE}
+source("../_startup.R")
+```
+
 Use `mod_eval()`
 
 ## A model as function
@@ -36,6 +40,6 @@ In the PREDICTION lessons, build a model of list price versus amazon price, poss
 ```{r}
 offsets <- lm(log(list_price) ~ log(amazon_price), data = amazon_books) %>% residuals()
 bad_deals <- which(offsets < 0.4)
-amazon_books$list_price[inds]
+amazon_books$list_price[bad_deals]
 ```
 

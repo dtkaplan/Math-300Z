@@ -17,4 +17,55 @@ output:
 source("../_startup.R")
 ```
 
+```{r crocodile-spend-magnet-default, include = FALSE}
+dists <- log(2:40)
+Our_data <- math300::Hill_racing %>% mutate(log_distance = log(distance),
+                                   log_time = log(time)) 
+mod1 <- lm(log_time ~ ns(distance, 2), data = Our_data)
+mod2 <- lm(log_time ~ ns(distance, 2) * sex, data = Our_data)
+Stats1 <- mod_eval(mod1, distance = dists, interval = "prediction")
+Stats2 <- mod_eval(mod2, distance = dists, sex = c("W", "M"), 
+                   interval = "prediction")
+Fun95 <- mod_eval(mod1, distance = dists, interval = "prediction", 
+                  level = 0.95) %>%
+  mutate(lower = exp(lower), upper = exp(upper))
+Fun75 <- mod_eval(mod1, distance = dists, interval = "prediction", 
+                  level = 0.75) %>%
+  mutate(lower = exp(lower), upper = exp(upper))
+Fun50 <- mod_eval(mod1, distance = dists, interval = "prediction", 
+                  level = 0.5) %>%
+  mutate(lower = exp(lower), upper = exp(upper))
+Fun25 <- mod_eval(mod1, distance = dists, interval = "prediction", 
+                  level = 0.25) %>%
+  mutate(lower = exp(lower), upper = exp(upper))
+```
 
+A prediction function takes values for explanatory variables as inputs and, as output, produces corresponding values for the prediction interval. Typically, the 95% prediction interval is shown. The graphic below shows both the 50% interval and a 95% interval for a model of winning time versus distance trained on the Scottish hill racing data.
+
+
+```{r crocodile-spend-magnet-1, echo = FALSE, out.width = "45%", fig.show = "hold"}
+gf_ribbon(lower + upper ~ distance, data = Fun95) %>%
+  gf_labs(y = "Winning time (s)", title = "(a)", x = "Distance (km)")
+gf_ribbon(lower + upper ~ distance, data = Fun50) %>%
+  gf_labs(y = "Winning time (s)", title = "(b)", x = "Distance (km)") 
+```
+
+1. Which graph, (a) or (b), corresponds to the 50% interval. -A- A 50% interval will be narrower than a 95% interval, so (b) is the 50% interval.
+
+2. Judging by eye in (a) and (b), give the top and bottom of the 95% prediction interval and the 50% prediction interval when the distance is 10 km. -A- 50% interval runs from about 670 to 950 seconds. The 90% interval runs from about 500 to 1300 seconds.
+
+Drawing the prediction intervals as bands gives the misleading idea that any value between the top and bottom of the band is equally likely. But values toward the center of the band are much more likely than those toward the edges or outside of the band. 
+
+The following graphic gives a better idea of the relative probability of each outcome by overlaying several prediction bands: 25%, 50%, 75%, 95%. The darker regions are more likely than the lighter regions. 
+
+```{r crocodile-spend-magnet-2, echo = FALSE}
+gf_ribbon(lower + upper ~ distance, data = Fun95) %>%
+  gf_ribbon(lower + upper ~ distance, data = Fun75) %>%
+  gf_ribbon(lower + upper ~ distance, data = Fun50) %>%
+  gf_ribbon(lower + upper ~ distance, data = Fun25) %>%
+  gf_labs(y = "Winning time (s)", title = "(b)", x = "Distance (km)") 
+```
+
+2. About how much wider is the 95% band than the 75% band? -A- Almost twice as wide.
+
+3. What is the probability of an individual outcome being somewhere inside the 95% band, but *outside* the 75% band? -A- 20%. Events outside the 75% band will be seen only 25% of the time. Events outside the 95% band will be seen only 5% of the time. That leaves 20% for the region between the two bands.

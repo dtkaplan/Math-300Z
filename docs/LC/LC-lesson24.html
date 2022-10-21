@@ -372,7 +372,52 @@ Solution
 </section>
 <hr>
 <section id="section-1" class="level2">
-<h2 class="anchored" data-anchor-id="section-1">24.3</h2>
+<h2 class="anchored" data-anchor-id="section-1">24.4</h2>
+<p>The logic of effect size is to investigate the change in output of a model when one input variable is changed, <em>holding all other things constant</em>. This problem is about the extent to which we mean “all”.</p>
+<p>The figure shows yearly CO<sub>2</sub> production of individual gasoline-fueled passenger vehicles stratified by the number of engine 4 or 6 cylinders.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="LC-lesson24_files/figure-html/camel-get-gloves-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol type="1">
+<li>The effect size is the difference between the output variable when a change is made to an input. Consider the effect size of changing from a six-cylinder engine to a four-cylinder engine. Here’s a subtly <strong>incorrect</strong> way of calculating something like an effect size: Pick a dot from the six-cylinder group and another dot from the four-cylinder group. Subtract the 4-cylinder point’s CO2 value from the six-cylinder point’s CO2 value, and divide by the change in the input, that is, -2 cylinders.
+<ol type="a">
+<li>Follow this procedure for the top-most dot in each cloud and calculate the effect size. -A- (5100 kg - 4100 kg) / (-2 cylinders) = -500 kg/cylinder.</li>
+<li>Follow the procedure for the bottom-most dot in each cloud and calculate the effect size. -A- (3400 kg - 2500 kg) / (-2 cylinders) = -450 kg/cylinder.</li>
+<li>Follow the procedure for the bottom-most dot in the four-cylinder cloud and the top-most dot in the six-cylinder cloud. -A- (5100 kg - 3400 kg) / (-2 cylinders) = -850 kg/cylinder.</li>
+<li>Do the same as in (c) but use the bottom-most six-cylinder dot and the top-most four-cylinder dot. -A- (3400 kg - 4100 kg) / (-2 cylinders) = +350 kg/cylinder. In other words, switching from the six</li>
+</ol></li>
+<li>You can imagine the (tedious) process of repeating the calculation for every possible pair of dots and getting a distribution of effect sizes. What would be the range of this distribution: from the smallest effect size to the biggest? (Hint: You can figure it out from your answers to (1).) -A- -850 kg/cylinder to +350 kg/cylinder</li>
+</ol>
+<p>From your result in (2), you might be tempted to conclude that the effect size is highly uncertain: it might be negative or it might be positive. But there is a problem, the procedure used in (1) and (2) fails to incorporate the notion of <em>all other things being equal</em>. This notion applies not just to known variables, but to all the other unknown factors that shape the data.</p>
+<p>For the purpose of envisioning the concept, imagine that we actually had a measurement of all the factors that shaped CO<sub>2</sub> emissions from a vehicle. We’ll call this imaginary measurement “all other things”. The figure below shows a conceptualization of what CO2 emissions as a function of the number of cylinders and “all other things” would look like.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="LC-lesson24_files/figure-html/camel-get-gloves-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Using the graph of CO2_year versus “all other things”, calculate the effect size of a change from six to four cylinders. Remember to hold “all other things” constant in your calculations. So do the effect size calculation at each of several values of “all other things”. What is the effect size and about how much does it vary from one value of “all other things” to another? -A- At “all other things being 0.25, the CO<sub>2</sub> emissions for the 6- and 4-cylinder cars is 2800 kg and 3800 kg. The effect size is therefore (3800 kg - 2800 kg) / -2 cylinders = -500 kg/cylinder. The value of the effect size for other levels of”all other things” will be about the same, since the position of the six-cylinder dots is more-or-less constant compared to the corresponding four-cylinder dot.</li>
+</ol>
+<p>This exercise is intended to give you a way of thinking about effect size and “all other things”. In reality, of course, we do not have a way to measure “all other things”. Instead, we calculate the effect size not directly from the data but from the model output (indicated by the statistic layer in the first graphic). As we saw in Lesson 22, there is actually some uncertainty about the model output stemming from sampling variability that can be summarized by a “confidence interval”. For the relationship between the number of cylinders and CO2 emissions, the extent of that uncertainty is indicated by the interval layer in the first graphic. A fair depiction for the corresponding uncertainty in the effect size can be had by repeating the process of (2), but only for points falling into the confidence interval.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Do we need this?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><em>Note to readers who know something about car engines</em>: As you know, switching out a six-cylinder engine for a four-cylinder engine is likely to change many other things: the weight of the vehicle, the displacement of the engine, the power available, etc. So it’s not useful to insist that everything other than the number of cylinders be held constant. Instead, we’ll be looking at the effect of that whole constellation of changes associated with a change in the number of cylinders.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="x" class="level2">
+<h2 class="anchored" data-anchor-id="x">24.X</h2>
 <p>In very simple settings, you don’t need access to the original data: a simple summary will do.</p>
 <div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -388,20 +433,30 @@ In draft
 </div>
 </div>
 <hr>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Solution
-</div>
-</div>
-<div class="callout-body-container callout-body">
-
-</div>
-</div>
-<hr>
+</section>
+<section id="z" class="level2">
+<h2 class="anchored" data-anchor-id="z">24.Z</h2>
+<p>The National Cancer Institute publishes an online, interactive “<a href="https://bcrisktool.cancer.gov/calculator.html">Breast Cancer Risk Assessment Tool</a>”, also called the “Gail model.” The output of the model is a probability that the woman whose characteristics are used as input will develop breast cancer in the next five years. The inputs include:</p>
+<ul>
+<li>age</li>
+<li>race/ethnicity</li>
+<li>age at first menstrual period</li>
+<li>age at birth of first child (if any)</li>
+<li>how many of the woman’s close relatives (mother, sisters, or children) have had breast cancer</li>
+</ul>
+<p>As a baseline, consider a 55-year-old, African-American woman who has never had a breast biopsy or any history of breast cancer, who doesn’t know her BRCA status, and whose close relatives have no history of breast cancer, whose first menstrual period was at age 13 and first child at age 23. No “subrace” or “place of birth” is specified.</p>
+<ol type="1">
+<li><p>Follow the link above to the cancer risk assessment tool, and enter the baseline values into the assessment tool using the link above. According to the assessment tool, what is the probability (“risk”) of developing breast cancer in the next five years? What is the lifetime risk of developing breast cancer? -A- 1.4% risk in the next five years, 7.8% lifetime risk.</p></li>
+<li><p>What is the effect size on our baseline subject of finding out that:</p></li>
+</ol>
+<ol type="a">
+<li><p>one of her close relatives has developed breast cancer? -A- Using the baseline values for the inputs, but changing the number of close relatives who have developed breast cancer to 1, the new five year risk is 2.2% and the lifetime risk is 12.3%. This is a change of five year risk of 0.8 percentage points and 4.5 percentage points for lifetime risk. (In Lesson 33, you’ll see that expressing effect size of a probability is often done using “<strong>log-odds</strong>”.)</p></li>
+<li><p>more than one of her close relatives have developed breast cancer? -A- This has a dramatic effect, with five-year risk increasing to 4.8 percentage points and lifetime risk increasing to 29.4%.</p></li>
+</ol>
+<ol start="3" type="1">
+<li><p>What is the effect size associated with comparing the baseline conditions to a woman with the same conditions but a race of white? -A- Five year risk goes down by 0.3 percentage points, lifetime risk goes down by 0.4 percentage points.</p></li>
+<li><p>What is the effect size of age? Compare the baseline 55-year old woman to herself when she is 65, without the other inputs changing. Since age is quantitative, Report the effect size as percentage-points-per-year. -A- Five year risk goes up to 1.5%, an increase of 0.1 percentage points per year. Lifetime risk goes down to 5.6%, a rate of -0.67 percentage points per year. Possibly <code>Stat2Data::ArcheryData</code> and ask about effect size.</p></li>
+</ol>
 
 
 </section>

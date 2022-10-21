@@ -191,7 +191,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 1 × 2
      vx    vy
   &lt;dbl&gt; &lt;dbl&gt;
-1  4.04  1.02</code></pre>
+1  3.96  1.03</code></pre>
 </div>
 </div>
 <p>Compare this result to the DAG tilde expressions</p>
@@ -268,7 +268,7 @@ lm(formula = y ~ x, data = .)
 
 Coefficients:
 (Intercept)            x  
-      3.974        1.495  </code></pre>
+      3.986        1.477  </code></pre>
 </div>
 </div>
 <p>The intercept corresponds to the additive constant (4) in the <code>y</code> tilde expression. The <code>x</code> coefficient corresponds to the multiplier on <code>x</code> in the tilde expression.</p>
@@ -284,7 +284,7 @@ lm(formula = x ~ y, data = .)
 
 Coefficients:
 (Intercept)            y  
-    -1.8473       0.4636  </code></pre>
+    -1.8302       0.4602  </code></pre>
 </div>
 </div>
 <p>These coefficients do not appear in the <code>dag01</code> tilde expressions.</p>
@@ -314,6 +314,27 @@ Coefficients:
 <li>Again repeat the process of sampling and modeling, this time using <span class="math inline">\(n=1600\)</span>. iv. Does the interval reported depend systematically on the size <span class="math inline">\(n\)</span> of the sample? Describe what pattern you see.</li>
 </ol>
 <hr>
+</section>
+<section id="section-4" class="level2">
+<h2 class="anchored" data-anchor-id="section-4">21.7</h2>
+<p>A short report from the British Broadcasting Company (BBC) was headlined “<a href="https://www.bbc.com/news/business-47106711">Millennials’ pay ‘scarred’ by the 2008 banking crisis</a>.”</p>
+<blockquote class="blockquote">
+<p>Pay for workers in their 30s is still 7% below the level at which it peaked before the 2008 banking crisis, research has suggested. The Resolution Foundation think tank said people who were in their 20s at the height of the recession a decade ago were worst hit by the pay squeeze. It suggested the crisis had a lasting “scarring” effect on their earnings.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>The foundation said people in their 30s who wanted to earn more should move to a different employer. The research found those who stayed in the same job in 2018 had real wage growth of 0.5%, whereas those who found a different employer saw an average increase of 4.5%.</p>
+</blockquote>
+<p>The phrase “should move” in the second paragraph of the report suggests causation. A corresponding DAG would look like this:</p>
+<ul>
+<li>move_to_new_employer <span class="math inline">\(\rightarrow\)</span> higher_wage</li>
+</ul>
+<p>For the sake of discussion, let’s add two more variables to the DAG:</p>
+<ul>
+<li>effectiveness—standing for how productive the employee is.</li>
+<li>qualifications—standing for whether the employee is a good candidate attractive to potential new employers.</li>
+</ul>
+<p>Construct a DAG with all four variables that represent plausible causal connections between them. The DAG should not contain a direct causal connection between move_to_new_employer and higher_wage.</p>
+<p>If the world worked this way, would it necessarily be good advice to switch to a new employer with the aim of earning a higher wage?</p>
 
 
 </section>

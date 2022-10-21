@@ -102,7 +102,7 @@ with(openintro::starbucks, cor(fat, protein))
 with(openintro::starbucks, cor(fiber, protein))
 lm( calories ~ fiber , data = openintro::starbucks) %>% confint()
 lm( calories ~ protein, data = openintro::starbucks) %>% confint()
-lm( calories ~ protein + fiber, )
+lm( calories ~ protein + fiber, data = openintro::starbucks) %>% confint()
 
 ```
 

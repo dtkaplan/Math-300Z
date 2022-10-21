@@ -15,6 +15,69 @@ span.underline{text-decoration: underline;}
 div.column{display: inline-block; vertical-align: top; width: 50%;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -54,6 +117,7 @@ ul.task-list{list-style: none;}
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -117,8 +181,33 @@ ul.task-list{list-style: none;}
 
 </header>
 
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Just while in draft
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>25.1 Given a data frame, construct a predictor function for a specified response variable.</p>
+<p>25.2 Use the predictor function to estimate prediction error on a given DAG sample and summarize with root mean square (RMS) error. Relate this to a predition interval.</p>
+<p>25.3 Distinguish between in-sample and out-of-sample prediction estimates of prediction error.</p>
+</div>
+</div>
 <section id="section" class="level2">
-<h2 class="anchored" data-anchor-id="section">25.1</h2>
+<h2 class="anchored" data-anchor-id="section">25.2</h2>
+<p>The data frame <code>moderndive::house_prices</code> lists the sales prices of 21,613 houses in King County, Washington (which includes Seattle) sold from May 2014 and May 2015. Often, with price or income data, economists work with the <em>logarithm</em> of the price or income or income-related quantity such as house living area. We are going to do here, but this problem is not about logarithms, so once you create the “logged” data frame, you’ll just be modeling the data using the usual methods.</p>
+<p>To create the “logged” data, add these two new variables to the data frame, which we will call <code>Seattle</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Seattle <span class="ot">&lt;-</span> moderndive<span class="sc">::</span>house_prices <span class="sc">%&gt;%</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">log_price =</span> <span class="fu">log10</span>(price),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">log_area =</span> <span class="fu">log10</span>(sqft_living))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="1">
+<li>Build a model of <code>log_price ~ log_area</code> using the <code>Seattle</code> data. Store the model under the name <code>pmod</code>.</li>
+</ol>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -129,7 +218,137 @@ Solution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_price <span class="sc">~</span> log_area, <span class="at">data =</span> Seattle)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Imagine that you are moving to Seattle in August 2014. Housing is expensive in the Seattle area, so you might decide to live in a small house, say 750 square feet. The <code>log_area</code> of such a house is 2.87. Using <code>mod_eval()</code>, predict the <code>log_price</code> of such a house. (Note that <code>mod_eval()</code> puts the model output in a column named <code>model_output</code>, not <code>log_price</code>.) In your Rmd file, give the command and show the output. If you’re curious about what the predicted price is in dollars (rather than log-dollars), simply raise 10 to the log-dollar amount. For instance, if the <code>model_output</code> were 5, the dollar amount will be <span class="math inline">\(10^5 = \$100,000\)</span>.</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(pmod, <span class="at">log_area =</span> <span class="fl">2.87</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  log_area model_output
+1     2.87     5.324298</code></pre>
+</div>
+</div>
+<p>In dollar terms, the predicted price is 10<sup>5.324</sup> = 2.1086281^{5}.</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li><p>Repeat (2), but for a house with lots of space: 1500 square feet. The <code>log_area</code> of such a house is 3.18. As in (2), give the command and show the output in your Rmd file.</p></li>
+<li><p>Your budget is $200,000. In log dollars this budget is <code>log10(200000)</code> = 5.3. The predicted price of a 750 square-foot house is somewhat beyond your budget. But you figure that some 750-square foot house will be within your budget. To see if this is likely, look at the <strong>prediction interval</strong> of the house price. You can do this by adding the <code>interval="prediction"</code> to the <code>mod_eval()</code> command. Is your budget (5.3 log dollars) within the prediction interval? Show your command and the result in your Rmd file and also give a sentence stating your conclusion.</p></li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(pmod, <span class="at">log_area =</span> <span class="fl">2.87</span>, <span class="at">interval=</span><span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  log_area model_output    lower   upper
+1     2.87     5.324298 4.993416 5.65518</code></pre>
+</div>
+</div>
+<p>Yeah! Your budget of 5.3 log dollars is near the center of the prediction interval.</p>
+</div>
+</div>
+<ol start="5" type="1">
+<li>On a hunch, you decide to see whether you might find a 1500 square foot (<code>log_area</code> = 3.18) might also fall within the prediction interval. Will it? Show your command, the result, and a sentence interpreting the result.</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(pmod, <span class="at">log_area =</span> <span class="fl">3.18</span>, <span class="at">interval=</span><span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  log_area model_output    lower    upper
+1     3.18     5.583697 5.252851 5.914543</code></pre>
+</div>
+</div>
+<p>Strictly speaking, your budget (5.3 log dollars) is within the prediction interval. But it is very close to the lower bound of 5.25 log dollars. So there will likely be few houses of 1500 square feet within your budget. So plan that the house you will end up purchasing will be somewhere in the range 750-1500 square feet.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="xx" class="level2">
+<h2 class="anchored" data-anchor-id="xx">25.XX</h2>
+<p>You are a bus dispatcher in New York City. The Department of Education bus logistics office has called to say that a school bus has broken down and the students need to be offloaded onto a functioning bus to take them to school. Unfortunately, the DOE officer didn’t tell you how many students are on the bus. You need to make a quick prediction in order to decide what kind and how many busses you will need for the pickup.</p>
+<p>You go to the NYC OpenData site bus breakdown page to get the historical data on how many students are on the bus. There are more than 200,000 bus events listed, each one of them including the number of students. You make a jitter/violin plot of the number of students on each of the 200,000 busses.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="LC-lesson25_files/figure-html/cheetah-lose-saucer-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol type="a">
+<li>The violin plot looks like an upside-down T. Explain what’s going on. (Hint: How many students fit on a school bus?) -A- As very often happens, the data file contains data-entry or other mistakes producing outliers. Almost all of the 200,000 bus incidents fall into the horizontal line near zero. There are only 164 with a number above 100 students. In the US, the legal maximum capacity for a school bus is 72 students.</li>
+</ol>
+<p>One of the ways of handling outliers is to delete them from the data. A softer way is to trim the outliers, giving them a value that is distinct but not so far from the mass of values. The figure below shows a violin plot where any record where the number of students is greater than 20 is trimmed to 21.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="LC-lesson25_files/figure-html/cheetah-lose-saucer-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol start="2" type="a">
+<li><p>If you sent a small school bus (capacity 14), what fraction of the time would you be able to handle all the students on the school bus? -A- Only about 5% of the area of the violin plot is above 14.</p></li>
+<li><p>If you sent one 14-passenger school bus with another on stand-by (just in case the first bus doesn’t have sufficient capacity), what fraction of the time could you handle all the students?</p></li>
+</ol>
+<p>-A- It’s tempting to say that the 2 x 14 = 28 passenger capacity could handle all the cases, but remember, the cases at 21 stand for “21 or more passengers.” We can’t tell from the violin plot how many of those have more than 28 students on board.</p>
+<ol start="4" type="a">
+<li>Notice that the violin plot is jagged. Explain why. -A- The number of passengers is an integer, e.g.&nbsp;1, 2, 3, …. It can’t be a number like 4.5.</li>
+</ol>
+<hr>
+</section>
+<section id="yyy" class="level2">
+<h2 class="anchored" data-anchor-id="yyy">25.YYY</h2>
+<p>At a very large ballroom dance class, you are to be teamed up with a randomly selected partner. There are 200 potential partners. The figure below shows their heights.</p>
+<p>From the data plotted, calculate a 95% prediction interval on the height of your eventual partner. (Hint: You can do this by counting.)</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="LC-lesson25_files/figure-html/fish-eat-vase-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>59 to 74 inches.</p>
+<p>Since there are 200 points, a 95% interval should exclude the top five cases and the bottom five cases. So draw the bottom boundary of the interval just above the bottom five points, and the top boundary just below the top five points.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="LC-lesson25_files/figure-html/fish-eat-vase-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </div>
 </div>
 <hr>

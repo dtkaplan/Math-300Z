@@ -1,0 +1,181 @@
+---
+title: "Additional LC for first half of course"
+author: "Daniel Kaplan"
+---
+
+## Tidying data
+
+The US Department of Transportation has a program called the Fatality Analysis Reporting System. FARS has a web site which publishes data. Figure @fig-bear-ride-pants-1 shows partial screen shot of their web page.
+
+```{r echo = FALSE}
+#| label: fig-bear-ride-pants-1
+#| fig-cap: "National statistics from the US on motor0-vehicle accident-related fatalities. Source: <https://www-fars.nhtsa.dot.gov/Main/index.aspx>."
+knitr::include_graphics("images/fars-1.png")
+```
+
+
+For several reasons, the table is not in tidy form.
+
+1. Some of the rows serve as headers for the next several rows, but don't contain any data. Identify several of those headers. -A- "Motor vehicle traffic crashes", "Traffic crash fatalities", "Vehicle occupants", "Non-motorists", "Other national statistics", "National rates: fatalities"
+
+2. In tidy data, all the entries in a column should describe the same kind of quantity. You can see that all of the columns contain numbers. But the numbers are not all the same kind of quantity. Referring to the 2016 column: 
+    (a) What kind of thing is the number 34,439? -A- A number of crashes
+    (b) What kind of thing is 18,610? -A- A  number of drivers
+    (c) What kind of thing is 1.18? -A- A rate: fatalities per 100-million miles.
+
+3. In tidy data, there is a definite unit of observation that is the same kind of thing for every row. Give an example of two rows that are not the same kind of thing. -A- For example,  "Registered vehicles" and "Licensed drivers". The first is a count of cars,  the second a count of drivers.
+
+4. Identify a few rows that are summaries of other rows. Such summaries are not themselves a unit of observation. -A- "Sub Total1", "Sub Total2",  "Total**"
+
+--------
+
+## Graphics
+
+The three graphs below show the distribution of weights broken down by sex. The violin layer is the same in each graph. Each graph has a coverage interval at one of these levels: 25% 50%, 80%, 95%. Which graph has which coverage interval? Which of the listed coverage intervals is not shown in any graph?
+
+
+
+```{r bee-sell-blanket-1, echo = FALSE, fig.show = "hold", out.width = "30%"}
+library(NHANES)
+library(dplyr)
+library(mosaic)
+Dat <- NHANES %>%
+  dplyr::select(Weight, Smoke100, Gender) %>%
+  na.omit() 
+Intervals <- df_stats(Weight ~ Gender, data = Dat, 
+                      fifty = coverage(0.50), eighty = coverage(0.80), ninetyfive = coverage(0.95))
+P <- gf_violin(Weight ~ Gender, data = Dat, alpha = 0.2, fill = ~ Gender, color = NA) %>%
+  gf_theme(legend.position="none",axis.text = element_text(size = 20), 
+           plot.title = element_text(size = 30)) %>%
+  gf_labs(y = "Weight (lbs)", x = "")
+P %>%  
+  gf_errorbar(eighty_lower + eighty_upper ~ Gender, inherit=FALSE,
+              alpha = 1, size = 2, color = ~ Gender, data = Intervals, width = 0.2) %>%
+  gf_labs(title = "(a)")
+
+P %>%  
+  gf_errorbar(fifty_lower + fifty_upper ~ Gender, inherit=FALSE,
+              alpha = 1, size = 2, color = ~ Gender, data = Intervals, width = 0.2) %>%
+  gf_labs(title = "(b)")
+P %>%  
+  gf_errorbar(ninetyfive_lower + ninetyfive_upper ~ Gender, inherit=FALSE,
+              alpha = 1, size = 2, color = ~ Gender, data = Intervals, width = 0.2) %>%
+  gf_labs(title = "(c)")
+```
+
+--------
+
+## Violin plots
+
+The graph below is a violin plot. Using a pencil and your intuition, add a few dozen dots to the graphic as they would appear in a data layer superimposed on the violin layer. The dots should be jittered and be consistent with the shape of the violins.
+
+```{r cheetah-hit-plate-1, echo = FALSE}
+NHANES::NHANES %>% 
+  dplyr::select(Poverty, HomeOwn) %>%
+  na.omit() %>%
+  filter(HomeOwn != "Other", Poverty != 5) %>%
+  gf_violin(Poverty ~ HomeOwn, fill = "gray", alpha = 0.4, color = NA ) %>%
+    gf_labs(y = "Income (1 = poverty level)", x = "Housing status")
+```
+
+
+::: {.callout-note}
+## Solution
+
+Where the violin is wider, there is a greater concentration of dots. In a jittered plot, the exact horizontal position of the dots has no significance.
+
+```{r cheetah-hit-plate-answer, echo = FALSE}
+NHANES::NHANES %>% 
+  dplyr::select(Poverty, HomeOwn) %>%
+  na.omit() %>%
+  filter(HomeOwn != "Other", Poverty != 5) %>%
+  gf_violin(Poverty ~ HomeOwn, fill = "gray", alpha = 0.4, color = NA ) %>%
+    gf_labs(y = "Income (1 = poverty level)", x = "Housing status") %>%
+    gf_jitter(data = . %>% sample_n(size = 200), width = 0.2)
+```
+:::
+
+--------
+
+## Untidy data
+
+List what's not tidy about this table.
+
+```{r fox-fall-book-1, echo = FALSE}
+knitr::include_graphics("images/planet-info.png")
+```
+
+::: {.callout-note}
+## Solution
+
+- Units ought to be  in the codebook.
+- The "length of year" variable is in a mixture of units. Some rows are (Earth) days, others are (Earth) years.
+- The numbers have commas, which are intended for human consumption. Data tables are for machine consumption and the commas are a nuisancwe.
+- The $\frac{1}{4}$ in the  "length of year" column is not a standard computer numeral. Write 365.25 instead.
+:::
+
+--------
+
+## Calculating new variables from old.
+
+```{r fir-shut-sofa-default, include = FALSE}
+
+FARS <- tribble(
+  ~ year, ~ crashes, ~ drivers, ~ passengers, ~ unknown, ~ miles, ~ resident_pop,
+  2016, 34439, 18610, 6407, 79, 3174, 323128,
+  2015, 32539, 17613, 6213, 71, 3095, 320897,
+  2014, 30056, 16470, 5766, 71, 3026, 318563)
+```
+
+TITLE GOES HERE: Often, a data scientist needs to calculate some new quantity from the quantities already available in a data table. Proper data computing software makes this easy to do in a manner that is clear even to an inexperienced reader. For example, the following statement will take a data frame named `Fatality_data` with the structure of  @tab-pine-hit-pants and augment it with a new variable `total_fatalities` that gives the total number of fatalities in each year
+
+```{r fir-shut-sofa-1, results = "hide"}
+FARS <-
+  FARS %>%
+  mutate(total_fatalities = drivers + passengers + unknown)
+```
+
+```{r echo=FALSE}
+#| label: tab-pine-hit-pants
+knitr::kable(FARS)
+```
+
+The `mutate()` function does the work of creating the new variable. The text between the opening parenthesis and the corresponding closing parenthesis is the *argument* to `mutate()`, which gives the specifics of what to do.
+
+For each of the following, write the argument for a `mutate()` statement that will produce the desired new variable. You can assume that `total_fatalities` is already one of the existing variables. (We created it above!)
+
+
+a. Fatalities per crash.
+::: {.callout-note} ##Solution
+```{r fir-shut-sofa-2, eval = FALSE}
+fatalities_per_crash = total_fatalities / crash
+```
+:::
+
+b. Fatalities per *million* vehicle miles.
+::: {.callout-note} 
+##Solution
+```{r fir-shut-sofa-3, eval = FALSE}
+fatalities_per_distance = total_fatalities / (miles * 1000)
+```
+
+Divide the total number of fatalities by the number of  vehicle miles travelled.
+
+Why the multiplication by `1000`? Recall that `miles` is in *billions* of vehicle miles, while we want the units of `fatalities_per_distance` to be fatalities per *million* vehicle miles. The `1000`  performs the conversion from billions to millions.
+:::
+
+c. Number of crashes per *million* vehicle miles.
+::: {.callout-note} 
+##Solution
+```{r fir-shut-sofa-4, eval = FALSE}
+crashes_per_distance = crashes / (miles * 1000)
+```
+:::
+d. Referring back  to the original data shown in Figure \@ref(fig:bear-ride-pants-1), you can see that the calculation of total fatalities in the introduction to this problem left out the number of motorcyclist and nonmotorist fatalities.  Modify the calculation of 
+total fatalities to include these, assuming they are represented by `motorcyclist` and `nonmotorist` respectively.
+::: {.callout-note} ##Solution
+```{r fir-shut-sofa-5, eval = FALSE}
+total_fatalities = drivers + passengers + unknown +
+  motorcyclist + nonmotorist
+```
+:::

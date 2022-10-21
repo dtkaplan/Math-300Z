@@ -117,8 +117,75 @@ ul.task-list{list-style: none;}
 
 </header>
 
+<p><code>Stat2Data::FaithfulFaces</code>. Come back to it concerning prevalence.</p>
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section">34.1</h2>
+<p>To illustrate how stratification is used to build a classifier, consider this very simple, unrealistically small, made-up data frame listing observations of animals:</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> species </th>
+   <th style="text-align:left;"> size </th>
+   <th style="text-align:left;"> color </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> A </td>
+   <td style="text-align:left;"> large </td>
+   <td style="text-align:left;"> reddish </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> B </td>
+   <td style="text-align:left;"> large </td>
+   <td style="text-align:left;"> brownish </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> B </td>
+   <td style="text-align:left;"> small </td>
+   <td style="text-align:left;"> brownish </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> A </td>
+   <td style="text-align:left;"> large </td>
+   <td style="text-align:left;"> brownish </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>You are going to build classifiers using the data. The output of the classifier will be the probability that the species is A. The classifier itself will be a simple table: each row lists the different levels of the explanatory variable(s) the the classifier output (as a probability that the species is A).</p>
+<ol type="1">
+<li>Use just <code>size</code> as an explanatory variable. Since there are two levels for size, the classifier can take the form of a simple table, giving the proportion of rows for each of the two sizes. Fill in the table to reflect the data.</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> size </th>
+   <th style="text-align:left;"> prop_of_A </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> large </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> small </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -129,10 +196,180 @@ Solution
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p>There are three rows where the size is large, of which one is species A. The classifier output is thus 2/3 for large.</p>
+<p>Similarly, there is only one row where the size is small, none of which are species A. The classifier output is 0/1 for small.</p>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Repeat (1), but instead of “size”, use just “color” as an explanatory variable.</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> color </th>
+   <th style="text-align:left;"> prop_of_A </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> reddish </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> brownish </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+</tbody>
+</table>
 
 </div>
 </div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There are three rows where the color is brownish, of which two are species A. The classifier output is thus 1/3 for brownish.</p>
+<p>There is only one row where the color is reddish, and it is species A. The classifier output is 1/1 for reddish.</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Again build a classifier, but use both color and size as explanatory variables.</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> color </th>
+   <th style="text-align:left;"> size </th>
+   <th style="text-align:left;"> prop_of_A </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> reddish </td>
+   <td style="text-align:left;"> large </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> reddish </td>
+   <td style="text-align:left;"> small </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> brownish </td>
+   <td style="text-align:left;"> large </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> brownish </td>
+   <td style="text-align:left;"> small </td>
+   <td style="text-align:left;">  </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There is just one row in which color is reddish and size is large, and it is species A. The classifier output is thus 1/1.</p>
+<p>There are two rows in which color is brownish and size is large, one of which is species A. The classifier output is thus 1/2.</p>
+<p>There is one row in which color is brownish and size is small. It is species B. The classifier output is 1/1.</p>
+<p>There are no rows in which color is reddish and size is small. A classifier output of 0/0 is meaningless. So our classifier has nothing to say for these inputs.</p>
+</div>
+</div>
+<ol start="4" type="1">
+<li>Finally, build the “null model”, a no-input classifier. This means there is just one group, which has all four rows. -A- Of the four rows, two are species A, so the classifier output is 2/4.</li>
+</ol>
 <hr>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1">34.2</h2>
+<p>The graph below shows data on marital status versus age from National Health and Nutrition Evaluation Survey data. You can see that the probability of the various possibilities are a function of age.</p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'kernlab'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:mosaic':
+
+    cross</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:scales':
+
+    alpha</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:ggplot2':
+
+    alpha</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="LC-lesson34_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>A very simple classifier can be constructed just by indicating at each age which marital status is the most likely, as seen in the figure below.</p>
+<div class="cell" data-hash="LC-lesson34_cache/html/ash-chew-kitchen-0_cbad094dbeff9daf2b14ab5f769ee2da">
+<div class="cell-output cell-output-stdout">
+<pre><code>maximum number of iterations reached 0.0005931441 0.0005866059</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="LC-lesson34_files/figure-html/ash-chew-kitchen-0-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>A classifier output should be a probability, not a categorical level. On the blank graph below, sketch out a plausible form for probability vs age for each of three categorical levels shown in the above plot. (Hint: At an age where, say, “NeverMarried” is the categorical output, the probability for “NeverMarried” will be higher than the other categories.)</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="LC-lesson34_files/figure-html/ash-chew-kitchen-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<!--answer-start-->
+<p>Presumably the probability output for each category varies somewhat smoothly. There are two constraints:</p>
+<ol type="1">
+<li>At any age/sex, one probability will be the highest of the three. That one should correspond to the category shown in the first graph.</li>
+<li>The probabilities should add up to 1.</li>
+</ol>
+<p>Here’s one possibility. Note that for females, the highest probability around age 80 is “widowed”.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="LC-lesson34_files/figure-html/ash-chew-kitchen-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<!--answer-end-->
+<hr>
+<p>From CPS §32.6: <code>openintro::possum</code>. Let’s investigate the possum data set again. This time we want to model a binary outcome variable. As a reminder, the common brushtail possum of the Australia region is a bit cuter than its distant cousin, the American opossum. We consider 104 brushtail possums from two regions in Australia, where the possums may be considered a random sample from the population. The first region is Victoria, which is in the eastern half of Australia and traverses the southern coast. The second region consists of New South Wales and Queensland, which make up eastern and northeastern Australia.</p>
+<p>We use logistic regression to differentiate between possums in these two regions. The outcome variable, called pop, takes value Vic when a possum is from Victoria and other when it is from New South Wales or Queensland. We consider five predictors: sex, head_l, skull_w, total_l, and tail_l.</p>
+<p>Explore the data by making histograms or boxplots of the quantitative variables, and bar charts of the discrete variables.</p>
+<ul>
+<li>Are there any outliers that are likely to have a very large influence on the logistic regression model?</li>
+<li>Build a logistic regression model with all the variables. Report a summary of the model.</li>
+<li>Using the p-values decide if you want to remove a variable(s) and if so build that model.</li>
+<li>For any variable you decide to remove, build a 95% confidence interval for the parameter.</li>
+<li>Explain why the remaining parameter estimates change between the two models.</li>
+<li>Write out the form of the model. Also identify which of the following variables are positively associated (when controlling for other variables) with a possum being from Victoria: head_l, skull_w, total_l, and tail_l.</li>
+<li>Suppose we see a brushtail possum at a zoo in the US, and a sign says the possum had been captured in the wild in Australia, but it doesn’t say which part of Australia. However, the sign does indicate that the possum is male, its skull is about 63 mm wide, its tail is 37 cm long, and its total length is 83 cm. What is the reduced model’s computed probability that this possum is from Victoria? How confident are you in the model’s accuracy of this probability calculation?</li>
+</ul>
 
 
 </section>
