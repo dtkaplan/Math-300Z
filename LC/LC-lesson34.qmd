@@ -185,3 +185,43 @@ Explore the data by making histograms or boxplots of the quantitative variables,
 - Explain why the remaining parameter estimates change between the two models.
 - Write out the form of the model. Also identify which of the following variables are positively associated (when controlling for other variables) with a possum being from Victoria: head_l, skull_w, total_l, and tail_l.
 - Suppose we see a brushtail possum at a zoo in the US, and a sign says the possum had been captured in the wild in Australia, but it doesn’t say which part of Australia. However, the sign does indicate that the possum is male, its skull is about 63 mm wide, its tail is 37 cm long, and its total length is 83 cm. What is the reduced model’s computed probability that this possum is from Victoria? How confident are you in the model’s accuracy of this probability calculation?
+
+--------
+
+## 34.3
+
+The `HELPrct` date frame (in the `mosaicData` package) is about a clinical trial (that is, an experiment) conducted with adult inpatients recruited from a detoxification unit. The response variable of interest reflects the success or failure of the detox treatment, namely, did the patient continue use of the substance abused after the treatment.
+
+Figure \@ref(fig:giraffe-fall-door-1) shows the output of a simple classifier (maybe too simple!) of the response given these inputs: the average number of alcoholic drinks consumed per day in the past 30 day (before treatment); and the patient's self-perceived level of social support from friends. (The scale for social support is zero to fourteen, with a higher number meaning more support.)
+
+```{r giraffe-fall-door-1, echo = FALSE, fig.cap = "Classifier based on data from a clinical trial"}
+New <- mosaicData::HELPrct %>%
+  rename(social_support = pss_fr)
+mod2 <- glm(anysub == "yes" ~ ns(i1,2) * social_support, data = New, 
+            family = binomial )
+mod_plot(mod2, data = New, social_support = c(0, 5, 10, 14 )) %>% 
+  gf_labs(y = "Probability of treatment failure", 
+          x = "Alcoholic Drinks per day") %>%
+  gf_lims(y = c(NA,1)) %>%
+  gf_theme(legend.position="top")
+```
+
+1. What's the probability of treatment failure for a patient who has 25 alcoholic drinks per day? Does the probability depend on the level of social support? -A- Probability of failure is 75%, and doesn't depend on the level of social support.
+
+2. For a patient at 0 to 10 alcoholic drinks per day, what's the probability of treatment failure? Does the probability depend on the level of social support? -A- The probability of failure ranges from about 72% for those with no social support to 82% for those with high social support?
+
+3. You are thinking about a friend who has roughly five alcoholic drinks per day. You are concerned that he will go on to substance abuse. Do the data from the clinical trial give good reason for your concern? Explain why or why not.
+
+::: {.callout-note}
+## Solution
+
+It's always a good idea to be concerned for your friend, but the data reported here are not a basis for that concern. These data are from a population consisting of inpatients from a detoxification unit. These are people who have already shown strong substance abuse. The classifier is not generalizable to your friend, unless he is an inpatient from a detox unit.
+:::
+
+4. Explain what's potentially misleading about the y-axis scale selected for the plot. 
+
+::: {.callout-note}
+## Solution
+
+The selected scale doesn't include zero and so tends to over-emphasize what amount to small differences in the probability of failure.
+:::

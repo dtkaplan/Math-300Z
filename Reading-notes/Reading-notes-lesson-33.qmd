@@ -17,6 +17,44 @@ output:
 source("../_startup.R")
 ```
 
+## Odds (and log odds)
+
+A probability---a number between 0 and 1---is the most used measure of the chances that something will happen, but it is not the only way nor the best for all purposes.
+
+Also part of everyday language is the word "odds," as in, "What are the odds?" to express surprise at an unexpected event.
+
+Odds are usually expressed in terms of two numbers, as in "3 to 2" or "100 to 1", written more compactly as 3:2 and 100:1 respectively. The setting for odds is an even that might happen or not: the horse Fortune's Chance might win the race, otherwise not; it might rain today, otherwise not; the Red Sox might win the World Series, otherwise not.
+
+The format of a *probability* assigns a number between 0 and 1 to the chances that Fortune's Chance will win, or that it will rain, or that the Red Sox will come out on top. If that number is called $p$, then the chances of the "otherwise outcome" must be $1-p$. The event with probability $p$ would be reformatted into odds as $p:(1-p)$. No information is lost if we treat the odds as a single number, the result of the division $p/(1-p)$. Thus, when $p=0.25$ the corresponding odds will be $0.25/0.75$, in other words, 1/3.
+
+A big mathematical advantage to using odds is that the odds number can be anything from zero to infinity; it's not bounded within 0 to 1. Even more advantageous for the purposes of accumulating risk is the logarithm of the odds, called "**log odds**." We will come back to this later.
+
+::: {.callout-note}
+## Example: A bookies' calculations [NEEDS FIXING]
+
+The most familiar use of "odds" is in gambling. For instance, a famous song lyric puts the odds of Valentine winning the horse rate "at five to nine." Less musically, this odds is $5/9 = 0.5555$, but the two-number format makes particular sense for keeping track of bets. Five-to-nine describes a bet of one unit. The second number, 9, specifies the amount the gambler is staking on the outcome. On a loss, the gambler loses that stake. On a win, the gambler gets back the stake and, in addition, gets the amount specified by the first number. So a winner at five to nine would leave the racetrack with an extra $5. But on a loss, the gambler leaves $9 behind.
+
+A "bookie" is someone who provides a service. You can go to a bookie to lay a bit. In drama, this might be done by telephone: "Lay $90 on Valentine" is all the gambler needs to communicate. No money has to change hands. On a win, the bookie will return $50 to the gambler. On a loss, the gambler has a debt of $90.
+
+A bookie is not a gambler; he's an accountant who records numbers. The bookie arranges these numbers so that he makes money. To see this, imagine a horse race including Valentine, Paul Revere, and Epitaph. To start, the bookie specifies odds on each possible outcome, say 5:9 for Valentine, 1:3 for Paul Revere (a favorite!), and 1:2 on Epitaph. 
+
+If the bookie has a good nose, about a third of the stakes will be bet on each outcome. If not, as new bets come in the bookie raises or lowers the odds to encourage or discourage bets so that the roughly one-third of stakes are placed on each outcome. Suppose at the end of the day that $500 is staked on each of the three outcomes. 
+
+WRONG WRONG WRONG. It needs to work that the winning returned for Valentine has to be less than the stakes on the other horses, and similarly for all horses. So if $100 is bet on Valentine we need $100 staked on the other horses.  
+
+
+
+
+
+Added up, these odds are $5+1+1=7$ on the top and $9+2+1=12$ on the bottom. It's important---for the bookie---that the odds are arranged so that the bottom number is larger than the top number: 12 is larger than 11. Note that this method of adding is simpler than combining fractions. To add the fractions $1/2$ and $1/3$ gives $5/6$. But to combine the odds $1:2$ and $1:3$ gives $2:5$. One more detail is needed for a real-life bookies, taking into account the size of each bet. For instance, a $5 bet at 5:9 would be recorded as 25:45.
+
+Now the race is run. The winner is ... well ... from the bookie's point of view it doesn't matter who wins.
+
+
+
+:::
+
+
 
 
 ## "Irrationality"

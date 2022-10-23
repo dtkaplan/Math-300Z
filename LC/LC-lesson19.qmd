@@ -75,3 +75,110 @@ REDO `confint()` so that the columns are named `lower`, `middle`, `upper`
 
 
 --------
+
+## 19.5 (Obj. 19.3)
+
+Calculation of a 95% coverage interval (or any other percent level interval) is straightforward with the right software. To illustrate, consider the efficiency of cars and light trucks in terms of CO_2 emissions per mile driven. We'll use the `CO2city` variable in the `math300::MPG` data frame. The basic calculation using the `mosaic` package is:
+
+
+```{r kangaroo-freeze-candy-1, echo = TRUE}
+df_stats( ~ CO2city, data = math300::MPG, coverage(0.95))
+```
+
+The following figure shows a violin plot of `CO2city` which has been annotated with various coverage intervals. Use the calculation above to identify which of the intervals corresponds to which coverage level.
+
+1. 50% coverage interval -A- (c)
+2. 75% coverage interval -A- (e)
+3. 90% coverage interval -A- (g)
+4. 100% coverage interval -A- (i). This extends from the min to the max, so you could have figured this out just from the figure.
+
+```{r kangaroo-freeze-candy-2, echo = FALSE}
+Res <- NULL
+levels <- c(0.2, 0.4, 0.5, 0.6, 0.75, 0.80, 0.90, 0.95, 1.00)
+letters <- base::letters[1:length(levels)]
+for (k in 1:length(levels)) {
+  new <- df_stats( ~ CO2city, data = math300::MPG, coverage(!!levels[k]))
+  new$id <- paste0("(", letters[k], ")")
+  new$x <- 0.75 + k/20
+  Res <- bind_rows(Res, new)
+}
+gf_violin(CO2city ~ 1, data = math300::MPG, alpha = 0.25, fill = "blue", color = NA) %>%
+  gf_errorbar(lower + upper ~ x, data = Res, inherit=FALSE) %>%
+  gf_text(upper ~ x, label = ~ id, data = Res, nudge_y = 30) %>%
+  gf_lims(x = c(.5, 1.5))
+```
+
+
+--------
+
+## 19.6 (Obj 19.3)
+
+The two jitter + violin graphs below show the distribution of two  different variables, X and Y. Which variable has more variability?
+
+
+
+```{r goat-take-linen-1, echo = FALSE, fig.show = "hold", out.width = "50%"}
+set.seed(101)
+Data <- data.frame(x = rnorm(500, mean = 50, sd = 10)) %>%
+  mutate(y = 7 * round(x /  7), pos = " ")
+gf_jitter(x ~ pos, data = Data, seed = 400, width = 0.2, alpha = 0.5) %>%
+  gf_violin(fill = "gray", color = NA, alpha = 0.5) %>%
+  gf_labs(y = "Variable A", x = "", title = "(a)") %>%
+  gf_lims(y = c(15, 85))
+gf_jitter(y ~ pos, data = Data, height = 1,  seed = 400, alpha = .5) %>%
+  gf_violin(fill = "gray", color = NA, alpha = 0.5, bw = 2) %>%
+  gf_labs(y = "Variable B", x = "", title = "(b)")   %>%
+  gf_lims(y = c(15, 85))
+```
+
+::: {.callout-note}
+## Solution
+
+There is about  the same level of variability in variable A and variable B. This surprises some people. Remember, the amount of variability has to do with the spread of *values* of the variable. In variable B, those values are have a 95% prediction interval of about 30 to 65,  about the same as for variable A. There are two things about plot (b) that  suggest to many people that there is more variability in  variable B. 
+
+1. The larger horizontal spread of the dots. Note that variable B is shown along the vertical axis. The horizontal spread imposed by  jittering is completely arbitrary: the only values that count are on the y axis.  
+2.  The  scalloped, irregular edges of the violin plot. 
+
+On the other hand, some people look at the clustering of the data points in graph (b) into several discrete values, creating empty spaces in between. To them, this clustering implies less variability. And, in a way, it does. But the *statistical* meaning of variability has to do with  the overall spread of the  points, not whether they are restricted to discrete values.   
+
+:::
+
+--------
+
+## 19.7 (Objs. 19.3 & 19.4)
+
+The graphs below show a violin plot of body mass index (BMI) for adults and children. One of the graphs shows a correct 95% coverage interval on BMI, the other does not.
+
+Identify the incorrect graph and say what feature of the graph led to your answer.
+
+
+```{r goat-hurt-painting-1, echo = FALSE}
+Dat <- NHANES %>%
+  dplyr::select(BMI, Age) %>%
+  mutate(age_group = ifelse(Age < 18, "Child", "Adult")) %>%
+  na.omit() 
+Intervals <- df_stats(BMI ~ age_group, data = Dat, 
+                      ci = coverage(0.95))
+P <- gf_violin(BMI ~ age_group, data = Dat, alpha = 0.2, fill = ~ age_group, color = NA) %>%
+  gf_theme(legend.position="none",axis.text = element_text(size = 20), 
+           plot.title = element_text(size = 30)) %>%
+  gf_labs(y = "Body Mass Index", x = "")
+Bogus_intervals <- Intervals %>% mutate(age_group = ifelse(age_group == "Child", "Adult", "Child"))
+
+P %>% 
+  gf_errorbar(ci_lower + ci_upper ~ age_group, data = Bogus_intervals,
+              width = 0.2, size = 2, color = ~ age_group, inherit=FALSE) %>%
+  gf_labs(title = "(a)")
+P %>% 
+  gf_errorbar(ci_lower + ci_upper ~ age_group, data = Intervals,
+              width = 0.2, size = 2, color = ~ age_group, inherit=FALSE) %>%
+  gf_labs(title = "(b)")
+```
+
+::: {.callout-note}
+## Solution
+Graph (b) is correct. In graph (a), you can see that the interval fails to include a lot of the low BMI children and extends too high. For adults, the graph (a) interval extends too far low and doesn't go high enough.
+:::
+
+--------
+

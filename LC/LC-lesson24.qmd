@@ -231,6 +231,56 @@ b. more than one of her close relatives have developed breast cancer? -A- This h
 3. What is the effect size associated with comparing the baseline conditions to a woman with the same conditions but a race of white? -A- Five year risk goes down by 0.3 percentage points, lifetime risk goes down by 0.4 percentage points.
 
 4. What is the effect size of age? Compare the baseline 55-year old woman to herself when she is 65, without the other inputs changing. Since age is quantitative,  Report the effect size as percentage-points-per-year. -A- Five year risk goes up to 1.5%, an increase of 0.1 percentage points per year. Lifetime risk goes down to 5.6%, a rate of -0.67 percentage points per year.
+
+--------
+
 Possibly `Stat2Data::ArcheryData` and ask about effect size.
 
+--------
 
+## 24.ZZ
+
+The graphs shows world record times in the 100m and 200m butterfly swim race as a function of year, sex, and race length. (Data frame: `math300::Butterfly`)
+
+```{r hamster-dive-stove-1, echo = FALSE}
+gf_point(time ~ date | dist, color = ~ sex, data = math300::Butterfly)
+gf_point(time ~ date, shape = ~ factor(dist), color = ~ sex, data = math300::Butterfly)
+```
+
+
+1. In 1980, what is the effect size of race distance? (Make sure to give the units.)
+
+2. In 1980, what is the effect size of sex? (Make sure to give the units.)
+
+3. In 2000, what is the effect size of race distance? (Be sure to give the units.)
+
+----------
+
+## 24WW
+
+@fig-lamb-come-sheet-1 shows a model of the running time of winners of Scottish hill races as a function of climb, distance, and sex.
+
+
+```{r echo = FALSE}
+#| label: fig-lamb-come-sheet-1
+#| fig-cap: "A model of running time in Scottish hill racing versus climb, distance, and sex of the runner"
+mod2 <- lm(time ~ ns(distance, 3)  + ns(climb, 3) * sex, 
+           data = Hill_racing)
+mod_plot(mod2, ~ distance + climb + sex,
+         distance = c(1:25)) %>%
+  gf_theme(legend.position="top") %>% 
+  gf_refine(scale_color_viridis_d())
+y1 <- mod_eval(mod2, distance = 10, climb = 500, sex = "W")$model_output
+y2 <- mod_eval(mod2, distance = 20, climb = 500, sex = "M")$model_output
+y3 <- mod_eval(mod2, distance = 10, climb = 1000, sex = "W")$model_output
+```
+```
+
+Using as a baseline a distance of 10 km, a climb of 500m, and sex female, calculate each of these effect sizes. Remember for quantitative inputs to format the effect size as a *rate*, for instance seconds-per-meter-of-climb.
+
+1. The effect size of climb. Consider an increase of climb by 500m. - For females running a 10 km course, an increase in climb from 500m (the specified baseline for comparison) to 1000m is roughly 2000 seconds. Since climb is quantitative, this should be reported as a rate, the change of output (2000 s) divided by the change in input (500 m). This comes to 4 seconds per meter of climb.
+
+2. The effect size of distance. Consider an increase in distance of 10 km. -A-
+The model output at baseline is about 3500 seconds. The model output for a distance of 20 km (an additional 10 km above baseline) is about 6000 s. The effect size is a rate: (6000 - 3500) s / 10 km, or 250 s/km. For comparison, the fastest 20 km road run by a woman (at the time this is being written) is 1 hour 1 minute 25 seconds, that is, 3685 seconds. This amounts to an average of about 180 s/km. A walker would cover 1 km in about 720 seconds. So the racers are quite fast.
+
+3. Is there any evidence of an interaction between sex and climb? -A- Yes. Note that the lines for different climb amounts are vertically spaced more widely for females than for males. This means that the effect size of climb differs between the sexes. That's an interaction between climb and sex.

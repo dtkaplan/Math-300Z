@@ -179,3 +179,94 @@ total_fatalities = drivers + passengers + unknown +
   motorcyclist + nonmotorist
 ```
 :::
+
+--------=
+
+## Unit of observation
+
+
+```{r kitten-drink-sofa-default, include = FALSE}
+One <- tribble(
+  ~ mechanic, ~ product, ~ price, ~ date,
+  "Anne", "starter", 170.00, as.Date('2019-01-12'),
+  "Beatrice", "shock absorber", 78.42, as.Date('2019-01-12'),
+  "Anne", "alternator", 385.95, as.Date('2019-01-12'),
+  "Clarisse", "brake shoe", 39.50, as.Date("2019-01-12"),
+  "Clarisse", "brake shoe", 39.50, as.Date("2019-01-12"),
+  "Beatrice", "radiator hose", 17.90, as.Date("2019-02-12")
+)
+```
+
+The data table below records activity at a neighborhood car repair shop.
+
+`r knitr::kable(One)`
+
+The codebook for a data table should describe what is the unit of observation. For the purpose of this exercise, your job is to comment on each of the following possibilities and say why or why not this is plausibly the unit of observation.
+
+a. a day. -A- There must be more to it than that, since the same date may be repeated with different values for the other variables. 
+b. a mechanic. -A- No. The same mechanic appears multiple times, so the unit of observation is not simply a mechanic.
+c. a car part used in a repair. -A- Could be, for instance if every time a mechanic installs a part a new entry is added to the table describing the part, its price, the date, and the mechanic doing the work.
+
+--------
+
+## Graphics and data
+
+```{r horse-dig-shoe-default, include = FALSE}
+SDSdata::sds_setup()
+set.seed(101)
+For_plotting <- 
+  NHANES %>%
+  dplyr::select(Poverty, HomeRooms) %>%
+  na.omit() %>%
+  filter(HomeRooms < 6, Poverty < 3) %>%
+  arrange(HomeRooms) %>%
+  mutate(symbol = "o", size = 1)
+Jittered <-
+  For_plotting %>% 
+  mutate(HomeRooms = HomeRooms + runif(nrow(.), min = -0.2, max = 0.2))
+indices <- c(122, 154, 220, 222)
+Jittered$symbol[indices] <- letters[1:length(indices)]
+Jittered$size[indices] <- 4
+```
+
+
+
+The graphic below contains a single data layer. Four of the data points are annotated with letters in order to identify them specifically.
+
+
+```{r horse-dig-shoe-1, echo = FALSE}
+  gf_point(HomeRooms ~ Poverty, data = Jittered, alpha = 0.2) %>%
+    gf_text(HomeRooms ~ Poverty, data = Jittered %>% filter(symbol != "o"),
+            size = 8, color="blue",
+            label = ~ symbol) %>%
+  gf_theme(legend.position="none") %>%
+  gf_labs(x = "Income (multible of poverty level)", y = "Number of rooms in dwelling")
+
+```
+
+**Part 1**
+
+1. Is the income level of "a" greater than "b"? -A- no
+2. Is the income level of "d" greater than "a"? -A- no
+3. Is the number of rooms greater for "b" than for "a"? -A- no
+4. Is the number of rooms greater for "c" than for "a"? -A- no
+
+**Part 2**
+
+Here is the data plotted in the figure.
+
+```{r horse-dig-shoe-2, echo = FALSE}
+set.seed(104)
+bind_rows(Jittered[indices,], sample_n(Jittered[1:300,], size = 6)) %>%
+  mosaic::shuffle() %>%
+  dplyr::select(income = Poverty, `number_of_rooms` = HomeRooms, symbol) %>%
+  mutate(row = row_number(), number_of_rooms = round(number_of_rooms)) %>%
+  dplyr::select(row, income, number_of_rooms) %>%
+  sds_table(show_n = 10, nrows = nrow(Jittered))
+```
+
+The points a, b, c, and d, are shown in the table. For each of a, b, c, d, say which row corresponds to the point. -A- a is row 8, b is row 7, c is row 2, d is row 1
+
+--------
+
+## 

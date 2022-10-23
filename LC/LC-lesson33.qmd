@@ -41,3 +41,20 @@ A major company in big trouble is planning to lay off 20% of its employees. You 
     - What are the log odds of her being laid off? -A- At baseline, her log odds is -1.4. Being a software engineer, her log odds are lower by 0.5. But she makes more than the average pay by $10,000, which adds 0.2  to her log odds. Altogether, -1.4 - 0.5 + 0.2  = -1.7.
     - Translate the log odds into an absolute risk of her being laid off. -A- Undoing the logarithm on -1.7 gives an odds of 0.18, which corresponds to a probability of 0.18/(1 + 0.18) or 15%. 
 
+--------
+
+In LC 24.2, we took as baseline inputs for [this online breast-cancer risk assessment model]((https://bcrisktool.cancer.gov/calculator.html),  a 55-year-old, African-American woman who has never had a breast biopsy or any history of breast cancer, who doesn't know her BRCA status, and whose close relatives have no history of breast cancer, whose first menstrual period was at age 13 and first child at age 23.  
+
+For this baseline case, the output of the model was a probability of 1.4% five-year risk of developing breast cancer. Finding out that one close relative has developed breast cancer elevates this risk to 2.2%. 
+
+These are absolute risks: probabilities. The effect size is 2.2 - 1.4 = 0.8 percentage points. When risks are specified as probabilities, differences in risks are in "percentage points."
+
+1. What *risk ratio* corresponds to the 1.4 to 2.2 change of risk? -A- This  is a simple ratio: 2.2% / 1.4% which is 1.57.
+
+2. Suppose (hypothetically) that the risks were ten times higher: 14% and 22%. 
+    a. What would be the risk ratio? -A- Still 1.57.
+    b. What would be the percentage point change in absolute risk? -A- 8 percentage points.
+
+3. Put yourself in the place of the baseline woman who has just found out that a close relative developed breast cancer. Which way of reporting a change of risk is more pertinent to your personal life? -A- The change in absolute risk. Even though the risk ratios are the same in (1) and (2), the change in absolute  risk is much greater in (2).
+
+--------

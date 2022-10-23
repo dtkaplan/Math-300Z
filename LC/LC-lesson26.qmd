@@ -86,3 +86,59 @@ The 95% prediction interval contains 95% of the results. That puts a fraction of
 :::
 
 --------
+
+## 26.GG
+
+The town where you live has just gone through a so-called 100-year rain storm, which caused flooding of the town's sewage treatment plant and consequent general ickiness. The city council is holding a meeting to discuss install flood barriers around the sewage treatment plant. The are trying to decide how urgent it is to undertake this expensive project. When will the next 100-year storm occur.
+
+To address the question, the city council has enlisted you, the town's most famous data scientist, to do some research to find the soonest that a 100-year flood can re-occcur. 
+
+You look at the historical weather records for towns that had a 100-year flood at least 20 years ago. The records start in  1900 and you found 1243 towns with a 100-year flood that happened 20 or more years ago. The plot shows, for all the towns that had a 100-year flood at least 20 years ago, how long it was until the next flood occurred.  Those town for which  no second flood occurred are shown in a different color.
+
+
+You explain to the city council what a 95% prediction  interval is and that you will put your prediction in the form of a probability of 2.5% that the flood will occur sooner than the date you give. You show them how to count dots on a jitter plot to find the 2.5% level.
+
+
+```{r lobster-spend-cotton-1, echo = FALSE, fig.show = "hold", out.width = "50%"}
+set.seed(101)
+n = 1243
+Floods <- data.frame(year = runif(n, min = 1900, max = 1998), interval = rexp(n, rate = 1/100)) %>%
+  mutate(next_flood = year + interval, second_flood = ifelse(next_flood < 2019, "flood", "not yet"),
+         capped_year = pmin(2018, next_flood), 
+         capped_interval = capped_year -year,
+         pos = " ")
+P <- gf_jitter(capped_interval ~ pos, height = 0, data = Floods, color = ~ second_flood, width = 0.25,
+          alpha = 0.8, seed = 400 ) %>%
+  #gf_violin(capped_interval ~ pos, fill = "gray", alpha  = 0.3,  color = NA) %>%
+  gf_labs(y = "Interval to Next Flood (years)", x = "", title = paste(n, "100-year floods")) %>%
+  gf_theme(legend.position = "left")
+
+P
+P %>% gf_lims(y = c(0, 10)) %>%
+  gf_labs(title = paste(n, "100-year floods, recurrence before 10 years")) %>%
+  gf_theme(legend.position = "none")
+
+```
+
+Since the town council is thinking of making the  wall-building investment in the  next 10 years, you also have provided a zoomed-in plot showing just the floods where the interval to the next flood was less than ten years.
+
+a. You have n = 1243 floods in your database. How many is 2.5% of  1243? -A- 31
+b. Using the zoomed-in plot, starting at the bottom count the number of floods you  calculated in part (a). A line  drawn where the counting stops is the location of  the bottom of the 95% coverage interval. Where is the bottom of the 95% interval.-A- About 2.5 years. 
+c. A council member proposes that the town act soon enough so that there is a 99% chance that the next 100-year flood will not occur before the work is finished. It will take 1 year to finish the work, once it is started.  According  to your data, when should the  town start work? -A- Find the bottom limit that excludes 1% of the 1243 floods in your data. This will be  between the 12th and 13th flood, counting up from the bottom. This will be  at about 1.25 years, that is 15 months. So the town has 3 months before work must begin. That answer will be a big surprise to those who think the next 100-year flood won't come  for about 100 years.
+d. A council member has a question. "Judging from the graph on the left, are you saying that the next 100-year flood *must*  come sometime within the next 120 years?" No, that's not how the graph shold  be read. Explain why. -a- Since the  records only start in 1900, the  longest possible  interval  can be 120 years, that is, from about 2020 to 1900.  About half of the dots in the plot reflect towns that haven't yet had a recurrence 100-year flood. Those could happen at any time, and presumably many of them will happen after an interval of, say, 150 years or even longer.
+
+--------
+
+## 26.WW
+
+::: {.callout-warning}
+## In draft
+This exercise will be about the  mean square error when modeling BMI versus weight. Weight is not the same thing as BMI, though  it is closely related. You  can  see from the data the amount of variation  there is  in BMI at any given weight. 
+
+Add in Height  as an explanatory variable. Mean square  error gets smaller. (R^2 goes from .85 to .95)
+
+FOR EXTRA CREDIT?
+Model log BMI against log Weight + log Height. RMS residual is zero.
+:::
+
+--------
