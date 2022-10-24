@@ -17,4 +17,116 @@ Given some classifier summaries, calculate the false-positive and false-negative
 
 --------
 
+## 35.Q
+
+```{r snail-rise-table-default, include = FALSE}
+Our_data <- tribble(
+  ~ species, ~ size, ~ color,
+  "A", "large", "reddish",
+  "B", "large", "brownish",
+  "B", "small", "brownish",
+  "A", "large", "brownish", 
+)[c(1,1,1,2,3,4,4,4),]
+```
+
+TITLE GOES HERE: Customize the classifiers in (ref:ant-take-room) for a population in which species A is three times as common as species B.
+
+::: {callout-note}
+## Solution
+
+Follow the same procedure as in (ref:ant-take-room), but duplicate each of the A rows two times, so that the data show a world in which A is three times as common as B. That is,  
+
+```{r snail-rise-table-1, echo = FALSE}
+knitr::kable(Our_data, show_n = 10)
+```
+
+For the classifier using just size as an explanatory variable ... There are 7 rows for which size is large. Of these six are species A so the classifier output is 6/7. For size small, there is just one row, which  is B, so the classifier output is 0/1.
+
+For the classifier using just color as an explanatory variable ... There are five rows for which color is brownish. Of these, 2 are species A. So the classifier output is 2/5 for brownish. For reddish, the classifier output is 3/3.
+
+:::
+
+--------
+
+## 35.R
+
+The two tables below are different summaries of the Univ. of California Berkeley graduate admissions data from the 197e fall quarter. (Data frame: `UCB_applicants`) Each of the tables is about conditional probabilities about admission and sex.
+
+```{r zebra-do-magnet-0, echo = FALSE}
+output <- ifelse(knitr::is_latex_output(), "latex", "html")
+mosaic::tally(~ gender | admit, data = UCB_applicants, format = "percent") %>%
+  round(1) %>% 
+  knitr::kable(caption = "Table A", row.names = TRUE, format = output) %>%
+    kableExtra::kable_styling(full_width = FALSE)
+mosaic::tally(~ admit | gender, data = UCB_applicants, format = "percent") %>%
+  round(1) %>% 
+  knitr::kable(caption = "Table B", row.names = TRUE, format = output) %>%
+    kableExtra::kable_styling(full_width = FALSE)
+```
+
+1. Which table displays p(sex given admit)? 
+
+::: {.callout-note} 
+## Solution Table 
+A
+:::
+
+2. Which table displays p(admit given sex)? 
+
+::: {.callout-note} 
+## Solution 
+Table B
+:::
+
+3. Which of these statements is true?
+    a. Table A shows that admitted students are more likely to be male. 
+    
+::: {.callout-note} 
+## Solution 
+True
+:::
+
+    b. Table A shows that rejected students are more likely to be male. 
+    
+::: {.callout-note} 
+## Solution 
+True
+:::
+
+    c. Table A shows that females are less likely to be admitted than rejected. 
+::: {.callout-note} 
+## Solution False. 
+
+There's nothing in Table A to tell us what fraction of applicants were admitted. Because table A stratifies by  admitted/rejected, we don't know how large those two groups are with respect to one another.
+:::
+
+    d. Table B shows that admitted students are more likely to be male. 
+    
+::: {.callout-note} 
+## Solution False. 
+Table B is stratified on female/male. As  a result, there's no information in Table B about what fraction of applicants is male.
+:::
+
+    e. Table B shows that females are less likely to be admitted than males. 
+    
+4. Suppose you are interested in the possibility of discrimination against women in graduate admissions (in Berkeley in 1973). Which of these questions is the right one to ask, and which table gives you the information needed to answer the question?
+    a. What is the probability of an admitted student being a female compared to the probability of a rejected student being a female? 
+    
+::: {.callout-note} 
+## Solution False. 
+The question is about the relative admissions probability of females and males.
+:::
+
+    b. What is the probability of a female applicant being admitted compared to the probability that an admitted student is male? 
+
+::: {.callout-note} 
+## Solution False. You want to compare like with like. The group involved in "the probability of a female student being admitted" is females, whereas the group involved in  "the probability that an admitted student is male" is admitted students. There's little if any meaning in comparing a probability among the group of females to a probability among group of admitted students.
+:::
+
+    c. What is the probability of  a female applicant being admitted compared to the probability of a male applicant being admitted? 
+    
+::: {.callout-note} 
+## Solution True. 
+We want to compare two groups: females and males. Here, we're comparing the probability of being admitted in each of the comparison groups. Table **B** is formatted to enable this comparison. 
+:::
 

@@ -4,6 +4,7 @@ title: "Learning Checks Lesson 24"
 
 ```{r include=FALSE}
 source("../_startup.R")
+library(NHANES)
 ```
 
 ::: {.callout-warning}
@@ -91,9 +92,11 @@ Effect sizes generally come with *units* and you have to take into account the u
 
 Move the `Loans` data into the `math300` package. But for now ...
 
-```{r}
+```{r message=FALSE}
 Loans <- readr::read_csv("data/loans.csv")
 ```
+
+:::
 
 A case in point is provided by the `Loans` data frame, which records dozens of variables on each of 10,000 loans made through the Lending Club. The interest rate at which the loans are made varies substantially from loan to loan. Presumably, higher interest rates reflect a higher perception of risk of default (which would lead to the lender losing his or her money).
 
@@ -149,7 +152,7 @@ Our_data <- MPG %>%
   filter( !is.na(vol_passenger), n_cyl %in% c(4, 6),  
           fuel %in% c("G", "GP"), hybrid != "hybrid") %>%
   mutate(n_cyl = as.character(n_cyl)) %>%
-  select(CO2_year, n_cyl)
+  dplyr::select(CO2_year, n_cyl)
 
 Stats <- df_stats(CO2_year ~ n_cyl, data = Our_data, center=mean(), mean = ci.mean())
 gf_violin(CO2_year ~ n_cyl, data  = Our_data, color = NA, fill = "gray", alpha = 0.4) %>%
@@ -242,7 +245,7 @@ Possibly `Stat2Data::ArcheryData` and ask about effect size.
 
 The graphs shows world record times in the 100m and 200m butterfly swim race as a function of year, sex, and race length. (Data frame: `math300::Butterfly`)
 
-```{r hamster-dive-stove-1, echo = FALSE}
+```{r hamster-dive-stove-1, echo = FALSE, warning=FALSE}
 gf_point(time ~ date | dist, color = ~ sex, data = math300::Butterfly)
 gf_point(time ~ date, shape = ~ factor(dist), color = ~ sex, data = math300::Butterfly)
 ```
@@ -274,7 +277,6 @@ y1 <- mod_eval(mod2, distance = 10, climb = 500, sex = "W")$model_output
 y2 <- mod_eval(mod2, distance = 20, climb = 500, sex = "M")$model_output
 y3 <- mod_eval(mod2, distance = 10, climb = 1000, sex = "W")$model_output
 ```
-```
 
 Using as a baseline a distance of 10 km, a climb of 500m, and sex female, calculate each of these effect sizes. Remember for quantitative inputs to format the effect size as a *rate*, for instance seconds-per-meter-of-climb.
 
@@ -284,3 +286,33 @@ Using as a baseline a distance of 10 km, a climb of 500m, and sex female, calcul
 The model output at baseline is about 3500 seconds. The model output for a distance of 20 km (an additional 10 km above baseline) is about 6000 s. The effect size is a rate: (6000 - 3500) s / 10 km, or 250 s/km. For comparison, the fastest 20 km road run by a woman (at the time this is being written) is 1 hour 1 minute 25 seconds, that is, 3685 seconds. This amounts to an average of about 180 s/km. A walker would cover 1 km in about 720 seconds. So the racers are quite fast.
 
 3. Is there any evidence of an interaction between sex and climb? -A- Yes. Note that the lines for different climb amounts are vertically spaced more widely for females than for males. This means that the effect size of climb differs between the sexes. That's an interaction between climb and sex.
+
+--------
+
+## 24.R
+
+Over the past hundred years, attitudes toward sex have changed. Let's examine one way that this change might show up in data: the age at which people first had sex. The National Health and Nutrition Evaluation Survey includes a question about the age at which a person first had sex. For the moment, let's focus just on that subset of people who have had sex at least once. 
+
+
+```{r wolf-begin-jacket-1, echo = FALSE, warning=FALSE}
+For_sex <-
+  NHANES %>% 
+  dplyr::select(Gender, Age, SexAge) %>% 
+  na.omit() %>%
+  mutate(Year_born = 2011 - Age) %>%
+  filter(Year_born < 1999, SexAge > 11)
+mod1 <- lm(SexAge ~ Year_born * Gender, data = For_sex %>% filter(SexAge < 20))
+mod2 <- MASS::rlm(SexAge ~ Year_born * Gender, data = For_sex %>% filter(SexAge < 20))
+pts1 <- mod_eval(mod1, nlevels = Inf)
+
+gf_jitter(SexAge ~ Year_born | Gender, color = ~ Gender, data = For_sex, alpha = 0.2) %>%
+  gf_line(model_output ~ Year_born, color = "black", data = pts1) %>%
+  gf_lims(y = c(8,23))
+```
+
+
+1. What is the effect size of year born on age at first sex? Use units of years-over-years. -A- The model output is 17 years for those born round about 1940, and slightly more than 16 years for those born around 1990. The effect size is therefore about negative 1 year per 50 years
+
+2. Is there evidence for an interaction between gender and year born? -A- No, the slopes of the lines are essentially identical for males and females.
+
+3. Translate the effect size in (1) to the units weeks-over-years. -A- 1 year per 50 years is the same as 52 weeks per 50 years, or about one week per year.

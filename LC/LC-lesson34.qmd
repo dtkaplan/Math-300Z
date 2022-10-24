@@ -121,7 +121,7 @@ gf_jitter(MaritalStatus ~ Age | Gender,
 A very simple classifier can be constructed just by indicating at each age which marital status is the most likely, as seen in the figure below.
 
 
-```{r ash-chew-kitchen-0, echo = FALSE, cache=TRUE, message=FALSE}
+```{r ash-chew-kitchen-0, echo = FALSE, message=FALSE}
 mod1 <- kernlab::ksvm(MaritalStatus ~ Age + Gender, data = NHANES_small, prob.model = TRUE)
 Eval_at <- unique(NHANES_small)
 Eval_at$response <- predict(mod1, newdata = Eval_at)

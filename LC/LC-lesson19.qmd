@@ -8,6 +8,7 @@ The `math300` package will be needed for lessons 20 through 39.
 
 ```{r message=FALSE}
 library(math300)
+library(NHANES)
 ```
 
 
@@ -182,3 +183,40 @@ Graph (b) is correct. In graph (a), you can see that the interval fails to inclu
 
 --------
 
+## 19.E
+
+There are two equivalent formats describing an interval numerically that are widely used:
+
+i. Specify the lower and upper endpoints of the interval, e.g. 7 to 13.
+ii. Specify  the center and half-width of the interval, e.g. 10 ± 3, which is  just the same as 7 to 13.
+
+Complete the following table to show the equivalences between the two notations.
+
+```{r rabbit-put-pen-1, echo=FALSE}
+This_table <- tribble(
+~ Interval, ~ "bottom-to-top", ~ "plus-or-minus",
+"(a)", "3 to 11", "",
+"(b)",  "" , "108 ± 10",
+"(c)", "", "30 ± 1",
+"(d)",  "97 to  100"  , "",
+"(e)",  "-4 to  16"   , "",
+)
+knitr::kable(This_table)
+```
+
+::: {.callout-note}
+## Solution
+
+a. 7 ± 4
+b. 98 to 118
+c. 29 to 31
+d. 98.5 ± 1.5
+e. 6 ± 10
+
+It's a matter of judgement which format to use. The bottom-to-top notation highlights the range of the interval  while the plus-or-minus notation emphasizes the center of the interval. As a rule of thumb, I suggest this:
+
+* If the first two digits are different between the top and bottom of the interval, use the bottom-to-top notation. So,  write 387 to 393.  If the first two digits are the same, use plus-or-minus. For instancer, the ratio of the mass of the Earth to that of the Moon is 81.3005678 ± 0.0000027. This is easier to take in at a glance than the equivalent 81.3005651 - 81.3005708
+
+:::
+
+--------

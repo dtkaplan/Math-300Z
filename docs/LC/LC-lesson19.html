@@ -184,7 +184,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
 <p>The <code>math300</code> package will be needed for lessons 20 through 39.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(math300)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(math300)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="objective-2" class="level2">
@@ -247,9 +248,165 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="solution-3" class="level3">
 <h3 class="anchored" data-anchor-id="solution-3">Solution</h3>
 <hr>
-
-
 </section>
+</section>
+<section id="obj.-19.3" class="level2">
+<h2 class="anchored" data-anchor-id="obj.-19.3">19.5 (Obj. 19.3)</h2>
+<p>Calculation of a 95% coverage interval (or any other percent level interval) is straightforward with the right software. To illustrate, consider the efficiency of cars and light trucks in terms of CO_2 emissions per mile driven. We’ll use the <code>CO2city</code> variable in the <code>math300::MPG</code> data frame. The basic calculation using the <code>mosaic</code> package is:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>( <span class="sc">~</span> CO2city, <span class="at">data =</span> math300<span class="sc">::</span>MPG, <span class="fu">coverage</span>(<span class="fl">0.95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  response   lower   upper
+1  CO2city 276.475 684.525</code></pre>
+</div>
+</div>
+<p>The following figure shows a violin plot of <code>CO2city</code> which has been annotated with various coverage intervals. Use the calculation above to identify which of the intervals corresponds to which coverage level.</p>
+<ol type="1">
+<li>50% coverage interval -A- (c)</li>
+<li>75% coverage interval -A- (e)</li>
+<li>90% coverage interval -A- (g)</li>
+<li>100% coverage interval -A- (i). This extends from the min to the max, so you could have figured this out just from the figure.</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="LC-lesson19_files/figure-html/kangaroo-freeze-candy-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<hr>
+</section>
+<section id="obj-19.3" class="level2">
+<h2 class="anchored" data-anchor-id="obj-19.3">19.6 (Obj 19.3)</h2>
+<p>The two jitter + violin graphs below show the distribution of two different variables, X and Y. Which variable has more variability?</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="LC-lesson19_files/figure-html/goat-take-linen-1-1.png" class="img-fluid" style="width:50.0%"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="LC-lesson19_files/figure-html/goat-take-linen-1-2.png" class="img-fluid" style="width:50.0%"></p>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There is about the same level of variability in variable A and variable B. This surprises some people. Remember, the amount of variability has to do with the spread of <em>values</em> of the variable. In variable B, those values are have a 95% prediction interval of about 30 to 65, about the same as for variable A. There are two things about plot (b) that suggest to many people that there is more variability in variable B.</p>
+<ol type="1">
+<li>The larger horizontal spread of the dots. Note that variable B is shown along the vertical axis. The horizontal spread imposed by jittering is completely arbitrary: the only values that count are on the y axis.<br>
+</li>
+<li>The scalloped, irregular edges of the violin plot.</li>
+</ol>
+<p>On the other hand, some people look at the clustering of the data points in graph (b) into several discrete values, creating empty spaces in between. To them, this clustering implies less variability. And, in a way, it does. But the <em>statistical</em> meaning of variability has to do with the overall spread of the points, not whether they are restricted to discrete values.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="objs.-19.3-19.4" class="level2">
+<h2 class="anchored" data-anchor-id="objs.-19.3-19.4">19.7 (Objs. 19.3 &amp; 19.4)</h2>
+<p>The graphs below show a violin plot of body mass index (BMI) for adults and children. One of the graphs shows a correct 95% coverage interval on BMI, the other does not.</p>
+<p>Identify the incorrect graph and say what feature of the graph led to your answer.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="LC-lesson19_files/figure-html/goat-hurt-painting-1-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="LC-lesson19_files/figure-html/goat-hurt-painting-1-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Graph (b) is correct. In graph (a), you can see that the interval fails to include a lot of the low BMI children and extends too high. For adults, the graph (a) interval extends too far low and doesn’t go high enough.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="e" class="level2">
+<h2 class="anchored" data-anchor-id="e">19.E</h2>
+<p>There are two equivalent formats describing an interval numerically that are widely used:</p>
+<ol type="i">
+<li>Specify the lower and upper endpoints of the interval, e.g.&nbsp;7 to 13.</li>
+<li>Specify the center and half-width of the interval, e.g.&nbsp;10 ± 3, which is just the same as 7 to 13.</li>
+</ol>
+<p>Complete the following table to show the equivalences between the two notations.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Interval</th>
+<th style="text-align: left;">bottom-to-top</th>
+<th style="text-align: left;">plus-or-minus</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(a)</td>
+<td style="text-align: left;">3 to 11</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(b)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">108 ± 10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(c)</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">30 ± 1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(d)</td>
+<td style="text-align: left;">97 to 100</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(e)</td>
+<td style="text-align: left;">-4 to 16</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>7 ± 4</li>
+<li>98 to 118</li>
+<li>29 to 31</li>
+<li>98.5 ± 1.5</li>
+<li>6 ± 10</li>
+</ol>
+<p>It’s a matter of judgement which format to use. The bottom-to-top notation highlights the range of the interval while the plus-or-minus notation emphasizes the center of the interval. As a rule of thumb, I suggest this:</p>
+<ul>
+<li>If the first two digits are different between the top and bottom of the interval, use the bottom-to-top notation. So, write 387 to 393. If the first two digits are the same, use plus-or-minus. For instancer, the ratio of the mass of the Earth to that of the Moon is 81.3005678 ± 0.0000027. This is easier to take in at a glance than the equivalent 81.3005651 - 81.3005708</li>
+</ul>
+</div>
+</div>
+<hr>
+
+
 </section>
 
 </main> <!-- /main -->

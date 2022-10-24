@@ -67,7 +67,7 @@ lm(list_price ~ amazon_price, data = amazon_books) %>% broom::tidy()
 1. You can read the confidence interval directly from the `confint()` report. For the regression report, calculate the confidence interval as the estimate $\pm 2$ times the "standard error."
 
 2. Just to look at the `amazon_price()` coefficient, the list price is about 8% higher than the Amazon price. Here, "about" means 5% to 13%. But don't forget the intercept. The list price is, on average, about $4.50 higher than the 1.08 multiplier on the Amazon price.
-
+:::
 
 **Model 2**.
 
@@ -82,7 +82,7 @@ lm(list_price ~ amazon_price + hard_paper, data = amazon_books) %>% broom::tidy(
 ```
 
 A hardcover costs about $2 to $4 more than a paperback.
-
+:::
 
 ::: {.callout-warning}
 ## Note in draft

@@ -294,7 +294,16 @@ Solution
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section">24.2</h2>
 <p>Effect sizes generally come with <em>units</em> and you have to take into account the units in order to know if the effect is important or not.</p>
-<p>::: {.callout-warning} ## In draft</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+In draft
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Move the <code>Loans</code> data into the <code>math300</code> package. But for now …</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Loans <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"data/loans.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -307,6 +316,8 @@ dbl (42): emp_length, annual_income, debt_to_income, annual_income_joint, de...
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
 </div>
 </div>
 <p>A case in point is provided by the <code>Loans</code> data frame, which records dozens of variables on each of 10,000 loans made through the Lending Club. The interest rate at which the loans are made varies substantially from loan to loan. Presumably, higher interest rates reflect a higher perception of risk of default (which would lead to the lender losing his or her money).</p>
@@ -455,7 +466,63 @@ In draft
 </ol>
 <ol start="3" type="1">
 <li><p>What is the effect size associated with comparing the baseline conditions to a woman with the same conditions but a race of white? -A- Five year risk goes down by 0.3 percentage points, lifetime risk goes down by 0.4 percentage points.</p></li>
-<li><p>What is the effect size of age? Compare the baseline 55-year old woman to herself when she is 65, without the other inputs changing. Since age is quantitative, Report the effect size as percentage-points-per-year. -A- Five year risk goes up to 1.5%, an increase of 0.1 percentage points per year. Lifetime risk goes down to 5.6%, a rate of -0.67 percentage points per year. Possibly <code>Stat2Data::ArcheryData</code> and ask about effect size.</p></li>
+<li><p>What is the effect size of age? Compare the baseline 55-year old woman to herself when she is 65, without the other inputs changing. Since age is quantitative, Report the effect size as percentage-points-per-year. -A- Five year risk goes up to 1.5%, an increase of 0.1 percentage points per year. Lifetime risk goes down to 5.6%, a rate of -0.67 percentage points per year.</p></li>
+</ol>
+<hr>
+<p>Possibly <code>Stat2Data::ArcheryData</code> and ask about effect size.</p>
+<hr>
+</section>
+<section id="zz" class="level2">
+<h2 class="anchored" data-anchor-id="zz">24.ZZ</h2>
+<p>The graphs shows world record times in the 100m and 200m butterfly swim race as a function of year, sex, and race length. (Data frame: <code>math300::Butterfly</code>)</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="LC-lesson24_files/figure-html/hamster-dive-stove-1-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="LC-lesson24_files/figure-html/hamster-dive-stove-1-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol type="1">
+<li><p>In 1980, what is the effect size of race distance? (Make sure to give the units.)</p></li>
+<li><p>In 1980, what is the effect size of sex? (Make sure to give the units.)</p></li>
+<li><p>In 2000, what is the effect size of race distance? (Be sure to give the units.)</p></li>
+</ol>
+<hr>
+</section>
+<section id="ww" class="level2">
+<h2 class="anchored" data-anchor-id="ww">24WW</h2>
+<p><a href="#fig-lamb-come-sheet-1">Figure&nbsp;1</a> shows a model of the running time of winners of Scottish hill races as a function of climb, distance, and sex.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-lamb-come-sheet-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="LC-lesson24_files/figure-html/fig-lamb-come-sheet-1-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure 1: A model of running time in Scottish hill racing versus climb, distance, and sex of the runner</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Using as a baseline a distance of 10 km, a climb of 500m, and sex female, calculate each of these effect sizes. Remember for quantitative inputs to format the effect size as a <em>rate</em>, for instance seconds-per-meter-of-climb.</p>
+<ol type="1">
+<li><p>The effect size of climb. Consider an increase of climb by 500m. - For females running a 10 km course, an increase in climb from 500m (the specified baseline for comparison) to 1000m is roughly 2000 seconds. Since climb is quantitative, this should be reported as a rate, the change of output (2000 s) divided by the change in input (500 m). This comes to 4 seconds per meter of climb.</p></li>
+<li><p>The effect size of distance. Consider an increase in distance of 10 km. -A- The model output at baseline is about 3500 seconds. The model output for a distance of 20 km (an additional 10 km above baseline) is about 6000 s. The effect size is a rate: (6000 - 3500) s / 10 km, or 250 s/km. For comparison, the fastest 20 km road run by a woman (at the time this is being written) is 1 hour 1 minute 25 seconds, that is, 3685 seconds. This amounts to an average of about 180 s/km. A walker would cover 1 km in about 720 seconds. So the racers are quite fast.</p></li>
+<li><p>Is there any evidence of an interaction between sex and climb? -A- Yes. Note that the lines for different climb amounts are vertically spaced more widely for females than for males. This means that the effect size of climb differs between the sexes. That’s an interaction between climb and sex.</p></li>
+</ol>
+<hr>
+</section>
+<section id="r" class="level2">
+<h2 class="anchored" data-anchor-id="r">24.R</h2>
+<p>Over the past hundred years, attitudes toward sex have changed. Let’s examine one way that this change might show up in data: the age at which people first had sex. The National Health and Nutrition Evaluation Survey includes a question about the age at which a person first had sex. For the moment, let’s focus just on that subset of people who have had sex at least once.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="LC-lesson24_files/figure-html/wolf-begin-jacket-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol type="1">
+<li><p>What is the effect size of year born on age at first sex? Use units of years-over-years. -A- The model output is 17 years for those born round about 1940, and slightly more than 16 years for those born around 1990. The effect size is therefore about negative 1 year per 50 years</p></li>
+<li><p>Is there evidence for an interaction between gender and year born? -A- No, the slopes of the lines are essentially identical for males and females.</p></li>
+<li><p>Translate the effect size in (1) to the units weeks-over-years. -A- 1 year per 50 years is the same as 52 weeks per 50 years, or about one week per year.</p></li>
 </ol>
 
 

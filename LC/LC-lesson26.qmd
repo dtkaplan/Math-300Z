@@ -142,3 +142,112 @@ Model log BMI against log Weight + log Height. RMS residual is zero.
 :::
 
 --------
+
+## 26.NN
+
+
+```{r squirrel-cost-rug-default, include = FALSE}
+Small_data <- MPG %>%
+  dplyr::select(mpg_city, doors) %>%
+  mutate(doors = ifelse(is.na(doors), "NA", doors))
+
+```
+
+The violin plot shows gasoline consumption (in miles-per-gallon for city driving) stratified by the number of passenger doors for the `SDSdata::MPG` data frame. (For many vehicles, the values are missing. These are marked "NA".)
+
+
+
+```{r squirrel-cost-rug-1, echo = FALSE}
+P <- Small_data %>%
+  gf_violin(mpg_city ~ doors, fill = "gray", alpha = 0.5, color = NA) %>%
+  gf_labs(y = "Gasoline consumption (MPG in city)", x = "Number of passenger doors")
+P
+```
+
+a. Sketch in 95% prediction intervals for gasoline consumption stratified by the number of passenger doors. 
+
+::: {.callout-note} ## Solution
+```{r squirrel-cost-rug-2, echo = FALSE}
+Stats <-
+  Small_data  %>%
+  df_stats(mpg_city ~ doors, data = ., coverage())
+P %>% 
+  gf_errorbar(lower + upper ~ doors, data = Stats, width = 0.2, inherit=FALSE)
+```
+:::
+
+b. Which category -- 2 doors, 4 doors, or NA -- has the largest number of vehicles? 
+
+::: {.callout-note}
+## Solution
+There is no way to tell from the violin graph. Each violin shows the distribution of values *within* its category. There's no information about how many data rows are comprised by an individual violin.
+:::
+
+The unit of observation in the `MPG` data frame is "a model of car". There are `r nrow(MPG)` different models included in `MPG`, thus `r nrow(MPG)` rows. Imagine that you had another data frame with the same variables as `MPG`, but where the unit of observation were "a registered vehicle". There are roughly 290 million vehicles registered in the US, so the data frame would have 290 million rows. Also imagine (probably contrary to reality at present) that car models with relatively high miles per gallon are much more popular than cars with low miles per gallon. 
+
+c. Sketch out what the `MPG ~ doors` violins would look like for the 290 million-row table.
+
+::: {.callout-note} 
+## Solution
+
+Compared to the `r nrow(MPG)` data frame, the violins would be fatter at the higher miles-per-gallon and correspondingly thinner at low miles-per-gallon. If they are fatter in one place, they must be thinner in another so that the overall area of each violin stays the same.
+
+The graph shows an imagined scenario where cars with a 10 mile-per-gallon increase in fuel efficiency triples the popularity of a car model.
+
+```{r squirrel-cost-rug-3, echo = FALSE}
+setting_up <-
+  Small_data  %>%
+  mutate(nreps = round(3^((mpg_city - 8)/10)))
+Large <- setting_up[rep(1:nrow(setting_up), setting_up$nreps), ]
+Stats_large <- df_stats(mpg_city ~ doors, data = Large, coverage)  
+Large %>%
+  gf_violin(mpg_city ~ doors, fill = "gray", alpha = 0.5, color = NA, bw = 1.2) %>%
+  gf_labs(y = "Gasoline consumption (MPG in city)", x = "Number of passenger doors") %>%
+  gf_errorbar(lower + upper ~ doors, data = Stats_large, width = 0.2, inherit=FALSE)
+```
+
+:::
+
+---------
+
+## 26.R
+
+You've been told that Jenny is in an elementary school that covers grade K through 6. Predict how old is Jenny.
+
+a. Put your prediction in the format of assigning a probability to each of the possible outcomes, as listed below. Remember that the sum of your probabilities should be 1. (You don't have to give too much thought to the details. Anything reasonable will do.)
+
+```
+Age         | 3 or under | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12  | 13 | 14 | 15+
+------------|------------|---|---|---|---|---|---|----|----|-----|----|----|-----
+probability |            |   |   |   |   |   |   |    |    |     |    |    |
+```
+
+::: {.callout-note}
+## Solution
+
+Perhaps something like the following, where the probabilities are given in percentage  points.
+
+```
+Age         | 3 or under  | 4   | 5   | 6   | 7   | 8   | 9   | 10  | 11  | 12  | 13  | 14  | 15+
+------------|-------------|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|------
+probability |      0      | 2.5 | 12  | 12  | 12  | 12  | 12  | 12  | 12  | 11  | 2   | 0.5 | 0
+```
+
+Ages 5 through 12 are equally likely, with a small possibility of 4-year olds or 14 year olds.
+
+:::
+
+b. Translate your  set of probabilities to a 95% prediction interval.
+
+::: {.callout-note}
+## Solution
+
+The 95% prediction interval 5 to 12 years old.
+
+A 95% interval should leave out 2.5% of the total probability on either end. Below age 5 there is 2.5% and above age 12 there is 2.5%.
+
+If you wrote your own probabilities so that there's no cut-off that gives exactly 2.5%, then set the interval to come as close as possible to 2.5%.
+:::
+
+--------
+

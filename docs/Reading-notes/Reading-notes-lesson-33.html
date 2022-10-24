@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-10-21">
+<meta name="dcterms.date" content="2022-10-24">
 
 <title>Spring 2023 Math 300 Revisions - Math 300R Lesson r (lesson &lt;- 33) Reading Notes</title>
 <style>
@@ -124,7 +124,7 @@ ul.task-list{list-style: none;}
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 21, 2022</p>
+      <p class="date">October 24, 2022</p>
     </div>
   </div>
     
@@ -133,6 +133,33 @@ ul.task-list{list-style: none;}
 
 </header>
 
+<section id="odds-and-log-odds" class="level2">
+<h2 class="anchored" data-anchor-id="odds-and-log-odds">Odds (and log odds)</h2>
+<p>A probability—a number between 0 and 1—is the most used measure of the chances that something will happen, but it is not the only way nor the best for all purposes.</p>
+<p>Also part of everyday language is the word “odds,” as in, “What are the odds?” to express surprise at an unexpected event.</p>
+<p>Odds are usually expressed in terms of two numbers, as in “3 to 2” or “100 to 1”, written more compactly as 3:2 and 100:1 respectively. The setting for odds is an even that might happen or not: the horse Fortune’s Chance might win the race, otherwise not; it might rain today, otherwise not; the Red Sox might win the World Series, otherwise not.</p>
+<p>The format of a <em>probability</em> assigns a number between 0 and 1 to the chances that Fortune’s Chance will win, or that it will rain, or that the Red Sox will come out on top. If that number is called <span class="math inline">\(p\)</span>, then the chances of the “otherwise outcome” must be <span class="math inline">\(1-p\)</span>. The event with probability <span class="math inline">\(p\)</span> would be reformatted into odds as <span class="math inline">\(p:(1-p)\)</span>. No information is lost if we treat the odds as a single number, the result of the division <span class="math inline">\(p/(1-p)\)</span>. Thus, when <span class="math inline">\(p=0.25\)</span> the corresponding odds will be <span class="math inline">\(0.25/0.75\)</span>, in other words, 1/3.</p>
+<p>A big mathematical advantage to using odds is that the odds number can be anything from zero to infinity; it’s not bounded within 0 to 1. Even more advantageous for the purposes of accumulating risk is the logarithm of the odds, called “<strong>log odds</strong>.” We will come back to this later.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Example: A bookies’ calculations [NEEDS FIXING]
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The most familiar use of “odds” is in gambling. For instance, a famous song lyric puts the odds of Valentine winning the horse rate “at five to nine.” Less musically, this odds is <span class="math inline">\(5/9 = 0.5555\)</span>, but the two-number format makes particular sense for keeping track of bets. Five-to-nine describes a bet of one unit. The second number, 9, specifies the amount the gambler is staking on the outcome. On a loss, the gambler loses that stake. On a win, the gambler gets back the stake and, in addition, gets the amount specified by the first number. So a winner at five to nine would leave the racetrack with an extra $5. But on a loss, the gambler leaves $9 behind.</p>
+<p>A “bookie” is someone who provides a service. You can go to a bookie to lay a bit. In drama, this might be done by telephone: “Lay $90 on Valentine” is all the gambler needs to communicate. No money has to change hands. On a win, the bookie will return $50 to the gambler. On a loss, the gambler has a debt of $90.</p>
+<p>A bookie is not a gambler; he’s an accountant who records numbers. The bookie arranges these numbers so that he makes money. To see this, imagine a horse race including Valentine, Paul Revere, and Epitaph. To start, the bookie specifies odds on each possible outcome, say 5:9 for Valentine, 1:3 for Paul Revere (a favorite!), and 1:2 on Epitaph.</p>
+<p>If the bookie has a good nose, about a third of the stakes will be bet on each outcome. If not, as new bets come in the bookie raises or lowers the odds to encourage or discourage bets so that the roughly one-third of stakes are placed on each outcome. Suppose at the end of the day that $500 is staked on each of the three outcomes.</p>
+<p>WRONG WRONG WRONG. It needs to work that the winning returned for Valentine has to be less than the stakes on the other horses, and similarly for all horses. So if $100 is bet on Valentine we need $100 staked on the other horses.</p>
+<p>Added up, these odds are <span class="math inline">\(5+1+1=7\)</span> on the top and <span class="math inline">\(9+2+1=12\)</span> on the bottom. It’s important—for the bookie—that the odds are arranged so that the bottom number is larger than the top number: 12 is larger than 11. Note that this method of adding is simpler than combining fractions. To add the fractions <span class="math inline">\(1/2\)</span> and <span class="math inline">\(1/3\)</span> gives <span class="math inline">\(5/6\)</span>. But to combine the odds <span class="math inline">\(1:2\)</span> and <span class="math inline">\(1:3\)</span> gives <span class="math inline">\(2:5\)</span>. One more detail is needed for a real-life bookies, taking into account the size of each bet. For instance, a $5 bet at 5:9 would be recorded as 25:45.</p>
+<p>Now the race is run. The winner is … well … from the bookie’s point of view it doesn’t matter who wins.</p>
+</div>
+</div>
+</section>
 <section id="irrationality" class="level2">
 <h2 class="anchored" data-anchor-id="irrationality">“Irrationality”</h2>
 <p>[From <em>The Model Thinker</em>, p.&nbsp;52]</p>
