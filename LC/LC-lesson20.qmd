@@ -2,31 +2,150 @@
 title: "Learning Checks Lesson 20"
 ---
 
+::: {.callout-warning}
+## Only for use in drafting questions
+20.1. Understand that gaming is a way of improving our skills and identifying potential opportunities and problems. 
+
+20.2 Characterize the "size" of a variable or of random noise using variance (or, equivalently, "standard deviation").
+
+20.3 Distinguish between a sample, a summary of a sample, and a sample of summaries of samples.
+
+:::
+
+--------
+
+## 20.A
+
+You're having a conversation about your statistics course with your engineer aunt at Thanksgiving. You tell her about how the course uses gaming (e.g. simulated data from DAGs) to develop an understanding of statistical methodology. She says (sensibly), "What? Simulated data? Isn't statistics supposed to be about real data? It's not a game."
+
+1. Write a paragraph-long response to your aunt explaining the point of gaming in learning statistics. Your paragraph should make a compelling case for gaming.
+
+2. Write another paragraph that expresses any concerns you have about using games in a course that's supposed to be about methods for extracting information about the world from real data.
+
+--------
+
+## 20.B
+
+Write statements using the computer commands covered in the first half of the course to calculate the **size** of the variability of these quantities:
+
+1. The `age` variable from the `Cherry_race_longitudinal` data frame.
+
+2. The `Height` variable from the `NHANES` data frame.
+
+3. Compute the body-mass index from the formula $\text{BMI} = \frac{w^2}/h$ where $w$ is the person's weight and $h$ is the person's height. Then calculate the **size** of the variability of the BMI you calculate from the `NHANES` data.
+
+--------
+
+## 20.C
+
+::: {.callout-warning}
+## In draft
+
+Show pictures of data together with violins. Ask students to estimate the "size" of the variation and to mark on the graph an annotation reflecting the "size." 
+
+Is "size" a single number or a pair of numbers?
+
+Contrast "size" with the coverage interval: why is one of them two numbers and the other just a single number. 
+:::
+
+--------
 
 ## 20.1
 
-@sec-size-of-variable describes two very closely related summary quantities used to measures of the "size" of a variable: i. the variance and ii. the "standard deviation" (which is the square root of the variance.
+@sec-size-of-variable describes two very closely related summary quantities used to measures of the "size" of a variable: a) the variance and b) the "standard deviation" (which is the square root of the variance).
 
 i. Using software, what is the variance of the XXX variable in the YYY data frame? Make sure to include the *units*.
 ii. What is the "standard deviation" of the XXX variable? Calculate this in two different ways: i. "by-hand" taking of the square root of the variance; ii. using the `sd()` software directly.
 
 [Repeat for a number of variables from different data frames.]
 
-### Solution
+::: {.callout-note}
+## Solution
+
+:::
+
+---------
+
+## 20.D
+
+::: {.callout-warning}
+## In draft
+
+In arithmetic notation, parentheses are used to group operations. So, $4*(3+2)$ is different from $4*3 + 2$. With `do()`, a similar logic applies, but we use curly braces---not parentheses---for the grouping. Another difference is that with `do()` and summarization, some configurations may not work at all because using braces or not will produce different data frames with different names.
 
 
+1. Try the following two commands, which differ in how curly braces are used.
+
+```r
+do(5) * {sample(Galton, size=50)} %>% summarize(m = mean(height))
+do(5) * {sample(Galton, size=50) %>% summarize(m = mean(height))}
+```
+
+One command produces an error message and the other doesn't. Explain what's wrong with the erroneous command.
+
+2. Try these two statements. Again, one will work and the other won't. Diagnose the 
+
+```{r}
+{ do(5) * {sample(Galton, size=50) %>% summarize(m = mean(height))} } %>% summarize(sz=sd(m))
+do(5) * {sample(Galton, size=50) %>% summarize(m = mean(height))} %>% summarize(sz = sd(m))
+```
+
+:::
 
 ----------
 
+## 20.E
+
+Write single-line computer statements that will do the following (related) tasks:
+
+1. Draw a sample of size 5 from the `mosaicData::TenMileRace` data
+
+2. Draw a sample (but now of size 100) and compute the "size" of variation of the `net` variable (which gives the net time to complete the race, start line to finish line).
+
+3. Carry out 300 trials of (2) using the `do()` operator. (The result should be a data frame with entries that vary.) Note: Surround the statement for a single trial with curly braces: `{` and `}`. Also, arrange for the name of the column in the overall result to be `sz`. This will appear in the `summarize()` command.
 
 
-## 20.2
+4. Add on to (3) the computations needed to calculate the mean and the standard deviation of the trials? Note: Surround the statement from (3) with a pair of curly braces so that the `summarize()` command will look at all 300 trials as a single data frame.
 
+    i. Is the mean thus calculated a single number comprising all trials or a number for each trial? Briefly justify your answer in terms of what the mean of the trials should be about.
+    
+    ii. Eexplain what the standard deviation of the trials captures and why it's different from the standard deviation on one trial (as from (2)).
+    
+5. Repeat (4), but now with a sample size of 400 instead of 100. With the larger sample size, how do the mean and the standard deviation compare to what you got with a sample size of 100.
 
+6. Repeat (4) but this time use 1200 trials instead of 300. With more trials, how do the mean and standard deviation compare to what you got with 300 trials?
+    
+::: {.callout-note}
+## Solution
 
-### Solution
+```{r}
+# sample of size 100 from TenMileRace
+sample(TenMileRace, size=5)
+sample(TenMileRace, size=100) %>% summarize(sz = sd(net))
+do(300)* {sample(TenMileRace, size=100) %>% summarize(sz = sd(net))}
+{do(300)* {sample(TenMileRace, size=100) %>% summarize(sz = sd(net))}} %>% summarize(m = mean(sz), s=sd(sz))
+{do(300)* {sample(TenMileRace, size=400) %>% summarize(sz = sd(net))}} %>% summarize(m = mean(sz), s=sd(sz))
+```
 
+5. Using a sample size that's four times larger doesn't affect the mean, but it reduces the standard deviation by a factor of two.
 
+6. Increasing the number of trials does have any noticeable effect on either the mean or standard deviation.
 
 ----------
 
+## 20.E
+
+Throughout this course, you're going to be using `lm()` to build models. Often, to demonstrate "**sampling variation**." you will use `sample()` on a dataset or a DAG to generate a random sample and then send the result as the `data=` argument to `lm()`,
+
+Here are three computer commands that use the `data=` argument in different ways. One of them doesn't work at all. Which one?
+
+```r
+sample(mtcars, size=10) %>% lm(mpg ~ wt + hp, data=.)
+sample(mtcars, size=10) %>% lm(mpg ~ wt + hp)
+lm(mpg ~ wt + hp, data=sample(mtcars, size=10))
+```
+
+::: {.callout-warning}
+## In draft
+
+This problem would be come irrelevant if the `fitmodel()` command described in the [Lesson 19 NTI]{../NTI/NTI-Lesson19.html} is being used.

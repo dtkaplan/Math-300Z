@@ -19,6 +19,14 @@ source("../_startup.R")
 library(mosaicData)
 ```
 
+
+::: {.callout-warning}
+## Question about software in draft
+
+Should we use a `fitmodel()` command modeled on `rigr::regress()` that does the right thing (linear versus logistic regression, count regression, ...) based on the response variable? It will have data as the first argument, enabling `sample()` to be piped into the function. Return the model object, but have the model function (which will be in probability for logistic regression) available for extraction via `makeFun()`. Allow `makeFun()` to specify whether to return probability, odds, or log odds from a logistic regression model.
+:::
+
+
 ## Objectives
 
 

@@ -68,6 +68,43 @@ Referring to the graphs in the figure, say which ones are DAGs. If a graph is no
 
 
 
+## 21.A
+
+A DAG (directed acyclic graph) is a mathematical object used to state hypothetical causal relationships between variables. Explain briefly (e.g. a few sentences overall) what each of the words "directed," "acyclic," and "graph" mean in the context of a DAG.
+
+::: {.callout-note}
+## Solution
+
+1. A graph is a relationship between discrete elements (called "nodes" abstraction) each of which for us represents a hypothetical quantity, that is, a variable. In addition to the nodes, the graph contains edges which represent the connections between variables.
+
+2. A directed graph is one whose arrows have a direction. For instance $A \rightarrow B \leftarrow C$ means that $A$ and $C$ together cause $B$, but $B$ has no influence on $A$ and $C$.
+
+3. An acyclic graph is one where it is impossible to start on any given node and, by following the directed edges, return back to that node.
+:::
+
+----------
+
+## 21.B
+
+Draw these DAGs:
+
+1. "April showers bring May flowers."
+
+2. "Price of a rug is determined by the size and the quality of materials."
+
+3. "The weight of an automobile is reflected in the MPG fuel economy, as is the speed of the car, and inflation level of the tires."
+
+4. "Plants tend to grow in the direction of the sunlight."
+
+5. "An ice-cream shop owner needs to plan staffing based on the season, day of the week, and holidays."
+
+----------
+
+## 21.C
+
+
+
+
 ----------
 
 ## 21.4
