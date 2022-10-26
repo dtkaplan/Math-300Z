@@ -19,3 +19,9 @@ LC_file <- function(n) {
 Obj_file <- function(n) {
   glue::glue("../Objectives/Obj-lesson-{n}.qmd")
 }
+
+
+## Typesetting functions
+
+# a temporary replacement for the index_entry() used in the SM2 book
+index_entry <- function(...) return(NULL)

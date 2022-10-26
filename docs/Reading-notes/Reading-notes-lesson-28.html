@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-10-14">
+<meta name="dcterms.date" content="2022-10-26">
 
 <title>Spring 2023 Math 300 Revisions - Math 300R Lesson r (lesson &lt;- 28) Reading Notes</title>
 <style>
@@ -187,7 +187,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 14, 2022</p>
+      <p class="date">October 26, 2022</p>
     </div>
   </div>
     
@@ -196,20 +196,270 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<section id="from-sm2" class="level2">
+<h2 class="anchored" data-anchor-id="from-sm2">From SM2</h2>
+<p>One of the most important ideas in science is “<strong>experiment</strong>”. In a simple, ideal form of an experiment, you cause one explanatory factor to vary, hold all the other conditions constant, and observe the response. A famous story of such an experiment involves Galileo Galilei (1564-1642) dropping balls of different masses but equal diameter from the Leaning Tower of Pisa.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Would a heavy ball fall faster than a light ball, as theorized by Aristotle 2000 years previously? The quantity that Galileo varied was the weight of the ball, the quantity he observed was how fast the balls fell, the conditions he held constant were the height of the fall and the diameter of the balls. The experimental method of dropping balls side by side also holds constant the atmospheric conditions: temperature, humidity, wind, air density, etc.</p>
+<p>Of course, Galileo had no control over the atmospheric conditions. By carrying out the experiment in a short period, while atmospheric conditions were steady, he effectively held them constant.</p>
+<p>Today, Galileo’s experiment seems obvious. But not at the time. In the history of science, Galileo’s work was a landmark: he put <em>observation</em> at the fore, rather than the beliefs passed down from authority. Aristotle’s ancient theory, still considered authoritative in Galileo’s time, was that heavier objects fall faster.</p>
+<p>The ideal of “holding all other conditions constant” is not always so simple as with dropping balls from a tower in steady weather. Consider an experiment to test the effect of a blood-pressure drug. Take two groups of people, give the people in one group the drug and give nothing to the other group. Observe how blood pressure changes in the two groups. The factor being caused to vary is whether or not a person gets the drug. But what is being held constant? Presumably the researcher took care to make the two groups as similar as possible: similar medical conditions and histories, similar weights, similar ages. But “similar” is not “constant.”</p>
+<p>For non-experimentalists – people who study data collected through observation, without doing an experiment – a central question is whether there is a way to mimic “holding all other conditions constant.” For example, suppose you observe the academic performance of students, some taught in large classes and some in small classes, some taught by well-paid teachers and some taught by poorly-paid teachers, some coming from families with positive parental involvement and some not, and so on. Is there a way to analyze data so that you can separate the influences of these different factors, examining one factor while, through analysis if not through experiment, holding the others constant?</p>
+<p>In this chapter you’ll see how models can be used to examine data as if some variables were being held constant. Perhaps the most important message of the chapter is that there is no point hiding your head in the sand; simply ignoring a variable is not at all the same thing as holding that variable constant. By including multiple variables in a model you make it possible to interpret that model in terms of holding the variables constant. But there is no methodological magic at work here. The results of modeling can be misleading if the model does not reflect the reality of what is happening in the system under study. Understanding how and when models can be used effectively, and when they can be misleading, will be a major theme of the remainder of the book.</p>
+</section>
+<section id="total-and-partial-relationships" class="level2">
+<h2 class="anchored" data-anchor-id="total-and-partial-relationships">Total and Partial Relationships</h2>
+<p>The common phrase “all other things being equal” is an important qualifier in describing relationships. To illustrate: A simple claim in economics is that a high price for a commodity reduces the demand. For example increasing the price of heating fuel will reduce demand as people turn down thermostats in order to save money. But the claim can be considered obvious only with the qualifier <em>all other things being equal</em>. For instance, the fuel price might have increased because winter weather has increased the demand for heating compared to summer. Thus, higher prices may be associated with higher demand. Unless you hold other variables constant – e.g., weather conditions – increased price may not in fact be associated with lower demand.</p>
+<p>In fields such as economics, the Latin equivalent of “all other things being equal” is sometimes used: “<strong>ceteris paribus</strong>”. So, the economics claim would be, “higher prices are associated with lower demand, <em>ceteris paribus</em>.”</p>
+<p>Although the phrase “all other things being equal” has a logical simplicity, it’s impractical to implement “all.” Instead of the blanket “all other things,” it’s helpful to be able to consider just “some other things” to be held constant, being explicit about what those things are. Other phrases along these lines are “taking into account …” and “controlling for ….” Such phrases apply when you want to examine the relationship between two variables, but there are additional variables that may be coming into play. The additional variables are called “<strong>covariates</strong>” or “<strong>confounders</strong>” .</p>
+<p>A covariate is just an ordinary variable. The use of the word “covariate” rather than “variable” highlights the interest in holding this variable constant, to indicate that it’s not a variable of primary interest.</p>
+</section>
+<section id="example-covariates-and-death" class="level2">
+<h2 class="anchored" data-anchor-id="example-covariates-and-death">Example: Covariates and Death</h2>
+<p>This news report appeared in 2007:</p>
+<blockquote class="blockquote">
+<p><strong>Heart Surgery Drug Carries High Risk, Study Says.</strong> A drug widely used to prevent excessive bleeding during heart surgery appears to raise the risk of dying in the five years afterward by nearly 50 percent, an international study found. The researchers said replacing the drug – aprotinin, sold by Bayer under the brand name Trasylol – with other, cheaper drugs for a year would prevent 10,000 deaths worldwide over the next five years.<br>
+Bayer said in a statement that the findings are unreliable because Trasylol tends to be used in more complex operations, and the researchers’ statistical analysis did not fully account for the complexity of the surgery cases. The study followed 3,876 patients who had heart bypass surgery at 62 medical centers in 16 nations. Researchers compared patients who received aprotinin to patients who got other drugs or no antibleeding drugs. Over five years, 20.8 percent of the aprotinin patients died, versus 12.7 percent of the patients who received no antibleeding drug. [This is a 64% increase in the death rate.] When researchers adjusted for other factors, they found that patients who got Trasylol ran a 48 percent higher risk of dying in the five years afterward. The other drugs, both cheaper generics, did not raise the risk of death significantly. The study was not a randomized trial, meaning that it did not randomly assign patients to get aprotinin or not. In their analysis, the researchers took into account how sick patients were before surgery, but they acknowledged that some factors they did not account for may have contributed to the extra deaths. - Carla K. Johnson, Associated Press, 7 Feb.&nbsp;2007 The report involves several variables. Of primary interest is the relationship between (1) the risk of dying after surgery and (2) the drug used to prevent excessive bleeding during surgery. Also potentially important are (3) the complexity of the surgical operation and (4) how sick the patients were before surgery. Bayer disputes the published results of the relationship between (1) and (2) holding (4) constant, saying that it’s also important to hold variable (3) constant.</p>
+</blockquote>
+<p>In the aprotinin drug example, the total relationship involves a death rate of 20.8 percent of patients who got aprotinin, versus 12.7 percent for others. This implies an increase in the death rate by a factor of 1.64. When the researchers looked at a partial relationship (holding constant the patient sickness before the operation), the death rate was seen to increase by less: a factor of 1.48. In evaluating the drug, it’s best to examine its effects holding other factors constant. So, even though the data directly show a 64% increase in the death rate, 48% is a more meaningful number since it adjusts for covariates such as patient sickness. The difference between the two estimates reflect that sicker patients tended to be given aprotinin. As the last paragraph of the story indicates, however, the researchers did not take into account all covariates. Consequently, it’s hard to know whether the 48% number is a reliable guide for decision making.</p>
+<hr>
+<p>The term “<strong>partial relationship</strong>” describes a relationship with one or more covariates being held constant. A useful thing to know in economics might be the partial relationship between fuel price and demand with weather conditions being held constant. Similarly, it’s a partial relationship when the article refers to the effect of the drug on patient outcome in those patients with a similar complexity of operation.</p>
+<p>In contrast to a partial relationship where certain variables are being held constant, there is also a “<strong>total relationship</strong>”: how an explanatory variable is related to a response variable <em>letting those other explanatory variables change as they will</em>. (The corresponding Latin phrase is “<strong>mutatis mutandis</strong>”.)</p>
+<p>Here’s an everyday illustration of the difference between partial and total relationships. I was once involved in a budget committee that recommended employee health benefits for the college at which I work. At the time, college employees who belonged to the college’s insurance plan received a generous subsidy for their health insurance costs. Employees who did not belong to the plan received no subsidy but were instead given a moderate monthly cash payment. After the stock-market crashed in year 2000, the college needed to cut budgets. As part of this, it was proposed to eliminate the cash payment to the employees who did not belong to the insurance plan. This proposal was supported by a claim that this would save money without reducing health benefits. I argued that this claim was about a partial relationship: how expenditures would change assuming that the number of people belonging to the insurance plan remained constant. I thought that this partial relationship was irrelevant; the loss of the cash payment would cause some employees, who currently received health benefits through their spouse’s health plan, to switch to the college’s health plan. Thus, the total relationship between the cash payment and expenditures might be the opposite of the partial relationship: the savings from the moderate cash payment would trigger a much larger expenditure by the college.</p>
+<p>Perhaps it seems obvious that one should be concerned with the “big picture,” the total relationship between variables. If eliminating the cash payment increases expenditures overall, it makes no sense to focus exclusively on the narrow savings from the suspending the payment itself. On the other hand, in the aprotinin drug example, for understanding the impact of the drug itself it seems important to take into account how sick the various patients were and how complex the surgical operations. There’s no point ascribing damage to aprotinin that might instead be the result of complicated operations or the patient’s condition.</p>
+<p>Whether you wish to study a partial or a total relationship is largely up to you and the context of your work. But certainly you need to know which relationship you are studying.</p>
+</section>
+<section id="example-used-car-prices" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="example-used-car-prices">Example: Used Car Prices</h2>
+<p>Figure @ref(fig:price-vs-mileage) shows a scatter plot of the price of used Honda Accords versus the number of miles each car has been driven. The graph shows a pretty compelling relationship: the more miles that a car goes, the lower the price. This can be summarized by a simple linear model: <code>price</code> ~ <code>mileage</code>. Fitting such a model gives this model formula</p>
+<p><em>price</em> = 20770 - 0.10 × <code>mileage</code>.</p>
+<p>Keeping in mind the units of the variables, the price of these Honda Accords typically falls by about 10 cents per mile driven. Think of that as the cost of the wear and tear of driving: depreciation.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Reading-notes-lesson-28_files/figure-html/price-vs-mileage-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">The price of used cars falls with increasing miles driven. The gray diagonal line shows the best fitting linear model. Price falls by about $10,000 for 100,000 miles, or 10 cents per mile driven.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>As the cars are being driven, other things are happening to them. They are wearing out, they are being involved in minor accidents, and they are getting older. The relationship shown in Figure @ref(fig:price-vs-mileage) takes none of these into account. As mileage changes, the other variables such as age are changing as they will: a total relationship.</p>
+<p>In contrast to the total relationship, the <em>partial</em> relationship between price and mileage holding age constant tells you something different than the total relationship. The partial relationship would be relevant, for instance, if you were interested in the cost of driving a car. This cost includes gasoline, insurance, repairs, and depreciation of the car’s value. The car will age whether or not you drive it; the extra depreciation due to driving it will be indicated by the partial relationship between price and mileage holding age constant.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Reading-notes-lesson-28_files/figure-html/price-vs-mileage2-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">The relationship between price and mileage for cars in different age groups, indicating the partial relationship between price and mileage holding age constant.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The most intuitive way to hold age constant is to look at the relationship between price and mileage for a subset of the cars; include only those cars of a given age. This is shown in Figure @ref(fig:price-vs-mileage2). The cars have been divided into age groups (less than 2 years old, between 3 and 4 years old, etc.) and the data for each group has been plotted separately together with the best fitting linear model for the cars in that group. From the figure it’s easy to see that the slope of the fitted models for each group is shallower than the slope fitted to all the cars combined. Instead of the price falling by about 10 cents per mile as it does for all the cars combined, within the 4-8 year old group the price decrease is only about 7 cents per mile, and only 3 cents per mile for cars older than 8 years.</p>
+<p>By looking at the different age groups individually, you are holding age approximately constant in your model. The relationship you find in this way between price and mileage is a partial relationship. Of course, there are other variables that you didn’t hold constant. So, to be precise, you should describe the relationship you found as a partial relationship <em>with respect to age</em>.</p>
+</section>
+<section id="models-and-partial-relationships" class="level2">
+<h2 class="anchored" data-anchor-id="models-and-partial-relationships">Models and Partial Relationships</h2>
+<p>Models make it easy to estimate the partial relationship between a response variable and an explanatory variable, holding one or more covariates constant.</p>
+<p>The first step is to fit a model using both the explanatory variable and the covariates that you want to hold constant. For example, to find the partial relationship between car price and miles driven, holding age constant, fit the model <code>price</code> ~ <code>mileage</code>+<code>age</code>. For the car-price data from Figure @ref(fig:price-vs-mileage), this gives the model formula</p>
+<p><em>price</em> = 21330 - 0.077 × <code>mileage</code> - 538 × <code>age</code></p>
+<p>The second step is to interpret this model as a partial relationship between <code>price</code> and <code>mileage</code> holding <code>age</code> constant. A simple way to do this is to plug in some particular value for <code>age</code>, say 1 year. With this value plugged in, the formula for <code>price</code> as a function of <code>mileage</code> becomes</p>
+<p><em>price</em> = 21330 - 0.077 × <code>mileage</code> - 538 × <strong>1</strong> = 20792 - 0.077 × <code>mileage</code></p>
+<p>The partial relationship is that <code>price</code> goes down by 0.077 dollars per mile, holding <code>age</code> constant.</p>
+<p>Note the use of the phrase “estimate the partial relationship” in the first paragraph of this section. The model you fit creates a representation of the system you are studying that incorporates both the variable of interest and the covariates in explaining the response values. In this mathematical representation, it’s easy to hold the covariates constant. If you don’t include the covariate in the model, you can’t hold it constant and so you can’t estimate the partial relationship between the response and the variable of interest while holding the covariate constant. But even when you do include the covariates in your model, there is a legitimate question of whether your model is a faithful reflection of reality; holding a covariate constant in a model is not the same thing as holding it constant in the real world. These issues, which revolve around the idea of the causal relationship between the covariate and the response, are discussed in Chapter 18.</p>
+</section>
+<section id="aside-partial-change-and-partial-derivatives" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="aside-partial-change-and-partial-derivatives">Aside: Partial change and partial derivatives</h2>
+<p>If you are familiar with calculus and “<strong>partial derivatives</strong>”, you may notice that this rate is the partial derivative of <code>price</code> with respect to <code>mileage</code>. Using partial derivatives allows one to interpret more complicated models relatively easily. For example, Figure @ref(fig:price-vs-mileage2) shows pretty clearly that the <code>price</code> vs <code>mileage</code> lines have different slopes for different age group. To capture this in your model, you might choose to include an interaction term between <code>mileage</code> and <code>age</code>. This gives a model with four terms:</p>
+<p><em>price</em> = 22140 - 0.094 × <code>mileage</code> - 750× <code>age</code> + 0.0034 × <code>mileage</code> × <code>age</code></p>
+<p>For this model, the partial relationship between <code>price</code> and <code>mileage</code> is not just the coefficient on <code>mileage</code>. Instead it is the partial derivative of <code>price</code> with respect to <code>mileage</code>, or:</p>
+<p>∂<code>price</code> / ∂<code>mileage</code> = −0.094 + 0.0034 × <code>age</code></p>
+<p>Taking into account the units of the variables, this means that for a new car (<code>age</code> = 0), the price declines by $0.09/mile, that is, 9.4 cents per mile. But for a 10-year old car, the decline is less rapid: −0.094 + 10×0.0034 = −0.060 – only six cents a mile.</p>
+</section>
+<section id="adjustment" class="level2">
+<h2 class="anchored" data-anchor-id="adjustment">Adjustment</h2>
+<p>The table contains the data on professional and sales employees of a large mid-western US trucking company: the annual earnings in 2007, sex, age, job title, how many years of employment with the company. Data such as these are sometimes used to establish whether or not employers discriminate on the basis of sex.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">sex</th>
+<th style="text-align: right;">earnings</th>
+<th style="text-align: right;">age</th>
+<th style="text-align: left;">title</th>
+<th style="text-align: right;">hiredyears</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">35000</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: left;">PROGRAMMER</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">36800</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: left;">CLAIMS ADJUSTER</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">25000</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: left;">RECRUITER</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">45000</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: left;">CLAIMS ADJUSTER</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">40000</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: left;">PROGRAMMER</td>
+<td style="text-align: right;">5</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-truckwages1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Reading-notes-lesson-28_files/figure-html/fig-truckwages1-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure 1: The distribution of annual earnings broken down by sex for professional and sales employees of a trucking company.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The data in <a href="#fig-truckwages1">Figure&nbsp;1</a> reveals a clear pattern: men are being paid more than women. Fitting the model <code>earnings</code> ~ <code>sex</code> indicates the average difference in earnings between men and women:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(earnings <span class="sc">~</span> sex, <span class="at">data =</span> mosaicModel<span class="sc">::</span>Trucking_jobs) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)        sexM 
+  35501.250    4735.098 </code></pre>
+</div>
+</div>
+<p>Since <code>earnings</code> are in dollars per year, men are being paid, on average, $4735 more per year than women. This difference reflects the <em>total</em> relationship between earnings and sex, letting other variables change as they will.</p>
+<p>Notice from the boxplot that even within the male or female groups, there is considerable variability in annual earnings from person to person. Evidently, there is something other than sex that influences the wages.</p>
+<p>An important question is whether you should be interested in the total relationship between earnings and sex, or the partial relationship, holding other variables constant. This is a difficult issue. Clearly there are some legitimate reasons to pay people differently, for example different levels of skill or experience or different job descriptions, but it’s always possible that these legitimate factors are being used to mask discrimination.</p>
+<p>For the moment, take as a covariate something that can stand in as a proxy for experience: the employee’s age. Unlike job title, age is hardly something that can be manipulated to hide discrimination. <a href="#fig-truckingfig2">Figure&nbsp;2</a> shows the employees’ earnings plotted against age. Also shown are the fitted model values of wages against age, fitted separately for men and women.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-truckingfig2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Reading-notes-lesson-28_files/figure-html/fig-truckingfig2-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure 2: Annual earnings versus age. The lines show fitted models made separately for men (top) and women (bottom).</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It’s evident that for both men and women, earnings tend to increase with age. The model design imposes a straight line structure on the fitted model values. The formulas for the two lines are:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For females</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(earnings <span class="sc">~</span> age, <span class="at">data =</span> mosaicModel<span class="sc">::</span>Trucking_jobs <span class="sc">%&gt;%</span> <span class="fu">filter</span>(sex<span class="sc">==</span><span class="st">"F"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)         age 
+  17178.160     529.952 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For males</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(earnings <span class="sc">~</span> age, <span class="at">data =</span> mosaicModel<span class="sc">::</span>Trucking_jobs <span class="sc">%&gt;%</span> <span class="fu">filter</span>(sex<span class="sc">==</span><span class="st">"M"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)         age 
+ 16734.9949    609.0916 </code></pre>
+</div>
+</div>
+<p>From the graph, you can see the partial relationship between earnings and sex, holding age constant. Pick an age, say 30 years. At 30 years, according to the model, the difference in annual earnings is $1931, with men making more. At 40 years of age, the difference between the sexes is even more ($2722), at 20 years of age, the difference is less ($1140). All of these partial differences (holding age constant) are substantially less than the difference when age is not taken into account ($4735).</p>
+<p>One way to summarize the differences in earnings between men and women is to answer this question: How would the earnings of the men have been different if the men were women? Of course you can’t know all the changes that might occur if the men were somehow magically transformed, but you can use the model to calculate the change assuming that all other variables except sex are held constant. This process is called “<strong>adjustment</strong>”.</p>
+<p>To find the men’s wages adjusted as if they were women, take the age data for the men and plug them into the model formula for women. The difference between the earnings of men and women, adjusting for age, is $2125. This is much smaller than the difference, $4735, when earnings are not adjusted for age. Differences in age between the men and women in the data set appear to account for more than half of the overall earnings difference between men and women.</p>
+<p>Of course, before you draw any conclusions, you need to know how precise these coefficients are. For instance, it’s a different story if the sex difference is 2125 <span class="math inline">\(\pm\)</span> 10 or if it is 2125 <span class="math inline">\(\pm\)</span> 5000. In the latter case, it would be sensible to conclude only that the data leave the matter of wage difference undecided. Later chapters in this book describe how to characterize the precision of an estimate.</p>
+<p>Another key matter is that of causation. $2125 indicates a difference, but doesn’t say completely where the difference comes from. By adjusting for <code>age</code>, the model disposes of the possibility that the earnings difference reflects differences in the typical ages of male and female workers. It remains to be found out whether the earnings difference might be due to different skill sets, discrimination, or other factors.</p>
+</section>
+<section id="simpsons-paradox" class="level2">
+<h2 class="anchored" data-anchor-id="simpsons-paradox">Simpson’s Paradox</h2>
+<p>Sometimes the total relationship is the opposite of the partial relationship. This is “<strong>Simpson’s paradox</strong>”.</p>
+<p>One of the most famous examples involves graduate admissions at the University of California in Berkeley. It was observed that graduate admission rates were lower for women than for men overall. This reflects the total relationship between admissions and sex. But, on a department-by-department basis, admissions rates for women were consistently as high or higher than for men. The partial relationship, taking into account the differences between departments, was utterly different from the total relationship.</p>
+</section>
+<section id="example-cancer-rates-increasing" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="example-cancer-rates-increasing">Example: Cancer Rates Increasing?</h2>
+<p>Consider another example of partial versus total relationships. In 1962, naturalist author Rachel Carson published <em>Silent Spring</em> <span class="citation" data-cites="silent-spring">[@silent-spring]</span>, a powerful indictment of the widespread use of pesticides such as DDT. Carson pointed out the links between DDT and dropping populations of birds such as the bald eagle. She also speculated that pesticides were the cause of a recent increase in the number of human cancer cases. The book’s publication was instrumental in the eventual banning of DDT.</p>
+<p>The increase in deaths from cancer over time is a total relationship between cancer deaths and time. It’s relevant to consider a partial relationship between the number of cancer deaths and time, holding the population constant. This partial relationship can be indicated by a death <em>rate</em>: say, the number of cancer deaths per 100,000 people. It seems obvious that the covariate of population size ought to be held constant. But there are still other covariates to be held constant. The decades before <em>Silent Spring</em> had seen a strong decrease in deaths at young ages from other non-cancer diseases which now were under greater control. It had also seen a strong increase in smoking. When adjusting for these covariates, the death rate from cancer was actually falling, not increasing as Carson claimed.<span class="citation" data-cites="tierney-NYT-june-5-2007">[@tierney-NYT-june-5-2007]</span></p>
+</section>
+<section id="explicitly-holding-covariates-constant" class="level2">
+<h2 class="anchored" data-anchor-id="explicitly-holding-covariates-constant">Explicitly Holding Covariates Constant</h2>
+<p>The distinction between explanatory variables and covariates is in the modeler’s mind. When it comes to fitting a model, both sorts of variables are considered on an equal basis when calculating the residuals and choosing the best fitting model to produce a model function. The way that you choose to interpret and analyze the model function is what determines whether you are examining partial change or total change.</p>
+<p>The intuitive way to hold a covariate constant is to do just that. Experimentalists arrange their experimental conditions so that the covariates are the same. Think of Galileo using balls of the same diameter and varying only the mass. In a clinical trial of a new drug, perhaps you would test the drug only on women so that you don’t have to worry about the covariate sex.</p>
+<p>When you are not doing an experiment but rather working with observational data, you can hold a covariate constant by throwing out data. Do you want to see the partial relationship between <code>price</code> and <code>mileage</code> while holding <code>age</code> constant? Then restrict your analysis to cars that are all the same age, say 3 years old. Want to know the relationship between breath-holding time and body size holding <code>sex</code> constant? Then study the relationship in just women or in just men.</p>
+<p>Dividing data up into groups of similar cases, as in Chapter 4, is an intuitive way to study partial relationships. It can be effective, but it is not a very efficient way to use data.</p>
+<p>The problem with dividing up data into groups is that the individual groups may not have many cases. For example, for the used cars shown in Figure @ref(fig:price-vs-mileage2) there are only a dozen or so cases in each of the groups. To get even this number of cases, the groups had to cover more than one year of age. For instance, the group labeled “age &lt; 8” includes cars that are 5, 6, 7, and 8 years old. It would have been nice to be able to consider six-year old cars separately from seven-year old cars, but this would have left me with very few cases in either the six- or seven-year old group.</p>
+<p>At the same time, it seems reasonable to think that 5- and 7-year old cars have something to say about 6-year old cars; you would expect the relationship between price and mileage to shift gradually with age. For instance, the relationship for 6-year old cars should be intermediate to the relationships for 5- and for 7-year old cars.</p>
+<p>Modeling provides a powerful and efficient way to study partial relationships that does not require studying separate subsets of data. Just include multiple explanatory variables in the model. Whenever you fit a model with multiple explanatory variables, the model gives you information about the partial relationship between the response and each explanatory variable <em>with respect to each of the other explanatory variables</em>.</p>
+</section>
+<section id="example-sat-scores-and-school-spending" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="example-sat-scores-and-school-spending">Example: SAT Scores and School Spending</h2>
+<p>Chapter 7 showed some models relating school expenditures to SAT scores. The model <code>sat</code> ~ 1 + <code>expend</code> produced a negative coefficient on <code>expend</code>, suggesting that higher expenditures are associated with lower test scores. Including another variable, the fraction of students who take the SAT (variable <code>frac</code>) reversed this relationship.</p>
+<p>The model <code>sat</code> ~ 1 + <code>expend</code> + <code>frac</code> attempts to capture how SAT scores depend both on <code>expend</code> and <code>frac</code>. In interpreting the model, you can look at how the SAT scores would change with <code>expend</code> while holding <code>frac</code> constant. That is, from the model formula, you can study the partial relationship between SAT and <code>expend</code> while holding <code>frac</code> constant.</p>
+<p>The example also looked at a couple of other fiscally related variables: student-teacher ratio and teachers’ salary. The total relationship between each of the fiscal variables and SAT was negative – for instance, higher salaries were associated with lower SAT scores. But the partial relationship, holding <code>frac</code> constant, was the opposite: Simpson’s Paradox.</p>
+<p>For a moment, take at face value the idea that higher teacher salaries and smaller class sizes are associated with better SAT scores as indicated by the following models:</p>
+<p><em>sat</em> = 988 + 2.18 <code>salary</code> - 2.78 <code>frac</code></p>
+<p><em>sat</em> = 1119 - 3.73 <code>ratio</code> - 2.55 <code>frac</code></p>
+<p>In thinking about the impact of an intervention – changing teachers’ salaries or changing the student-teacher ratio – it’s important to think about what other things will be changing during the intervention. For example, one of the ways to make student-teacher ratios smaller is to hire more teachers. This is easier if salaries are held low. Similarly, salaries can be raised if fewer teachers are hired: increasing class size is one way to do this. So, salaries and student-teacher ratio are in conflict with each other.</p>
+<p>If you want to anticipate what might be the effect of a change in teacher salary while holding student-teacher ratio constant, then you should include <code>ratio</code> in the model along with <code>salary</code> (and <code>frac</code>, whose dominating influence remains confounded with the other variables if it is left out of the model):</p>
+<p><em>sat</em> = 1058 + 2.55 <code>salary</code> - 4.64 <code>ratio</code> - 2.91 <code>frac</code></p>
+<p>Comparing this model to the previous ones gives some indication of the trade-off between salaries and student-teacher ratios. When <code>ratio</code> is included along with <code>salary</code>, the salary coefficient is somewhat bigger: 2.55 versus 2.18. This suggests that if salary is increased while holding constant the student-teacher ratio, salary has a stronger relationship with SAT scores than if salary is increased while allowing student-teacher ratio to vary in the way it usually does, accordingly.</p>
+<p>Of course, you still need to have some way to determine whether the precision in the estimate of the coefficients is adequate to judge whether the detected difference in the <code>salary</code> coefficient is real – 2.18 in one model and 2.55 in the other. Such issues are introduced in Chapter 12.</p>
+</section>
+<section id="aside-divide-and-be-conquered" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="aside-divide-and-be-conquered">Aside: Divide and Be Conquered!</h2>
+<p>Efficiency starts to be a major issue when there are many covariates. Consider a study of the partial relationship between lung capacity and smoking, holding constant all these covariates: sex, body size, smoking status, age, physical fitness. There are two sexes and perhaps three or more levels of body size (e.g., small, medium, large). You might divide age into five different groups (e.g., pre-teens, teens, young adults, middle aged, elderly) and physical fitness into three levels (e.g., never exercise, sometimes, often). Taking the variables altogether, there are now 2 × 3 × 5 × 3 = 90 groups. It’s very inefficient to treat these 90 groups completely separately, as if none of the groups had anything to say about the others. A model of the form</p>
+<p><code>lung capacity</code> ~ <code>body size</code> + <code>sex</code> + <code>smoking status</code> + <code>age</code> + <code>fitness</code></p>
+<p>can not only do the job more efficiently, but avoids the need to divide quantitative variables such as <code>body size</code> or <code>age</code> into categories.</p>
+<p>To illustrate, consider this news report:</p>
+<blockquote class="blockquote">
+<p>Higher vitamin D intake has been associated with a significantly reduced risk of pancreatic cancer, according to a study released last week. Researchers combined data from two prospective studies that included 46,771 men ages 40 to 75 and 75,427 women ages 38 to 65. They identified 365 cases of pancreatic cancer over 16 years. Before their cancer was detected, subjects filled out dietary questionnaires, including information on vitamin supplements, and researchers calculated vitamin D intake. After statistically adjusting for [that is, holding constant] age, smoking, level of physical activity, intake of calcium and retinol and other factors, the association between vitamin D intake and reduced risk of pancreatic cancer was still significant. Compared with people who consumed less than 150 units of vitamin D a day, those who consumed more than 600 units reduced their risk by 41 percent. - New York Times, 19 Sept.&nbsp;2006, p.&nbsp;D6. There are more than 125,000 cases in this study, but only 365 of them developed pancreatic cancer. If those 365 cases had been scattered around dozens or hundreds of groups and analyzed separately, there would be so little data in each group that no pattern would be discernible.</p>
+</blockquote>
+</section>
+<section id="adjustment-and-truth" class="level2">
+<h2 class="anchored" data-anchor-id="adjustment-and-truth">Adjustment and Truth</h2>
+<p>It’s tempting to think that including covariates in a model is a way to reach the truth: a model that describes how the real world works, a model that can correctly anticipate the consequences of interventions such as medical treatments or changes in policy, etc. This overstates the power of models.</p>
+<p>A model design – the response variable and explanatory terms – is a statement of a hypothesis about how the world works. If this hypothesis happens to be right, then under ideal conditions the coefficients from the fitted model will approximate how the real world works. But if the hypothesis is wrong, for example if an important covariate has been left out, then the coefficients may not correctly describe how the world works.</p>
+<p>In certain situations – the idealized “<strong>experiment</strong>” – researchers can create a world in which their modeling hypothesis is correct. In such situations there can be good reason to take the model results as indicating how the world works. For this reason, the results from studies based on experiments are generally taken as more reliable than results from non-experimental studies. But even when an experiment has been done, the situation may not be ideal; experimental subjects don’t always do what the experimenter tells them to and uncontrolled influences can sometimes remain at play.</p>
+<p>It’s appropriate to show some humility about models and recognize that they can be no better than the assumptions that go into them. Useful object lessons are given by the episodes where conclusions from modeling (with careful adjustment for covariates) can be compared to experimental results. Some examples (from <span class="citation" data-cites="freedman-editorial-2008">[@freedman-editorial-2008]</span>):</p>
+<ul>
+<li>Does it help to use telephone canvassing to get out the vote? Models suggest it does, but experiments indicate otherwise.</li>
+<li>Is a diet rich in vitamins, fruits, vegetables and low in fat protective against cancer, heart disease or cognitive decline? Models suggest yes, but experiments generally do not.</li>
+</ul>
+<p>The divergence between models and experiment suggests that an important covariate has been left out of the models.</p>
+</section>
+<section id="from-sds-book" class="level2">
+<h2 class="anchored" data-anchor-id="from-sds-book">From SDS book</h2>
 <p>Our method for modeling a real-world system is to identify a single response variable and treat that variable as a function of one, several, or many explanatory variables. Effect size (<a href="../Reading-notes/Reading-notes-lesson-24.html">Lesson 24</a>) lets you focus attention on an individual explanatory variable and how changes in that explanatory variable correspond to changes in the response variable.</p>
 <p>Insofar as the logic of effect size is to isolate a single explanatory variable of interest, you might wonder why not build a model that conditions the response variable just on that one explanatory variable? As you’ll see, this is generally the wrong way to go about things. The role of each explanatory variable takes place in a context set by other explanatory factors.</p>
 <p>The context-setting factors are called “<strong>covariates</strong>”. In the sense of data, covariates are perfectly ordinary variables. They are called covariates only to highlight the role of these variables for putting in context some other explanatory variables of particular interest to the modeler.</p>
+</section>
 <section id="example-covariates-and-context-in-educational-outcomes" class="level2">
 <h2 class="anchored" data-anchor-id="example-covariates-and-context-in-educational-outcomes">Example: Covariates and context in educational outcomes</h2>
 <p>To illustrate how covariates set context, consider an issue of interest to public policy-makers in many societies: How much money to spend on children’s education? In the United States, for instance, educational budget policy is set mainly on a state-by-state level. State lawmakers are understandably concerned with the quality of the public education provided, but they also have other concerns and constraints and constituencies who give budget priority to other matters.</p>
 <p>In evaluating the various trade-offs they face, lawmakers would be helped by knowing how increased educational spending will shape educational outcomes. What can available data tell us? Unfortunately, there are various political constraints that work against states adopting and publishing data on a common measure of genuine educational outcome. Instead, we have high-school graduation rates, student grades, etc. These have some genuine meaning but also can reflect the way the system is gamed by administrators and teachers and which cannot be easily compared across states. At a national level, we have college admissions tests such as the ACT and SAT. Perhaps because these tests are administered by private organizations and not state governments, it’s possible to gather data on test-score outcomes on a state-by-state basis and collate these with public spending information.</p>
-<p><a href="#fig-sat-1">Figure&nbsp;1</a> shows average SAT score in 2010 in each state versus expenditures per pupil in public elementary and secondary schools. Laid on top of the data is a flexible linear model (and its confidence band) of SAT score versus expenditure. The overall impression given by the model is that the relationship is negative, with lower expenditures corresponding to higher SAT scores. But the confidence bands are broad and it is possible to find a smooth path through the confidence band that has almost zero slope. Either way, the conventional wisdom that higher spending produces better school outcomes is not supported by this graph.</p>
+<p><a href="#fig-sat-1">Figure&nbsp;3</a> shows average SAT score in 2010 in each state versus expenditures per pupil in public elementary and secondary schools. Laid on top of the data is a flexible linear model (and its confidence band) of SAT score versus expenditure. The overall impression given by the model is that the relationship is negative, with lower expenditures corresponding to higher SAT scores. But the confidence bands are broad and it is possible to find a smooth path through the confidence band that has almost zero slope. Either way, the conventional wisdom that higher spending produces better school outcomes is not supported by this graph.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-sat-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="Reading-notes-lesson-28_files/figure-html/fig-sat-1-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 1: State by state data (from 2010) on average score on the SAT college admissions test and expenditures for public education.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure 3: State by state data (from 2010) on average score on the SAT college admissions test and expenditures for public education.</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -217,19 +467,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>There are other factors that play a role in shaping education outcomes: poverty levels, parental education, how the educational money is spent (higher pay for teachers or smaller class sizes? administrative bloat?), and so on. Modeling educational outcomes solely by expenditures ignores these other factors.</p>
 <p>At first glance, it’s tempting to ignore these additional factors. We may not have data on them. And insofar as our interest is in understanding the relationship between expenditures and education outcomes, we are not directly concerned with the additional factors. This lack of direct concern, however, doesn’t imply that we should totally ignore them but that we should do what we can to “hold them constant”.</p>
 <p>To illustrate, let’s consider a factor on which we do have data: the fraction of eligible students (those in their last year of high school) who actually take the test. This varies widely from state to state. In a poor state where few students go to college the fraction can be very small (Alabama 8%, Arkansas 5%, Mississippi 4%, Louisiana 8%). In some states, the large majority of students take the SAT (Maine 93%, Massachusetts 89%, New York 89%). In states with low SAT participation rates, the students who do take the test are applying to schools with competitive admissions. Such strong students can be expected to be get high scores. In contrast, the scores in states with high participation rates reflect both strong and weak students; they will be lower on average than in the low-participation states.</p>
-<p>Putting the relationship between expenditure and SAT scores in the context of the fraction taking the SAT can be done by using fraction as a co-variate, that is, building the model <code>SAT ~ expenditure + fraction</code> rather than just <code>SAT ~ expenditure</code>. <a href="#fig-sat-3">Figure&nbsp;2</a>) shows a model with fraction taken into account.</p>
+<p>Putting the relationship between expenditure and SAT scores in the context of the fraction taking the SAT can be done by using fraction as a co-variate, that is, building the model <code>SAT ~ expenditure + fraction</code> rather than just <code>SAT ~ expenditure</code>. <a href="#fig-sat-3">Figure&nbsp;4</a>) shows a model with fraction taken into account.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-sat-3" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="Reading-notes-lesson-28_files/figure-html/fig-sat-3-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 2: The model of SAT score versus expenditures, including as a covariate the fraction of eligible students in the state who take the SAT.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure 4: The model of SAT score versus expenditures, including as a covariate the fraction of eligible students in the state who take the SAT.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Note that the effect size of spending on SAT scores is positive when the expenditure level is less than $10,000 per pupil. And notice that when the fraction taking the SAT is near 0, the average scores don’t depend on expenditure. This suggests that among elite students, expenditure doesn’t make a discernable difference: it’s the students, not the schools that matter.</p>
-<p>The relationship shown in <a href="#fig-sat-1">Figure&nbsp;1</a> is genuine. So is the very different relationship seen in <a href="#fig-sat-3">Figure&nbsp;2</a>. How can the same data be consistent with two utterly different displays? The answer, perhaps unexpectedly, has to do with the connections among the explanatory variables. Whatever the relationship between each individual explanatory variable and the response variable, the <em>appearance</em> of that relationship will depend on how explanatory variables are connected to each other.</p>
+<p>The relationship shown in <a href="#fig-sat-1">Figure&nbsp;3</a> is genuine. So is the very different relationship seen in <a href="#fig-sat-3">Figure&nbsp;4</a>. How can the same data be consistent with two utterly different displays? The answer, perhaps unexpectedly, has to do with the connections among the explanatory variables. Whatever the relationship between each individual explanatory variable and the response variable, the <em>appearance</em> of that relationship will depend on how explanatory variables are connected to each other.</p>
 </section>
 <section id="connections-among-explanatory-variables" class="level2">
 <h2 class="anchored" data-anchor-id="connections-among-explanatory-variables">Connections among explanatory variables</h2>
@@ -238,11 +488,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[\mbox{sat} = 1100 + 0.01 * \mbox{dollar expenditure}\]</span></p>
 <p>Let’s also imagine that the fraction of students taking the SAT test also influences the average test score with an effect size of -4 sat points per percentage point. Adding this effect into the simulation leads to an imagined relationship of</p>
 <p><span class="math display">\[\mbox{sat} = 1100 + 0.01 * \mbox{dollar expenditure} - 4 * \mbox{participation percentage} .\]</span></p>
-<p>And, of course, there are other factors, but we’ll treat their effect as random with a typical size of ± 50 points.</p>
+<p>And, of course, there are other factors, but we’ll treat their effect as random with a typical size of <span class="math inline">\(\pm\)</span> 50 points.</p>
 <p>To complete the simulation, we’ll need to set values for dollar expenditures and participation percentage. We’ll let the dollar expenditures vary randomly from $7000 to $18,000 from one state to another and the participation percentage vary randomly from 1 to 100 percentage points.</p>
 <p>Notice that in this simulation, both participation percentage and expenditures affect education outcomes, but there is no connection at all between the two explanatory variables. That is, the graphical causal network is that shown in Figure @ref(fig:school-sim-1).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>dag_school1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dag_school1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 expenditure ~ unif(7000, 18000)
@@ -256,30 +506,30 @@ outcome ~ 1100 + 0.01 * expenditure - 4 * participation + eps(50)
 attr(,"class")
 [1] "list"      "dagsystem"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag_school1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag_school1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-school-sim-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="Reading-notes-lesson-28_files/figure-html/fig-school-sim-1-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 3: A graphical causal network relating expenditures, participation percentage, and education outcome, where there is no connection between expenditures and participation.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure 5: A graphical causal network relating expenditures, participation percentage, and education outcome, where there is no connection between expenditures and participation.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
 <p>We can generate simulated data and use the data to train models. <strong>?@fig-school-data-1</strong> shows the data and two different models.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Dat1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag_school1, <span class="at">size=</span><span class="dv">500</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>mod1_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(outcome <span class="sc">~</span> <span class="fu">ns</span>(expenditure,<span class="dv">2</span>), <span class="at">data =</span> Dat1)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>mod1_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(outcome <span class="sc">~</span> <span class="fu">ns</span>(expenditure,<span class="dv">2</span>) <span class="sc">*</span> participation, <span class="at">data =</span> Dat1)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_plot</span>(mod1_1, <span class="at">interval=</span><span class="st">"prediction"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_point</span>(outcome <span class="sc">~</span> expenditure, <span class="at">data =</span> Dat1)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_plot</span>(mod1_2, <span class="at">interval=</span><span class="st">"prediction"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_point</span>(outcome <span class="sc">~</span> expenditure, <span class="at">alpha=</span><span class="sc">~</span>participation, <span class="at">data =</span> Dat1, <span class="at">inherit=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Dat1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag_school1, <span class="at">size=</span><span class="dv">500</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>mod1_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(outcome <span class="sc">~</span> <span class="fu">ns</span>(expenditure,<span class="dv">2</span>), <span class="at">data =</span> Dat1)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>mod1_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(outcome <span class="sc">~</span> <span class="fu">ns</span>(expenditure,<span class="dv">2</span>) <span class="sc">*</span> participation, <span class="at">data =</span> Dat1)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_plot</span>(mod1_1, <span class="at">interval=</span><span class="st">"prediction"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_point</span>(outcome <span class="sc">~</span> expenditure, <span class="at">data =</span> Dat1)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_plot</span>(mod1_2, <span class="at">interval=</span><span class="st">"prediction"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_point</span>(outcome <span class="sc">~</span> expenditure, <span class="at">alpha=</span><span class="sc">~</span>participation, <span class="at">data =</span> Dat1, <span class="at">inherit=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-school-data-1-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="Reading-notes-lesson-28_files/figure-html/fig-school-data-1-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 4: Data and models of the relationship between expenditures and education outcomes from a simulation in which expenditures and participation rate are unconnected as in <a href="#fig-school-sim-1">Figure&nbsp;3</a>. - (a) The model <code>outcome ~ expenditure</code> - (b) The model with participation as a covariate: <code>outcome ~ expenditure + participation</code> Both models (a) and (b) show the same effect size for outcome with respect to expenditure.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure 6: Data and models of the relationship between expenditures and education outcomes from a simulation in which expenditures and participation rate are unconnected as in <a href="#fig-school-sim-1">Figure&nbsp;5</a>. - (a) The model <code>outcome ~ expenditure</code> - (b) The model with participation as a covariate: <code>outcome ~ expenditure + participation</code> Both models (a) and (b) show the same effect size for outcome with respect to expenditure.</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -287,15 +537,15 @@ attr(,"class")
 <div id="fig-school-data-1-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="Reading-notes-lesson-28_files/figure-html/fig-school-data-1-2.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 5: Data and models of the relationship between expenditures and education outcomes from a simulation in which expenditures and participation rate are unconnected as in <a href="#fig-school-sim-1">Figure&nbsp;3</a>. - (a) The model <code>outcome ~ expenditure</code> - (b) The model with participation as a covariate: <code>outcome ~ expenditure + participation</code> Both models (a) and (b) show the same effect size for outcome with respect to expenditure.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure 7: Data and models of the relationship between expenditures and education outcomes from a simulation in which expenditures and participation rate are unconnected as in <a href="#fig-school-sim-1">Figure&nbsp;5</a>. - (a) The model <code>outcome ~ expenditure</code> - (b) The model with participation as a covariate: <code>outcome ~ expenditure + participation</code> Both models (a) and (b) show the same effect size for outcome with respect to expenditure.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<p>The relationship between outcome and expenditure can be quantified by the effect size, which appears as the slope of the function. You can see that when the explanatory variables are unconnected, as in <a href="#fig-school-sim-1">Figure&nbsp;3</a>, the functions have the same slope.</p>
-<p>Now consider a somewhat different simulation. Rather than expenditures and participation being unconnected (as in the causal diagram shown in <a href="#fig-school-sim-1">Figure&nbsp;3</a>), in this new situation we will posit a connection between the two explanatory variables. We’ll image that there is some broad factor, labeled “culture” in <strong>?@fig-school-sim-2</strong>, that influences both the amount of expenditure and the participation in the tests used to measure education outcome. For instance, “culture” might be the importance that the community places on education or the wealth of the community.</p>
+<p>The relationship between outcome and expenditure can be quantified by the effect size, which appears as the slope of the function. You can see that when the explanatory variables are unconnected, as in <a href="#fig-school-sim-1">Figure&nbsp;5</a>, the functions have the same slope.</p>
+<p>Now consider a somewhat different simulation. Rather than expenditures and participation being unconnected (as in the causal diagram shown in <a href="#fig-school-sim-1">Figure&nbsp;5</a>), in this new situation we will posit a connection between the two explanatory variables. We’ll image that there is some broad factor, labeled “culture” in <strong>?@fig-school-sim-2</strong>, that influences both the amount of expenditure and the participation in the tests used to measure education outcome. For instance, “culture” might be the importance that the community places on education or the wealth of the community.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dag_school2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dag_school2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 culture ~ unif(-1, 1)
@@ -313,12 +563,12 @@ outcome ~ 1100 + 0.01 * expenditure - 4 * participation + eps(50)
 attr(,"class")
 [1] "list"      "dagsystem"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag_school2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag_school2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-school-sim2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="Reading-notes-lesson-28_files/figure-html/fig-school-sim2-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 6: A DAG for school outcomes that links <code>participation</code> and <code>expenditure</code> as a function of <code>culture</code>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure 8: A DAG for school outcomes that links <code>participation</code> and <code>expenditure</code> as a function of <code>culture</code>.</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -338,7 +588,7 @@ attr(,"class")
 <div id="fig-school-data2-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="Reading-notes-lesson-28_files/figure-html/fig-school-data2-1.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">Figure 7: Similar to <strong>?@fig-school-data-1</strong> but using the simulation in which the explanatory variables – expenditure and participation – are connected by a common cause. The two models show very different relationships between outcomes and expenditures. Model (b) matches the mechanism used in the simulation, while that mechanism is obscured in model (a).</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure 9: Similar to <strong>?@fig-school-data-1</strong> but using the simulation in which the explanatory variables – expenditure and participation – are connected by a common cause. The two models show very different relationships between outcomes and expenditures. Model (b) matches the mechanism used in the simulation, while that mechanism is obscured in model (a).</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -346,7 +596,7 @@ attr(,"class")
 <div id="fig-school-data2-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="Reading-notes-lesson-28_files/figure-html/fig-school-data2-2.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">Figure 8: Similar to <strong>?@fig-school-data-1</strong> but using the simulation in which the explanatory variables – expenditure and participation – are connected by a common cause. The two models show very different relationships between outcomes and expenditures. Model (b) matches the mechanism used in the simulation, while that mechanism is obscured in model (a).</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure 10: Similar to <strong>?@fig-school-data-1</strong> but using the simulation in which the explanatory variables – expenditure and participation – are connected by a common cause. The two models show very different relationships between outcomes and expenditures. Model (b) matches the mechanism used in the simulation, while that mechanism is obscured in model (a).</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -371,18 +621,24 @@ attr(,"class")
 <div id="fig-xkcd-correlation" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="www/xkcd-correlation.png" class="img-fluid figure-img" width="459"></p>
-<p></p><figcaption class="figure-caption">Figure 9: Insisting that “correlation is not causation” can interfere with making useful judgements, as interpreted by Randall Munroe in his <a href="https://xkcd.com/552/">XKCD cartoon series</a>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure 11: Insisting that “correlation is not causation” can interfere with making useful judgements, as interpreted by Randall Munroe in his <a href="https://xkcd.com/552/">XKCD cartoon series</a>.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<p>The optimists, again to oversimplify, believe it is possible to make useful statements (e.g.&nbsp;“the class helped” in <a href="#fig-xkcd-correlation">Figure&nbsp;9</a>) about the causal connections that underlie data. They emphasize that statistics can support decision making even when knowledge of causation is incomplete and uncertain.</p>
+<p>The optimists, again to oversimplify, believe it is possible to make useful statements (e.g.&nbsp;“the class helped” in <a href="#fig-xkcd-correlation">Figure&nbsp;11</a>) about the causal connections that underlie data. They emphasize that statistics can support decision making even when knowledge of causation is incomplete and uncertain.</p>
 <p>The optimists and the pessimists use the same set of mathematical and statistical tools for data analysis, particularly the calculation of effect sizes. The difference between them is the range of legitimate conclusions that can be drawn. The pessimists place in the center the idea that “correlation is not causation” and that <em>only</em> controlled experiment can be a justification for making causal conclusions. (We’ll study experiment in <a href="Reading-notes-lesson-32.html">Lesson 32</a>.) The optimists also see the difference between correlation and causation: correlation is a mathematical property, causation is a physical one. And the optimists accept that controlled experiment is an excellent way to form strong conclusions. But they accept other sources of knowledge or theoretical speculations as potentially useful, and use effect-size calculations in a way that, contingent on that knowledge or speculation, creates through the process of data analysis situations analogous to those created in the laboratory by careful experimentation.</p>
 
 
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1" role="doc-endnote"><p>The picturesque story of balls dropped from the Tower of Pisa may not be true. Galileo did record experiments done by rolling balls down ramps.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

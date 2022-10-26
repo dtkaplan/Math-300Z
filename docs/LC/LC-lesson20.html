@@ -15,6 +15,69 @@ span.underline{text-decoration: underline;}
 div.column{display: inline-block; vertical-align: top; width: 50%;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -54,6 +117,7 @@ ul.task-list{list-style: none;}
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -117,27 +181,489 @@ ul.task-list{list-style: none;}
 
 </header>
 
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Only for use in drafting questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>20.1. Understand that gaming is a way of improving our skills and identifying potential opportunities and problems.</p>
+<p>20.2 Characterize the “size” of a variable or of random noise using variance (or, equivalently, “standard deviation”).</p>
+<p>20.3 Distinguish between a sample, a summary of a sample, and a sample of summaries of samples.</p>
+</div>
+</div>
+<hr>
+<section id="a" class="level2">
+<h2 class="anchored" data-anchor-id="a">20.A</h2>
+<p>You’re having a conversation about your statistics course with your engineer aunt at Thanksgiving. You tell her about how the course uses gaming (e.g.&nbsp;simulated data from DAGs) to develop an understanding of statistical methodology. She says (sensibly), “What? Simulated data? Isn’t statistics supposed to be about real data? It’s not a game.”</p>
+<ol type="1">
+<li><p>Write a paragraph-long response to your aunt explaining the point of gaming in learning statistics. Your paragraph should make a compelling case for gaming.</p></li>
+<li><p>Write another paragraph that expresses any concerns you have about using games in a course that’s supposed to be about methods for extracting information about the world from real data.</p></li>
+</ol>
+<hr>
+</section>
+<section id="b" class="level2">
+<h2 class="anchored" data-anchor-id="b">20.B</h2>
+<p>Write statements using the computer commands covered in the first half of the course to calculate the <strong>size</strong> of the variability of these quantities:</p>
+<ol type="1">
+<li><p>The <code>age</code> variable from the <code>Cherry_race_longitudinal</code> data frame.</p></li>
+<li><p>The <code>Height</code> variable from the <code>NHANES</code> data frame.</p></li>
+<li><p>Compute the body-mass index from the formula <span class="math inline">\(\text{BMI} = \frac{w^2}/h\)</span> where <span class="math inline">\(w\)</span> is the person’s weight and <span class="math inline">\(h\)</span> is the person’s height. Then calculate the <strong>size</strong> of the variability of the BMI you calculate from the <code>NHANES</code> data.</p></li>
+</ol>
+<hr>
+</section>
+<section id="c" class="level2">
+<h2 class="anchored" data-anchor-id="c">20.C</h2>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+In draft
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Show pictures of data together with violins. Ask students to estimate the “size” of the variation and to mark on the graph an annotation reflecting the “size.”</p>
+<p>Is “size” a single number or a pair of numbers?</p>
+<p>Contrast “size” with the coverage interval: why is one of them two numbers and the other just a single number.</p>
+</div>
+</div>
+<hr>
+</section>
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section">20.1</h2>
-<p><strong>?@sec-size-of-variable</strong> describes two very closely related summary quantities used to measures of the “size” of a variable: i. the variance and ii. the “standard deviation” (which is the square root of the variance.</p>
+<p><strong>?@sec-size-of-variable</strong> (in the reading for this variable) describes two very closely related summary quantities used to measures of the “size” of a variable: a) the variance and b) the “standard deviation” (which is the square root of the variance).</p>
 <ol type="i">
 <li>Using software, what is the variance of the XXX variable in the YYY data frame? Make sure to include the <em>units</em>.</li>
 <li>What is the “standard deviation” of the XXX variable? Calculate this in two different ways: i. “by-hand” taking of the square root of the variance; ii. using the <code>sd()</code> software directly.</li>
 </ol>
 <p>[Repeat for a number of variables from different data frames.]</p>
-<section id="solution" class="level3">
-<h3 class="anchored" data-anchor-id="solution">Solution</h3>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
 <hr>
 </section>
-</section>
-<section id="section-1" class="level2">
-<h2 class="anchored" data-anchor-id="section-1">20.2</h2>
-<section id="solution-1" class="level3">
-<h3 class="anchored" data-anchor-id="solution-1">Solution</h3>
+<section id="d" class="level2">
+<h2 class="anchored" data-anchor-id="d">20.D</h2>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+In draft
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In arithmetic notation, parentheses are used to group operations. So, <span class="math inline">\(4*(3+2)\)</span> is different from <span class="math inline">\(4*3 + 2\)</span>. With <code>do()</code>, a similar logic applies, but we use curly braces—not parentheses—for the grouping. Another difference is that with <code>do()</code> and summarization, some configurations may not work at all because using braces or not will produce different data frames with different names.</p>
+<ol type="1">
+<li>Try the following two commands, which differ in how curly braces are used.</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">5</span>) <span class="sc">*</span> {<span class="fu">sample</span>(Galton, <span class="at">size=</span><span class="dv">50</span>)} <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(height))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">5</span>) <span class="sc">*</span> {<span class="fu">sample</span>(Galton, <span class="at">size=</span><span class="dv">50</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(height))}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>One command produces an error message and the other doesn’t. Explain what’s wrong with the erroneous command.</p>
+<ol start="2" type="1">
+<li>Try these two statements. Again, one will work and the other won’t. Diagnose the</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>{ <span class="fu">do</span>(<span class="dv">5</span>) <span class="sc">*</span> {<span class="fu">sample</span>(Galton, <span class="at">size=</span><span class="dv">50</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(height))} } <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sz=</span><span class="fu">sd</span>(m))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         sz
+1 0.7253725</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">5</span>) <span class="sc">*</span> {<span class="fu">sample</span>(Galton, <span class="at">size=</span><span class="dv">50</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(height))} <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sz =</span> <span class="fu">sd</span>(m))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  sz
+1 NA
+2 NA
+3 NA
+4 NA
+5 NA</code></pre>
+</div>
+</div>
+</div>
+</div>
 <hr>
-
-
 </section>
+<section id="e" class="level2">
+<h2 class="anchored" data-anchor-id="e">20.E</h2>
+<p>Write single-line computer statements that will do the following (related) tasks:</p>
+<ol type="1">
+<li><p>Draw a sample of size 5 from the <code>mosaicData::TenMileRace</code> data</p></li>
+<li><p>Draw a sample (but now of size 100) and compute the “size” of variation of the <code>net</code> variable (which gives the net time to complete the race, start line to finish line).</p></li>
+<li><p>Carry out 300 trials of (2) using the <code>do()</code> operator. (The result should be a data frame with entries that vary.) Note: Surround the statement for a single trial with curly braces: <code>{</code> and <code>}</code>. Also, arrange for the name of the column in the overall result to be <code>sz</code>. This will appear in the <code>summarize()</code> command.</p></li>
+<li><p>Add on to (3) the computations needed to calculate the mean and the standard deviation of the trials? Note: Surround the statement from (3) with a pair of curly braces so that the <code>summarize()</code> command will look at all 300 trials as a single data frame.</p>
+<ol type="i">
+<li><p>Is the mean thus calculated a single number comprising all trials or a number for each trial? Briefly justify your answer in terms of what the mean of the trials should be about.</p></li>
+<li><p>Eexplain what the standard deviation of the trials captures and why it’s different from the standard deviation on one trial (as from (2)).</p></li>
+</ol></li>
+<li><p>Repeat (4), but now with a sample size of 400 instead of 100. With the larger sample size, how do the mean and the standard deviation compare to what you got with a sample size of 100.</p></li>
+<li><p>Repeat (4) but this time use 1200 trials instead of 300. With more trials, how do the mean and standard deviation compare to what you got with 300 trials?</p></li>
+</ol>
+<p>::: {.callout-note} ## Solution</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sample of size 100 from TenMileRace</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(TenMileRace, <span class="at">size=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     state time  net age sex orig.id
+5200    VA 5826 5622  26   F    5200
+3621    NY 3710 3710  52   M    3621
+4319    VA 5187 5162  16   F    4319
+6236    DC 5086 4898  31   F    6236
+4850    VA 5005 4928  25   F    4850</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(TenMileRace, <span class="at">size=</span><span class="dv">100</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sz =</span> <span class="fu">sd</span>(net))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        sz
+1 989.7872</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">300</span>)<span class="sc">*</span> {<span class="fu">sample</span>(TenMileRace, <span class="at">size=</span><span class="dv">100</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sz =</span> <span class="fu">sd</span>(net))}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           sz
+1    935.2835
+2    864.1209
+3    991.9426
+4   1033.4450
+5   1107.1699
+6    999.3019
+7    979.6108
+8    984.8824
+9    893.9452
+10   896.9353
+11   909.7440
+12  1082.4825
+13   869.6667
+14   909.8586
+15   841.8605
+16   899.8305
+17  1098.6771
+18   903.9756
+19  1017.5757
+20  1009.8084
+21   947.4528
+22   866.5563
+23  1111.8237
+24   920.9881
+25  1114.2142
+26   989.2198
+27   904.5219
+28   942.2985
+29   975.0523
+30  1005.0565
+31  1045.0649
+32   804.7149
+33   984.5017
+34   931.1376
+35   987.1799
+36   966.1105
+37  1176.1742
+38   997.8880
+39   939.1997
+40   964.8751
+41  1023.9575
+42   894.5466
+43  1078.5738
+44   890.7672
+45   913.1032
+46   957.8719
+47   938.4455
+48  1198.2465
+49   960.2679
+50  1093.0112
+51   878.1397
+52   902.9950
+53   959.2964
+54   955.9949
+55   994.5670
+56   999.6098
+57   894.5494
+58   944.2706
+59   841.5120
+60   971.9427
+61   866.6388
+62   884.4254
+63  1005.0672
+64   859.3656
+65   869.6465
+66   928.4984
+67   882.3493
+68   929.3066
+69   961.0110
+70   954.7666
+71   995.1881
+72   910.8695
+73  1086.1882
+74   866.8875
+75   829.8607
+76   978.2121
+77   915.6285
+78   960.1390
+79  1075.9175
+80   806.8149
+81  1038.5203
+82   916.7681
+83   909.2274
+84   884.5920
+85   847.5868
+86  1000.2599
+87  1013.9214
+88   952.3603
+89  1032.1450
+90   960.9476
+91   938.9403
+92  1124.0317
+93  1117.8027
+94   813.1756
+95   899.5693
+96  1106.8892
+97   805.3640
+98   895.5305
+99  1041.5698
+100 1001.3925
+101 1033.3263
+102  967.3543
+103  992.1093
+104 1099.2348
+105 1006.7875
+106 1013.3553
+107 1100.3269
+108  821.2211
+109 1042.6789
+110  988.7332
+111  905.7325
+112 1025.8348
+113  909.8306
+114  880.0523
+115 1151.6035
+116  759.0052
+117 1021.5409
+118  887.0085
+119  915.8048
+120  882.4327
+121 1108.2071
+122  961.0029
+123  917.1378
+124 1022.6772
+125 1019.5482
+126 1034.1278
+127 1008.5512
+128  866.9532
+129  937.5872
+130  969.3005
+131  963.5933
+132  940.6535
+133  865.5862
+134  979.6695
+135  855.7436
+136  831.7585
+137  904.6226
+138  939.4044
+139  964.5623
+140  923.7244
+141 1035.8546
+142 1020.1612
+143  871.0645
+144  779.6602
+145 1018.4503
+146  980.4815
+147  895.1516
+148  903.2798
+149  933.7116
+150 1088.0078
+151  946.0003
+152 1085.4115
+153  836.6267
+154 1096.0999
+155 1001.8983
+156  937.0384
+157  932.4856
+158 1071.9284
+159  964.6650
+160  948.0608
+161  961.7802
+162 1086.2583
+163  881.6392
+164 1074.1256
+165 1014.8427
+166 1019.0670
+167  762.5020
+168  956.9975
+169 1013.7822
+170  961.2855
+171 1064.2289
+172  896.5258
+173  876.9779
+174 1002.3865
+175  902.0062
+176 1087.5041
+177  969.0666
+178  949.3226
+179  937.5604
+180  967.8846
+181  962.7566
+182  842.6570
+183  975.8517
+184  860.3817
+185  934.1456
+186  966.8410
+187 1054.9238
+188  864.7210
+189  897.6808
+190  975.0652
+191 1034.4298
+192 1028.2902
+193  994.6110
+194  864.5749
+195  909.5564
+196  917.8059
+197  785.3245
+198  869.8035
+199  948.1110
+200 1041.2221
+201  938.3919
+202  837.3169
+203  938.4763
+204  997.6952
+205  853.5572
+206  856.8444
+207  953.4682
+208  897.4692
+209  935.7548
+210  994.2567
+211  830.4893
+212 1009.4564
+213 1021.2338
+214  916.7626
+215  961.3999
+216 1026.8420
+217  955.5354
+218 1092.4335
+219  871.2790
+220 1022.1029
+221 1012.0510
+222  941.3925
+223  899.5408
+224  944.8411
+225  948.6405
+226 1013.6389
+227  979.0452
+228  923.8670
+229  919.9923
+230 1059.0503
+231  849.6150
+232 1115.5983
+233  948.7558
+234  823.0285
+235 1149.5049
+236 1012.8591
+237 1093.9288
+238  959.5887
+239 1001.5643
+240  830.0468
+241  984.8155
+242  962.4929
+243  920.9400
+244  874.5202
+245  933.4128
+246  899.6460
+247  939.2989
+248  971.5205
+249 1076.3141
+250 1077.4322
+251  915.0616
+252 1004.6463
+253  918.4548
+254 1053.7438
+255  984.9317
+256 1012.3069
+257  969.1277
+258  791.9972
+259  996.1261
+260  955.9223
+261 1010.5353
+262  906.0977
+263 1013.5866
+264  975.9976
+265  824.0274
+266  895.0678
+267  857.9002
+268  921.7147
+269  867.7880
+270 1114.6959
+271 1016.6237
+272 1010.3011
+273  916.3437
+274  942.8530
+275  990.4020
+276 1022.8936
+277 1010.1219
+278  945.0536
+279  962.7322
+280  966.1271
+281  769.4918
+282 1031.4658
+283  920.7142
+284  966.3896
+285 1046.1081
+286 1009.1230
+287  929.2753
+288 1011.5554
+289  856.8500
+290  916.3724
+291  962.7453
+292  865.7287
+293 1008.0288
+294 1032.9117
+295  898.6383
+296  871.3332
+297  985.6596
+298  911.9377
+299 1178.4605
+300  836.0317</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>{<span class="fu">do</span>(<span class="dv">300</span>)<span class="sc">*</span> {<span class="fu">sample</span>(TenMileRace, <span class="at">size=</span><span class="dv">100</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sz =</span> <span class="fu">sd</span>(net))}} <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(sz), <span class="at">s=</span><span class="fu">sd</span>(sz))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         m        s
+1 964.5374 78.20796</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>{<span class="fu">do</span>(<span class="dv">300</span>)<span class="sc">*</span> {<span class="fu">sample</span>(TenMileRace, <span class="at">size=</span><span class="dv">400</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sz =</span> <span class="fu">sd</span>(net))}} <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(sz), <span class="at">s=</span><span class="fu">sd</span>(sz))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         m        s
+1 972.0645 40.66924</code></pre>
+</div>
+</div>
+<ol start="5" type="1">
+<li><p>Using a sample size that’s four times larger doesn’t affect the mean, but it reduces the standard deviation by a factor of two.</p></li>
+<li><p>Increasing the number of trials does have any noticeable effect on either the mean or standard deviation.</p></li>
+</ol>
+<hr>
+</section>
+<section id="e-1" class="level2">
+<h2 class="anchored" data-anchor-id="e-1">20.E</h2>
+<p>Throughout this course, you’re going to be using <code>lm()</code> to build models. Often, to demonstrate “<strong>sampling variation</strong>.” you will use <code>sample()</code> on a dataset or a DAG to generate a random sample and then send the result as the <code>data=</code> argument to <code>lm()</code>,</p>
+<p>Here are three computer commands that use the <code>data=</code> argument in different ways. One of them doesn’t work at all. Which one?</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(mtcars, <span class="at">size=</span><span class="dv">10</span>) <span class="sc">%&gt;%</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> hp, <span class="at">data=</span>.)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(mtcars, <span class="at">size=</span><span class="dv">10</span>) <span class="sc">%&gt;%</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> hp)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> hp, <span class="at">data=</span><span class="fu">sample</span>(mtcars, <span class="at">size=</span><span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>::: {.callout-warning} ## In draft</p>
+<p>This problem would be come irrelevant if the <code>fitmodel()</code> command described in the [Lesson 19 NTI]{../NTI/NTI-Lesson19.html} is being used.</p>
+
+
 </section>
 
 </main> <!-- /main -->

@@ -117,6 +117,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -180,6 +181,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Remove these hard-coded objectives after drafting problems
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>28.1 Read a DAG to determine which covariates to include in a model to reduce (out-of-sample) prediction error.</p>
+<p>28.2 Calculate amount of in-sample mean square error reduction to be expected with a useless (random) covariate. (Residual sum of squares divided by residual degrees of freedom.)</p>
+</div>
+</div>
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section">28.1</h2>
 <p>Consider <code>dag01</code>, which shows a simple causal relationship between two variable.</p>
@@ -192,11 +207,393 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>So far as the size of prediction error is concerned, does it matter whether <code>x</code> is used to predict <code>y</code> or vice versa? Show the models and the results you use to come to your conclusion. ::: {.callout-note} ## Solution</p>
 <p>:::</p>
 <hr>
+</section>
+<section id="b" class="level2">
+<h2 class="anchored" data-anchor-id="b">28.B</h2>
+<p>Whenever you seek to study a partial relationship, there must be at least three variables involves: a response variable, an explanatory variable that is of direct interest, and one or more other explanatory variables that will be held constant: the covariates. Unfortunately, it’s hard to graph out models involving three variables on paper: the usual graph of a model just shows one variable as a function of a second.</p>
+<p>One way to display the relationship between a response variable and two quantitative explanatory variables is to use a contour plot. The two explanatory variables are plotted on the axes and the fitted model values are shown by the contours. <a href="#fig-car-modelC">Figure&nbsp;1</a> shows such a display of the fitted model of used car prices as a function of <code>mileage</code> and <code>age</code>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-car-modelC" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/car-modelC.png" class="img-fluid figure-img" width="250"></p>
+<p></p><figcaption class="figure-caption">Figure 1: <strong>?(caption)</strong></figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The dots are the <code>mileage</code> and <code>age</code> of the individual cars — the model <code>Price</code> is indicated by the contours.</p>
+<p>The total relationship between <code>Price</code> and <code>mileage</code> involves how the price changes for typical cars of different mileage.</p>
+<ol type="1">
+<li>Pick a dot that is a typical car with about 10,000 miles. Using the contours, find the model price of this car. Which of the following is closest to the model price (in dollars)?</li>
+</ol>
+<p>18000, 21000, 25000, <strong>30000</strong></p>
+<ol start="2" type="1">
+<li>Pick another dot that is a typical car with about 70,000 miles. Using the contours, find the model price of this car. Which of the following is closest to the model price?</li>
+</ol>
+<p>18000 <strong>21000</strong>, 25000, 30000</p>
+<p>The total relationship between <code>Price</code> and <code>mileage</code> is reflected by this ratio: change in model price divided by change in mileage. What is that ratio (roughly)?</p>
+<ol type="a">
+<li><strong><span class="math inline">\(\frac{30000 - 21000}{70000-10000}=0.15\)</span> dollars/mile</strong></li>
+<li><span class="math inline">\(\frac{70000-10000}{25000-21000}=15.0\)</span> dollars/mile</li>
+<li><span class="math inline">\(\frac{25000 - 18000}{70000-10000}=0.12\)</span> dollars/mile</li>
+</ol>
+<p>In contrast, the partial relationship between <code>Price</code> and <code>mileage</code> holding <code>age</code> constant is found in a different way, by comparing two points with different mileage but exactly the same age.</p>
+<ol start="3" type="1">
+<li>Mark a point on the graph where age is 3 years and mileage is</li>
+<li>Keep in mind that this point doesn’t need to be an actual car, that is, a data point in the graph typical car. There might be no actual car with an age of 3 years and mileage 10000. But using the contour model, find the model price at this point. Which of these is closest?</li>
+</ol>
+<p>22000, 24000, 26000 <strong>28000</strong>, 30000</p>
+<ol start="4" type="1">
+<li>Find another point, one where the age is exactly the same (3 years) but the mileage is different. Again there might not be an actual car there. Let’s pick mileage as 80000. Using the contours, find the model price at this point. Which of these is closest?</li>
+</ol>
+<p><strong>22000</strong>, 24000, 26000, 28000, 30000</p>
+<ol start="5" type="1">
+<li>The partial relationship between price and mileage (holding age constant) is reflected again reflected by the ratio of the change in model price divided by the change in mileage. What is that ratio (roughly)?</li>
+</ol>
+<ol type="a">
+<li><span class="math inline">\(\frac{80000-10000}{25000-21000} = 17.50\)</span> dollars/mile</li>
+<li><strong><span class="math inline">\(\frac{28000 - 22000}{80000-10000}=0.09\)</span> dollars/mile</strong></li>
+<li><span class="math inline">\(\frac{26000 - 24000}{80000-10000}=0.03\)</span> dollars/mile</li>
+</ol>
+<hr>
+<p>Both the total relationship and the partial relationship are indicated by the slope of the model price function given by the contours. The total relationship involves the slope between two points that are typical cars, as indicated by the dots. The partial relationship involves a slope along a different direction. When holding age constant, that direction is the one where mileage changes but age does not (vertical in the graph).</p>
+<p>There’s also a partial relationship between price and age holding mileage constant. That partial relationship involves the slope along the direction where age changes but mileage is held constant. Estimate that slope by finding the model price at a point where age is 2 years and another point where age is 5 years. You can pick whatever mileage you like, but it’s key that your two points be at exactly the same mileage.</p>
+<ol start="6" type="1">
+<li>Estimate the slope of the price function along a direction where age changes but mileage is held constant (horizontally on the graph).</li>
+</ol>
+<ol type="a">
+<li>100 dollars per year</li>
+<li>500 dollars per year</li>
+<li><strong>1000 dollars per year</strong></li>
+<li>2000 dollars per year</li>
+</ol>
+<p>The contour plot in <a href="#fig-car-modelC">Figure&nbsp;1</a> depicts a model in which both mileage and age are explanatory variables. By choosing the direction in which to measure the slope, one determines whether the slope reflects a total relationship (a direction between typical cars), or a partial relationship holding age constant (a direction where age does not change, which might not be typical for cars), or a partial relationship holding mileage constant (a direction where mileage does not change, which also might not be typical for cars).</p>
+<p>In calculus, the partial derivative of price with respect to mileage refers to an infinitesimal change in a direction where age is held constant. Similarly, the partial derivative of price with respect to age refers to an infinitesimal change in a direction where mileage is held constant.</p>
+<p>Of course, in order for the directional derivatives to make sense, the price function needs to have <strong>both</strong> age and mileage as explanatory variables. <a href="#fig-car-modelA">Figure&nbsp;2</a> shows a model in which only <code>age</code> has been used as an explanatory variable: there is no dependence of the function on <code>mileage</code>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-car-modelA" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/car-modelA.png" class="img-fluid figure-img" width="250"></p>
+<p></p><figcaption class="figure-caption">Figure 2: <strong>?(caption)</strong></figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Such a model is incapable of distinguishing between a partial relationship and a total relationship. Both the partial and the total relationship involve a ratio of the change in price and change in age between two points. For the total relationship, those two points would be typical cars of different ages. For the partial relationship, those two points would be different ages at exactly the same mileage. But, because the model depend on mileage, the two ratios will be exactly the same.</p>
+<hr>
+</section>
+<section id="c" class="level2">
+<h2 class="anchored" data-anchor-id="c">28.C</h2>
+<p>In each of the following, a situation is described and a question is asked that is to be answered by modeling. Several variables are listed. Imagine an appropriate model and identify each variable as either the response variable, an explanatory variable, a covariate, or a variable to be ignored.</p>
+<blockquote class="blockquote">
+<p>EXAMPLE: <em>Some people have claimed that police foot patrols are more effective at reducing the crime rate than patrols done in automobiles. Data from several different cities is available; each city has its own fraction of patrols done by foot, its own crime rate, etc. The mayor of your town has asked for your advice on whether it would be worthwhile to shift to more foot patrols in order to reduce crime. She asks, “Is there evidence that a larger fraction of foot patrols reduces the crime rate?”</em></p>
+</blockquote>
+<p><strong>Variables</strong>:</p>
+<ol>
+<li>Crime rate (e.g., robberies per 100000 population)</li>
+<li>Fraction of foot patrols</li>
+<li>Number of policemen per 1000 population</li>
+<li>Demographics (e.g., poverty rate)</li>
+</ol>
+<p>Answer: The question focuses on how the <code>fraction of foot patrols</code> might influence <code>crime rate</code>, so <code>crime rate</code> is the response variable and <code>fraction of foot patrols</code> is an explanatory variable.</p>
+<p>But, the crime rate might also depend on the overall level of policing (as indicated by the <code>number of policemen</code>), or on the social conditions that are associated with crime (e.g., <code>demographics</code>). Since the mayor has no power to change the demographics of your town, and probably little power to change the overall level number of policemen, in modeling the data from the different cities, you would want to hold constant <code>number of policemen</code> and the <code>demographics</code>. You can do this by treating <code>number of policemen</code> and <code>demographics</code> as covariates and including them in your model.</p>
+<hr>
+<section id="alcohol-and-road-safety" class="level3">
+<h3 class="anchored" data-anchor-id="alcohol-and-road-safety">Alcohol and Road Safety</h3>
+<p>Fifteen years ago, your state legislature raised the legal drinking age from 18 to 21 years. An important motivation was to reduce the number of car accident deaths due to drunk or impaired drivers. Now, some people are arguing that the 21-year age limit encourages binge drinking among 18 to 20 year olds and that such binge drinking actually increases car accident deaths. But the evidence is that the number of car accident deaths has gone down since the 21-year age restriction was introduced.<br>
+You are asked to examine the issue: Does the reduction in the number of car-accident deaths per year point to the effectiveness of the 21-year drinking age?</p>
+<p><strong>Variables</strong>:</p>
+<ol>
+<li>Drinking age limit. Levels: 18 or 21.</li>
+</ol>
+<p>Which is it? response <strong>explanatory</strong> covariate ignore</p>
+<ol>
+<li>Number of car-accident deaths per year.</li>
+</ol>
+<p>Which is it? <strong>response</strong> explanatory covariate ignore</p>
+<ol>
+<li>Prevalence of seat-belt use.</li>
+</ol>
+<p>Which is it? response explanatory <strong>covariate</strong> ignore</p>
+<ol>
+<li>Fraction of cars with air bags.</li>
+</ol>
+<p>Which is it? response explanatory <strong>covariate</strong> ignore</p>
+<ol>
+<li>Number of car accidents (with or without death).</li>
+</ol>
+<p>Which is it? response explanatory covariate <strong>ignore</strong></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Explanation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Of direct interest is how the <code>drinking age limit</code> accounts for the <code>number of deaths</code>, so these are, respectively, explanatory and response variables. But a lower death rate might also be explained by increased use of <code>seat belts</code> and of <code>air bags</code>; these can prevent deaths in an accident and they have been increasing over the same period in which the 21-year age limit was introduced.<br>
+In examining how the <code>drinking age limit</code> might affect the <code>number of deaths</code>, it might be important to hold these other factors constant. So, <code>seat belts</code> and <code>air bags</code> should be covariates included in the model.</p>
+<p>The <code>number of accidents</code> is different. It seems plausible that the mechanism by which drunk driving causes deaths is by causing accidents. If the <code>number of accidents</code> were included as a covariate, then the model would be examining how the death rate changes with drinking age when {} even though the point is that the higher drinking age might reduce the number of accidents. So, <code>number of accidents</code> ought to be left out of the model.</p>
+</div>
+</div>
+</section>
+<section id="rating-surgeons" class="level3">
+<h3 class="anchored" data-anchor-id="rating-surgeons">Rating Surgeons</h3>
+<p>Your state government wants to guide citizens in choosing physicians. As part of this effort, they are going to rank all the surgeons in your state. You have been asked to build the rating system and you have a set of variables available for your use. These variables have been measured for each of the 342,861 people who underwent surgery in your state last year: one person being treated by one doctor. How should you construct a rating system that will help citizens to choose the most effective surgeon for their own treatment?</p>
+<p><strong>Variables</strong>:</p>
+<ol>
+<li>Outcome score. (A high score means that the operation did whatit was supposed to. A low score reflects failure, e.g.&nbsp;death. Death is a very bad outcome, post-operative infection a somewhat bad outcome.)</li>
+</ol>
+<p>Which is it? <strong>response</strong> explanatory covariate ignore</p>
+<ol>
+<li>Surgeon. One level for each of the operating surgeons.</li>
+</ol>
+<p>Which is it? response explanatory covariate ignore</p>
+<ol>
+<li>Experience of the surgeon.</li>
+</ol>
+<p>Which is it? response explanatory covariate <strong>ignore</strong></p>
+<ol>
+<li>Difficulty of the case.</li>
+</ol>
+<p>Which is it? response explanatory <strong>covariate</strong> ignore</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Explanation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The patient has a choice of doctors and wants to have the best possible outcome. So the model needs to include <code>surgeon</code> as an explanatory variable and <code>outcome score</code> as the response.</p>
+<p>A simple model might be misleading for informing a patient’s choice. The best doctors might take on the most difficult cases and therefore have worse outcomes than doctors who are not as good. But the patient’s condition doesn’t change depending on what doctor is selected. This means that the <code>difficulty of the case</code> ought to be included as a covariate. The model would thus tell what is the typical outcome for each surgeon <em>adjusting for the difficulty of the case</em>, that is, given the patient’s condition.</p>
+<p>Another variable that might explain the outcome is the <code>experience of the surgeon</code>; possibly more experienced surgeons produce better outcomes. However, <code>experience of the surgeon</code><br>
+should not be included in the model used to inform a patient’s choice. The reason is that the patient’s choice of a doctor already reflects the experience of that doctor. From the patient’s point of view, it doesn’t matter whether the doctor’s outcomes reflect a high level of talent, a lot of experience, or superior training.</p>
+<p>The choice of variables and covariates depends on the purpose of the model. If the purpose of the model were to decide how much experience to require of doctors before they are licensed, then an appropriate model would have <code>outcome</code> as the response, <code>experience</code> as the explanatory variable, and <code>difficulty of the case</code> and <code>surgeon</code> as covariates.</p>
+</div>
+</div>
+</section>
+<section id="school-testing" class="level3">
+<h3 class="anchored" data-anchor-id="school-testing">School testing</h3>
+<p>Last year, your school district hired a new superintendent to ``shake things up.’’ He did so, introducing several controversial new policies. At the end of the year, test scores were higher than last year. A representative of the teachers’ union has asked you to examine the score data and answer this question: Is there reason to think that the higher scores were the result of the superintendent’s new policies?</p>
+<p><strong>Variables</strong>:</p>
+<ol>
+<li>Superintendent (levels: New or Former superintendent)</li>
+</ol>
+<p>Which is it? response <strong>explanatory</strong> covariate ignore</p>
+<ol>
+<li>Exam difficulty</li>
+</ol>
+<p>Which is it? response explanatory <strong>covariate</strong> ignore</p>
+<ol>
+<li>Test scores</li>
+</ol>
+<p>Which is it? <strong>response</strong> explanatory covariate ignore</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Explanation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The issue of direct interest is whether the policies of the new superintendent might have influenced the test scores, so the model should be <code>test scores</code> as the response and <code>superintendent</code> as an explanatory variable. Of course, one possible mechanism that might have improved the scores, outside of the influence of the superintendent’s policies, is the test itself. If it were easier this year than last year, then it wouldn’t be surprising that the test scores improved this year even if the superintendent’s policies had no effect. So <code>exam difficulty</code> should be a covariate to be included in the model.</p>
+</div>
+</div>
+</section>
+<section id="gravity" class="level3">
+<h3 class="anchored" data-anchor-id="gravity">Gravity</h3>
+<p>In a bizarre twist of time, you find yourself as Galileo’s research assistant in Pisa in 1605. Galileo is studying gravity: Does gravity accelerate all materials in the same way, whether they be made of metal, wood, stone, etc.? Galileo hired you as his assistant because you have brought with you, from the 21st century, a stop-watch with which to measure time intervals, a computer, and your skill in statistical modeling. All of these seem miraculous to him.</p>
+<p>He drops objects off the top of the Leaning Tower of Pisa and you measure the following:</p>
+<p><strong>Variables</strong></p>
+<ol>
+<li>The size of the object (measured by its diameter).</li>
+</ol>
+<p>Which is it? response explanatory <strong>covariate</strong> ignore</p>
+<ol>
+<li>Time of fall of the object.</li>
+</ol>
+<p>Which is it? <strong>response</strong> explanatory covariate ignore</p>
+<ol>
+<li>The material from which the object is made (brass, lead, wood, stone).</li>
+</ol>
+<p>Which is it? response <strong>explanatory</strong> covariate ignore</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Explanation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Galileo wants to know how the <code>material</code> affects the <code>time</code> of fall of the object. These are the explanatory and response variables respectively. But the size of the object also has an influence, due to air resistance. For instance, a tiny ball will fall more slowly than a large ball. So the <code>size of the object</code> should be a covariate.</p>
+</div>
+</div>
+<hr>
+<p>##28.D</p>
+<p>Polling organizations often report their results in tabular form, as in <a href="#fig-time-poll-2008">Figure&nbsp;3</a>. The basic question in the poll summarized in <a href="#fig-time-poll-2008">Figure&nbsp;3</a> asked whether the respondant agrees with the statement, “The US was a better place to live in the 1990s and will continue to decline.”</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-time-poll-2008" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/time-poll-july-2008.png" class="img-fluid figure-img" width="310"></p>
+<p></p><figcaption class="figure-caption">Figure 3: Results from a poll conducted by <em>Time</em> magazine. (Source: <em>Time</em>, July 28, 2008, p.&nbsp;41)</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The response variable here is “pessimism.” In the report, there are three explanatory variables: race/ethnicity, income, and age. The report’s breakdown is one explanatory variable at a time, meaning that it considers “total change” rather than “change holding other factors constant.” This can be misleading when there are connections among the explanatory variables. For instance, relatively few people in the 18 to 29 age group have high incomes.</p>
+<p>Pollsters rarely make available the raw data they collected. This is unfortunate because it prevents others from looking at the data in different ways. For the purpose of this exercise, you’ll use simulated data in the frame <code>math300::Econ_outlook_poll</code>. Of course, the simulation doesn’t necessarily describe people’s attitudes directly, but it does let you see how the conclusions drawn from the poll might have been different if the results for each explanatory variable had been presented in a way that adjusts for the other explanatory variables.</p>
+<ol type="1">
+<li><p>Construct the model <code>pessimism ~ age - 1</code>. Look at the coefficients and choose the statement that best reflects the results. (In case you’re wondering: The <code>-1</code> is convenient when the explanatory variable is categorical. It ensures that a coefficient is reported for each level of the <code>age</code> variable. You’ll have to compare coefficients for different age groups to see a trend.)</p></li>
+<li><p><strong>Middle aged people have lower pessimism than young or old people.</strong></p></li>
+<li><p>Young people have the least pessimism.</p></li>
+<li><p>There is no relationship between age and pessimism.</p></li>
+<li><p>Now construct the model <code>pessimism ~ income - 1</code>. Look at the coefficients and choose the statement that best reflects the results:</p></li>
+<li><p>Higher income people are more pessimistic than low-income people.</p></li>
+<li><p><strong>Higher income people are less pessimistic than low-income people.</strong></p></li>
+<li><p>There is no relationship between income and pessimism.</p></li>
+<li><p>Construct a model in which you can look at the relationship between pessimism and age while <em>adjusting for</em> income. That is, include income as a covariate in your model. Look at the coefficients from your model and choose the statement that best reflects the results:</p></li>
+<li><p><strong>Holding income constant, older people tend to have higher levels of pessimism than young people.</strong></p></li>
+<li><p>Holding income constant, young people tend to have higher levels of pessimism than old people.</p></li>
+<li><p>Holding income constant, there is no relationship between age and pessimism.</p></li>
+<li><p>You can also interpret that same model to see the relationship between pessimism and income while <em>adjusting for age</em>. Which of the following statements best reflects the results? (Hint: make sure to pay attention to the sign of the coefficients.)</p></li>
+<li><p>Holding age constant, higher income people are more pessimistic than low-income people.</p></li>
+<li><p><strong>Holding age constant, higher income people are less pessimistic than low-income people.</strong></p></li>
+<li><p>Holding age constant, there is no relationship between income and pessimism.</p></li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="e" class="level2">
+<h2 class="anchored" data-anchor-id="e">28.E</h2>
+<p>A study<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> on drug D indicates that patients who were given the drug were <strong>less</strong> likely to recover from their condition C. Here is a table showing the overall results:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Drug</th>
+<th style="text-align: right;"># recovered</th>
+<th style="text-align: right;"># died</th>
+<th style="text-align: right;">Recovery Rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Given</td>
+<td style="text-align: right;">1600</td>
+<td style="text-align: right;">2400</td>
+<td style="text-align: right;">40%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Not given</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">50%</td>
+</tr>
+</tbody>
+</table>
+<p>Strangely, when investigators looked at the situation separately for males and females, they found that the drug <strong>improves</strong> recovery for each group:</p>
+<p>Sex | Drug | num recovered | # died | Recovery Rate :—-::———|—–:|—–:|——: Sex | Drug | num recovered | # died | Recovery Rate Females| Given | 900 | 2100 | 30% | Not given | 200 | 800 | 20% e | | | |<br>
+Males | Given | 700 | 300 | 70% | Not given | 1800 | 1200 | 60%</p>
+<ol type="1">
+<li><p>Are the two tables consistent with one another in terms of the numbers reported?</p></li>
+<li><p>Does the drug improve recovery or hinder recovery?</p></li>
+<li><p>What advice would you give to a physician about whether or not to prescribe the drug to her patients? Give enough of an explanation that the physician can judge whether your advice is reasonable.</p></li>
+</ol>
+<hr>
+</section>
+<section id="f" class="level2">
+<h2 class="anchored" data-anchor-id="f">28.F</h2>
+<p>Economists measure the inflation rate as a percent change in price per year. Unemployment is measured as the fraction (percentage) of those who want to work who are seeking jobs.</p>
+<p>According to economists, in the short run — say, from one year to another — there is a relationship between inflation and unemployment: all other things being equal, as unemployment goes up, inflation should go down. (The relationship is called the “Phillips curve,” but you don’t need to know that or anything technical about economics to answer this question.)</p>
+<ol type="1">
+<li><dl>
+<dt>If the Phillips-curve relationship is true, in the model</dt>
+<dd>
+<code>Inflation ~ Unemployment</code>, what should be the sign of the coefficient on <code>Unemployment</code>? positive, zero, <strong>negative</strong>
+</dd>
+</dl></li>
+</ol>
+<p>But despite the short term relationship, economists claim that In the long run — over decades — unemployment and inflation should be unrelated.</p>
+<ol start="2" type="1">
+<li><dl>
+<dt>If the long-run theory is true, in the model</dt>
+<dd>
+<code>Inflation ~ Unemployment</code>, what should be the sign of the coefficient on <code>Unemployment</code>? positive, <strong>zero</strong>, negative}
+</dd>
+</dl></li>
+</ol>
+<hr>
+<p>The point of this exercise is to figure out how to arrange a model so that you can study the short-term behavior of the relationship, or so that you can study the long term relationship.</p>
+<p>For your reference, <a href="#fig-inflation1">Figure&nbsp;4</a> shows inflation and unemployment rates over about 30 years in the US. Each point shows the inflation and unemployment rates during one quarter of a year. The plotting symbol indicates which of three decade-long periods the point falls into.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-inflation1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/inflation-fig1.png" class="img-fluid figure-img" width="381"></p>
+<p></p><figcaption class="figure-caption">Figure 4: <strong>?(caption)</strong></figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The relationship between inflation and unemployment seems to be different from one decade to another — that’s the short term.</p>
+<ol start="3" type="1">
+<li>Which decade seems to violate the economists’ Phillips Curve short-term relationship? <strong>A</strong>, B, C, none, all</li>
+</ol>
+<p>Using the modeling language, express these different possible relationships between the variables <code>Inflation</code>, <code>Unemployment</code>, and <code>Decade</code>, where the variable <code>Decade</code> is a categorical variable with the three different levels shown in the legend for the graph.</p>
+<ol start="4" type="1">
+<li><p>Inflation depends on Unemployment in a way that doesn’t change over time.</p></li>
+<li><p><code>Inflation ~ Decade</code></p></li>
+<li><p>** ~ <code>Inflation ~ Unemployment</code>**</p></li>
+<li><p><code>Inflation ~ Unemployment + Decade</code></p></li>
+<li><p><code>Inflation ~ Unemployment * Decade</code></p></li>
+<li><p>Inflation changes with the decade, but doesn’t depend on Unemployment.</p></li>
+<li><p>** ~ <code>Inflation ~ Decade</code>**</p></li>
+<li><p><code>Inflation ~ Unemployment</code></p></li>
+<li><p><code>Inflation ~ Unemployment + Decade</code></p></li>
+<li><p><code>Inflation ~ Unemployment * Decade</code></p></li>
+<li><p>Inflation depends on Unemployment in the same way every decade, but each decade introduces a new background inflation rate independent of Unemployment.</p></li>
+<li><p><code>Inflation ~ Decade</code></p></li>
+<li><p><code>Inflation ~ Unemployment</code></p></li>
+<li><p>** ~ <code>Inflation ~ Unemployment + Decade</code>**</p></li>
+<li><p><code>Inflation ~ Unemployment * Decade</code></p></li>
+<li><p>Inflation depends on Unemployment in a way that differs from decade to decade.</p></li>
+<li><p><code>Inflation ~ Decade</code></p></li>
+<li><p><code>Inflation ~ Unemployment</code></p></li>
+<li><p><code>Inflation ~ Unemployment + Decade</code></p></li>
+<li><p>** ~ <code>Inflation ~ Unemployment * Decade</code>**</p></li>
+</ol>
+<hr>
+<p>Whether a model examines the short-term or the long-term behavior is analogous to whether a partial change or a total change is being considered.</p>
+<ol start="8" type="1">
+<li><p>Suppose you wanted to study the long-term relationship between inflation and unemployment. Which of these is appropriate?</p></li>
+<li><p>Hold <code>Decade</code> constant. (Partial change)</p></li>
+<li><p><strong>Let <code>Decade</code> vary as it will. (Total change)</strong></p></li>
+<li><p>Now suppose you want to study the short-term relationship. Which of these is appropriate?</p></li>
+<li><p><strong>Hold <code>Decade</code> constant. (Partial change)</strong></p></li>
+<li><p>Let <code>Decade</code> vary as it will. (Total change)</p></li>
+</ol>
 
 
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1" role="doc-endnote"><p>{Based on an example from Judea Pearl (2000) <em>Causality: Models, Reasoning, and Inference</em>, Cambridge Univ. Press, p.&nbsp;175}<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -307,26 +307,16 @@ In draft
 <p>Move the <code>Loans</code> data into the <code>math300</code> package. But for now …</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Loans <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"data/loans.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 10000 Columns: 55
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (13): emp_title, state, homeownership, verified_income, verification_inc...
-dbl (42): emp_length, annual_income, debt_to_income, annual_income_joint, de...
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
 </div>
 </div>
 </div>
 <p>A case in point is provided by the <code>Loans</code> data frame, which records dozens of variables on each of 10,000 loans made through the Lending Club. The interest rate at which the loans are made varies substantially from loan to loan. Presumably, higher interest rates reflect a higher perception of risk of default (which would lead to the lender losing his or her money).</p>
 <p>Here’s a model of the interest rate. (This is for the borrowers who have a low debt-to-income percent; we won’t worry about the few very high debt-to-income cases.) We’re only interested in this problem with the effect size, which is the same as the coefficients on the model.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(interest_rate <span class="sc">~</span> homeownership <span class="sc">+</span> debt_to_income <span class="sc">+</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>            account_never_delinq_percent <span class="sc">+</span> verified_income, </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">data =</span> Loans <span class="sc">%&gt;%</span> <span class="fu">filter</span>(debt_to_income<span class="sc">&lt;</span><span class="dv">50</span>))</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>mod <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(interest_rate <span class="sc">~</span> homeownership <span class="sc">+</span> debt_to_income <span class="sc">+</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>            account_never_delinq_percent <span class="sc">+</span> verified_income, </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">data =</span> Loans <span class="sc">%&gt;%</span> <span class="fu">filter</span>(debt_to_income<span class="sc">&lt;</span><span class="dv">50</span>))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>mod <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                     2.5 %      97.5 %
 (Intercept)                    15.31467948 17.26502804
