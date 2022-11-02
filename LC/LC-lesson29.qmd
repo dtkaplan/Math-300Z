@@ -7,6 +7,31 @@ source("../_startup.R")
 ```
 
 
+## LC 29.A
+
+::: {.callout-warning}
+## Still a draft
+
+Look at `dag07`. Notice that `d` is not connected to any of the other variables.
+
+Generate a sample of size $n=6$. Compare the sum of square residual (in sample) from the nested  models `c ~ 1`, `c ~ a` `c ~ a + b`, and `c ~ a + b + d`. (Use the `compare_model_residuals()` using the argument `method="SS"`.
+
+Which, if any, of the variables `a`, `b`, or `d` reduces the in-sample sum-of-squared residuals compared to the previous model.
+
+
+::: {.callout-note}
+## Solution
+
+```{r}
+compare_model_residuals(dag07, c ~ 1, c ~ a, c ~ a + b, c ~ a + b + d, 
+                        n=6, measure="SS", in_sample=TRUE)
+```
+:::
+
+Out of sample, the useless covariate often *increases* the SS error.
+
+--------
+
 ## LC 29.1
 
 In `dag04`, build models to predict `c` from the other variables. Does one of those variables "block" the others? 
@@ -106,6 +131,20 @@ lm( calories ~ protein + fiber, data = openintro::starbucks) %>% confint()
 
 ```
 
+--------
+
+## 29.6
+
+::: {.callout-note}
+## In draft
+
+For each of a set of explanatory and response variables (possibly in different data), ask for the units of 
+
+i. The RMS residual.
+ii. The sum-of-square residual
+iii. The effect size
+
+--------
 
 
 

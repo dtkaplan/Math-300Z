@@ -89,9 +89,33 @@ Confirm these by running many simulations.
 
 :::
 
-### A change in accounting
+### Alternative accountings
 
-We've been using RMS prediction error to quantify how well the response variable has een
+We've been using RMS prediction error to quantify how well the response variable has been accounted for by the explanatory variable(s). RMS prediction error is a convenient summary of the size of the typical prediction error because 1) it is an average over all the cases in the testing data and 2) it has the same units as the response variable. But RMS is not the only the only such accounting. In this section, we'll look at two others that are widely used in statistical reports: R^2^ and the "**sum of squares**".
+
+We'll start with the *sum of squares* accounting. Recall that the letters in RMS each stand for a specific step:
+
+- **S**: square the each of the values
+- **M**: average over the (squared) values
+- **R**: take the square root of the (average squared) values.
+
+The *order* of the steps is important; S first, M next, then finally R. 
+
+The *sum of squares*, often written SS, is a two-step process.
+
+- **S**: square each of the values
+- **S**: sum (not average) the (squared) values.
+
+Again, the *order* of the steps is important: square first then finally sum. (The notation SS doesn't make the order clear, but the name "sum of squares" does. So remember that SS stands for "sum of squares".)
+
+::: {.callout-warning}
+## Note in draft
+
+WHEN YOU GET TO THE ANOVA REPORT, make sure to point out that the so-called "mean square" is a confusing name because it wrongly brings to mind the MS in RMS.  The quantity is really the sum of squares divided by the degrees of freedom.
+:::
+
+
+
 
 
 

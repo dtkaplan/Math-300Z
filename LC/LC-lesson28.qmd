@@ -632,11 +632,57 @@ these is appropriate?
 #. Let `Decade` vary as it will. (Total change)
 
 
+--------
+
+## 28.G {#sec-28-G}
+
+Consider `dag03`, involving three variables: `x`, `y`, `g`
+
+Let's take `y` as the response variable, `x` as the explanatory variable of interest, and `g` as a covariate that we might or might not want to include in a model. Consequently, there are two model structures that we can choose between: `y ~ x` versus `y ~ x + g`.
+
+1. Is there any causal path from `x` to `y` or vice versa?
+
+::: {.callout-note}
+## Solution
+
+No. Even though `x` and `y` are connected to one another via `g`, the path from `x` to `y` (or vice versa) is not causal.  There is no way to get from `x` to `y` (or vice versa) by starting on one of those two nodes and following the links in their causal direction.
+:::
+
+2. Generate a sample of, say, size $n=1000$ from `dag03` and train each of the two models mentioned above on the sample. Examine the 95% confidence intervals on the coefficients and explain which model (if either) is suitable to show that `x` and `y` are connected, and which model (if either) shows that there is no causal path between `x` and `y`. 
+
+3. The nature of 95% confidence intervals means that even when the true coefficient is zero, 5% of the time the confidence interval will not include zero. In a class with 100 students, around 5 will see this failure to include zero. In order to avoid those students from being fooled by such accidental effects, feel free to analyze 2 or more samples.
+
+Regretably, in the real world, when working with data that have already been collected, you can't use such multiple samples to check your work. So there is always that 5% chance that a real effect of size zero will produce a confidence interval that doesn't include zero. This is one reason why replication of results is useful.
+
+--------
+
+## 28.H
+
+This learning challenge is much like LC -@28-G, but uses `dag11` instead of `dag03`.
+
+1. Compare the graphs of `dag03` and `dag11`. (You can use `dag_draw()` to generate the graph.) Are the two DAGs equivalent or not? Describe what differences you see between the two graphs and explain whether those differences are sufficient to make the two DAGs causally different.
+
+
+Let's take `y` as the response variable, `x` as the explanatory variable of interest, and `g` as a covariate that we might or might not want to include in a model. Consequently, there are two model structures that we can choose between: `y ~ x` versus `y ~ x + g`.
+
+1. Is there any causal path from `x` to `y` or vice versa?
+
+::: {.callout-note}
+## Solution
+
+No. Even though `x` and `y` are connected to one another via `g`, the path from `x` to `y` (or vice versa) is not causal.  There is no way to get from `x` to `y` (or vice versa) by starting on one of those two nodes and following the links in their causal direction.
+:::
+
+2. Generate a sample of, say, size $n=1000$ from `dag03` and train each of the two models mentioned above on the sample. Examine the 95% confidence intervals on the coefficients and explain which model (if either) is suitable to show that `x` and `y` are connected, and which model (if either) shows that there is no causal path between `x` and `y`. 
+
+3. Now look at the graph of `dag12` and speculate whether the models `x ~ y` and `x ~ y + g` will give equivalent results. (Don't include node `h` in the models.) Write down your speculation. (No penalty for being wrong, it's just a speculation!) Then, generate a sample from `dag12` and, looking at the 95% confidence intervals on the coefficients, explain whether your speculation was correct or not. 
+
+--------
 
 
 
 
 
+--------
 
-
-
+## 28.I

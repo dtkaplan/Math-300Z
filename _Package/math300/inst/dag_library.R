@@ -81,6 +81,18 @@ dag10 <- dag_make(
   y ~ binom(2*a - 3*b + c + 0*d + 0*e + 0*f)
 )
 
+dag11 <- dag_make(
+  x ~ eps(),
+  y ~ eps(),
+  g ~ x + y + eps()
+)
+
+dag12 <- dag_make(
+  x ~ eps(),
+  y ~ eps(),
+  h ~ x + y,
+  g ~- h + eps()
+)
 
 dag_school1 <- dag_make(
   expenditure ~ unif(7000, 18000),
