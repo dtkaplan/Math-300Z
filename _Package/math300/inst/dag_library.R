@@ -108,8 +108,20 @@ dag_school2 <- dag_make(
   outcome ~ 1100 + 0.01*expenditure - 4*participation + eps(50)
 )
 
+dag_vaccine <- dag_make(
+  .h ~ eps(1),
+  .v ~ 0.2 + 2* .h + eps(.25),
+  .f ~ -0.5 - 0.5 * binom(.v) - 1*.h,
+  .s ~ 2 - 0.2*binom(.f) + 0.4*(.h + 0.5),
+  died ~ binom(.s, labels=c("yes", "no")),
+  vaccinated ~ binom(.v, labels=c("none", "yes")),
+  health ~ binom(.h, labels=c("poor", "good")),
+  flu ~ binom(.f)
+)
+
 save(dag00, dag01, dag02, dag03, dag04, dag05,
-     dag06, dag07, dag08, dag09, dag10,
+     dag06, dag07, dag08, dag09, dag10, dag11, dag12,
+     dag_vaccine,
      dag_school1, dag_school2,
      file = "data/daglib.rda")
 

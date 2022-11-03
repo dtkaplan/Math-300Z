@@ -58,7 +58,7 @@ Using the covariates reduces prediction error.
 ::: {.callout-note icon=false}
 ## Automating model comparison
 
-Rather than having to go through the same commands over and over again, let's write a function that will compare the prediction error of different models. `compare_rms_error()` is currently defined in the `_startup.R` file.
+
 
 
 
@@ -69,7 +69,7 @@ dag_draw(dag05)
 ```
 
 ```{r}
-compare_rms_error(dag05, n=500, d ~ c, d ~ b, d ~ a, d ~ a + b + c, in_sample=TRUE)
+compare_model_residuals(dag05, n=500, d ~ c, d ~ b, d ~ a, d ~ a + b + c, in_sample=TRUE)
 ```
 
 ::: {.callout-note icon=false}
@@ -89,7 +89,7 @@ dag_draw(dag06)
 Do these principles hold for in-sample prediction error?
 
 ```{r}
-compare_rms_error(dag05, n=500, d ~ c, d ~ b, d ~ a, d ~ a + b + c, in_sample=FALSE)
+compare_model_residuals(dag05, n=500, d ~ c, d ~ b, d ~ a, d ~ a + b + c, in_sample=FALSE)
 ```
 ## Learning Checks
 

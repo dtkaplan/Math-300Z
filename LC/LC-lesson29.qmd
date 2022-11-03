@@ -42,14 +42,14 @@ In `dag04`, build models to predict `c` from the other variables. Does one of th
 ::: {.callout-note}
 ## Solution
 ```{r}
-compare_rms_error(dag04, c~ 1, c ~ d, c~ b + d, c ~ a + b + d, n=50, in_sample = TRUE)
+compare_model_residuals(dag04, c~ 1, c ~ d, c~ b + d, c ~ a + b + d, n=50, in_sample = TRUE)
 ```
 
 `d` seems to block effect of `a` and `b` on `c`.
 
 
 ```{r}
-compare_rms_error(dag04, c~ 1, c ~ d, c~ b + d, c ~ a + b + d, n=5, in_sample = TRUE)
+compare_model_residuals(dag04, c~ 1, c ~ d, c~ b + d, c ~ a + b + d, n=5, in_sample = TRUE)
 ```
 :::
 
@@ -63,9 +63,9 @@ Compare these in-sample and out-of-sample results.
 
 ```{r}
 set.seed(101)
-compare_rms_error(dag07, d ~ 1, d ~ c, d~ b + c, d ~ a + b + c, n=4, in_sample = TRUE)
+compare_model_residuals(dag07, d ~ 1, d ~ c, d~ b + c, d ~ a + b + c, n=4, in_sample = TRUE)
 set.seed(101)
-compare_rms_error(dag07, d ~ 1, d ~ c, d~ b + c, d ~ a + b + c, n=4, in_sample = FALSE)
+compare_model_residuals(dag07, d ~ 1, d ~ c, d~ b + c, d ~ a + b + c, n=4, in_sample = FALSE)
 ```
 
 What do you see in the results that tells you that incorporating irrelevant covariates hurts the out-of-sample predictions?

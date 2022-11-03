@@ -19,13 +19,60 @@ source("../_startup.R")
 library(mosaicData)
 ```
 
+In the first half of the course, we examined *data wrangling* methods---`group_by()`, `summarize()` and `tally()` in particular---for summarizing variables and breaking up the summaries by groups. 
 
-::: {.callout-warning}
-## Question about software in draft
+In this second half of the course, we will be emphasizing the **relationships between variables**. The conceptual framework we've used for describing such relationships involves choosing a **response variable** and selecting one or more **explanatory variables**. Within this framework, you've already seen regression techniques for describing how a numerical response variable can be related to numerical explanatory variables. Something new you will see in the second half of the course is using regression techniques to handle *categorical* response variables. This will allow us to extend regression to cover such things as proportions and probabilities.
 
-Should we use a `fitmodel()` command modeled on `rigr::regress()` that does the right thing (linear versus logistic regression, count regression, ...) based on the response variable? It will have data as the first argument, enabling `sample()` to be piped into the function. Return the model object, but have the model function (which will be in probability for logistic regression) available for extraction via `makeFun()`. Allow `makeFun()` to specify whether to return probability, odds, or log odds from a logistic regression model.
-:::
+Graphics can be a powerful way to perceive relationships between variables. In keeping with the response/explanatory framework, our go-to graphical technique will be to plot data as a "**point plot**" absolutely sticking to the convention that the response variable will be assigned to the *vertical axis*. Note that we'll use the term "point plot" rather than the "scatter plot" that was used in the early graphics chapters. That's partly because we're going to use the idea of "scattering" in a different way.
 
+We're also going to adopt a new graphical convention: that statistical summaries should always be graphed as a layer on top of the raw data from which the summaries are derived. This means that we'll switch away from histograms as a way of displaying distributions. Why? Because the vertical axis on a histogram does not correspond to the values of a response variable. Similarly, barplots won't be appropriate, because the response variable in a barplot is represented by color rather than position on a vertical axis.
+
+Overall, both the graphical display of data and summaries and the calculation of numerical summaries like means and proportions will become much simpler to accomplish, since relationship summaries will be produced using using `lm()` and closely related model types. Data graphics will be made with `geom_point()` and closely related geoms.
+
+## Graphing data and statistical annotations
+
+
+
+
+## Categorical response variables
+
+To get started, we'll work with categorical response variables that are "**dicotomous**" or, equivalently, "**binomial**," that is, with only two methods. This covers a large fraction of the situations where categorical response values are needed. We'll leave those situations where there are lots of levels for the response variable to courses on "machine learning," a topic we can only scratch the surface of in this introductory course.
+
+The important insight into using categorical variables in regression models is encapsulated in the idea of the 0-1 ("zero-one") encoding. To illustrate, consider the `mosaicData::Whickham` data frame that records the age, smoking status, and survival of 1000 or so nurses in the UK. The relationship that motivated the collection of these data is between smoking and survival. Taking a few rows from the data frame let's us easily see the types of the variables involved:
+
+```{r echo=FALSE}
+set.seed(101)
+sample_n(Whickham, size=10) %>% knitr::kable()
+```
+
+HOW TO USE `math300::zero_one()`
+
+Plotting a zero-one response variable with correctly labelled axes.
+
+```{r}
+P <- Whickham %>% 
+  gf_jitter(zero_one(outcome) ~ age, color=~smoker, height=0.1, alpha=0.5) %>% 
+  label_zero_one()
+P
+```
+
+We might equally well plot age as a function of outcome:
+
+```{r}
+gf_jitter(age ~ outcome, data = Whickham, width=0.2) %>% gf_violin(color=NA, fill="blue", alpha=0.5)
+```
+
+PLOT OUT A MODEL
+
+```{r}
+mod <- mod_train(zero_one(outcome) ~ age + smoker, data = Whickham)
+fun <- makeFun(mod, type="response") # NEED TO FIX BUG in `makeFun.glm()`.
+P %>% mosaicCalc::slice_plot(fun(age, smoker="Yes") ~ age, color="red")
+```
+
+## Intervals
+
+Once you have FIXES MOSAICMODEL, Generate a "prediction" interval and use gf_errorbar() to plot it over the model.
 
 ## Objectives
 
@@ -88,8 +135,6 @@ Learning how to interpret models in terms of what they say about the world is a 
 Another, more technical question that we will address has to do with the *precision* of coefficients like 125.40 dollars per square foot. Might it actually be $200/ft^2^? How about $500/ft^2^? And how seriously should we take the sales value that we calculate by setting numbers for `bedrooms` and `livingArea` into the model?
 
 ::::
-
-
 
 ## Learning Checks
 

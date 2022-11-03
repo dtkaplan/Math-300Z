@@ -17,4 +17,49 @@ output:
 source("../_startup.R")
 ```
 
+In model building, we create a function to link a response variable to one or more explanatory variables. Let's imagine that the response variable is named `y` and the explanatory variable named `x`, `a`, `b`, and so on. By *training* a model on data, we create a function, let's call it $f(x, a, b)$. This function that results from training can be used in two two distinct decision-making settings: 
+
+i. Prediction mode: Having measured values for the explanatory variables `x`, `a`, `b` and so on, figure out what's a likely value for the as-yet-unmeasured response variable. To illustrate, suppose we know the length `x` of a road trip, the speed driven `a`, and the horsepower of the car's engine. To plan for the trip, we want to predict how much fuel `y` will be used.
+
+ii. Intervention mode: We propose to intervene in the world to change the value of `x` by an amount `dx`. For instance, suppose `x` is the dose of a drug taken by a patient and `y` is the patient's blood pressure. If we increase the dose by `dx`, what will be the corresponding change in the blood pressure `dy`. The ratio `dy/dx` is called the **effect size**.
+
+In intervention mode, as we saw in Lesson 28, it's important that the model formula reflect accurate the *causal connections* among the variables. The simple model `y ~ x`, without covariates, can sometimes give a misleading view of the effect of `x` on `y`. Including a covariate in the model might improve or worsen the estimate of effect size, depending on the causal connections in the real-world mechanism of the system. 
+
+In prediction mode, capturing the real-world causal connections in the model formula is not essential. For example, even if `y` is the cause of `x`, the model formula `y ~ x` might do a good job of predicting `y` from a measured value of `x`.
+
+In this Lesson, we'll examine the use of covariates in constructing prediction models.
+
+## Prediction error
+
+The output of a prediction model is typically somewhat different from what happens in the real world. The difference between the real-world value of the response variable and the output of the prediction model is called the *prediction error*. As we saw in Lesson 26, in stating the output of a prediction model, it is helpful to also be able to state a typical size for the prediction error, usually in the form of a prediction interval. 
+
+
+
+
+### Alternative accountings
+
+We've been using RMS prediction error to quantify how well the response variable has been accounted for by the explanatory variable(s). RMS prediction error is a convenient summary of the size of the typical prediction error because 1) it is an average over all the cases in the testing data and 2) it has the same units as the response variable. But RMS is not the only the only such accounting. In this section, we'll look at two others that are widely used in statistical reports: R^2^ and the "**sum of squares**".
+
+We'll start with the *sum of squares* accounting. Recall that the letters in RMS each stand for a specific step:
+
+- **S**: square the each of the values
+- **M**: average over the (squared) values
+- **R**: take the square root of the (average squared) values.
+
+The *order* of the steps is important; S first, M next, then finally R. 
+
+The *sum of squares*, often written SS, is a two-step process.
+
+- **S**: square each of the values
+- **S**: sum (not average) the (squared) values.
+
+Again, the *order* of the steps is important: square first then finally sum. (The notation SS doesn't make the order clear, but the name "sum of squares" does. So remember that SS stands for "sum of squares".)
+
+::: {.callout-warning}
+## Note in draft
+
+WHEN YOU GET TO THE ANOVA REPORT, make sure to point out that the so-called "mean square" is a confusing name because it wrongly brings to mind the MS in RMS.  The quantity is really the sum of squares divided by the degrees of freedom.
+:::
+
+
 

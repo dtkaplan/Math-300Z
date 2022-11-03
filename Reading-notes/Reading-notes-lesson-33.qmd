@@ -29,6 +29,58 @@ The format of a *probability* assigns a number between 0 and 1 to the chances th
 
 A big mathematical advantage to using odds is that the odds number can be anything from zero to infinity; it's not bounded within 0 to 1. Even more advantageous for the purposes of accumulating risk is the logarithm of the odds, called "**log odds**." We will come back to this later.
 
+## Staying in bounds
+
+::: {.callout-warning}
+## Note in draft
+
+Maybe move this to a earlier lesson. Not clear.
+:::
+
+The *linear models* (`lm()`) we have mostly been using up until now accumulate the model output as a linear combination of model inputs. Consider, for instance, a simple model of fuel economy based on the horsepower and weight of a car:
+
+```{r}
+mpg_mod <- lm(mpg ~ hp + wt, data = mtcars) 
+mpg_mod %>% coefficients()
+```
+
+These coefficients mean that the model output is a **sum**. For instance, a 100 horsepower car weighting 2500 pounds has a predicted fuel economy of `37.2 - 0.032*100 - 3.88*2.5=``r 37.2 - 0.032*100 - 3.88*2.5` miles per gallon.^[The `wt` variable is measured in units of 1000 lbs, so a 2500 pound vehicle has a `wt` value of 2.5.]
+If we're interested in making a prediction, we often hide the arithmetic behind a computer function, but it is exactly this arithmetic:
+
+```{r}
+mod_eval(mpg_mod, hp = 100, wt = 2.5)
+```
+
+The arithmetic, in principle, let's us evaluate the model for any inputs, even ridiculous ones like a 10,000 hp car weighing 50,000 lbs. There is no such car, but there is a model output.^[A 10,000 hp, 50,000 lbs ground vehicle does have a name: a "tank." Common sense dictates that one not put too much stake in a calculate of a tank's fuel economy based on data from cars!]
+
+```{r}
+mod_eval(mpg_mod, hp=10000, wt = 50)
+```
+The prediction reported here means that such a car goes *negative* 474 miles on a gallon of gas. That's silly. One way to deal with such silliness is to restrict the inputs to "reasonable" values.
+
+Often, a better way to avoid the silliness is to structure the model so that unreasonable outputs---such as negative miles per gallon---cannot happen. Figuring out how to do this draws on mathematical experience. In this case, modeling the *logarithm* of mpg means that a numerically negative output still corresponds to a positive mpg. If we want the model output denominated in miles-per-gallon rather than logarithmic units, we just need to exponentiate (`exp()`) the logarithmic output to return to the world of miles-per-gallon:
+
+```{r}
+mod_logmpg <- lm(log(mpg) ~ hp + wt, data = mtcars)
+mod_eval(mod_logmpg, hp=10000, wt=50) %>%
+  mutate(model_mpg = exp(model_output))
+```
+
+This "trick" of modeling the logarithm of output keeps the model output **in bounds** so far as `mpg` is concerned. There will never be a negative mpg output.^[That does not fix the absurdity of modeling tanks based on the fuel economy of cars.] 
+## Modeling log odds
+
+When a model output is intended to be interpreted as a probability, we have a similar problem.  THATS what the LOG-ODDS transformation DOES. WITH LOG-ODDS we can model probability using linear combinations of inputs.
+
+## Probability as prediction?
+
+DOES IT MAKE SENSE TO FRAME a PREDICTION IN TERMS OF A PROBABILITY? So long as the probability is not exactly zero or one, observing either of the two kinds of events---e.g., yes/no, alive/dead, diseased/healthy---does not contradict the model output. So how can we judge if a model is on-target or not. Or, equivalently, how can we decide which of two models is better.
+
+In Lesson 26 we introduced the idea of a prediction interval OUTPUT SHOULD ALMOST ALWAYS (95% of the time) be within the interval.
+
+The problem for us now is to create something like the PREDICTION INTERVAL when the model output is a probability.
+
+INTRODUCE the variance as a measure of uncertainty. The variance of a probability is $p(1-p)$.
+
 ::: {.callout-note}
 ## Example: A bookies' calculations [NEEDS FIXING]
 

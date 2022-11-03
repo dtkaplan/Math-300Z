@@ -62,7 +62,7 @@ dag_draw(dag07)
 Start with `dag04`, where variables `a`, `b`, and `c` all contribute to the formation of `d`. 
 
 ```{r}
-compare_rms_error(dag04, d ~ c, d~ b + c, d ~ a + b + c, n=50, in_sample = TRUE)
+compare_model_residuals(dag04, d ~ c, d~ b + c, d ~ a + b + c, n=50, in_sample = TRUE)
 ```
 
 Prediction error gets smaller, the more covariates are included.
@@ -70,13 +70,13 @@ Prediction error gets smaller, the more covariates are included.
 The situation can be different. In `dag05`, `a`, `b`, and `c` all contribute to `d`, but **not separately**. `a` and `b` communicate with `d`  only via `c`. If `c` is in the model, `a` and `b` contribute nothing to reducing prediction error.
 
 ```{r}
-compare_rms_error(dag05, d ~ c, d~ b + c, d ~ a + b + c, n=50, in_sample = TRUE)
+compare_model_residuals(dag05, d ~ c, d~ b + c, d ~ a + b + c, n=50, in_sample = TRUE)
 ```
 
 `dag07` is a case where we have covariates, but they aren't actually connected to `d`. Will they reduce prediction error? We'll use a very small sample size, $n=4$, to make the situation obvious.
 
 ```{r}
-compare_rms_error(dag07, d ~ 1, d ~ c, d~ b + c, d ~ a + b + c, n=4, in_sample = TRUE)
+compare_model_residuals(dag07, d ~ 1, d ~ c, d~ b + c, d ~ a + b + c, n=4, in_sample = TRUE)
 ```
 
 ::: {.callout-note icon=false}
@@ -88,33 +88,6 @@ Confirm these by running many simulations.
 2. The last prediction error, with 4 terms in the model (don't forget `1`!) is zero. A perfect model?
 
 :::
-
-### Alternative accountings
-
-We've been using RMS prediction error to quantify how well the response variable has been accounted for by the explanatory variable(s). RMS prediction error is a convenient summary of the size of the typical prediction error because 1) it is an average over all the cases in the testing data and 2) it has the same units as the response variable. But RMS is not the only the only such accounting. In this section, we'll look at two others that are widely used in statistical reports: R^2^ and the "**sum of squares**".
-
-We'll start with the *sum of squares* accounting. Recall that the letters in RMS each stand for a specific step:
-
-- **S**: square the each of the values
-- **M**: average over the (squared) values
-- **R**: take the square root of the (average squared) values.
-
-The *order* of the steps is important; S first, M next, then finally R. 
-
-The *sum of squares*, often written SS, is a two-step process.
-
-- **S**: square each of the values
-- **S**: sum (not average) the (squared) values.
-
-Again, the *order* of the steps is important: square first then finally sum. (The notation SS doesn't make the order clear, but the name "sum of squares" does. So remember that SS stands for "sum of squares".)
-
-::: {.callout-warning}
-## Note in draft
-
-WHEN YOU GET TO THE ANOVA REPORT, make sure to point out that the so-called "mean square" is a confusing name because it wrongly brings to mind the MS in RMS.  The quantity is really the sum of squares divided by the degrees of freedom.
-:::
-
-
 
 
 

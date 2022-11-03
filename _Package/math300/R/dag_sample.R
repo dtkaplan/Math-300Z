@@ -50,10 +50,14 @@ dag_sample <- function(DAG, size=10, seed=NULL, survive=NULL, .size_multiplier=1
   }
 
   #transformations
-  binom <- function(x=0) {
+  binom <- function(x=0, labels=NULL) {
     # 1 or 0 output with logistic input
     prob <- exp(x)/(1+exp(x))
-    as.numeric(runif(size) < prob)
+    yesno <- as.numeric(runif(size) < prob)
+    if (!is.null(labels) && length(labels)==2)
+      yesno <- labels[yesno+1]
+
+    yesno
   }
   seq <- function() 1:size
 
