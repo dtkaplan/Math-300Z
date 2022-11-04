@@ -17,6 +17,41 @@ library(NHANES)
 24.3. Gaming: Evaluate whether confidence interval indicates that estimated effect size is consistent with simulation.
 :::
 
+## 24.1 (Objective 24.1)
+
+What are the two settings for decision making that we cover in this course?
+
+Give an example of each.
+
+### Solution
+
+(1) Prediction and (2) Relationship
+
+i. What will be the sales price of this house? *"This house" is a shorthand way of saying "a house with these attributes." The sales price will be the output of a prediction function that takes the various attributes as input and produces a sales price as output.*
+
+ii. If I look for a house with an additional bathroom, how much will that change the sales price? *This asks for the relationship between number of bathrooms and sales price.*
+
+----------
+
+## 24.2 (Objective 24.1)
+
+For each of these research questions, say whether it is a prediction setting or a relationship setting.
+
+i. What's the risk of falling ill? 
+ii. How will the risk of falling ill change if we eat more broccholi? 
+iii. Is there any reason to believe, based on the evidence at hand, that we should look more deeply into the possible benefits of broccholi?
+
+
+
+### Solution
+
+i. Prediction
+ii. Relationship
+iii. Relationship
+
+
+--------
+
 SOME IDEAS FOR EXERCISE MODES
 
 a. Use `mod_plot()` and look at the slope of lines and offsets. Compare to the model coefficients.

@@ -40,13 +40,14 @@ as.character.zero_one <- function(x, ...) {
   paste(levels(x), "->", c(0,1), collapse="")
 }
 
+#' need to write documentation for the graphics command `label_zero_one()`
 #' @export
 label_zero_one <- function(P) {
   YesNo <- rlang::eval_tidy(P$mapping$y, data = P$data)
   if (!inherits(YesNo, "zero_one")) return(P)
-  else P + scale_y_continuous(breaks=c(0,1),
-                              labels=(paste(levels(YesNo), 0:1)),
-                              sec.axis=sec_axis(trans = ~ ., breaks=seq(0,1,by=0.2)))
+  else P + scale_y_continuous(breaks=waiver(),
+                              sec.axis=sec_axis(trans = ~ .,
+                                                breaks=c(0,1), labels=levels(YesNo)))
 }
 
 
