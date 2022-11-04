@@ -8,8 +8,8 @@ compare_model_residuals(
   source,
   ...,
   n = 500,
-  measure = c("RMS", "SS"),
-  in_sample = FALSE
+  measure = c("RMS", "SS", "R2"),
+  testing = c("in-sample", "out-of-sample", "R2")
 )
 }
 \arguments{
@@ -19,9 +19,9 @@ compare_model_residuals(
 
 \item{measure}{Either of \code{"RMS"} (the default) or \code{"SS"} (sum of squares)}
 
-\item{in_sample}{Boolean flag: whether to use in-sample testing. Default: FALSE.}
-
 \item{\ldots}{One or more model formulas, all with the same response variable.}
+
+\item{in_sample}{Boolean flag: whether to use in-sample testing. Default: FALSE.}
 }
 \description{
 Compare a set of models, all with the same response variable, using either

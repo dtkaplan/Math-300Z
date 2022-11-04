@@ -65,9 +65,9 @@ gf_jitter(age ~ outcome, data = Whickham, width=0.2) %>% gf_violin(color=NA, fil
 PLOT OUT A MODEL
 
 ```{r}
-mod <- mod_train(zero_one(outcome) ~ age + smoker, data = Whickham)
-fun <- makeFun(mod, type="response") # NEED TO FIX BUG in `makeFun.glm()`.
-P %>% mosaicCalc::slice_plot(fun(age, smoker="Yes") ~ age, color="red")
+mod <- model_train(zero_one(outcome) ~ age + smoker, data = Whickham)
+# fun <- mod_fun(mod) 
+# P %>% mosaicCalc::slice_plot(fun(age, smoker="Yes") ~ age, color="red")
 ```
 
 ## Intervals

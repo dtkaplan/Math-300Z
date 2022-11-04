@@ -6,8 +6,110 @@ title: "Learning Checks Lesson 29"
 source("../_startup.R")
 ```
 
+## 29.A {#sec-LC-29-A}
 
-## LC 29.A
+
+
+The `math300::Hill_racing" data frame records 2236 winning times (in seconds) in Scottish hill racing competitions. Consider this model of the winning time as a function of the race distance (km) and the total climb (meters):
+
+```{r}
+mod <- lm(time ~ distance + climb, data=Hill_racing)
+```
+
+The `model_eval()` function provides a convenient way to evaluate the model output (`.output`) for each of the rows in a data frame and, at the same time, calculates row-by-row residuals (`.resid`) and prediction errors (`.lwr` and `.upr`). *Make sure to take not of the starting periods on the names.*
+
+```{r}
+model_eval(mod) %>% head()
+```
+
+
+
+
+The RMS residual from the model can be calculated this way:
+
+```{r}
+model_eval(mod) %>%
+  summarize(rms = sqrt(mean(.resid^2)))
+```
+1. What are the units of the RMS residual?
+
+2. Modify the calculation to compute the sum-of-square residuals. Report the result numerically. Be sure to say what are the units.
+
+3. What are the units of the effect size on time with respect to climb? 
+
+4. What are the units of the effect size on time with respect to climb? 
+
+::: {.callout-note}
+## Solution
+
+1. RMS residual has the same units as the response variable. In this case, that's the time to run the race, with units "seconds."
+
+2. SS residual has units that are the square of the respond variable, in this case "square-seconds." 
+
+3. Recall that the effect size on the response with respect to an explanatory variable has the units of the response variable divided by the units of the explanatory variable. The `climb` variable has units of meters, so the effect size has units "seconds/meters."
+
+4. seconds/km
+
+:::
+
+---------
+
+## LC 29.B
+
+
+Which of the following models are **not** nested within `time ~ distance + climb`?
+
+a. `time ~ 1`
+b. `time ~ distance + sex`
+c. `time ~ distance`
+d. `time ~ climb`
+
+::: {.callout-note}
+## Solution
+
+The model `time ~ distance + sex` is not nested in `time ~ distance + climb`. 
+
+Note that `time ~ 1` is indeed nested in `time ~ distance + climb`. The `1` corresponds to the intercept.
+
+:::
+
+--------
+
+## 29.C 
+
+In LC -@sec-LC-29-A you calculated the RMS residuals and the sum-of-square residuals by wrangling the results from `mod_eval()`. That's a perfectly good way to do things, but the work becomes tedious when there are multiple models you want to compare.
+
+For convenience, there is a `compare_model_residuals()` command, which can calculate the RMS residual or sum-of-square residual for each of a set of models. All the models must have the same response variable.
+
+```{r}
+Hill_racing %>% 
+  compare_model_residuals(time ~ 1, 
+                          time ~ distance + climb, 
+                          time ~ distance + climb + sex,
+                          time ~ distance,
+                          measure = "RMS"
+                          )
+```
+
+It happens that all of the models in the command are a nested set. Re-order the models so that each model nests inside the following model, that is, from smaller model to bigger model. 
+
+1. Do the RMS residuals for the nested models increase or decrease when moving from a smaller model to a larger model?
+
+2. You can calculate the sum-of-square residual by using the argument `measure="SS"`. Do the sum-of-square residuals for the nested models increas or decrease when moving from a smaller model to a larger model.
+
+3. You can calculate R^2^ by using the argument `measure="R2"`. Do the R^2^ for the nested models increase or decrease when moving from a smaller model to a larger model.
+
+::: {.callout-note}
+## Solution
+
+1. Decrease
+2. Decrease
+3. Increase. R^2^ tells you how big the model output is compared to the response variable. 1-R^2^ tells you how big the residuals are compared to the response variable.
+:::
+
+--------
+
+## LC 29.D
 
 ::: {.callout-warning}
 ## Still a draft
@@ -24,7 +126,7 @@ Which, if any, of the variables `a`, `b`, or `d` reduces the in-sample sum-of-sq
 
 ```{r}
 compare_model_residuals(dag07, c ~ 1, c ~ a, c ~ a + b, c ~ a + b + d, 
-                        n=6, measure="SS", in_sample=TRUE)
+                        n=6, measure="R2")
 ```
 :::
 
@@ -42,14 +144,14 @@ In `dag04`, build models to predict `c` from the other variables. Does one of th
 ::: {.callout-note}
 ## Solution
 ```{r}
-compare_model_residuals(dag04, c~ 1, c ~ d, c~ b + d, c ~ a + b + d, n=50, in_sample = TRUE)
+compare_model_residuals(dag04, c~ 1, c ~ d, c~ b + d, c ~ a + b + d, n=50)
 ```
 
 `d` seems to block effect of `a` and `b` on `c`.
 
 
 ```{r}
-compare_model_residuals(dag04, c~ 1, c ~ d, c~ b + d, c ~ a + b + d, n=5, in_sample = TRUE)
+compare_model_residuals(dag04, c~ 1, c ~ d, c~ b + d, c ~ a + b + d, n=5)
 ```
 :::
 
@@ -63,9 +165,10 @@ Compare these in-sample and out-of-sample results.
 
 ```{r}
 set.seed(101)
-compare_model_residuals(dag07, d ~ 1, d ~ c, d~ b + c, d ~ a + b + c, n=4, in_sample = TRUE)
+compare_model_residuals(dag07, d ~ 1, d ~ c, d~ b + c, d ~ a + b + c, n=4)
 set.seed(101)
-compare_model_residuals(dag07, d ~ 1, d ~ c, d~ b + c, d ~ a + b + c, n=4, in_sample = FALSE)
+compare_model_residuals(dag07, d ~ 1, d ~ c, d~ b + c, d ~ a + b + c, n=4, 
+                        testing = "out-of-sample")
 ```
 
 What do you see in the results that tells you that incorporating irrelevant covariates hurts the out-of-sample predictions?
@@ -108,9 +211,11 @@ gf_jitter(total_personal_income ~ total_family_income | sex,
 
 ## 29.5
 
-`openintro::starbucks`  where do the calories come from?  Find effect size of, say, protein on calories. Then see what happens if you use carbohydrates as a covariate.
+::: {.callout-warning}
+## Still in draft
 
-YOU WERE HERE
+`openintro::starbucks`  where do the calories come from?  Find effect size of, say, protein on calories. Then see what happens if you use carbohydrates as a covariate.
+```
 
 ```{r}
 lm( calories ~ protein, data = openintro::starbucks) %>% confint()
@@ -130,21 +235,10 @@ lm( calories ~ protein, data = openintro::starbucks) %>% confint()
 lm( calories ~ protein + fiber, data = openintro::starbucks) %>% confint()
 
 ```
+:::
 
 --------
 
-## 29.6
-
-::: {.callout-note}
-## In draft
-
-For each of a set of explanatory and response variables (possibly in different data), ask for the units of 
-
-i. The RMS residual.
-ii. The sum-of-square residual
-iii. The effect size
-
---------
 
 
 

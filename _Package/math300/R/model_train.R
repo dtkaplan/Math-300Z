@@ -9,7 +9,7 @@
 #' @param verbose whether to report on decisions being made
 #' @param prob_of which of two levels to use for logistic regression
 #' @export
-mod_train <- function(data, tilde, verbose=FALSE, prob_of = NULL,
+model_train <- function(data, tilde, verbose=FALSE, prob_of = NULL,
                       type = c("auto", "linear", "prob", "counts"), logs=FALSE, ...) {
   type <- match.arg(type)
   response_vals <- eval(tilde[[2]], envir=data)
