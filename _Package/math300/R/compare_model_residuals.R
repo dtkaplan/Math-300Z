@@ -11,8 +11,8 @@
 #'
 #'
 #' @examples
-#' compare_model_residuals(mtcars, mpg ~ 1, mpg ~ hp, mpg ~ hp + wt, measure="SS", in_sample=TRUE)
-#' compare_model_residuals(dag07, c ~ 1, c ~ a, c ~ a + b, c ~ a + b + d, measure="SS", in_sample=FALSE)
+#' compare_model_residuals(mtcars, mpg ~ 1, mpg ~ hp, mpg ~ hp + wt, measure="SS")
+#' compare_model_residuals(dag07, c ~ 1, c ~ a, c ~ a + b, c ~ a + b + d, measure="SS", testing="out-of-sample")
 
 #' @export
 

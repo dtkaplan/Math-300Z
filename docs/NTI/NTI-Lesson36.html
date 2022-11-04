@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-10-14">
+<meta name="dcterms.date" content="2022-11-04">
 
 <title>Spring 2023 Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 35)</title>
 <style>
@@ -55,6 +55,9 @@ ul.task-list{list-style: none;}
     "search-submit-button-title": "Submit"
   }
 }</script>
+
+<script src="../site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -123,7 +126,7 @@ ul.task-list{list-style: none;}
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 14, 2022</p>
+      <p class="date">November 4, 2022</p>
     </div>
   </div>
     
@@ -166,6 +169,273 @@ Solution
 </div>
 </div>
 <hr>
+</section>
+<section id="q" class="level2">
+<h2 class="anchored" data-anchor-id="q">35.Q</h2>
+<p>TITLE GOES HERE: Customize the classifiers in (ref:ant-take-room) for a population in which species A is three times as common as species B.</p>
+</section>
+<section id="solution-1" class="level2 {callout-note}">
+<h2 class="anchored" data-anchor-id="solution-1">Solution</h2>
+<p>Follow the same procedure as in (ref:ant-take-room), but duplicate each of the A rows two times, so that the data show a world in which A is three times as common as B. That is,</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> species </th>
+   <th style="text-align:left;"> size </th>
+   <th style="text-align:left;"> color </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> A </td>
+   <td style="text-align:left;"> large </td>
+   <td style="text-align:left;"> reddish </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> A </td>
+   <td style="text-align:left;"> large </td>
+   <td style="text-align:left;"> reddish </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> A </td>
+   <td style="text-align:left;"> large </td>
+   <td style="text-align:left;"> reddish </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> B </td>
+   <td style="text-align:left;"> large </td>
+   <td style="text-align:left;"> brownish </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> B </td>
+   <td style="text-align:left;"> small </td>
+   <td style="text-align:left;"> brownish </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> A </td>
+   <td style="text-align:left;"> large </td>
+   <td style="text-align:left;"> brownish </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> A </td>
+   <td style="text-align:left;"> large </td>
+   <td style="text-align:left;"> brownish </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> A </td>
+   <td style="text-align:left;"> large </td>
+   <td style="text-align:left;"> brownish </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>For the classifier using just size as an explanatory variable … There are 7 rows for which size is large. Of these six are species A so the classifier output is 6/7. For size small, there is just one row, which is B, so the classifier output is 0/1.</p>
+<p>For the classifier using just color as an explanatory variable … There are five rows for which color is brownish. Of these, 2 are species A. So the classifier output is 2/5 for brownish. For reddish, the classifier output is 3/3.</p>
+</section>
+<hr>
+<section id="r" class="level2">
+<h2 class="anchored" data-anchor-id="r">35.R</h2>
+<p>The two tables below are different summaries of the Univ. of California Berkeley graduate admissions data from the 197e fall quarter. (Data frame: <code>UCB_applicants</code>) Each of the tables is about conditional probabilities about admission and sex.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Table A</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> admitted </th>
+   <th style="text-align:right;"> rejected </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> female </td>
+   <td style="text-align:right;"> 31.7 </td>
+   <td style="text-align:right;"> 46.1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> male </td>
+   <td style="text-align:right;"> 68.3 </td>
+   <td style="text-align:right;"> 53.9 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Table B</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> female </th>
+   <th style="text-align:right;"> male </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> admitted </td>
+   <td style="text-align:right;"> 30.4 </td>
+   <td style="text-align:right;"> 44.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> rejected </td>
+   <td style="text-align:right;"> 69.6 </td>
+   <td style="text-align:right;"> 55.5 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<ol type="1">
+<li>Which table displays p(sex given admit)?</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution Table
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A</p>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Which table displays p(admit given sex)?</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Table B</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Which of these statements is true?
+<ol type="a">
+<li>Table A shows that admitted students are more likely to be male.</li>
+</ol></li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>True</p>
+</div>
+</div>
+<pre><code>b. Table A shows that rejected students are more likely to be male. </code></pre>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>True</p>
+</div>
+</div>
+<pre><code>c. Table A shows that females are less likely to be admitted than rejected. </code></pre>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution False.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There’s nothing in Table A to tell us what fraction of applicants were admitted. Because table A stratifies by admitted/rejected, we don’t know how large those two groups are with respect to one another.</p>
+</div>
+</div>
+<pre><code>d. Table B shows that admitted students are more likely to be male. </code></pre>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution False.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Table B is stratified on female/male. As a result, there’s no information in Table B about what fraction of applicants is male.</p>
+</div>
+</div>
+<pre><code>e. Table B shows that females are less likely to be admitted than males. </code></pre>
+<ol start="4" type="1">
+<li>Suppose you are interested in the possibility of discrimination against women in graduate admissions (in Berkeley in 1973). Which of these questions is the right one to ask, and which table gives you the information needed to answer the question?
+<ol type="a">
+<li>What is the probability of an admitted student being a female compared to the probability of a rejected student being a female?</li>
+</ol></li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution False.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The question is about the relative admissions probability of females and males.</p>
+</div>
+</div>
+<pre><code>b. What is the probability of a female applicant being admitted compared to the probability that an admitted student is male? </code></pre>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution False. You want to compare like with like. The group involved in “the probability of a female student being admitted” is females, whereas the group involved in “the probability that an admitted student is male” is admitted students. There’s little if any meaning in comparing a probability among the group of females to a probability among group of admitted students.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<pre><code>c. What is the probability of  a female applicant being admitted compared to the probability of a male applicant being admitted? </code></pre>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution True.
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We want to compare two groups: females and males. Here, we’re comparing the probability of being admitted in each of the comparison groups. Table <strong>B</strong> is formatted to enable this comparison.</p>
+</div>
+</div>
 </section>
 <section id="documenting-software" class="level2">
 <h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>

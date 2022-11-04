@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-10-14">
+<meta name="dcterms.date" content="2022-11-04">
 
 <title>Spring 2023 Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 22)</title>
 <style>
@@ -187,7 +187,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 14, 2022</p>
+      <p class="date">November 4, 2022</p>
     </div>
   </div>
     
@@ -200,7 +200,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
 <p>22.1 Implement on the computer a procedure to generate a sample, calculate a regression model, and produce a summary.</p>
 <p>22.2 Iterate the procedure and collect the summaries across iterations. This collection is called the “sampling distribution.”</p>
-<p>22.3 Graphically display the distribution of summaries and generate a compact numerical description (“confidence interval”) of the sampling distribution.</p>
+<p>22.3 Graphically display the distribution of summaries and generate a compact numerical description of the sampling distribution.</p>
 </section>
 <section id="reading" class="level2">
 <h2 class="anchored" data-anchor-id="reading">Reading</h2>
@@ -246,7 +246,7 @@ Example: A simple DAG
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Sample) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)           x 
-   4.010625    1.643239 </code></pre>
+   3.869644    1.737707 </code></pre>
 </div>
 </div>
 <p>Inference task: Given a report like the one above, say what the coefficient on <code>x</code> is likely to be in the underlying data generation mechanism.</p>
@@ -268,7 +268,16 @@ Activity
 </div>
 </div>
 </div>
-<p>::: {.callout-note icon=false} ## Automating the procedure</p>
+<div class="callout-note callout callout-style-default no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Automating the procedure
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>In the previous example, we</p>
 <ol type="i">
 <li>generated (simulated) data,</li>
@@ -283,7 +292,7 @@ Activity
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">proc01</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)           x 
-   3.972924    1.567417 </code></pre>
+   4.219905    1.755867 </code></pre>
 </div>
 </div>
 <p>Now that the procedure is automated, we can see what happens if we carry out many trials:</p>
@@ -308,7 +317,6 @@ Activity: Simulating the sampling distribution
 </div>
 </div>
 <p>Question: How does the sampling distribution change if the sample size in each trial is changed to <span class="math inline">\(n=100\)</span> from <span class="math inline">\(n=25\)</span>?</p>
-</section>
 <section id="learning-checks" class="level2">
 <h2 class="anchored" data-anchor-id="learning-checks">Learning Checks</h2>
 </section>
@@ -347,10 +355,98 @@ Solution
 </div>
 <hr>
 </section>
+<section id="obj-21.3" class="level2">
+<h2 class="anchored" data-anchor-id="obj-21.3">22.2 (Obj 21.3)</h2>
+<p><strong>Part 1</strong></p>
+<p>You are going to write a <em>procedure</em> that automates the following process:</p>
+<ol type="i">
+<li>sampling from a DAG, specifically <code>dag01</code>, using <code>sample()</code> with a size of 25.</li>
+<li>fitting a model <code>y ~ x</code> using <code>lm()</code></li>
+<li>reporting the coefficient on <code>x</code> using <code>coefficients()</code>.</li>
+</ol>
+<p>Call the procedure <code>proc1()</code>.</p>
+<p>To do this fill in the following template in your Rmd document:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>proc1 <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># your statements go here</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once you have <code>proc1()</code> ready, you can carry out the procedure by giving a simple command:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">proc1</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Part 2</strong></p>
+<p>Now that you have <code>proc1()</code> ready and have tried it out, you are going to run the procedure 100 times repeatedly and look at the distribution in the <code>x</code> coefficient.</p>
+<p>Of course, you could laboriously give the command <code>proc1()</code> 5 times, and write down the <code>x</code> coefficient each time. Far better, though, to automate the process of repeating and collecting the <code>x</code> coefficient.</p>
+<p>You can do this easily by using <code>do(5)</code> in conjunction with <code>proc1()</code>.</p>
+<ol type="1">
+<li><p>What’s the form in which the coefficients are collected when using <code>do()</code>?</p></li>
+<li><p>Is the <code>x</code> coefficient the same from trial to trial? Explain why or why not.</p></li>
+<li><p>Change your statement to run 100 trials rather than just 5, and to store the collected results in a data frame called <code>Trials</code>. Use appropriate graphics to display the distribution of the <code>x</code> coefficient. Summarize the distribution in a sentence or two.</p></li>
+<li><p>Create a consise summary of the <code>x</code> column of <code>Trials</code> using <code>summarize()</code> with <code>sd(x)</code> to calculate the standard deviation. Compare the size of the standard deviation to the graphical display in (3).</p></li>
+</ol>
+<section id="solution-1" class="level3">
+<h3 class="anchored" data-anchor-id="solution-1">Solution</h3>
+<p><strong>Part 1</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>proc1 <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  Dat <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">25</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  Mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Dat)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>(Mod)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>or, more concisely ::: {.cell}</p>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>proc1 <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">25</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coefficients</span>()</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+</div>
+</div>
+<p><strong>Part 2</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">5</span>) <span class="sc">*</span> <span class="fu">proc1</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Intercept        x
+1  3.975325 1.301303
+2  4.011122 1.524910
+3  3.825081 1.296534
+4  4.051062 1.773053
+5  4.221712 1.496531</code></pre>
+</div>
+</div>
+<ol type="1">
+<li><p>The results of the five trials are collected into a data frame.</p></li>
+<li><p>The <code>x</code> coefficients varies from trial to trial.</p></li>
+</ol>
+<p>Collect 100 trials</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">100</span>) <span class="sc">*</span> <span class="fu">proc1</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="1">
+<li>An appropriate graphical display of the trials:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Trials, <span class="fu">aes</span>(x)) <span class="sc">+</span> <span class="fu">geom_density</span>(<span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">alpha=</span><span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="NTI-Lesson22_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The <code>x</code> coefficient varies from near 0.5 to near 2.5 in a bell-shaped form.</p>
+<ol start="4" type="1">
+<li>Summarize the trials by the standard deviation.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">s =</span> <span class="fu">sd</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          s
+1 0.1893063</code></pre>
+</div>
+</div>
+<p>The standard deviation is about 1/4 the width of the distribution.</p>
+</section>
 <section id="documenting-software" class="level2">
 <h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>
 <ul>
-<li>File creation date: 2022-10-14</li>
+<li>File creation date: 2022-11-04</li>
 <li>R version 4.2.1 (2022-06-23)</li>
 <li><code>tidyverse</code> package version: 1.3.2</li>
 </ul>

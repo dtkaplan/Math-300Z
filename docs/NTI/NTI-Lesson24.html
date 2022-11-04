@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-10-14">
+<meta name="dcterms.date" content="2022-11-04">
 
 <title>Spring 2023 Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 24)</title>
 <style>
@@ -186,7 +186,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 14, 2022</p>
+      <p class="date">November 4, 2022</p>
     </div>
   </div>
     
@@ -197,9 +197,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="objectives" class="level2">
 <h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
-<p>24.1 Estimate an effect size from a regression model of one and two variables.</p>
-<p>24.2 Construct a confidence interval on the effect size.</p>
-<p>24.3. Gaming: Evaluate whether confidence interval indicates that estimated effect size is consistent with simulation.</p>
+<p>24.1 Distinguish between the two settings for decision-making:</p>
+<pre><code>a. **Prediction**: predict an outcome for an individual
+b. **Relationship**: characterize a relationship with an eye toward intervention or a better understanding of how a mechanism works.
+
+Given a research question, identify whether it corresponds to a prediction setting or a relationship setting.</code></pre>
+<p>24.2 Estimate an effect size from a regression model of one and two variables.</p>
+<p>24.3 Construct a confidence interval on the effect size and evaluate whether a confidence interval indicates that estimated effect size is consistent with a specified value.</p>
 </section>
 <section id="reading" class="level2">
 <h2 class="anchored" data-anchor-id="reading">Reading</h2>
@@ -218,7 +222,7 @@ In-class example
 </div>
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">+</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">+</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5</code></pre>
 </div>
@@ -236,9 +240,9 @@ In-class activity
 </div>
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Fri Oct 14 13:26:01 2022"</code></pre>
+<pre><code>[1] "Fri Nov  4 08:36:19 2022"</code></pre>
 </div>
 </div>
 </div>
@@ -247,9 +251,77 @@ In-class activity
 </section>
 <section id="learning-checks" class="level2">
 <h2 class="anchored" data-anchor-id="learning-checks">Learning Checks</h2>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Just to help when writing problems
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>24.1 Estimate an effect size from a regression model of one and two variables.</p>
+<p>24.2 Construct a confidence interval on the effect size.</p>
+<p>24.3. Gaming: Evaluate whether confidence interval indicates that estimated effect size is consistent with simulation.</p>
+</div>
+</div>
 </section>
-<section id="section" class="level2">
-<h2 class="anchored" data-anchor-id="section">24.1</h2>
+<section id="objective-24.1" class="level2">
+<h2 class="anchored" data-anchor-id="objective-24.1">24.1 (Objective 24.1)</h2>
+<p>What are the two settings for decision making that we cover in this course?</p>
+<p>Give an example of each.</p>
+<section id="solution" class="level3">
+<h3 class="anchored" data-anchor-id="solution">Solution</h3>
+<ol type="1">
+<li>Prediction and (2) Relationship</li>
+</ol>
+<ol type="i">
+<li><p>What will be the sales price of this house? <em>“This house” is a shorthand way of saying “a house with these attributes.” The sales price will be the output of a prediction function that takes the various attributes as input and produces a sales price as output.</em></p></li>
+<li><p>If I look for a house with an additional bathroom, how much will that change the sales price? <em>This asks for the relationship between number of bathrooms and sales price.</em></p></li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="objective-24.1-1" class="level2">
+<h2 class="anchored" data-anchor-id="objective-24.1-1">24.2 (Objective 24.1)</h2>
+<p>For each of these research questions, say whether it is a prediction setting or a relationship setting.</p>
+<ol type="i">
+<li>What’s the risk of falling ill?</li>
+<li>How will the risk of falling ill change if we eat more broccholi?</li>
+<li>Is there any reason to believe, based on the evidence at hand, that we should look more deeply into the possible benefits of broccholi?</li>
+</ol>
+<section id="solution-1" class="level3">
+<h3 class="anchored" data-anchor-id="solution-1">Solution</h3>
+<ol type="i">
+<li>Prediction</li>
+<li>Relationship</li>
+<li>Relationship</li>
+</ol>
+<hr>
+<p>SOME IDEAS FOR EXERCISE MODES</p>
+<ol type="a">
+<li><p>Use <code>mod_plot()</code> and look at the slope of lines and offsets. Compare to the model coefficients.</p></li>
+<li><p>Generate data from a DAG and look at the confidence interval on the effect size. Then make new samples and see if the effect size in those samples is consistent with the confidence interval.</p></li>
+<li><p>In text, maybe look at the confidence intervals across new samples and show that they tend to overlap. Only a few of them don’t touch a common line. This is basically just a review of confidence intervals, but why not?</p></li>
+<li><p>Interaction. Show that when there is an interaction term, the effect size (as calculated by <code>mod_effect()</code>) is not constant, as it is for models with purely linear terms.</p></li>
+</ol>
+</section>
+</section>
+<section id="lc-24.1" class="level2">
+<h2 class="anchored" data-anchor-id="lc-24.1">LC 24.1</h2>
+<p>The <a href="https://github.com/DS-USAFA/Computational-Probability-and-Statistics/blob/main/data/Stanford_heart_study.csv"><em>Computational Probability and Statistics</em></a> text describes an early study on human-to-human heart transplantation:</p>
+<blockquote class="blockquote">
+<p>“The Stanford University Heart Transplant Study was conducted to determine whether an experimental heart transplant program increased lifespan. Each patient entering the program was designated an official heart transplant candidate, meaning that he was gravely ill and would most likely benefit from a new heart. Some patients got a transplant and some did not. The variable indicates which group the patients were in; patients in the treatment group got a transplant and those in the control group did not. [[Not in data set: Another variable called [MISSING] was used to indicate whether or not the patient was alive at the end of the study.]]”</p>
+</blockquote>
+<p>The data frame is called <code>Transplants</code>. [NEED TO MOVE TO PACKAGE]</p>
+<div class="cell">
+
+</div>
+<p>You’re going to build a model of <code>outcome</code> vs <code>group</code> based on the data in <code>Transplants</code>. The <code>outcome</code> variable has levels <code>"Dead"</code> and <code>"Alive"</code>, that is, it is a two-level categorical variable. Consequently, the model output will be the <strong>probability</strong> that the transplant candidate was alive at the end of the study.</p>
+<ol type="1">
+<li>Build a model <code>outcome == "Alive" ~ group</code> from the <code>Transplants</code> data. Pay close attention to the left-hand side of the tilde expression: it is a calculation that produces a 1 if <code>outcome</code> is <code>"Alive"</code> and zero otherwise. Notice the <strong>double equal signs</strong> and the quotes around <code>"Alive"</code>.</li>
+</ol>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -260,15 +332,294 @@ Solution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(outcome <span class="sc">==</span> <span class="st">"Alive"</span> <span class="sc">~</span> group, <span class="at">data =</span> Transplants)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<ol start="2" type="1">
+<li><p>The sole explanatory variable here, <code>group</code> also is categorical. It has levels <code>"Control"</code> and <code>"Treatment"</code>.</p>
+<ol type="i">
+<li>Using <code>eval_mod()</code>, find the probability of being alive at the end of the study for the Control group and for the treatment group.</li>
+<li>The two probabilities in (ii) do not add up to zero. Explain why.</li>
+</ol></li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(mod, <span class="at">group=</span><span class="st">"Treatment"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      group model_output
+1 Treatment    0.3478261</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(mod, <span class="at">group=</span><span class="st">"Control"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    group model_output
+1 Control    0.1176471</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ol start="3" type="1">
+<li><p>Find the effect size of the treatment. All you need is your results from (2)?</p></li>
+<li><p>Use <code>mod_effect(</code>modelname<code>, ~ group)</code> to calculate the effect size.</p>
+<ol type="i">
+<li>Is the result consistent with what you found in (3).</li>
+<li>Explain in everyday language what this effect size means.</li>
+</ol></li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_effect</span>(mod, <span class="sc">~</span> group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     change     group to_group
+1 -0.230179 Treatment  Control</code></pre>
+</div>
+</div>
 </div>
 </div>
 <hr>
 </section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section">24.2</h2>
+<p>Effect sizes generally come with <em>units</em> and you have to take into account the units in order to know if the effect is important or not.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+In draft
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Move the <code>Loans</code> data into the <code>math300</code> package. But for now …</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Loans <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"data/loans.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p>A case in point is provided by the <code>Loans</code> data frame, which records dozens of variables on each of 10,000 loans made through the Lending Club. The interest rate at which the loans are made varies substantially from loan to loan. Presumably, higher interest rates reflect a higher perception of risk of default (which would lead to the lender losing his or her money).</p>
+<p>Here’s a model of the interest rate. (This is for the borrowers who have a low debt-to-income percent; we won’t worry about the few very high debt-to-income cases.) We’re only interested in this problem with the effect size, which is the same as the coefficients on the model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(interest_rate <span class="sc">~</span> homeownership <span class="sc">+</span> debt_to_income <span class="sc">+</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>            account_never_delinq_percent <span class="sc">+</span> verified_income, </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">data =</span> Loans <span class="sc">%&gt;%</span> <span class="fu">filter</span>(debt_to_income<span class="sc">&lt;</span><span class="dv">50</span>))</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>mod <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                     2.5 %      97.5 %
+(Intercept)                    15.31467948 17.26502804
+homeownershipOWN                0.16056412  0.73009641
+homeownershipRENT               1.01571903  1.41695574
+debt_to_income                  0.09565833  0.11523598
+account_never_delinq_percent   -0.09149666 -0.07122369
+verified_incomeSource Verified  1.37798985  1.79909554
+verified_incomeVerified         2.88724295  3.39001806</code></pre>
+</div>
+</div>
+<p>There are two <em>quantitative</em> explanatory variables—<code>debt_to_income</code> and <code>account_never_delinq_percent</code>—both of which are measured in percent.</p>
+<p>There are two <em>categorical</em> explanatory variables: <code>homeownership</code> and <code>verified_income</code>. The levels for <code>homeownership</code> are “MORTGAGE” (meaning money is still owed on the house), “OWN” (without a mortgage), and “RENT” (meaning the borrower rents rather than owning a home). The levels for <code>verified_income</code> are “Not Verified”, “Verified”, “Source Verified”.</p>
+<p>For the categorical explanatory variables (and the intercept) the effect-size units are “percent interest.” For the quantitative explanatory variables, the effect-size units are “percent interest per percent,” so that when multiplied by the <code>debt_to_income</code> percent or the <code>account_never_delinq_percent</code> the result will be in “percent interest.”</p>
+<ol type="1">
+<li>According to the model, who pays the higher interest rate (on average): people who OWN their home, people who RENT, or people who have a mortgage on their home? How much higher than the lowest-interest rate category.</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>People who rent pay the highest interest rate, a little more than 1 percentage point higher than people who have mortgages. It’s interesting that people who own their homes outright pay (on average) pay about 0.45 percentage points more than people who own outright. This might be because having a mortgage means you also have a credit history.</p>
+</div>
+</div>
+<ol start="2" type="1">
+<li>According to the model, who pays the higher interest rate (on average): people whose income is “not verified,” people whose income is “verified,” or people who have the source of income verified (level: “source verified”)?</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>People whose income is verified pay about 3 percentage points higher interest than people whose income is “not verified.” This seems surprising, but it may be that people who have higher perceived default risk are also the people who are asked to verify their income. Things get complicated when explanatory variables are linked to each other.</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>The coefficients on <code>debt_to_income</code> and <code>account_never_delinq_percent</code> are the smallest numerically. Does this mean that the effects of <code>debt_to_income</code> and <code>account_never_delinq_percent</code> are smaller than the other two explanatory variables in the model? Explain why or why not. (Hint: Look at the distribution of <code>debt_to_income</code> and <code>account_never_delinq_percent</code> to get an idea for the range of values these variables take on.)</li>
+</ol>
+</section>
+<section id="solution-7" class="level2 {callout-note}">
+<h2 class="anchored" data-anchor-id="solution-7">Solution</h2>
+<p><code>debt_to_income</code> varies over about 25 percentage points. The variation in <code>account_never_delinq_percent</code> is about the same, varying from about 80 to 100 percentage points. The effect of the variables (in percent interest) is determined by multiplying the coefficients by the amount of variation in the variables. So, from one extreme to the other, the effect of <code>debt_to_income</code> is about 2 perentage points of interest, and roughly the same for <code>debt_to_income</code>.</p>
+</section>
+<hr>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1">24.4</h2>
+<p>The logic of effect size is to investigate the change in output of a model when one input variable is changed, <em>holding all other things constant</em>. This problem is about the extent to which we mean “all”.</p>
+<p>The figure shows yearly CO<sub>2</sub> production of individual gasoline-fueled passenger vehicles stratified by the number of engine 4 or 6 cylinders. ::: {.cell} ::: {.cell-output-display} <img src="NTI-Lesson24_files/figure-html/camel-get-gloves-1-1.png" class="img-fluid" width="672"> ::: :::</p>
+<ol type="1">
+<li>The effect size is the difference between the output variable when a change is made to an input. Consider the effect size of changing from a six-cylinder engine to a four-cylinder engine. Here’s a subtly <strong>incorrect</strong> way of calculating something like an effect size: Pick a dot from the six-cylinder group and another dot from the four-cylinder group. Subtract the 4-cylinder point’s CO2 value from the six-cylinder point’s CO2 value, and divide by the change in the input, that is, -2 cylinders.
+<ol type="a">
+<li>Follow this procedure for the top-most dot in each cloud and calculate the effect size. -A- (5100 kg - 4100 kg) / (-2 cylinders) = -500 kg/cylinder.</li>
+<li>Follow the procedure for the bottom-most dot in each cloud and calculate the effect size. -A- (3400 kg - 2500 kg) / (-2 cylinders) = -450 kg/cylinder.</li>
+<li>Follow the procedure for the bottom-most dot in the four-cylinder cloud and the top-most dot in the six-cylinder cloud. -A- (5100 kg - 3400 kg) / (-2 cylinders) = -850 kg/cylinder.</li>
+<li>Do the same as in (c) but use the bottom-most six-cylinder dot and the top-most four-cylinder dot. -A- (3400 kg - 4100 kg) / (-2 cylinders) = +350 kg/cylinder. In other words, switching from the six</li>
+</ol></li>
+<li>You can imagine the (tedious) process of repeating the calculation for every possible pair of dots and getting a distribution of effect sizes. What would be the range of this distribution: from the smallest effect size to the biggest? (Hint: You can figure it out from your answers to (1).) -A- -850 kg/cylinder to +350 kg/cylinder</li>
+</ol>
+<p>From your result in (2), you might be tempted to conclude that the effect size is highly uncertain: it might be negative or it might be positive. But there is a problem, the procedure used in (1) and (2) fails to incorporate the notion of <em>all other things being equal</em>. This notion applies not just to known variables, but to all the other unknown factors that shape the data.</p>
+<p>For the purpose of envisioning the concept, imagine that we actually had a measurement of all the factors that shaped CO<sub>2</sub> emissions from a vehicle. We’ll call this imaginary measurement “all other things”. The figure below shows a conceptualization of what CO2 emissions as a function of the number of cylinders and “all other things” would look like.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="NTI-Lesson24_files/figure-html/camel-get-gloves-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Using the graph of CO2_year versus “all other things”, calculate the effect size of a change from six to four cylinders. Remember to hold “all other things” constant in your calculations. So do the effect size calculation at each of several values of “all other things”. What is the effect size and about how much does it vary from one value of “all other things” to another? -A- At “all other things being 0.25, the CO<sub>2</sub> emissions for the 6- and 4-cylinder cars is 2800 kg and 3800 kg. The effect size is therefore (3800 kg - 2800 kg) / -2 cylinders = -500 kg/cylinder. The value of the effect size for other levels of”all other things” will be about the same, since the position of the six-cylinder dots is more-or-less constant compared to the corresponding four-cylinder dot.</li>
+</ol>
+<p>This exercise is intended to give you a way of thinking about effect size and “all other things”. In reality, of course, we do not have a way to measure “all other things”. Instead, we calculate the effect size not directly from the data but from the model output (indicated by the statistic layer in the first graphic). As we saw in Lesson 22, there is actually some uncertainty about the model output stemming from sampling variability that can be summarized by a “confidence interval”. For the relationship between the number of cylinders and CO2 emissions, the extent of that uncertainty is indicated by the interval layer in the first graphic. A fair depiction for the corresponding uncertainty in the effect size can be had by repeating the process of (2), but only for points falling into the confidence interval.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Do we need this?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><em>Note to readers who know something about car engines</em>: As you know, switching out a six-cylinder engine for a four-cylinder engine is likely to change many other things: the weight of the vehicle, the displacement of the engine, the power available, etc. So it’s not useful to insist that everything other than the number of cylinders be held constant. Instead, we’ll be looking at the effect of that whole constellation of changes associated with a change in the number of cylinders.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="x" class="level2">
+<h2 class="anchored" data-anchor-id="x">24.X</h2>
+<p>In very simple settings, you don’t need access to the original data: a simple summary will do.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+In draft
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the <code>data/bloodthinner.csv</code> data from <em>CPS</em> chapter 19. Create the table of counts and calculate the effect size/probabilities from that.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="z" class="level2">
+<h2 class="anchored" data-anchor-id="z">24.Z</h2>
+<p>The National Cancer Institute publishes an online, interactive “<a href="https://bcrisktool.cancer.gov/calculator.html">Breast Cancer Risk Assessment Tool</a>”, also called the “Gail model.” The output of the model is a probability that the woman whose characteristics are used as input will develop breast cancer in the next five years. The inputs include:</p>
+<ul>
+<li>age</li>
+<li>race/ethnicity</li>
+<li>age at first menstrual period</li>
+<li>age at birth of first child (if any)</li>
+<li>how many of the woman’s close relatives (mother, sisters, or children) have had breast cancer</li>
+</ul>
+<p>As a baseline, consider a 55-year-old, African-American woman who has never had a breast biopsy or any history of breast cancer, who doesn’t know her BRCA status, and whose close relatives have no history of breast cancer, whose first menstrual period was at age 13 and first child at age 23. No “subrace” or “place of birth” is specified.</p>
+<ol type="1">
+<li><p>Follow the link above to the cancer risk assessment tool, and enter the baseline values into the assessment tool using the link above. According to the assessment tool, what is the probability (“risk”) of developing breast cancer in the next five years? What is the lifetime risk of developing breast cancer? -A- 1.4% risk in the next five years, 7.8% lifetime risk.</p></li>
+<li><p>What is the effect size on our baseline subject of finding out that:</p></li>
+</ol>
+<ol type="a">
+<li><p>one of her close relatives has developed breast cancer? -A- Using the baseline values for the inputs, but changing the number of close relatives who have developed breast cancer to 1, the new five year risk is 2.2% and the lifetime risk is 12.3%. This is a change of five year risk of 0.8 percentage points and 4.5 percentage points for lifetime risk. (In Lesson 33, you’ll see that expressing effect size of a probability is often done using “<strong>log-odds</strong>”.)</p></li>
+<li><p>more than one of her close relatives have developed breast cancer? -A- This has a dramatic effect, with five-year risk increasing to 4.8 percentage points and lifetime risk increasing to 29.4%.</p></li>
+</ol>
+<ol start="3" type="1">
+<li><p>What is the effect size associated with comparing the baseline conditions to a woman with the same conditions but a race of white? -A- Five year risk goes down by 0.3 percentage points, lifetime risk goes down by 0.4 percentage points.</p></li>
+<li><p>What is the effect size of age? Compare the baseline 55-year old woman to herself when she is 65, without the other inputs changing. Since age is quantitative, Report the effect size as percentage-points-per-year. -A- Five year risk goes up to 1.5%, an increase of 0.1 percentage points per year. Lifetime risk goes down to 5.6%, a rate of -0.67 percentage points per year.</p></li>
+</ol>
+<hr>
+<p>Possibly <code>Stat2Data::ArcheryData</code> and ask about effect size.</p>
+<hr>
+</section>
+<section id="zz" class="level2">
+<h2 class="anchored" data-anchor-id="zz">24.ZZ</h2>
+<p>The graphs shows world record times in the 100m and 200m butterfly swim race as a function of year, sex, and race length. (Data frame: <code>math300::Butterfly</code>)</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="NTI-Lesson24_files/figure-html/hamster-dive-stove-1-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="NTI-Lesson24_files/figure-html/hamster-dive-stove-1-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol type="1">
+<li><p>In 1980, what is the effect size of race distance? (Make sure to give the units.)</p></li>
+<li><p>In 1980, what is the effect size of sex? (Make sure to give the units.)</p></li>
+<li><p>In 2000, what is the effect size of race distance? (Be sure to give the units.)</p></li>
+</ol>
+<hr>
+</section>
+<section id="ww" class="level2">
+<h2 class="anchored" data-anchor-id="ww">24WW</h2>
+<p><a href="#fig-lamb-come-sheet-1">Figure&nbsp;1</a> shows a model of the running time of winners of Scottish hill races as a function of climb, distance, and sex.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-lamb-come-sheet-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="NTI-Lesson24_files/figure-html/fig-lamb-come-sheet-1-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure 1: A model of running time in Scottish hill racing versus climb, distance, and sex of the runner</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Using as a baseline a distance of 10 km, a climb of 500m, and sex female, calculate each of these effect sizes. Remember for quantitative inputs to format the effect size as a <em>rate</em>, for instance seconds-per-meter-of-climb.</p>
+<ol type="1">
+<li><p>The effect size of climb. Consider an increase of climb by 500m. - For females running a 10 km course, an increase in climb from 500m (the specified baseline for comparison) to 1000m is roughly 2000 seconds. Since climb is quantitative, this should be reported as a rate, the change of output (2000 s) divided by the change in input (500 m). This comes to 4 seconds per meter of climb.</p></li>
+<li><p>The effect size of distance. Consider an increase in distance of 10 km. -A- The model output at baseline is about 3500 seconds. The model output for a distance of 20 km (an additional 10 km above baseline) is about 6000 s. The effect size is a rate: (6000 - 3500) s / 10 km, or 250 s/km. For comparison, the fastest 20 km road run by a woman (at the time this is being written) is 1 hour 1 minute 25 seconds, that is, 3685 seconds. This amounts to an average of about 180 s/km. A walker would cover 1 km in about 720 seconds. So the racers are quite fast.</p></li>
+<li><p>Is there any evidence of an interaction between sex and climb? -A- Yes. Note that the lines for different climb amounts are vertically spaced more widely for females than for males. This means that the effect size of climb differs between the sexes. That’s an interaction between climb and sex.</p></li>
+</ol>
+<hr>
+</section>
+<section id="r" class="level2">
+<h2 class="anchored" data-anchor-id="r">24.R</h2>
+<p>Over the past hundred years, attitudes toward sex have changed. Let’s examine one way that this change might show up in data: the age at which people first had sex. The National Health and Nutrition Evaluation Survey includes a question about the age at which a person first had sex. For the moment, let’s focus just on that subset of people who have had sex at least once.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="NTI-Lesson24_files/figure-html/wolf-begin-jacket-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol type="1">
+<li><p>What is the effect size of year born on age at first sex? Use units of years-over-years. -A- The model output is 17 years for those born round about 1940, and slightly more than 16 years for those born around 1990. The effect size is therefore about negative 1 year per 50 years</p></li>
+<li><p>Is there evidence for an interaction between gender and year born? -A- No, the slopes of the lines are essentially identical for males and females.</p></li>
+<li><p>Translate the effect size in (1) to the units weeks-over-years. -A- 1 year per 50 years is the same as 52 weeks per 50 years, or about one week per year.</p></li>
+</ol>
+</section>
 <section id="documenting-software" class="level2">
 <h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>
 <ul>
-<li>File creation date: 2022-10-14</li>
+<li>File creation date: 2022-11-04</li>
 <li>R version 4.2.1 (2022-06-23)</li>
 <li><code>tidyverse</code> package version: 1.3.2</li>
 </ul>

@@ -181,6 +181,154 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<section id="sec-LC-29-A" class="level2">
+<h2 class="anchored" data-anchor-id="sec-LC-29-A">29.A</h2>
+<p>The `math300::Hill_racing” data frame records 2236 winning times (in seconds) in Scottish hill racing competitions. Consider this model of the winning time as a function of the race distance (km) and the total climb (meters):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(time <span class="sc">~</span> distance <span class="sc">+</span> climb, <span class="at">data=</span>Hill_racing)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>model_eval()</code> function provides a convenient way to evaluate the model output (<code>.output</code>) for each of the rows in a data frame and, at the same time, calculates row-by-row residuals (<code>.resid</code>) and prediction errors (<code>.lwr</code> and <code>.upr</code>). <em>Make sure to take not of the starting periods on the names.</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(mod) <span class="sc">%&gt;%</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  time distance climb  .output     .resid       .lwr     .upr
+1 1630        6   240 1679.215  -49.21475  -29.56279 3387.992
+2 1655        6   240 1679.215  -24.21475  -29.56279 3387.992
+3 2391        6   240 1679.215  711.78525  -29.56279 3387.992
+4 2351        6   240 1679.215  671.78525  -29.56279 3387.992
+5 4151       14   660 4805.779 -654.77947 3097.10184 6514.457
+6 3975       14   660 4805.779 -830.77947 3097.10184 6514.457</code></pre>
+</div>
+</div>
+<p>The RMS residual from the model can be calculated this way:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(mod) <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">rms =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(.resid<span class="sc">^</span><span class="dv">2</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       rms
+1 870.4631</code></pre>
+</div>
+</div>
+<ol type="1">
+<li><p>What are the units of the RMS residual?</p></li>
+<li><p>Modify the calculation to compute the sum-of-square residuals. Report the result numerically. Be sure to say what are the units.</p></li>
+<li><p>What are the units of the effect size on time with respect to climb?</p></li>
+<li><p>What are the units of the effect size on time with respect to climb?</p></li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>RMS residual has the same units as the response variable. In this case, that’s the time to run the race, with units “seconds.”</p></li>
+<li><p>SS residual has units that are the square of the respond variable, in this case “square-seconds.”</p></li>
+<li><p>Recall that the effect size on the response with respect to an explanatory variable has the units of the response variable divided by the units of the explanatory variable. The <code>climb</code> variable has units of meters, so the effect size has units “seconds/meters.”</p></li>
+<li><p>seconds/km</p></li>
+</ol>
+</div>
+</div>
+<hr>
+</section>
+<section id="lc-29.b" class="level2">
+<h2 class="anchored" data-anchor-id="lc-29.b">LC 29.B</h2>
+<p>Which of the following models are <strong>not</strong> nested within <code>time ~ distance + climb</code>?</p>
+<ol type="a">
+<li><code>time ~ 1</code></li>
+<li><code>time ~ distance + sex</code></li>
+<li><code>time ~ distance</code></li>
+<li><code>time ~ climb</code></li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The model <code>time ~ distance + sex</code> is not nested in <code>time ~ distance + climb</code>.</p>
+<p>Note that <code>time ~ 1</code> is indeed nested in <code>time ~ distance + climb</code>. The <code>1</code> corresponds to the intercept.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="c" class="level2">
+<h2 class="anchored" data-anchor-id="c">29.C</h2>
+<p>In LC -<a href="#sec-LC-29-A">Section&nbsp;1</a> you calculated the RMS residuals and the sum-of-square residuals by wrangling the results from <code>mod_eval()</code>. That’s a perfectly good way to do things, but the work becomes tedious when there are multiple models you want to compare.</p>
+<p>For convenience, there is a <code>compare_model_residuals()</code> command, which can calculate the RMS residual or sum-of-square residual for each of a set of models. All the models must have the same response variable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Hill_racing <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compare_model_residuals</span>(time <span class="sc">~</span> <span class="dv">1</span>, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                          time <span class="sc">~</span> distance <span class="sc">+</span> climb, </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                          time <span class="sc">~</span> distance <span class="sc">+</span> climb <span class="sc">+</span> sex,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                          time <span class="sc">~</span> distance,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">measure =</span> <span class="st">"RMS"</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                          )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3122.4821  870.4631  775.2962 1189.7148</code></pre>
+</div>
+</div>
+<p>It happens that all of the models in the command are a nested set. Re-order the models so that each model nests inside the following model, that is, from smaller model to bigger model.</p>
+<ol type="1">
+<li><p>Do the RMS residuals for the nested models increase or decrease when moving from a smaller model to a larger model?</p></li>
+<li><p>You can calculate the sum-of-square residual by using the argument <code>measure="SS"</code>. Do the sum-of-square residuals for the nested models increas or decrease when moving from a smaller model to a larger model.</p></li>
+<li><p>You can calculate R<sup>2</sup> by using the argument <code>measure="R2"</code>. Do the R<sup>2</sup> for the nested models increase or decrease when moving from a smaller model to a larger model.</p></li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Decrease</li>
+<li>Decrease</li>
+<li>Increase. R<sup>2</sup> tells you how big the model output is compared to the response variable. 1-R<sup>2</sup> tells you how big the residuals are compared to the response variable.</li>
+</ol>
+</div>
+</div>
+<hr>
+</section>
+<section id="lc-29.d" class="level2">
+<h2 class="anchored" data-anchor-id="lc-29.d">LC 29.D</h2>
+<p>::: {.callout-warning} ## Still a draft</p>
+<p>Look at <code>dag07</code>. Notice that <code>d</code> is not connected to any of the other variables.</p>
+<p>Generate a sample of size <span class="math inline">\(n=6\)</span>. Compare the sum of square residual (in sample) from the nested models <code>c ~ 1</code>, <code>c ~ a</code> <code>c ~ a + b</code>, and <code>c ~ a + b + d</code>. (Use the <code>compare_model_residuals()</code> using the argument <code>method="SS"</code>.</p>
+<p>Which, if any, of the variables <code>a</code>, <code>b</code>, or <code>d</code> reduces the in-sample sum-of-squared residuals compared to the previous model.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_model_residuals</span>(dag07, c <span class="sc">~</span> <span class="dv">1</span>, c <span class="sc">~</span> a, c <span class="sc">~</span> a <span class="sc">+</span> b, c <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> d, </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">n=</span><span class="dv">6</span>, <span class="at">measure=</span><span class="st">"R2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.0000000 0.4390922 0.6557035 0.7487311</code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>Out of sample, the useless covariate often <em>increases</em> the SS error.</p>
+<hr>
+</section>
 <section id="lc-29.1" class="level2">
 <h2 class="anchored" data-anchor-id="lc-29.1">LC 29.1</h2>
 <p>In <code>dag04</code>, build models to predict <code>c</code> from the other variables. Does one of those variables “block” the others?</p>
@@ -199,16 +347,16 @@ Solution
 </div>
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag04, c<span class="sc">~</span> <span class="dv">1</span>, c <span class="sc">~</span> d, c<span class="sc">~</span> b <span class="sc">+</span> d, c <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> d, <span class="at">n=</span><span class="dv">50</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_model_residuals</span>(dag04, c<span class="sc">~</span> <span class="dv">1</span>, c <span class="sc">~</span> d, c<span class="sc">~</span> b <span class="sc">+</span> d, c <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> d, <span class="at">n=</span><span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.1800403 1.0320995 0.8710613 0.7991100</code></pre>
+<pre><code>[1] 0.9916292 0.8672413 0.8119626 0.7180731</code></pre>
 </div>
 </div>
 <p><code>d</code> seems to block effect of <code>a</code> and <code>b</code> on <code>c</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag04, c<span class="sc">~</span> <span class="dv">1</span>, c <span class="sc">~</span> d, c<span class="sc">~</span> b <span class="sc">+</span> d, c <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> d, <span class="at">n=</span><span class="dv">5</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_model_residuals</span>(dag04, c<span class="sc">~</span> <span class="dv">1</span>, c <span class="sc">~</span> d, c<span class="sc">~</span> b <span class="sc">+</span> d, c <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> d, <span class="at">n=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.0076738 0.9694713 0.9480191 0.2881173</code></pre>
+<pre><code>[1] 1.136096 1.106351 1.446975 1.423358</code></pre>
 </div>
 </div>
 </div>
@@ -220,13 +368,20 @@ Solution
 <p>For out-of-sample, when working with new data, it’s not just a matter of being tricked into thinking covariates are useful when they’re not. Using irrelevant covariates can be genuinely harmful to the predictions.</p>
 <p>Compare these in-sample and out-of-sample results.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag07, d <span class="sc">~</span> <span class="dv">1</span>, d <span class="sc">~</span> c, d<span class="sc">~</span> b <span class="sc">+</span> c, d <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">n=</span><span class="dv">4</span>, <span class="at">in_sample =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4.689275e-01 4.188891e-01 3.603896e-01 1.416962e-16</code></pre>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_model_residuals</span>(dag07, d <span class="sc">~</span> <span class="dv">1</span>, d <span class="sc">~</span> c, d<span class="sc">~</span> b <span class="sc">+</span> c, d <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">n=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in qt((1 - level)/2, df): NaNs produced</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_rms_error</span>(dag07, d <span class="sc">~</span> <span class="dv">1</span>, d <span class="sc">~</span> c, d<span class="sc">~</span> b <span class="sc">+</span> c, d <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">n=</span><span class="dv">4</span>, <span class="at">in_sample =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.965495 1.434434 1.641881 1.591050</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compare_model_residuals</span>(dag07, d <span class="sc">~</span> <span class="dv">1</span>, d <span class="sc">~</span> c, d<span class="sc">~</span> b <span class="sc">+</span> c, d <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">n=</span><span class="dv">4</span>, </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">testing =</span> <span class="st">"out-of-sample"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in qt((1 - level)/2, df): NaNs produced</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.965495 1.434434 1.641881 1.591050</code></pre>
 </div>
@@ -265,8 +420,8 @@ In draft
 <div class="callout-body-container callout-body">
 <p><code>openintro::census</code> Predict log personal income based on other variables. Eat variance using the <code>total_family_income</code> variable.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log10</span>(total_personal_income) <span class="sc">~</span> <span class="fu">log10</span>(age) <span class="sc">+</span> sex <span class="sc">+</span> marital_status <span class="sc">+</span> <span class="fu">log10</span>(total_family_income), <span class="at">data =</span> openintro<span class="sc">::</span>census <span class="sc">%&gt;%</span> <span class="fu">filter</span>(total_personal_income <span class="sc">&gt;</span> <span class="dv">0</span>, total_family_income <span class="sc">&gt;</span> <span class="dv">0</span>))</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log10</span>(total_personal_income) <span class="sc">~</span> <span class="fu">log10</span>(age) <span class="sc">+</span> sex <span class="sc">+</span> marital_status <span class="sc">+</span> <span class="fu">log10</span>(total_family_income), <span class="at">data =</span> openintro<span class="sc">::</span>census <span class="sc">%&gt;%</span> <span class="fu">filter</span>(total_personal_income <span class="sc">&gt;</span> <span class="dv">0</span>, total_family_income <span class="sc">&gt;</span> <span class="dv">0</span>))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -280,10 +435,10 @@ Residuals                  306 51.028  0.1668
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_jitter</span>(total_personal_income <span class="sc">~</span> total_family_income <span class="sc">|</span> sex, </span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span>openintro<span class="sc">::</span>census <span class="sc">%&gt;%</span> <span class="fu">filter</span>(total_personal_income <span class="sc">&gt;</span> <span class="dv">3000</span>),</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">color=</span><span class="sc">~</span>marital_status, <span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(<span class="fu">scale_y_log10</span>(), <span class="fu">scale_x_log10</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_jitter</span>(total_personal_income <span class="sc">~</span> total_family_income <span class="sc">|</span> sex, </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span>openintro<span class="sc">::</span>census <span class="sc">%&gt;%</span> <span class="fu">filter</span>(total_personal_income <span class="sc">&gt;</span> <span class="dv">3000</span>),</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">color=</span><span class="sc">~</span>marital_status, <span class="at">alpha=</span><span class="fl">0.3</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(<span class="fu">scale_y_log10</span>(), <span class="fu">scale_x_log10</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Transformation introduced infinite values in continuous x-axis</code></pre>
 </div>
@@ -291,7 +446,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <pre><code>Warning: Removed 20 rows containing missing values (geom_point).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="LC-lesson29_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="LC-lesson29_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -300,16 +455,28 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section>
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section">29.5</h2>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Still in draft
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p><code>openintro::starbucks</code> where do the calories come from? Find effect size of, say, protein on calories. Then see what happens if you use carbohydrates as a covariate.</p>
-<p>YOU WERE HERE</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>( calories <span class="sc">~</span> protein, <span class="at">data =</span> openintro<span class="sc">::</span>starbucks) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>
+::: {.cell}
+
+```{.r .cell-code}
+lm( calories ~ protein, data = openintro::starbucks) %&gt;% confint()</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 2.5 %     97.5 %
 (Intercept) 254.107446 322.072380
 protein       2.616542   8.087778</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>( calories <span class="sc">~</span> fat <span class="sc">+</span> carb <span class="sc">+</span> fiber <span class="sc">+</span> protein, <span class="at">data =</span> openintro<span class="sc">::</span>starbucks) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>( calories <span class="sc">~</span> fat <span class="sc">+</span> carb <span class="sc">+</span> fiber <span class="sc">+</span> protein, <span class="at">data =</span> openintro<span class="sc">::</span>starbucks) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                2.5 %    97.5 %
 (Intercept) -2.938079 13.605279
@@ -319,30 +486,33 @@ fiber       -1.418966  1.370022
 protein      3.631695  4.364091</code></pre>
 </div>
 </div>
-<p>::: {.comment-warning} ## In draft</p>
+</div>
+</section>
+<section id="in-draft-2" class="level2 comment-warning">
+<h2 class="anchored" data-anchor-id="in-draft-2">In draft</h2>
 <p>Maybe come back to this in confounding lesson. Look for components that tend to go together</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(openintro<span class="sc">::</span>starbucks, <span class="fu">cor</span>(fat, protein))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(openintro<span class="sc">::</span>starbucks, <span class="fu">cor</span>(fat, protein))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.22347</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(openintro<span class="sc">::</span>starbucks, <span class="fu">cor</span>(fiber, protein))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(openintro<span class="sc">::</span>starbucks, <span class="fu">cor</span>(fiber, protein))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.488564</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>( calories <span class="sc">~</span> fiber , <span class="at">data =</span> openintro<span class="sc">::</span>starbucks) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>( calories <span class="sc">~</span> fiber , <span class="at">data =</span> openintro<span class="sc">::</span>starbucks) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 2.5 %    97.5 %
 (Intercept) 276.119106 343.80739
 fiber         1.923476  24.07453</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>( calories <span class="sc">~</span> protein, <span class="at">data =</span> openintro<span class="sc">::</span>starbucks) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>( calories <span class="sc">~</span> protein, <span class="at">data =</span> openintro<span class="sc">::</span>starbucks) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 2.5 %     97.5 %
 (Intercept) 254.107446 322.072380
 protein       2.616542   8.087778</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>( calories <span class="sc">~</span> protein <span class="sc">+</span> fiber, <span class="at">data =</span> openintro<span class="sc">::</span>starbucks) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>( calories <span class="sc">~</span> protein <span class="sc">+</span> fiber, <span class="at">data =</span> openintro<span class="sc">::</span>starbucks) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 2.5 %     97.5 %
 (Intercept) 247.891487 320.333514
@@ -350,9 +520,10 @@ protein       1.700777   7.996897
 fiber        -8.099007  15.978382</code></pre>
 </div>
 </div>
-
-
 </section>
+<hr>
+
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

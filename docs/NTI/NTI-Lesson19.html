@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-10-26">
+<meta name="dcterms.date" content="2022-11-04">
 
 <title>Spring 2023 Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 19)</title>
 <style>
@@ -187,7 +187,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 26, 2022</p>
+      <p class="date">November 4, 2022</p>
     </div>
   </div>
     
@@ -196,29 +196,120 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<p>In the first half of the course, we examined <em>data wrangling</em> methods—<code>group_by()</code>, <code>summarize()</code> and <code>tally()</code> in particular—for summarizing variables and breaking up the summaries by groups.</p>
+<p>In this second half of the course, we will be emphasizing the <strong>relationships between variables</strong>. The conceptual framework we’ve used for describing such relationships involves choosing a <strong>response variable</strong> and selecting one or more <strong>explanatory variables</strong>. Within this framework, you’ve already seen regression techniques for describing how a numerical response variable can be related to numerical explanatory variables. Something new you will see in the second half of the course is using regression techniques to handle <em>categorical</em> response variables. This will allow us to extend regression to cover such things as proportions and probabilities.</p>
+<p>Graphics can be a powerful way to perceive relationships between variables. In keeping with the response/explanatory framework, our go-to graphical technique will be to plot data as a “<strong>point plot</strong>” absolutely sticking to the convention that the response variable will be assigned to the <em>vertical axis</em>. Note that we’ll use the term “point plot” rather than the “scatter plot” that was used in the early graphics chapters. That’s partly because we’re going to use the idea of “scattering” in a different way.</p>
+<p>We’re also going to adopt a new graphical convention: that statistical summaries should always be graphed as a layer on top of the raw data from which the summaries are derived. This means that we’ll switch away from histograms as a way of displaying distributions. Why? Because the vertical axis on a histogram does not correspond to the values of a response variable. Similarly, barplots won’t be appropriate, because the response variable in a barplot is represented by color rather than position on a vertical axis.</p>
+<p>Overall, both the graphical display of data and summaries and the calculation of numerical summaries like means and proportions will become much simpler to accomplish, since relationship summaries will be produced using using <code>lm()</code> and closely related model types. Data graphics will be made with <code>geom_point()</code> and closely related geoms.</p>
+<section id="graphing-data-and-statistical-annotations" class="level2">
+<h2 class="anchored" data-anchor-id="graphing-data-and-statistical-annotations">Graphing data and statistical annotations</h2>
+</section>
+<section id="categorical-response-variables" class="level2">
+<h2 class="anchored" data-anchor-id="categorical-response-variables">Categorical response variables</h2>
+<p>To get started, we’ll work with categorical response variables that are “<strong>dicotomous</strong>” or, equivalently, “<strong>binomial</strong>,” that is, with only two methods. This covers a large fraction of the situations where categorical response values are needed. We’ll leave those situations where there are lots of levels for the response variable to courses on “machine learning,” a topic we can only scratch the surface of in this introductory course.</p>
+<p>The important insight into using categorical variables in regression models is encapsulated in the idea of the 0-1 (“zero-one”) encoding. To illustrate, consider the <code>mosaicData::Whickham</code> data frame that records the age, smoking status, and survival of 1000 or so nurses in the UK. The relationship that motivated the collection of these data is between smoking and survival. Taking a few rows from the data frame let’s us easily see the types of the variables involved:</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> outcome </th>
+   <th style="text-align:left;"> smoker </th>
+   <th style="text-align:right;"> age </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Dead </td>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:right;"> 56 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Alive </td>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:right;"> 54 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Alive </td>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:right;"> 21 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Dead </td>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:right;"> 72 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Alive </td>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:right;"> 30 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Alive </td>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:right;"> 19 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Alive </td>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:right;"> 46 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Alive </td>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:right;"> 31 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Alive </td>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:right;"> 74 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Alive </td>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:right;"> 32 </td>
+  </tr>
+</tbody>
+</table>
+
 </div>
-<div class="callout-caption-container flex-fill">
-Question about software in draft
+</div>
+<p>HOW TO USE <code>math300::zero_one()</code></p>
+<p>Plotting a zero-one response variable with correctly labelled axes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> Whickham <span class="sc">%&gt;%</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_jitter</span>(<span class="fu">zero_one</span>(outcome) <span class="sc">~</span> age, <span class="at">color=</span><span class="sc">~</span>smoker, <span class="at">height=</span><span class="fl">0.1</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">label_zero_one</span>()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>P</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="NTI-Lesson19_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<p>Should we use a <code>fitmodel()</code> command modeled on <code>rigr::regress()</code> that does the right thing (linear versus logistic regression, count regression, …) based on the response variable? It will have data as the first argument, enabling <code>sample()</code> to be piped into the function. Return the model object, but have the model function (which will be in probability for logistic regression) available for extraction via <code>makeFun()</code>. Allow <code>makeFun()</code> to specify whether to return probability, odds, or log odds from a logistic regression model.</p>
+<p>We might equally well plot age as a function of outcome:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_jitter</span>(age <span class="sc">~</span> outcome, <span class="at">data =</span> Whickham, <span class="at">width=</span><span class="fl">0.2</span>) <span class="sc">%&gt;%</span> <span class="fu">gf_violin</span>(<span class="at">color=</span><span class="cn">NA</span>, <span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="NTI-Lesson19_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>PLOT OUT A MODEL</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">model_train</span>(<span class="fu">zero_one</span>(outcome) <span class="sc">~</span> age <span class="sc">+</span> smoker, <span class="at">data =</span> Whickham)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># fun &lt;- mod_fun(mod) </span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># P %&gt;% mosaicCalc::slice_plot(fun(age, smoker="Yes") ~ age, color="red")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="intervals" class="level2">
+<h2 class="anchored" data-anchor-id="intervals">Intervals</h2>
+<p>Once you have FIXES MOSAICMODEL, Generate a “prediction” interval and use gf_errorbar() to plot it over the model.</p>
+</section>
 <section id="objectives" class="level2">
 <h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
-<p>19.1 Distinguish between the two settings for decision-making:</p>
-<ol type="a">
-<li><strong>Prediction</strong>: predict an outcome for an individual</li>
-<li><strong>Relationship</strong>: characterize a relationship with an eye toward intervention or a better understanding of how a mechanism works.</li>
-</ol>
-<p>19.2 Given a research question, identify whether it corresponds to a prediction setting or a relationship setting.</p>
-<p>19.3 Understand the covering of a variable by an interval specified by a coverage level (e.g.&nbsp;0.95).</p>
-<p>19.4 Use “violin” plots to display the density of a variable. (This should really go in the first half of the course, but ModernDive doesn’t do it.)</p>
+<p>19.1 Convert to the response vs explanatory format for data graphs.</p>
+<p>19.1 Understand the covering of a variable by an interval specified by a coverage level (e.g.&nbsp;0.95).</p>
+<p>19.2 Be able to produce pointUse “violin” plots to display the density of a variable. (This should really go in the first half of the course, but ModernDive doesn’t do it.)</p>
+<p>19.3 Convert categorical variables to a 0-1 encoding. a. Generate graphics appropriate to a categorical encoding. (jitter plots) b. Apply modeling techniques to 0-1 encodings of binomial response variables.</p>
 </section>
 <section id="reading" class="level2">
 <h2 class="anchored" data-anchor-id="reading">Reading</h2>
@@ -237,7 +328,7 @@ Setup
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaicData)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaicData)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout-note callout callout-style-default no-icon callout-captioned">
@@ -254,7 +345,7 @@ Guided activity: House prices
 <p>The <code>mosaicData::SaratogaHouses</code> data frame contains information about the sales price and various attributes of about 1700 houses. (See <code>?SaratogaHouses</code> for a detailed description.)</p>
 <p>Do a regression of <code>price ~ bedrooms</code> and explain what the regression coefficients mean.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(price <span class="sc">~</span> bedrooms, <span class="at">data=</span>SaratogaHouses) <span class="sc">|&gt;</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(price <span class="sc">~</span> bedrooms, <span class="at">data=</span>SaratogaHouses) <span class="sc">|&gt;</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)    bedrooms 
    59862.96    48217.81 </code></pre>
@@ -267,7 +358,7 @@ Guided activity: House prices
 </ol>
 <p>Of course, bedrooms are not the only important thing about a house. Let’s include <code>livingArea</code> along with <code>bedrooms</code> in the model.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(price <span class="sc">~</span> livingArea <span class="sc">+</span> bedrooms, <span class="at">data=</span>SaratogaHouses) <span class="sc">|&gt;</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(price <span class="sc">~</span> livingArea <span class="sc">+</span> bedrooms, <span class="at">data=</span>SaratogaHouses) <span class="sc">|&gt;</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)  livingArea    bedrooms 
   36667.895     125.405  -14196.769 </code></pre>
@@ -294,59 +385,330 @@ Guided activity: House prices
 <h2 class="anchored" data-anchor-id="setup-1">Setup</h2>
 <p>The <code>math300</code> package will be needed for lessons 20 through 39.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(math300)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(math300)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moderndive)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="objective-2" class="level2">
-<h2 class="anchored" data-anchor-id="objective-2">19.1 (Objective 2)</h2>
-<p>What are the two settings for decision making that we cover in this course?</p>
-<p>Give an example of each.</p>
-<section id="solution" class="level3">
-<h3 class="anchored" data-anchor-id="solution">Solution</h3>
-<ol type="1">
-<li>Prediction and (2) Relationship</li>
-</ol>
-<ol type="i">
-<li><p>What will be the sales price of this house? <em>“This house” is a shorthand way of saying “a house with these attributes.” The sales price will be the output of a prediction function that takes the various attributes as input and produces a sales price as output.</em></p></li>
-<li><p>If I look for a house with an additional bathroom, how much will that change the sales price? <em>This asks for the relationship between number of bathrooms and sales price.</em></p></li>
-</ol>
-<hr>
-</section>
-</section>
-<section id="objective-2-1" class="level2">
-<h2 class="anchored" data-anchor-id="objective-2-1">19.2 (Objective 2)</h2>
-<p>For each of these research questions, say whether it is a prediction setting or a relationship setting.</p>
-<ol type="i">
-<li>What’s the risk of falling ill?</li>
-<li>How will the risk of falling ill change if we eat more broccholi?</li>
-<li>Is there any reason to believe, based on the evidence at hand, that we should look more deeply into the possible benefits of broccholi?</li>
-</ol>
-<section id="solution-1" class="level3">
-<h3 class="anchored" data-anchor-id="solution-1">Solution</h3>
-<ol type="i">
-<li>Prediction</li>
-<li>Relationship</li>
-<li>Relationship</li>
-</ol>
-<hr>
-</section>
-</section>
 <section id="section" class="level2">
-<h2 class="anchored" data-anchor-id="section">19.3</h2>
-<p>Fit a model to some data. Write down the function implied by the coefficients.</p>
-<p>Evaluate the function for:</p>
-<ol type="i">
-<li>a=7, b=9</li>
-<li>and so on.</li>
+<h2 class="anchored" data-anchor-id="section">19.1</h2>
+<p>Consider the <code>moderndive::evals</code> data that records students’ evaluations (<code>score</code>, on a 1-5 scale) of the professors in each of several courses (the course <code>ID</code>), as well as the <code>age</code>, “average beauty rating” (<code>bty_avg</code>) of the professor, enrollment in the course (<code>cls_students</code>) and the level o the course (<code>cls_level</code>). Each row in the data frame is an individual course section.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> ID </th>
+   <th style="text-align:right;"> score </th>
+   <th style="text-align:right;"> age </th>
+   <th style="text-align:right;"> bty_avg </th>
+   <th style="text-align:right;"> cls_students </th>
+   <th style="text-align:left;"> cls_level </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 329 </td>
+   <td style="text-align:right;"> 2.7 </td>
+   <td style="text-align:right;"> 64 </td>
+   <td style="text-align:right;"> 2.333 </td>
+   <td style="text-align:right;"> 22 </td>
+   <td style="text-align:left;"> upper </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 313 </td>
+   <td style="text-align:right;"> 4.2 </td>
+   <td style="text-align:right;"> 42 </td>
+   <td style="text-align:right;"> 2.667 </td>
+   <td style="text-align:right;"> 86 </td>
+   <td style="text-align:left;"> upper </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 430 </td>
+   <td style="text-align:right;"> 4.5 </td>
+   <td style="text-align:right;"> 33 </td>
+   <td style="text-align:right;"> 5.833 </td>
+   <td style="text-align:right;"> 120 </td>
+   <td style="text-align:left;"> lower </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 95 </td>
+   <td style="text-align:right;"> 4.2 </td>
+   <td style="text-align:right;"> 48 </td>
+   <td style="text-align:right;"> 4.333 </td>
+   <td style="text-align:right;"> 33 </td>
+   <td style="text-align:left;"> upper </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 209 </td>
+   <td style="text-align:right;"> 4.8 </td>
+   <td style="text-align:right;"> 60 </td>
+   <td style="text-align:right;"> 3.667 </td>
+   <td style="text-align:right;"> 34 </td>
+   <td style="text-align:left;"> upper </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 442 </td>
+   <td style="text-align:right;"> 3.6 </td>
+   <td style="text-align:right;"> 61 </td>
+   <td style="text-align:right;"> 3.333 </td>
+   <td style="text-align:right;"> 39 </td>
+   <td style="text-align:left;"> lower </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 351 </td>
+   <td style="text-align:right;"> 4.6 </td>
+   <td style="text-align:right;"> 50 </td>
+   <td style="text-align:right;"> 3.333 </td>
+   <td style="text-align:right;"> 26 </td>
+   <td style="text-align:left;"> lower </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 317 </td>
+   <td style="text-align:right;"> 3.7 </td>
+   <td style="text-align:right;"> 52 </td>
+   <td style="text-align:right;"> 6.500 </td>
+   <td style="text-align:right;"> 44 </td>
+   <td style="text-align:left;"> upper </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 444 </td>
+   <td style="text-align:right;"> 4.1 </td>
+   <td style="text-align:right;"> 52 </td>
+   <td style="text-align:right;"> 4.500 </td>
+   <td style="text-align:right;"> 111 </td>
+   <td style="text-align:left;"> lower </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 315 </td>
+   <td style="text-align:right;"> 3.8 </td>
+   <td style="text-align:right;"> 52 </td>
+   <td style="text-align:right;"> 6.000 </td>
+   <td style="text-align:right;"> 88 </td>
+   <td style="text-align:left;"> upper </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>The following commands model <code>score</code> versus <code>age</code> and plots the data as a point plot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(score <span class="sc">~</span> age, <span class="at">data =</span> moderndive<span class="sc">::</span>evals) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> (Intercept)          age 
+ 4.461932354 -0.005938225 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>openintro<span class="sc">::</span>evals <span class="sc">%&gt;%</span> <span class="fu">gf_point</span>(score <span class="sc">~</span> age, <span class="at">alpha=</span><span class="fl">0.2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="NTI-Lesson19_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol type="1">
+<li>Explain why some of the dots are darker than others?</li>
 </ol>
-<section id="solution-2" class="level3">
-<h3 class="anchored" data-anchor-id="solution-2">Solution</h3>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>All the ages have integer values—e.g., 43, 44, 45—so the dots line up in vertical lines.</p>
+<p>Similarly, the scores have values only to one decimal place—e.g., 3.1, 3.2, 3.3—so the dots line up in horizontal lines. If there are two or more rows in <code>evals</code> that have the same age and score, the dots will be plotted over one another. Since transparency (<code>alpha = 0.2</code>) is being used, points where there is a lot of overplotting will appear darker.</p>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Remake the plot, but using <code>gf_jitter()</code> instead of <code>gf_point()</code>. Explain what’s different about the jittered plot. (Hint: Almost all of the dots are the same lightness.)</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>openintro<span class="sc">::</span>evals <span class="sc">%&gt;%</span> <span class="fu">gf_jitter</span>(score <span class="sc">~</span> age, <span class="at">alpha=</span><span class="fl">0.2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="NTI-Lesson19_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>“Jittering” means to shift each dot by a small random amount. This reduces the number of instances where dots are overplotted.</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Now make a jitter plot of score versus class level (<code>cls_level</code>).
+<ol type="a">
+<li>What do the tick-mark labels on the horizontal axis describe? Are they numerical?</li>
+<li>To judge from the plot, are their more lower-level than upper-level courses? Explain briefly what graphical feature lets you answer this question at a glance.</li>
+</ol></li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>openintro<span class="sc">::</span>evals <span class="sc">%&gt;%</span> <span class="fu">gf_jitter</span>(score <span class="sc">~</span> cls_level)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="NTI-Lesson19_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol type="a">
+<li>The tick-mark labels are the levels of the categorical variable <code>cls_level</code>. The are words, not numbers.</li>
+<li>There are many more dots in the right column than in the left. Since <code>lower</code> level class are shown in the left column, there are fewer lower-level courses than upper-level courses.</li>
+</ol>
+</div>
+</div>
+<ol start="4" type="1">
+<li><p>The two columns of points in the plot you made in (3) are not separated by very much empty space. You can fix this by giving <code>gf_jitter()</code> an argument <code>width=0.2</code>. Try different numerical values for <code>width</code> and report which one you find most effective at making the two columns clearly separated while avoiding overplotting.</p></li>
+<li><p>Are the scores, on average, different for the lower- vs upper-level classes? It’s hard to get more than a rough idea of the distribution of scores by looking at the “density” of points. The reason is that the number of points differs in the two columns. But there is an easy fix: add a layer to the graphic that shows the distribution (more or less like a histogram displays a distribution of values). You can do this by piping the jitter plot layer into a geom called a “violin,” like this:</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>openintro<span class="sc">::</span>evals <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_jitter</span>(score <span class="sc">~</span> cls_level) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_violin</span>(<span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">color=</span><span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="NTI-Lesson19_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Explain how to read the violins.</p>
 <hr>
-</section>
 </section>
 <section id="section-1" class="level2">
-<h2 class="anchored" data-anchor-id="section-1">19.4</h2>
+<h2 class="anchored" data-anchor-id="section-1">19.2</h2>
+<p>The <code>openintro::promotions</code> data comes the the 1970s and records the gender of 38 people along with the result of a decision to promote (or not) the person. =</p>
+<p>Chapter 2 of ModernDive suggests graphically depicting <code>decision</code> versus <code>gender</code> by using a bar plot. There are two ways to make the bar plot, depending on which variable you assign to the horizontal axis and which to the fill color.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">gf_bar</span>(<span class="sc">~</span> decision, <span class="at">fill=</span><span class="sc">~</span> gender)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">gf_bar</span>(<span class="sc">~</span> gender, <span class="at">fill=</span><span class="sc">~</span>decision)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-promotion-bars-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="NTI-Lesson19_files/figure-html/fig-promotion-bars-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure 1: Two different ways to plot promotion outcome and gender</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-promotion-bars-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="NTI-Lesson19_files/figure-html/fig-promotion-bars-2.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure 2: Two different ways to plot promotion outcome and gender</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Plots like those in <strong>?@fig-promotion-bars</strong> might be attractive or not, depending on your taste. What they don’t accomplish is to make sure which is the response variable and which the explanatory variable.</p>
+<p>The choice of response and explanatory variables depends, of course, on what you are trying to display. But everyday English gives a big hint. For instance, you might describe the question at hand as, “Does gender affect promotion decisions.” Here, the variable doing the affecting is <code>gender</code>, and the outcome is the <code>decision</code>.</p>
+<p>Modeling decision as a function of gender is easy once you convert the response variable to a zero-one variable. Like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">zero_one</span>(decision, <span class="at">one=</span><span class="st">"promoted"</span>) <span class="sc">~</span> gender, <span class="at">data =</span> promotions)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coefficients</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> (Intercept) genderfemale 
+   0.8750000   -0.2916667 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>mosaicModel<span class="sc">::</span><span class="fu">mod_eval</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  gender model_output
+1   male    0.8750000
+2 female    0.5833333</code></pre>
+</div>
+</div>
+<ol type="1">
+<li>Explain what is the relationship between the model coefficients and the model outputs.</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The coefficients tell how to calculate the model output. These coefficients say that the model output will be 0.875, but subtract 0.292 if the person is female.</p>
+<p>The model outputs give the probability of being promoted for each of the two genders.</p>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Make this plot and explain what the red lines show. (We don’t expect you to be able to write the command to generate such plots on your own, but we do expect you to be able to interpret them.)</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_jitter</span>(<span class="fu">zero_one</span>(decision) <span class="sc">~</span> gender, <span class="at">height=</span><span class="fl">0.2</span>, <span class="at">width=</span><span class="fl">0.2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_errorbar</span>(model_output <span class="sc">+</span> model_output <span class="sc">~</span> gender, <span class="at">data=</span><span class="fu">mod_eval</span>(mod), </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">color=</span><span class="st">"red"</span>, <span class="at">inherit=</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">label_zero_one</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The red lines show the proportion of the people in each gender group who were promoted. The y-axis scale on the left refers to the zero-one encoding of <code>decision</code>, while the y-axis labels on the right make it easier to read off the numerical value of the proportion.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="section-2" class="level2">
+<h2 class="anchored" data-anchor-id="section-2">19.3</h2>
+<p>The <code>mosaicData::Whickham</code> data from comes from a survey of a thousand or so nurses in the UK in the 1970s. The data record the <code>age</code> of each nurse along with whether the nurse was still alive in a follow-up survey 20 years later (<code>outcome</code>).</p>
+<p>Make this graph from the <code>Whickham</code> data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_jitter</span>(<span class="fu">zero_one</span>(outcome) <span class="sc">~</span> age, <span class="at">data =</span> Whickham, <span class="at">alpha=</span><span class="fl">0.3</span>, <span class="at">height=</span><span class="fl">0.1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">label_zero_one</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="NTI-Lesson19_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol type="1">
+<li><p>Explain in everyday language what the graph shows about the lives of humans.</p></li>
+<li><p>Make the graph again, but leave out the <code>%&gt;% label_zero_one()</code>. Then explain what <code>label_zero_one()</code> does.</p></li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>The graph shows that young nurses tended to be alive at the 20-year follow-up, older nurses not so much.</p></li>
+<li><p><code>%&gt;% label_zero_one()</code> adds an axis on the left of the graph showing that in the zero-one tranform of <code>outcome</code>, “Alive” is assigned the value 1 and “Dead” the value 0.</p></li>
+</ol>
+</div>
+</div>
+<section id="solution-6" class="level3">
+<h3 class="anchored" data-anchor-id="solution-6">Solution</h3>
+<hr>
+</section>
+</section>
+<section id="section-3" class="level2">
+<h2 class="anchored" data-anchor-id="section-3">19.4</h2>
 <p>About the summarization of models. Pipe the model fit into any of four functions:</p>
 <ol type="i">
 <li><code>%&gt;% coefficients()</code></li>
@@ -355,8 +717,8 @@ Guided activity: House prices
 <li><code>%&gt;% confint()</code></li>
 </ol>
 <p>REDO <code>confint()</code> so that the columns are named <code>lower</code>, <code>middle</code>, <code>upper</code></p>
-<section id="solution-3" class="level3">
-<h3 class="anchored" data-anchor-id="solution-3">Solution</h3>
+<section id="solution-7" class="level3">
+<h3 class="anchored" data-anchor-id="solution-7">Solution</h3>
 <hr>
 </section>
 </section>
@@ -364,7 +726,7 @@ Guided activity: House prices
 <h2 class="anchored" data-anchor-id="obj.-19.3">19.5 (Obj. 19.3)</h2>
 <p>Calculation of a 95% coverage interval (or any other percent level interval) is straightforward with the right software. To illustrate, consider the efficiency of cars and light trucks in terms of CO_2 emissions per mile driven. We’ll use the <code>CO2city</code> variable in the <code>math300::MPG</code> data frame. The basic calculation using the <code>mosaic</code> package is:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>( <span class="sc">~</span> CO2city, <span class="at">data =</span> math300<span class="sc">::</span>MPG, <span class="fu">coverage</span>(<span class="fl">0.95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>( <span class="sc">~</span> CO2city, <span class="at">data =</span> math300<span class="sc">::</span>MPG, <span class="fu">coverage</span>(<span class="fl">0.95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  response   lower   upper
 1  CO2city 276.475 684.525</code></pre>
@@ -518,10 +880,13 @@ Solution
 </div>
 <hr>
 </section>
+<section id="f" class="level2">
+<h2 class="anchored" data-anchor-id="f">19.F</h2>
+</section>
 <section id="documenting-software" class="level2">
 <h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>
 <ul>
-<li>File creation date: 2022-10-26</li>
+<li>File creation date: 2022-11-04</li>
 <li>R version 4.2.1 (2022-06-23)</li>
 <li><code>tidyverse</code> package version: 1.3.2</li>
 </ul>

@@ -195,6 +195,38 @@ Just to help when writing problems
 <p>24.3. Gaming: Evaluate whether confidence interval indicates that estimated effect size is consistent with simulation.</p>
 </div>
 </div>
+<section id="objective-24.1" class="level2">
+<h2 class="anchored" data-anchor-id="objective-24.1">24.1 (Objective 24.1)</h2>
+<p>What are the two settings for decision making that we cover in this course?</p>
+<p>Give an example of each.</p>
+<section id="solution" class="level3">
+<h3 class="anchored" data-anchor-id="solution">Solution</h3>
+<ol type="1">
+<li>Prediction and (2) Relationship</li>
+</ol>
+<ol type="i">
+<li><p>What will be the sales price of this house? <em>“This house” is a shorthand way of saying “a house with these attributes.” The sales price will be the output of a prediction function that takes the various attributes as input and produces a sales price as output.</em></p></li>
+<li><p>If I look for a house with an additional bathroom, how much will that change the sales price? <em>This asks for the relationship between number of bathrooms and sales price.</em></p></li>
+</ol>
+<hr>
+</section>
+</section>
+<section id="objective-24.1-1" class="level2">
+<h2 class="anchored" data-anchor-id="objective-24.1-1">24.2 (Objective 24.1)</h2>
+<p>For each of these research questions, say whether it is a prediction setting or a relationship setting.</p>
+<ol type="i">
+<li>What’s the risk of falling ill?</li>
+<li>How will the risk of falling ill change if we eat more broccholi?</li>
+<li>Is there any reason to believe, based on the evidence at hand, that we should look more deeply into the possible benefits of broccholi?</li>
+</ol>
+<section id="solution-1" class="level3">
+<h3 class="anchored" data-anchor-id="solution-1">Solution</h3>
+<ol type="i">
+<li>Prediction</li>
+<li>Relationship</li>
+<li>Relationship</li>
+</ol>
+<hr>
 <p>SOME IDEAS FOR EXERCISE MODES</p>
 <ol type="a">
 <li><p>Use <code>mod_plot()</code> and look at the slope of lines and offsets. Compare to the model coefficients.</p></li>
@@ -202,6 +234,8 @@ Just to help when writing problems
 <li><p>In text, maybe look at the confidence intervals across new samples and show that they tend to overlap. Only a few of them don’t touch a common line. This is basically just a review of confidence intervals, but why not?</p></li>
 <li><p>Interaction. Show that when there is an interaction term, the effect size (as calculated by <code>mod_effect()</code>) is not constant, as it is for models with purely linear terms.</p></li>
 </ol>
+</section>
+</section>
 <section id="lc-24.1" class="level2">
 <h2 class="anchored" data-anchor-id="lc-24.1">LC 24.1</h2>
 <p>The <a href="https://github.com/DS-USAFA/Computational-Probability-and-Statistics/blob/main/data/Stanford_heart_study.csv"><em>Computational Probability and Statistics</em></a> text describes an early study on human-to-human heart transplantation:</p>
@@ -367,8 +401,8 @@ Solution
 <li>The coefficients on <code>debt_to_income</code> and <code>account_never_delinq_percent</code> are the smallest numerically. Does this mean that the effects of <code>debt_to_income</code> and <code>account_never_delinq_percent</code> are smaller than the other two explanatory variables in the model? Explain why or why not. (Hint: Look at the distribution of <code>debt_to_income</code> and <code>account_never_delinq_percent</code> to get an idea for the range of values these variables take on.)</li>
 </ol>
 </section>
-<section id="solution-5" class="level2 {callout-note}">
-<h2 class="anchored" data-anchor-id="solution-5">Solution</h2>
+<section id="solution-7" class="level2 {callout-note}">
+<h2 class="anchored" data-anchor-id="solution-7">Solution</h2>
 <p><code>debt_to_income</code> varies over about 25 percentage points. The variation in <code>account_never_delinq_percent</code> is about the same, varying from about 80 to 100 percentage points. The effect of the variables (in percent interest) is determined by multiplying the coefficients by the amount of variation in the variables. So, from one extreme to the other, the effect of <code>debt_to_income</code> is about 2 perentage points of interest, and roughly the same for <code>debt_to_income</code>.</p>
 </section>
 <hr>

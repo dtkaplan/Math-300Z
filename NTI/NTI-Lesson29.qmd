@@ -62,7 +62,7 @@ dag_draw(dag07)
 Start with `dag04`, where variables `a`, `b`, and `c` all contribute to the formation of `d`. 
 
 ```{r}
-compare_model_residuals(dag04, d ~ c, d~ b + c, d ~ a + b + c, n=50, in_sample = TRUE)
+compare_model_residuals(dag04, d ~ c, d~ b + c, d ~ a + b + c, n=50)
 ```
 
 Prediction error gets smaller, the more covariates are included.
@@ -70,13 +70,13 @@ Prediction error gets smaller, the more covariates are included.
 The situation can be different. In `dag05`, `a`, `b`, and `c` all contribute to `d`, but **not separately**. `a` and `b` communicate with `d`  only via `c`. If `c` is in the model, `a` and `b` contribute nothing to reducing prediction error.
 
 ```{r}
-compare_model_residuals(dag05, d ~ c, d~ b + c, d ~ a + b + c, n=50, in_sample = TRUE)
+compare_model_residuals(dag05, d ~ c, d~ b + c, d ~ a + b + c, n=50)
 ```
 
 `dag07` is a case where we have covariates, but they aren't actually connected to `d`. Will they reduce prediction error? We'll use a very small sample size, $n=4$, to make the situation obvious.
 
 ```{r}
-compare_model_residuals(dag07, d ~ 1, d ~ c, d~ b + c, d ~ a + b + c, n=4, in_sample = TRUE)
+compare_model_residuals(dag07, d ~ 1, d ~ c, d~ b + c, d ~ a + b + c, n=4)
 ```
 
 ::: {.callout-note icon=false}

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-10-14">
+<meta name="dcterms.date" content="2022-11-04">
 
 <title>Spring 2023 Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 21)</title>
 <style>
@@ -119,6 +119,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -186,7 +187,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 14, 2022</p>
+      <p class="date">November 4, 2022</p>
     </div>
   </div>
     
@@ -198,7 +199,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="objectives" class="level2">
 <h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
 <p>21.1 Determine whether a proposed graph is directed and acyclic.</p>
-<p>21.2 Having selected a response and one or more explanatory variables, identify other DAG notes as covariates.</p>
+<p>21.2 Having selected a response and one or more explanatory variables, identify other DAG nodes as covariates.</p>
 <p>21.3 Generate data from simulations and use the data to model the relationships.</p>
 </section>
 <section id="reading" class="level2">
@@ -271,7 +272,7 @@ Inference example: Regression to the mean
 <pre><code># A tibble: 1 × 2
      vx    vy
   &lt;dbl&gt; &lt;dbl&gt;
-1  4.03  1.01</code></pre>
+1  4.17 0.973</code></pre>
 </div>
 </div>
 <p>Compare this result to the DAG tilde expressions</p>
@@ -326,8 +327,45 @@ attr(,"class")
 <p>Referring to the graphs in the figure, say which ones are DAGs. If a graph is not a DAG, say whether that’s because it’s not <strong>directed</strong> or because it’s not <strong>cyclic</strong>.</p>
 <section id="solution-2" class="level3">
 <h3 class="anchored" data-anchor-id="solution-2">Solution</h3>
+</section>
+</section>
+<section id="a" class="level2">
+<h2 class="anchored" data-anchor-id="a">21.A</h2>
+<p>A DAG (directed acyclic graph) is a mathematical object used to state hypothetical causal relationships between variables. Explain briefly (e.g.&nbsp;a few sentences overall) what each of the words “directed,” “acyclic,” and “graph” mean in the context of a DAG.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>A graph is a relationship between discrete elements (called “nodes” abstraction) each of which for us represents a hypothetical quantity, that is, a variable. In addition to the nodes, the graph contains edges which represent the connections between variables.</p></li>
+<li><p>A directed graph is one whose arrows have a direction. For instance <span class="math inline">\(A \rightarrow B \leftarrow C\)</span> means that <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span> together cause <span class="math inline">\(B\)</span>, but <span class="math inline">\(B\)</span> has no influence on <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span>.</p></li>
+<li><p>An acyclic graph is one where it is impossible to start on any given node and, by following the directed edges, return back to that node.</p></li>
+</ol>
+</div>
+</div>
 <hr>
 </section>
+<section id="b" class="level2">
+<h2 class="anchored" data-anchor-id="b">21.B</h2>
+<p>Draw these DAGs:</p>
+<ol type="1">
+<li><p>“April showers bring May flowers.”</p></li>
+<li><p>“Price of a rug is determined by the size and the quality of materials.”</p></li>
+<li><p>“The weight of an automobile is reflected in the MPG fuel economy, as is the speed of the car, and inflation level of the tires.”</p></li>
+<li><p>“Plants tend to grow in the direction of the sunlight.”</p></li>
+<li><p>“An ice-cream shop owner needs to plan staffing based on the season, day of the week, and holidays.”</p></li>
+</ol>
+<hr>
+</section>
+<section id="c" class="level2">
+<h2 class="anchored" data-anchor-id="c">21.C</h2>
+<hr>
 </section>
 <section id="section-3" class="level2">
 <h2 class="anchored" data-anchor-id="section-3">21.4</h2>
@@ -336,8 +374,8 @@ attr(,"class")
 <li><p>How do the coefficients relate to the tilde expressions that define <code>dag01</code>?</p></li>
 <li><p>Instead of using the regression model <code>y ~ x</code>, where <code>y</code> is the response variable, try the regression model <code>x ~ y</code>. Do the coefficients from <code>x ~ y</code> correspond in any simple way to the tilde expressions that define <code>dag01</code>?</p></li>
 </ol>
-<section id="solution-3" class="level3">
-<h3 class="anchored" data-anchor-id="solution-3">Solution</h3>
+<section id="solution-4" class="level3">
+<h3 class="anchored" data-anchor-id="solution-4">Solution</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> .)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -348,7 +386,7 @@ lm(formula = y ~ x, data = .)
 
 Coefficients:
 (Intercept)            x  
-      4.044        1.554  </code></pre>
+      3.967        1.537  </code></pre>
 </div>
 </div>
 <p>The intercept corresponds to the additive constant (4) in the <code>y</code> tilde expression. The <code>x</code> coefficient corresponds to the multiplier on <code>x</code> in the tilde expression.</p>
@@ -364,17 +402,73 @@ lm(formula = x ~ y, data = .)
 
 Coefficients:
 (Intercept)            y  
-    -1.8566       0.4643  </code></pre>
+    -1.8325       0.4589  </code></pre>
 </div>
 </div>
 <p>These coefficients do not appear in the <code>dag01</code> tilde expressions.</p>
 <hr>
 </section>
 </section>
+<section id="objective-21.2" class="level2">
+<h2 class="anchored" data-anchor-id="objective-21.2">21.5 (Objective 21.2)</h2>
+<p>You are trying to understand why automobile fuel economy varies from model to model. Using the <code>mtcars</code> data frame (documentation at <code>help("mtcars")</code>) …</p>
+<ol type="i">
+<li>What’s an appropriate choice of a response variable?</li>
+<li>Pick two explanatory variables of interest to you. Build an appropriate model from the data, extracting the <code>coefficients()</code> of the model. Explain what the coefficients mean in everyday terms that your cylinder-head uncle would approve of.</li>
+<li>Which of the other variables are covariates? iv.Pick a covariate that your intuition suggests would be important. Include that covariate in the model from (ii) and say whether the covariate shows up as important in the model coefficients.</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Solution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol start="3" type="i">
+<li>All of the other variables are covariates. A covariate is merely a potential explanatory variable that you are not directly interested in. Of course, not all covariates play an important role in the system.</li>
+</ol>
+</div>
+</div>
+<hr>
+</section>
+<section id="obj-21.3" class="level2">
+<h2 class="anchored" data-anchor-id="obj-21.3">21.6 (Obj 21.3)</h2>
+<p>Generate a sample of size <span class="math inline">\(n=100\)</span> from <code>dag03</code>. Use the data to construct a model of <code>y</code> versus <code>x</code>. But instead of using <code>coefficients()</code> to look at the model coefficients, use <code>confint()</code>. While <code>coefficients()</code> reports a single value for each coefficient, <code>confint()</code> reports a plausible interval for coefficients that is consistent with the data.</p>
+<ol type="i">
+<li>For <span class="math inline">\(n=100\)</span>, how wide is the interval reported by <code>confint()</code> on the <code>x</code> coefficient.</li>
+<li>Repeat the process of sampling and modeling, but this time use <span class="math inline">\(n=400\)</span>. How wide is the interval reported by <code>confint()</code> on the <code>x</code> coefficient.</li>
+<li>Again repeat the process of sampling and modeling, this time using <span class="math inline">\(n=1600\)</span>. iv. Does the interval reported depend systematically on the size <span class="math inline">\(n\)</span> of the sample? Describe what pattern you see.</li>
+</ol>
+<hr>
+</section>
+<section id="section-4" class="level2">
+<h2 class="anchored" data-anchor-id="section-4">21.7</h2>
+<p>A short report from the British Broadcasting Company (BBC) was headlined “<a href="https://www.bbc.com/news/business-47106711">Millennials’ pay ‘scarred’ by the 2008 banking crisis</a>.”</p>
+<blockquote class="blockquote">
+<p>Pay for workers in their 30s is still 7% below the level at which it peaked before the 2008 banking crisis, research has suggested. The Resolution Foundation think tank said people who were in their 20s at the height of the recession a decade ago were worst hit by the pay squeeze. It suggested the crisis had a lasting “scarring” effect on their earnings.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>The foundation said people in their 30s who wanted to earn more should move to a different employer. The research found those who stayed in the same job in 2018 had real wage growth of 0.5%, whereas those who found a different employer saw an average increase of 4.5%.</p>
+</blockquote>
+<p>The phrase “should move” in the second paragraph of the report suggests causation. A corresponding DAG would look like this:</p>
+<ul>
+<li>move_to_new_employer <span class="math inline">\(\rightarrow\)</span> higher_wage</li>
+</ul>
+<p>For the sake of discussion, let’s add two more variables to the DAG:</p>
+<ul>
+<li>effectiveness—standing for how productive the employee is.</li>
+<li>qualifications—standing for whether the employee is a good candidate attractive to potential new employers.</li>
+</ul>
+<p>Construct a DAG with all four variables that represent plausible causal connections between them. The DAG should not contain a direct causal connection between move_to_new_employer and higher_wage.</p>
+<p>If the world worked this way, would it necessarily be good advice to switch to a new employer with the aim of earning a higher wage?</p>
+</section>
 <section id="documenting-software" class="level2">
 <h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>
 <ul>
-<li>File creation date: 2022-10-14</li>
+<li>File creation date: 2022-11-04</li>
 <li>R version 4.2.1 (2022-06-23)</li>
 <li><code>tidyverse</code> package version: 1.3.2</li>
 <li><code>mosaic</code> package version: 1.8.4</li>
