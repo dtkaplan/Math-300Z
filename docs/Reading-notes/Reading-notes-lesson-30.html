@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-11-04">
+<meta name="dcterms.date" content="2022-10-20">
 
-<title>Spring 2023 Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 31)</title>
+<title>Spring 2023 Math 300 Revisions - Math 300R Lesson r (lesson &lt;- 30) Reading Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -168,8 +168,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Math 300R NTI Lesson 31</h1>
-<p class="subtitle lead">Spurious correlation</p>
+<h1 class="title">Math 300R Lesson 30 Reading Notes</h1>
+<p class="subtitle lead">Confounding</p>
 </div>
 
 
@@ -186,7 +186,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 4, 2022</p>
+      <p class="date">October 20, 2022</p>
     </div>
   </div>
     
@@ -195,100 +195,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>By which I mean correlations that are not just statistical noise but do not represent a causal path between two variables.</p>
-<section id="objectives" class="level2">
-<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
-<p>31.1 Distinguish “common cause” and “collider” forms of DAG.</p>
-<p>31.2 Construct appropriate DAG to match a narrative hypothesis.</p>
-</section>
-<section id="reading" class="level2">
-<h2 class="anchored" data-anchor-id="reading">Reading</h2>
-<p>TBD</p>
-</section>
-<section id="lesson" class="level2">
-<h2 class="anchored" data-anchor-id="lesson">Lesson</h2>
-<p>Statisticians are often careful in their use of language about relationships. They will say two variables are “correlated” or “associated” rather than casually using words like “connected” or “related.” There is even a proverb, “Correlation is not causation.”</p>
+<p>Interest in data often stems from a desire to anticipate the consequences of an intervention. Is a new polio vaccine effective? Will increasing the consumption of organic food improve health generally? Does giving bed nets to poor people in malaria-prone regions reduce the incidence of malaria?</p>
+<p>The previous chapters introduced techniques for modeling a response variable as a function of explanatory variables. Each model is a machine for turning inputs into outputs. Change the input and the output will change correspondingly. But this does not mean that nature works in the same way. Changing an input in the real world – administering polio vaccine, eating organic food, providing bed nets to the poor – may not <em>cause</em> the same change in the response variable as happens when you change the input to a model.</p>
+<p><em>The key word here is “<strong>cause</strong>.”</em></p>
+<p>Statisticians are careful to distinguish between two different interpretations of relationship: <strong>“correlation”</strong> and <strong>“causal.”</strong> Every successful prediction model <code>Y ~ X</code> is a demonstration that there is a correlation between the response Y and the explanatory variable X.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> But the performance of the model does not itself tell us that X <em>causes</em> Y in the real world. There are other possible configurations that will produce a correlation between X and Y. For instance, both X and Y may themselves have a common cause C without X being otherwise related to Y. In such a circumstance, a real-world intervention to change X will have no effect on Y. To put this in the form of a story, consider that the start of the school year and leaves changing color are correlated. But an intervention to start the school year in mid-winter will not result in leaves changing color. There’s a common cause for the school year and colorful folliage that produces the relationship: the end of summer.</p>
+<p>This chapter considers simple networks of causality involving three variables, generically called X, Y, and C. Always, we’ll imagine that the modeler’s interest is in anticipating how an intervention to change X will create to a change in Y. To accomplish this, the modeler has two basic choices for structuring a model, either</p>
+<ol type="1">
+<li><code>Y ~ X</code>, or</li>
+<li><code>Y ~ X + C</code>.</li>
+</ol>
+<p>It’s surprising to many people that models (1) and (2) can have utterly different, even contradictory implications for how a change in model input X will produce a change in the model output Y. To the modeler trying to capture how the real world works, there’s a fundamental choice to be made between using model (1) or model (2) to anticipate the consequences of a real-world intervention on X.</p>
+<p>Consider this hypothesis: “It’s harder to learn to drive as you move into your 20s.” The hypothesis might or might not be true. The way such hypotheses are formed is often by anecdote. Say, you’re having dinner when the conversation turns to a friend who has been learning to drive in her 30s. She explains that even after taking many lessons last year, she failed her driving test twice. Others at the table, who started driving in their teens, learned in a much shorter amount of time.</p>
+<p>The hypothesis suggests a practical recommendation: It will be easier to learn to drive when younger, so better to start young. Such recommendations to take an action are always rooted in causality: starting young will <em>cause</em> you to have less difficulty learning to drive. A diagram, or <em>graphical causal model</em>, representing the causal hypothesis is seen in <a href="#fig-learn-to-drive-1">Figure&nbsp;1</a>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-xkcd-correlation" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-learn-to-drive-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="www/xkcd-correlation.png" class="img-fluid figure-img" width="459"></p>
-<p></p><figcaption class="figure-caption">Figure 1: <a href="https://xkcd.com/552/">XKCD’s take</a> on correlation and causation.</figcaption><p></p>
+<p><img src="www/anxiety-drive-1.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption">Figure 1: A simple graphical causal model expressing the hypothesis that age when learning to drive is the causal factor for the difficulty of learning to drive.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Traditionally, statistics courses have emphasized disputing any causal interpretation of correlations found in data. The response “Well, maybe,” in the last panel of the cartoon shows a student correctly having assimilated this lesson.</p>
-<p>Another formulation might be more enlightening for statistics students: “Correlation is the sign in data of causal connections in mechanisms.” If two variables <code>a</code> and <code>b</code> are correlated, then either <code>a</code> causes <code>b</code> (perhaps indirectly), <code>b</code> causes <code>a</code> (also perhaps indirectly), or both <code>a</code> and <code>b</code> are caused by other factors. There’s another possibility as well, most easily seen with a corresponding DAG in hand. It’s important to consider all of these possibilities, rather than jumping to a conclusion of what causes what.</p>
-<p>In this lesson, we’re going to look at only those correlations that would be supported by out-of-sample testing. Later, we’ll also need to deal with correlations that are an illusion of sampling fluctuation or due to a systematic hunt.</p>
-<p>We’ll use the term “spurious correlation” to refer to those correlations created by mechanisms other than a causal path between two variables in a DAG.</p>
-<div class="callout-note callout callout-style-default no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Paths in DAGS
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Examples and exercises classifying causal and correlating paths in DAGs.</p>
-<p>Selection on a collider or using it as a covariate.</p>
+<p>The direction of the arrow in fig-learn-to-drive-1 is a crucial feature. The diagram asserts that a person’s age when learning to drive <em>causes</em> difficulty, as opposed to the other way around.</p>
+<p>So, does learning to drive when young make it easier to succeed? You might collect some data, perhaps a survey asking people at what age (if ever) they learned to drive (X) and how difficult it was (Y). Suppose you build a successful model Y ~ X. This establishes a correlation X and Y (and vice versa), confirming the dinner table anecdote.</p>
+<p>If you were undertaking serious study of the hypothesis, you should consider how other factors might influence the situation. For instance, it might be that people who learn to drive in their 30s were more anxious about driving when in their teens. That anxiety is why they didn’t learn in their teens. The anxiety might also influence the drivers perception of the difficulty learning. Such a situation is expressed in the graphical causal models in <a href="#fig-learn-to-drive-2">Figure&nbsp;2</a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag09)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="NTI-Lesson31_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<div id="fig-learn-to-drive-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="www/anxiety-drive-3.png" class="img-fluid figure-img" width="202"></p>
+<p></p><figcaption class="figure-caption">Figure 2: Two possible graphical causal models of the hypothesis, “Age causes difficulty learning to drive,” which do not incorporate a direct link from age to difficulty learning. Left: Anxiety itself leads to people deferring learning to drive, and to increased difficulty when learning. Right: Age is causally linked to difficulty, but the issue is really the diminished support available to older learners.</figcaption><p></p>
+</figure>
 </div>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">500</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(a <span class="sc">~</span> b, <span class="at">data =</span> Sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = a ~ b, data = Sample)
-
-Coefficients:
-(Intercept)            b  
-  -0.013249     0.007196  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(a <span class="sc">~</span> b, <span class="at">data =</span> Sample <span class="sc">%&gt;%</span> <span class="fu">filter</span>(c<span class="sc">==</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = a ~ b, data = Sample %&gt;% filter(c == 1))
-
-Coefficients:
-(Intercept)            b  
-      0.652       -0.400  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(a <span class="sc">~</span> b, <span class="at">data =</span> Sample <span class="sc">%&gt;%</span> <span class="fu">filter</span>(c<span class="sc">==</span><span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = a ~ b, data = Sample %&gt;% filter(c == 0))
-
-Coefficients:
-(Intercept)            b  
-    -0.6600      -0.3592  </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(a <span class="sc">~</span> b, <span class="at">data =</span> Sample) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = a ~ b, data = Sample)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--2.9370 -0.7473  0.1003  0.6630  2.5546 
-
-Coefficients:
-             Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept) -0.013249   0.043811  -0.302    0.762
-b            0.007196   0.044263   0.163    0.871
-
-Residual standard error: 0.9796 on 498 degrees of freedom
-Multiple R-squared:  5.307e-05, Adjusted R-squared:  -0.001955 
-F-statistic: 0.02643 on 1 and 498 DF,  p-value: 0.8709</code></pre>
-</div>
+<p>Another possibility is that older learners have busier lives and less support for learning to drive. (<a href="#fig-learn-to-drive-2">Figure&nbsp;2</a>(right)) It’s harder for older learners to schedule opportunities to practice or to find car owners who can help them learn.</p>
+<p>There is nothing inevitable about graphical causal networks. We can, and often do, intervene in ways that alter the causal flow. For example, <a href="#fig-friend-drive">Figure&nbsp;3</a> shows the network when a later-in-life friend steps in to support a mature student.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-friend-drive" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="www/anxiety-drive-4.png" class="img-fluid figure-img" width="144"></p>
+<p></p><figcaption class="figure-caption">Figure 3: Intervening in a system can change the structure of the graphical causal network. Here, a friend has stepped in to provide the support needed to learn to drive, severing the link that previously connected age when learning to support. (That link – now severed – reflects the kind of learning support often available to teenage students of driving, but not to older learners.)</figcaption><p></p>
+</figure>
 </div>
 </div>
 </div>
@@ -298,41 +248,48 @@ F-statistic: 0.02643 on 1 and 498 DF,  p-value: 0.8709</code></pre>
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Regression to mediocrity
+Causal Caution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>An unusually large deviation is likely to be followed by one not so unusually large.</p>
-</div>
-</div>
-</section>
-<section id="learning-checks" class="level2">
-<h2 class="anchored" data-anchor-id="learning-checks">Learning Checks</h2>
-</section>
-<section id="section" class="level2">
-<h2 class="anchored" data-anchor-id="section">31.1</h2>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Solution
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<p>Just because you’ve calculated an effect size doesn’t mean that you have captured any sort of causal relationship between the variables. To illustrate, use <code>dag01</code> and fit two different models: <code>y ~ x</code> and <code>x ~ y</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">500</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x, data = Sample)
 
+Coefficients:
+(Intercept)            x  
+      3.998        1.525  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(x <span class="sc">~</span> y, <span class="at">data =</span> Sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = x ~ y, data = Sample)
+
+Coefficients:
+(Intercept)            y  
+     -1.845        0.464  </code></pre>
 </div>
 </div>
-<hr>
-</section>
-<section id="documenting-software" class="level2">
-<h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>
+<p>You can’t tell from these coefficients whether <code>x</code> causes <code>y</code> or vice versa (or something entirely different). The words “correlation” or “association” are used when we don’t want to claim that there is a causal connection. Many statisticians will only use those words unless the data come from an <strong>experiment</strong>.</p>
+<p>We’re going to use causal language (“relationship”, “effect,” etc.) because that is often the matter of concern to decision making. But using language doesn’t doesn’t make the connection causal.</p>
+</div>
+</div>
 
 
-</section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1" role="doc-endnote"><p>“Successful” means that the prediction performance of the model is better than the performance of a no-input model.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

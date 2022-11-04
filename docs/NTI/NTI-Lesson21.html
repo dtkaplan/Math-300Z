@@ -272,7 +272,7 @@ Inference example: Regression to the mean
 <pre><code># A tibble: 1 × 2
      vx    vy
   &lt;dbl&gt; &lt;dbl&gt;
-1  4.17 0.973</code></pre>
+1  3.95  1.03</code></pre>
 </div>
 </div>
 <p>Compare this result to the DAG tilde expressions</p>
@@ -386,7 +386,7 @@ lm(formula = y ~ x, data = .)
 
 Coefficients:
 (Intercept)            x  
-      3.967        1.537  </code></pre>
+      4.093        1.499  </code></pre>
 </div>
 </div>
 <p>The intercept corresponds to the additive constant (4) in the <code>y</code> tilde expression. The <code>x</code> coefficient corresponds to the multiplier on <code>x</code> in the tilde expression.</p>
@@ -402,7 +402,7 @@ lm(formula = x ~ y, data = .)
 
 Coefficients:
 (Intercept)            y  
-    -1.8325       0.4589  </code></pre>
+    -1.8171       0.4554  </code></pre>
 </div>
 </div>
 <p>These coefficients do not appear in the <code>dag01</code> tilde expressions.</p>

@@ -248,7 +248,7 @@ Setup
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>{<span class="fu">do</span>(<span class="dv">100</span>) <span class="sc">*</span> <span class="fu">trial</span>()} <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="fu">sd</span>(Intercept), <span class="fu">sd</span>(num_pages))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  sd(Intercept) sd(num_pages)
-1  1.128844e-14  2.261668e-17</code></pre>
+1  1.299845e-14  2.193162e-17</code></pre>
 </div>
 </div>
 <div class="callout-note callout callout-style-default no-icon callout-captioned">
@@ -526,7 +526,7 @@ Solution
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>{<span class="fu">resample</span>(Five) <span class="sc">%&gt;%</span> <span class="fu">unique</span>() <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4</code></pre>
+<pre><code>[1] 2</code></pre>
 </div>
 </div>
 <p>Using <code>do(1000)</code>, carry out 1000 trials of this process, saving the overall results in a data frame named <code>Trials</code>. What is the mean number of unique human subjects across the 1000 trials? What fraction is this of the five subjects.</p>
@@ -545,8 +545,8 @@ Solution
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">1000</span>) <span class="sc">*</span> {<span class="fu">resample</span>(mythbusters_yawn) <span class="sc">%&gt;%</span> <span class="fu">unique</span>() <span class="sc">%&gt;%</span> <span class="fu">nrow</span>()}</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>Trials <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">mn =</span> <span class="fu">mean</span>(result)<span class="sc">/</span><span class="fu">nrow</span>(mythbusters_yawn))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       mn
-1 0.63864</code></pre>
+<pre><code>      mn
+1 0.6352</code></pre>
 </div>
 </div>
 </div>
@@ -561,7 +561,7 @@ Solution
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(list_price <span class="sc">~</span> amazon_price, <span class="at">data =</span> <span class="fu">resample</span>(amazon_books)) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> (Intercept) amazon_price 
-    4.293039     1.105706 </code></pre>
+    5.041221     1.060036 </code></pre>
 </div>
 </div>
 <p>Then, using <code>do(500)</code>, carry out 500 trials, saving the result in a data frame named <code>Trials</code>.</p>
@@ -590,7 +590,7 @@ Solution
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">samazon_price =</span> <span class="fu">sd</span>(amazon_price))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        m1       m2 sintercept samazon_price
-1 4.269433 1.100835  0.8871307    0.07756029</code></pre>
+1 4.171633 1.109313  0.9593141    0.08356072</code></pre>
 </div>
 </div>
 </div>

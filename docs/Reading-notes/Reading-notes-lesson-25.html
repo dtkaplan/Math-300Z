@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-11-04">
+<meta name="dcterms.date" content="2022-10-20">
 
-<title>Spring 2023 Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 31)</title>
+<title>Spring 2023 Math 300 Revisions - Math 300R Lesson r (lesson &lt;- 25) Reading Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -168,8 +168,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Math 300R NTI Lesson 31</h1>
-<p class="subtitle lead">Spurious correlation</p>
+<h1 class="title">Math 300R Lesson 25 Reading Notes</h1>
+<p class="subtitle lead">Mechanics of prediction</p>
 </div>
 
 
@@ -186,7 +186,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 4, 2022</p>
+      <p class="date">October 20, 2022</p>
     </div>
   </div>
     
@@ -195,139 +195,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>By which I mean correlations that are not just statistical noise but do not represent a causal path between two variables.</p>
-<section id="objectives" class="level2">
-<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
-<p>31.1 Distinguish “common cause” and “collider” forms of DAG.</p>
-<p>31.2 Construct appropriate DAG to match a narrative hypothesis.</p>
+<p>Use <code>mod_eval()</code></p>
+<section id="a-model-as-function" class="level2">
+<h2 class="anchored" data-anchor-id="a-model-as-function">A model as function</h2>
+<p>Inconvenient because functions don’t know how to translate from the individual arguments to values taken from a data frame.</p>
 </section>
-<section id="reading" class="level2">
-<h2 class="anchored" data-anchor-id="reading">Reading</h2>
-<p>TBD</p>
+<section id="feeding-inputs-into-a-model" class="level2">
+<h2 class="anchored" data-anchor-id="feeding-inputs-into-a-model">Feeding inputs into a model</h2>
 </section>
-<section id="lesson" class="level2">
-<h2 class="anchored" data-anchor-id="lesson">Lesson</h2>
-<p>Statisticians are often careful in their use of language about relationships. They will say two variables are “correlated” or “associated” rather than casually using words like “connected” or “related.” There is even a proverb, “Correlation is not causation.”</p>
+<section id="drawing-a-model-function" class="level2">
+<h2 class="anchored" data-anchor-id="drawing-a-model-function">Drawing a model function</h2>
+<p>Evaluate the model at many inputs, then plot out <code>model_output</code> versus input.</p>
+<p><code>mod_plot()</code> automates this.</p>
+</section>
+<section id="an-example-extracting-information-from-residuals" class="level2">
+<h2 class="anchored" data-anchor-id="an-example-extracting-information-from-residuals">An example extracting information from residuals</h2>
+<p>Amazon discounts it’s books, but the discount is a smaller percentage for low-priced books. You can see this by building a model of log prices, extracting the most negative residuals, then looking at the prices of these negative-residual books.</p>
+<p>In the PREDICTION lessons, build a model of list price versus amazon price, possibly using logarithms. Are the books with the most negative residuals different in some way from the others? (I think that they are mostly low-price books.)</p>
 <div class="cell">
-<div class="cell-output-display">
-<div id="fig-xkcd-correlation" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="www/xkcd-correlation.png" class="img-fluid figure-img" width="459"></p>
-<p></p><figcaption class="figure-caption">Figure 1: <a href="https://xkcd.com/552/">XKCD’s take</a> on correlation and causation.</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Traditionally, statistics courses have emphasized disputing any causal interpretation of correlations found in data. The response “Well, maybe,” in the last panel of the cartoon shows a student correctly having assimilated this lesson.</p>
-<p>Another formulation might be more enlightening for statistics students: “Correlation is the sign in data of causal connections in mechanisms.” If two variables <code>a</code> and <code>b</code> are correlated, then either <code>a</code> causes <code>b</code> (perhaps indirectly), <code>b</code> causes <code>a</code> (also perhaps indirectly), or both <code>a</code> and <code>b</code> are caused by other factors. There’s another possibility as well, most easily seen with a corresponding DAG in hand. It’s important to consider all of these possibilities, rather than jumping to a conclusion of what causes what.</p>
-<p>In this lesson, we’re going to look at only those correlations that would be supported by out-of-sample testing. Later, we’ll also need to deal with correlations that are an illusion of sampling fluctuation or due to a systematic hunt.</p>
-<p>We’ll use the term “spurious correlation” to refer to those correlations created by mechanisms other than a causal path between two variables in a DAG.</p>
-<div class="callout-note callout callout-style-default no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Paths in DAGS
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Examples and exercises classifying causal and correlating paths in DAGs.</p>
-<p>Selection on a collider or using it as a covariate.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag09)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="NTI-Lesson31_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">500</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(a <span class="sc">~</span> b, <span class="at">data =</span> Sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>offsets <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(list_price) <span class="sc">~</span> <span class="fu">log</span>(amazon_price), <span class="at">data =</span> amazon_books) <span class="sc">%&gt;%</span> <span class="fu">residuals</span>()</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>bad_deals <span class="ot">&lt;-</span> <span class="fu">which</span>(offsets <span class="sc">&lt;</span> <span class="fl">0.4</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>amazon_books<span class="sc">$</span>list_price[bad_deals]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = a ~ b, data = Sample)
-
-Coefficients:
-(Intercept)            b  
-  -0.013249     0.007196  </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(a <span class="sc">~</span> b, <span class="at">data =</span> Sample <span class="sc">%&gt;%</span> <span class="fu">filter</span>(c<span class="sc">==</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = a ~ b, data = Sample %&gt;% filter(c == 1))
-
-Coefficients:
-(Intercept)            b  
-      0.652       -0.400  </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(a <span class="sc">~</span> b, <span class="at">data =</span> Sample <span class="sc">%&gt;%</span> <span class="fu">filter</span>(c<span class="sc">==</span><span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = a ~ b, data = Sample %&gt;% filter(c == 0))
-
-Coefficients:
-(Intercept)            b  
-    -0.6600      -0.3592  </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(a <span class="sc">~</span> b, <span class="at">data =</span> Sample) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = a ~ b, data = Sample)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--2.9370 -0.7473  0.1003  0.6630  2.5546 
-
-Coefficients:
-             Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept) -0.013249   0.043811  -0.302    0.762
-b            0.007196   0.044263   0.163    0.871
-
-Residual standard error: 0.9796 on 498 degrees of freedom
-Multiple R-squared:  5.307e-05, Adjusted R-squared:  -0.001955 
-F-statistic: 0.02643 on 1 and 498 DF,  p-value: 0.8709</code></pre>
+<pre><code>  [1]  15.00   1.50  15.99  30.50  28.95  20.00  15.00  35.00  30.00  17.00
+ [11]  17.00  19.95  20.00  39.95  18.99   5.95  15.00   7.50  15.95  13.00
+ [21]  11.94  14.00  14.95  22.99  15.00  18.00   7.95  14.95  14.95   7.95
+ [31]  15.95  20.00  14.00  29.50  11.99  13.07  13.95  15.00   4.99  13.00
+ [41]  13.99  24.95  26.99  14.95   6.69   5.99  13.95  26.95  24.00  16.00
+ [51]  13.99  17.99  15.00   8.99   6.99  14.54  17.99 114.95  48.20  15.95
+ [61]  15.95  18.00  86.95  15.00  17.99  15.00  11.50  26.95   6.99  15.00
+ [71]  16.00  53.95  15.00   6.99  12.00  21.10  13.95  14.99  30.00   7.99
+ [81]   8.00  15.99  26.99  17.00   6.99  14.95  18.00  16.00   6.99  16.00
+ [91]   8.99  16.00  19.99  18.00   8.99  17.00  14.00  27.95 139.95  24.95
+[101]   6.95  26.00  26.00   9.95  27.99  16.99   8.95  14.95  15.95  21.00
+[111]  14.00  20.00  15.00  14.95  15.95  14.99  14.00  12.95  24.99  15.00
+[121]  15.00  25.95  25.00   9.99  26.99  17.99  15.00  15.00  25.05  17.99
+[131]  16.00  14.99  20.00   7.99  14.00  13.29  16.00  13.83  12.00  14.95
+[141]  15.00  16.99  15.00   6.95  14.00  15.00  20.00  16.00  15.00  16.00
+[151]  15.00  15.00  16.00   8.95   5.99  16.00  15.00  14.00  35.95  14.99
+[161]   7.95  16.99  98.95  35.75  19.73  37.50  13.00  15.95  26.00   5.99
+[171]  14.99  16.00   9.99  15.95  14.99  14.00  13.95  16.00  75.00  32.95
+[181]  26.95  15.99  15.00  24.00   6.95  16.00  16.00  26.95  26.99   7.99
+[191]  17.95  35.75   6.99   9.99   6.99  15.00  12.00   9.99     NA  11.99
+[201]  15.00  24.00  16.00  16.00  12.14   7.75  14.10   4.99  13.95  22.00
+[211]  12.99  13.99   8.95   8.99   7.95  15.00  17.00  13.00  12.99  70.80
+[221]  48.20   9.99  30.00  15.00  14.00  16.99  22.00   8.42   9.99  15.00
+[231]  14.95  18.99  10.95  16.95  28.00  25.00  15.00  15.00  15.00  17.00
+[241]  13.95  16.00  11.00   8.99  17.99  16.00  15.00  12.00  17.99  21.99
+[251]  15.95  24.95  39.95  16.00  10.65  13.99  19.95  14.00  15.00  16.95
+[261]   9.99  14.95  11.00  17.00  14.95  12.00   9.99  25.00  14.00  17.99
+[271]  30.00  16.99  34.80  15.95   7.77   3.95   2.00   8.99  18.95  20.00
+[281]  20.00  15.44  22.00  14.95  17.99  16.00  14.95  25.00  14.95  26.00
+[291]  24.99  20.00  13.00  13.99  15.99  12.60  10.99  24.99  28.00  35.00
+[301]  15.95   6.99  14.95  14.95  25.00  27.00  15.00  15.00  15.95  14.95
+[311]  26.00  18.99  12.95</code></pre>
 </div>
 </div>
-</div>
-</div>
-<div class="callout-note callout callout-style-default no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Regression to mediocrity
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>An unusually large deviation is likely to be followed by one not so unusually large.</p>
-</div>
-</div>
-</section>
-<section id="learning-checks" class="level2">
-<h2 class="anchored" data-anchor-id="learning-checks">Learning Checks</h2>
-</section>
-<section id="section" class="level2">
-<h2 class="anchored" data-anchor-id="section">31.1</h2>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Solution
-</div>
-</div>
-<div class="callout-body-container callout-body">
-
-</div>
-</div>
-<hr>
-</section>
-<section id="documenting-software" class="level2">
-<h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>
 
 
 </section>
