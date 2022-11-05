@@ -82,22 +82,19 @@ dag_sample <- function(DAG, size=10, seed=NULL, survive=NULL, .size_multiplier=1
     Res[[vnames[k]]] <- this # make it available for successive formulas.
   }
 
+  Res <- tibble::as_tibble(Res) # convert to a data frame
   if (!is.null(survive)) {
     rhs <- rlang::f_rhs(survive)
     survived <- eval(rhs, envir=Res)
+    Res <- Res %>%
+      filter(survived) %>%
+      slice_sample(n=min(out_size, nrow(.)))
   }
 
   # Post-process: take out the items whose names start with dots
   keepers <- !grepl("^\\.", vnames)
 
-  Res <- Res[keepers]
-
-
-  tibble::as_tibble(Res) %>%
-    filter(survived) %>%
-    slice_sample(n=min(out_size, nrow(.)))
-
-
+  return(Res[keepers])
 }
 
 #' @importFrom mosaic sample

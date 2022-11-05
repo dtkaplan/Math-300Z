@@ -5,10 +5,10 @@ format: html
 
 19.1 Convert to the response vs explanatory format for data graphs.
 
-19.1 Understand the covering of a variable by an interval specified by a coverage level (e.g. 0.95).
+19.2 Understand the covering of a variable by an interval specified by a coverage level (e.g. 0.95) and make a data graphic annotated by such intervals.
 
-19.2 Be able to produce pointUse "violin" plots to display the density of a variable. (This should really go in the first half of the course, but ModernDive doesn't do it.)
+19.3 Be able to produce point plots overlaid with "violin" plots to display the density of a variable. (This should really go in the first half of the course, but ModernDive doesn't do it.)
 
-19.3 Convert categorical variables to a 0-1 encoding. 
+19.4 Convert categorical variables to a 0-1 encoding. 
     a. Generate graphics appropriate to a categorical encoding. (jitter plots)
     b. Apply modeling techniques to 0-1 encodings of binomial response variables. 

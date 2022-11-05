@@ -1,10 +1,10 @@
-test_that("math300 generates data", {
+test_that("default sample size is 5", {
   Foo <- sample(dag_make(x ~ eps(.3), y ~ x + eps(.3)))
   expect_equal(nrow(Foo), 5)
   expect_equal(names(Foo), c("x", "y"))
 })
 
-test_that("nrow is used", {
+test_that("size parameter is used", {
   Foo <- sample(dag_make(x ~ eps(.5), y ~ x + eps(.5)), size=10000)
   expect_equal(nrow(Foo), 10000)
   expect_equal(sum(is.na(Foo$y)), 0)

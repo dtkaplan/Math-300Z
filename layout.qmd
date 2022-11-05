@@ -15,3 +15,5 @@ There are four main directories. In each directory, the contents are split up on
 - **LC**: Like `Objectives`, this directory contains lesson-by-lesson exercises, styled "learning checks" in the style of the *Statistical Inference via Data Science* textbook. Not all the learning checks need to be assigned. Which ones are assigned for each lesson will be noted in the NTIs.
 
 - **Reading-notes**: Textbook-like readings, also organized lesson-by-lesson (as opposed to the chapter organization typically found in textbooks.) Often, several lessons in sequence refer to the same statistical topic. Nonetheless, the reading notes are divided on a lesson basis. It is anticipated that these will be provided to students in an on-line format.
+
+- **Student-notes**: "Student notes" refers to a set of student-facing **Rmd** files, one for each Lesson. They are usually based on the [Learning Challenges](LC-list.html) Students are expected to work through the notes, answering the questions by completing code chunks and writing short free response answers. A good daily assignment would be complete the notes and compile them to PDF format. 

@@ -9,16 +9,21 @@ model_eval <- function(mod, data=NULL, type=c("response", "link"),
   if (level <= 0 || level >=1) stop("<level> must be > 0 and < 1.")
 
   if (is.null(data)) data <- model.frame(mod)
+  response_var_name <- all.names(mosaicModel:::response_var(mod))
+  response_in_data <- response_var_name %in% names(data)
 
 
   ## NEED TO UPDATE THE RESPONSE_Var and explanatory_vars functions
   ## to return a character vector of variable names
-  keepers <- c(all.names(mosaicModel:::response_var(mod)),
-               unlist(mosaicModel:::explanatory_vars(mod)))
+  keepers <-  unlist(mosaicModel:::explanatory_vars(mod))
+  if (response_in_data) keepers <- c(response_var_name, keepers)
+
   # Keep only the input columns needed by the model
   data <- data[ , keepers]
-  if (grepl("^zero_one\\(.*\\)$", names(data)[1])) {
-    names(data)[1] <- gsub("^zero_one\\((.*)\\)$", "\\1", names(data)[1])
+  if (response_in_data) {
+    if (grepl("^zero_one\\(.*\\)$", names(data)[1])) {
+      names(data)[1] <- gsub("^zero_one\\((.*)\\)$", "\\1", names(data)[1])
+    }
   }
   interval_fun <- add_pi
   if (interval == "confidence") interval_fun = add_ci
@@ -38,9 +43,12 @@ model_eval <- function(mod, data=NULL, type=c("response", "link"),
   }
   Fitted <- dplyr::select(Result, .output)
   Result[ , c(".output", names(data))] <- NULL
-  Residuals <- data.frame(.resid = data[[1]] - Fitted$.output)
-
-  bind_cols(data, Fitted, Residuals,  Result)
+  if (response_in_data) {
+    Residuals <- data.frame(.resid = data[[1]] - Fitted$.output)
+    return(bind_cols(data, Fitted, Residuals,  Result))
+  } else {
+    return(bind_cols(data, Fitted, Result))
+  }
 }
 
 

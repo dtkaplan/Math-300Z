@@ -9,7 +9,7 @@ compare_model_residuals(
   ...,
   n = 500,
   measure = c("RMS", "SS", "R2"),
-  testing = c("in-sample", "out-of-sample", "R2")
+  testing = c("in-sample", "out-of-sample")
 )
 }
 \arguments{
@@ -19,15 +19,15 @@ compare_model_residuals(
 
 \item{measure}{Either of \code{"RMS"} (the default) or \code{"SS"} (sum of squares)}
 
-\item{\ldots}{One or more model formulas, all with the same response variable.}
+\item{testing}{Character string, either \code{"in-sample"} or \code{"out-of-sample"}}
 
-\item{in_sample}{Boolean flag: whether to use in-sample testing. Default: FALSE.}
+\item{\ldots}{One or more model formulas, all with the same response variable.}
 }
 \description{
 Compare a set of models, all with the same response variable, using either
 RMS residuals or the sum-of-square residuals
 }
 \examples{
-compare_model_residuals(mtcars, mpg ~ 1, mpg ~ hp, mpg ~ hp + wt, measure="SS", in_sample=TRUE)
-compare_model_residuals(dag07, c ~ 1, c ~ a, c ~ a + b, c ~ a + b + d, measure="SS", in_sample=FALSE)
+compare_model_residuals(mtcars, mpg ~ 1, mpg ~ hp, mpg ~ hp + wt, measure="SS")
+compare_model_residuals(dag07, c ~ 1, c ~ a, c ~ a + b, c ~ a + b + d, measure="SS", testing="out-of-sample")
 }

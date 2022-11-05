@@ -35,10 +35,7 @@ zero_one <- function(x, one) {
 #' fun <- makeFun(mod)
 #' P
 #' P %>% mosaicCalc::slice_plot(fun(age, smoker="Yes") ~ age)
-#' @export
-as.character.zero_one <- function(x, ...) {
-  paste(levels(x), "->", c(0,1), collapse="")
-}
+
 
 #' need to write documentation for the graphics command `label_zero_one()`
 #' @export
@@ -50,4 +47,12 @@ label_zero_one <- function(P) {
                                                 breaks=c(0,1), labels=levels(YesNo)))
 }
 
+#' @export
+unique.zero_one <- function(x, incomparables=FALSE, ...) {
+  levels <- attr(x, "levels")
+  vals <- unique.default(x)
+  attr(vals, "levels") <- levels
+  class(vals) <- c(class(vals), "zero_one")
 
+  vals
+}

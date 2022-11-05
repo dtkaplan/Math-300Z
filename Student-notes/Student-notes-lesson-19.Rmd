@@ -1,0 +1,99 @@
+---
+title: "Math 300 Lesson 19 Notes"
+subtitle: "Decisions with data"
+author: "YOUR NAME HERE"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+---
+
+
+```{r setup, include=FALSE}
+library(math300)
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+## Key ideas
+
+1. Starting with this lesson, the course will be about ways to extract **actionable information** from data. "Actionable information" is in a form to guide decision making. Core techniques for extracting information from data are graphics and models.
+
+2. In this lesson ...
+    a. You will start to construct data graphics in a standard format suited for modeling: a response variable on the vertical axis and an explanatory variable on the horizontal axis. (Other explanatory variables can be mapped to color or facets. We'll get to that in later lessons.)
+    b. You will be introduced to statistical annotations that display an **interval** over the response variable. (In later lessons, we'll introduce specific types of intervals.)
+    c. You will extend regression models to be able to handle a two-level **categorical** response variable.
+    
+## Objectives
+
+While in draft, see `Objectives/Obj-lesson-19.qmd`. Those will be copied over here.
+
+## A standard format for data graphics
+
+A "data graphic" is one that displays each of the rows of a data frame. Graphics are fundamentally two-dimensional, so the data graphic has a frame that maps one variable to the vertical axis ("the y aesthetic") and another to the horizontal axis ("the x aesthetic"). 
+
+Models are important to extracting information from data. Models always have a **response variable** and one or more **explanatory variables**. So our standard format for data graphics will put the response variable on the vertical axis and the one of the explanatory variables on the horizontal axis.
+
+### Example: Scottish hill racing
+
+A popular competitive sport in Scotland is hill racing. This is a running race that involves ascending a hill rather than running on the flat. The `math300::Hill_racing` data frames records about 2000 winning performances in hill races. (See `?Hill_racing` for the documentation.)
+
+1. A simple model of a hill race performance is `time ~ distance`. 
+
+    a. Which is the response variable and which is the explanatory variable in the model `time ~ distance`?
+    
+    **ANSWER**:
+    
+
+    b. Make a data graphic from `Hill_racing` that is consistent with this choice of explanatory and response variables.
+    
+```{r}
+# complete the code
+# Hill_racing %>%
+#  ggplot(aes(x=_____, y=______)) +
+#  geom_point()
+```
+
+
+::: {.callout-note}
+## Solution
+```{r}
+# complete the code
+Hill_racing %>%
+ ggplot(aes(x=distance, y=time)) +
+ geom_point() 
+```
+:::
+
+### The "Null" model
+
+The basis of the techniques you'll learn in this second half of the course is building a model that uses explanatory variables to account for the response variable.
+
+We'll extract various quantities from the models we build and, in particular, use those quantities to compare one model to another, the point being to see SAY WHAT.
+
+Surprisingly, an important model for starting the chain of comparisons *has no explanatory variable*. OR RATHER, WE MAKE UP AN EXPLANATORY variable. SHOW MEAN is a coefficient from such a model. Model formula: `y ~ 1`
+
+Let's use the standard data-graphic format to display to display `y ~ 1`,
+
+```{r}
+Whickham %>% mutate(group = "all") %>% ggplot(aes(y=age, x=group)) + geom_jitter()
+```
+
+
+2. A somewhat more complex model is `time ~ distance + climb`. In this model there are two explanatory variables. Only one of them can be mapped to the horizontal axis, the other will need to be mapped to some other aesthetic or to faceting.
+
+```{r}
+# complete the code
+# Hill_racing %>%
+#  ggplot(aes(x=_____, y=______)) +
+#  geom_point()
+```
+
+
