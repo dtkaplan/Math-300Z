@@ -1,31 +1,117 @@
 #' Plot model output for representative levels of explanatory variables
 #'
+#' @examples
+#' mod <- lm(time ~ distance*sex*climb, data=Hill_racing)
+#' model_plot(mod, x=climb, color=sex, facet=distance, nlevels=4, show_data=TRUE)
+
 #' @export
-model_plot <- function(mod, data = NULL, tilde=NULL, nlevels=3) {
+model_plot <- function(mod, x, color=NULL, facet=NULL, facet2=NULL,
+                       data = NULL, nlevels=3, show_data=TRUE, data_alpha=0.25) {
+  # Allow unquoted names as arguments
+  x <- as.character(substitute(x))
+  color <- as.character(substitute(color))
+  facet <- as.character(substitute(facet))
+  facet2 <- as.character(substitute(facet2))
+
+  response_name <- all.vars(mosaicModel:::response_var(mod))
+
   if (is.null(data)) data <- mosaicModel::data_from_mod(mod)
-  if (is.null(tilde)) tilde <- mosaicModel::formula_from_mod(mod)
-  plotting_names <- all.vars(tilde)
-  if (length(tilde) == 3) plotting_names <- plotting_names[-1]
+  plotting_names <- c(x, color)
+  facet_names <- c(facet, facet2)
+  spread_names <- c(plotting_names, facet_names)
   other_explan_names <- all.vars(mosaicModel::formula_from_mod(mod)[[3]])
-  all_names <- union(plotting_names, other_explan_names)
+  all_names <- union(spread_names, other_explan_names)
   all_names_formula <- as.formula(paste("~", paste(all_names, collapse="+")))
   # data_skeleton() never returns the response variable
-  skeleton <- model_eval(mod,
-                         data=data_skeleton(data, all_names_formula, nlevels=nlevels))
+  Skeleton <- data_skeleton(data, all_names_formula,
+                            spreadn=length(spread_names),
+                            ncont=100, nlevels=nlevels)
 
-  space_formula <- as.formula(glue::glue(".output~ {plotting_names[1]}"))
-
-  if(length(plotting_names) > 1) {
-    color_formula <- as.formula(glue::glue("~ {plotting_names[2]}"))
-  } else color_formula <- "blue"
-
-  P <- gf_point(space_formula, color=color_formula, data = skeleton, size=0.75)
-  if (length(plotting_names) > 2) {
-    # prepare to set up the facets
-    if (length(plotting_names) == 3) P <- P + facet_wrap(plotting_names[3], labeller = "label_both")
-    else P <- P + facet_grid(rows=names(skeleton)[3], cols=plotting_names[4], labeller = "label_both")
+  # If there is faceting going on based on a quantitative variable,
+  # redo the Skeleton so the levels are in the middle
+  # of the data for each facet
+  for (var in facet_names) {
+    if (continuous_or_discrete(data[[var]])=="continuous") {
+      temp_data <- data.frame(raw = data[[var]])
+      breaks <- compromise_breaks(data[[var]], n=nlevels + 1)
+      temp_data$groups <- cut(temp_data$raw, breaks, include.lowest=TRUE, dig.lab=3)
+      center_of_groups <- df_stats(raw ~ groups, data = temp_data, middle=median())
+      Skeleton[[var]] <- center_of_groups$middle
+    }
+  }
+  # If a continuous variable is mapped to color, space the skeleton
+  # levels evenly
+  if (!is.null(color) && continuous_or_discrete(data[[color]])=="continuous") {
+    vals <- data[[color]]
+    breaks <- seq(quantile(vals, 0.01, na.rm=TRUE),
+                  quantile(vals, 0.99, na.rm=TRUE),
+                  length = nlevels)
+    Skeleton[[color]] <- breaks
   }
 
-  P
+  For_plotting <-
+    model_eval(mod, data=expand.grid(Skeleton))
+
+  # determine the plot geoms and formulas
+  data_formula <- as.formula(glue::glue("{response_name} ~ {x}"))
+  if (continuous_or_discrete(data[[x]]) == "continuous") {
+    mod_plot_fun <- gf_line
+    data_plot_fun <- gf_point
+    space_formula <- as.formula(glue::glue(".output ~ {x}"))
+  } else {
+    mod_plot_fun <- gf_errorbar
+    data_plot_fun <- gf_jitter
+    space_formula <- as.formula(glue::glue(".output + .output ~ {x}"))
+  }
+
+  if(length(plotting_names) > 1) {
+    color_formula <- as.formula(glue::glue("~ {color}"))
+  } else color_formula <- "blue"
+
+
+  # Add columns for the facets, if any
+  for (var in facet_names) {
+    # even number of points in each cut level
+    fname <- paste0("..", var, "..") # name of column for this facet axis
+    if (continuous_or_discrete(data[[var]])=="discrete") {
+      data[[fname]] <- data[[var]]
+      For_plotting[[fname]] <- For_plotting[[var]]
+    } else {
+      breaks <- compromise_breaks(data[[var]], n=nlevels + 1) %>% signif(3)
+      data[[fname]] <- cut(data[[var]], breaks, include.lowest=TRUE, dig.lab=3)
+      For_plotting[[fname]] <- cut(For_plotting[[var]], breaks, include.lowest=TRUE, dig.lab=5)
+    }
+  }
+
+
+  if (show_data) {
+    P <- data_plot_fun(data_formula, color=color_formula, data = data, alpha=data_alpha)
+  } else {
+    P <- NULL
+  }
+
+  P <- P %>%
+    mod_plot_fun(space_formula, color=color_formula,
+                 group=color_formula, data = For_plotting,
+                 size=0.75, inherit=FALSE) +
+    ylab(response_name)
+
+  # Facet the plot
+  if (length(facet_names) == 1) {
+    P <- P + facet_wrap(paste0("..", facet, ".."),labeller = "label_both")
+  } else if (length(facet_names)==2) {
+    dotted_names <- paste0("..", facet_names, "..")
+     P <- P + facet_grid(rows=dotted_names[1],
+                         cols=dotted_names[2],
+                         labeller = "label_both")
+  }
+
+  # Set the color scale
+  if (is.null(color)) return(P)
+  else if (continuous_or_discrete(data[[color]]) == "discrete")
+    return(P)
+  else return(P + scale_color_stepsn(colors=heat.colors(5)))
 
 }
+
+

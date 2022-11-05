@@ -12,9 +12,6 @@ model_eval <- function(mod, data=NULL, type=c("response", "link"),
   response_var_name <- all.names(mosaicModel:::response_var(mod))
   response_in_data <- response_var_name %in% names(data)
 
-
-  ## NEED TO UPDATE THE RESPONSE_Var and explanatory_vars functions
-  ## to return a character vector of variable names
   keepers <-  unlist(mosaicModel:::explanatory_vars(mod))
   if (response_in_data) keepers <- c(response_var_name, keepers)
 

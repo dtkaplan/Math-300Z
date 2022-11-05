@@ -4,8 +4,22 @@
 \alias{model_plot}
 \title{Plot model output for representative levels of explanatory variables}
 \usage{
-model_plot(mod, data = NULL)
+model_plot(
+  mod,
+  x,
+  color = NULL,
+  facet = NULL,
+  facet2 = NULL,
+  data = NULL,
+  nlevels = 3,
+  show_data = TRUE,
+  data_alpha = 0.25
+)
 }
 \description{
 Plot model output for representative levels of explanatory variables
+}
+\examples{
+mod <- lm(time ~ distance*sex + sex*climb, data=Hill_racing)
+model_plot(mod, x=climb, color=sex, facet=distance, nlevels=4, show_data=TRUE)
 }

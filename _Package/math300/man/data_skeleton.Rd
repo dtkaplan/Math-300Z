@@ -4,12 +4,14 @@
 \alias{data_skeleton}
 \title{Convert a data frame to a skeleton}
 \usage{
-data_skeleton(data, tilde, ..., ncont = 100, nlevels = 3)
+data_skeleton(data, tilde, spreadn = NULL, ..., ncont = 10, nlevels = 3)
 }
 \arguments{
 \item{data}{a data frame}
 
 \item{tilde}{the model specification as a tilde expression}
+
+\item{spreadn}{integer, number of the explanatory variables to give multiple levels}
 
 \item{ncont}{number of levels at which to represent a continuous variable that comes first in the formula}
 
@@ -18,5 +20,6 @@ data_skeleton(data, tilde, ..., ncont = 100, nlevels = 3)
 \item{\ldots}{specific levels to use for variables}
 }
 \description{
-Only explanatory variables are included in the result.
+Only explanatory variables are included in the result. Use \code{expand.grid()} on
+the output to create a data frame with the skeleton values.
 }
