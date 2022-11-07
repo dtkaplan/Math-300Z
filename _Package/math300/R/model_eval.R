@@ -37,12 +37,11 @@ model_eval <- function(mod, data=NULL, type=c("response", "link"),
     )
   if (inherits(Result, "try-error")) {
     if (interval=="prediction")
-      warning("Prediction intervals not available for this model type.")
-    Result <- add_ci(eval_data, mod, yhatName=".output", names=c(".lwr", ".upr"),
-                     alpha = 1 - level, response=TRUE)
-    # drop interval if none requested
-    if (interval != "confidence") Result <- dplyr::select(Result, -.lwr, -.upr)
-  }
+      warning("Prediction intervals not available for this model type. Giving confidence intervals instead.")
+    Result <- add_ci(eval_data, mod, alpha = 1 - level,
+                     names=c(".lwr", ".upr"), yhatName=".output",
+                     response=TRUE)
+    }
   Fitted <- Result[".output"]
   if (".lwr" %in% names(Result)) Result <- Result[c(".lwr", ".upr")]
 

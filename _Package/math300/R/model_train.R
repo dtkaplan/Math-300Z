@@ -63,9 +63,10 @@ model_train <- function(data, tilde, verbose=FALSE, prob_of = NULL,
     response_vals <- na.omit(response_vals)
     if (is.numeric(response_vals)) {
       if (min(response_vals, na.rm=TRUE) >= 0 &&
-          all(response_vals==round(response_vals) )) type = "counts"
-      else type = "linear"
-    } else if (is.logical(response_vals) || !is.numeric(response_vals)) {
+          all(response_vals==round(response_vals) )) {
+        type <- ifelse(max(response_vals <= 1), "prob", "counts")
+    } else type = "linear"
+    } else if (is.logical(response_vals) || inherits(response_vals, "zero_one")) {
       type = "prob"
     }
     # Make a recursive call to this function
