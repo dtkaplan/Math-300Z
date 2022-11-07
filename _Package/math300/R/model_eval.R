@@ -12,7 +12,7 @@ model_eval <- function(mod, data=NULL, type=c("response", "link"),
   response_var_name <- as.character(deparse(mosaicModel:::response_var(mod)))
 
   if (skeleton) {
-    eval_data <- model_skeleton(mod, data=data)
+    eval_data <- training_data <- model_skeleton(mod, data=data)
     response_in_data <- FALSE
   } else {
     if (is.null(data)) {

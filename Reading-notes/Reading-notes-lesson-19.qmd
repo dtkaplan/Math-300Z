@@ -1,6 +1,6 @@
 ---
 title: "Math 300R Lesson `r (lesson <- 19)` Reading Notes"
-subtitle: "Decisions with data"
+subtitle: "Statistical thinking"
 author: "Prof. Danny Kaplan"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
@@ -115,7 +115,7 @@ Gestation %>%
   ggplot(aes(x=parity, y=gestation)) + 
   geom_jitter(alpha=0.2, width=0.2, height=0) +
   geom_violin(aes(group=parity), fill="blue", alpha=0.2, color=NA) +
-  geom_boxplot(color="blue", fill=NA, alpha=.5)
+  geom_boxplot(aes(group=parity), color="blue", fill=NA, alpha=.5)
 ```
 
 :::: {.callout-note}
@@ -298,24 +298,15 @@ survival_model <- Whickham %>%
 
 From this model, we can read off an interval summary of the effect of smoking on survival:
 
-```{r}
+```{r message=FALSE}
 survival_model %>% confint()
 ```
 
 A full understanding of this interval summary will need to wait until Lessons 22 through 24. For the present, we'll simply point out that the summary interval on `smokerYes` includes zero, so `Whickham` provides no support for the mistaken conclusion that smoking improves survival. But seeing this requires taking into account `age`. A graphic may help explain why:
 
-::: {.callout-warning}
-## Bug in model_eval
-
-`model_eval()` isn't doing the conversion to a response format. That's why I had to do the exponential transformations in the previous command.
-
-:::
-
 ```{r}
 Model_output <- model_eval(survival_model, interval="confidence")
 Model_output %>%
-  mutate(.lwr = exp(.lwr)/(1+exp(.lwr)),
-         .upr = exp(.upr)/(1+exp(.upr))) %>%
   ggplot(aes(y = survived, ymin=.lwr, ymax=.upr, x=age, color=smoker, fill=smoker)) +
   geom_jitter(height=.1, width=0, alpha=0.2) +
   geom_ribbon(alpha=0.2) 
@@ -323,6 +314,6 @@ Model_output %>%
 
 The interval summary in the graph shows how the probability of survival changes for different ages. The intervals for non-smokers and smokers entirely overlap. For both groups, 20-year survival goes down with greater initial age. So why did the model `outcome ~ smoker` suggest that smokers have a higher survival? The reason relates to the proportion of smokers with initial age 70+. In the 1970s, life expectancy was such that people 70+ were unlikely to survive 20 years. This pulls down the survival rate at that age. Notice that the 70+ nurses were unlikely to have been smokers compared to younger nurses. The 70+ nurses grew up in an era when social conventions caused smoking to be uncommon for women (even though it was very common for men).
 
-
+:::
 
 
