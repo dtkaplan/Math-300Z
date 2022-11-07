@@ -6,16 +6,19 @@
 
 #' @export
 model_plot <- function(mod, x, color=NULL, facet=NULL, facet2=NULL,
-                       data = NULL, nlevels=3, show_data=TRUE, data_alpha=0.25) {
+                       data = NULL, nlevels=3, show_data=TRUE,
+                       interval=c("none", "prediction", "confidence"), data_alpha=0.25) {
   # Allow unquoted names as arguments
   x <- as.character(substitute(x))
   color <- as.character(substitute(color))
   facet <- as.character(substitute(facet))
   facet2 <- as.character(substitute(facet2))
 
-  response_name <- all.vars(mosaicModel:::response_var(mod))
+  interval=match.arg(interval)
 
-  if (is.null(data)) data <- mosaicModel::data_from_mod(mod)
+  response_name <- as.character(deparse(mosaicModel:::response_var(mod)))
+
+  if (is.null(data)) data <- extract_training_data(mod)
   plotting_names <- c(x, color)
   facet_names <- c(facet, facet2)
   spread_names <- c(plotting_names, facet_names)
@@ -55,12 +58,22 @@ model_plot <- function(mod, x, color=NULL, facet=NULL, facet2=NULL,
   # determine the plot geoms and formulas
   data_formula <- as.formula(glue::glue("{response_name} ~ {x}"))
   if (continuous_or_discrete(data[[x]]) == "continuous") {
-    mod_plot_fun <- gf_line
+
     data_plot_fun <- gf_point
-    space_formula <- as.formula(glue::glue(".output ~ {x}"))
+    if (interval && ".lwr" %in% names(For_plotting)) {
+      space_formula <- as.formula(glue::glue(".lwr + .upr ~ {x}"))
+      mod_plot_fun <- gf_ribbon
+    } else {
+      space_formula <- as.formula(glue::glue(".output ~ {x}"))
+      mod_plot_fun <- gf_line
+    }
+
   } else {
     mod_plot_fun <- gf_errorbar
     data_plot_fun <- gf_jitter
+    if (interval && ".lwr" %in% names(For_plotting)) {
+      space_formula <- as.formula(glue::glue(".lwr + .upr ~ {x}"))
+    }
     space_formula <- as.formula(glue::glue(".output + .output ~ {x}"))
   }
 

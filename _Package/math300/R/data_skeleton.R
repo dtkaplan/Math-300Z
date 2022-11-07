@@ -8,8 +8,41 @@
 #' @param spreadn integer, number of the explanatory variables to give multiple levels
 #' @param \ldots specific levels to use for variables
 #' @param ncont number of levels at which to represent a continuous variable that comes first in the formula
+#' @param mod A fitted model **or** a tilde expression describing a model structure, e.g. `outcome ~ vara+varb`.
 #' @param nlevels number of levels at which to represent other variables
 #'
+#' @export
+model_skeleton <- function(mod, data=NULL, ncont=10) {
+  if (is.null(data)) {
+    data <- try(extract_training_data(mod), silent=TRUE)
+    if (inherits(data, "try-error")) {
+      stop("Your model does not carry its own training data. Use the data= argument to provide it. ")
+    }
+  }
+  if (inherits(mod, "formula")) {
+    if (length(formula)==2) explan_names <- all.vars(formula)
+    else explan_names <- all.vars(formula[[3]])
+  } else {
+    explan_names <- all.vars(mosaicModel::formula_from_mod(mod)[[3]])
+  }
+  Skeleton <- list()
+
+  for (var in explan_names) {
+    values <- na.omit(data[[var]])
+    type <- continuous_or_discrete(values)
+    if (type == "continuous") {
+      points <- pretty(values, n=ncont)
+      # If no actual negative values, don't allow any in the levels
+      if (min(values) > 0) points <- points[points > 0]
+    } else {
+      if (inherits(values, "zero_one")) points <- unique.zero_one(values)
+      else points <- unique(values)
+    }
+    Skeleton[[var]] <- points
+  }
+
+  expand.grid(Skeleton)
+}
 
 #' @export
 data_skeleton <- function(data, tilde, spreadn=NULL, ..., ncont=10, nlevels=3) {

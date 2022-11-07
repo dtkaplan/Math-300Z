@@ -13,6 +13,7 @@ model_plot(
   data = NULL,
   nlevels = 3,
   show_data = TRUE,
+  interval = c("none", "prediction", "confidence"),
   data_alpha = 0.25
 )
 }
@@ -20,6 +21,6 @@ model_plot(
 Plot model output for representative levels of explanatory variables
 }
 \examples{
-mod <- lm(time ~ distance*sex + sex*climb, data=Hill_racing)
+mod <- lm(time ~ distance*sex*climb, data=Hill_racing)
 model_plot(mod, x=climb, color=sex, facet=distance, nlevels=4, show_data=TRUE)
 }

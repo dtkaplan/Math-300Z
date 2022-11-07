@@ -9,7 +9,8 @@ model_eval(
   data = NULL,
   type = c("response", "link"),
   interval = c("prediction", "confidence", "none"),
-  level = 0.95
+  level = 0.95,
+  skeleton = FALSE
 )
 }
 \description{

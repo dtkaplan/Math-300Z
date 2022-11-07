@@ -31,6 +31,22 @@ knitr::opts_chunk$set(echo = TRUE)
     b. You will be introduced to statistical annotations that display an **interval** over the response variable. (In later lessons, we'll introduce specific types of intervals.)
     c. You will extend regression models to be able to handle a two-level **categorical** response variable.
     
+::: {.callout-warning}
+## In draft
+
+Make a jitter plot of gestation period versus smoking status. Then find the mean for each smoking status show this table. Then the ci.mean() as a table and graphed as an interval.
+
+```{r}
+# need to change this to use `model_eval()`: add a skeleton=TRUE argument
+# When there is just 2 variables, one categorical one numeric, do 100 values for the numerical variable.
+values <- lm(gestation ~ smoke, data = Gestation) %>% 
+  mod_eval(nlevels=5, interval="confidence")
+Gestation %>% ggplot(aes(x = smoke, y = gestation)) +
+  geom_jitter(width=0.2, alpha=0.1) +
+  geom_errorbar(data = values, aes(x=smoke, ymin=lower, ymax=upper), y=NA)
+```
+:::
+    
 ## Objectives
 
 While in draft, see `Objectives/Obj-lesson-19.qmd`. Those will be copied over here.

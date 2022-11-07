@@ -18,6 +18,62 @@ source("../_startup.R")
 library(splines)
 ```
 
+::: {.callout-warning}
+## Note: in draft
+
+Use `KidsFeet` to illustrate the importance of incorporating covariates into models. Story: It was claimed that girls' feet are narrower than boys. Do the data show this?
+
+```{r}
+df_stats(width ~ sex, data = KidsFeet, ci.mean)
+```
+Barely any overlap in the two intervals, so there does seem to be a difference between the groups. Or, in the language of models:
+
+```{r}
+lm(width ~ sex, data = KidsFeet) %>% confint()
+```
+
+The confidence interval on the effect size of `sex` does not include zero, so it's reasonable to conclude that `sex` is related to foot width.
+
+::: {.callout-warning}
+## Possible LC or Student-notes item
+
+Describe the meaning of the reports in this section in everyday English to someone not trained in statistics.
+:::
+
+With covariates: The motivating question is not really about the width of feet but the *shape* of feet. If boys' and girls' feet have the same shape, there's no obvious anatomical reason for shoes to be divided into types according to sex.
+
+One way to get at this is to use a response variable that serves the actual needs of the question, which is about shape. The "aspect ratio"---width divided by length---is a simple summary of shape. Does the aspect ratio differ between the sexes?
+
+```{r}
+KidsFeet %>%
+  mutate(aspect_ratio = width/length) %>%
+  df_stats(aspect_ratio ~ sex, ci.mean)
+```
+
+Another way to see the same thing is to look at the confidence interval on the effect size of `sex` on `aspect_ratio`:
+
+```{r}
+KidsFeet %>%
+  mutate(aspect_ratio = width/length) %>%
+  lm(aspect_ratio ~ sex, data=.) %>%
+  confint()
+```
+
+The confidence interval includes zero, so it's reasonable to conclude that sex is not a predictor of foot shape.
+
+Notice that constructing an appropriate data analysis to address the real-world question at hand involved using **three** variables: `sex`, `width`, and `length`. For the question at hand, examining just `sex` and `width` isn't adequate. `length` isn't a variable of direct interest here, but we can't get an appropriate sense of the relationship between `sex` and `width` unless we take `length` into account. Variables that aren't of direct interest, but which play an important role in the overall system, are called "**covariates**."
+
+In the above, we used the covariate `length` to generate a more meaningful *response variable*. This is clever and appropriate. But more generally, covariates play the role of an *explanatory* variable. To illustrate the general use of covariates, we can construct a different model of `width` which shows that `sex` is not an explanatory factor once we take `length` into account.
+
+```{r}
+lm(width ~ sex + length, data = KidsFeet) %>% confint()
+```
+
+The confidence interval on the effect size of `sexG` on `width` includes zero, so the data do not justify a conclusion that `sex` is related to `width`. 
+
+:::
+
+
 ## From SM2
 
 One of the most important ideas in science is "**experiment**". In a simple, ideal form of an experiment, you cause one explanatory factor to vary, hold all the other conditions constant, and observe the response.  A famous story of such an experiment involves Galileo Galilei (1564-1642) `r index_entry('C','Galileo Galilei')` `r index_entry('C', 'Pisa, Leaning Tower')`  dropping balls of different masses but equal diameter from the Leaning Tower of Pisa.^[The picturesque story of balls dropped from the Tower of Pisa may not be true. Galileo did record experiments done by rolling balls down ramps.] Would a heavy ball fall faster than a light ball, as theorized by Aristotle 2000 years previously?  The quantity that Galileo varied was the weight of the ball, the quantity he observed was how fast the balls fell, the conditions he held constant were the height of the fall and the diameter of the balls.  The experimental method of dropping balls side by side also holds constant the atmospheric conditions: temperature, humidity, wind, air density, etc.
