@@ -16,3 +16,5 @@ dag_draw <- function(DAG, ...) {
   plot(ig, vertex.size=30, vertex.color="green", vertex.shape="none",
        vertex.label.cex=2, vertex.label.family="Courier", ...)
 }
+
+
