@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-10-20">
+<meta name="dcterms.date" content="2022-11-08">
 
 <title>Spring 2023 Math 300 Revisions - Math 300R Lesson r (lesson &lt;- 21) Reading Notes</title>
 <style>
@@ -170,7 +170,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Math 300R Lesson 21 Reading Notes</h1>
-<p class="subtitle lead">DAGs, noise, and simulation</p>
+<p class="subtitle lead">Signal and noise</p>
 </div>
 
 
@@ -187,7 +187,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 20, 2022</p>
+      <p class="date">November 8, 2022</p>
     </div>
   </div>
     
@@ -196,49 +196,90 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>The theme of this second half of the course is one word: “inference.” To illustrate how inference is distinct from the data science methods—wrangling, visualization, modeling—you have been learning, consider <a href="#fig-hadley-r4ds-diagram">Figure&nbsp;1</a>, copied from a well-regarded data-science text.</p>
+<p>Imagine being transported back to June 1940 . You and your family might be sitting around a radio receiver, having just switched on set and waited for it to warm up in time to hear a news broadcast. I’ve selected a newscast for you, recording 103. The recording covers the surrender of the French in the face of the German invasion. Press the play button in the box below and listen.</p>
+<iframe src="https://archive.org/details/1940RadioNews/1940-06-21-CAN-WIlliam-C-Kirker-On-French-Armistace-At-Compiegne.mp3" width="100%" height="400" style="border:1px solid black;">
+</iframe>
+<p>There are many other recordings on the site which are worth listening to. I’m directing you to <a href="https://archive.org/details/1940RadioNews/1940-06-21-CAN-WIlliam-C-Kirker-On-French-Armistace-At-Compiegne.mp3">#103</a> as an example of a radio phenomenon: <strong>noise</strong> (or, in slang, “static”). You can clearly make out the spoken words from the recording. But there is also a background sound, something like the sound made by the act of crumpling paper.</p>
+<p>Modern radio engineering has more-or-less eliminated noise, mainly by the use of digital technology. (Many of the recordings on the radio archive site have been “cleaned” so the noise is not so evident. ) But if you have ever talked to a friend at a sporting event, you have probably had to shout to get your message over the noise of the crowd. At the receiving end, your friend intuitively filters out the noise (unless it is too loud) and recovers your words.</p>
+<p>Engineers and others make a distinction between <strong>signal</strong> and noise. The signal is the spoken words of the 1940 broadcast, the noise is the hiss and clicks. You can intuitively separate the signal and the noise in this recording, focusing attention on the signal and ignoring the noise.</p>
+<p>Separating signal from noise—or, at least trying to reduce the noise—is a common problem in all sorts of settings. Historically, statistics emerged from a confluence of two needs: i) the need to summarize the resources and activities of countries and <strong>states</strong> (whence comes the “stat” in “statistics”) and ii) the need to filter out noise so that the signal becomes clearer.</p>
+<section id="sec-signal-and-noise" class="level2">
+<h2 class="anchored" data-anchor-id="sec-signal-and-noise">Signal and noise</h2>
+<p>To illustrate the statistical problem of signal and noise, let’s turn to a DAG simulation: <code>dag01</code>. Here’s a sample from <code>dag01</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+       x     y
+   &lt;dbl&gt; &lt;dbl&gt;
+1 -0.326  2.84
+2  0.552  5.04</code></pre>
+</div>
+</div>
+<p>The DAG simulation implements a relationship between <code>x</code> and <code>y</code>. In statistics, this <em>relationship</em> is the signal.</p>
+<blockquote class="blockquote">
+<p>Look at the 2-row sample from the simulation and make a guess about what the relationship is.</p>
+</blockquote>
+<p>Your guess will be exactly that: a guess. Any of an infinite number of possible relationships could account for the <code>x</code> and <code>y</code> data. The noise reduction problem of statistics is to make the guess as good as possible. For a sample of size <span class="math inline">\(n=2\)</span>, as good as possible is not very good!</p>
+<p>To have a better shot at revealing the relationship hidden by the noise, we need more data, a bigger sample. Here’s a sample of size <span class="math inline">\(n=10\)</span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 2
+         x     y
+     &lt;dbl&gt; &lt;dbl&gt;
+ 1 -0.786  1.89 
+ 2  0.0547 4.12 
+ 3 -1.17   2.36 
+ 4 -0.167  6.33 
+ 5 -1.87   0.933
+ 6 -0.120  2.93 
+ 7  0.826  5.70 
+ 8  1.19   5.90 
+ 9 -1.09   2.13 
+10 -0.375  4.23 </code></pre>
+</div>
+</div>
+<p>Looking carefully at the two rows of data you may be able to see some patterns. <code>x</code> is never larger than, say, 2 in magnitude and can be positive or negative. <code>y</code> is always positive. And notice that when <code>x</code> is negative, the corresponding <code>y</code> value is relatively small compared to the <code>y</code> values for positive <code>x</code>.</p>
+<p>With the bigger sample size, <span class="math inline">\(n=10\)</span> versus <span class="math inline">\(n=2\)</span>, we can make a more informed guess about the relationship between variables <code>x</code> and <code>y</code>.</p>
+<p>Human cognition is not well suited to looking a long columns of numbers. Often, we can make better use of our natural human talents by translating the sample into a graphic, like this:</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-hadley-r4ds-diagram" class="quarto-figure quarto-figure-center anchored">
+<p><img src="Reading-notes-lesson-21_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Collecting more data can make the relationship clearer. Here’s a graph of a sample of size <span class="math inline">\(n=10,000\)</span> with the smaller <span class="math inline">\(n=10\)</span> sample shown in orange:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-xy-relationship-large" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="www/data-science-explore.png" class="img-fluid figure-img" style="width:60.0%"></p>
-<p></p><figcaption class="figure-caption">Figure 1: Schematic diagram illustrating a path for data exploration. From Wickham &amp; Grolemund, <a href="https://r4ds.had.co.nz/explore-intro.html"><em>R for Data Science</em></a></figcaption><p></p>
+<p><img src="Reading-notes-lesson-21_files/figure-html/fig-xy-relationship-large-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure 1: With <span class="math inline">\(n=10,000\)</span> rows, the relationship between <code>x</code> and <code>y</code> is evident graphically.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<p>You’ve been to all the stepping stones on this path (with “transform” meaning “wrangling”), except the one on the far right: “Communicate.” I’d prefer if “communicate” were replaced with “inform.” One of the main uses of data science is to extract from data information that is useful for decision-making. The best information is that which reflects the true state of the world.</p>
-<p><strong>Statistical inference</strong> is the body of concepts and techniques that help us be careful and responsible that our statistical results do actually reflect the true state of the world insofar as the data can tell us about it.</p>
-<p>Example: Imagine a salesperson bargaining with a customer. Successful salespeople want to have some idea about how much money the customer would be willing to spend. They try to predict this based on observations they can make about the customer. These might include the kind of car the customer drives, how the customer is dressed, age of the customer, etc. You might think that the prediction takes the form of a <strong>quantity</strong>: the amount of money. But it’s better if the prediction is in the form of a <strong>range</strong>. After all, the relationship between willingness to pay and the observed customer attributes is weak and uncertain. It’s not good if the prediction suggests more precision than is actually warranted.</p>
-<p>Example: Nutritionists are interested in helping people to make diet choices that will increase health. Often they do this by collecting data on what people eat and their health outcomes. A regression model might indicate, for instance, that “organic” food is associated with a reduction in risk of an illness by, say, 20%. Skeptics could point out that “correlation is not causation,” and that other factors, say family income, account for the association. To inform the consumers decision about spending on food, it’s helpful if the data modeling is structured in a way that can provide confidence that the link between food and health is causal.</p>
-<p>Since inference involves the relationship between the resulted gleaned from models and the state of the world, it’s helpful to have situations where the state of the world is well known. We are going to provide such situations in a simple, sure way: by simulation.</p>
-<p>To emphasize that the simulation is only for developing an understanding of inference, and <strong>not for depicting the real world</strong>, we’ll use the word “gaming” to refer to using such simulations. The full process of gaming has four stages.</p>
-<div class="callout-note callout callout-style-default no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-The Four Stages
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="i">
-<li>building the deck: Instructors provide a simulation of a mechanism that generates rows of a data frame.</li>
-<li>the deal: Some of these rows will be dealt to you, constituting the data you have to work with. [real-world]</li>
-<li>the play: Build models and extract results. [real-world]</li>
-<li>the reveal: Compare your results from (iii) either to the mechanism given in (i) or to more data generated by the simulation.</li>
-</ol>
-</div>
-</div>
-<p>WE’RE GOING TO USE SIMPLE NAMES like X, Y, A, B, C just to remind you that this is a simulation. Real-world data will usually have descriptive variable names, like <code>height</code>, <code>age</code>, <code>score</code>.</p>
-<section id="sec-signal-and-noise" class="level2">
-<h2 class="anchored" data-anchor-id="sec-signal-and-noise">Signal and noise</h2>
-<p>A useful distinction is made in statistics—as it is in engineering—between <strong>signal</strong> and <strong>noise</strong>. For instance, it is usually assumed that response variables consist of a part that stems deterministically from the rest of the system (“signal”) and a random part (“noise”).</p>
-<p>An important task in statistical modeling is to estimate the <strong>size</strong> of the noise. We’ll need to develop some statistical techniques to do this with real world data, but we can illustrate the ideas with DAG games.</p>
-<p>Consider the mechanism represented by <code>dag01</code>:</p>
+<p>There are many ways to describe the relationship between <code>x</code> and <code>y</code> indicated by the graph of the large sample. For instance, we can see that when <code>x</code> is positive, <code>y</code> is almost always greater than 4, but for negative <code>x</code> the value of <code>y</code> tends to be less than 4.</p>
+<p>In this course, we prefer to make quantitative summaries of relationships. We do this by fitting models to the data. Here’s the relationship that’s shown by the original sample of 10:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>dag01</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> original) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>() <span class="co"># size 10 sample</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)           x 
+   4.262846    1.741758 </code></pre>
+</div>
+</div>
+<p>The coefficients in this model correspond to the mathematical relationship <span class="math inline">\(y = 4.26 + 1.74 x\)</span>. On it’s own, this formula doesn’t tell us the extent to which we have filtered out the noise in the simulation.</p>
+<p>With more data, say, the larger sample of <span class="math inline">\(n=10,000\)</span>, the relationship becomes more evident:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> larger) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>() <span class="co"># size 10 sample</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)           x 
+   4.008928    1.495904 </code></pre>
+</div>
+</div>
+<p>Because these data come from a DAG simulation, we can look at the formulas to see exactly what relationship is behind the data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dag01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 x ~ eps()
@@ -249,57 +290,92 @@ y ~ 1.5 * x + 4 + eps()
 attr(,"class")
 [1] "list"      "dagsystem"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Reading-notes-lesson-21_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
-</div>
-<p><code>dag01</code> has two variables, <code>x</code> and <code>y</code>. The tilde expression <code>x ~ eps()</code> means that <code>x</code> is generated entirely as random noise; that’s what the <code>eps()</code> function does. In contrast, the tilde expression <code>y ~ 1.5 * x + 4 + eps()</code> means that variable <code>y</code> will be composed of a part that depends on <code>x</code> and another part that is random noise.</p>
-<ul>
-<li>“depends on <code>x</code>”: <code>1.5*x + 4</code></li>
-<li>“random noise”: <code>eps()</code></li>
-</ul>
-<p>In contrast, the <code>dag00</code> system involves two variables that are not connected in any way.</p>
+<p>Comparing the two models to the DAG formula for <code>y</code>, we can see that the larger sample produced coefficients that are much closer to the formula than did the smaller sample. Closer, but not exactly the same. Even in the coefficients calculated from the large sample, there is still a legacy of the noise in the original relationship.</p>
+<p>The lesson here is simple: <em>More data can give a better view of the relationships.</em></p>
+<p>The challenge we face when working with data generated in the real world is that it is not often possible to open the black box that generated the data; all we have is the data! So how can we tell whether the data we have at hand are sufficient for giving a faithful description of the actual relationships?</p>
+<p>The general idea is to use the variation within the sample to accomplish two things at once: i. make a description of the relationship, and ii. estimate how much inherited noise there is in the description. The result of (ii) is important, since it can tell us whether or not our description (i) is good enough for the purpose we seek to serve.</p>
+<p>To get started, let’s explore how to measure the amount of variation in the data. This can give us an idea of the size of the overall signal+noise, which we will do in the next section of this Lesson. In Lesson 22 we will use DAG simulations to get an idea of how to estimate the amount of inherited noise in the description of the relationship. The DAG simulation is useful because we have access to the internal mechanism of the DAG, so it is easy to see how close the description is to the actual relationship.</p>
+<p>In Lesson 23, we will take off the DAG training wheels and learn how to estimate the size of the inherited noise in the description directly from data, without having to open the black box of the mechanism that generated the data. If you think about it, it is an amazing claim that we can estimate how close our data-driven description is to the actual mechanism, without having to know the actual mechanism!</p>
+</section>
+<section id="measuring-variation" class="level2">
+<h2 class="anchored" data-anchor-id="measuring-variation">Measuring variation</h2>
+<p>We already know the standard way to measure variation in a single variable: the <strong>variance</strong> or, equivalently, the <strong>standard deviation</strong>, which is simply the square root of the variance.</p>
+<p>Perhaps you are wondering why there are <em>two</em> standard ways to measure variation, when each can be calculated from the other? The variance can be found by squaring the standard deviation, the standard deviation by taking the square root of the variance. Either will do, so why both?</p>
+<p>The answer to this question is illustrated by a bit of geometry: the mathematics of right triangles and the corresponding Pythagorean relationship among the sides of the triangle: <span class="math inline">\(A^2 + B^2 = C^2\)</span>. The quantities <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, and <span class="math inline">\(C\)</span> are the lengths of the edges of the right triangle. The quantities <span class="math inline">\(A^2\)</span>, <span class="math inline">\(B^2\)</span> and <span class="math inline">\(C^2\)</span> are the lengths-<em>squared</em> of those edges. In order to calculate the length of one edge given the lengths of the others, we need first to square the lengths. Having squared them, we can easily do the calculation of the length-squared of the unknown edge. Then, we take the square root of the length-squared to find the length of the edge.</p>
+<p>Lengths are like standard deviations, lengths-squared are like the variance. Where does the right triangle fit in? The overall variation in the response variable is like the hypothenuse of a right triangle. One of the other two edges represents the <em>noise</em> in the relationship. The other edge represents the <em>signal</em>: the relationship itself. It’s easy to measure the overall variation in the response variable. We can also measure the noise, but indirectly. First, we fit a model connecting the response variable to the explanatory variable(s). Then the variation of the <strong>residuals</strong> for that model are the estimate for the noise.</p>
+<p>Our first illustration will use data from <code>dag01</code>. We will arbitrarily set the sample size to <span class="math inline">\(n=10,000\)</span>. (In Lesson 22, we will look at the impact of sample size on the results.)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dag00</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Dag_data <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">10000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now measure the variation in <code>x</code> and <code>y</code> in the standard way:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Dag_data <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sx =</span> <span class="fu">sd</span>(x), <span class="at">sy =</span> <span class="fu">sd</span>(y), <span class="at">vx =</span> <span class="fu">var</span>(x), <span class="at">vy =</span> <span class="fu">var</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+     sx    sy    vx    vy
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 0.998  1.81 0.995  3.29</code></pre>
+</div>
+</div>
+<p>The size of the <code>x</code> variation is about 1. The size of the <code>y</code> variation is about 1.7. (We’re using the standard deviation to measure the size of the variation.</p>
+<p>Look again at the formulas that compose <code>dag01</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dag01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
-x ~ eps(2) + 5
+x ~ eps()
 
 [[2]]
-y ~ eps(1) - 7
+y ~ 1.5 * x + 4 + eps()
 
 attr(,"class")
 [1] "list"      "dagsystem"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag00)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Reading-notes-lesson-21_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
-</div>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-<code>eps()</code> is a process
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The idea of randomness is central to statistics. In simulating data from a DAG, we use a variety of <strong>random number generators</strong>. One of the most often used generators appears in the tilde expressions as <code>eps()</code>.</p>
-<p>From the notation, you can see that <code>eps()</code> is an R function. By default, it is used without an input, just the bare <code>()</code> with nothing inside. So what could the output be?</p>
-<p>A random number generator, like <code>eps()</code>, produces its output as if from nothing. (There’s a lot of sophisticated mathematics behind this “nothing” but that doesn’t concern us here.) Each time <code>eps()</code> is used, it makes a new set of random numbers that are not connected to any previous output created by <code>eps()</code>. It’s best to think about random number generators like <code>eps()</code> as a process, for instance, rolls of dice or spins of a lottery wheel.</p>
-<p>By default, the “size” of the random noise produced by <code>eps()</code> is 1. Some DAGs, such as <code>dag01</code>, explicitly specify the size of the noise. For instance, <code>eps(2)</code> means the noise will have size 2, <code>eps(0.17)</code> means the noise will have size 0.17.</p>
-</div>
-</div>
+<p>From the formula for <code>x</code> we can see that <code>x</code> comes from a random number generator, <code>eps()</code>. The <code>eps()</code> generator is designed to generate noise of size 1 by default.</p>
+<p>As for <code>y</code>, the formula includes two sources of variation:</p>
+<ol type="1">
+<li>The part of <code>y</code> determined by <code>x</code>, that is <span class="math inline">\(y = \mathbf{1.5 x} + \color{gray}{4 + \text{eps()}}\)</span></li>
+<li>The noise added directly into <code>y</code>, that is <span class="math inline">\(y = \color{gray}{\mathbf{1.5 x} + 4} + \mathbf{eps(\,)}\)</span></li>
+</ol>
+<p>The 4 in the formula doesn’t add any <em>variation</em> to <code>y</code>; it’s just a number.</p>
+<p>Let’s measure variation using the standard deviation: We already know that <code>eps()</code> generates variation of size 1. So the amount of variation contributed by the <code>+ eps()</code> term in the DAG formula is 1. The remaining variation is contributed by <code>1.5 * x</code>. The amount of variation in <code>x</code> is 1, coming from the <code>eps()</code> in the formula for <code>x</code>. A reasonable guess is that <code>1.5 * x</code> will have 1.5 times the variation in <code>x</code>. So, the variation contributed by the <code>1.5 * x</code> component is 1.5. The overall variation in <code>y</code> is the sum of the variations contributed by the individual components. This suggests that the variation in <code>y</code> should be <span class="math display">\[\underbrace{1}_\text{from eps()} + \underbrace{1.5}_\text{from 1.5 x} = \underbrace{2.5}_\text{overall variation in y}.\]</span> Simple addition! Unfortunately, the result is wrong. In the previous <code>summarize()</code> of the <code>Dag_data</code>, we measured the overall variation in <code>y</code> as about 1.72.</p>
+<p>Let’s try again, this time using the <em>variance</em> as our measure of variation.</p>
+<p>Since <code>eps()</code> generates variation whose standard deviation is 1, the variance is simply <span class="math inline">\(1^2 = 1\)</span>. The variance of <code>x</code> is therefore 1, as is the variance of the <code>eps()</code> component of <code>y</code>.</p>
+<p>What’s the variance of <code>1.5 * x</code>? It turns out to be <span class="math inline">\(1.5^2\, \text{var(}\mathit{x}\text{)} = 2.25\)</span>. Adding up the variances from the two components gives</p>
+<p><span class="math display">\[\text{var(}\mathit{y}\text{)} = \underbrace{2.25}_\text{from 1.5 eps()} + \underbrace{1}_\text{from eps()} = 3.25\]</span></p>
+<p>This result, that the variance of <code>y</code> is 3.25, is a close match to what we found in summarizing the <code>y</code> data generated by the DAG. And, of course, <span class="math inline">\(\sqrt{3.25} = 1.80\)</span>, which is what we found by calculating the standard deviation of the <code>y</code> directly from the data.</p>
+<p>The lesson here: When adding two sources of variation, the variances of the individual sources add to produce the overall variance of the sum. Just like <span class="math inline">\(A^2 + B^2 = C^2\)</span>.</p>
 </section>
-<section id="simple-dags" class="level2">
-<h2 class="anchored" data-anchor-id="simple-dags">Simple DAGs</h2>
+<section id="dags-from-data" class="level2">
+<h2 class="anchored" data-anchor-id="dags-from-data">DAGs from data</h2>
+<p>In modeling data from <code>dag01</code> we could recover the DAGs formula for <code>y</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)           x 
+   3.996846    1.494939 </code></pre>
+</div>
+</div>
+<p>It is wrong to think that from data we can determine the DAG that generated the data. It’s only if we know the structure of the data-generation DAG that we can recover the mechanism inside that DAG. But another statistical thinker might claim that what’s behind the data is <code>y</code> causing <code>x</code>. Based on this assumption, she also can find the mechanism inside the hypothesized DAG:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(x <span class="sc">~</span> y, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)           y 
+ -1.8485902   0.4635813 </code></pre>
+</div>
+</div>
 <p>A DAG is a <strong>hypothesis</strong>, a statement that might or might not be true. DAGs are part of the statistical apparatus for thinking responsibly about <strong>causality</strong>. You use a DAG—or, potentially, multiple DAGs—when the issue of what causes what is relevant to your work.</p>
 <p>When there are only two variables involved in the system under consideration—we’ll call them X and Y for simplicity—there are only two possible DAGs:</p>
 <p><span class="math display">\[X \rightarrow Y\ \ \ \ \ \text{and}\ \ \ \ \ X \leftarrow Y\]</span></p>
-<p>But there are additional DAG possibilities once we accept that there might be other factors that positioned in the middle of the relationship between X and Y, for instance a variable C.</p>
+<p>Often, but not always, our understanding of the world allows us to focus on one of these and not the other. Example: Does the rooster crowing cause the sun to rise, or does the rising sun cause the rooster to crow? That’s a pretty easy question if you know how things work.</p>
+<p>But there are additional DAG possibilities that can account for the relationship between <code>x</code> and <code>y</code>. For instance, if we introduce another quantity, <code>c</code> in between <code>x</code> and <code>y</code>, four other DAGs need to be considered:</p>
 <p><span class="math display">\[X \rightarrow C \rightarrow Y \ \ \ \ \ \text{and}\ \ \ \ \
 X \leftarrow C \leftarrow Y \ \ \ \ \ \text{and}\ \ \ \ \
 X \leftarrow C \rightarrow Y \ \ \ \ \ \text{and}\ \ \ \ \
@@ -310,35 +386,12 @@ X \rightarrow C \leftarrow Y\]</span></p>
 <div id="fig-ten-triples" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="www/ten-triples.png" class="img-fluid figure-img" width="167"></p>
-<p></p><figcaption class="figure-caption">Figure 2: Ten DAG configurations involving three variables X, Y, and C and where there is no causal arrow between Y and X.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure 2: Ten DAG configurations involving three variables X, Y, and C and where there is no causal path going from Y to X.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<p>This enumeration of the ten configurations is useful for two reasons. First, the appropriate ways of analyzing data to quantify the causal links depends on which DAGs are hypothesized to be relevant. (We’ll get to this matter in Lesson 30.) Second, however strong may be your conviction that a particular DAG describes the way the world works, it’s worthwhile to look at each of the other DAGs as possibilities and try to imagine scenarios where they might be an appropriate choice. This exercise can reveal alternative reasonable hypotheses about the real-world connections among variables.</p>
-<p>The behavior of such three-variable DAGs is sufficiently rich that we won’t have to systematically enumerate the possibilities for four- and higher-variable DAGs. On the other hand, in framing hypotheses about connections in the real world, you will often have occasion to connect multiple factors.</p>
-<p>Always keep in mind that DAGs never involve loops (“cycles”). <strong>?@fig-two-cycles</strong> shows examples of connections that have cycles. The middle A or DAG stands for “acyclic,” that is, without cycles.</p>
-<div class="cell quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-two-cycles-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="www/three-RLR.png" class="img-fluid figure-img" width="99"></p>
-<p></p><figcaption class="figure-caption">Figure 3: Examples of networks with cycles. These are <strong>not</strong> DAGs.</figcaption><p></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-two-cycles-2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="www/three-CX-loop.png" class="img-fluid figure-img" width="99"></p>
-<p></p><figcaption class="figure-caption">Figure 4: Examples of networks with cycles. These are <strong>not</strong> DAGs.</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<p>What about systems that involve feedback, for instance an economic model where today’s prices determine tomorrow’s supply which in turn shapes the prices on the next day? Keep in mind that “today’s prices” and “the next day’s prices” are different variables and therefore not the same node in a directed graph.</p>
+<p>The statistical thinker, with the conceptual tool of DAGs at, can consider multiple possibilities for what might cause what. Sometimes she will be able to discard some of the possibilities based on common sense. (Think: roosters and the sun.) But other times there may be possibilities that she doesn’t favor but which nonetheless might be plausible to other people. In Lesson 28 we will explore how each configuration of DAG has implications for which model formulas can or cannot reveal the hypothesized causal mechanism.</p>
 
 
 </section>

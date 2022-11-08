@@ -18,3 +18,26 @@ source("../_startup.R")
 ```
 
 
+## Sample or census?
+
+Distinction between samples and census.
+
+A **sample** is convenient when we want to find out about a large group but don't have the resources---time, energy, money---to contact every member of the group. Sometimes, as in quality control in manufacturing, the measurement process is destructive: the item is consumed in the process of measurement. Then, of course, it would be pointless to make a measurement of every single item. A sample will have to do.
+
+A **census** is a complete enumeration of every member of the group. Famously, many countries have a regular census---every 10 years in the US or the UK---in which (they try to) reach out to every resident. But there are many occasions when data are a "census" on a much smaller scale. The inventory records of a store are a kind of census; every item is included. A comprehensive list of students in a class or employees of a company are also a "census."
+
+One important goal in the development of statistical technique was to be able to draw reasonable conclusions about the whole group from a sample. But it turns out that treating a census as a sample, and applying statistical thinking to the census, is helpful.
+
+Consider, for instance, the enforcement of laws against employment discrimination. Suppose a company has been accused of age discrimination in hiring. A standard part of a law suit is a requirement for the parties involved to turn over information to each other. (This is called legal "discovery.") The company has comprehensive records of all the people who applied for jobs, including often personal data such as the applicant's age. Comparing the ages of the people who were hired to those who were not can provide evidence that supports or rebuts the accusation of age discrimination. 
+
+The law against age discimination in the US defines people aged 40+ as the protected group. A useful summary of the company's job applicants and hires might look at the fraction of 40+ applicants hired and compare that to the fraction of younger applicants who were hired. Suppose the result is that 12% of the 40+ applicants were hired versus 20% of the younger applicants. What does that tell us about whether the company was discriminatory?
+
+A strict discrimination law might require that the fraction of applicants who were hired be exactly the same in the 40+ as in the younger group. A moment's thought reveals a problem with such a law ... THE FRACTION WON'T NECESSARY BE THE SAME even in the absence of discrimation. Part of the reason is the nature of fraction. Suppose there are 20 younger applicants of whom 4 were hired. What if there were 7 applicants in the 40+ group? For the fractions to be equal, the company would have had to hire 1.4 people from the 40+ group. But how do you hire 0.4 of an employee?
+
+A deeper reason why the strict laws are not common is the desire to impose a hiring quota. ??Parliament INDIA?? Without a quota, a company can't guarantee that its hiring procedures will produce equal fractions of hires in the 40+ and the younger group as well as in the other categories where discrimination law applies. Instead of imposing a quota, the strategy behind many discrimation law enforcement policies is to look for evidence of discriminatory intent or discriminatory impact.  EXPLAIN THESE
+
+## External validity
+
+## Sampling variation
+
+

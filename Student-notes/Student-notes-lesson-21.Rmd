@@ -1,0 +1,30 @@
+---
+title: "Math 300 Lesson 21 Notes"
+subtitle: "Signal and noise"
+author: "YOUR NAME HERE"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+---
+
+
+```{r setup, include=FALSE}
+library(math300)
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+::: {.callout-warning}
+## Note in draft
+
+One activity can be to determine whether the parameter to `eps()` is in terms of standard deviation or of variance.
+:::
+
+## Key ideas
+
