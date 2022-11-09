@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-11-08">
+<meta name="dcterms.date" content="2022-11-09">
 
 <title>Spring 2023 Math 300 Revisions - Math 300R Lesson r (lesson &lt;- 21) Reading Notes</title>
 <style>
@@ -187,7 +187,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 8, 2022</p>
+      <p class="date">November 9, 2022</p>
     </div>
   </div>
     
@@ -200,7 +200,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <iframe src="https://archive.org/details/1940RadioNews/1940-06-21-CAN-WIlliam-C-Kirker-On-French-Armistace-At-Compiegne.mp3" width="100%" height="400" style="border:1px solid black;">
 </iframe>
 <p>There are many other recordings on the site which are worth listening to. I’m directing you to <a href="https://archive.org/details/1940RadioNews/1940-06-21-CAN-WIlliam-C-Kirker-On-French-Armistace-At-Compiegne.mp3">#103</a> as an example of a radio phenomenon: <strong>noise</strong> (or, in slang, “static”). You can clearly make out the spoken words from the recording. But there is also a background sound, something like the sound made by the act of crumpling paper.</p>
-<p>Modern radio engineering has more-or-less eliminated noise, mainly by the use of digital technology. (Many of the recordings on the radio archive site have been “cleaned” so the noise is not so evident. ) But if you have ever talked to a friend at a sporting event, you have probably had to shout to get your message over the noise of the crowd. At the receiving end, your friend intuitively filters out the noise (unless it is too loud) and recovers your words.</p>
+<p>Modern radio engineering has more-or-less eliminated noise, mainly by the use of digital technology. (Many of the recordings on the radio archive site have been “cleaned” so the noise is not so evident.) But if you have ever talked to a friend at a sporting event, you have probably had to shout to get your message over the noise of the crowd. At the receiving end, your friend intuitively filters out the noise (unless it is too loud) and recovers your words.</p>
 <p>Engineers and others make a distinction between <strong>signal</strong> and noise. The signal is the spoken words of the 1940 broadcast, the noise is the hiss and clicks. You can intuitively separate the signal and the noise in this recording, focusing attention on the signal and ignoring the noise.</p>
 <p>Separating signal from noise—or, at least trying to reduce the noise—is a common problem in all sorts of settings. Historically, statistics emerged from a confluence of two needs: i) the need to summarize the resources and activities of countries and <strong>states</strong> (whence comes the “stat” in “statistics”) and ii) the need to filter out noise so that the signal becomes clearer.</p>
 <section id="sec-signal-and-noise" class="level2">
@@ -338,7 +338,7 @@ attr(,"class")
 <p>As for <code>y</code>, the formula includes two sources of variation:</p>
 <ol type="1">
 <li>The part of <code>y</code> determined by <code>x</code>, that is <span class="math inline">\(y = \mathbf{1.5 x} + \color{gray}{4 + \text{eps()}}\)</span></li>
-<li>The noise added directly into <code>y</code>, that is <span class="math inline">\(y = \color{gray}{\mathbf{1.5 x} + 4} + \mathbf{eps(\,)}\)</span></li>
+<li>The noise added directly into <code>y</code>, that is <span class="math inline">\(y = \color{gray}{\mathbf{1.5 x} + 4} + \color{blank}{\mathbf{eps(\,)}}\)</span></li>
 </ol>
 <p>The 4 in the formula doesn’t add any <em>variation</em> to <code>y</code>; it’s just a number.</p>
 <p>Let’s measure variation using the standard deviation: We already know that <code>eps()</code> generates variation of size 1. So the amount of variation contributed by the <code>+ eps()</code> term in the DAG formula is 1. The remaining variation is contributed by <code>1.5 * x</code>. The amount of variation in <code>x</code> is 1, coming from the <code>eps()</code> in the formula for <code>x</code>. A reasonable guess is that <code>1.5 * x</code> will have 1.5 times the variation in <code>x</code>. So, the variation contributed by the <code>1.5 * x</code> component is 1.5. The overall variation in <code>y</code> is the sum of the variations contributed by the individual components. This suggests that the variation in <code>y</code> should be <span class="math display">\[\underbrace{1}_\text{from eps()} + \underbrace{1.5}_\text{from 1.5 x} = \underbrace{2.5}_\text{overall variation in y}.\]</span> Simple addition! Unfortunately, the result is wrong. In the previous <code>summarize()</code> of the <code>Dag_data</code>, we measured the overall variation in <code>y</code> as about 1.72.</p>
@@ -361,7 +361,7 @@ attr(,"class")
    3.996846    1.494939 </code></pre>
 </div>
 </div>
-<p>It is wrong to think that from data we can determine the DAG that generated the data. It’s only if we know the structure of the data-generation DAG that we can recover the mechanism inside that DAG. But another statistical thinker might claim that what’s behind the data is <code>y</code> causing <code>x</code>. Based on this assumption, she also can find the mechanism inside the hypothesized DAG:</p>
+<p>It is wrong to think that from data we can determine the DAG that generated the data. It’s only if we know the structure of the data-generation DAG that we can recover the mechanism inside that DAG. But another statistical thinker might claim that what’s behind the data is <code>y</code> causing <code>x</code>. Based on this assumption, she also can find the mechanism inside her hypothesized DAG:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(x <span class="sc">~</span> y, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>

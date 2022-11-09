@@ -26,7 +26,7 @@ This can be an example, perhaps in the reading notes.
 ```{r}
 library(splines)
 mod <- lm(time ~ ns(distance,4)*climb*sex, data = Hill_racing)
-model_plot(mod, tilde=time ~ distance + sex + climb)
+model_plot(mod,  x=distance, color=sex, facet=climb)
 ```
 
 At higher climbs, the effect size of distance depends on sex, but not at lower climbs.

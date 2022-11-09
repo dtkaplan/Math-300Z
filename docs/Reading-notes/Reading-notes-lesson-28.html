@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-10-26">
+<meta name="dcterms.date" content="2022-11-09">
 
 <title>Spring 2023 Math 300 Revisions - Math 300R Lesson r (lesson &lt;- 28) Reading Notes</title>
 <style>
@@ -187,7 +187,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 26, 2022</p>
+      <p class="date">November 9, 2022</p>
     </div>
   </div>
     
@@ -196,6 +196,87 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note: in draft
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use <code>KidsFeet</code> to illustrate the importance of incorporating covariates into models. Story: It was claimed that girls’ feet are narrower than boys. Do the data show this?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(width <span class="sc">~</span> sex, <span class="at">data =</span> KidsFeet, ci.mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  response sex   lower    upper
+1    width   B 8.97856 9.401440
+2    width   G 8.54631 9.022111</code></pre>
+</div>
+</div>
+<p>Barely any overlap in the two intervals, so there does seem to be a difference between the groups. Or, in the language of models:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(width <span class="sc">~</span> sex, <span class="at">data =</span> KidsFeet) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 2.5 %      97.5 %
+(Intercept)  8.9758882  9.40411181
+sexG        -0.7125476 -0.09903131</code></pre>
+</div>
+</div>
+<p>The confidence interval on the effect size of <code>sex</code> does not include zero, so it’s reasonable to conclude that <code>sex</code> is related to foot width.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Possible LC or Student-notes item
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Describe the meaning of the reports in this section in everyday English to someone not trained in statistics.</p>
+</div>
+</div>
+<p>With covariates: The motivating question is not really about the width of feet but the <em>shape</em> of feet. If boys’ and girls’ feet have the same shape, there’s no obvious anatomical reason for shoes to be divided into types according to sex.</p>
+<p>One way to get at this is to use a response variable that serves the actual needs of the question, which is about shape. The “aspect ratio”—width divided by length—is a simple summary of shape. Does the aspect ratio differ between the sexes?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>KidsFeet <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">aspect_ratio =</span> width<span class="sc">/</span>length) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">df_stats</span>(aspect_ratio <span class="sc">~</span> sex, ci.mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      response sex     lower     upper
+1 aspect_ratio   B 0.3585847 0.3742274
+2 aspect_ratio   G 0.3530213 0.3700862</code></pre>
+</div>
+</div>
+<p>Another way to see the same thing is to look at the confidence interval on the effect size of <code>sex</code> on <code>aspect_ratio</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>KidsFeet <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">aspect_ratio =</span> width<span class="sc">/</span>length) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(aspect_ratio <span class="sc">~</span> sex, <span class="at">data=</span>.) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  2.5 %     97.5 %
+(Intercept)  0.35861279 0.37419929
+sexG        -0.01601772 0.00631307</code></pre>
+</div>
+</div>
+<p>The confidence interval includes zero, so it’s reasonable to conclude that sex is not a predictor of foot shape.</p>
+<p>Notice that constructing an appropriate data analysis to address the real-world question at hand involved using <strong>three</strong> variables: <code>sex</code>, <code>width</code>, and <code>length</code>. For the question at hand, examining just <code>sex</code> and <code>width</code> isn’t adequate. <code>length</code> isn’t a variable of direct interest here, but we can’t get an appropriate sense of the relationship between <code>sex</code> and <code>width</code> unless we take <code>length</code> into account. Variables that aren’t of direct interest, but which play an important role in the overall system, are called “<strong>covariates</strong>.”</p>
+<p>In the above, we used the covariate <code>length</code> to generate a more meaningful <em>response variable</em>. This is clever and appropriate. But more generally, covariates play the role of an <em>explanatory</em> variable. To illustrate the general use of covariates, we can construct a different model of <code>width</code> which shows that <code>sex</code> is not an explanatory factor once we take <code>length</code> into account.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(width <span class="sc">~</span> sex <span class="sc">+</span> length, <span class="at">data =</span> KidsFeet) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 2.5 %     97.5 %
+(Intercept)  1.1048182 6.17751841
+sexG        -0.4947759 0.02974084
+length       0.1202348 0.32181513</code></pre>
+</div>
+</div>
+<p>The confidence interval on the effect size of <code>sexG</code> on <code>width</code> includes zero, so the data do not justify a conclusion that <code>sex</code> is related to <code>width</code>.</p>
+</div>
+</div>
 <section id="from-sm2" class="level2">
 <h2 class="anchored" data-anchor-id="from-sm2">From SM2</h2>
 <p>One of the most important ideas in science is “<strong>experiment</strong>”. In a simple, ideal form of an experiment, you cause one explanatory factor to vary, hold all the other conditions constant, and observe the response. A famous story of such an experiment involves Galileo Galilei (1564-1642) dropping balls of different masses but equal diameter from the Leaning Tower of Pisa.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Would a heavy ball fall faster than a light ball, as theorized by Aristotle 2000 years previously? The quantity that Galileo varied was the weight of the ball, the quantity he observed was how fast the balls fell, the conditions he held constant were the height of the fall and the diameter of the balls. The experimental method of dropping balls side by side also holds constant the atmospheric conditions: temperature, humidity, wind, air density, etc.</p>
@@ -344,7 +425,7 @@ Bayer said in a statement that the findings are unreliable because Trasylol tend
 </div>
 <p>The data in <a href="#fig-truckwages1">Figure&nbsp;1</a> reveals a clear pattern: men are being paid more than women. Fitting the model <code>earnings</code> ~ <code>sex</code> indicates the average difference in earnings between men and women:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(earnings <span class="sc">~</span> sex, <span class="at">data =</span> mosaicModel<span class="sc">::</span>Trucking_jobs) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(earnings <span class="sc">~</span> sex, <span class="at">data =</span> mosaicModel<span class="sc">::</span>Trucking_jobs) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)        sexM 
   35501.250    4735.098 </code></pre>
@@ -366,16 +447,16 @@ Bayer said in a statement that the findings are unreliable because Trasylol tend
 </div>
 <p>It’s evident that for both men and women, earnings tend to increase with age. The model design imposes a straight line structure on the fitted model values. The formulas for the two lines are:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For females</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(earnings <span class="sc">~</span> age, <span class="at">data =</span> mosaicModel<span class="sc">::</span>Trucking_jobs <span class="sc">%&gt;%</span> <span class="fu">filter</span>(sex<span class="sc">==</span><span class="st">"F"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For females</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(earnings <span class="sc">~</span> age, <span class="at">data =</span> mosaicModel<span class="sc">::</span>Trucking_jobs <span class="sc">%&gt;%</span> <span class="fu">filter</span>(sex<span class="sc">==</span><span class="st">"F"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)         age 
   17178.160     529.952 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For males</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(earnings <span class="sc">~</span> age, <span class="at">data =</span> mosaicModel<span class="sc">::</span>Trucking_jobs <span class="sc">%&gt;%</span> <span class="fu">filter</span>(sex<span class="sc">==</span><span class="st">"M"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For males</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(earnings <span class="sc">~</span> age, <span class="at">data =</span> mosaicModel<span class="sc">::</span>Trucking_jobs <span class="sc">%&gt;%</span> <span class="fu">filter</span>(sex<span class="sc">==</span><span class="st">"M"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)         age 
  16734.9949    609.0916 </code></pre>
@@ -492,7 +573,7 @@ Bayer said in a statement that the findings are unreliable because Trasylol tend
 <p>To complete the simulation, we’ll need to set values for dollar expenditures and participation percentage. We’ll let the dollar expenditures vary randomly from $7000 to $18,000 from one state to another and the participation percentage vary randomly from 1 to 100 percentage points.</p>
 <p>Notice that in this simulation, both participation percentage and expenditures affect education outcomes, but there is no connection at all between the two explanatory variables. That is, the graphical causal network is that shown in Figure @ref(fig:school-sim-1).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dag_school1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>dag_school1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 expenditure ~ unif(7000, 18000)
@@ -506,7 +587,7 @@ outcome ~ 1100 + 0.01 * expenditure - 4 * participation + eps(50)
 attr(,"class")
 [1] "list"      "dagsystem"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag_school1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag_school1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-school-sim-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -518,13 +599,13 @@ attr(,"class")
 </div>
 <p>We can generate simulated data and use the data to train models. <strong>?@fig-school-data-1</strong> shows the data and two different models.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Dat1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag_school1, <span class="at">size=</span><span class="dv">500</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>mod1_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(outcome <span class="sc">~</span> <span class="fu">ns</span>(expenditure,<span class="dv">2</span>), <span class="at">data =</span> Dat1)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>mod1_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(outcome <span class="sc">~</span> <span class="fu">ns</span>(expenditure,<span class="dv">2</span>) <span class="sc">*</span> participation, <span class="at">data =</span> Dat1)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_plot</span>(mod1_1, <span class="at">interval=</span><span class="st">"prediction"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_point</span>(outcome <span class="sc">~</span> expenditure, <span class="at">data =</span> Dat1)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_plot</span>(mod1_2, <span class="at">interval=</span><span class="st">"prediction"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_point</span>(outcome <span class="sc">~</span> expenditure, <span class="at">alpha=</span><span class="sc">~</span>participation, <span class="at">data =</span> Dat1, <span class="at">inherit=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>Dat1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag_school1, <span class="at">size=</span><span class="dv">500</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>mod1_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(outcome <span class="sc">~</span> <span class="fu">ns</span>(expenditure,<span class="dv">2</span>), <span class="at">data =</span> Dat1)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>mod1_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(outcome <span class="sc">~</span> <span class="fu">ns</span>(expenditure,<span class="dv">2</span>) <span class="sc">*</span> participation, <span class="at">data =</span> Dat1)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_plot</span>(mod1_1, <span class="at">interval=</span><span class="st">"prediction"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_point</span>(outcome <span class="sc">~</span> expenditure, <span class="at">data =</span> Dat1)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_plot</span>(mod1_2, <span class="at">interval=</span><span class="st">"prediction"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_point</span>(outcome <span class="sc">~</span> expenditure, <span class="at">alpha=</span><span class="sc">~</span>participation, <span class="at">data =</span> Dat1, <span class="at">inherit=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-school-data-1-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -545,7 +626,7 @@ attr(,"class")
 <p>The relationship between outcome and expenditure can be quantified by the effect size, which appears as the slope of the function. You can see that when the explanatory variables are unconnected, as in <a href="#fig-school-sim-1">Figure&nbsp;5</a>, the functions have the same slope.</p>
 <p>Now consider a somewhat different simulation. Rather than expenditures and participation being unconnected (as in the causal diagram shown in <a href="#fig-school-sim-1">Figure&nbsp;5</a>), in this new situation we will posit a connection between the two explanatory variables. We’ll image that there is some broad factor, labeled “culture” in <strong>?@fig-school-sim-2</strong>, that influences both the amount of expenditure and the participation in the tests used to measure education outcome. For instance, “culture” might be the importance that the community places on education or the wealth of the community.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dag_school2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>dag_school2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 culture ~ unif(-1, 1)
@@ -563,7 +644,7 @@ outcome ~ 1100 + 0.01 * expenditure - 4 * participation + eps(50)
 attr(,"class")
 [1] "list"      "dagsystem"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag_school2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag_school2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-school-sim2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">

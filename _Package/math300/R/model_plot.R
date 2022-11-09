@@ -60,7 +60,7 @@ model_plot <- function(mod, x, color=NULL, facet=NULL, facet2=NULL,
   if (continuous_or_discrete(data[[x]]) == "continuous") {
 
     data_plot_fun <- gf_point
-    if (interval && ".lwr" %in% names(For_plotting)) {
+    if (interval != "none" && ".lwr" %in% names(For_plotting)) {
       space_formula <- as.formula(glue::glue(".lwr + .upr ~ {x}"))
       mod_plot_fun <- gf_ribbon
     } else {
@@ -71,7 +71,7 @@ model_plot <- function(mod, x, color=NULL, facet=NULL, facet2=NULL,
   } else {
     mod_plot_fun <- gf_errorbar
     data_plot_fun <- gf_jitter
-    if (interval && ".lwr" %in% names(For_plotting)) {
+    if (interval != "none" && ".lwr" %in% names(For_plotting)) {
       space_formula <- as.formula(glue::glue(".lwr + .upr ~ {x}"))
     }
     space_formula <- as.formula(glue::glue(".output + .output ~ {x}"))
