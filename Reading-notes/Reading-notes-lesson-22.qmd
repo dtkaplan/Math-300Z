@@ -66,6 +66,9 @@ We start the process of learning about sampling variation on the training ground
 
 It's crucial to remember that sampling variation is not about the row-to-row variation in a single sample, it is about the variation in the summary from one sample to another. So our initial process for exploring sampling variation will be to carry out many trials, each of which is a summary of a sample. 
 
+::: {.callout-warning}
+## Samples and specimens 
+
 To illustrate, here is one trial using a sample of size $n=25$. There are many ways to summarize a sample, here we will use `y ~ 1`.
 
 ```{r}
@@ -100,6 +103,43 @@ This quantity, which is the standard deviation of a sample of summaries, has a t
 
 The standard error is an ordinary standard deviation, but in a particular context: the standard deviation of a sample of summaries. This can be confusing, since "error" and "deviation" are somewhat synonomous in everyday language. It can be hard to remember when to use "error" and when to use "deviation." Fortunately, it's more common to use another way to present the information about sampling variation.
 
+## The SE depends on sample size
+
+We found an SE of 0.348 on the Intercept in a sample of size $n=25$. Does the SE depend on the sample size. We can find out by trying it for several different sample sizes, say, 25, 100, 400, 1600, 6400, 25600, 102400. We picked these particular numbers to be multiples of 4 times the previous sample size.
+
+Here's the SE for a sample of size 400:
+```{r}
+Trials <- do(100) * {
+  Sample <- sample(dag01, size=25) 
+  Sample %>% 
+    lm(y ~ 1, data = .) %>%
+    coefficients()
+}
+Trials %>% summarize(se = sd(Intercept))
+```
+
+You can try it yourself for the other sample sizes. Here's what we got, running 1000 trials in each instance:
+
+```{r echo=FALSE, results="hide"}
+SE <- tibble::tribble(
+  ~n, ~se,
+  25, 0.36,
+  100, 0.19,
+  400, 0.091,
+  1600, 0.043,
+  6400, 0.023,
+  25600, 0.011,
+  102400, 0.0056
+)
+```
+
+```{r}
+SE  %>% knitr::kable()
+```
+
+There's a pattern here. Every time we double $n$, the standard error goes down by a factor of 2, that is, $\sqrt{4}$. (The pattern isn't exact because there is sampling variation in the trials themselves.)
+
+Lesson: The standard error gets smaller the larger the sample size. For a sample size of $n$, the SE will be proportional to $1/\sqrt{\strut n}$.
 
 ## The confidence interval
 
@@ -147,7 +187,7 @@ Here's the regression report on the `Hill_racing` model
 ```{r}
 Hill_racing %>% 
   lm(time ~ distance + climb, data=.) %>% 
-  broom::tidy()
+  regression_summary()
 ```
 
 The "standard error" for each coefficient is reported in the column labelled `std.error`. 

@@ -165,7 +165,7 @@ gf_jitter(zero_one(outcome) ~ age, data = Whickham, alpha=0.3, height=0.1) %>%
 About the summarization of models. Pipe the model fit into any of four functions:
 
 i. `%>% coefficients()`
-ii. `%>% broom::tidy()`
+ii. `%>% regression_summary()`
 iii. `%>% rsquared()`
 iv. `%>% confint()`
 

@@ -48,7 +48,7 @@ In each case, the standard deviation is somewhat random, since new simulated dat
 We're going to build models of prices of books based on the `moderndive::amazon_books` data frame. For each model, you will calculate the confidence interval of one or more coefficients in two ways:
 
 i. Directly, using `confint()`.
-ii. Indirectly, using `broom::tidy()`
+ii. Indirectly, using `regression_summary()`
 
 **Model 1**. 
 
@@ -61,7 +61,7 @@ ii. Indirectly, using `broom::tidy()`
 
 ```{r}
 lm(list_price ~ amazon_price, data = amazon_books) %>% confint()
-lm(list_price ~ amazon_price, data = amazon_books) %>% broom::tidy()
+lm(list_price ~ amazon_price, data = amazon_books) %>% regression_summary()
 ```
 
 1. You can read the confidence interval directly from the `confint()` report. For the regression report, calculate the confidence interval as the estimate $\pm 2$ times the "standard error."
@@ -78,7 +78,7 @@ lm(list_price ~ amazon_price, data = amazon_books) %>% broom::tidy()
 
 ```{r}
 lm(list_price ~ amazon_price + hard_paper, data = amazon_books) %>% confint()
-lm(list_price ~ amazon_price + hard_paper, data = amazon_books) %>% broom::tidy()
+lm(list_price ~ amazon_price + hard_paper, data = amazon_books) %>% regression_tidy()
 ```
 
 A hardcover costs about $2 to $4 more than a paperback.

@@ -53,7 +53,7 @@ Let's model `d` by `b` and look at the p-value: `r set.seed(101)`
 
 ```{r}
 Sample <- sample(dag07, size=50)
-lm(d ~ b, data=Sample) %>% broom::tidy()
+lm(d ~ b, data=Sample) %>% regression_summary()
 ```
 
 The p-value on the `b` coefficient is large, greater than the usual threshold of 0.05.
@@ -61,7 +61,7 @@ The p-value on the `b` coefficient is large, greater than the usual threshold of
 On the other hand, `b` and `c` are connected and the p-value (with this much data) is tiny.
 
 ```{r}
-lm(c ~ b, data = Sample) %>% broom::tidy()
+lm(c ~ b, data = Sample) %>% regression_summary()
 ```
 
 Imagine a setting where a popular (but unproven!) hypothesis has emerged: that `b` and `d` are really related. 100 different research teams rush in to be the first to demonstrate, each generating their own experimental data. We'll simulate this and collect the summary of the `b` coefficient w.r.t. `d`. [First show the statement without the `do()` to show what each row looks like. Then run the 100 trials and look for small p-values]
@@ -69,7 +69,7 @@ Imagine a setting where a popular (but unproven!) hypothesis has emerged: that `
 ```{r}
 All_groups <- do(100) * {
   lm(d ~ b, data=sample(dag07, size=50)) %>% 
-  broom::tidy() %>%
+  regression_summary() %>%
   filter(term == 'b')
   }
 ```
@@ -91,7 +91,7 @@ Here's a simulation where each lab group runs the study twice. Do any get small 
 Replicated_groups <- do(100) * {
   do(2) * {
     lm(d ~ b, data=sample(dag07, size=50)) %>% 
-      broom::tidy() %>%
+      regression_summary() %>%
       filter(term == 'b')
     } %>% .$p.value
 } 
@@ -105,9 +105,9 @@ A better approach. As a rule of thumb, once you have a sample size $n$ that give
 A demonstration when there is a genuine relationship:
 
 ```{r}
-lm(c ~ a, data = sample(dag07, size=5)) %>% broom::tidy() %>%
+lm(c ~ a, data = sample(dag07, size=5)) %>% regression_summary() %>%
   filter(term == 'a')
-lm(c ~ a, data = sample(dag07, size=10)) %>% broom::tidy() %>%
+lm(c ~ a, data = sample(dag07, size=10)) %>% regression_summary() %>%
   filter(term == 'a')
 ```
 
@@ -116,7 +116,7 @@ Let's re-run the simulation with $n$ doubled, that is, `size=100` compared to th
 ```{r}
 Bigger_n <- do(100) * {
   lm(d ~ b, data=sample(dag07, size=100)) %>% 
-    broom::tidy() %>%
+    regression_summary() %>%
     filter(term == 'b')
   }
 ```

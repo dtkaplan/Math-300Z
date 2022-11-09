@@ -21,7 +21,7 @@ So far, we've used only the first three columns of the regression report: the na
 
 ```{r}
 lm(mpg ~ wt + hp, data = mtcars) %>% 
-  broom::tidy()
+  regression_summary()
 ```
 
 There are two more columns to go. The fourth column is labelled "**statistic**" (short for "**test statistic**") and the fifth column is the "**p-value**."
@@ -82,7 +82,7 @@ We'll use such data, replacing the actual `hp` with the shuffled `hp`, to find t
 ```{r}
 set.seed(112)
 lm(mpg ~ wt + shuffle(hp), data = mtcars) %>%
-  broom::tidy()
+  regression_summary()
 ```
 
 In this trial, the coefficient on the shuffled `hp` is 0.0120. Of course the coefficient might well be different if the trial were repeated. Let's run 1000 trials, from each of which we'll extract the coefficient on the shuffled `hp`.
@@ -90,7 +90,7 @@ In this trial, the coefficient on the shuffled `hp` is 0.0120. Of course the coe
 ```{r}
 Trials <- do(1000) * { 
   lm(mpg ~ wt + shuffle(hp), data = mtcars) %>%
-  broom::tidy() %>%
+  regression_summary() %>%
   filter(term == "shuffle(hp)") %>%
   select(estimate)
 }

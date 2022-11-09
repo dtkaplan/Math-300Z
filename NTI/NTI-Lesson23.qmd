@@ -86,7 +86,7 @@ In the readings, we mentioned that there are formulas for the standard deviation
 Show how to construct the regression table and where to find the relevant standard error
 
 ```{r}
-do(3) * {lm(list_price ~ num_pages, data = moderndive::amazon_books) %>% broom::tidy()}
+do(3) * {lm(list_price ~ num_pages, data = moderndive::amazon_books) %>% regression_summary()}
 ```
 
 ```{r}
