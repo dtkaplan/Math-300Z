@@ -13,6 +13,35 @@ output:
     toc: yes
 ---
 
+You now have a substantial toolbox for for summarizing data in ways that support statistical thinnking. Time to move to the next step: extracting actionable information from such summarizing. Why the word "actionable" in the previous sentence? Because much of the time the goal of summarizing data is to guide **decision making**. The setting is that you or your organization have to make a decision: administer a medicine, change a budget, raise or lower a price, respond to an evolving situation, and so on. Decisions ought to be made on an informed basis. Often, the information needed is hidden in tables of data. The statistical thinker knows how to extract information in a form that is as useful as possible to the decision maker.
+
+Setting for decisions vary widely, but a useful simplification splits support for decision making into two broad categories.
+
+1. **Making a prediction** for an individual choice. The need for predictions arises in both mundane and in critical settings. For instance, an airline needs to set prices. They want to maximize revenue. Higher prices will bring in more money per seat, but the seats may not be filled. To make the decision, the airline needs a prediction about what the demand will be for those seats, which may vary based on day of the week, time of day, time of year, origin and destination of the flight, and so on. Another example: Merchants and social media sites have to make choices about what products or posts to display to a viewer. Merchants have many products, social media has many news feeds, tweets, blog entries to choose from. They want to predict which ones are most likely to cause you to respond, either by buying a particular product or watching a video, "news" report, and so on. 
+
+Less mundane: A patient comes to an urgent-care clinic with symptoms. A decision needs to be made about what disease or illness the patient has in order to guide choices of tests and, in turn, possible treatment. The inputs to the prediction are the symptoms---neck stiffness, a tremor, and so on---as well as facts about the person---age, sex, occupation, etc. The output of the prediction will assign a probability to each of medical conditions that could cause the symptom. As new tests or measurements are done---temperature, blood pressure, white-blood-cell count, blood oxygenation, and others---they become new inputs for the prediction and the probabilities change accordingly. The television drama *House* provides in every episode an example of such evolving predictions, which clinicians call "differential diagnosis." The word "prediction" suggests the future, but many predictions have to do with the current or past state that is as yet unknown to greater or lesser extent. Synonyms for "prediction" include "classification" (Lessons 34 and 35), "conjecture", "guess", "bet", .... The phrase "informed guess" points to the idea: using information to support decision making.
+
+2. **Intervening** in a system. Such interventions occur on both grand scales and small: changes in government policies such as funding for pre-school education or subsidies for renewable energy, closing a road to redirect traffic or opening a new highway or bus line, changing the minimum wage, etc. Before making such interventions, it is wise to know what the consequences are likely to be. Figuring this out often requires understanding how the system works: what causes what. Without knowing this, how can you antipate the influence of the intervention on other components of the system? Also, interventions often affect many individuals: influencing the overall trend of the effect across individuals might be the goal, as opposed to a prediction for each individual affected.
+
+This lesson is focuses on two ideas that are useful for building and summarizing models of a system for the purposes of *intervening* in that system: effect size and interaction. We will need some additional concepts and tools in order to bring causality into the picture. This will have to wait until Lessons 28 through 31.
+
+## Efect size: Input to output
+
+
+## Interaction
+
+Not all effects are additive.
+
+## Old stuff
+
+
+
+Does a patient have a disease? That's a prediction.
+
+
+https://moderndive.com/5-regression.html
+
+
 A regression model can be formulated as a function that takes the explanatory variables as inputs and produces a value for the response variable as output.
 
 SHOW `makeFun()` applied to a model producing a **model function**.
