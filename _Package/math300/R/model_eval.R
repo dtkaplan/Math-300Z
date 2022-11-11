@@ -2,9 +2,17 @@
 #'
 #'
 #' @export
-model_eval <- function(mod, data=NULL, type=c("response", "link"),
+model_eval <- function(mod, input=NULL, data=NULL, ..., type=c("response", "link"),
                        interval=c("prediction", "confidence", "none"), level=0.95,
                        skeleton=FALSE) {
+  if (is.null(data)) {
+    if (!is.null(input)) data <- input
+    else if (skeleton==FALSE) data <- expand.grid(list(...))
+  }
+  explan_names <- all.vars(mosaicModel:::explanatory_vars(mod))
+  if (!all(explan_names %in% names(data)))
+    stop("Must provide values for all explanatory variables.")
+
   type <- match.arg(type)
   interval = match.arg(interval)
   if (level <= 0 || level >=1) stop("<level> must be > 0 and < 1.")

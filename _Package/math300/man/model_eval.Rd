@@ -6,7 +6,9 @@
 \usage{
 model_eval(
   mod,
+  input = NULL,
   data = NULL,
+  ...,
   type = c("response", "link"),
   interval = c("prediction", "confidence", "none"),
   level = 0.95,
