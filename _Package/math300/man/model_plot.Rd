@@ -10,6 +10,7 @@ model_plot(
   color = NULL,
   facet = NULL,
   facet2 = NULL,
+  ...,
   data = NULL,
   nlevels = 3,
   show_data = TRUE,

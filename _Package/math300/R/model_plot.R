@@ -6,13 +6,13 @@
 
 #' @export
 model_plot <- function(mod, x, color=NULL, facet=NULL, facet2=NULL,
-                       data = NULL, nlevels=3, show_data=TRUE,
+                       ..., data = NULL, nlevels=3, show_data=TRUE,
                        interval=c("none", "prediction", "confidence"), data_alpha=0.25) {
   # Allow unquoted names as arguments
   x <- as.character(substitute(x))
-  color <- as.character(substitute(color))
-  facet <- as.character(substitute(facet))
-  facet2 <- as.character(substitute(facet2))
+  if (!is.null(color)) color <- as.character(substitute(color))
+  if (!is.null(facet)) facet <- as.character(substitute(facet))
+  if (!is.null(facet2)) facet2 <- as.character(substitute(facet2))
 
   interval=match.arg(interval)
 
@@ -28,6 +28,7 @@ model_plot <- function(mod, x, color=NULL, facet=NULL, facet2=NULL,
   # data_skeleton() never returns the response variable
   Skeleton <- data_skeleton(data, all_names_formula,
                             spreadn=length(spread_names),
+                            ...,
                             ncont=100, nlevels=nlevels)
 
   # If there is faceting going on based on a quantitative variable,
@@ -52,8 +53,9 @@ model_plot <- function(mod, x, color=NULL, facet=NULL, facet2=NULL,
     Skeleton[[color]] <- breaks
   }
 
+  alpha_val <- 0.75
   For_plotting <-
-    model_eval(mod, data=expand.grid(Skeleton))
+    model_eval(mod, data=expand.grid(Skeleton), interval=interval)
 
   # determine the plot geoms and formulas
   data_formula <- as.formula(glue::glue("{response_name} ~ {x}"))
@@ -63,6 +65,7 @@ model_plot <- function(mod, x, color=NULL, facet=NULL, facet2=NULL,
     if (interval != "none" && ".lwr" %in% names(For_plotting)) {
       space_formula <- as.formula(glue::glue(".lwr + .upr ~ {x}"))
       mod_plot_fun <- gf_ribbon
+      alpha_val <- .3
     } else {
       space_formula <- as.formula(glue::glue(".output ~ {x}"))
       mod_plot_fun <- gf_line
@@ -79,7 +82,8 @@ model_plot <- function(mod, x, color=NULL, facet=NULL, facet2=NULL,
 
   if(length(plotting_names) > 1) {
     color_formula <- as.formula(glue::glue("~ {color}"))
-  } else color_formula <- "blue"
+    fill_formula <- color_formula
+  } else fill_formula <- color_formula <- "blue"
 
 
   # Add columns for the facets, if any
@@ -104,8 +108,8 @@ model_plot <- function(mod, x, color=NULL, facet=NULL, facet2=NULL,
   }
 
   P <- P %>%
-    mod_plot_fun(space_formula, color=color_formula,
-                 group=color_formula, data = For_plotting,
+    mod_plot_fun(space_formula, color=color_formula, fill=fill_formula,
+                 group=color_formula, data = For_plotting, alpha=alpha_val,
                  size=0.75, inherit=FALSE) +
     ylab(response_name)
 
@@ -123,7 +127,8 @@ model_plot <- function(mod, x, color=NULL, facet=NULL, facet2=NULL,
   if (is.null(color)) return(P)
   else if (continuous_or_discrete(data[[color]]) == "discrete")
     return(P)
-  else return(P + scale_color_stepsn(colors=heat.colors(5)))
+  else return(P + scale_color_stepsn(colors=heat.colors(5)) +
+                scale_fill_stepsn(colors=heat.colors(5)))
 
 }
 
