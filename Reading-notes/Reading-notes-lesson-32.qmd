@@ -17,6 +17,29 @@ output:
 source("../_startup.R")
 ```
 
+
+
+## From SM2
+
+One of the most important ideas in science is "**experiment**". In a simple, ideal form of an experiment, you cause one explanatory factor to vary, hold all the other conditions constant, and observe the response.  A famous story of such an experiment involves Galileo Galilei (1564-1642) `r index_entry('C','Galileo Galilei')` `r index_entry('C', 'Pisa, Leaning Tower')`  dropping balls of different masses but equal diameter from the Leaning Tower of Pisa.^[The picturesque story of balls dropped from the Tower of Pisa may not be true. Galileo did record experiments done by rolling balls down ramps.] Would a heavy ball fall faster than a light ball, as theorized by Aristotle 2000 years previously?  The quantity that Galileo varied was the weight of the ball, the quantity he observed was how fast the balls fell, the conditions he held constant were the height of the fall and the diameter of the balls.  The experimental method of dropping balls side by side also holds constant the atmospheric conditions: temperature, humidity, wind, air density, etc.
+
+Of course, Galileo had no control over the atmospheric conditions.  By carrying out the experiment in a short period, while atmospheric conditions were steady, he effectively held them constant.
+
+Today, Galileo's experiment seems obvious.  But not at the time.  In the history of science, Galileo's work was a landmark: he put *observation* at the fore, rather than the beliefs passed down from authority.  Aristotle's ancient theory, still considered authoritative in Galileo's time, was that heavier objects fall faster. 
+
+`r index_entry('C', 'experiment! vs observation')` 
+`r index_entry('C', 'relationship!partial vs total')` 
+`r index_entry('C', 'partial relationship')` 
+`r index_entry('C', 'total relationship')` 
+`r index_entry('C', 'aprotinin (drug)')` 
+`r index_entry('C', 'heart surgery')` 
+
+The ideal of "holding all other conditions constant" is not always so simple as with dropping balls from a tower in steady weather.  Consider an experiment to test the effect of a blood-pressure drug. Take two groups of people, give the people in one group the drug and give nothing to the other group.  Observe how blood pressure changes in the two groups.  The factor being caused to vary is whether or not a person gets the drug. But what is being held constant?  Presumably the researcher took care to make the two groups as similar as possible: similar medical conditions and histories, similar weights, similar ages.  But "similar" is not "constant." 
+
+
+
+## DAG interpretation of experiment
+
 Albert Einstein is reputed to have said:
 
 > *A theory is something nobody believes, except the person who made it. An experiment is something everybody believes, except the person who made it.*
@@ -49,3 +72,13 @@ It turns out that for either of the causal systems in [Figures @fig-experiment-s
 
 Typically, experiments are done using a specially constructed system that is thought to resemble the system on which the intervention will actually be done. Insofar as the experimental system does resemble the real-world system, the experimental results will anticipate the effect of the real-world intervention. But often it's hard to establish that the experimental system is a match to the system on which the real-world intervention will be applied. As such, subjective belief is still a factor in accepting that the experiment will be informative about the real-world systems we work with.
  
+--------
+
+It's appropriate to show some humility about models and recognize that they can be no better than the assumptions that go into them.  Useful object lessons are given by the episodes where conclusions from modeling (with careful adjustment for covariates) can be compared to experimental results.  Some examples (from [@freedman-editorial-2008]):
+
+* Does it help to use telephone canvassing to get out the vote? Models suggest it does, but experiments indicate otherwise.
+* Is a diet rich in vitamins, fruits, vegetables and low in fat protective against cancer, heart disease or cognitive decline? Models suggest yes, but experiments generally do not.
+
+The divergence between models and experiment suggests that an important covariate has been left out of the models. `r index_entry('C', 'covariate!leaving out')`  `r index_entry('C', 'adjustment!faulty')` 
+
+

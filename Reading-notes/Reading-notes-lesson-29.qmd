@@ -17,6 +17,22 @@ output:
 source("../_startup.R")
 ```
 
+::: {.callout-warning}
+
+- Covariates reduce residuals in-sample.
+
+- Out of sample, they may or may not reduce residuals, depending on whether the covariate is informative.
+
+- Covariates can lead to better predictions since prediction intervals are substantially shaped by the size of the residuals
+
+- They can lead to better or worse estimates of effect size (colinearity)
+:::
+
+
+
+---------
+
+
 In model building, we create a function to link a response variable to one or more explanatory variables. Let's imagine that the response variable is named `y` and the explanatory variable named `x`, `a`, `b`, and so on. By *training* a model on data, we create a function, let's call it $f(x, a, b)$. This function that results from training can be used in two two distinct decision-making settings: 
 
 i. Prediction mode: Having measured values for the explanatory variables `x`, `a`, `b` and so on, figure out what's a likely value for the as-yet-unmeasured response variable. To illustrate, suppose we know the length `x` of a road trip, the speed driven `a`, and the horsepower of the car's engine. To plan for the trip, we want to predict how much fuel `y` will be used.

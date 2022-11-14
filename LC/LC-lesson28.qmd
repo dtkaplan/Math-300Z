@@ -679,10 +679,39 @@ No. Even though `x` and `y` are connected to one another via `g`, the path from 
 
 --------
 
-
-
-
-
---------
-
 ## 28.I
+
+
+In the hypothetical Mr. Shoebuyer's data and model `width ~ sex`, 8 pairs of shoes produced a margin of error of $\pm 0.8$, estimate how many shoes you would need to reduce the margin of error to $\pm 0.1$.
+
+------
+
+## More examples
+
+## Example: SAT Scores and School Spending {-}
+
+Chapter 7 showed some models relating school expenditures to SAT scores.  The model `sat` ~ 1 + `expend` produced a negative coefficient on `expend`, suggesting that higher expenditures are associated with lower test scores.  Including another variable, the fraction of students who take the SAT (variable `frac`) reversed this relationship. 
+
+The model  `sat` ~ 1 + `expend` + `frac` attempts to capture how SAT scores depend both on `expend` and `frac`.  In interpreting the model, you can look at how the SAT scores would change with `expend` while holding `frac` constant.  That is, from the model formula, you can study the partial relationship between SAT and `expend` while holding `frac` constant.
+
+The example also looked at a couple of other fiscally related variables:  student-teacher ratio and teachers' salary.  The total relationship between each of the fiscal variables and SAT was negative – for instance, higher salaries were associated with lower SAT scores.  But the partial relationship, holding `frac` constant, was the opposite: Simpson's Paradox.
+
+For a moment, take at face value the idea that higher teacher salaries and smaller class sizes are associated with better SAT scores as indicated by the following models:
+
+*sat* = 988 + 2.18 `salary` - 2.78 `frac`
+
+*sat* = 1119 - 3.73 `ratio` - 2.55 `frac`
+
+In thinking about the impact of an intervention – changing teachers' salaries or changing the student-teacher ratio – it's important to think about what other things will be changing during the intervention. For example, one of the ways to make student-teacher ratios smaller is to hire more teachers. This is easier if salaries are held low.  Similarly, salaries can be raised if fewer teachers are hired: increasing class size is one way to do this.  So, salaries and student-teacher ratio are in conflict with each other.
+
+If you want to anticipate what might be the effect of a change in teacher salary while holding student-teacher ratio constant, then you should include `ratio` in the model along with `salary` (and `frac`, whose dominating influence remains confounded with the other variables if it is left out of the model):
+
+*sat* = 1058 + 2.55 `salary` - 4.64 `ratio` - 2.91 `frac`
+
+Comparing this model to the previous ones gives some indication of the trade-off between salaries and student-teacher ratios. When `ratio` is included along with `salary`, the salary coefficient is somewhat bigger: 2.55 versus 2.18.  This suggests that if salary is increased while holding constant the student-teacher ratio, salary has a stronger relationship with SAT scores than if salary is increased while allowing student-teacher ratio to vary in the way it usually does, accordingly.  
+
+Of course, you still need to have some way to determine whether the precision in the estimate of  the coefficients is adequate to judge whether the detected difference in the `salary` coefficient is real – 2.18 in one model  and 2.55 in the other.  Such issues are introduced in Chapter 12. 
+
+
+
+

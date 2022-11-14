@@ -1,0 +1,35 @@
+---
+title: "USCOTS 2023 proposal"
+author: "Daniel Kaplan"
+editor: visual
+---
+
+**Title**: Decision-making with data: a novel introduction to statistics
+
+**Presenter**: Daniel Kaplan
+
+**Duration**: 1.5 days
+
+## Abstract
+
+The workshop provides an overview of a novel approach to introductory statistics focused on the challenges decision-makers face and the ways data and statistical analysis can inform decision-making. The decision-making setting emphasizes statistical methods that can guide action in the world, such as loss functions, comparing hypotheses, and engaging causality as an essential component for taking action in the world. To cope with real-world issues, the course introduces ways to communicate with data graphically and with numerical summaries about complex questions involving multiple factors. Among other things, the approach provides a way to unbind intro stats from topics that controversially receive undo emphasis, such as hypothesis testing. The workshop will orient instructors to a complete set of free, online classroom-tested text and other materials for teaching in this novel way.
+
+## Connection to theme
+
+The broad conference theme is "Communicating with data." The theme of this workshop is a subset of this: "Communicating with data to inform decision-making." Guiding decision-making is not the only reason to communicate with data, but it is an extremely important one. And decision-making engages modes of communication that are not emphasized in conventional statistics courses, for instance effect sizes and causal reasoning. Decision-making de-emphasizes some controversial modes of communicating with data, such as p-values, and provides insight into more effective ways to extract and communicate information gleaned from data.
+
+## Engagement
+
+The workshop gives a broad overview of a new course taught in Spring 2023 at the US Air Force Academy. That course uses R "workbooks" each class day which provide students practice and reinforcement on the statistical topics. In the workshop we will use a few selected workbooks, working in small groups (2-3 participants) to complete them. The workshop will also feature several group discussions contrasting and debating the approach in the new course versus that in conventional introductory courses. As interest dictates, we will also discuss ways to get around institutional roadblocks to innovation.
+
+## Goals
+
+All participants should come away from the workshop with a better perspective about alternatives to conventional introductory statistics courses that provide better ability to work with data-driven decision-making, and an appreciation of the overly narrow focus of conventional statistics courses. Those participants will finish the workshop with full text, computing, exercise, and other materials needed to teach the novel course and enough of an orientation to be able to teach the novel course if they wish.
+
+## Technology
+
+We'll be computing using RStudio. Participants will need a web browser and will be guided to set up an account, if needed, on the cloud-hosted service `RStudio.cloud` (soon to be renamed `Posit.cloud`).
+
+## Prior Knowledge
+
+Participants should be familiar with linear regression, e.g. model coefficients and confidence intervals on those coefficients and the distinction between confidence intervals and prediction intervals. Basic proficiency with the RStudio user interface is also helpful. The ability to program in R is **not** required; we will be working with command templates.
