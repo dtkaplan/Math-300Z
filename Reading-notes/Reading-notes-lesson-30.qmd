@@ -100,7 +100,124 @@ Same data, but the opposite conclusion. With `wealth` as a covariate, "organic" 
 
 Keep in mind that this is simulated data. So don't draw any conclusions from the data in this example about the safety of the chemicals used by lawn-greening companies.
 
+::: {.callout-note}
+## Example: A missed opportunity
 
+Sewall Wright (1889-1988) was an American geneticist and statistical pioneer. One of his statistical inventions is the "coefficient of determination" now universally called R^2^ and a widely used, basic summary of statistical models. In 1921, he invented "path analysis." One of his "path diagrams" is shown in @fig-path-guinea-pig.
+
+```{r echo=FALSE}
+#| label: fig-path-guinea-pig
+#| fig-cap: "Sewall Wright's path diagram describing the the mixing of environmental, developmental, and genetic factors contributing to the color patterns on guinea pigs."
+
+"GET THIS FROM p.75 of the *Book of Why*"
+```
+
+His path diagrams are directed acyclic graphs, DAGs, augmented with coefficients representing the relative strength of each contributor to a node. He worked out the algebra of the correlation induced by the graph between any two nodes. Then, by measuring the R^2^ between pairs of nodes, he was able in some cases to work backwards to numerical values for the coefficients.
+
+Wright's path diagrams are the historically earliest form of our DAGs. In his honor, we've constructed a DAG to represent one of his calculations, how much the body weight at birth of a guinea pig increases due to one day longer in the womb. The path diagram Wright imagined is drawn below, though we have left out the coefficients from the display.
+
+```{r echo=FALSE}
+dag_pigs <- dag_make(
+  liter_size ~ 5 + as.numeric(eps() > 1),
+  .gestation ~ 24 - liter_size + eps(),
+  growth_rate ~ 10 - liter_size + eps(.3),
+  weight ~ growth_rate*.gestation + liter_size + eps(),
+  gestation ~ round(.gestation)
+)
+dag_pigs_for_drawing <- dag_make(
+  Liter_size ~ 5 + as.numeric(eps() > 1),
+  Gestation ~ 24 - Liter_size + eps(),
+  growth_rate ~ 10 - Liter_size + eps(.3),
+  Weight ~ growth_rate*Gestation + Liter_size + eps()
+)
+set.seed(103); dag_draw(dag_pigs_for_drawing)
+```
+
+We can't measure the growth rate directly, but we can measure liter size, gestation length, and birth weight. How can we estimate the direct effect of growth rate when it is confounded with the other causal pathways.
+
+Sewall's breeding experiments would have provided data like this:
+
+```{r echo=FALSE}
+set.seed(104)
+Pigs <- sample(dag_pigs, size=1000)
+knitr::kable(head(round(Pigs %>% select(-gestation))))
+```
+
+You might think that weight gain per day of gestation can be simply calculated as `weight/gestation`, but this ignores the fact that weight gain is slow early in gestation and faster as the cubs develop. Instead, using a model `weight ~ gestation` lets us look at the marginal impact of an extra day of gestation. The coefficients from this model indicates that weight increases by 6.8 grams per extra day of gestation.
+
+```{r}
+lm(weight ~ gestation, data = Pigs) %>% coefficients()
+```
+
+But Wright knew that this number was misleading. Larger liters tend to have shorter gestation times. And larger liters produce cubs that weigh less. With more computational power available to us, we can use a simpler calculation to incorporate these facts into the estimation of weight gain per day of gestation:
+
+```{r}
+lm(weight ~ gestation + liter_size, data = Pigs) %>% coefficients()
+```
+
+This model pegs the growth rate at about 4.5 grams per day. 
+
+Since we generated the data from a DAG, we have the luxury of measuring the actual growth rate used for each liter. 
+
+```{r}
+Pigs %>% summarize(rate = mean(growth_rate))
+```
+
+Covariates help us deal with confounding!
+
+:::
+
+
+
+$X \overset{a}{\longrightarrow} Y \overset{b}{\longleftarrow} C$
+
+$\text{resid}^2_y = \sigma_{yy} - \left(a^2 \sigma_{xx} + b^2 \sigma_{cc}\right)$
+
+$\sigma_{xy} = \sqrt{\sigma_{xx}\left[\sigma_{yy} - \left(b^2 \sigma_{cc} + \text{resid}^2_y\right)\right]}$
+
+```{r}
+wright_example <- dag_make(
+  x ~ eps(4),
+  c ~ eps(1),
+  y ~ 2*x + 3*c + eps(1)
+)
+Sample <- sample(wright_example, size=1000)
+Stats <- Sample %>% 
+  summarize(xv = var(x), yv=var(y), cv=var(c), xy = cov(x,y), cy = cov(y,c), xc = cov(x,c))
+Normalize <- Sample %>% mutate(x = x/sqrt(Stats$xv),
+                               y = y/sqrt(Stats$yv),
+                               c = c/sqrt(Stats$cv))
+Stats
+```
+```{r}
+with(Stats, yv - (4*xv + 9*cv)) # variance of y
+with(Stats, sqrt(xv*(yv - (9*cv +1)))) # covariance of x with y
+with(Stats, sqrt(cv*(yv - (4*xv + 1)))) # covariance of c with y
+
+```
+
+
+
+```{r}
+dag_pigs <- dag_make(
+  liter_size ~ 5 + as.numeric(eps() > 1),
+  .gestation ~ 24 - liter_size + eps(),
+  .growth_rate ~ 10 - liter_size + eps(.3),
+  weight ~ .growth_rate*.gestation + liter_size + eps(),
+  gestation ~ round(.gestation)
+)
+dag_pigs_for_drawing <- dag_make(
+  Liter_size ~ 5 + as.numeric(eps() > 1),
+  Gestation ~ 24 - Liter_size + eps(),
+  growth_rate ~ 10 - Liter_size + eps(.3),
+  Weight ~ growth_rate*Gestation + Liter_size + eps()
+)
+set.seed(103); dag_draw(dag_pigs_for_drawing)
+
+lm(weight ~ liter_size + gestation, data = Dat) %>% confint()
+lm(weight ~ gestation, data = Dat) %>% confint()
+
+```
 
 ## DAGs and covariates
 
