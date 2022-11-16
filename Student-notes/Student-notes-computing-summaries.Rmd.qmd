@@ -1,0 +1,13 @@
+---
+title: "Computing summaries of data"
+author: "Daniel Kaplan"
+editor: visual
+---
+
+The first half of this course emphasized data wrangling and visualization. When using data wrangling commands, summaries of data frames were computed using, naturally enough, the `summarize()` function. Typical summaries for quantitative variables include means, medians, standard deviations, maxima, minima, each of which applies to one variable at a time. For instance, this command calculates four summary statistics on the net running time recorded in the `TenMileRace` data frame:
+
+```{r}
+TenMileRace %>%
+  summarize(mn = mean(net), middle = median(net), sd = sd(net), n = n())
+
+```

@@ -17,6 +17,67 @@ output:
 source("../_startup.R")
 ```
 
+In its everyday meaning, the word "experiment" is similar in meaning to the word "experience." As a verb, to experiment means to "try out new concepts or ways of doing things." As a noun, an experiment is a "course of action tentatively adopted without being sure of the outcome: the farm is an ongoing experiment in sustainable living." Both quotes are from the Oxford Dictionaries, which provides examples of each: "the designers experimented with new ideas in lighting" or "the farm is an ongoing experiment in sustainable living." 
+
+From movies and other experiences, people associate experiments with science. Indeed, one of the dictionary definitions of "experiment" is: "a scientific procedure undertaken to make a discovery, test a hypothesis, or demonstrate a known fact."
+
+Almost all the knowledge needed to perform a scientific experiment relates to the science itself: what reagents to use, how to measure, say, the concentration of a neurotransmitter, how to administer a drug safely, and so on. This is why people who carry out scientific procedures are trained primarily in their area of science.
+
+::: {.callout-note}
+## Example: Malaria and bed nets
+
+In many parts of the world, malaria is a major cause of disability and death. Economists who study ways to relieve poverty have a simple, plausible theory: reducing the effect of illnesses such as malaria will have an impact on poverty rates, since healthier people are more productive and reduced uncertainty can help them amass capital to invest to increase production further.
+
+There are many possible ways to reduce the burden of malaria. Vaccination (although effective vaccines have been hard to develop), insect control using pesticides (which can cause environmental problems), etc. One simple intervention is the use of bed nets; screen nets deployed at night by draping over the bed and its occupant. Still, there are reasons why distributing bed nets may not be effective; people might use them incorrectly or for other purposes such as fishing. People might not be able to afford them, but giving them away might signal that they have no value.
+
+To find out, try it: do an experiment. For instance, run a trial program where nets are given away to everyone in an area and observed whether and to what extent rates of malarial illness go down.
+
+Such a trial is certainly and experiment. But it may not be the best way to get meaningful information.
+
+:::
+
+To understand the contribution that statistical thinking can make to experiment, recall our earlier definition:
+
+> *Statistic thinking is the explanation/description of measured variation* in the context of *what remains unexplained/undescribed.*
+
+A key concept that statistical thinking brings to experiment is the idea of **variation**. Simply put, a good experiment should involve some variation. The simplest way to create variation is to repeat each experimental trial multiple times. This is called "**replication**."
+
+::: {.callout-note}
+## Example: Replicated bed net trials
+
+One way to improve the simple experiment bed net described above is to carry out many trials. One reason is that the results from any single trial might be shaped by accidental or particular circumstances: the weather in the trial area was less favorable to mosquito reproduction; another government agency decided to help out by spraying pesticides broadly, and so on. Setting up trials in different areas can help to balance out these influences.
+
+Replicated trials also allow us to estimate the size of the variability caused by the accidental or particular factors. To illustrate, suppose a single trial is done and the rate of malarial illness goes down by 5 percentage points. What can we conclude? The result is promising but we can't rule out that it occurred because of accidental factors other than bed nets. Why not? Because we have no idea how much unexplained variation is in play.
+
+In contrast, suppose four trials at different sites are done, showing reductions by 5, 8, 2, and -1 percentage points. (Reduction by a negative number, like -1, is an *increase*.) Now we know something about the amount of variation due to accidental, site-to-site factors. The replication introduces *observed* variation in results, the observed variation can be quantified and used to place the overall trend in context. 
+
+Common sense correctly suggests summarizing the results of the four trials by their mean: a reduction in the rate of malarial diseases of $\frac{5 + 8 + 2 -1}{4} = 3.5$ percentage points. Statistical thinking tells us that this exact number, 3.5, is somewhat of an accident. This is because the four numbers tell us that there is site-to-site variation that remains unexplained by the bed nets: the residual variation. The residual variation gives us a handle on the amount of sampling variation to expect, the variation in results if we had collected a different sample of trials from different sites or at different times. 
+
+As usual, we quantify the sampling variation by a "standard error," which in turn gets translated into a "margin of error," and transformed yet again into an interval estimate. Here, that interval is $3.5 \pm 4.5$. Generations of statistics students have learned how to carry out the standard-error/margin-of-error/confidence-interval calculations and how to interpret them. $3.5 \pm 4.5$ means that the results from our trials are entirely consistent with the bed nets having zero effect on rates of malarial illness. 
+
+Put another way, the replication of trials---the $n=4$ trials in this example---provides us a way to quantify the amount of noise in our results. Here, the observed 3.5 percentage point reduction cannot be distinquished from noise so we have no confidence that we have seen a signal.
+:::
+
+Replication is a comparatively modern idea. Experiments go back into pre-history. For instance, a biblical example is [DAVID's experiment as described by Judea Pearl.]
+
+Galileo, taken by many historians to mark the appearance of "science," didn't replicate his trials. He had no clear knowledge of the idea of "signal" versus "noise," let alone ......
+
+GALILEO didn't do replication.
+
+
+
+
+
+Statistics contributes to experiment in two, very different ways. The first is that statistical methods are used to summarize the measurements made during the experiment. For instance, if your experiment involves 
+
+Go back to definition of statistics: explanation/description of variation in the context of what remains unexplained.
+
+Purpose of a "scientif
+
+
+
+
+
 
 
 ## From SM2
