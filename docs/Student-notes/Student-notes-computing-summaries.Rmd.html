@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Kaplan">
+
+<title>Spring 2023 Math 300 Revisions - Computing summaries of data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html">Proposal</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../lessons.html">Lessons</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../layout.html">Site layout</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../objective-list.html">Objectives</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../LC-list.html">LCs</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Computing summaries of data</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Kaplan </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<p>The first half of this course emphasized data wrangling and visualization. When using data wrangling commands, summaries of data frames were computed using, naturally enough, the <code>summarize()</code> function. Typical summaries for quantitative variables include means, medians, standard deviations, etc., each of which applies to one variable at a time. For instance, this command calculates four summary statistics on the <code>net</code> running time recorded in the <code>TenMileRace</code> data frame:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">ave =</span> <span class="fu">mean</span>(net), <span class="at">middle =</span> <span class="fu">median</span>(net), <span class="at">sd =</span> <span class="fu">sd</span>(net), <span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       ave middle       sd    n
+1 5599.065   5555 969.6564 8636</code></pre>
+</div>
+</div>
+<p>Constructing such summaries groupwise is a matter of using the <code>group_by()</code> modifier. Here, we calculate summaries broken down by the state of residence of the participant and arranged from fastest (average) running time downward.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(state) <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">ave =</span> <span class="fu">mean</span>(net), <span class="at">middle =</span> <span class="fu">median</span>(net), <span class="at">sd =</span> <span class="fu">sd</span>(net), <span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(ave) <span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 5
+   state       ave middle    sd     n
+   &lt;fct&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+ 1 Australia 2872   2872    NA      1
+ 2 Kenya     2934.  2874.  141.    14
+ 3 Lithuania 2961   2961    NA      1
+ 4 Japan     2992   2992   132.     2
+ 5 Colombia  2998   2998    NA      1
+ 6 Ethiopia  3185   3185   356.     2
+ 7 EN        3251   3251    NA      1
+ 8 Ukraine   3256   3256    NA      1
+ 9 Russia    3267   3197   272.     3
+10 Romania   3287.  3297   162.     3</code></pre>
+</div>
+</div>
+<p>Wrangling is essential for many statistical purposes, including making graphical displays, cleaning data, and assembling data that comes from multiple sources.</p>
+<p>In Lessons 11-17, you were introduced to regression modeling. The computing tasks for regression, such as fitting a model with <code>lm()</code>, don’t fit into the wrangling framework. To illustrate:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(net <span class="sc">~</span> age, TenMileRace) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = net ~ age, data = TenMileRace)
+
+Coefficients:
+(Intercept)          age  
+    5297.22         8.19  </code></pre>
+</div>
+</div>
+<p>Regression produces a summary of a data set, somewhat like <code>summarize()</code>. The output of <code>summarize()</code> is always a data frame. The output of <code>lm()</code> is a different kind of thing, as you can see above. In computing lingo, the “kind of thing” is often called the “object class” or “object type.”</p>
+<p>Perhaps the first thing that’s confusing about the object produced by <code>lm()</code> is that they contain much more than what’s printed out when you display them directly on the screen. The printed output is just a glimpse at the object and, almost always, you use another function to present the content of the object in a way that suits your current need. Let’s informally call such functions “extractors.” Here are examples of a few of the extractors that you will be using in the coming lessons; you are not expected at this point to know what each is doing.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(net <span class="sc">~</span> age, TenMileRace) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)         age 
+5297.219248    8.189886 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(net <span class="sc">~</span> age, TenMileRace) <span class="sc">%&gt;%</span> <span class="fu">rsquared</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.008014284</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(net <span class="sc">~</span> age, TenMileRace) <span class="sc">%&gt;%</span> <span class="fu">regression_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)  5297.      37.6      141.   0       
+2 age             8.19     0.981      8.35 7.76e-17</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(net <span class="sc">~</span> age, TenMileRace) <span class="sc">%&gt;%</span> <span class="fu">model_eval</span>(<span class="at">skeleton=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  age  .output     .lwr     .upr
+1  10 5379.118 3485.069 7273.167
+2  20 5461.017 3567.394 7354.640
+3  30 5542.916 3649.525 7436.307
+4  40 5624.815 3731.460 7518.170
+5  50 5706.714 3813.200 7600.227
+6  60 5788.612 3894.744 7682.480
+7  70 5870.511 3976.094 7764.928
+8  80 5952.410 4057.249 7847.571
+9  90 6034.309 4138.210 7930.408</code></pre>
+</div>
+</div>
+<p>Much of what you will be learning in the following Lessons concerns such regression extractors: why what they calculate is useful and how to use it. But let’s return to the command patterns you will be seeing.</p>
+<p>Regression and wrangling are allies. You will use wrangling, especially <code>mutate()</code> and <code>filter()</code> to pre-process data before carrying out the regression. For instance, in studying the relationship between <code>age</code> and <code>net</code> running time, you might want to focus on older people.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age <span class="sc">&gt;</span> <span class="dv">40</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(net <span class="sc">~</span> age, <span class="at">data=</span>.) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                2.5 %     97.5 %
+(Intercept) 4014.7081 4541.71744
+age           22.8315   33.43884</code></pre>
+</div>
+</div>
+<p>In this example, we’ve used <code>confint()</code> as the extractor, but, depending on our purpose, we might have used any of the others.</p>
+<p>Looking closely at the above command you will notice something new: the <code>data=.</code> argument being used inside <code>lm()</code> . The simple <code>.</code> is doing something important, carrying the output of the earlier stages of the pipeline into the <code>data=</code> argument of <code>lm()</code>.</p>
+<p>The dot (<code>.</code>) has always been available for use when wrangling, but we haven’t needed to use it. For instance, here is an earlier example of a wrangling command translated to use the <code>.</code> notation:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(., state) <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(., <span class="at">ave =</span> <span class="fu">mean</span>(net), <span class="at">middle =</span> <span class="fu">median</span>(net), <span class="at">sd =</span> <span class="fu">sd</span>(net), <span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(., ave) <span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(., <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 5
+   state       ave middle    sd     n
+   &lt;fct&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
+ 1 Australia 2872   2872    NA      1
+ 2 Kenya     2934.  2874.  141.    14
+ 3 Lithuania 2961   2961    NA      1
+ 4 Japan     2992   2992   132.     2
+ 5 Colombia  2998   2998    NA      1
+ 6 Ethiopia  3185   3185   356.     2
+ 7 EN        3251   3251    NA      1
+ 8 Ukraine   3256   3256    NA      1
+ 9 Russia    3267   3197   272.     3
+10 Romania   3287.  3297   162.     3</code></pre>
+</div>
+</div>
+<p>The <code>.</code> always means, use the output of the preceding stages of the pipeline as <em>this argument</em> to the function. All of the data wrangling commands were designed so that the first argument is always a data frame. The phrase <code>%&gt;% group_by(., state) %&gt;%</code> is an explicit direction to place the data coming from the pipeline as the first argument. The pipeline connector, <code>%&gt;%</code>, is arranged by default to put the content it is transmitting as the first argument to the following function. For this reason, <code>.</code> is not needed if the pipeline pumps results into the first argument.</p>
+<p>But not all functions are designed with this convention in mind. In particular, in <code>lm()</code> the first argument should be the model formula, e.g.&nbsp;<code>net ~ age</code>. The data frame that will be used in fitting the model is the second argument. So, in <code>lm(net ~ age, data=.)</code> the dot is directing the pipeline to empty its data frame into the second argument. Otherwise, by default, the pipeline would be plumbed to force the first argument to be the data frame and demote the <code>net ~ age</code> to the second position.</p>
+<section id="grouping" class="level2">
+<h2 class="anchored" data-anchor-id="grouping">Grouping</h2>
+<p>The <code>group_by()</code> wrangling function is used whenever you want to treat a data frame in a group-by-group manner. It’s natural to assume that <code>group_by()</code> is slicing up a data frame according to groups. The <code>mutate()</code> and <code>summarize()</code> functions were specifically designed to make it appear that <code>group_by()</code> is doing the slicing. But in reality, <code>group_by()</code> is just adding a kind of tag to the data frame. <code>mutate()</code> and <code>summarize()</code> know to interpret that tag as an instruction to slice up the data when calculating on it.</p>
+<p>Most R functions simply ignore the tag added by <code>group_by()</code>. Consider, for instance, the pipeline</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(net <span class="sc">~</span> age, <span class="at">data=</span>.) <span class="sc">%&gt;%</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)         age 
+5297.219248    8.189886 </code></pre>
+</div>
+</div>
+<p>The output is not what you might expect from your earlier experiences using <code>group_by()</code>. Particularly, there is <em>not</em> a separate row for each of the groups defined by <code>sex</code>. Nor is there a column listing the sex. The <code>group_by()</code> has had no effect.</p>
+<p>What do you do if you really want to compare groups using regression models? For instance, it might be that you believe that the <code>F</code> group ages differently than the <code>M</code> group. How do you reveal this with regression?</p>
+<p>Regression models have their own, internal system for comparing groups. You express your wish to compare groups by using the model formula. The simple formula <code>net ~ age</code> does not instruct <code>lm()</code> to compare the sexes. Instead, you would use the formula <code>net ~ age*sex</code>. For instance,</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(net <span class="sc">~</span> age <span class="sc">*</span> sex, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)         age        sexM    age:sexM 
+5370.999953   15.961661 -785.145163    1.606559 </code></pre>
+</div>
+</div>
+<p>The output of <code>lm()</code> already contains the comparison information. You don’t yet know how to read and interpret that comparison information, but you will learn.</p>
+<p>There are extremely good reasons why <code>lm()</code> does things the way it does. It is not at all a matter of software incompatabiility between the wrangling family of commands and the regression family. The <code>lm()</code> paradigm can make much more efficient use of data than <code>group_by()</code>. It also offers much more flexibility. <code>lm()</code> can handle multiple “grouping” variables together and even lets you “group” by quantitative variables. These capabilities are extremely important for extracting relevant information from data, as you will see in the following lessons.</p>
+</section>
+<section id="learning-challenges" class="level2">
+<h2 class="anchored" data-anchor-id="learning-challenges">Learning challenges</h2>
+<ol type="1">
+<li><p>One of these pipeline commands will work and the other won’t. Which one will work? Explain why the other one doesn’t work.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(net <span class="sc">~</span> age, <span class="at">data =</span> TenMileRace)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span> <span class="fu">lm</span>(net <span class="sc">~</span> age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+<li><p>An example from the <em>OpenIntro</em> book uses data on promotions. Some data wrangling commands that might be relevant are these:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+      n
+  &lt;int&gt;
+1    48</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(decision) <span class="sc">%&gt;%</span> <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  decision     n
+  &lt;fct&gt;    &lt;int&gt;
+1 not         13
+2 promoted    35</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span> <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  gender     n
+  &lt;fct&gt;  &lt;int&gt;
+1 male      24
+2 female    24</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(gender, decision) <span class="sc">%&gt;%</span> <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+# Groups:   gender [2]
+  gender decision     n
+  &lt;fct&gt;  &lt;fct&gt;    &lt;int&gt;
+1 male   not          3
+2 male   promoted    21
+3 female not         10
+4 female promoted    14</code></pre>
+</div>
+</div></li>
+</ol>
+<p>You could use such wrangling to compare groups. For instance, you can use the results of the last command to calculate separately the proportion of males who were promoted and, similarly, the proportion of females.</p>
+<p>a. <strong>What are those proportions?</strong></p>
+<p>The following wrangling command will calculate the proportions for you, but it is a bit complicated:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">prop_promoted =</span> <span class="fu">sum</span>(decision<span class="sc">==</span><span class="st">"promoted"</span>) <span class="sc">/</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>b. <strong>Use this command to check your calculations in (a).</strong></p>
+<p>c. In the regression paradigm, the comparison of proportions between the two groups is done directly in <code>lm()</code>, like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">promoted =</span> <span class="fu">zero_one</span>(decision, <span class="at">one=</span><span class="st">"promoted"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(promoted <span class="sc">~</span> gender, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> (Intercept) genderfemale 
+   0.8750000   -0.2916667 </code></pre>
+</div>
+</div>
+<p>We’ll explain the purpose of <code>zero_one()</code> in Lesson 19, but putting that matter aside for a moment, compare the two coefficients in the regression model to the proportion results you got from wrangling.</p>
+<ol type="i">
+<li><p><strong>What does the value of the intercept coefficient correspond to in the wrangling results?</strong></p></li>
+<li><p><strong>What does the <code>genderfemale</code> coefficient correspond to in the wrangling results?</strong> (Hint: you will have to do a bit of arithmetic on the wrangling results.)</p></li>
+</ol>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
