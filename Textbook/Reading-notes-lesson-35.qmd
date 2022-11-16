@@ -1,0 +1,20 @@
+---
+title: "Accounting for prevalence"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+lesson <- 35
+source("../_startup.R")
+```
+
+Make sure this connects to the likelihood comparison material in Lesson 36.
