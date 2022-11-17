@@ -213,7 +213,7 @@ dag_pigs_for_drawing <- dag_make(
   Weight ~ growth_rate*Gestation + Liter_size + eps()
 )
 set.seed(103); dag_draw(dag_pigs_for_drawing)
-
+set.seed(103); Dat <- sample(dag_pigs, size=1000)
 lm(weight ~ liter_size + gestation, data = Dat) %>% confint()
 lm(weight ~ gestation, data = Dat) %>% confint()
 
@@ -227,7 +227,7 @@ The argument, "reduce spending by reducing spending" is very compelling, common 
 #| label: fig-insurance-two-dags
 #| fig-cap: "Two different DAGs relevant to the debate about eliminating the cash payment to employees not on the college's health care plan."
 #| layout-ncol: 2
-#| fig-cap: 
+#| fig-subcap: 
 #|   - "One path from cash to expenditures"
 #|   - "Two paths from cash to expenditures"
 dagA <- dag_make(`Cash payment` ~ 1, 
@@ -247,7 +247,7 @@ The situation with the drug aprotinin is similar.
 #| label: fig-drugs-two-dags
 #| fig-cap: "Two different DAGs relevant to the link between aprontinin and mortality."
 #| layout-ncol: 2
-#| fig-cap: 
+#| fig-subcap: 
 #|   - "One path from cash to expenditures"
 #|   - "Two paths from cash to expenditures"
 dagA <- dag_make(`Health condition` ~ 1, 

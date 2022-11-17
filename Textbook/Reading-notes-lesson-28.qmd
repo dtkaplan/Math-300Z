@@ -34,7 +34,7 @@ Shoebuyer_data <- KidsFeet %>% select(sex, width) %>%
    group_by(sex) %>%
   sample_n(size=4) %>% 
   arrange(desc(sex))
-knitr::kable(Shoe_sample)
+knitr::kable(Shoebuyer_data)
 ```
 
 Once back home, Mr. Shoebuyer uses his calculator to find the mean width of the shoes in each group. His results surprise him:

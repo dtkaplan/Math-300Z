@@ -107,10 +107,14 @@ d4 <- dag_make(hp ~ eps(), weight ~ hp, mpg ~ weight + hp)
 
 @fig-four-hp-mpg-dags shows four DAGs, each of which describe a plausible scenario.
 
-```{r echo=FALSE}
+::: {.content-visible when-format="html"}
+```{r echo=FALSE, eval=knitr::is_html_output()}
 #| label: fig-four-hp-mpg-dags
-#| layout-ncols: 4
-#| fig-cap:
+#| layout-ncol: 4
+#| out-width: "25%"
+#| column: page-right
+#| fig-cap: "Scenarios for the relationship between automobile fuel economy, weight, and horsepower"
+#| fig-subcap:
 #|   - Dag A
 #|   - Dag B
 #|   - Dag C
@@ -120,6 +124,14 @@ dag_draw(d2)
 dag_draw(d3)
 dag_draw(d4)
 ```
+:::
+
+:::: {.content-visible when-format="pdf"}
+::: {.callout-warning}
+Manually insert the four part figure as a single png
+:::
+::::
+
 In DAG A, the vehicle's design weight determines that an engine with high horsepower will be part of the design. The weight is also responsible for the lower fuel economy.
 
 The other DAGs describe other scenarios. In DAG C, for instance, the car designers decided to build a muscle car and put in a big engine. The engine itself adds to the vehicle's weight, and the higher weight determines lower miles per gallon. DAG D expresses a slightly different belief: again the choice to build a muscle car (high `hp`) influences the weight. But in DAG B, the big engine also directly influences the fuel economy, perhaps because the fuel-to-air ratio of the car, in normal use, is not optimal.
@@ -170,10 +182,14 @@ There are, of course, many other things that determine the price of a house. Rea
 
 For simplicity, let's collect all the factors other than `fireplaces` into a hypothetical variable which we will call "`fancy`." Here are three plausible DAGs that plausibly describe an affect of fireplace on `price` in the context of `fancy`.
 
-```{r echo=FALSE}
+:::: {.content-visible when-format="html"}
+```{r echo=FALSE, eval=knitr::is_html_output()}
 #| label: fig-fireplace-dags
-#| layout-ncols: 4
-#| fig-cap:
+#| layout-ncol: 3
+#| out-width: "33%"
+#| column: page-right
+#| fig-cap: "Scenarios relating the price of a house to having a fireplace"
+#| fig-subcap:
 #|   - Dag A
 #|   - Dag B
 #|   - Dag C
@@ -182,6 +198,14 @@ dB <- dag_make(fancy ~ 1, fireplace ~ fancy, price ~ fancy+fireplace)
 dC <- dag_make(fancy ~ 1, fireplace ~ fancy, price ~ fancy)
 dag_draw(dA); dag_draw(dB); dag_draw(dC)
 ```
+::::
+
+:::: {.content-visible when-format="pdf"}
+::: {.callout-warning}
+Manually insert the three-part figure as a single png
+:::
+::::
+
 In DAG A, `fancy` and `fireplace` both contribute to `price`, but independently. In DAG B, `fireplace` directly contributes to `price`, but whether or not a house has a fireplace depends on the level of `fancy`. In DAG D, `fireplace` has no direct affect on `price`, which is set entirely by `fancy`. The `fireplace` variable is just an indicator of `fancy`.
 
 We can't say from the data alone which of these three DAGs is the closest description of the situation. In Lessons 28, 30, and 31 we will consider how the choice of explanatory variables in a model leads to a faithful or misleading picture of the connections. There you will find out that DAGS A & B both imply that `fancy` should be an explanatory variable if we want the effect size from the model to represent the **direct** effect of a fireplace on price. Easy enough to fit that model, ... except that we don't have an actual variable `fancy` in the `SaratogaHouses` data frame. To keep things simple for the moment, we will use `livingArea`---the size of the house---as a rough approximation to the hypothetical `fancy`.
@@ -233,5 +257,8 @@ Suppose the DAG is that fireplaces cause living area (`fancy`) and that both of 
 
 ## Interaction
 
+::: {.callout-warning}
+## Note in draft: 
 Not all effects are additive.
+:::
 

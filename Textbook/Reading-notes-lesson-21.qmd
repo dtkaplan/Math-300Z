@@ -149,7 +149,7 @@ From the formula for `x` we can see that `x` comes from a random number generato
 As for `y`, the formula includes two sources of variation:
 
 1. The part of `y` determined by `x`, that is $y = \mathbf{1.5 x} + \color{gray}{4 + \text{eps()}}$
-2. The noise added directly into `y`, that is $y = \color{gray}{\mathbf{1.5 x} + 4} + \color{blank}{\mathbf{eps(\,)}}$
+2. The noise added directly into `y`, that is $y = \color{gray}{\mathbf{1.5 x} + 4} + \color{black}{\mathbf{eps(\,)}}$
 
 The 4 in the formula doesn't add any *variation* to `y`; it's just a number.
 

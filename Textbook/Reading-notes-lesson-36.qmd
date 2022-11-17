@@ -282,6 +282,8 @@ Use this from Section 19.4 of *Computational Probability and Statistics*?
 
 > There are two competing hypotheses: the null and the alternative. In a hypothesis test, we make a statement about which one might be true, but we might choose incorrectly. There are four possible scenarios in a hypothesis test, which are summarized below.
 
+::: {.content-visible when-format="html"}
+
 $$
 \begin{array}{cc|cc} & & \textbf{Test Conclusion} &\\ 
 & & \text{do not reject } H_0 &  \text{reject } H_0 \text{ in favor of }H_A  \\
@@ -289,6 +291,19 @@ $$
 & H_A \text{true} & \text{Type 2 Error} & \text{Correct Decision}  \\
 \end{array} 
 $$
+:::
+
+::: {.content-visible when-format="pdf"}
+
+Make this table nicer by constructing it in some other system.
+
+. | do not reject H_0_ | reject H_0_ in favor of H_A_
+------|-----------------|-----------------
+H_0_ true | Correct decision | Type 1 error
+H_A_ true | Type 2 error | Correct decision
+ 
+
+:::
 
 > A **Type 1 error**, also called a **false positive**, is rejecting the null hypothesis when $H_0$ is actually true. Since we rejected the null hypothesis in the gender discrimination (from the Case Study) and the commercial length studies, it is possible that we made a Type 1 error in one or both of those studies. A **Type 2 error**, also called a **false negative**, is failing to reject the null hypothesis when the alternative is actually true. A Type 2 error was not possible in the gender discrimination or commercial length studies because we rejected the null hypothesis.
 

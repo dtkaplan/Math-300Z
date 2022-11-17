@@ -23,7 +23,7 @@ model_eval <- function(mod, input=NULL, data=NULL, ..., type=c("response", "link
     eval_data <- training_data <- model_skeleton(mod, data=data)
     response_in_data <- FALSE
   } else {
-    if (is.null(data)) {
+    if (is.null(data) || nrow(data) == 0) {
       training_data <- extract_training_data(mod)
       eval_data <- model.frame(mod)
       response_in_data <- TRUE

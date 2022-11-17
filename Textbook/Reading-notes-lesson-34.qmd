@@ -192,7 +192,7 @@ When the classifier gets things right, that is a "true" result. As with the fals
 
 Tabulating all 6000 rows of the testing data might produce something like this:
 
-.   | +    |  -
+Fraud   | test +    | test -
 ----|------|------
 yes | 1900 | 100      
 no  |   50 | 3950

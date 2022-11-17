@@ -25,6 +25,7 @@ Instead of focusing exclusively on statistical inference, we are going to work w
 ```{r echo=FALSE}
 #| label: fig-nature-significance
 #| fig-cap: "A cartoon published along with an article in *Nature*, \"Retire statistical significance\", showing this once-respected idea being relegated to the graveyard for outdated and misleading \"scientific\" concepts such as phlogiston and aether."
+#| fig-cap-location: margin
 knitr::include_graphics("www/Significance-cartoon.png")
 ```
 
@@ -37,21 +38,5 @@ To get you started with statistical thinking, it will help to have a concise def
 > *Statistic thinking is the explanation or description of measured variation* in the context of *what remains unexplained or undescribed.*
 
 Implicit in this definition is a pathway for learning to think statistically: first, you need to learn how to use data to describe variation; second, you need to know how to measure "what remains undescribed" and to use that as a context for interpretation; third, you'll need to understand how "explanation" differs from "description." The lessons that follow will take you down this path.
-
-
-
-## IN DRAFT: REMOVED MATERIAL
-
-Up to now, you've studied three main topics using the *OpenIntro* textbooks. 
-
-1. Lessons 2-4 covered **making graphics** (with `ggplot()`) and drew on Chapter 2 of *OpenIntro*.
-2. Lessons 5-8 covered **data wrangling** (with `mutate()`, `inner_join()` and its cousins, `group_by()` `summarize()`, `filter()`, `arrange()` and so on. These lessons drew on Chapters 3 & 4. 
-3. Lessons 11-17 covered **regression** and related topics. There was a huge amount of material in these lessons, covered in Chapters 5 & 6, including 
-    a. exploring and summarizing data with graphics and "statistics" such as the mean, median, proportion, and standard deviation.
-    b. building models of data using the `lm()` function. Such models are called "regression models" for historical reasons. (The story is fascinating because it comes from a blunder in interpretation of the models, a blunder that is still regrettably common today.)
-    c. interpreting models using residuals and coefficients.
-    d. the distinction between "**correlation**" and "**causation**."
-    
-Chapters 7 through 10 of *OpenIntro* cover a topic known broadly as "**statistical inference**." If you have studied statistics previously---say in an advanced high-school course---you have learned some of the term of statistical inference, such as "confidence interval," "p-value," "statistical significance", and the "t-test."
 
 

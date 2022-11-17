@@ -110,9 +110,9 @@ p = 100
 ```
 
 ```{r random-binary, echo = FALSE, eval = FALSE}
-outcome <- as.tibble(matrix(ifelse(rnorm(k * n) > 1, "Y", "N"), nrow = n, ncol = k))
+outcome <- as_tibble(matrix(ifelse(rnorm(k * n) > 1, "Y", "N"), nrow = n, ncol = k))
 names(outcome) <- paste0("R", 1:k)
-explan <- as.tibble(matrix(100*round(runif(p * n), 2), nrow = n, ncol = p))
+explan <- as_tibble(matrix(100*round(runif(p * n), 2), nrow = n, ncol = p))
 Results <- list()
 tmod <- list()
 for (product in 1:k) {
@@ -151,7 +151,7 @@ Results %>%
 
 (ref:some-results-cap) The output of the ten classifiers for the first 15 customers. Green highlighting is used for those products which a given customer is likely to buy.
 
-```{r echo = FALSE}
+```{r echo = FALSE, warning=FALSE}
 For_counting <- 
   Results %>% 
   mutate(action = ifelse(Y > 0.40, "coupon", "no coupon")) %>% 
@@ -175,9 +175,9 @@ A true measure of the performance of a model should be based not on the data on 
 
 ```{r purchase-test, echo = FALSE}
 set.seed(2001)
-test_outcome <- as.tibble(matrix(ifelse(rnorm(k * n) > 1, "Y", "N"), nrow = n, ncol = k))
+test_outcome <- as_tibble(matrix(ifelse(rnorm(k * n) > 1, "Y", "N"), nrow = n, ncol = k))
 names(test_outcome) <- paste0("R", 1:k)
-test_explan <- as.tibble(matrix(100*round(runif(p * n), 2), nrow = n, ncol = p))
+test_explan <- as_tibble(matrix(100*round(runif(p * n), 2), nrow = n, ncol = p))
 Test_results <- list()
 for (product in 1:k) {
   The_data <- test_explan %>% mutate(Resp = test_outcome[[product]])

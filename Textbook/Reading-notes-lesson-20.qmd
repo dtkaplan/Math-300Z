@@ -57,22 +57,26 @@ Recall from *OpenIntro* chapters 5 & 6 that the linear modeling technique produc
 The fitted values are the output from the model when the explanatory variables from the training data are given as inputs to the model. The residuals are the row-by-row numerical *difference* betwen the response variable and the fitted values. 
 
 These three columns of numbers---the response variable, the fitted model values, and the residuals---are exactly analogous to the three sides of a right triangle. (This is not an obvious fact, but it is an important one to keep in mind.) In particular, the following numerical relationship is as true for linear models as it is for triangles:
-$$\text{sd(fitted)}^2 + \text{sd(residuals)}^2 = \text{sd(response)}^2$$ where sd() refers to the standard deviation. Consequently, sd()^2 is the variance.
+$$\text{sd(fitted)}^2 + \text{sd(residuals)}^2 = \text{sd(response)}^2$$ where sd() refers to the standard deviation. Consequently, sd()^2^ is the variance.
 
 The variance and the standard deviation are defined mathematically in a special way that makes the Pythagorean relationship always describe models constructed the the `lm()` technique, that is "least squares" models.
 
-The antique name "standard deviation" hardly hints at this, largely because it was invented before the least squares technique was invented. For thinking about data, it can be helpful to have in mind a modernization of "standard deviation."
+::: {.callout-note}
+## Why "standard deviation"
+
+"Standard deviation" is an antique term and is misleading to people who think about "deviation" in the everyday sense. The term is so widely used that we can hardly avoid it, but it is helpful to have in mind a modernization of "standard deviation."
 
 Step 1 in the modernization is to make clear what "standard" means:
-$$\text{standard deviation} = \text{accepted}\ \ \textit{measure of} \
-\ \text{deviation}$$
+
+> standard deviation $=$ accepted *measure of* deviation.
+
 
 Step 2 in the modernization replaces the archaic word "deviation" with something more descriptive:
-$$\text{standard deviation} = \text{accepted}\ \ \textit{measure of} \
-\ \text{variation in the variable}$$
 
-We won't explain here *why* the standard deviation became the go-to, accepted, standard measure of
-variation, but it did and for excellent reasons. 
+> standard deviation $=$ accepted *measure of* variation in the variable.
+
+
+We won't explain here *why* the standard deviation became the go-to, accepted, standard measure of variation, but it did and for excellent reasons. 
 
 :::
 
@@ -89,13 +93,12 @@ Keep in mind also that variance and standard deviation are *summaries* of a vari
 
 Almost always, people use software to do the calculations. The relevant R functions are `sd()` and `var()`. You can use these functions in a `summarize()` statement, for instance
 
-```{r}
-mtcars %>%
-  summarize(v = var(hp))
-mtcars %>% 
-  summarize(s = sd(hp))
+```{r class.output="column_margin"}
+mtcars %>% summarize(v = var(hp))
+mtcars %>% summarize(s = sd(hp))
 ```
 Regrettably, the software does not indicate the units of the quantity. For that, you need to determine the units of the variable itself, typically by reading the documentation for the data frame.
+:::
 
 To understand *what* is being calculated by `var()`, we will describe an algorithm. There are more efficient algorithms than the one described here, but this one is easy to understand.
 
@@ -146,6 +149,7 @@ Statistical graph**ics** are so common and so often used in this course, that yo
 
 ```{r echo=FALSE}
 #| label: fig-graphs
+#| column: page-right
 #| layout-ncol: 3
 #| fig.cap:
 #|   - "undirected graph"
@@ -230,7 +234,11 @@ The second purpose is for learning modeling technique. We are going to generate 
 Here's a simple example: a DAG with two exogenous nodes (`a` and `b`) and one another node, `c`, that gets input from both `a` and `b`.
 
 ```{r}
+#| column: margin
 dag_draw(dag09)
+```
+
+```{r}
 print(dag09)
 ```
 
@@ -245,13 +253,17 @@ sample(dag09, size=5)
 Each of the rows in the sample is one trial in which the values of the nodes have been assigned, either by random numbers for exogenous nodes, or by a formula for nodes that receive inputs.
 
 ::: {.callout-warning}
-## WARNING!! DAGs are not reality
+## Reality check: DAGs and data
 
-Sometimes students get so used to working with DAGs that they forget they are simulations. They start to think that they can generate data from a DAG that will help to understand some aspect of the real world.
+DAGs are a way to lay down on paper your beliefs about what is connected to what in the real world. They are also a kind of scratchpad for constructing alternative scenarios and, as you'll see starting in Lesson 28, thinking about how your models might go wrong in the face of a plausible alternative.
 
-WRONG! If you want to know about the real world, you need to collect data from the real world, not a computer simulation. Where DAGs can be useful in practice is to guide model building **from real data** when you have a hypothesis about the causal connections in the world. 
+In this book, we extend the use of DAGs beyond their scope in professional statistics; we use them as simulations from which we can generate data. This can be a good way to learn about statistical methodology. 
 
-In this course, we also sample from DAGs to help learn about statistical technique. But never to make claims about real-world phenomena.
+DAGs are aides to reasoning, scratchpads that help us play out the consequences of our hypotheses about possible real-world mechanisms. But data from DAG simulations shouldn't be confused with data from reality.
+
+If you want to know about the real world, you need to collect data from the real world. The proper role of DAGs in real work is to guide model building **from real data**. 
+
+In this course, we sample from DAGs to learn statistical technique. But never to make claims about real-world phenomena.
 :::
 
 

@@ -56,6 +56,7 @@ The arithmetic, in principle, let's us evaluate the model for any inputs, even r
 ```{r}
 mod_eval(mpg_mod, hp=10000, wt = 50)
 ```
+
 The prediction reported here means that such a car goes *negative* 474 miles on a gallon of gas. That's silly. One way to deal with such silliness is to restrict the inputs to "reasonable" values.
 
 Often, a better way to avoid the silliness is to structure the model so that unreasonable outputs---such as negative miles per gallon---cannot happen. Figuring out how to do this draws on mathematical experience. In this case, modeling the *logarithm* of mpg means that a numerically negative output still corresponds to a positive mpg. If we want the model output denominated in miles-per-gallon rather than logarithmic units, we just need to exponentiate (`exp()`) the logarithmic output to return to the world of miles-per-gallon:
@@ -101,9 +102,6 @@ WRONG WRONG WRONG. It needs to work that the winning returned for Valentine has 
 Added up, these odds are $5+1+1=7$ on the top and $9+2+1=12$ on the bottom. It's important---for the bookie---that the odds are arranged so that the bottom number is larger than the top number: 12 is larger than 11. Note that this method of adding is simpler than combining fractions. To add the fractions $1/2$ and $1/3$ gives $5/6$. But to combine the odds $1:2$ and $1:3$ gives $2:5$. One more detail is needed for a real-life bookies, taking into account the size of each bet. For instance, a $5 bet at 5:9 would be recorded as 25:45.
 
 Now the race is run. The winner is ... well ... from the bookie's point of view it doesn't matter who wins.
-
-
-
 :::
 
 
@@ -138,7 +136,8 @@ A subtle modification to the linear model architecture allows the modeller to gu
 
 @fig-w-logistic shows a logistic model of survival as a function of age and smoking status. Notice that in the logistic model, the effect of smoking on survival is negative, particularly for people around age 50. The logistic architecture provides an intrinsic flexibility which avoids the undue influence of the very young and very old, for whom survival is close to 100% or 0 respectively *regardless* of smoking status.
 
-```{r echo = FALSE}
+::: {.content-visible when-format="html"}
+```{r echo = FALSE, warning=FALSE}
 #| label: fig-w-logistic
 #| fig-cap: A simple logistic model of survival versus age and smoking status. 
 wmod_glm1 <- glm(outcome=="Alive" ~ age + smoker, data = mosaicData::Whickham, family = binomial)
@@ -146,10 +145,18 @@ mod_plot(wmod_glm1) %>%
   gf_lims(y = c(-.1,1.1)) %>%
   gf_refine(scale_y_continuous(breaks=c(0,.2,.4,.6,.8,1.0))) %>%
   gf_labs(y = "Probability of survival for 20 years") %>%
-  gf_jitter(as.numeric(outcome=="Alive") ~ age, color = ~ smoker, data = mosaicData::Whickham, alpha = 0.2, height = 0.1)
+  gf_jitter(as.numeric(outcome=="Alive") ~ age, color = ~ smoker, 
+            data = mosaicData::Whickham, alpha = 0.2, height = 0.1)
 ```
-
 :::
+
+
+:::: {.content-visible when-format="pdf"}
+
+::.: {.callout-warning}
+The figure fig-w-logistic is not compiling in PDF mode
+:::
+::::
 
 
 ::: {.callout-note}
