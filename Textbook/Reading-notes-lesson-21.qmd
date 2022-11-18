@@ -1,7 +1,5 @@
 ---
 title: "Signal and noise"
-author: "Prof. Danny Kaplan"
-date: "`r format(Sys.time(), '%B %d, %Y')`"
 output:
   html_document:
     theme: lumen
@@ -17,7 +15,7 @@ lesson <- 21
 source("../_startup.R")
 ```
 
-Imagine being transported back to June 1940 . You and your family might be sitting around a radio receiver, having just switched on set and waited for it to warm up in time to hear a news broadcast. I've selected a newscast for you, recording 103. The recording covers the surrender of the French in the face of the German invasion. Press the play button in the box below and listen.
+Imagine being transported back to June 1940 . You and your family might be sitting around a radio receiver. You have just switched on the set and are waiting for it to warm up in time to hear a news broadcast. I've selected a newscast for you, recording 103. The recording covers the surrender of the French in the face of the German invasion. Press the play button in the box below and listen.
 
 <iframe src="https://archive.org/details/1940RadioNews/1940-06-21-CAN-WIlliam-C-Kirker-On-French-Armistace-At-Compiegne.mp3" width="100%" height="400"  style="border:1px solid black;">
 </iframe>

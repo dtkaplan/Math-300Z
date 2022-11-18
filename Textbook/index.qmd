@@ -39,4 +39,74 @@ To get you started with statistical thinking, it will help to have a concise def
 
 Implicit in this definition is a pathway for learning to think statistically: first, you need to learn how to use data to describe variation; second, you need to know how to measure "what remains undescribed" and to use that as a context for interpretation; third, you'll need to understand how "explanation" differs from "description." The lessons that follow will take you down this path.
 
+## Important distinctions
 
+The following terminology will show up throughout these lessons. Some of them may not make sense until you get to the lesson where they are introduced. This 
+
+**Explanatory** vs **response** variables. Your models will always involve a *single response variable* (which the modeler selects according to his or her own purposes). Models can have zero or more explanatory variables.
+
+**Variable** vs **covariate**. "Covariate" is another word for an explanatory variable. Using the word "covariate" signals to the human reader that the variable is not itself of direct interest but is needed to put another explanatory variable in a correct context.
+
+**Categorical** vs **quantitative** variables. Always be aware of whether the response variable you are working with is categorical or quantitative. When it is categorical, expect to use `zero_one()` to convert it to quantitative before modeling. In contrast, explanatory variables can be either categorical or quantitative.
+
+**Regression model** vs **classifier**. A regression model always has a *quantitative* response variable. A classifier has a *categorical* response variable. In this course, the only categorical response variables we will use will have *two levels* (e.g. healthy or sick, up or down, yes or no). In this simple but important situation, the distinction between regression model and classifier disappears.
+
+**Model** vs **model function**. By "model" we will almost always mean "regression model." A regression model, typically constructed by the `lm()` function, contains a lot of information that can be put together in different ways to summarize the model. Every regression model has, in addition to the other information, a "model function" which is, like all functions, a mechanism for turning inputs into outputs. 
+
+**Model output** vs **effect size**. A model output is the result of supplying input values to a model function. An effect size is about the *relationship* between the response variable and a selected explanatory variable.
+
+**Model coefficient** vs **effect size**. Model coefficients are numerical parameters whose value is the result of "training" a model on data. An effect size, as stated above, is about a relationship between the response variable and a selected explanatory variable. In this course, we will usually be training models that involve only linear terms. For such linear models, the effect size can be read directly from the corresponding model coefficient. But, in general, models can involve nonlinear interactions between variables. In such cases, the effect size needs to be calculated differently.
+
+**Point estimate** vs **interval estimate**. A point estimate has the form of a single number, e.g. the output from a model function, a model coefficient, etc. In contrast, interval estimates involve *two* numbers; one number specifies the lower end of the interval, the other number specifies the upper end.
+
+**Prediction interval** vs **confidence interval**. A prediction interval is used to describe the anticipated range of the actual result for which we have made a prediction, e.g. "tomorrow's wind will be between 5 and 10 mph." A **confidence interval** is most often used to express the uncertainty (due to sampling variation) in an effect size.
+
+## Software guide
+
+You will be using about a dozen new R functions in these lessons. This is a list of the ones you should become familiar with, and the ones that will be used in **demonstrations**.
+
+::: {.callout-warning}
+## Demonstrations
+
+Throughout these lessons, there will be *demonstrations* to illustrate statistical concepts or data analysis strategies. We'll place these in a distinctive box, of which this is an example.
+
+The demonstrations will often contain new computer commands that you are **not** expected to master on your own. (You're welcome to do so, but in general you should think of being in a no-stress zone when you're reading a demonstration.)
+:::
+
+
+* Training models with data
+    - **`lm()`** arguments: i. tilde expression, ii. `data=` data frame.
+    - Occasionally, you will be directed to use `glm()` or `model_train()`, which work similarly to `lm()` but are specialized for models whose output is a *probability*.
+    - **`zero_one()`** converts a two-level categorical variable to a 0/1 encoding.
+    
+* Summarizing models. These invariably take as input a model produced by `lm()` (or `glm()`) and generate a summary report about that model.
+    - **`coefficients()`**: displays model coefficients as a single number.
+    - **`confint()`**: displays model coefficients as an *interval* with a lower and upper value.
+    - **`rsquared()`** reduces a model to a single number, called R^2^.
+    - **`regression_summary()`**, like `confint()`, but with more detail.
+    
+* Evaluating a model on inputs
+    - **`model_eval()`** takes a trained model (as produced by `lm()`) and calculates the model output in both a point form and an interval form. `model_eval()` can also display the residuals from training or evaluation data.
+
+* Graphics
+    - `model_plot()` draws a graphic of a model's function optionally with prediction or confidence intervals.
+    - `geom_violin()` is a modern alternative to `geom_boxplot()`.
+    
+* DAGs (directed, acyclic graphs)
+    - **`sample()`** collects simulated data from a DAG
+    - `dag_draw()` draws a picture of a DAG showing how the variables are connected.
+    
+* Used within the `summarize()` data wrangling function: 
+    - **`var()`** computes the variance of a single variable.
+    
+::: {.callout-warning}
+## Demonstration
+
+Here are some functions that you will see in demonstrations. You don't have to learn to use such functions on your own, but it's helpful if you have a general idea what they are doing.
+
+- `do(10) * {` *command* `}` causes the *command* to be executed repeatedly the indicated number of times. Such repetitions are useful when the *command* is a trial of a random process such as sampling, resampling, or shuffling.
+- `function(`*arguments*`) {` *set of commands* `}` packages up a set of one or more commands so that you use them over and over again with specified arguments.
+- `geom_errorbar()` works much like `geom_point()` but draws vertical bars instead of dots. This is useful for graphing *intervals* such as confidence or prediction intervals.
+- `geom_ribbon()` is like `geom_line()` but for *intervals*. 
+- `effect_size()` calculates the strength and direction of the input-output relationship between the response variable of a model, and a selected *one* of the explanatory variables.
+:::
