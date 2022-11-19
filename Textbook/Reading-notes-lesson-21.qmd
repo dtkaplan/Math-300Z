@@ -204,6 +204,7 @@ Actually, there are many other configurations of DAGs involving three variables.
 ```{r echo=FALSE}
 #| label: fig-ten-triples
 #| fig-cap: "Ten DAG configurations involving three variables X, Y, and C and where there is no causal path going from Y to X."
+#| fig-cap-location: margin
 knitr::include_graphics("www/ten-triples.png")
 ```
 

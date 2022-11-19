@@ -1,7 +1,5 @@
 ---
 title: "Sampling variation"
-
-
 output:
   html_document:
     theme: lumen
@@ -22,9 +20,9 @@ There are many sources of noise in data; every variable has its own story, part 
 The statistical thinker is well advised to know about the sources of noise in the system she is studying. Your analysis of data will be better the more you know about how measurements are made and data collected.
 
 ::: {.callout-note}
-## Noise in hiring
+#### Noise in hiring
 
-The author has on several occasions testified in legal hearings as a statistical expert. In one case, the US Department of Labor had audited the records of a contractor with several hundred employees and high turnover. The records led the Department to bring suit against the contractor for discriminating against Hispanics, and open-and-shut case. How so? The hiring records showed that many Hispanics applied for jobs but none of them was hired. 
+The author has on sevons testified in legal hearings as a statistical expert. In one case, the US Department of Labor had audited the records of a contractor with several hundred employees and high turnover. The records led the Department to bring suit against the contractor for discriminating against Hispanics, and open-and-shut case. How so? The hiring records showed that many Hispanics applied for jobs but none of them was hired. 
 
 As the statistical expert, I was asked to review the findings from the Department of Labor. The lawyers thought they were asking me to check the arithmetic. As a statistical thinker, I know that the arithmetic is only part of the story. You also have to investigate the data. Although I had the spreadsheets to work from, I asked to be given the complete files on all applicants and hires the previous year. 
 

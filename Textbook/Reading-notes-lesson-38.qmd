@@ -1,7 +1,5 @@
 ---
 title: "False discovery"
-
-
 output:
   html_document:
     theme: lumen
@@ -17,6 +15,58 @@ lesson <- 38
 source("../_startup.R")
 library("rpart")
 ```
+
+There is, I think, a helpful analogy to be made between hypothesis testing and the familiar ways that we try to avoid information overload on the Internet.
+
+"Internet protocols" organize communication into standard format "packets" that are easily and rapidly transmitted, routed, and received. These packets make possible the vast web of connections that is the Internet. Anyone can put any digital content they like *inside* a packets; the protocols are neutral in this regard. The Internet protocols were *not* designed to determine what content is worth transmitting and what is worth receiving. We rely on other systems for that, mostly at the receiving end. There are spam filters to avoid email accounts being flooded with worthless or harmful messages. There are recommender systems that compare your history of music or movie streaming to that of others in order to identify what new content you might like. Search engines look inside web pages to identify connections and rank highly those pages that are linked to by other highly ranked pages. These systems leave creators free to follow their interests, ideas, and imaginations, while providing a little guidance to people who want to access some content but avoid being overcrowded by other content that is not worthwhile.
+
+Historically, there were earlier waves of technology that increased the ability to communicate. Printing and postal systems emerged in the 13th and following systems. Before those innovations, communication was outrageously expensive, requiring hand-copying of manuscripts, couriers, and camel trains. Content was controlled to some extent by authorities: government censorship; church "indices" and spritual authorities; and often the authorities of those famous classical philosophers and poets whose work and thought was promulgated by early universities.
+
+About four centuries ago, such authorities were being challenged. It slowly became accepted to make judgements based on observations and to disregard antique authorities. Enlightened "scientists" communicated their discoveries in hand-written letters to one another.^[The word "science" comes from the Latin for "to know." But a dictionary definition of "science" makes clear the "scientific" style for gaining knowledge: "The systematic study of the structure and behavior of the physical and natural world through observation, experimentation, and the testing of theories against the evidence obtained." (Oxford dictionaries)] In the late 1600s, another, possibly more efficient means of communication was developed: scientific societies where members met and read aloud their work to an audience, and the journals of such societies which enabled mass communication to those scientists distant from the society's meetings in time or space.
+
+Early scientific journals are delightful collations on diverse and miscellaneous subjects. Everything seems to have been of interest to everyone. Publication was regulated by the recommendations of "members" of the society; new members were admitted by the consensus of earlier members. 
+
+Over the centuries, the growth of scientific content and the specialization of methodology called for research findings to be sorted by area. But there was still need to regulate publication, to avoid distracting readers with worthless information.
+
+Hand-in-hand with the scientific revolution's reliance on observation and data rather than authority came the need to standardize methods for summarizing data. This might be called a "statistical protocol" by analogy to Internet protocols, but there is no wise governing body, only consensus and "accepted practice."
+
+The data from a bench-top experiment might consist of, say, six numbers: three from the treatment and three from controls. The arithmetic means of these two groups is practically certain to be non-zero, even if the the treatment had no effect. This meant that a means was needed to establish when the difference in means was large enough to suggest the two groups might be genuinely different and that the treatment did have an effect. The statistical protocol to decide such things needed to be simple: computers weren't available and there were no courses to teach statistical method until the 1960s. In the 1930s, prominent statistical pioneer Ronald Fisher published a slim volume, *Statistical Methods for Research Workers* which laid out methods for managing and standardizing the calculations. Fisher's authority was substantial but not absolute. Differing philosophical views also came to influence "accepted practice." 
+
+Early statistics books and courses codified "accepted practice." What emerged is the system of calculations that we call "hypothesis testing" and the ubiquitous p-value. Still, this was rooted in  the need to avoid journals wasting library-shelf-space and reader time with experiments that produced arithmetic differences between groups that were accidental and not genuinely "significant.'
+
+The now-codified accepted practice was in many ways similar to the protocols used by search engines and social media to direct our eyes and ears to content that might, possibly, be worthwhile. These systems are far from perfect, sometimes hiding good content or promoting worthless content. And, of course, the worth of content is a matter of personal interests and values, something that computer algorithms can mimic only imperfectly.
+
+"Hypothesis testing" is an ad hoc set of not always consistent concepts cobbled together by a unorganized community of independent researchers, steered perhaps by the perceived authority of one statistical celebrity or another. It is not a mathematically derived, highly optimized calculation of objective worth, just a simple means to deal with the fact that arithmetic differences are influenced by sampling variation and noise, and that a detected difference might not reliably point to a genuine difference between groups.
+
+It is simply not possible to understand hypothesis testing in the same way you can understand differentiation or data wrangling. 
+
+Hypothesis testing emerged in an era of bench-top and agricultural experiments conducted by a small community of self-identified scientists working without central control. It might have been a practicable solution to the problem of information overload in that era of small data. But the protocol has been frozen in place by textbooks; each generation passing it along to the next as received wisdom, in much the same way as the views of classical philosophers and poets were passed down to later generations as authoritative and unchallengeable. 
+
+So lets step back from this frozen statistical protocol of hypothesis testing and point out inconsistencies and peculiarities that make it hard to make sense of and perhaps unsuited to the needs of handling information overload in todays world of big data and huge scientific enterprise.
+
+NULL versus Alternative hypothesis
+
+Use a threshold
+
+Don't print the p-value
+
+p-value is an inseparable tangle of the amount of data available and the effect size. With enough data, practically everything has a small p-value.
+
+Hundreds of thousands (perhaps millions) of scientists churning out research results. A filter that eliminates 95% of the nonsense still lets through an unfathomable mass of content.
+
+So many choices in research and analysis methods---which covariates to include, whether to exclude an inconvenient point as an outlier, multiple choices for the response variable, all combined with a professional priority to "publish or perish."
+
+
+
+
+
+::: {.callout-note}
+A short introduction to power and the alternative hypothesis.
+
+Use DAGs and ask for the p-value for different sample sizes.
+:::
+
+---------
 
 > *Ask, and it shall be given you; seek, and ye
     shall find; knock, and it shall be opened unto you:
