@@ -15,147 +15,204 @@ lesson <- 34
 source("../_startup.R")
 ```
 
-We all face many yes/no situations. A patient has a disease or does not. A credit card transaction is genuine or fraudulent. A **classifier** is a statistical model designed to *predict* the unknown outcome of a yes/no situation from information that is already available. 
+There are many yes-or-no conditions. A patient has a disease or does not. A credit-card transaction is genuine or fraudulent. 
 
+But it is not straightforward to figure out at the time the patient comes to the clinic or the credit-card transaction is made, whether the condition is yes or no. If we could wait, the condition might reveal itself: the patient gets critically ill or the credit-hard holder complains about an unauthorized charge. But we can't wait. We want to treat the patient *before* he or she gets critically ill. We want to block the credit-card transaction before it is completed.
 
-## Case-control study design
+Instead of waiting, we measure whatever relevant variables we can when the patient arrives at the clinic or the credit-card transaction has been submitted for approval. For the patient, we might look at the concentration of specific markers for cancer in the blood. For the transaction, we might look at the shipping address to see if it matches the credit-card holder's genuine address. Such variables may provide an indication, imperfect though it may be, of whether the condition is yes or no.
 
-Consider this news report:
+A **classifier** is a statistical model used to *predict* the unknown outcome of a yes-or-no situation from information that is already available. This Lesson concerns three closely related topics about classifiers: how we collect data for training the model, how we summarize the performance of the classifier, and how we "tune" the classifier.
+
+To help keep things straight, we will write the output of the classifier as + or -; a positive or a negative test result. But the actual condition of the person will be denoted **C** or **H**, as in "you have the **C**ondition or you are **H**ealthy.
+
+## Collecting useful data
+
+Consider this news report and note the time lag between collection of the dietary explanatory variables and the response variable---whether the patient developed pancreatic cancer.
 
 > Higher vitamin D intake has been associated with a significantly reduced risk of pancreatic cancer, according to a study released last week.
 > Researchers combined data from two prospective studies that included 46,771 men ages 40 to 75 and 75,427 women ages 38 to 65.  They identified 365 cases of pancreatic cancer over 16 years.
-> Before their cancer was detected, subjects filled out dietary questionnaires, including information on vitamin supplements, and researchers calculated vitamin D intake.  After statistically adjusting for [that is, holding constant]  age, smoking, level of physical activity, intake of calcium and retinol and other factors, the association between vitamin D intake and reduced risk of pancreatic cancer was still significant.
-> Compared with people who consumed less than 150 units of vitamin D a day, those who consumed more than 600 units reduced their risk by 41 percent. - New York Times, 19 Sept. 2006, p. D6.
+> Before their cancer was detected, subjects filled out dietary questionnaires, including information on vitamin supplements, and researchers calculated vitamin D intake.  After statistically adjusting^[That is, applying the methods of Lesson 28.] for age, smoking, level of physical activity, intake of calcium and retinol and other factors, the association between vitamin D intake and reduced risk of pancreatic cancer was still significant.
+> Compared with people who consumed less than 150 units of vitamin D a day, those who consumed more than 600 units reduced their risk by 41 percent. - *New York Times*, 19 Sept. 2006, p. D6.
 
-There are more than 125,000 cases in this study, but only 365 of them developed pancreatic cancer.  If those 365 cases had been scattered around dozens or hundreds of groups and analyzed separately, there would be so little data in each group that no pattern would be discernible.
+This was not an experiment; it was an observational study without any intervention to change anyone's diet.
 
-## School spending example
+In building a classifier, we have a similar situation. Perhaps we can perform the blood test today, but that gives us only the test result, not the subject's true condition. We might have to wait years for that condition to reveal itself. Only at that point can we measure the performance of the classifier.
+
+To picture the situation, let's imagine many people in the world, some of whom have the condition and some who don't. On Day 1 of the study, we test everyone and get raw score on a scale from 0 to 40. The results are shown in @fig-whole-world. Each glyph is a person. The varying locations are meant to help us later on; for now, just think of them as representing where each person lives in the world. The different shapes of glyph---circle, square, triangle---are meant to remind you that people are different from one another in age, gender, risk-factors, etc. 
+
+Each person took a blood test. The raw result from that test is a score from 0 to 40. The distribution of scores is shown in the right panel of the figure. We also show the score in the world-plot;
+the higher the raw score, the more blue the glyph. On Day 1, it isn't known who has the condition and who does not.
 
 
 
-## Example: Covariates and context in educational outcomes 
-
-To illustrate how covariates set context, consider an issue of interest to public policy-makers in many societies: How much money to spend on children's education? In the United States, for instance, educational budget policy is set mainly on a state-by-state level. State lawmakers are understandably concerned with the quality of the public education provided, but they also have other concerns and constraints and constituencies who give budget priority to other matters. 
-
-In evaluating the various trade-offs they face, lawmakers would be helped by knowing how increased educational spending will shape educational outcomes. What can available data tell us? Unfortunately, there are various political constraints that work against states adopting and publishing data on a common measure of genuine educational outcome. Instead, we have high-school graduation rates, student grades, etc. These have some genuine meaning but also can reflect the way the system is gamed by administrators and teachers and which cannot be easily compared across states. At a national level, we have college admissions tests such as the ACT and SAT. Perhaps because these tests are administered by private organizations and not state governments, it's possible to gather data on test-score outcomes on a state-by-state basis and collate these with public spending information.
-
-@fig-sat-1 shows average SAT score in 2010 in each state versus expenditures per pupil in public elementary and secondary schools. Laid on top of the data is a flexible linear model (and its confidence band) of SAT score versus expenditure. The overall impression given by the model is that the relationship is negative, with lower expenditures corresponding to higher SAT scores. But the confidence bands are broad and it is possible to find a smooth path through the confidence band that has almost zero slope. Either way, the conventional wisdom that higher spending produces better school outcomes is not supported by this graph.
-
-```{r echo = FALSE}
-#| label: fig-sat-1
-#| fig-cap: "State by state data (from 2010) on average score on the SAT college admissions test and expenditures for public education."
-data(SAT_2010, package = "mdsr")
-mod_1 <- lm(total ~ ns(expenditure, 2), data = SAT_2010)
-mod_plot(mod_1, interval = "confidence") %>%
-  gf_jitter(total ~ expenditure,  alpha = 0.5, data = SAT_2010, height = 0, width = 0.25) %>%
-  gf_labs(y = "Average SAT score", x = "Public school expenditures per pupil ($1000s)")
+```{r echo=FALSE}
+#| label: fig-whole-world
+#| fig-cap: "Day 1: The people participating in the study to develop the classifier. Each has been given a blood test which gives a score from zero (gray) to one (blue). "
+#| fig-cap-location: margin
+P1 <- plot_people_score(People)   # from _startup.R
+set.seed(101)
+P2 <- ggplot(People %>% mutate(cond = "?"), 
+       aes(y = raw_result, x = cond, color=raw_result)) +
+  geom_jitter(width=0.2, size=.1, alpha=0.4) +
+  scale_shape_identity(guide="none") +
+  scale_color_gradient(low="#A0A0A0", high="#0000FF", guide="none") +
+  ylab("Test score") + xlab("") + theme_minimal()
+gridExtra::grid.arrange(P1, P2, widths = c(.8, .2))
 ```
 
-There are other factors that play a role in shaping education outcomes: poverty levels, parental education, how the educational money is spent (higher pay for teachers or smaller class sizes? administrative bloat?), and so on. Modeling educational outcomes solely by expenditures ignores these other factors. 
+Having recorded the raw test results for each person, we wait. In the pancreatic cancer study, they waited 16 years for the cancer to reveal itself. After the waiting period, we can add a new column to the original data; whether the person has the condition (C) or doesn't (H). In @fig-world-condition people who developed the condition have been re-drawn with filled glyphs to make them easier to spot.
 
-At first glance, it's tempting to ignore these additional factors. We may not have data on them. And insofar as our interest is in understanding the relationship between expenditures and education outcomes, we are not directly concerned with the additional factors. This lack of direct concern, however, doesn't imply that we should totally ignore them but that we should do what we can to "hold them constant".
-
-To illustrate, let's consider a factor on which we do have data: the fraction of eligible students (those in their last year of high school) who actually take the test. This varies widely from state to state. In a poor state where few students go to college the fraction can be very small (Alabama 8%, Arkansas 5%, Mississippi 4%, Louisiana 8%). In some states, the large majority of students take the SAT (Maine 93%, Massachusetts 89%, New York 89%). In states with low SAT participation rates, the students who do take the test are applying to schools with competitive admissions. Such strong students can be expected to be get high scores. In contrast, the scores in  states with high participation rates reflect both strong and weak students; they will be lower on average than in the low-participation states. 
-
-
-Putting the relationship between expenditure and SAT scores in the context of the fraction taking the SAT can be done by using fraction as a co-variate, that is, building the model `SAT ~ expenditure + fraction` rather than just `SAT ~ expenditure`. @fig-sat-3) shows a model with fraction taken into account. 
-
-```{r echo = FALSE}
-#| label: fig-sat-3
-#| fig-cap: "The model of SAT score versus expenditures, including as a covariate the fraction of eligible students in the state who take the SAT."
-mod <- lm(total ~ ns(expenditure,2) * sat_pct, data = SAT_2010)
-mod_plot(mod, interval = "confidence") %>%
-  gf_labs(y = "Average SAT score", x = "Public school expenditures per pupil ($1000s)")
+```{r echo=FALSE}
+#| label: fig-world-condition
+#| fig-cap: "The same people as in @fig-whole-world, but now we know who turned out to have the condition and who didn't. The people with the condition are re-drawn with filled glyphs."
+P3 <- plot_people_score_condition(People)
+P3
 ```
 
-Note that the effect size of spending on SAT scores is positive when the expenditure level is less than $10,000 per pupil. And notice that when the fraction taking the SAT is near 0, the average scores don't depend on expenditure. This suggests that among elite students, expenditure doesn't make a discernable difference: it's the students, not the schools that matter.
+Only now, when we have found out the C-or-H state of each person, can we compare the raw scores on the blood test for those were found to have the condition and those who were not. 
 
-The relationship shown in @fig-sat-1 is genuine. So is the very different relationship seen in @fig-sat-3. How can the same data be consistent with two utterly different displays? The answer, perhaps unexpectedly, has to do with the connections among the explanatory variables. Whatever the relationship between each individual explanatory variable and the response variable, the *appearance* of that relationship will depend on how explanatory variables are connected to each other.
+## Setting the threshold for +
 
-## Connections among explanatory variables
 
-To demonstrate that the apparent relationship between an explanatory variable and a response variable -- for instance, school expenditures and education outcomes -- depends on the connections of the explanatory variable with other explanatory variables, let's move away from the controversies of political issues and study some systems where everyone can agree exactly how the variables are connected. We'll look at data produced by simulations where we specify exactly what the connections are.
-
-A simulation implements a hypothesis: a statement about that might or might not be true about the real world. As a starting point for our simulation, let's imagine that education outcomes increase with school expenditures in a very simple way: each $1000 increase in school expenditures per pupil results in an average increase of 10 points in the SAT score: an effect size of 0.01 points per dollar. Thus, the imagined relationship is:
-
-$$\mbox{sat} = 1100 + 0.01 * \mbox{dollar expenditure}$$
-
-Let's also imagine that the fraction of students taking the SAT test also influences the average test score with an effect size of -4 sat points per percentage point. Adding this effect into the simulation leads to an imagined relationship of 
-
-$$\mbox{sat} = 1100 + 0.01 * \mbox{dollar expenditure} - 4 * \mbox{participation percentage} .$$
-
-And, of course, there are other factors, but we'll treat their effect as random with a typical size of $\pm$ 50 points.
-
-To complete the simulation, we'll need to set values for dollar expenditures and participation percentage. We'll let the dollar expenditures vary randomly from $7000 to $18,000 from one state to another and the participation percentage vary randomly from 1 to 100 percentage points.
-
-Notice that in this simulation, both participation percentage and expenditures affect education outcomes, but there is no connection at all between the two explanatory variables. That is, the graphical causal network is that shown in Figure \@ref(fig:school-sim-1).
-
-```{r}
-#| label: fig-school-sim-1
-#| fig-cap: "A graphical causal network relating expenditures, participation percentage, and education outcome, where there is no connection between expenditures and participation."
-dag_school1
-dag_draw(dag_school1)
+```{r echo=FALSE}
+#| label: fig-compare-scores
+#| fig-cap: "The distribution of raw test scores. After we know the true condition, we can break down the test scores by condition."
+set.seed(101)
+P4 <- ggplot(People, 
+       aes(y = raw_result, x = cond)) +
+  geom_jitter(width=0.2, size=0.2, alpha=0.4) +
+  geom_violin(color=NA, width=0.9, fill="blue", alpha=0.5)+
+  scale_shape_identity(guide="none") +
+  scale_color_gradient(low="#A0A0A0", high="#0000FF", guide="none") +
+  ylab("") + xlab("") + theme_minimal() + labs(title="After waiting to find out")
+gridExtra::grid.arrange(P2 + labs(title="Day 1") , P4, widths = c(.4, .6))
 ```
 
-We can generate simulated data and use the data to train models. @fig-school-data-1 shows the data and two different models.
+At the end of year 16, we can now divide the study participants into two groups: those who developed the condition and those who didn't.
 
-```{r}
-#| label: fig-school-data-1
-#| fig-cap: "Data and models of the relationship between expenditures and education outcomes from a simulation in which expenditures and participation rate are unconnected as in @fig-school-sim-1.\n- (a) The model `outcome ~ expenditure` \n- (b) The model with participation as a covariate: `outcome ~ expenditure + participation` \nBoth models (a) and (b) show the same effect size for outcome with respect to expenditure."
-Dat1 <- sample(dag_school1, size=500)
-mod1_1 <- lm(outcome ~ ns(expenditure,2), data = Dat1)
-mod1_2 <- lm(outcome ~ ns(expenditure,2) * participation, data = Dat1)
-mod_plot(mod1_1, interval="prediction") %>%
-  gf_point(outcome ~ expenditure, data = Dat1)
-mod_plot(mod1_2, interval="prediction") %>%
-  gf_point(outcome ~ expenditure, alpha=~participation, data = Dat1, inherit=FALSE)
+@fig-compare-scores shows the distribution of raw test scores. The values are those recorded on Day 1, but after waiting to find out the patients' conditions, we can subdivide them into those who have the condition (C) and those who don't (H).
+
+The classifier we aim to build is not yet complete, even though we have all the data we need. To finish the classifier, we need to identify a "**threshold score**." Raw scores above this threshold will generate a + test; scores below the threshold generate a - test.
+
+::: {.callout-note}
+## False positives and false negatives
+
+Since each individual person is either C or H, and each has a test result that is + or -, we can divide the people into four distinct groups.
+
+- C with a + test: This is called a "**true positive**", since the test was + (that is, positive) and the test was right.
+
+- H with a + test: This is a "**false positive**"; the test was + (positive) but wrong (false).
+
+- H with a - test: A "**true negative**"
+
+- C with a - test: A "**false negative**"
+:::
+
+It is you, the modeler, who decides what the threshold should be. In setting it, you have two objectives that happen to conflict. You want to avoid both false negatives and false positives. You do this by setting the threshold low enough that a large fraction of the people in column C are above the threshold. Those below the threshold are the false negatives. But you also want to set the threshold low enough so that only a small fraction of the people in column H are above the threshold---such people are false positives.
+
+::: {.callout-note}
+## The Loss Function
+
+In order to set the threshold at an optimal level, it is important to measure the impact of the positive or negative test result. This impact of course will depend on whether the test is right or wrong about the person's true condition. It is conventional to measure the impact as a "**loss**," that is, the amount of harm that is done.
+
+If the test result is right, there's no loss. Of course, it's not nice that a person is C, but a + test result will steer our actions to treat the condition appropriately: no loss in that.
+
+Typically, the loss of a false negative is reckoned as more than the loss of a false positive. A false negative will lead to failure to treat the person for a condition that he or she actually has.
+
+In contrast, a false positive will lead to unnecessary treatment. This also is a loss that includes several components that would have been avoided if the test had be right. The cost of the treatment itself is one part of the loss. The harm that a treatment might do is another part of the loss. And the anxiety that the person and his or her family go through is still another part of the loss. These losses are not necessarily small. The woman who gets a false positive breast-cancer diagnosis will suffer from the effects of chemotherapy and the loss of breast tissue. The man who gets a false-positive prostate-cancer diagnosis may end up with urinary incontinence and impotence. 
+
+The aim in setting the threshold is to minimize the total loss. This will be the loss incurred due to false negative times the number of false negatives plus the loss incurred from a false positive times the number of false positives.
+
+The term "**loss function**" is used to describe how the loss depends on whether the outcome is a false negative or a false positive.
+
+However, as you'll see in Lesson 35, the number of false positives and false negatives depends on the "**prevalence**" of the condition. This can differ from group to group or location to location. Until we know the relevant prevalence and the loss function, we can't sensibly pick a threshold. 
+:::
+
+## Test performance
+
+As pointed out above, to know the impact of the test you need to know both the loss function and the prevalence. Even so, there is a simple way to describe the performance of the test itself that will enable us to apply the test optimally for any prevalence or loss function.
+
+Assume for the moment that we have already selected a threshold that turns the raw score from the test into the + or - final result from the test.
+
+The threshold lets us mark as + or - each of the people whose data we are using to develop the classifier. In terms of the graphics we have been drawing, the threshold turns what we were drawing as shades of blue to represent the raw score into a definite blue-or-not color code, as in @fig-after-threshold.
+
+```{r echo=FALSE}
+#| label: fig-after-threshold
+#| fig-cap: "Fixing the threshold turns the shades of blue into blue-or-not. Depending on the threshold, the picture will look somewhat different."
+plot_people_final(People)
 ```
 
 
+To drive home an important point, I'm going to engage in a bit of metaphorical hyperbole. Imagine that all of the people who genuinely have condition C come from one planet, the Planet of the C. Similarly, the people with condition H come from another planet, the Planet of the H. (@fig-divided-by-condition)
 
-The relationship between outcome and expenditure can be quantified by the effect size, which appears as the slope of the function. 
-You can see that when the explanatory variables are unconnected, as in @fig-school-sim-1, the functions have the same slope.
 
-Now consider a somewhat different simulation. Rather than expenditures and participation being unconnected (as in the causal diagram shown in @fig-school-sim-1), in this new situation we will posit a connection between the two explanatory variables. We'll image that there is some broad factor, labeled "culture" in @fig-school-sim-2, that influences both the amount of expenditure and the participation in the tests used to measure education outcome. For instance, "culture" might be the importance that the community places on education or the wealth of the community.
 
-```{r}
-#| label: fig-school-sim2
-#| fig-cap: "A DAG for school outcomes that links `participation` and `expenditure` as a function of `culture`."
-dag_school2
-dag_draw(dag_school2)
+```{r echo=FALSE}
+#| label: fig-divided-by-condition
+#| fig-cap: "The hypothetical planets of origin of the people in the classifier-building project. Everyone on the Planet of the C has condition C. (Note that all the glyphs are filled in.) Everyone on the Planet of the H has condition H. (The glyphs on planet H are hollow.)"
+pC <- plot_people_final(People %>% filter(cond=="C"))
+pNC <- plot_people_final(People %>% filter(cond != "C"))
+gridExtra::grid.arrange(pC + labs(title="Planet of the C"), pNC + labs(title="Planet of the H") , ncol=2)
 ```
 
-Again, using data from this simulation, we can train models:
+Suppose we perform the blood test on everybody on Planet of the C. A logician might point out that there is no need for a blood test, since everyone on Planet C has condition C. But our objective is to see how well the test performs. We'll measure the performance---on Planet C---by the fraction of inhabitants who get a + test.
 
-* (a) `outcome ~ expenditures`, which has no covariates.
-* (b) `outcome ~ expenditures + participation`, which includes participation as a covariate. 
+This fraction applies only to Planet C and is called the "**sensitivity**" of the test. The fraction must be between zero and one, so it's tempting to call it a probability. **But don't.** We are going to give a new name to fractions computed on hypothetical planets: "**likelihoods**."
 
-@fig-school-data-2 shows the data from the new simulation (which is the same in both subplots) and the form of the function trained on the data. Now model (a) shows a very different relationship between expenditures and outcome than model (b). 
+In everyday speech, "likelihood" is a synonym for "probability," but we are using words in a technical sense here. A likelihood aways comes from a hypothetical planet.
+
+Another likelihood that's telling about how well the blood test performs is a fraction calculated on Planet H. This likelihood is called the test's "**specificity**" and is calculated as the fraction of - test results on Planet H.
+
+As a more concise notation, let's write the sensitivity as ${\cal L}(+ | C)$. The plus reminds us that we're looking at the fraction of tests that are positive, the $C$ reminds us which hypothetical planet we are on. The ${\cal L}$ stands for "likelihood."
+
+Similarly, we'll write the specificity as ${\cal L}(- | H)$. Sensitivity and specificity are both likelihoods, but there need not be any fixed relationship between them: They are calculated on different planets! To judge from the pictures in @fig-divided-by-condition, the sensitivity is about 90%---most of the glyphs are blue on Planet C. Similarly, the specificity is about 85%---most of the glyphs on Planet H are not blue.
 
 
-```{r school-data2, echo = FALSE, fig.cap = "(ref:school-data-2-cap)", fig.fullwidth = TRUE, fig.show = "hold", out.width = "50%"}
-#| label: fig-school-data2
-#| fig-cap: "Similar to @fig-school-data-1 but using the simulation in which the explanatory variables -- expenditure and participation -- are connected by a common cause. The two models show very different relationships between outcomes and expenditures. Model (b) matches the mechanism used in the simulation, while that mechanism is obscured in model (a). "
-Dat2 <- sample(dag_school2, size = 500) %>%
-  mutate(.participation = ifelse(participation < 33, 0, 
-         ifelse(participation < 67, 50, 100)))
-mod2_1 <- lm(outcome ~ expenditure, data = Dat2)
-mod2_2 <- lm(outcome ~ expenditure * participation, data = Dat2)
-mod_plot(mod2_1) %>%
-  gf_point(outcome ~ expenditure, data = Dat2)
-mod_plot(mod2_2) %>%
-  gf_point(outcome ~ expenditure | .participation, alpha=~participation, 
-           data = Dat2, 
-           inherit=FALSE)
+## LC 34.A
+
+The following graph shows four hypothetical planets, each inhabited by a different population. Filled glyphs indicate people with condition C, hollow glyphs are for people with condition H. The blue glyphs have positive (+) test results, the gray glyphs have negative (-) test results.
+
+```{r echo=FALSE}
+A <- patient_group(0, n=500, p=0.25, probs=c(.75, .30))
+Planet1 <- plot_people_final(A %>% filter(cond=="H")) + 
+  labs(title="Planet 1")
+Planet2 <- plot_people_final(A %>% filter(test_result=="+")) + 
+  labs(title="Planet 2")
+Planet3 <- plot_people_final(A %>% filter(test_result=="-")) + 
+  labs(title="Planet 3")
+Planet4 <- plot_people_final(A %>% filter(cond=="C")) + 
+  labs(title="Planet 4")
+gridExtra::grid.arrange(
+  Planet1, Planet2, Planet3, Planet4, ncol=2
+)
+
 ```
 
-Since we know the exact mechanism in the simulation---`outcome` increases with `expenditure`---we know that model (b) matches the workings of the simulation while model (a) does not.
 
+a. Which planets is suited for measuring sensitivity and which for specificity?
+b. By eye, estimate the numerical values for sensitivity and specificity. 
 
-For the simulation where expenditure and participation share a common cause, failing to stratify on `participation` -- that is, looking at the points in @fig:-school-data-2 (a) but ignoring color -- gives an utterly different result than if the stratification includes `participation`.
+## LC 34.B
 
+Another case of four hypothetical planets, but in a different solar system than LC 34.A.
 
+```{r echo=FALSE}
+B <- patient_group(0, n=300, p=0.45, probs=c(.35, .65))
+Planet4 <- plot_people_final(B %>% filter(cond=="H")) + 
+  labs(title="Planet 1")
+Planet1 <- plot_people_final(B %>% filter(test_result=="+")) + 
+  labs(title="Planet 2")
+Planet3 <- plot_people_final(B %>% filter(test_result=="-")) + 
+  labs(title="Planet 3")
+Planet2 <- plot_people_final(B %>% filter(cond=="C")) + 
+  labs(title="Planet 4")
+gridExtra::grid.arrange(
+  Planet4, Planet1, Planet3, Planet2, ncol=2
+)
+```
 
+a. Which planets is suited for measuring sensitivity and which for specificity?
+b. By eye, estimate the numerical values for sensitivity and specificity. 
 
 
 ## Other stuff
