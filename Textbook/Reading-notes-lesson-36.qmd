@@ -17,13 +17,13 @@ source("../_startup.R")
 
 We are nearing the end of our journey through the world of statistical thinking. But I think it's time to get off the well-travelled road and take a detour of a few paragraphs. Detours are usually not the straightest path between two points, but they often have some advantage: safety, a scenic view or inspiring experience, and such.
 
-Our detour starts with a turn onto a lane marked with the word "orthodox." There are, as you know, religions denominated by "orthodox." But the word has a more general meaning that can be seen by translating the Greek origin words "ortho" and "doxa" into a familiar language: "ortho" means "straight" or "right"; "doxa" means "belief".  Synonyms for "belief" include creed, dogma, teaching, doctrine (which stems from the Latin for "to teach"), conviction, and article of faith. A line is straight and the phrase "the party line" indicates attitudes that fall into line with the party leadership. "Ortho" appears in "orthodonture" (straightening the teeth), "orthography" (correct spelling), and "orthogonal" (being at a right angle).
+Our detour starts with a turn onto a lane marked with the word "orthodox." There are, as you know, religions denominated by "orthodox." But the word has a more general meaning that can be seen by translating the Greek origin words "ortho" and "doxa" into a familiar language: "ortho" means "straight" or "right"; "doxa" means "belief".  Synonyms for "belief" include creed, dogma, teaching, doctrine (which stems from the Latin for "to teach"), conviction, and article of faith. A line is straight and the phrase "the party line" indicates attitudes that fall into line with the party leadership. "Ortho" appears in "orthodonture" (straightening the teeth), "orthography" (correct spelling), and "orthogonal" (being at a right angle).^[The link between words for "straight" and thinking according to the rule book has ancient origins.  The word "canon," meaning the set of officially accepted writings, comes from the Sumerian word for a straight reed.]
 
 To "true a wheel" means to set it straight, and the phrase "true believer" does not refer to someone whose beliefs are correct but rather to someone who stays in line with to a particular system of belief. There can be many different systems of belief, many different orthodoxies, and disagreeing parties can each have their distinct line.
 
 There are two major orthodoxies of statistical thought, "frequentists" and "Bayesians,"  a fact that's important to keeping straight the variety of statistical nomenclature. The key distinction between the frequentist orthodoxy and that of the Bayesians, is their attitude toward the meaning of "probability." One sect, the "frequentists," bases their methodology in a supreme being they call the "population." Coin flips are an example of a population; an abstractly infinite supply of events. The probability of "heads" is the *frequency* of a head turning up in $n$ trials, where $n \rightarrow\infty$. Flipping coins an infinite number of times is still a work in progress. Until it is complete, we need to work with the probability of heads as the proportion of a large but finite number of trials in which the outcome is "heads."
 
-In contrast, the "Bayesian" sect holds that a probability is a statement about belief. Different people, depending on their experiences, will rightly come to different conclusions about the probability of the outcome of an event. Bayesians will happily deal with a statement like, "the probability of rain tomorrow is 60%," while frequentists might respond by both taking an umbrella and pointing out that there is no "population" of "tomorrows" from which we can draw a sample to estimate the frequency of rain. 
+In contrast, the "Bayesian" sect holds that a probability is a statement about belief. Different people, depending on their experiences, will rightly come to different conclusions about the probability of the outcome of an event. Bayesians will happily deal with a statement like, "the probability of rain tomorrow is 60%," while frequentists might respond (while packing an umbrella in their knapsack for tomorrow's weather) by pointing out that there is no "population" of "tomorrows" from which we can draw a sample to estimate the frequency of rain. 
 
 For a frequentist, the hypothesis "April showers bring May flowers" is an assumption. There is no actual population from which to draw many trials, so a probability cannot be assigned to the hypothesis. In the frequentist liturgy, to *test the hypothesis* means to make a *simulation* of the world. Typically the simulation implements a world in which it is hard coded that the connection described by the hypothesis *does not exist*. This no-connection hypothesis is generically called the "**Null hypothesis**." In this case, the Null hypothesis states that there is no association between April showers and May flowers. 
 
@@ -33,15 +33,19 @@ Run many trials of the shuffling simulation. In each trial, record the measured 
 
 Notice that the simulation mechanism provides a population--- a "hypothetical planet" to use the language of Lesson 34---from which many samples could be drawn. Thus, it's straight thinking for the frequentists to assign a probability to the event "a simulation trial will generate a result at least as extreme as what was observed in the real world." This probability, in the lingo of hypothesis testing, is called a "**p-value**".
 
-In my opinion, it would have been better for everyone to have called the p-value and ${\cal L}$-value. After all, it's a likelihood, a proportion calculated on a hypothetical planet.
+In my opinion, it would have been better for everyone to rename the p-value as the ${\cal L}$-value. After all, it's a **likelihood**, a proportion calculated on a hypothetical planet.
 
 For many people, the orthodoxy that "hypothesis testing" can properly lead only to one of two conclusions---"reject" or "fail to reject" the Null hypothesis---seems stilted and overly rigid. Like others who are not aligned with orthodoxy, they will translate the orthodox result into language that they find reasonable and more comfortable. For instance, they will say that the p-value is the probability that the Null hypothesis is true. Or, they interpret a small probability for the Null hypothesis---what should properly lead to "rejecting" the Null hypothesis---as an indication that the original hypothesis is to be "accepted" as true. And "failing to reject" often gets (mis-)interpreted as meaning the original hypothesis is not true.
 
 The ministers of orthodoxy---statistics professors, for example---will point out that such (mis-)statements are a sign of wrong thinking. The ministers exert such power as they have to set straight the strays among the flock, for instance by giving low scores on a course final examination. In practice, limited as it is to the examination room, this punishment rarely leads to a repentant and binding return to frequentist orthodoxy.
 
-The Bayesian orthodoxy is more permissive. It accepts as legitimate statements involving probability, such as "Hypothesis A is less likely than Hypothesis B." The frequentists assail such "probabilities" as illegitimate and insist that they are merely measures of belief in the probabilities that happen to be on the same zero-to-one scale as probabilities. Such zero-to-one measures of belief might be called  "subjective probabilities," meaning that they can differ from person to person. Frequentists want probabilities to be objective, meaning that all people will agree to them once there is enough data.
+The Bayesian orthodoxy is more permissive. It accepts as legitimate statements involving probability, such as "Hypothesis A is less likely than Hypothesis B." 
 
-Few people will disagree with the idea that good science ought to be objective. Yet allowing some scope for subjectivity can lead to better informed decision-making. To illustrate, let's tell a story that illustrates Bayesian right-thinking.
+In Lesson 35 we used a Bayesian approach to address two hypotheses that were relevant to a disease C. Once the data are in---say, a test result of + in the Lesson 35 example---we can use the likelihoods (sensitivity and specificity) and the disease prevalence to calculate the probability that, for a + test result, the patient actually has C. 
+
+The frequentists don't disaggree with the legitimacy of a **likelihood**. That is just a probability under the assumption that a given hypothesis is true. Where they depart from the Bayesians is in accepting the "probability of a hypothesis." For, in order to calculate the relative probability of two hypotheses, you need to combine the likelihoods with a prior idea of how likely the hypotheses were in the first place. Frequentists assert that any such prior ideas are subjective. 
+
+Few people will disagree with the idea that good science ought to be objective. Yet allowing some scope for subjectivity can lead to better informed decision-making. To illustrate, let's tell a story that illustrates the benefits of assigning a probability, subjective though it may be, to a hypothesis.
 
 Imagine you are a doctor. A long-time patient comes to your clinic. His recent symptoms have him thinking that there is a strong chance he might have cancer. You, the doctor, ask questions about the patient's symptoms and do a brief physical examination. 
 
@@ -53,194 +57,15 @@ In medical school, you learned a mantra: "When you hear hoofbeats, think horses,
 
 To make an appropriate decision, you consider what you know about the patient. Had he just finished a round of chemo-therapy six months ago? If so, an MRI might be a good choice. Is the patient elderly? The elderly as a group have a greater risk of developing cancer than the young. So for an elderly patient, you might decide on ordering a screening test. Does the patient have a history of good health and an active imagination? Then the flu medication might be the right road to go down.
 
-A Bayesian would interpret this decision-making process in terms of probabilities. You assign, based on your observations, a probability to each hypothesis. If the probability of the cancer hypothesis is much smaller than the probability of flu, and if the cost of making a mistake (as measured by the "loss function," see Lesson 34) is small, the flu medication is a good next step. But if the probability of cancer is not so small, and the cost of a delay is high, then ordering the screening test seems appropriate.
+A Bayesian would interpret this decision-making process in terms of probabilities. You assign, based on your observations, a probability to each hypothesis. If the probability of the cancer hypothesis is much smaller than the probability of flu, and if the cost of making a mistake (as measured by a "loss function," see Lesson 34) is small, the flu medication is a good next step. But if the probability of cancer is not so small, and the cost of a delay is high, then ordering the screening test seems appropriate.
 
-A frequentist might accept your decision, but understand that the "probabilities" are subjective; a measure of your belief.
 
-Let's suppose that you have decided to order a cancer screening test. And, because these are lessons on statistics, we'll imagine that you have actually quantified the probability of the cancer hypothesis being true is 2%.
 
-You order the test and, while waiting for the results, you look up in the literature the facts about the test you just ordered. These facts take the form of the sensitivity and specificity of the test. The facts come from extensive trials of the test on two different groups of people: those known to have cancer and those known not to have cancer.^[How would you "know" which group a subject falls into. Perhaps you give the test, get the result, and then wait five years to see who shows clear signs of cancer and who doesn't. At that point you can divide the subjects into the two groups.] 
 
-To save time later on, you enter the screening test's sensitivity and specificity into your notes on the patient. These facts are not at all based on observation of your patient, but they will be useful later on when you get the test result. Suppose the sensitivity is 90% and the specificity is 85%. And, since the author of this story is a statistician, the doctor character goes ahead with the calculations: one in case the test result is positive, the other for a negative test result. Following the "posterior" calculation in Lesson 36, the probability of cancer given the test result is:
 
-- for a + test result:  p(C | +) = 0.02 {\cal L}(+ | C) / normalization
 
-- for a - test result:  p(C | -) = 0.02 (1 - {\cal L}(- | H)) / normalization
 
 
-
-The test results are in. Regrettably the test for cancer was positive. 
-
-BOTH THE FREQUENTISTS and the BAYESIAN agree on some terminology. Statements like p(cancer given +) are called "likelihoods." The frequentists use "maximum likelihood" estimates, while the Bayesians modulate the likelihoods with the prior probabilities in order to produce the "posterior probabilities."
-
-
-
-
-
-If the simulation trials rarely or never produce an association as strong as that found in real-world observations, you can fairly conclude that the assumptions embedded in the simulation ought to be *rejected* as a proper description of the real world. On the other hand, if the simulation shows good accord with the real-world observations, you can ... what? It's not a good idea to claim the simulation is a correct description of the real world; it's just a simulation. Instead, the proper statement is that you "*fail to reject*" the the hypothesis hard-coded into the simulation.
-
-
-
-
-For the Bayesians, straight thinking goes in a different direction. Bayesians are happy to adorn any hypothesis with a probability
-
-----------
-
-There are just two words in the title of this Lesson: "Hypothesis testing." It seems fair to start with the meanings of these words individually then see how putting them together into a phrase changes things.
-
-I define "hypothesis" as a statement that might or might not be true. "The Earth orbits the Sun," is such a statement. A contemporary reader might insist that the statement is true. This statement was once considered simply wrong, then became controversial in the time of Galileo (1565-1642), and has since become accepted wisdom. 
-
-Decision-makers often need to evaluate competing hypotheses, each hypothesis encapsulating its own view of the state of the world or the mechanisms that play out in it. A case in point is provided by the kinds of classifiers we met in Lessons 34 and 35. For the sake of concreteness, imagine yourself in the position of a doctor thinking out what her patient needs. The two hypotheses in contention might be "the patient has cancer" or "the patient does not have cancer." Each of these is a statement about the state of the world that might or might not be true; that's all a hypothesis is. These two hypotheses, cancer or not, are in conflict with one another. How you treat the patient ought to depend on your assessment of which hypothesis is more likely.
-
-To inform your decision, you have observations or measurements: data. For our example, we'll keep the data simple; we have the results of a blood screening test for cancer. Based on this evidence, the doctor weighs the relative likelihood of the different hypotheses.
-
-There is an accepted mathematical method for comparing the likelihood of each of the two hypotheses in the light of the data. You've already seen this in Lessons 34 and 35, but let's review it now, using terminology that is more general than in those Lessons.
-
-"Likelihood" is a word with an everyday meaning familiar to everyone. It is also a technical term for a mathematical quantity. In this case, the technical meaning is in pretty good correspondence with the everyday meaning, but being technical it can be a bit hard to understand.
-
-Recall the "sensitivity" and "specificity" of the classifiers from Lessons 34 and 35. Sensitivity refers to a particular situation where the person being tested genuinely has the condition being tested for. Continuing the example, we'll imagine that the condition is that the patient has cancer. Sensitivity refers only to such patients. In a representative group of such patients, the sensitivity is simply the proportion of the group who have a positive (+) test result. Another way to state it, the sensitivity is the *probability* that a randomly selected patient gets a + test result, **given** that the patient has cancer." The sensitivity is a *conditional probability*, a probability that is relevant only when a certain condition applies. For sensitivity, that condition is that the patient has cancer.
-
-Specificity is similarly a probability, but relevant to a different condition: the patient does *not* have cancer. Among such cancer-free patients, the specificity is the probability that a randomly selected patient will receive a negative (-) result.
-
-There is no fixed relationship between the sensitivity and the specificity. Each applies only to its own distinct group; sensitivity to the patients with cancer, specificity to the patients who are cancer free. 
-
-The sensitivity and specificity are both examples of the technical meaning of "likelihood." In general, a likelihood is a probability of an observation *given* a particular hypothesis. The sensitivity is the probability of a + observation *given* that a patient has cancer. The specificity is the probability of a - observation *given* that the patient does not have cancer. Likelihoods are things you can measure or calculate directly. Collect a large number of patients with cancer and see how many of them get a + test result. Similarly, for specificity, collect a large number of patients who are cancer free and see how many get a negative result. The people who developed the test had to measure the sensitivity and the specificity in order to get permission to sell the test kit for clinical use.
-
-There are actually four different likelihoods relevant here. To name them
-
-p(+ given cancer) and p(- given cancer). Of course, these two add up to 1.
-
-p(+ given no cancer) and p(- given no cancer). Again these two add up to 1.
-
-Since you know the sensitivity and specificity of the test, you know p(+ given cancer) and p(- given no cancer). From these, you can easily calculate their partners: p(- given cancer) and p(+ given no cancer). To follow through with the example, let's give numerical values to the four likelihoods.
-
-. | cancer | no cancer
---|--------|----------
-p(+ given ...) | 0.6    | 0.2
-p(- given ...) | 0.4    | 0.8
-
-These likelihoods do **not** say anything about your patient. They are known ahead of time, measured by the makers of the test kit.
-
-Of course, your interest as a doctor is in your patient. The four probabilities relevant to your impending decision are 
-
-p(cancer given +) and p(cancer given -) as well as their respective partners p(no cancer given +) and p(no cancer given -). You don't yet know whidh of these probabilities relevant to your patient, but you will when you find out the test result.
-
-There is more that is going to enter into your decision making than the eventual test result. Also important is your assessment of the probability that you patient had cancer even before he came in to your office. Or, to use the technical vocabulary, you need to Perhaps the patient is old and has a family history of cancer. You will then give a relatively high 
-
-You, in the position of the decision-making doctor, have two competing hypotheses: cancer or no cancer. In your decision making process, these are hypotheses because, so far as you know, either might be right, but not both. You could choose either hypothesis as the basis for action, but of course you want to make that choice based on the evidence. Here, that evidence is the test result. What you will want to be able to calculate, once you get the test result, is the probability that the cancer hypothesis is correct. (The probability of the non-cancer hypothesis will be 1 minus the probability of cancer.) 
-
-There are two, different conditional probabilities involve here, too. One is the probability of the cancer hypothesis being right *given* a positive test result. We'll write that p(cancer given +). The other is p(cancer given -). Again, these two probabilities have no fixed relationship, one might be, say, 0.9 and the other 0.3. This isn't absurd even though 0.9 + 0.3 is greater than one. One is a probability among the patients who have + test results, the other is a probability among a completely different patient group, the ones who have negative test results.^[A possible source of confusion is that there is a definite relationship between these two probabilities, p(cancer given +) and p(no cancer given +). These two probabilities must be related because they both refer to the same group of patients, those with the + result. Of course, the relationship is p(no cancer given +) = 1 - p(cancer given +).] 
-
-                                                              
-
-
-
-
-
-
----------
-
-It's important, first of all, to know that a sensible non-technical interpretation of the phrase "hypothesis testing" describes something that is very different from its actual technical meaning. Consider the hypothesis expressed by this sentence: "Birds are the evolutionary descendants of dinosaurs." Like all hypotheses, this one is a statement that might or might not be true. Unlike many hypotheses, it is an interesting and surprising statement. For many people, the reference examples of dinosaurs are heavy, armor plated and bespiked, land-dwelling fighting giants, so different from sweetly singing, gently dashing, lightweight, feathered airborne creatures found in our backyards. Even the names suggest an irreconcilable gap: compare Tyrannosaurus Rex, Stegosaurus, and Triceratops, to jay, finch, lark, swallow, and wren. In general, we test a hypothesis by making a list of things that should be true if the hypothesis were right, for instance, similar bone layout (check), reproduction via eggs (check), nest-building (check), hollow bones (check). A hypothesis test might involve also similar lists of possible facts that contradict the hypothesis; observing such facts is evidence against the hypothesis. Framing and testing hypotheses is a central part of scientific method.
-
-In statistics, a "hypothesis test" has a completely different flavor. First of all, the hypothesis being tested is almost always *uninteresting*, something that we would *not* be surprised at. Second, we don't look for evidence to support the hypothesis or establish its truth. Instead, the conclusion we reach from statistical hypothesis testing can never be that the hypothesis is true or even likely. The allowed conclusions come in only two possibilities: *rejecting* the hypothesis or *failing to reject* the hypothesis. Also strange about a statistical hypothesis test: one person might collect data that lead correctly to the conclusion of *failing to reject* the hypothesis; another person might collect data that are completely compatible with the first person's, yet correctly lead to the opposite conclusion.
-
-With such a strange and counter-intuitive structure, it's understandable that the consensus among statisticians is that few users of statistical hypothesis tests understand the correct interpretation of them. Many statisticians argue that the employment of statistical hypothesis testing in the usual ways has led to a crisis in science and a justifiable lack of trust in published scientific findings.
-
-The three previous paragraphs might suggest that what's called "statistical hypothesis testing" is an odd topic that shouldn't be included in statistics textbooks. Yet, statistical hypothesis testing has for generations been at the center of statistics courses. Using it---even if it's not understood---is a practical necessity for scientists who want to publish their results or apply for research grants based on preliminary research.
-
-Hypothesis testing is a difficult topic for many introductory students. Partly that's because of the large amount of terminology that's involved: Null hypothesis, test statistic, p-value, type-I and type-II errors, significance level. Partly that's because everyday language is being used to mean something that is nothing like the everyday meaning. The word "significant" is particularly abused by statistical hypothesis testing. In contemporary usage, "significant" is synonymous with "important," "consequential," "meaningful," "substantial," "momentous," and so on. Your "significant other" is a person of great importance to you. It's very good news when your doctor reports a "significant improvement" in your friend or relative's condition. In statistical hypothesis testing, "significant" can be entirely consistent with "trivial," "useless," "of no practical importance." It's unclear whether the choice of "significant" in statistics was intended to deceive, but it very often has that effect.
-
-## A standard operating procedure
-
-## What people want to know
-
-Another major reason why statistical hypothesis testing can be difficult to get your head around is that many people have an intuitive idea about what they want to know when testing a hypothesis: whether the stated hypothesis is likely to be true. But statistical hypothesis is expressly designed to avoid making any statement about the probability that a hypothesis might be true or false. There is good reason for this since "truth" is a shakey concept philosophically.
-
-Consider this example of a hypothesis: "Drug X lowers blood pressure." People being so different one from another, a hypothesis like this would not be refuted just because X raised the blood pressure of a person. A better statement might be, "Drug X typically lowers blood pressure." Still better would be a more definite statement, "Drug X typically lowers blood pressure by around 10 mmHg." Whether such a statement is true or not depends on the meaning of "typically" and "by around."
-
-Rather than looking for the truth or falsity of a hypotheses, statistical thinkers focus on a question in this form, "Is the statement that 'Drug X typically lowers blood pressure by around 10 mmHg' consistent with the observed facts?" Suppose, to illustrate, that the facts are the recorded change in blood pressure in 10 patients given drug X.
-
-Consider these measurements of change in blood pressure before and after administration of the drug: -5, -1, +7, -15, -3, -6, +1, -8, +2, 0
-
-We're seeing a reduction (a negative number) in most of the patients. The numbers are near -10, even if they are not exactly -10 all the time. When there's an increase in blood pressure, it's small.
-
-In contrast, suppose the numbers were 5, 1, -7, 15, 3, 6, -1, 8, -2, 0. These number are inconsistent with the claim that the typical change is -10. Most of them are positive, sometimes by a lot. Of the negative numbers, none of them even reaches -10.
-
-It would be better to have a quantitative way to measure "consistency with the observed facts." Two changes to the way we frame hypotheses will help.
-
-1.  Be more specific about "typical" and "by around." For instance, here's a very definite hypothesis: "In a group of patients with such-and-such condition, drug X lowers blood pressure by an average of -10 mmHg with a standard deviation of 7mmHg."
-
-::: callout-note
-## Demonstration: Likelihood of the facts given the hypothesis
-
-With such a statement we can actually do some arithmetic to find a numeric measure of consistency: something very much like the probability of seeing the observed data under the assumption that the stated hypothesis is true. For instance, the relative probability of seeing -5 from a normal distribution with mean -10 and standard deviation 7 is easily calculated in R:
-
-```{r}
-dnorm(-5, mean = -10, sd = 7)
-```
-
-We can do a similar calculation for each of the "facts."
-
-```{r}
-facts <- c(-5, -1, +7, -15, -3, -6, +1, -8, +2, 0)
-dnorm(facts, mean = -10, sd = 7)
-```
-
-But what we really want is the probability not of each of the facts but of all of them put together. This is the product of the individual relative probabilities:
-
-```{r}
-dnorm(facts, mean = -10, sd = 7) %>% prod()
-```
-
-This number, $5.9 \times 10^{-17}$, is called the "likelihood" of the observed facts. Obviously it is very small, but that is not an indication that the facts are unlikely under the assumption that the hypothesis is true. The smallness is a consequence of the fact that *any* particular number is an unlikely outcome of a draw from a continuous probability density. (For those familiar with calculus, the numbers calculated by `dnorm()` are not actually probabilities, they are probability densities, which we've casually called "relative probabilities.")
-:::
-
-How to interpret a likelihood number like $5.9 \times 10^{-17}$? In order to make sense of it, we need to add another component to our measurement of "consistency with the observed facts."
-
-2.  Have one or more additional hypotheses so that we can compare likelihoods one to another. For instance, we might use the hypothesis, "In a group of patients with such-and-such condition, drug X lowers blood pressure by an average of 0 mmHg with a standard deviation of 7mmHg."
-
-    A hypothesis like this, that stipulates zero change (on average), is called a "null hypothesis," the word "null" meaning "nothing" or "zero."
-
-    The null hypothesis may not be of direct interest, but it provides a way for us to interpret likelihoods from the hypotheses of actual interest. We do this by comparing the numerical value of the likelihoods, often as a ratio.
-
-::: callout-note
-## The likelihood of the null hypothesis
-
-Calculating the likelihood of the observed facts under the assumption that the null is true is done in the same way as we did for our original hypotheses. The only change is to use a mean of zero with `dnorm()`.
-
-```{r}
-dnorm(facts, mean = 0, sd = 7) %>% prod()
-```
-:::
-
-The likelihoods of the two hypotheses are:
-
--   Hypothesis: Mean change of -10 mmHg: $5.9 \times 10^{-17}$
-
--   Null hypothesis: Mean change of 0 mmHg: $5.3 \times 10^{-15}$
-
-Taking the ratio of likelihoods gives 0.01. From this, we conclude that the original hypothesis is only 1% as likely as the null hypotheses. In other words, the original hypothesis is not very likely given the observed facts.
-
-## Digression: Likelihood, sensitivity, and specificity
-
-Recall our discussion of classifiers in Lessons 34 and 35. There we defined two terms:
-
--   Sensitivity: The probability of a + test given that the patient has the disease.
-
--   Specificity: The probability of a - test given that the patient does not have the disease.
-
-Both of these are actually likelihoods: the probability of a possible observation for a given condition of the world.
-
-$p(D | +) = p(+ | D) p(D)$ Probability is sensitivity times prevalence
-
-Or do probability ratio: $\frac{p(D|+)}{p(H|+)} = \frac{p(+|D) p(D)}{p(+|H)p(H)}$ the probability of the state of the world given the observed data (a + or - test). Here, $p(H) = 1-p(D)$ and $p(+|H) = 1 - p(-|H)$
-
-We could turn the likelihood ratio into a probability ratio, but we need a "prior" to do so.
-
-## What makes hypothesis testing different?
-
-1.  No prior is allowed. Your subjective beliefs shouldn't influence your result.
-2.  There's no definite hypothesis other than the null hypothesis. This means that all calculations need to be done based on the likelihood of the null hypothesis. But with nothing to compare the likelihood to, we have a problem. Established solution: Compare the total likelihood over all facts that are "more extreme" than the observed facts.
 
 ## The Null hypothesis as a DAG
 
@@ -248,190 +73,3 @@ Zero out any inputs to the node in question.
 
 A DAG is a kind of hypothesis, a statement about the world that might or might not be true.
 
-So far, we've used only the first three columns of the regression report: the name of the term to which the remaining entries belong, the estimate of the coefficient on that term, and the standard error of that estimate.
-
-```{r}
-lm(mpg ~ wt + hp, data = mtcars) %>% 
-  regression_summary()
-```
-
-There are two more columns to go. The fourth column is labelled "**statistic**" (short for "**test statistic**") and the fifth column is the "**p-value**."
-
-It's the p-value that concerns us here, the "statistic" is just an intermediate on the way to calculating the p-value. Both are reported because, in some fields people are accustomed to reading the statistic to draw quick conclusions. But in every field, the p-value is used.
-
-The p-value is at once incredibly simple to interpret and impossibly difficult to make sense of. This contradiction is the reason many statisticians have called for moving away from the p-value as a summary of a result. We will discuss the reasons for the controversy in Lesson 38. In Lesson 37, we'll show how the p-value is computed from the test statistic and introduce another report summarizing a model, the "**ANOVA report**," which is useful for many purposes.
-
-In this Lesson, we'll explain the "incredibly simple" interpretation of the p-value and the subtle logic behind it. This is important because frequently (pretty close to "always") people mistake the p-value as addressing a completely different question than the question it actually pertains to. It's useful to know about this misconception, because it points to a different question that often more directly addresses the needs of researchers and decision makers.
-
-## "Incredibly simple" interpretation
-
-As you will see, the p-value is always a number between zero and one. When the p-value is small, the conclusion is that the corresponding explanatory variable is contributing to explaining the variation in the response variable. That is, a p-value that's small is justification for believing that there is a connection of some sort between the explanatory variable and the response variable.
-
-"Small" in the phrase "when the p-value is small" is most usually taken to mean $p < 0.05$. But different fields have different standards for defining small. For instance, it's common in psychology to consider $p < 0.10$ as fairly small, while in physics, "small" means perhaps $p < 0.001$ or even $p < 0.000001$.
-
-It may seem odd that there is no universal agreement about "small." The reason is that p-values are part of a *standard operating procedure* for evaluating research results to know if they are worthy of publication.
-
-In physics, laws and models are meant to be exact or close to exact. Lord Rutherford (1871-1935), an important physicist who won the Nobel prize in 1908, famously disparaged the use of statistics, reportedly saying, "If your experiment needs statistics, you should have done a better experiment." This was in an era where the p-value *standard operating procedure* had not yet been invented. Today, when p-values are common in most fields, Rutherford's distaste for statistical method is reflected in p-value thresholds like $p < 0.000001$.
-
-In other fields such as economics or psychology or clinical medicine, models are sought that are *useful* but without any expectation that they be exact. (In the 19th and early 20th century, psychologists and economists sometimes used the vocabulary of "law" to describe their findings, but "model" is more appropriate, because, unlike physics, the laws are not strictly enforced!) Often, in economics or psychology or medicine, the size of a sample used to train a model is less than, say, $n=100$. And the units of observation---people or countries, for instance---are different one from the other, quite unlike, say, electrons, which are all the same. Consequently, sampling variation is often an important source of noise, obscuring relationships or even suggesting relationships that are not really there. (See Lesson 31.) This situation---small sample size, variation in observational units, and large sampling variation---would cause many useful findings to go unreported, as would happen if $p < 0.000001$ were the standard. So a less stringent threshold for publication is used, most commonly 0.05.
-
-## What is a p-value?
-
-A p-value is the result of a calculation based on data, but also involving a special hypothesis, called the "Null hypothesis." The Null hypothesis is almost always a statement in line with the claim that "there is no relationship between these variables" or "nothing is going on." For example, in a study about the effectiveness of a new drug, the Null hypothesis will be that the drug has no effect at all. Another example: In an economics study about the possible relationship between a country's "corruption index" and interest rates, the Null hypothesis would be "corruption is unrelated to interest rates."
-
-Perhaps it is helpful to envision the Null hypothesis as the belief of a skeptical devil, standing on the researcher's shoulder and constantly whispering to the research that, "this study is useless, a waste of time, the result purely of sampling variation." Note that in a world where researchers always took the devil's advice, no study would be done. What motivates a researcher is a belief that the study will indeed produce results that are useful and represent something about the real world other than sampling variation, e.g. a relationship between two variables.
-
-The calculation that results in a p-value is done under the assumption that the devil is right. The point is to see if the data are consistent with the devil's skeptical position. If they are consistent, then the p-value will be large. If not, the p-value will be "small."
-
-The format of a p-value is that of a **conditional probability**. The condition is that the devil is right. The probability is that of seeing what the data analysis shows---typically summarized as a model coefficient---if the devil were right.
-
-Actually, the probability reported in the p-value is not that of seeing the exact value of the model coefficient shown in the regression report. The probability also includes the events where the coefficient was larger in magnitude than the coefficient. Why? Because larger coefficients are stronger evidence that the devil is not right.
-
-## The world of the Null hypothesis
-
-Recall that the Null hypothesis is the claim that "nothing is going on." For a regression model, this amounts to saying that "there is no relationship between an explanatory variable and the response variable." In order to help clarify the description in the previous section, let's do an example calculation of a p-value. We will use for the example the possible relationship between a car's fuel economy (`mpg`) and the maximum horsepower (`hp`) of the engine.
-
-A skeptic, such as the imaginary devil from the previous section, might argue this way: "The maximum horsepower is hardly ever used by a car. Instead, the driver throttles the engine so that it generates only that power needed to move the car along under the current conditions: acceleration, speed, wind, slope of the road. The maximum horsepower just affects the range of conditions under which the car can operate. But the fuel economy is based on a standard set of conditions which is the same for every car, regardless of the horsepower."
-
-We will pick up the action at the point where the study has been designed and the design implemented to produce data. For the example, we have the `mtcars` data frame in hand. As should be familiar at this point, the data are modeled and the model coefficient on the explanatory variable of interest is recorded. Looking at the regression report presented at the beginning of this Lesson, that coefficient is -0.0318 mpg/horsepower.
-
-The data were collected in the real world, but that is not the world that's relevant to the Null hypothesis. The world of the Null hypothesis is one where fuel economy is utterly unrelated to horsepower. To calculate the p-value, we construct a simulation of the Null-hypothesis world. But it is not sufficient for the simulation to generate Null-hypothesis data out of the blue. We want the simulation to be as much like the actual data as possible, except that there is no relationship between `mpg` and `hp`.
-
-Perhaps surprisingly, there is a very simple device for accomplishing this. It involves creating a new variable to use in place of `hp` in the model, but which is unrelated to `mpg`. Let's call this new variable `hp_null`. We can generate `hp_null` by taking the values in `hp` and shuffling them. This randomized version of `hp` has no relationship to `mpg` because it is being dealt out to each row of the data frame at random.
-
-Here's what the shuffling looks like, pretending for readability that there wee only ten rows in `mtcars`. `r set.seed(111)`
-
-```{r}
-Samp <- mtcars %>% 
-  select(mpg, wt, hp) %>%
-  sample_n(size=10) %>%
-  mutate(hp_null = shuffle(hp))
-Samp
-```
-
-We'll use such data, replacing the actual `hp` with the shuffled `hp`, to find the model coefficient on `hp`. This can be done concisely:
-
-```{r}
-set.seed(112)
-lm(mpg ~ wt + shuffle(hp), data = mtcars) %>%
-  regression_summary()
-```
-
-In this trial, the coefficient on the shuffled `hp` is 0.0120. Of course the coefficient might well be different if the trial were repeated. Let's run 1000 trials, from each of which we'll extract the coefficient on the shuffled `hp`.
-
-```{r}
-Trials <- do(1000) * { 
-  lm(mpg ~ wt + shuffle(hp), data = mtcars) %>%
-  regression_summary() %>%
-  filter(term == "shuffle(hp)") %>%
-  select(estimate)
-}
-```
-
-@fig-mpg-null-trials shows the distribution of the shuffled `hp` coefficient, compared to the coefficient we found from the original, unshuffled data.
-
-```{r}
-#| label: fig-mpg-null-trials
-#| fig-cap: "The sampling distribution of the shuffled `hp` coefficient"
-gf_jitter(estimate ~ 1, data = Trials, alpha=0.3, width=0.3) %>%
-  gf_violin(color=NA, fill="blue", alpha=0.5, width=0.1) %>%
-  gf_lims(x=c(0,2)) %>%
-  gf_hline(yintercept = ~ -0.03177295, color="red")
-```
-
-You can see in @fig-mpg-null-trials that the coefficient on the shuffled `hp` is near zero, as would be expected since we enforced `hp_null` to be unrelated to `mpg`. Almost always, the coefficients on `hp_null` are in the interval $\pm 0.02$. That is to say, even though `hp_null` is unrelated to `mpg`, sampling variation will spread out the estimated coefficient away from the ideal of zero. The amount of spread due to sampling variation is $\pm 0.02$.
-
-The estimated coefficient on `hp` in the original, unshuffled data is shown as a red horizontal line. You can see that this is farther from zero than any of the null-hypothesis trials. Since there were 1000 trials, the extreme nature of the coefficient from the original data let's us eyeball the probability of that coefficient (or larger) coming out of the Null hypothesis simulation is something on the order of one-in-a-thousand. A detailed calculation---refer to the regression table at the start of this Lesson---puts that probability at $p = 0.0015$.
-
-## What to conclude?
-
-Remember always that the p-value is a probability calculated in a **hypothetical world** the world of the Null hypothesis. In the calculation, we are able to place the data in this hypothetical world by shuffling the explanatory variable.
-
-No calculation done in the Null hypothesis world is going to tell us whether that hypothesis is correct or not. Nonetheless, that the Null hypothesis simulation did not generate a coefficient as large as that in the actual data suggests that the data are inconsistent with the Null hypothesis, that we can in the case of the `hp` coefficient regard the Null hypothesis as an implausible candidate to account for the data.
-
-Almost always, newcomers to this p-value based scheme of hypothesis testing misinterpret the p-value to be the probability that the Null hypothesis is right. Small p-value would thus mean a small probability that the Null is right.
-
-But suppose we want to do a calculation to produce something in the format "the probability that the Null is right?" The probability that decision-makers are usually interested in is the relative conditional probabilities for each of a set of hypotheses of interest. The "condition" under which these probabilities are calculated is, "*given the data at hand*." Returning to the notation of Lesson 34, this is $p(H | \text{data})$, where $H$ stands for each of the hypotheses of interest, say, that a drug has a large effect, a medium effect, no effect at all, or even a negative effect. The framework for calculation is called "**Bayesian**" statistics, the ideas of which date from the very beginnings of the emergence of statistical method.
-
-To illustrate the Bayesian approach, return to Lesson 35 when we were evaluating the performance of classifiers. There, we had two hypotheses that were relevant. In the context of health, these might be $H_\text{sick}$ and $H_\text{healthy}$. The quantity of ultimate interest to the patient is p(sick given the test result). To calculate this probability we need to take a round-about route. We first find two completely different probabilities: p(test result given sick) and p(test result given healthy). In practice, these two probabilities are accessible: take a group of sick patients and see what fraction of them have positive tests, and take a different group of people who are healthy and see what fraction of that group have positive tests. With those two probabilities in hand, we take an estimate of the **prevalence** of sickness: p(sick). Then the probability of clinical interest, p(sick given test result) can be calculated using the Bayesian formula, just as we did in Lesson 35.
-
-In contrast, the p-value is a probability in a different format: $p(\text{summary(data)} | H_0)$. Here, $H_0$, the Null hypothesis, is indeed a specific hypothesis, but not any hypothesis that motivates the research. The quantity "summary(data)" is a particular summary computed from the data, say the sample mean or a regression coefficient.
-
-The p-value probability is bound to be confusing on first sight (and, for most people, on second, third, and later sightings). After all, we know exactly what is the "summary(data)"; we just calculated it from the data! The probability of "summary(data)" is therefore 1, at least until you understand what is the event being summarized by the p-value probability.
-
-For the p-value, the random event that lies behind the probability is a number generated by a process: Go to the world of the Null hypothesis, that boring world of "nothing happening" or "no relationship between variables." @fig-four-planets lays out the different worlds involved in statistical inference using the metaphor of planets.
-
-::: {#fig-four-planets layout-ncol="4"}
-![Planet Alt](www/planet-alt.png){#fig-planet-alt}
-
-![The real world](www/planet-earth.png){#fig-planet-earth}
-
-![Planet Sample](www/planet-sample.png){#fig-planet-sample}
-
-![Planet Null](www/planet-null.png){#fig-planet-null}
-
-The four planets of the statistical solar system.
-:::
-
-What motivates the work of collecting and modeling data is a hypothesis about the world. Typically, such hypotheses are simplistic, cartoon-like ideas about the shape of things.
-
-Naturally, our ultimate interest is in the real world. But we don't have the whole Earth at hand; we have only a sample from it. The sample is something like the real world, but being a sample it is somewhat patchy, assembled from the $n$ cases in our sample. Planet Sample lacks the detail of the real world, but each point on Planet Sample comes from a genuine place on Planet Earth.
-
-The p-value is a probability computed on Planet Null, that boring world where nothing is going on and any perceived patterns are illusions, the appearance produced by random and shifting gusts of the winds of chance.
-
-Almost all the work of calculating a p-value takes place on Planet Null. That work consists of simulation trials. Each trial involves taking a sample from Planet Null, summarizing it, and recording the result for later comparison the the summary calculated from Planet Sample.
-
-It may seem perverse to base conclusions for real-world data on an imagined planet of no direct interest. And it is! At a minimum, we should put into competition at least two hypotheses: for instance Planet Alt and Planet Null. But in the world of the first half of the 20th century, when statistical analysis of data was just coming into the mainstream, it was impractical to compute the competing probabilities of the Bayesian style of reasoning. The reason: the computers and algorithms we use now had not been invented.
-
-In addition, those early statisticians put a big premium on what they called "objectivity." They did not think the subjective beliefs of researchers---the cartoon alternative hypothesis---should play any role in data analysis. The method they ended up inventing, p-values, was based only on a hypothesis that everyone could agree might be in play: the Null hypothesis. Unfortunately, the only valid conclusions that can be drawn from p-values are 1) "reject the Null hypothesis" and 2) "fail to reject the Null hypothesis." These conclusions don't guide us to favor any other particular hypothesis and so are inadequate to support decision-making in the real world. But the p-value conclusions can be the basis for a standard operating procedure: If the conclusion is "fail to reject the Null hypothesis," don't allow the work to be published.
-
-So, standard operating procedures were based on the tools at hand. We will return to the mismatch between hypothesis testing and the contemporary world in Lesson 38.
-
-## More metaphors?
-
-Use this from Section 19.4 of *Computational Probability and Statistics*?
-
-> A US court considers two possible claims about a defendant: she is either innocent or guilty. Imagine you are the prosecutor. If we set these claims up in a hypothesis framework, the null hypothesis is that the defendant is innocent and the alternative hypothesis is that the defendant is guilty. Your job as the prosecutor is to use evidence to demonstrate to the jury that the alternative hypothesis is the reasonable conclusion.
-
-> The jury considers whether the evidence under the null hypothesis, innocence, is so convincing (strong) that there is no reasonable doubt regarding the person's guilt. That is, the skeptical perspective (null hypothesis) is that the person is innocent until evidence is presented that convinces the jury that the person is guilty (alternative hypothesis).
-
-> Jurors examine the evidence under the assumption of innocence to see whether the evidence is so unlikely that it convincingly shows a defendant is guilty. Notice that if a jury finds a defendant not guilty, this does not necessarily mean the jury is confident in the person's innocence. They are simply not convinced of the alternative that the person is guilty.
-
-> This is also the case with hypothesis testing: even if we fail to reject the null hypothesis, we typically do not accept the null hypothesis as truth. Failing to find strong evidence for the alternative hypothesis is not equivalent to providing evidence that the null hypothesis is true.
-
-> There are two types of mistakes possible in this scenario, letting a guilty person go free and sending an innocent person to jail. The criteria for making the decision, reasonable doubt, establishes the likelihood of those errors.
-
-> Hypothesis tests are not flawless. Just think of the court system: innocent people are sometimes wrongly convicted and the guilty sometimes walk free. Similarly, data can point to the wrong conclusion. However, what distinguishes statistical hypothesis tests from a court system is that our framework allows us to quantify and control how often the data lead us to the incorrect conclusion.
-
-> There are two competing hypotheses: the null and the alternative. In a hypothesis test, we make a statement about which one might be true, but we might choose incorrectly. There are four possible scenarios in a hypothesis test, which are summarized below.
-
-::: {.content-visible when-format="html"}
-
-$$
-\begin{array}{cc|cc} & & \textbf{Test Conclusion} &\\ 
-& & \text{do not reject } H_0 &  \text{reject } H_0 \text{ in favor of }H_A  \\
-\textbf{Truth} & \hline H_0 \text{ true} & \text{Correct Decision} &  \text{Type 1 Error}  \\
-& H_A \text{true} & \text{Type 2 Error} & \text{Correct Decision}  \\
-\end{array} 
-$$
-:::
-
-::: {.content-visible when-format="pdf"}
-
-Make this table nicer by constructing it in some other system.
-
-. | do not reject H_0_ | reject H_0_ in favor of H_A_
-------|-----------------|-----------------
-H_0_ true | Correct decision | Type 1 error
-H_A_ true | Type 2 error | Correct decision
- 
-
-:::
-
-> A **Type 1 error**, also called a **false positive**, is rejecting the null hypothesis when $H_0$ is actually true. Since we rejected the null hypothesis in the gender discrimination (from the Case Study) and the commercial length studies, it is possible that we made a Type 1 error in one or both of those studies. A **Type 2 error**, also called a **false negative**, is failing to reject the null hypothesis when the alternative is actually true. A Type 2 error was not possible in the gender discrimination or commercial length studies because we rejected the null hypothesis.
-
-::: callout-warning
-## In DRAFT
-
-Recast the previous paragraph to tie it to classifiers. Point out that in a hypothesis test, unlike a court, we never "accept the Null hypothesis." Neither is there any definite notion of "true," since neither the Null nor the Alternative are strictly speaking correct: they are both models of the world.
-:::

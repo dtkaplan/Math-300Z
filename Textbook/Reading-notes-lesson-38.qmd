@@ -16,6 +16,41 @@ source("../_startup.R")
 library("rpart")
 ```
 
+
+## Interpreting a  p-value
+
+If the simulation trials rarely or never produce an association as strong as that found in real-world observations, you can fairly conclude that the assumptions embedded in the simulation ought to be *rejected* as a proper description of the real world. On the other hand, if the simulation shows good accord with the real-world observations, you can ... what? It's not a good idea to claim the simulation is a correct description of the real world; it's just a simulation. Instead, the proper statement is that you "*fail to reject*" the hypothesis hard-coded into the simulation.
+
+
+
+
+## A standard operating procedure
+
+## What people want to know
+
+Another major reason why statistical hypothesis testing can be difficult to get your head around is that many people have an intuitive idea about what they want to know when testing a hypothesis: whether the stated hypothesis is likely to be true. But statistical hypothesis is expressly designed to avoid making any statement about the probability that a hypothesis might be true or false. There is good reason for this since "truth" is a shakey concept philosophically.
+
+Consider this example of a hypothesis: "Drug X lowers blood pressure." People being so different one from another, a hypothesis like this would not be refuted just because X raised the blood pressure of a person. A better statement might be, "Drug X typically lowers blood pressure." Still better would be a more definite statement, "Drug X typically lowers blood pressure by around 10 mmHg." Whether such a statement is true or not depends on the meaning of "typically" and "by around."
+
+Rather than looking for the truth or falsity of a hypotheses, statistical thinkers focus on a question in this form, "Is the statement that 'Drug X typically lowers blood pressure by around 10 mmHg' consistent with the observed facts?" Suppose, to illustrate, that the facts are the recorded change in blood pressure in 10 patients given drug X.
+
+Consider these measurements of change in blood pressure before and after administration of the drug: -5, -1, +7, -15, -3, -6, +1, -8, +2, 0
+
+We're seeing a reduction (a negative number) in most of the patients. The numbers are near -10, even if they are not exactly -10 all the time. When there's an increase in blood pressure, it's small.
+
+In contrast, suppose the numbers were 5, 1, -7, 15, 3, 6, -1, 8, -2, 0. These number are inconsistent with the claim that the typical change is -10. Most of them are positive, sometimes by a lot. Of the negative numbers, none of them even reaches -10.
+
+It would be better to have a quantitative way to measure "consistency with the observed facts." Two changes to the way we frame hypotheses will help.
+
+1.  Be more specific about "typical" and "by around." For instance, here's a very definite hypothesis: "In a group of patients with such-and-such condition, drug X lowers blood pressure by an average of -10 mmHg with a standard deviation of 7mmHg."
+
+
+
+
+--------
+
+
+
 There is, I think, a helpful analogy to be made between hypothesis testing and the familiar ways that we try to avoid information overload on the Internet.
 
 "Internet protocols" organize communication into standard format "packets" that are easily and rapidly transmitted, routed, and received. These packets make possible the vast web of connections that is the Internet. Anyone can put any digital content they like *inside* a packets; the protocols are neutral in this regard. The Internet protocols were *not* designed to determine what content is worth transmitting and what is worth receiving. We rely on other systems for that, mostly at the receiving end. There are spam filters to avoid email accounts being flooded with worthless or harmful messages. There are recommender systems that compare your history of music or movie streaming to that of others in order to identify what new content you might like. Search engines look inside web pages to identify connections and rank highly those pages that are linked to by other highly ranked pages. These systems leave creators free to follow their interests, ideas, and imaginations, while providing a little guidance to people who want to access some content but avoid being overcrowded by other content that is not worthwhile.

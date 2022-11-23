@@ -143,29 +143,25 @@ plot_people_final(People)
 ```
 
 
-To drive home an important point, I'm going to engage in a bit of metaphorical hyperbole. Imagine that all of the people who genuinely have condition C come from one planet, the Planet of the C. Similarly, the people with condition H come from another planet, the Planet of the H. (@fig-divided-by-condition)
+There's not much more we can do at this point. We know who has a positive test and who a negative test, but we don't know which people are C and which H. We therefore wait to get more information. This might involve waiting for the condition to reveal itself, 16 years in the pancreatic cancer study. 
+
+The day at last comes when we can identify the condition of each person in @fig-after-threshold.  At this point, we can split the people in @fig-after-threshold into a C group and an H group, as in @fig-divided-by-condition.
 
 
 
 ```{r echo=FALSE}
 #| label: fig-divided-by-condition
-#| fig-cap: "The hypothetical planets of origin of the people in the classifier-building project. Everyone on the Planet of the C has condition C. (Note that all the glyphs are filled in.) Everyone on the Planet of the H has condition H. (The glyphs on planet H are hollow.)"
+#| fig-cap: "The people in the classifier-building project split up according to their condition. Everyone in one group has condition C. (Note that all the glyphs are filled in since everyone has the condition.) Everyone in the other group has condition H. (The glyphs of the H people are hollow.)"
 pC <- plot_people_final(People %>% filter(cond=="C"))
 pNC <- plot_people_final(People %>% filter(cond != "C"))
-gridExtra::grid.arrange(pC + labs(title="Planet of the C"), pNC + labs(title="Planet of the H") , ncol=2)
+gridExtra::grid.arrange(pC + labs(title="C group"), pNC + labs(title="H group") , ncol=2)
 ```
 
-Suppose we perform the blood test on everybody on Planet of the C. A logician might point out that there is no need for a blood test, since everyone on Planet C has condition C. But our objective is to see how well the test performs. We'll measure the performance---on Planet C---by the fraction of inhabitants who get a + test.
+With the people divided according to their actual condition, it is easy to measure how well the test performed. There are two, distinct measures: the "**sensitivity**" and the "**specificity**." The word "distinct" is important. The sensitivity applies only to the people in the C group. We get absolutely no information about the specificity from the C group. It's the H group that we will look at to find the specificity.
 
-This fraction applies only to Planet C and is called the "**sensitivity**" of the test. The fraction must be between zero and one, so it's tempting to call it a probability. **But don't.** We are going to give a new name to fractions computed on hypothetical planets: "**likelihoods**."
+Both sensitivity and specificity describe the fraction of people who get the *correct* result from the test. But there are two distinct correct results, depending on which group, C or H, any person is in. Among the C people, a correct result is a positive test. Among the H people, a negative test is the correct result. 
 
-In everyday speech, "likelihood" is a synonym for "probability," but we are using words in a technical sense here. A likelihood aways comes from a hypothetical planet.
-
-Another likelihood that's telling about how well the blood test performs is a fraction calculated on Planet H. This likelihood is called the test's "**specificity**" and is calculated as the fraction of - test results on Planet H.
-
-As a more concise notation, let's write the sensitivity as ${\cal L}(+ | C)$. The plus reminds us that we're looking at the fraction of tests that are positive, the $C$ reminds us which hypothetical planet we are on. The ${\cal L}$ stands for "likelihood."
-
-Similarly, we'll write the specificity as ${\cal L}(- | H)$. Sensitivity and specificity are both likelihoods, but there need not be any fixed relationship between them: They are calculated on different planets! To judge from the pictures in @fig-divided-by-condition, the sensitivity is about 90%---most of the glyphs are blue on Planet C. Similarly, the specificity is about 85%---most of the glyphs on Planet H are not blue.
+From @fig-divided-by-condition you can estimate by eye the sensitivity and specificity, keeping in mind that a *blue* symbol means a + test result. The sensitivity is the fraction of people in the C group who are marked by a blue symbol. The specificity is the fraction of people in the H group who are marked gray, the color for a - test. The vast majority of the C group are colored blue; counting marks puts the sensitivity at 90%. For the H group, most of the marks are gray. Count marks and you'll find the specificity to be 85%.
 
 
 ## LC 34.A
