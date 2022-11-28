@@ -15,6 +15,23 @@ lesson <- 37
 source("../_startup.R")
 ```
 
+THE ROOT OF THE CALCULATION. CREATE A SIMULATION of what would happen if the null hypothesis were true. This is remarkably easy, which is why hypothesis testing is used so much.
+
+SPACE SHUFFLE TO PLANET NULL. Calculate the likelihood of the observed result on that planet, that is, assuming that the null hypothesis is true.
+
+--------
+
+
+If the simulation trials rarely or never produce an association as strong as that found in real-world observations, you can fairly conclude that the assumptions embedded in the simulation ought to be *rejected* as a proper description of the real world. On the other hand, if the simulation shows good accord with the real-world observations, you can ... what? It's not a good idea to claim the simulation is a correct description of the real world; it's just a simulation. Instead, the proper statement is that you "*fail to reject*" the hypothesis hard-coded into the simulation.
+
+
+
+
+--------------
+
+
+
+
 So far, we've used only the first three columns of the regression report: the name of the term to which the remaining entries belong, the estimate of the coefficient on that term, and the standard error of that estimate.
 
 ```{r}

@@ -112,25 +112,31 @@ Basic calculation: You are going to repeat a calculation for each and every row 
 
 Using the same roll of paper for all, carry out the basic calculation starting at each of the rows in the single column of data.  Now your roll of paper has many numbers on each, each of which is the square difference between the values from two rows of the table. If you are mathematically inclined, you might like to know that there will be exactly $n(n-1)$ numbers written on the roll. If you are a statistical instructor, your ears might perk up when you notice the $n-1$ in that count. 
 
-The final result---the variance---will be the mean of the numbers on the roll. Since each of the numbers on the roll is the square difference between two values of the variable, the mean will be the average square difference.
+The final result---the variance---will be half the average of the numbers on the roll. 
 
 ::: {.callout-warning}
 ## For the statistically experienced reader ...
 
 **Warning!** This box contains mathematical formulas that are **not needed for the course**. The formulas might be interested to mathematically inclined statistics instructors. If that's not you, skip this material.
 
-I realize that the algorithm described above is probably not used by any statistical software package. It's really inefficient numerically. 
+I realize that the algorithm described above is not used by any statistical software package; there are much faster ways to arrive at the result. 
 
 You can see this by comparing the traditional formula for the variance to the formula version of the above algorithm:
 
-$$\underbrace{\frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2}_\text{traditional} \ \ \text{versus} \ \ \underbrace{\frac{1}{n} \sum_{i=1}^n \left[\frac{1}{n-1}\sum_{j\neq i} (x_i - x_j)^2\right]}_\text{our algorithm}$$
+$$\underbrace{\frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2}_\text{traditional} \ \ \text{versus} \ \ \underbrace{\frac{1}{2n} \sum_{i=1}^n \left[\frac{1}{n-1}\sum_{j\neq i} (x_i - x_j)^2\right]}_\text{our algorithm}$$
 The inefficiency of the algorithm stems from the double sum. The advantage of the algorithm is conceptual and two-fold:
 
 i. You can see where the $n-1$ in the formula for the variance comes from: the inner sum involves $(n-1)$ numbers. No hand waving needed to explain the $n-1$. (What might need explaining is the $j \neq i$ in the inner sum. Why not $\sum_j=1^n$? Because that would put $n$ zeros on the roll and bias the result downward. We want to average the square distance between each value and *every other value*.)
 
 ii. There is no need to introduce the mean $\bar{x}$ of the values. Of course, $\bar{x}$ is easy and fast to calculate so there is no numerical reason to avoid using it in the calculation. There is, however, a philosophical reason  based on Stephen J. Gould's observation, quoted at the start of this lesson: "Variation is the hard reality. Means ... are the abstractions." 
 
-Here's a traditional-minded definition: "Variance is equal to the average squared deviations from the mean." This definition makes it seem like the mean has some special status and that variations from it are "deviations."
+The usual definition given for the variance uses the mean as the reference point for calculating deviations. This makes it seem like the mean has some aspect of reality. But the mean is not needed to calculate the variance; it is just, as Gould says, a mathematical abstraction.
+
+There is a factor $\frac{1}{2}$ in the formula for the variance based on the pairwise-square-differences. This may seem unnatural to some readers. Stripping out the $\frac{1}{2}$ the quantity has a name dating from at least 1885: the **modulus**. Writing the modulus as $c = 2 s^2$ makes the formula for the gaussian function cleaner than the formula usually given:
+
+$$\underbrace{\frac{1}{\sqrt{2 \pi s^2}} \exp\left[-\frac{(x-m)^2}{2s^2}\right]}_\text{using standard deviation}\ \ \text{vs}\ \ \ \underbrace{\frac{1}{\sqrt{\pi c^2}} \exp\left[-\frac{(x-m)^2}{c^2}\right]}_\text{using modulus}$$
+In mathematical and scientific nomenclature, the word "modulus" is roughly synonymous with "size." For example, in algebra, $\left|x\right|$ is the modulus of $x$. "Modulus" is less off-putting than "standard deviation" and less redolent of the unfortunate early ties between statistics and eugenics. Looking back, perhaps "modulus" would have been the better choice for parameterizing the gaussian.
+
 :::
 
 ## Causality

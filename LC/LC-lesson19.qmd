@@ -12,6 +12,56 @@ library(moderndive)
 library(NHANES)
 ```
 
+
+1.  One of these pipeline commands will work and the other won't. Which one will work? Explain why the other one doesn't work.
+
+    ```{r eval=FALSE}
+    lm(net ~ age, data = TenMileRace)
+    TenMileRace %>% lm(net ~ age)
+    ```
+
+2.  An example from the *OpenIntro* book uses data on promotions. Some data wrangling commands that might be relevant are these:
+
+    ```{r}
+    promotions %>% tally()
+    promotions %>% group_by(decision) %>% tally()
+    promotions %>% group_by(gender) %>% tally()
+    promotions %>% group_by(gender, decision) %>% tally()
+    ```
+
+You could use such wrangling to compare groups. For instance, you can use the results of the last command to calculate separately the proportion of males who were promoted and, similarly, the proportion of females.
+
+a\. **What are those proportions?**
+
+The following wrangling command will calculate the proportions for you, but it is a bit complicated:
+
+```{r eval=FALSE}
+promotions %>%
+  group_by(gender) %>%
+  summarize(prop_promoted = sum(decision=="promoted") / n())
+```
+
+b\. **Use the above command to check your calculations in (a).**
+
+c\. In the regression paradigm, the comparison of proportions between the two groups is done directly in `lm()`, like this:
+
+```{r}
+promotions %>%
+  mutate(promoted = zero_one(decision, one="promoted")) %>%
+  lm(promoted ~ gender, data = .) %>%
+  coefficients()
+```
+
+We'll explain the purpose of `zero_one()` in Lesson 19, but putting that matter aside for a moment, compare the two coefficients in the regression model to the proportion results you got from wrangling.
+
+i.  **What does the value of the intercept coefficient correspond to in the wrangling results?**
+
+ii. **What does the `genderfemale` coefficient correspond to in the wrangling results?** (Hint: you will have to do a bit of arithmetic on the wrangling results.)
+
+
+
+
+
 ## 19.1
 
 Consider the `moderndive::evals` data that records students' evaluations (`score`, on a 1-5 scale) of the professors in each of several courses (the course `ID`), as well as the `age`, "average beauty rating" (`bty_avg`) of the professor, enrollment in the course (`cls_students`) and the level o the course (`cls_level`). Each row in the data frame is an individual course section.
@@ -321,3 +371,9 @@ It's a matter of judgement which format to use. The bottom-to-top notation highl
 --------
 
 ## 19.F
+
+::: {.callout-warning}
+## Still in draft
+
+Suppose there are other explanatory variables to be displayed. In that case, we will use color and faceting. If there are *no* explanatory variables, as in `y ~ 1`, we will jitter the data horizontally to avoid overplotting.]
+:::

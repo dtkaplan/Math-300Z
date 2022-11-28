@@ -152,3 +152,29 @@ Another, more technical question that we will address has to do with the *precis
   * `r R.version.string`
   * `tidyverse` package version: `r packageVersion("tidyverse")`
 
+
+::: {.callout-note}
+## Violins versus boxes
+
+All of the graphical statistical annotations are human inventions. Each invention attempts to meet a need, but usually, the invention is a compromise between the statistical objective and the computational and graphical resources available. The **box plot** format is a case in point. The statistical goal of a box plot is to display the distribution of values of a variable. It was invented in a time when graphics were mostly drawn by hand and computers were not widely available. The computations behind a box plot produce a five-number summary: min, first quartile, median, third quartile, max. It's straightforward (but tedious!) to do these by hand since they are based on sorting and counting. The drawing itself uses only straight lines, which are easy to draw by hand with only a pencil and a straightedge.
+
+:::: {.content-visible when-format="pdf"}
+
+\includegraphics[width=0.3\columnwidth]{www/cigar-box-guitar.png} A cigar-box guitar
+
+::::
+
+:::: {.column-margin .content-visible when-format="html"}
+![](www/cigar-box-guitar.png)
+
+A cigar-box guitar
+
+::::
+
+
+A violin plot requires hundreds or thousands of evaluations of the gaussian function along with post-processing. They are not feasible for a human; a computer is required. Similarly, drawing the detailed shape of the violin (@fig-violin-intro) requires a computer. 
+
+The box plot has important deficiencies. It is appropriate only for uni-modal distributions and doesn't give even a hint of possible bi-modality. The sharp boundaries of the box and endpoints of the whiskers suggest that even smooth density shapes have abrupt transitions. Points are marked as "outliers" in order to keep the whiskers from becoming absurdly long, but box plots of data with a normal (gaussian) distribution will produce such "outliers" whenever the sample size is large. 
+
+When it comes to computing power, we are today unimaginably rich compared to the generation that introduced box plots. In a sense, we are so rich we can use expensive, well made products such as a violin. The box-plot generation was living in computational poverty. Not having the (computational) funds to buy a violin, they had to make do with primitive instruments they had to make do with the materials at hand, just as early blues mucisians, coming out of poverty, often had to build instruments such as a cigar-box guitar. 
+:::

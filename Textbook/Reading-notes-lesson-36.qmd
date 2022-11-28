@@ -59,17 +59,3 @@ To make an appropriate decision, you consider what you know about the patient. H
 
 A Bayesian would interpret this decision-making process in terms of probabilities. You assign, based on your observations, a probability to each hypothesis. If the probability of the cancer hypothesis is much smaller than the probability of flu, and if the cost of making a mistake (as measured by a "loss function," see Lesson 34) is small, the flu medication is a good next step. But if the probability of cancer is not so small, and the cost of a delay is high, then ordering the screening test seems appropriate.
 
-
-
-
-
-
-
-
-
-## The Null hypothesis as a DAG
-
-Zero out any inputs to the node in question.
-
-A DAG is a kind of hypothesis, a statement about the world that might or might not be true.
-
