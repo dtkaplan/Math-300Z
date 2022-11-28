@@ -154,10 +154,10 @@ There is a technique to improve results in experimental trial. We'll make yet an
 
 ```{r}
 exp08c <- dag_make(
-  c ~ eps(),
+  c ~ exo(),
   z ~ binom(),
   x ~ c/2 + z,
-  y ~ x + c + 3 + eps()
+  y ~ x + c + 3 + exo()
 )
 dag_draw(exp08c)
 ```

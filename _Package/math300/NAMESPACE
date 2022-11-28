@@ -3,6 +3,7 @@
 S3method(extract_training_data,bootstrap_ensemble)
 S3method(extract_training_data,default)
 S3method(extract_training_data,knn3)
+S3method(print,dagsystem)
 S3method(sample,dagsystem)
 S3method(unique,zero_one)
 export(compare_model_residuals)

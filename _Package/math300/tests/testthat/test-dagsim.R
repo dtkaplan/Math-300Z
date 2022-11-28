@@ -1,17 +1,17 @@
 test_that("default sample size is 5", {
-  Foo <- sample(dag_make(x ~ eps(.3), y ~ x + eps(.3)))
+  Foo <- sample(dag_make(x ~ exo(.3), y ~ x + exo(.3)))
   expect_equal(nrow(Foo), 5)
   expect_equal(names(Foo), c("x", "y"))
 })
 
 test_that("size parameter is used", {
-  Foo <- sample(dag_make(x ~ eps(.5), y ~ x + eps(.5)), size=10000)
+  Foo <- sample(dag_make(x ~ exo(.5), y ~ x + exo(.5)), size=10000)
   expect_equal(nrow(Foo), 10000)
   expect_equal(sum(is.na(Foo$y)), 0)
 })
 
-test_that("eps() generates noise of the right magnitude", {
-  Foo <- sample(dag_make(x ~ eps(.5), y ~ x + eps(.5)), size=10000)
+test_that("exo() generates noise of the right magnitude", {
+  Foo <- sample(dag_make(x ~ exo(.5), y ~ x + exo(.5)), size=10000)
   expect_lt(abs(sd(Foo$x) - 0.5), 0.1)
   expect_lt(abs(sd(Foo$y) - sqrt(0.5)), 0.1)
 })
@@ -60,7 +60,7 @@ test_that("Constant patterns are replicated to have nrow", {
 })
 
 test_that("Names starting with dots don't appear in the output.", {
-  Foo <- sample(dag_make(.genes ~ eps(), x ~ .genes + eps(), y ~ .genes + eps()))
+  Foo <- sample(dag_make(.genes ~ exo(), x ~ .genes + exo(), y ~ .genes + exo()))
   expect_equal(names(Foo), c("x", "y") )
 })
 

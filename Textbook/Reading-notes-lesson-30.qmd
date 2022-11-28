@@ -20,12 +20,12 @@ Suppose you are concerned that the chemicals used by lawn-greening companies are
 ```{r echo=FALSE}
 # Same dag mechanism, wealth not shown in the first one
 dag_lawn1 <- dag_make(
-  .wealth ~ eps(),
+  .wealth ~ exo(),
   grass ~ binom(.wealth - 0.5, labels=c("organic", "chemicals")),
   cancer ~ binom(-2*(.wealth+2.5) + 0.5*(grass == "chemicals"), labels=c("no", "yes"))
 )
 dag_lawn2 <- dag_make(
-  wealth ~ eps(),
+  wealth ~ exo(),
   grass ~ binom(wealth - 0.5, labels = c("organic", "chemicals")),
   cancer ~ binom(-2*(wealth+2.5) + 0.5*(grass == "chemicals"), labels=c("no", "yes"))
 )
@@ -116,17 +116,17 @@ Wright's path diagrams are the historically earliest form of our DAGs. In his ho
 
 ```{r echo=FALSE}
 dag_pigs <- dag_make(
-  liter_size ~ 5 + as.numeric(eps() > 1),
-  .gestation ~ 24 - liter_size + eps(),
-  growth_rate ~ 10 - liter_size + eps(.3),
-  weight ~ growth_rate*.gestation + liter_size + eps(),
+  liter_size ~ 5 + as.numeric(exo() > 1),
+  .gestation ~ 24 - liter_size + exo(),
+  growth_rate ~ 10 - liter_size + exo(.3),
+  weight ~ growth_rate*.gestation + liter_size + exo(),
   gestation ~ round(.gestation)
 )
 dag_pigs_for_drawing <- dag_make(
-  Liter_size ~ 5 + as.numeric(eps() > 1),
-  Gestation ~ 24 - Liter_size + eps(),
-  growth_rate ~ 10 - Liter_size + eps(.3),
-  Weight ~ growth_rate*Gestation + Liter_size + eps()
+  Liter_size ~ 5 + as.numeric(exo() > 1),
+  Gestation ~ 24 - Liter_size + exo(),
+  growth_rate ~ 10 - Liter_size + exo(.3),
+  Weight ~ growth_rate*Gestation + Liter_size + exo()
 )
 set.seed(103); dag_draw(dag_pigs_for_drawing)
 ```
@@ -175,9 +175,9 @@ $\sigma_{xy} = \sqrt{\sigma_{xx}\left[\sigma_{yy} - \left(b^2 \sigma_{cc} + \tex
 
 ```{r}
 wright_example <- dag_make(
-  x ~ eps(4),
-  c ~ eps(1),
-  y ~ 2*x + 3*c + eps(1)
+  x ~ exo(4),
+  c ~ exo(1),
+  y ~ 2*x + 3*c + exo(1)
 )
 Sample <- sample(wright_example, size=1000)
 Stats <- Sample %>% 
@@ -198,17 +198,17 @@ with(Stats, sqrt(cv*(yv - (4*xv + 1)))) # covariance of c with y
 
 ```{r}
 dag_pigs <- dag_make(
-  liter_size ~ 5 + as.numeric(eps() > 1),
-  .gestation ~ 24 - liter_size + eps(),
-  .growth_rate ~ 10 - liter_size + eps(.3),
-  weight ~ .growth_rate*.gestation + liter_size + eps(),
+  liter_size ~ 5 + as.numeric(exo() > 1),
+  .gestation ~ 24 - liter_size + exo(),
+  .growth_rate ~ 10 - liter_size + exo(.3),
+  weight ~ .growth_rate*.gestation + liter_size + exo(),
   gestation ~ round(.gestation)
 )
 dag_pigs_for_drawing <- dag_make(
-  Liter_size ~ 5 + as.numeric(eps() > 1),
-  Gestation ~ 24 - Liter_size + eps(),
-  growth_rate ~ 10 - Liter_size + eps(.3),
-  Weight ~ growth_rate*Gestation + Liter_size + eps()
+  Liter_size ~ 5 + as.numeric(exo() > 1),
+  Gestation ~ 24 - Liter_size + exo(),
+  growth_rate ~ 10 - Liter_size + exo(.3),
+  Weight ~ growth_rate*Gestation + Liter_size + exo()
 )
 set.seed(103); dag_draw(dag_pigs_for_drawing)
 set.seed(103); Dat <- sample(dag_pigs, size=1000)

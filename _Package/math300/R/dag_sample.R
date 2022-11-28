@@ -32,7 +32,7 @@ dag_sample <- function(DAG, size=10, seed=NULL, survive=NULL, .size_multiplier=1
   size <- ifelse(!is.null(survive), .size_multiplier*out_size, out_size)
 
   # random noise generators
-  eps <- function(sd = 1) {
+  exo <- eps <- function(sd = 1) {
     rnorm(size, mean=0, sd=sd)
   }
   tdist <- function(df=3, ncp=0) {
@@ -103,4 +103,13 @@ sample.dagsystem <- function(x, size, replace = FALSE, ...) {
   if (missing(size)) size=5
   dag_sample(x, size=size, ...)
 }
+
+#' @export
+print.dagsystem <- function(x, ...) {
+  cat(paste(unlist(lapply(x, FUN=capture.output)),
+        collapse="\n"))
+}
+
+
+
 

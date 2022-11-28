@@ -5,7 +5,7 @@
 #' to be written using variables defined in earlier formulas, as well as random
 #' number generators, etc.
 #' @details Some random number generators are built in, and can be used in the DAG.
-#' - `eps(sd=1)` --- normally distributed with the given standard deviation
+#' - `exo(sd=1)` --- normally distributed with the given standard deviation
 #' - `unif(min=0, max=1)` --- uniformly distributed
 #' - `tdist(df=3, ncp=0)` --- t-distributed (long tails)
 #' - `roll(levels=1:6, weights=1)` --- generate samples from a vector
@@ -19,8 +19,8 @@
 #' @param \dots one or more formulas in the DAG format
 #' puts the right class on a dag, so that sample will work.
 #' @examples
-#' one <- dag_make(x ~ eps(0.5), y ~ x + eps(0.5))
-#' two <- dag_make(.genes ~ eps(), x ~ .genes + eps(), y ~ .genes + eps()))
+#' one <- dag_make(x ~ exo(0.5), y ~ x + exo(0.5))
+#' two <- dag_make(.genes ~ exo(), x ~ .genes + exo(), y ~ .genes + exo()))
 #' three <- dag_make(x ~ c("a", "b", "c"), y ~ 2)) # e.g. for blocking
 #' four <- dag_make(x ~ roll(c("a", "b", "c"))))
 #' sample(one, size=5)

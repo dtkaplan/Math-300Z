@@ -99,10 +99,10 @@ s a glue that it is giving both a single-number, "point" estimate (`.output.`) a
 It might seem from the negative sign on the effect size of engine horsepower on fuel economy that a more powerful engine is not as efficient than a less powerful engine at moving the car a given number of miles. That's a reasonable conclusion. But the statistical thinker always keeps in mind other possibilities. For instance, another factor in fuel economy is the overall weight of the vehicle. A van designed to haul many passengers weighs more than a 2-passenger sporty vehicle. The van needs more horsepower because it is accelerating more weight.
 
 ```{r echo=FALSE}
-d1 <- dag_make(weight ~ eps(), hp ~ weight, mpg ~ weight)
-d2 <- dag_make(weight ~ eps(), hp ~ weight, mpg ~ weight + hp)
-d3 <- dag_make(hp ~ eps(), weight ~ hp, mpg ~ weight)
-d4 <- dag_make(hp ~ eps(), weight ~ hp, mpg ~ weight + hp)
+d1 <- dag_make(weight ~ exo(), hp ~ weight, mpg ~ weight)
+d2 <- dag_make(weight ~ exo(), hp ~ weight, mpg ~ weight + hp)
+d3 <- dag_make(hp ~ exo(), weight ~ hp, mpg ~ weight)
+d4 <- dag_make(hp ~ exo(), weight ~ hp, mpg ~ weight + hp)
 ```
 
 @fig-four-hp-mpg-dags shows four DAGs, each of which describe a plausible scenario.

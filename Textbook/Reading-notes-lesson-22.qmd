@@ -60,7 +60,7 @@ The shell holes on the surviving planes were clustered in certain areas. The clu
 
 ## Measuring sampling variation
 
-We start the process of learning about sampling variation on the training ground. That is, we'll use simulations from DAGs even though our ultimate goal is to work with real data. DAGs are a convenient training tool because the data generated is always a simple random sample and we can generate any number of samples of any size we wish. In the spirit of starting simply, we'll return to `dag01` which, you may remember, has the structure $\mathtt{x}\longrightarrow\mathtt{y}$ and the causal formula `y ~ 4 + 1.5 * x + eps(x)`.
+We start the process of learning about sampling variation on the training ground. That is, we'll use simulations from DAGs even though our ultimate goal is to work with real data. DAGs are a convenient training tool because the data generated is always a simple random sample and we can generate any number of samples of any size we wish. In the spirit of starting simply, we'll return to `dag01` which, you may remember, has the structure $\mathtt{x}\longrightarrow\mathtt{y}$ and the causal formula `y ~ 4 + 1.5 * x + exo(x)`.
 
 It's crucial to remember that sampling variation is not about the row-to-row variation in a single sample, it is about the variation in the summary from one sample to another. So our initial process for exploring sampling variation will be to carry out many trials, each of which is a summary of a sample. 
 

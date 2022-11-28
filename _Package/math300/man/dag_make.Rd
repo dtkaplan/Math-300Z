@@ -19,7 +19,7 @@ number generators, etc.
 \details{
 Some random number generators are built in, and can be used in the DAG.
 \itemize{
-\item \code{eps(sd=1)} --- normally distributed with the given standard deviation
+\item \code{exo(sd=1)} --- normally distributed with the given standard deviation
 \item \code{unif(min=0, max=1)} --- uniformly distributed
 \item \code{tdist(df=3, ncp=0)} --- t-distributed (long tails)
 \item \code{roll(levels=1:6, weights=1)} --- generate samples from a vector
@@ -32,8 +32,8 @@ Use \code{sample()} to collect data from a DAG. Arguments: \verb{size=} and, opt
 }
 }
 \examples{
-one <- dag_make(x ~ eps(0.5), y ~ x + eps(0.5))
-two <- dag_make(.genes ~ eps(), x ~ .genes + eps(), y ~ .genes + eps()))
+one <- dag_make(x ~ exo(0.5), y ~ x + exo(0.5))
+two <- dag_make(.genes ~ exo(), x ~ .genes + exo(), y ~ .genes + exo()))
 three <- dag_make(x ~ c("a", "b", "c"), y ~ 2)) # e.g. for blocking
 four <- dag_make(x ~ roll(c("a", "b", "c"))))
 sample(one, size=5)

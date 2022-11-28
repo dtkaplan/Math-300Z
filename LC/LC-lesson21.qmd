@@ -21,10 +21,10 @@ Compare this result to the DAG tilde expressions
 dag00
 ```
 
-In the tilde expressions, `eps(2)` means to generate noise of magnitude 2.0.
+In the tilde expressions, `exo(2)` means to generate noise of magnitude 2.0.
 
-1. Is the argument to `eps()` specified in terms of the variance or the standard deviation?
-2. The tilde expression for `x` specifies that the constant `5` is to be added to `eps(2)`. Similarly, the constant `-7` is added to `y`.  How do these constants relate to the calculated magnitudes of `x` and `y`?
+1. Is the argument to `exo()` specified in terms of the variance or the standard deviation?
+2. The tilde expression for `x` specifies that the constant `5` is to be added to `exo(2)`. Similarly, the constant `-7` is added to `y`.  How do these constants relate to the calculated magnitudes of `x` and `y`?
 
 ### Solution
 

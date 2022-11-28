@@ -6,65 +6,65 @@ library(math300)
 
 
 dag00 <- dag_make(
-  x ~ eps(2) + 5,
-  y ~ eps(1) - 7
+  x ~ exo(2) + 5,
+  y ~ exo(1) - 7
 )
 
 dag01 <- dag_make(
-  x ~ eps(),
-  y ~ 1.5*x + 4.0 + eps()
+  x ~ exo(),
+  y ~ 1.5*x + 4.0 + exo()
 )
 
 
 dag02 <- dag_make(
-  x ~ eps(),
-  a ~ eps(),
-  y ~ 3*x - 1.5*a + 5 +  eps()
+  x ~ exo(),
+  a ~ exo(),
+  y ~ 3*x - 1.5*a + 5 +  exo()
 )
 
 dag03 <- dag_make(
-  g ~ eps(),
-  x ~ 1.0*g + eps(),
-  y ~ 1.0*g + eps()
+  g ~ exo(),
+  x ~ 1.0*g + exo(),
+  y ~ 1.0*g + exo()
 )
 
 dag04 <- dag_make(
-  a ~ eps(),
-  b ~ eps(),
-  c ~ eps(),
-  d ~ a + b + c + eps()
+  a ~ exo(),
+  b ~ exo(),
+  c ~ exo(),
+  d ~ a + b + c + exo()
 )
 
 dag05 <- dag_make(
-  a ~ eps(),
-  b ~ a + eps(),
-  c ~ b + eps(),
-  d ~ c + eps()
+  a ~ exo(),
+  b ~ a + exo(),
+  c ~ b + exo(),
+  d ~ c + exo()
 )
 
 dag06 <- dag_make(
-  a ~ eps(),
-  b ~ a + eps(),
-  c ~ b + eps(),
-  d ~ c + a + eps()
+  a ~ exo(),
+  b ~ a + exo(),
+  c ~ b + exo(),
+  d ~ c + a + exo()
 )
 
 dag07 <- dag_make(
-  a ~ eps(),
-  b ~ eps() - a,
-  c ~ a - b + eps(),
-  d ~ eps()
+  a ~ exo(),
+  b ~ exo() - a,
+  c ~ a - b + exo(),
+  d ~ exo()
 )
 
 dag08 <- dag_make(
-  c ~ eps(),
-  x ~ c + eps(),
-  y ~ x + c + 3 + eps()
+  c ~ exo(),
+  x ~ c + exo(),
+  y ~ x + c + 3 + exo()
 )
 
 dag09 <- dag_make(
-  a ~ eps(),
-  b ~ eps(),
+  a ~ exo(),
+  b ~ exo(),
   c ~ binom(2*a+ 3*b)
 )
 
@@ -72,45 +72,45 @@ dag09 <- dag_make(
 # a case-control style data source. There are roughly
 # even numbers of 0s and 1s. Only a, b, c have an impact on y
 dag10 <- dag_make(
-  a ~ eps(),
-  b ~ eps(),
-  c ~ eps(),
-  d ~ eps(),
-  e ~ eps(),
+  a ~ exo(),
+  b ~ exo(),
+  c ~ exo(),
+  d ~ exo(),
+  e ~ exo(),
   f ~ 2*binom() - 1,
   y ~ binom(2*a - 3*b + c + 0*d + 0*e + 0*f)
 )
 
 dag11 <- dag_make(
-  x ~ eps(),
-  y ~ eps(),
-  g ~ x + y + eps()
+  x ~ exo(),
+  y ~ exo(),
+  g ~ x + y + exo()
 )
 
 dag12 <- dag_make(
-  x ~ eps(),
-  y ~ eps(),
+  x ~ exo(),
+  y ~ exo(),
   h ~ x + y,
-  g ~- h + eps()
+  g ~- h + exo()
 )
 
 dag_school1 <- dag_make(
   expenditure ~ unif(7000, 18000),
   participation ~ unif(1,100),
-  outcome ~ 1100 + 0.01*expenditure - 4*participation + eps(50)
+  outcome ~ 1100 + 0.01*expenditure - 4*participation + exo(50)
 )
 
 dag_school2 <- dag_make(
   culture ~ unif(-1, 1),
-  expenditure ~ 12000 + 4000 * culture + eps(1000),
-  participation ~ (50 + 30 * culture + eps(15)) %>%
+  expenditure ~ 12000 + 4000 * culture + exo(1000),
+  participation ~ (50 + 30 * culture + exo(15)) %>%
     pmax(0) %>% pmin(100),
-  outcome ~ 1100 + 0.01*expenditure - 4*participation + eps(50)
+  outcome ~ 1100 + 0.01*expenditure - 4*participation + exo(50)
 )
 
 dag_vaccine <- dag_make(
-  .h ~ eps(1),
-  .v ~ 0.2 + 2* .h + eps(.25),
+  .h ~ exo(1),
+  .v ~ 0.2 + 2* .h + exo(.25),
   .f ~ -0.5 - 0.5 * binom(.v) - 1*.h,
   .s ~ 2 - 0.2*binom(.f) + 0.4*(.h + 0.5),
   died ~ binom(.s, labels=c("yes", "no")),
@@ -128,7 +128,7 @@ save(dag00, dag01, dag02, dag03, dag04, dag05,
 # An experiment
 
 exp_test <- dag_make(
-  g ~ eps(),
-  x ~ g + eps(),
+  g ~ exo(),
+  x ~ g + exo(),
   y ~ binom()
 )

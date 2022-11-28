@@ -35,9 +35,9 @@ TBD
 
 ```{r}
 # Simple correlation
-dag04 <- dag_make(x ~ eps(), y ~ 2*x + eps(0.5))
+dag04 <- dag_make(x ~ exo(), y ~ 2*x + exo(0.5))
 # "Error in variables", that is, we don't measure x exactly.
-dag05 <- dag_make(.latent ~ eps(), x ~ .latent + eps(0.5), y ~ 2*.latent + eps(0.5))
+dag05 <- dag_make(.latent ~ exo(), x ~ .latent + exo(0.5), y ~ 2*.latent + exo(0.5))
 ```
 :::
 
