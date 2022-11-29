@@ -15,6 +15,7 @@ output:
 
 ```{r setup, include=FALSE}
 library(math300)
+library(mosaicCore)
 library(knitr)
 library(kableExtra)
 knitr::opts_chunk$set(echo = TRUE)
@@ -31,7 +32,7 @@ Whickham %>%
 
 The graph suggests that non-smokers were more likely than smokers to be dead at the follow-up interview. But it's hard to calculate proportions from such a graph. It's reasonable to argue that for the purpose of showing the fraction of smokers and of non-smokers who died, a bar chart would be better.
 
-```{r}
+```{r warning=FALSE}
 #| label: fig-smoker-barplot
 #| fig-cap: "Barplots of the `Whickham`smoking and survival data."
 #| fig-subcap:

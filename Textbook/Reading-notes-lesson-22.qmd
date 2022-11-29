@@ -88,7 +88,7 @@ Trials <- do(100) * {
 Trials
 ```
 
-`Trials` is a *sample of summaries*. In `Trials`, the sampling variation can indeed be seen in the row-to-row variation in the data frame, but only because the data frame is a summary of samples. Since it is hard to read columns of numbers, we will *summarize* the variation in the *sample of summaries*. 
+`Trials` is a *sample of summaries*. (See Lesson 20). In `Trials`, the sampling variation can indeed be seen in the row-to-row variation in the data frame, but only because the data frame is a summary of samples. Since it is hard to read columns of numbers, we will *summarize* the variation in the *sample of summaries*. 
 
 As always, our standard measure of variation is the standard deviation (or, equivalently, variance):
 
@@ -97,7 +97,7 @@ Trials %>%
   summarize(sIntercept = sd(Intercept))
 ```
 
-This quantity, which is the standard deviation of a sample of summaries, has a technical name in statistics: the **standard error**. The words **standard error** should properly be followed by a description of the summary and the size of the individual samples involved. Here it would be, "0.348 is the standard error of the Intercept coefficient from a sample of size 25.
+This summary quantity, which is the standard deviation of a sample of summaries, has a technical name in statistics: the **standard error**. The words **standard error** should properly be followed by a description of the summary and the size of the individual samples involved. Here it would be, "0.348 is the standard error of the Intercept coefficient from a sample of size 25.
 
 The standard error is an ordinary standard deviation, but in a particular context: the standard deviation of a sample of summaries. This can be confusing, since "error" and "deviation" are somewhat synonomous in everyday language. It can be hard to remember when to use "error" and when to use "deviation." Fortunately, it's more common to use another way to present the information about sampling variation.
 

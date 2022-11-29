@@ -78,7 +78,7 @@ lm(list_price ~ amazon_price, data = amazon_books) %>% regression_summary()
 
 ```{r}
 lm(list_price ~ amazon_price + hard_paper, data = amazon_books) %>% confint()
-lm(list_price ~ amazon_price + hard_paper, data = amazon_books) %>% regression_tidy()
+lm(list_price ~ amazon_price + hard_paper, data = amazon_books) %>% regression_summary()
 ```
 
 A hardcover costs about $2 to $4 more than a paperback.
