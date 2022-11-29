@@ -8,6 +8,7 @@ output:
     css: NTI.css
   pdf_document:
     toc: yes
+status: "Proofed on Nov 29, 2022"
 ---
 
 ```{r include=FALSE}
@@ -24,6 +25,21 @@ The spoken words from the recording are discernable despite the hiss and clicks 
 
 Engineers and others make a distinction between **signal** and noise. The engineer aims to separate the signal from the noise. That aim applies to statistics as well.
 
+There are many sources of noise in data; every variable has its own story, part of which is noise from measurement errors and recording blunders. For instance, economists use national statistics, like GDP, even though the definition is arbitrary (a Hurricane can raise GDP!), and early reports are invariably corrected a few months later. Historians go back to original documents, but inevitably many of the documents have been lost or destroyed: a source of noise. Even in elections where, in principle, counting is straightforward, the voters' intentions are measured imperfectly due to "hanging chads," "butterfly ballots," broken voting machines, spoiled ballots, and so on. 
+
+The statistical thinker is well advised to know about the sources of noise in the system she is studying. Analysis of data will be better the more the modeler knows about how measurements are made and data collected.
+
+::: {.callout-note}
+#### Noise in hiring
+
+The author has, on several occasions, testified in legal hearings as a statistical expert. In one case, the US Department of Labor audited the records of a contractor with several hundred employees and high employee turnover. The records led the Department to bring suit against the contractor for discriminating against Hispanics. The hiring records showed that many Hispanics applied for jobs; the company hired none. An open-and-shut case.
+
+The lawyers for the defense asked me, the statistical expert, to review the findings from the Department of Labor. The lawyers thought they were asking me to check the arithmetic in the hiring spreadsheets. As a statistical thinker, I know that arithmetic is only part of the story; the origin of the data is critically important. So I asked for the complete files on all applicants and hires the previous year. 
+
+The spreadsheet files and the paper job applications were in accord; there were many Hispanic applicants. But the data on the paper job application form was not always consistent with the data on hiring spreadsheets. It turned out that whenever an applicant was hired, the contractor (per regulation) got a report on that person from the state police. The report returned by the state police had only two available race/ethnicities: white and Black. The contractor's personnel office filled in the hired-worker spreadsheet based on the state police report. So all the Hispanic applicants who were hired had been transformed into white or Black by the state police. Noise.
+:::
+
+
 ## Signal and noise {#sec-signal-and-noise}
 
 To illustrate the statistical problem of signal and noise, let us turn to a DAG simulation: `dag01`. Here's a sample from `dag01`: `r set.seed(101)`
@@ -33,8 +49,8 @@ Tiny <- sample(dag01, size=2)
 ```
 
 ```{r echo=FALSE}
-#| label: tab-tiny-dag01
-#| tab-cap: "A `Tiny` ($n=10$) sample from `dag01`"
+#| label: tbl-tiny-dag01
+#| tbl-cap: "A `Tiny` ($n=10$) sample from `dag01`"
 #| column: margin
 Tiny
 ```
@@ -42,19 +58,19 @@ Tiny
 
 The DAG simulation implements a relationship between `x` and `y`. In statistics, this *relationship* is the signal. 
 
-> Look at the 2-row sample (@tab-tiny-dag01) from the DAG and guess what the relationship might be. 
+> Look at the 2-row sample (@tbl-tiny-dag01) from the DAG and guess what the relationship might be. 
 
 Any of an infinite number of possible relationships could account for the `x` and `y` data. The noise reduction problem of statistics is to make a guess that is as good as possible. Unfortunately, for a sample with $n=2$, as "good as possible" is not very good!
 
-More data---a bigger sample---gives us a better shot at revealing the relationship hidden by the noise. @tab-small-dag01 shows a sample of size $n=10$: `r set.seed(103)`
+More data---a bigger sample---gives us a better shot at revealing the relationship hidden by the noise. @tbl-small-dag01 shows a sample of size $n=10$: `r set.seed(103)`
 
 ```{r}
 Small <- sample(dag01, size=10)
 ```
 
 ```{r echo=FALSE}
-#| label: tab-small-dag01
-#| tab-cap: "A `Small` ($n=10$) sample from `dag01`"
+#| label: tbl-small-dag01
+#| tbl-cap: "A `Small` ($n=10$) sample from `dag01`"
 #| column: margin
 Small
 ```

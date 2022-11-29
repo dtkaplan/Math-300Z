@@ -127,7 +127,7 @@ FARS <- tribble(
   2014, 30056, 16470, 5766, 71, 3026, 318563)
 ```
 
-TITLE GOES HERE: Often, a data scientist needs to calculate some new quantity from the quantities already available in a data table. Proper data computing software makes this easy to do in a manner that is clear even to an inexperienced reader. For example, the following statement will take a data frame named `Fatality_data` with the structure of  @tab-pine-hit-pants and augment it with a new variable `total_fatalities` that gives the total number of fatalities in each year
+TITLE GOES HERE: Often, a data scientist needs to calculate some new quantity from the quantities already available in a data table. Proper data computing software makes this easy to do in a manner that is clear even to an inexperienced reader. For example, the following statement will take a data frame named `Fatality_data` with the structure of  @tbl-pine-hit-pants and augment it with a new variable `total_fatalities` that gives the total number of fatalities in each year
 
 ```{r fir-shut-sofa-1, results = "hide"}
 FARS <-
@@ -136,7 +136,7 @@ FARS <-
 ```
 
 ```{r echo=FALSE}
-#| label: tab-pine-hit-pants
+#| label: tbl-pine-hit-pants
 knitr::kable(FARS)
 ```
 

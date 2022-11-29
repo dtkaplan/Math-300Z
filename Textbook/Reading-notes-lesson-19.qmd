@@ -217,7 +217,7 @@ The `zero_one()` function converts a yes/no variable to the numerical zero-one f
 To illustrate, consider the `mosaicData::Whickham` data frame, which records a 1972-1974 survey, part of a study of the relationship between smoking and mortality. Twenty years after the initial survey, a follow-up established whether or not each person was still alive. 
 
 ```{r echo=FALSE}
-#| label: tab-Whickham-short
+#| label: tbl-Whickham-short
 #| tab.cap: "A few rows of the `Whickham` data frame."
 #| tab.location: margin
 set.seed(201)

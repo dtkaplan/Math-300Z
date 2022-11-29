@@ -1,5 +1,5 @@
 ---
-title: "Sampling variation"
+title: "Sampling and sampling variation"
 output:
   html_document:
     theme: lumen
@@ -15,59 +15,53 @@ lesson <- 22
 source("../_startup.R")
 ```
 
-There are many sources of noise in data; every variable has its own story, part of which is noise from measurement error, recording blunders, etc. Economists use national statistics, like GDP, even though the definition is arbitrary (a Hurricane can raise GDP!) and early reports are invariably corrected a few months later. Historians go back to original documents, but inevitably many of the documents have been lost or destroyed: a source of noise. Even in elections, where you would think counting is straightforward, the voters' intentions are measured imperfectly due to "hanging chads," "butterfly ballots," broken voting machines, spoiled ballots, and so on. 
+We use "sample" as a near synonym for "data frame." However, a data frame may not be a sample but contains a row for every possible unit of observation. Such a complete enumeration---the inventory records of a merchant, the records kept of student grades by the school registrar---has a technical name: a "**census**." Famously, many countries conduct a census of the population in which they try to record every resident of the country. For example, the US, UK, and China carry out a census every ten years.
 
-The statistical thinker is well advised to know about the sources of noise in the system she is studying. Your analysis of data will be better the more you know about how measurements are made and data collected.
+In a typical setting, it is unfeasible to record every possible unit of observation.^[Even a population "census" inevitably leaves out some individuals.] Such incomplete records constitute a "**sample**." One of the great successes of statistics is the means to draw useful information from a sample, at least when the sample is collected correctly.
 
-::: {.callout-note}
-#### Noise in hiring
+Sampling is called for when we want to find out about a large group but lack time, energy, money, or the other resources needed to contact every group member. For instance, France collects samples at short intervals to collect up-to-date data while staying within a budget. The name used for the process---*recensement en continu* or "rolling census"---signals the intent. Over several years, the French rolling census contacts about 70% of the population.
 
-The author has on sevons testified in legal hearings as a statistical expert. In one case, the US Department of Labor had audited the records of a contractor with several hundred employees and high turnover. The records led the Department to bring suit against the contractor for discriminating against Hispanics, and open-and-shut case. How so? The hiring records showed that many Hispanics applied for jobs but none of them was hired. 
+Sometimes, as in quality control in manufacturing, the measurement process is destructive: the measurement process consumes the item. In a destructive measurement situation, it would be pointless to measure every single item. Instead, a sample will have to do.
 
-As the statistical expert, I was asked to review the findings from the Department of Labor. The lawyers thought they were asking me to check the arithmetic. As a statistical thinker, I know that the arithmetic is only part of the story. You also have to investigate the data. Although I had the spreadsheets to work from, I asked to be given the complete files on all applicants and hires the previous year. 
+## Sampling bias
 
-Here's what happened. There were indeed many Hispanic applicants, as shown both by the spreadsheet files and the paper job applications. And the spreadsheets showed no hires of Hispanics. But often the data on the job application form wasn't consistent with the data on hires. It turned out that whenever an applicant was hired, the contractor (per regulation) got a report on that person from the state police. But the report returned by the state police had only two available race/ethnicities: white and Black. The personnel office in the contractor filled in the hired-worker spreadsheet based on the state police report. So all the Hispanic applicants who were hired had been transformed into white or Black by the state police. Noise.
-:::
+Collecting a reliable sample is usually considerable work. An ideal is the "simple random sample" (SRS), where all of the items are available, but only some are selected---completely at random---for recording as data. Undertaking an SRS requires assembling a "sampling frame," essentially a census. Then, with the sampling frame in hand, a computer or throws of the dice can accomplish the random selection for the sample.
 
-## Sampling variation
+Understandably, if a census is unfeasible, constructing a perfect sampling frame is hardly less so. In practice, the sample is assembled by randomly dialing phone numbers or taking every 10th visitor to a clinic or similar means. Unlike genuinely random samples, the samples created by these practical methods are not necessarily representative of the larger group. For instance, many people will not answer a phone call from a stranger; such people are underrepresented in the sample. Similarly, the people who can get to the clinic may be healthier than those who cannot. Such unrepresentativeness is called "**sampling bias**."
 
-There is one source of noise that is so common across many settings that every statistical thinker needs to be intimately familiar with. This is called "**sampling variation**."
+Professional work, such as collecting unemployment data, often requires government-level resources. Assembling representative samples uses specialized statistical techniques such as stratification and weighting of the results. We will not cover the specialized techniques in this introductory course, even though they are essential in creating representative samples. The table of contents of a classic text, William Cochran's [*Sampling techniques*](https://ia801409.us.archive.org/35/items/Cochran1977SamplingTechniques_201703/Cochran_1977_Sampling%20Techniques.pdf) shows what is involved.
 
-We've been using "sample" as a near synonym for "data frame." But that's not completely fair. Often, data frames contain a row for each and every "item" of relevance. For instance, the Department of Labor never suggested that the contractor in the previous example had left out some of the applicants. Such a complete enumeration---the inventory records of a merchant, the records kept of student grades by the school registrar---has a technical name: a "**census**."
-Famously, many countries have a regular census of the population---every 10 years in the US or the UK or China---in which (they try to) reach out to every resident.
+All statistical thinkers, whether expert in sampling techniques or not, should be aware of factors that can bias a sample away from being representative. In political polls, many (most?) people will not respond to the questions. If this non-response stems from, for example, an expectation that the response will be unpopular, then the poll sample will not adequately reflect unpopular opinions. Such **non-response bias** can be significant, even overwhelming, in surveys. 
 
-But there are many settings where it is unfeasible to collect data in the form of a census. The records will be incomplete and therefore constitute a "**sample**." Sampling is called for when we want to find out about a large group but don't have the resources---time, energy, money---to contact every member of the group. France, in order to collect up-to-date data while staying within a budget, runs a "rolling census" where samples are made at short time intervals. It's estimated that the French rolling census ultimately reaches 70% of the population.
+**Survival bias** plays a role in many settings. The `mosaicData::TenMileRace` data frame provides an example, recording the running times of 8636 participants in a 10-mile road race and including information about each runner's age. Can such data carry information about changes in running performance as people age? The data frame includes runners aged 10 to 87. Nevertheless, a model of running time as a function of age from this data frame is seriously biased. The reason? As people age, casual runners tend to drop out of such races. So the older runners are skewed toward higher performance. (We can see this by taking a different approach to the sample: collecting data over multiple years and tracking individual runners as they age.
 
-Sometimes, as in quality control in manufacturing, the measurement process is destructive: the item is consumed in the process of measurement. Then, of course, it would be pointless to make a measurement of every single item. A sample will have to do.
-
-Collecting a reliable sample is usually a lot of work. One idealization is called a "simple random sample" (SRS) where all of the items are available, but only some are selected, at random, to be recorded as data. The work comes from having to assemble all of the items. Making a SRS calls for first assembling a "sampling frame," which is essentially a census. If a census is unfeasible, the construction of a perfect sampling frame is hardly less so.
-
-Professional work, such as the collection of unemployment data, often requires government-level resources and draws on specialized statistical techniques such as stratified sampling and weighting of the results. We won't cover the specialized techniques in this introductory course, even though they are very important in creating representative samples. If you're interested in seeing what's involved, you can get an idea by scrolling through the table of contents of a classic text, William Cochran's [*Sampling techniques*](https://ia801409.us.archive.org/35/items/Cochran1977SamplingTechniques_201703/Cochran_1977_Sampling%20Techniques.pdf)
-
-All statistical thinkers, whether expert in sampling techniques or not, should be aware of factors that can bias a sample away from being representative. **Non-response bias** can be significant, even overwhelming, in surveys. In political polls, many (most?) people will not respond to the questions. If this non-response stems from, for example, an expectation that the response will be unpopular, then the poll sample won't adequately reflect unpopular opinions.
-
-**Survival bias** is an important consideration in many settings. An example is given by the `mosaicData::TenMileRace` data. This records the running times of 8636 participants in a 10-mile road race held in 2005 and includes information about the runner, such as his or her age. You might think that such data could tell you about changes in running performance as people age: the data frame includes runners from age 10 to 87. But a model of running time as a function of age from this data frame is seriously biased. The reason? As people age, casual runners tend to drop out of such races. So the older runners are skewed toward higher performance. (We can see this by taking a different approach to the sample: collecting data over multiple years and tracking individual runners as they age.
-
-::: {.callout-note}
+:::: {.callout-note}
 ## Examples: Returned to base
 
-An inspiring story about dealing with survival bias comes from a World War II study of the damage sustained by bombers due to enemy guns. The sample, by necessity, included only those bombers that survived the mission and returned to base. The shell holes in those surviving bombers were not representative of where shells hit the planes, they were only representative of shell hits that did not prevent the plane from returning. The study report, [available here](https://apps.dtic.mil/sti/pdfs/ADA091073.pdf), is a tribute the the work and ingenuity needed to deal with issues such as survival bias. The report itself doesn't contain any diagram showing where shells it the bombers, but a hypothetical diagram on [Wikipedia](https://en.wikipedia.org/wiki/Survivorship_bias) conveys the idea.
+An inspiring story about dealing with survival bias comes from a World War II study of the damage sustained by bombers due to enemy guns. The sample, by necessity, included only those bombers that survived the mission and returned to base. The holes in those surviving bombers tell a story of survival bias. Shell holes on the surviving planes were clustered in certain areas, as depicted in @fig-airplane-holes. The clustering stems from survivor bias. The unfortunate planes hit in the middle of the wings, cockpit, engines, and the back of the fuselage did not return to base. Shell hits in those areas never made it into the record. 
 
-![](www/bomber-holes.png)
-:::
-
-The shell holes on the surviving planes were clustered in certain areas. The clustering stems from survivor bias. Planes that were it in the areas, such as the middle of the wings, the cockpit, the engines, and the back of the fusalage did not return to base. Consequently, those shell hits were never recorded.
+```{r echo=FALSE}
+#| label: fig-airplane-holes
+#| fig-cap: "An illustration of shell-hole locations in planes that returned to base. [Source: Wikipedia](https://en.wikipedia.org/wiki/Survivorship_bias)" 
+#| column: margin
+knitr::include_graphics("www/bomber-holes.png")
+```
+::::
 
 ## Measuring sampling variation
 
-We start the process of learning about sampling variation on the training ground. That is, we'll use simulations from DAGs even though our ultimate goal is to work with real data. DAGs are a convenient training tool because the data generated is always a simple random sample and we can generate any number of samples of any size we wish. In the spirit of starting simply, we'll return to `dag01` which, you may remember, has the structure $\mathtt{x}\longrightarrow\mathtt{y}$ and the causal formula `y ~ 4 + 1.5 * x + exo(x)`.
+Sampling variation is a form of noise. Unlike some other forms of noise, modeling cannot filter out sampling variation or reduce its magnitude. Sampling variation is easiest to see by collecting multiple samples from the same source and summarizing each one. The summaries likely will vary from sample to sample: sampling variation.
 
-It's crucial to remember that sampling variation is not about the row-to-row variation in a single sample, it is about the variation in the summary from one sample to another. So our initial process for exploring sampling variation will be to carry out many trials, each of which is a summary of a sample. 
+Typically, the data frame at hand is our only sample. With no other samples to compare it to, it may seem impossible to measure sampling variation. In this Lesson, we will use simulations from DAGs to study sampling variation. DAG simulations are suited to this because we can effortlessly collect as many samples as we wish from a DAG. In Lesson 23, we will use the knowledge gained from the simulations to see how to measure sampling variation even when there is only one sample.
+
+In the spirit of starting simply, we return to `dag01`. This DAG is $\mathtt{x}\longrightarrow\mathtt{y}$. The causal formula setting the value of `y` is `y ~ 4 + 1.5 * x + exo()`.
+
+It is crucial to remember that sampling variation is not about the row-to-row variation in a single sample. Rather, it is about the variation in the summary from one sample to another. So our initial process for exploring sampling variation will be to carry out many trials, each trial being a summary of a sample. 
 
 ::: {.callout-warning}
-## Samples and specimens 
+## Demonstration: Samples and specimens 
 
-To illustrate, here is one trial using a sample of size $n=25$. There are many ways to summarize a sample, here we will use `y ~ 1`.
+To illustrate, here is one trial using a sample of $n=25$ and a simple model, `y ~ 1`.
 
 ```{r}
 Sample <- sample(dag01, size=25) 
@@ -76,7 +70,7 @@ Sample %>%
   coefficients()
 ```
 
-We can't see sampling variation directly in the above result because there is only one trial. To see sampling variation directly, we need to run *many* trials. In each trial, a new sample (of size $n=25$ is taken and summarized.)
+We cannot see sampling variation directly in the above result because there is only one trial. The sampling variation becomes evident when we run *many* trials. In each trial, a new sample (of size $n=25$ is taken and summarized.) `r set.seed(301)`
 
 ```{r}
 Trials <- do(100) * {
@@ -85,38 +79,42 @@ Trials <- do(100) * {
     lm(y ~ 1, data = .) %>%
     coefficients()
 }
-Trials
 ```
 
-`Trials` is a *sample of summaries*. (See Lesson 20). In `Trials`, the sampling variation can indeed be seen in the row-to-row variation in the data frame, but only because the data frame is a summary of samples. Since it is hard to read columns of numbers, we will *summarize* the variation in the *sample of summaries*. 
+```{r echo=FALSE}
+#| label: tbl-sampling-trials
+#| tbl-cap: "`Trials` for seeing sampling variation."
+#| column: margin
+Trials %>% head(25) %>% knitr::kable()
+```
 
-As always, our standard measure of variation is the standard deviation (or, equivalently, variance):
+`Trials` is a *sample of summaries*. (See Lesson 20). The row-to-row variation in`Trials` comes from sampling variation. We can *summarize* the variation in the *sample of summaries*. As always, our standard measure of variation is the standard deviation (or, equivalently, variance):
 
 ```{r}
 Trials %>%
-  summarize(sIntercept = sd(Intercept))
+  summarize(se = sd(Intercept))
 ```
 
-This summary quantity, which is the standard deviation of a sample of summaries, has a technical name in statistics: the **standard error**. The words **standard error** should properly be followed by a description of the summary and the size of the individual samples involved. Here it would be, "0.348 is the standard error of the Intercept coefficient from a sample of size 25.
+This summary quantity, which we have named `se`, has a technical name in statistics: the **standard error**. The standard error is an ordinary standard deviation in a particular context: the standard deviation of a sample of summaries. The words **standard error** should be followed by a description of the summary and the size of the individual samples involved. Here it would be, "The standard error of the Intercept coefficient from a sample of size $n=25$ is around 0.36."
 
-The standard error is an ordinary standard deviation, but in a particular context: the standard deviation of a sample of summaries. This can be confusing, since "error" and "deviation" are somewhat synonomous in everyday language. It can be hard to remember when to use "error" and when to use "deviation." Fortunately, it's more common to use another way to present the information about sampling variation.
+It is easy to confuse "standard error" with "standard deviation." Adding to the potential confusion is another related term, the "margin of error." To avoid this confusion, we will tend to use an *interval* description of the sampling variation called the "**confidence interval**." However, for the present, we will continue with the standard error, sometimes written SE for short.
 
-## The SE depends on sample size
+## SE depends on the sample size
 
-We found an SE of 0.348 on the Intercept in a sample of size $n=25$. Does the SE depend on the sample size. We can find out by trying it for several different sample sizes, say, 25, 100, 400, 1600, 6400, 25600, 102400. We picked these particular numbers to be multiples of 4 times the previous sample size.
+We found an SE of 0.36 on the Intercept in a sample of size $n=25$. We can see how the SE depends on sample size by repeating the trials for several different sizes, say, $n=25$, 100, 400, 1600, 6400, 25,000, and 100,000.
 
-Here's the SE for a sample of size 400:
+The following command estimates the SE a sample of size 400:
 ```{r}
-Trials <- do(100) * {
+Trials <- do(1000) * {
   Sample <- sample(dag01, size=25) 
   Sample %>% 
     lm(y ~ 1, data = .) %>%
     coefficients()
 }
-Trials %>% summarize(se = sd(Intercept))
+Trials %>% summarize(se400 = sd(Intercept))
 ```
 
-You can try it yourself for the other sample sizes. Here's what we got, running 1000 trials in each instance:
+We repeated this process for each of the other sample sizes. @tbl-se-sizes reports the results.
 
 ```{r echo=FALSE, results="hide"}
 SE <- tibble::tribble(
@@ -126,61 +124,43 @@ SE <- tibble::tribble(
   400, 0.091,
   1600, 0.043,
   6400, 0.023,
-  25600, 0.011,
-  102400, 0.0056
+  25000, 0.011,
+  100000, 0.0056
 )
 ```
 
-```{r}
+```{r echo=FALSE}
+#| label: tbl-se-sizes
+#| tbl-cap: "Results of repeating the sampling variability trials for samples of varying sizes."
+#| column: margin
 SE  %>% knitr::kable()
 ```
 
-There's a pattern here. Every time we double $n$, the standard error goes down by a factor of 2, that is, $\sqrt{4}$. (The pattern isn't exact because there is sampling variation in the trials themselves.)
+There is a pattern in @tbl-se-sizes. Every time we double $n$, the standard error goes down by a factor of 2, that is, $\sqrt{4}$. (The pattern is not exact because there is also sampling variation in the trials.)
 
-Lesson: The standard error gets smaller the larger the sample size. For a sample size of $n$, the SE will be proportional to $1/\sqrt{\strut n}$.
+**Conclusion**: The larger the sample size, the smaller the SE. For a sample size of $n$, the SE will be proportional to $1/\sqrt{\strut n}$.
 
 ## The confidence interval
 
-The "confidence interval" is a more user-friendly format for describing the amount of sampling variation. As an interval, it commonly written either as [lower, upper] or center$\pm$half-width. These styles are completely equivalent and either style can be used. The preferred style can depend on the field or the journal in which a report is being published. Some journals like a different style, center (half-width). 
+The "confidence interval" is a more user-friendly format than SE for describing the amount of sampling variation. Being an interval, write it either as [lower, upper] or center$\pm$half-width. These styles are equivalent; both styles are correct. (The preferred style can depend on the field or the journal publishing the report.)
 
-::: {.callout-note}
-## Technical vocabulary
-
-There is a technical name for the half-width: the "**margin of error**." We will leave the confidence interval calculation to software, so we won't have much need to refer to the margin of error, but it is a term commonly used by statisticians and scientists.
-:::
-
-The margin of error is defined to be twice the SE. A lot of early statistical theory was given over to defining "twice." For our purposes, twice means "multiply by 2." Some people prefer the theoretically more precise "multiply by 1.96" which is appropriate for very large sample sizes. For small sample sizes "twice" is larger than 1.96 and depends on how many model coefficients there are. For instance, consider the simplest model `y ~ 1`. There is one coefficient and for a sample size of $n=20$ twice would be 2.09 while a for a sample size of $n=5$ "twice" would be 2.8. 
-
-::: {.callout-warning}
-## Demonstration: Confidence interval on the Intercept coefficient for $n=25$
-
-The following command computes the confidence interval (that is, the two numbers [`lower`,`upper`]) for the trials we ran on samples of size $n=25$ from `dag01` and summarized by the intercept coefficient from `y ~ 1`.  We show this just to make clear what that the margin of error is twice the standard error. 
-```{r}
-Trials %>%
-  summarize(m=mean(Intercept), se=sd(Intercept)) %>%
-  mutate(lower = m - 2*se, upper = m + 2*se)
-```
-Notice that we have used 2 for "twice." But best to leave the detailed calculations to the software.
-:::
-
-Statistical software is written to use the correct value of "twice" for any given sample size and number of coefficients. But for everyday purposes, and samples larger than, say, $n=10$, "twice" is roughly 2.
-
-In calculations, finding the half-width of the confidence interval requires first finding the standard error, then multiplying by "twice." In practice, it's far easier to use software. In R, the `confint()` function reports the confidence interval for model coefficients:
+In practice, confidence intervals are calculated using special-purpose software such as the `confint()` function, for instance:
 
 ```{r}
 Hill_racing %>% 
   lm(time ~ distance + climb, data=.) %>% 
   confint()
 ```
+Notice that there is a separate confidence interval for each model coefficient. The sampling variation is essentially the same, but that variation appears different when translated to the various coefficients' units. 
 
 ::: {.callout-warning}
 ## Demonstration: How many digits?
 
-In the calculation of confidence intervals on the model `time ~ distance + climb`, the results were reported to many digits. Such a report is appropriate for whatever further calculations might need to be done on the results, but it is usually not appropriate for a human reader.
+The confidence intervals on the model `time ~ distance + climb`, report the results to many digits. Such a report is appropriate for further calculations that might need doing, but it is usually not appropriate for a human reader.
 
-To know how many digits are worth reporting to humans, you can look at the standard error. The standard error is a part of a different kind of summary of a model: the "regression report." We won't need to look at regression reports until the end of the course. We show one here just to make the point about how many digits are worth reporting to humans.
+To know how many digits are worth reporting to humans, look toward the standard error. The standard error is a part of a different kind of summary of a model: the "regression report." We will only need to look at regression reports in the last few Lessons of the course. Here we want to point out how many digits are worth reporting to humans. That requires looking at the standard error itself.
 
-Here's the regression report on the `Hill_racing` model
+Previously, we looked at the confidence intervals on coefficients from the `Hill_racing` model. Now we look at the regression summary, which contains the information on sampling variation in a different format.
 
 ```{r}
 Hill_racing %>% 
@@ -188,10 +168,12 @@ Hill_racing %>%
   regression_summary()
 ```
 
-The "standard error" for each coefficient is reported in the column labelled `std.error`. 
+Each coefficient's standard error appears in the `std.error` column of the regression summary.
 
-For the human reader, only the first two significant digits of the standard error are worth reporting. In this case, that is 32 for the Intercept, 3.8 for the distance coefficient, and 0.059 for the climb coefficient. The confidence interval will be the coefficient itself (column labelled `estimate`) plus-or-minus "twice" the `std.error`. The report of the confidence interval (for a human reader) should be rounded to the place of the first two significant digits of the standard error.
+For the human reader, only the first two significant digits of the standard error are worth reporting. (This is true regardless of the data and model design.) Here, the SE is 32 for the Intercept, 3.8 for the distance coefficient, and 0.059 for the climb coefficient. The confidence interval will be the coefficient (column labeled `estimate`) plus or minus "twice" the `std.error`. It is appropriate to round the confidence interval (for a human reader) to the first two significant digits of the standard error.
 
-For example, the confidence interval on the distance coefficient will be $253.808295 \pm 2 \times 3.78433220$. Keep only the digits that come before the first two significant digits of the SE, so
-the reported interval can be $253.8 \pm 3.8$. 
+For example, the confidence interval on the distance coefficient will be $253.808295 \pm 2 \times 3.78433220$. Keep only the digits before the first two significant digits of the SE, so the reported interval can be $253.8 \pm 3.8$. 
 :::
+
+
+
