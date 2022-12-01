@@ -15,6 +15,14 @@ output:
 source("../_startup.R")
 ```
 
+Less mundane: A patient comes to an urgent-care clinic with symptoms. The health-care professional tries to diagnose what disease or illness the patient has. A diagnosis is prediction that informs the choices of additional tests and, in turn, possible treatments. The inputs to the prediction are the symptoms---neck stiffness, a tremor, and so on---as well as facts about the person---age, sex, occupation, etc. The output of the prediction will assign a probability to each medical condition that could cause the symptoms. As new tests or measurements are done---temperature, blood pressure, white-blood-cell count, blood oxygenation, and others---they become new inputs for the prediction and the probabilities change accordingly. The television drama *House* provides an example of evolving predictions in every episode. The process of constructing such predictions is called "differential diagnosis." 
+
+The word "prediction" suggests the future, but many predictions have to do with the current or past state that is as yet unknown to greater or lesser extent. Synonyms for "prediction" include "classification" (Lessons 34 and 35), "conjecture", "guess", "bet", .... The phrase "informed guess" points to the idea: using information to support decision making.
+
+----------
+
+
+
 We make a prediction when we have known values for some aspects of the system, but do not yet know the values of other aspects of the system but wish to infer what they might be by a calculation on the known values. An example: We wish to predict whether a patient will develop cancer or not. The patient is not known to have cancer at present, but we do know other relevant aspects of the patient: family history (e.g. which relatives developed cancer already), genetic markers (such as the BRCA marker of risk for breast cancer), exposure to environmental or workplace carcinogens, habits such as smoking, etc. 
 
 The prediction itself is the output of a kind of special-purpose machine. The inputs given to the machine are values for what we already know, the output is a value (or interval) for the as-yet-unknown aspects of the system. In the cancer prediction example, the output would take the form of a probability or probability rate: the probability of developing cancer in the upcoming 10-year period or the odds of developing cancer stated as a rate of odds per time unit. (For the present, just treat "odds" as a synonym for probability. In Lesson 33 we'll get more specific about how odds differ from probability and why they are used to quantify rates of probability.)
