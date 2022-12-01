@@ -71,3 +71,41 @@ Mod3 <- lm(list_price ~ hard_paper + num_pages, data = amazon_books)
 model_eval(Mod3, hard_paper = c("P", "H"),  num_pages=c(200, 400))
 ```
 
+## Prediction interval
+
+::: {.callout-warning}
+## Demonstration: Simple-minded data analysis shows why
+
+We constructed our model of running time using the "linear least-squares" modeling methodology implemented by the `lm()` model-training function. For the purpose of demonstration, we'll show you a simple-minded method to make a prediction. This simple-minded method would give results more or less equivalent to the least squares method if we had an almost infinite amount of data. Since we don't, the simple-minded method is not as reliable as the least-squares method.
+
+Remember our goal: to predict the running time for a 10km race with a 500m climb. All that we have to inform the prediction is the historical data contained in the `Hill_racing` data frame. The simple-minded method is ... well ... simple to understand. We will pull out from the `Hill_racing` data frame those rows where the race distance is close to 10km and the race climb is close to 500m. For example:
+
+```{r}
+close_rows <- Hill_racing %>%
+  filter(9 <= distance, distance <= 11,
+         450 <= climb, climb <= 550)
+## the prediction
+close_rows %>% summarize(sample_size=n(), pred = mean(time))
+```
+You might not agree with our definition of "close to 10km" as "between 9 and 11", and similarly for `climb`.
+
+To get the confidence interval on this simple-minded prediction, we point out that the value of the mean time is the same as the coefficient from the model `time ~ 1`. Let's fit that model formula to the `close_rows` and look at the coefficient and confidence interval. 
+
+```{r}
+simple_mod <- lm(time ~ 1, data = close_rows)
+simple_mod %>% coefficients()
+simple_mod %>% confint()
+```
+
+To interpret this confidence interval, we can plot the actual running times and compare them to the interval, as in @fig-running-prediction-conf
+
+```{r}
+#| label: fig-running-prediction-conf
+#| fig-cap: "The rows from `Hill_racing` with a distance close to 10km and climb close to 500m. The confidence interval on the mean time (shown in red) is narrow compared to the prediction interval (blue) calculated from the whole data frame and the model `time ~ distance + climb`."
+ggplot(close_rows, aes(y=time, x=1)) +
+  geom_jitter(width=0.2) + xlim(0,2) +
+  geom_violin(fill="blue", alpha=0.2, color=NA) +
+  geom_errorbar(aes(ymin=3364, ymax=3683), color="red") +
+  geom_errorbar(aes(ymin=1665, ymax=5082, x=1.5), color="blue")
+```
+:::

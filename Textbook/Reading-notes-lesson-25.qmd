@@ -15,118 +15,79 @@ output:
 source("../_startup.R")
 ```
 
-Less mundane: A patient comes to an urgent-care clinic with symptoms. The health-care professional tries to diagnose what disease or illness the patient has. A diagnosis is prediction that informs the choices of additional tests and, in turn, possible treatments. The inputs to the prediction are the symptoms---neck stiffness, a tremor, and so on---as well as facts about the person---age, sex, occupation, etc. The output of the prediction will assign a probability to each medical condition that could cause the symptoms. As new tests or measurements are done---temperature, blood pressure, white-blood-cell count, blood oxygenation, and others---they become new inputs for the prediction and the probabilities change accordingly. The television drama *House* provides an example of evolving predictions in every episode. The process of constructing such predictions is called "differential diagnosis." 
+An effect size describes the relationship between two variables in an input/output format. Lesson 24 introduced effect size in the context of causal connections as if turning a knob to change the input will produce a change in the output. Such mechanistic connections make for a nice mental image for those considering intervening in the world but can be misleading. 
 
-The word "prediction" suggests the future, but many predictions have to do with the current or past state that is as yet unknown to greater or lesser extent. Synonyms for "prediction" include "classification" (Lessons 34 and 35), "conjecture", "guess", "bet", .... The phrase "informed guess" points to the idea: using information to support decision making.
+First, the mere calculation of an effect size does not establish a causal connection. The statistical thinker has more work to do to justify a causal claim, as we will see in Lesson 30. 
 
-----------
+Second, owing to noise, the input/output relationship quantified by an effect size may not be evident in a single intervention, say, increasing a drug dose for any given individual patient. Instead, effect sizes are descriptions of *average* effects---trends---across a large group of individuals. 
 
+This Lesson is about *prediction*: what a model can properly say about the outcome of an individual case. Often, the setting is that we know values for some aspects of the individual but have yet to learn some other aspect of interest. 
 
+The word "prediction" suggests the future but also applies to saying what we can about an unknown current or past state. Synonyms for "prediction" include "classification" (Lessons 34 and 35), "conjecture," "guess," and "bet." The phrase "informed guess" is a good description of prediction: using available information to support decision-making about the unknown.
 
-We make a prediction when we have known values for some aspects of the system, but do not yet know the values of other aspects of the system but wish to infer what they might be by a calculation on the known values. An example: We wish to predict whether a patient will develop cancer or not. The patient is not known to have cancer at present, but we do know other relevant aspects of the patient: family history (e.g. which relatives developed cancer already), genetic markers (such as the BRCA marker of risk for breast cancer), exposure to environmental or workplace carcinogens, habits such as smoking, etc. 
+::: {.callout-note}
+## Example: Differential diagnosis
 
-The prediction itself is the output of a kind of special-purpose machine. The inputs given to the machine are values for what we already know, the output is a value (or interval) for the as-yet-unknown aspects of the system. In the cancer prediction example, the output would take the form of a probability or probability rate: the probability of developing cancer in the upcoming 10-year period or the odds of developing cancer stated as a rate of odds per time unit. (For the present, just treat "odds" as a synonym for probability. In Lesson 33 we'll get more specific about how odds differ from probability and why they are used to quantify rates of probability.)
+A patient comes to an urgent-care clinic with symptoms. The healthcare professional tries to diagnose what disease or illness the patient has. A diagnosis is a prediction. The inputs to the prediction are the symptoms---neck stiffness, a tremor, and so on---as well as facts about the person, such as age, sex, occupation, and family history. The prediction output is a set of probabilities, one for each medical condition that could cause the symptoms. 
 
-There are always two phases involved in making a prediction. The first is building the prediction machine. This is often done once in preparation for making a batch of predictions. The second phase is providing the machine with inputs for the individual case, turning the machine crank, and receiving the prediction as output.
-
-These two phases require different sorts of data. Building the machine requires a "historical" data set that includes records for many instances where we already know both the inputs that will be used as well as the observed output. The word "historical" emphasizes that the machine-building data must already have known values for each of the inputs and outputs of interest.
-
-The evaluation phase---turning the crank of the machine---is simple: take values for the inputs for the case you want to predict, put them into the machine, and receive a predicted value as output. Those input values may come from pure speculation, or they might be the measured values from a case of interest.
-
-This is practically the same as statistical modeling: the machine is the model function and has a specific format, e.g. a linear equation or some other function. Training data are used to adjust parameters of the function to find ones that do a good job matching the data. In the linear models `lm()` is the model trainer and the best parameters found become the coefficients of the model. 
-
-It's a mistake, however, to think that the model function is everything. Appropriate use of prediction requires additional information that stems from the training data but is not part of the formula. Let's look at this a little more closely using computer commands and the house `price ~ fireplaces + livingArea` model. You are not expected to master the commands introduced in the following demonstration.
-
-::: {.callout-warning}
-With the `SaratogaHouses` data frame, we started by eliminating the handful of houses (mansions or historical structures?) that have multiple fireplaces, to create a new data frame which we called `Simplified`.
-
-```{r}
-Simplified <- SaratogaHouses %>% filter(fireplaces <= 1)
-```
-
-From your work with data wrangling in the first half of the course, you know that wrangling functions like `filter()` return a data frame as output. The next R command---not one you need to know---interrogates the object `Simplified` to find out what "type" of thing it is. This is much the same as someone holding up some object from your kitchen and asking you what kind of thing it is. The thing might be a toaster or a glass or a pan. 
-
-```{r}
-class(Simplified)
-```
-
-Another class of R object you have used is `price ~ fireplaces + livingArea`. We have been calling this a "tilde expression" in honor of the tilde character that makes such things special. The R name for this is:
-
-```{r}
-class(price~fireplaces + livingArea)
-```
-The official name for "tilde expression" is "formula." This is fine for people whose business is R programming, but for people who use mathematics in other ways a "formula" can be something different, e.g. 
-
-$\$5000 \times \mathtt{fireplaces} + \$110 \times \mathtt{livingArea}$. 
-
-Another kind of R object that you make a lot of use of is called a "function."
-
-```{r}
-class(lm)
-class(filter)
-class(model_eval)
-```
-
-Knowing that something has class `"function"` tells you that you can put a pair of parentheses after it and some arguments in the parentheses, and R will know what to do (so long as your arguments are suited to the function.) For instance, we're often building models by evaluating the `lm()` function with two arguments: a tilde expression (officially, `"formula"`) and a data frame:
-
-```{r}
-thing <- lm(price ~ fireplaces + livingArea, data = Simplified)
-```
-
-The word `thing` is a terrible name for an R object; the name doesn't serve to remind the human reader what the purpose of the `thing` is. As for R, it can sort out what type of thing any object is just by asking:
-
-```{r}
-class(thing)
-```
-
-This `"lm"`-class object can be used in certain ways and not others. For example, we can't treat it as a function by providing arguments in paretheses:
-
-```{r error=TRUE}
-thing(fireplaces = 1, livingArea = 2000)
-```
-
-One of the operations you can apply to an object of class `"lm"` is `makeFun()`, which will create a function:
-
-```{r}
-f <- makeFun(thing)
-class(f)
-```
-
-This particular function, named `f`, can have arguments applied to it:
-
-```{r}
-f(fireplaces=1, livingArea=2000)
-```
-
-Even if you can't evaluate a `"lm"` object using parentheses, there are other things you can do with it by applying a suitable function. For instance:
-
-```{r}
-coefficients(thing)
-confint(thing)
-rsquared(thing)
-residuals(thing) %>% head()
-```
-
-But you can't do all these same things to the *function* extracted from `thing` using `makeFun()`:
-
-```{r error=TRUE}
-confint(f)
-rsquared(f)
-residuals(f) 
-```
+Doctors learn to perform a *differential diagnosis*, where the current set of probabilities informs the choices of additional tests and treatments. The probabilities are updated based on the information gained from the tests and treatments. This update may suggest new tests or treatments, the results of which may drive a new update. The television drama *House* provides an example of the evolving predictions of differential diagnosis in every episode.
 :::
 
-The function `model_eval()` is set up to take a `"lm"` object and evaluate it on inputs. First build the model, then you can evaluate it as many times as you want:
+Differential diagnosis is a cycle of prediction and action. This Lesson, however, is about the mechanics of prediction: taking what we know about an individual and producing an informed guess about what we do not yet know.
+
+## The prediction machine
+
+A statistical prediction is the output of a kind of special-purpose machine. The inputs given to the machine are values for what we already know; the output is a value (or interval) for the as-yet-unknown aspects of the system. 
+
+There are always two phases involved in making a prediction. The first is building the prediction machine. The second phase is providing the machine with inputs for the individual case, turning the machine crank, and receiving the prediction as output.
+
+These two phases require different sorts of data. Building the machine requires a "historical" data set that includes records from many instances where we already know two things: the values of the inputs and the observed output. The word "historical" emphasizes that the machine-building data must already have known values for each of the inputs and outputs of interest.
+
+The evaluation phase---turning the crank of the machine---is simple. Take the input values for the individual to be predicted, put those inputs into the machine, and receive a predicted value as output. Those input values may come from pure speculation or the measured values from a specific case of interest.
+
+## Building and using the machine
+
+To illustrate building a prediction machine, we turn to a problem first considered quantitatively in the 1880s: the relationship between parents' heights and their children's heights at adulthood. The `Galton` data frame records the heights of about 900 children, along with their parents' heights.  Suppose we want to predict a child's adult height (variable name: `height`) from his or her parents' heights (`mother` and `father`). An appropriate model formula is `height ~ mother + father`. We use the model-training function`lm()` to transform the model formula and the data into a model.
 
 ```{r}
-house_mod1 <- lm(price ~ fireplaces, data = Simplified)
-model_eval(house_mod1, fireplaces=1, livingArea=2000)
-house_mod2 <- lm(price ~ fireplaces + livingArea, data = Simplified)
-model_eval(house_mod2, fireplaces=1, livingArea=2000) 
+Mod1 <- lm(height ~ mother + father, data = Galton)
 ```
-The output of `model_eval()` is a data frame containing one column for each of the inputs to the model. After those columns, comes the point output from the model, sensibly labeled `.output`.  `model_eval()` uses the model coefficients to transform the inputs into the `.output`. But it goes further. The model object itself---`house_mod1` or `house_mod2` here---contains additional information about the results from training the model, for example the residuals from the trained model and the number of rows in the training data frame. `model_eval()` takes this information to produce an interval estimate for the prediction. The lower and upper ends of that interval are reported in the columns `.lwr` and `.upr`, respectively. This interval is called, naturally, a "**prediction interval**."
+As the output of an R function, `Mod1` is a computer object. It incorporates a variety of information organized in a somewhat complex way. There are several often-used ways to extract this information in ways that serve specific purposes.
 
-Statistical thinkers know that a prediction should always contain information about how uncertain the prediction is. That indication of uncertainty is provided by the prediction interval. To see why this is useful, look at the prediction interval for the rather silly model `price ~ fireplaces`; it spans a huge range from $60K to $410K. On the other hand, the model `price ~ fireplaces + livingArea` is covers a smaller range: $107K to $374K.
+One of the most common ways to see what is in a computer object like `Mod1` is by printing:
 
-In Lesson 26 we'll look at the components that make up the prediction interval and some of the ways to use it.
+```{r}
+print(Mod1)
+``` 
+Newcomers to technical computing tend to confuse the printed form of an object with the object itself. For example, the `Mod1` object contains many components, but the printed form displays only two: the model coefficients and the command used to construct the object. 
 
+We have already used some other functions to extract information from a model object. For instance,
+
+```{r}
+Mod1 %>% coefficients()
+Mod1 %>% confint()
+Mod1 %>% regression_summary()
+```
+
+Another extractor, `model_eval()`, is particularly convenient for prediction. Perhaps the most common use is to provide new input values to the model function, with `model_eval()` producing a data frame showing the output of the model function. To illustrate, here is how to calculate the predicted height of the child of a 63-inch-tall mother and a 68-inch father.
+
+```{r}
+Mod1 %>% model_eval(mother = 63, father=68)
+```
+The data frame includes the input values along with a point value for the prediction (`.output`) and a prediction interval (`.lwr` to `.upr`).
+
+Naturally, the predictions depend on the explanatory variables used in the model. For example, here is a model that uses only `sex` to predict the child's height:
+
+```{r}
+Mod2 <- lm(height ~ sex, data = Galton)
+Mod2 %>% model_eval(sex=c("F", "M"))
+```
+
+This model includes three explanatory variables:
+
+```{r}
+Mod3 <- lm(height ~ mother + father + sex, data = Galton)
+Mod3 %>% model_eval(mother=63, father=68, sex=c("F", "M"))
+```
+
+In Lesson 26, we will look at the components that make up the prediction interval and some ways to use it.
