@@ -4,7 +4,7 @@ project:
 book:
   title: "Lessons in Statistical Thinking"
   author: "Daniel Kaplan"
-  date: "11/16/2022"
+  date: "12/01/2022"
   chapters:
     - index.qmd
     - Reading-notes-lesson-19.qmd
@@ -33,10 +33,12 @@ book:
 
 bibliography: references.bib
 
+
+
 format:
   html:
-    theme: cosmo
-    number-offset: 18
+    number-offset: [18, 5]
+    theme: flatly
   pdf:
     documentclass: scrreprt
 

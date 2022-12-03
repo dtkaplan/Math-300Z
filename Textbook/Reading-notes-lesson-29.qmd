@@ -15,39 +15,265 @@ lesson <- 29
 source("../_startup.R")
 ```
 
+In Lesson 28, we introduced covariates as a way to set in the correct context the relationship between an explanatory variable and the response variable. In Lesson 30 we will return to this context-setting role to show that which covariates to include in a model depends on the modeler's opinion about the relevant structure of a DAG. Here, we will treat covariates as commodity items to show an important but surprising property of models. This property is a boon to the modeler, enabling good decisions to be made about whether to include any given covariate. But it is also a pitfall lieing in wait for the wishful thinker.
+
+## How much variation is explained
+
+We start by returning to the definition of statistical thinking introduced at the start of these Lessons:
+
+> *Statistic thinking is the explanation or description of variation* in the context of *what remains unexplained or undescribed.*
+
+In this Lesson, we are going to work with a very simple measure of "what remains unexplained or undescribed." The fitted model values represent the explained part of the variation. The residuals are what is left over; the difference between the actual values of the response variable and the fitted model values. 
+
+As a reminder, we will construct a simple model of the list price of books as a function of the number of pages and whether the book is a paperback or hardcover.^[If you seek to duplicate the results presented in this chapter, please note that we have deleted six rows from `amazon_books`: 62, 103, 205, 211, 242, and 303. These rows are either duplicates or have one of the variables missing.]
+
+
+```{r echo=FALSE}
+# Get rid of missing cases
+amazon_books <- moderndive::amazon_books[-c(62, 103, 205, 211, 245, 306),]
+```
+
+```{r}
+Price_model <- lm(list_price ~ num_pages + hard_paper, 
+                  data = amazon_books)
+```
+
+The `model_eval()` function can extract the fitted model values and the residuals from the model. We show just a few rows here, but we will use the entire report from `model_eval()`. Remember that when `model_eval()` is not given input values, it uses the model *training* data as input.
+
+```{r}
+Results <- model_eval(Price_model)
+```
+
+```{r echo=FALSE}
+Results %>% head() %>% 
+  mutate(.output = round(.output, 2),
+         .resid = round(.resid, 2),
+         .lwr = round(.lwr, 2), 
+         .upr = round(.upr, 2)) %>%
+  knitr::kable()
+```
+
+The first book in the training data is a 304-page paperback and has a list price of $12.95. The fitted model value for that book is $16.60. (Ordinarily, we refer to the output of the model function simply as the "output" or the "model output." However, when the model function is applied to a row from the *training* data, the output is also called the *fitted model value*.)
+
+At $16.60, the fitted model value is $3.65 *higher* than the list price. This difference is the residual for that book, the sign reflecting the definition 
+$$\text{residual} \equiv \text{response value} - \text{fitted model value}\ .$$
+When the residual is small in magnitude, the fitted model value is close to the response value. Conversely, a large residual means that the model was way off target for that book. 
+
+The standard measure of the typical size of a residual is the standard deviation or, equivalently, the variance. 
+
+```{r}
+Results %>% summarize(se_resids = sd(.resid), v_resids=var(.resid))
+```
+As always, the standard deviation is easier to read because it has sensible units, in this case, dollars. The variance has strange units (square dollars) because it is the square of the standard deviation. We will use the variance for measuring the typical size of a residual for the reasons described in Lesson 20; variances add nicely in a manner analogous to the Pythagorean Theorem.
+
+Similarly, the total amount of variation in the list price is simply the variance of the list price:
+
+```{r}
+Results %>% summarize(v_response = var(list_price))
+```
+A simple measure of how much of the variation in list price remains unexplained is the ratio of these variances $190.96/206.51 = 92.5\%$.
+More than 90% of the variation remains unexplained by the `Price_model`. That might suggest the model does not have much to tell us. This is also indicated by the uselessly wide prediction intervals. 
+Perhaps in the spirit of putting a positive spin on things, statisticians typically work with the complement of the unexplained fraction. Since the unexplained fraction is 92.5%, the complement is 7.5%. This number is written R^2^, pronounced "R-squared." (It also has a formal name: the "coefficient of determination." In Lesson 30, we will meet the inventor of the coefficient of determination, Sewall Wright, who is an early hero of causal reasoning.)
+
+R^2^ is such a widely used summary of the ability of explanatory variables to account for the response variable, that there is a special extractor that calculates it. 
+
+```{r}
+Price_model %>% R2()
+```
+
+Many modelers act as if their goal is to build a model that makes R^2^ as big as possible. This is understandable, since large R^2^ means that the explanatory variables account for a lot of the variance in the response variables. But it is a naive goal; the focus should always be on the suitability of the model for the purpose at hand. Often, shooting for a large R^2^ imposes costs that can undermine the purpose for modeling. In any event, any fool can create a model with the largest possible R^2^ but which tells nothing about the response variable.
+
+## Getting to 1
+
+R^2^ can range from zero to one. Zero means that the model accounts for *none* of the variation in the response variable. We can construct such a model easily enough: `list_price ~ 1` has no explanatory variables and therefore no ability to distinguish one book from another.
+
+```{r}
+Null_model <- lm(list_price ~ 1, data = amazon_books)
+Null_model %>% R2()
+```
+
+We are using the word "null" to name this model. This is part of statistics tradition. The dictionary definition of "null" is "having or associated with the value zero" or "lacking distinctive qualities; having no positive substance or content."^[Source: [Oxford Languages](https://languages.oup.com/dictionaries/)]
+
+In the null model, the fitted model values are all the same; all the variation is in the residuals. 
+
+```{r results="hide"}
+Null_model %>% model_eval()
+```
+ 
+```{r echo=FALSE}
+Null_model %>% model_eval() %>% head() %>%
+  mutate(.output = round(.output, 2),
+         .resid = round(.resid, 2),
+         .lwr = round(.lwr, 2), 
+         .upr = round(.upr, 2)) %>%
+  knitr::kable()
+```
+
+At the other extreme, where R^2^ = 1, the explanatory variables are account for every bit of variation in the response variable. We can try various combinations of explanatory variables to see if we can accomplish this. For example, `publisher` explains 67% of the variation in list price.
+
+```{r}
+lm(list_price ~ publisher, data = amazon_books) %>% R2()
+```
+
+Perhaps the book's author is the key explanatory factor?
+
+```{r}
+lm(list_price ~ author, data = amazon_books) %>% R2()
+```
+
+Incredible! How about if we use *both* `publisher` and `author` as explanatory variables? We get very close to R^2^ = 1.
+
+```{r}
+lm(list_price ~ publisher + author, data = amazon_books) %>%
+  R2()
+```
+
+The modeler discovering this amazing explanatory power of `publisher` and `author` can be forgiven for thinking he or she has found a real explanation. Unfortunately, the high R^2^ is largely an illusion.
+
+To see why, consider another possible explanatory variable, the International Standard Book Number (ISBN). The ISBN is a ten- or thirteen-digit number that marks each book with a unique number.
+
+```{r}
+#| label: fig-isbn-sm2
+#| fig-cap: "The ISBN number from one of the Project MOSAIC textbooks."
+#| column: margin
+knitr::include_graphics("www/SM2-ISBN.png")
+```
+
+There is a system behind the number, but effectively they are an arbitrary sequence of digits. In `amazon_books`, the `isbn_10` variable records each book's ISBN as a categorical level.
+
+```{r}
+ISBN_model <- lm(list_price ~ isbn_10, data = amazon_books)
+ISBN_model %>% R2()
+```
+
+The `isbn_10` explains all the variation in list price!
+
+Given that the ISBN is, as we have said, an arbitrary sequence of digits, why does it do such a good job accounting for the list price? The answer lies not in the content of the ISBN but in each book having a unique ISBN. This ISBN identifies each book uniquely. Each book has a single price. So the ISBN identifies the price of each book. Cleverness is not involved; the list price could be anything at all and the ISBN would still identify it exactly. The model is storing the whole set of ISBNs and the corresponding set of list prices.
+
+We can substantiate the claim just made---that the list price could be anything at all---by synthesizing a data frame where the list prices are set at random:
+
+```{r}
+amazon_books %>% 
+  mutate(random_list_price = rnorm(nrow(.))) %>%
+  lm(random_list_price ~ isbn_10, data = .) %>%
+  R2()
+```
+
+A similar randomization can be accomplished by *shuffling* the `isbn_10` variable so that each ISBN no longer points to its authentic book. Shuffling destroys the link between the ISBN and the list price. Even so, the R^2^ remains high.
+
+```{r}
+lm(list_price ~ shuffle(isbn_10), data=amazon_books) %>% R2()
+lm(shuffle(list_price) ~ isbn_10, data=amazon_books) %>% R2()
+```
+
+Statistical nomenclature is a bit obscure here, so we will call this incidental alignment, with no genuine explanatory power, the "**ISBN-effect**." 
+
+Statistical thinkers know to be aware of situations where there are many levels to categorical variables and check whether the ISBN-effect is in play.
+
+## The ISBN-effect as a benchmark
+
+Shuffling an explanatory variable (while keeping the response variable in the original order) voids any possible explanatory connection between the two. An R^2^=0, as we get from any model of the form `y ~ 1`, signals that the `1` cannot account for any variation. However, this does not mean that shuffling will lead to R^2^ = 0. Instead, there is a systematic relationship between the number of model coefficients associated with the shuffled variable, the sample size $n$, and R^2^.
+
+We can demonstrate this relationship by conducting many trials with shuffling of the `list_price` modeled by i) `publisher`; ii) `author`; and iii) `isbn_10`.
+
 ::: {.callout-warning}
+## Demonstration: Counting coefficients
 
-- Covariates reduce residuals in-sample.
+The `amazon_books` data frame has $n=319$ rows.^[The data frame in the `moderndive` package has six additional rows, which we have deleted as duplicates or because of missing data.] In the next computing chunk, we fit the model `list_price ~ publisher` and collect the coefficients for counting: `r set.seed(101)`
 
-- Out of sample, they may or may not reduce residuals, depending on whether the covariate is informative.
+```{r}
+Publisher_model <- lm(list_price ~ shuffle(publisher),
+                      data=amazon_books)
+Coefficients <- Publisher_model %>% coefficients() %>% data.frame()
+nrow(Coefficients)
+```
 
-- Covariates can lead to better predictions since prediction intervals are substantially shaped by the size of the residuals
+There are 159 coefficients in the model, but the first one of them is the "Intercept". 
 
-- They can lead to better or worse estimates of effect size (colinearity)
+```{r results="hide"}
+Coefficients %>% head()
+```
+
+```{r echo=FALSE}
+#| label: tbl-shuffle-publisher
+#| tbl-cap: "Confidence intervals on the first six of 161 coefficients in `list_price ~ publisher`" 
+#| column: margin
+tmp <- Coefficients %>% head()
+colnames(tmp) <- c("value")
+tmp %>% head() %>%
+  mutate(value = round(value, 2)) %>%
+  knitr::kable()
+```
+
+Altogether, there are $k=158$ coefficients relating to `shuffle(publisher)`.
 :::
 
+The rule relating R^2^ to the number of coefficients associated is very simple (for the case where the explanatory variable has been shuffled): R^2^ will be random with mean value $k/(n-1)$. For the `shuffle(publisher)` model, the mean across many trials will be R^2^ = 158/324 = 0.49. 
 
+`r set.seed(101)`
 
----------
+```{r}
+Pub_trials <- do(100) * {
+  lm(list_price ~ shuffle(publisher), data=amazon_books) %>%
+    R2()
+}
+```
 
+```{r echo=FALSE}
+#| label: fig-pub-trials
+#| fig-cap: "100 trials of R^2^ from `list_price ~ shuffled(publisher)`. The theoretical value $k/n=160/324=0.49$ is marked in red."
+#| column: margin
+ggplot(aes(x=k, y=Rsquared), data=Pub_trials) +
+  geom_jitter(width=15, alpha=.3) +
+  geom_errorbar(aes(ymin=0.49, ymax=0.49, x=160), color="red",
+                width=40) +
+  ylab(expression(R^{2})) + 
+  scale_x_continuous(limits=c(0,319),
+                     breaks=c(0,50, 100,158,200, 256, 300, 319))
+```
 
-In model building, we create a function to link a response variable to one or more explanatory variables. Let's imagine that the response variable is named `y` and the explanatory variable named `x`, `a`, `b`, and so on. By *training* a model on data, we create a function, let's call it $f(x, a, b)$. This function that results from training can be used in two two distinct decision-making settings: 
+:::
 
-i. Prediction mode: Having measured values for the explanatory variables `x`, `a`, `b` and so on, figure out what's a likely value for the as-yet-unmeasured response variable. To illustrate, suppose we know the length `x` of a road trip, the speed driven `a`, and the horsepower of the car's engine. To plan for the trip, we want to predict how much fuel `y` will be used.
+We can carry out a similar set of trials for the models `list_price ~ shuffle(author)` and `list_price ~ shuffle(isbn_10)`, which have $k=251$ and $k=319$ respectively. 
 
-ii. Intervention mode: We propose to intervene in the world to change the value of `x` by an amount `dx`. For instance, suppose `x` is the dose of a drug taken by a patient and `y` is the patient's blood pressure. If we increase the dose by `dx`, what will be the corresponding change in the blood pressure `dy`. The ratio `dy/dx` is called the **effect size**.
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-amazon-book-shuffle
+#| fig-cap: "R^2^ from many trials of three models, `list_price ~ shuffle(publisher)` and `~ shuffle(author)` and `~shuffle(isbn_10)`." 
+Author_trials <- do(100) * {
+  lm(list_price ~ shuffle(author), data=amazon_books) %>%
+    R2()
+}
+ISBN_trials <- do(100) * {
+  lm(list_price ~ shuffle(isbn_10), data=amazon_books) %>%
+    R2()
+}
+All_trials <- bind_rows(Pub_trials, Author_trials, ISBN_trials)
+ggplot(aes(x=k, y=Rsquared), data=All_trials) +
+  geom_jitter(width=15, alpha=.3) +
+  geom_errorbar(aes(ymin=0.49, ymax=0.49, x=158), color="red",
+                width=30) +
+  geom_errorbar(aes(ymin=0.79, ymax=0.79, x=251), color="red",
+                width=30) +
+  geom_errorbar(aes(ymin=1, ymax=1, x=319), color="red",
+                width=30) +
+  geom_abline(aes(intercept=0, slope=1/319), color="blue") +
+  geom_point(aes(x=0, y=0), alpha=0.3) + 
+  ylim(c(0,1)) +
+  labs(subtitle="with shuffling") +
+  ylab(expression(R^{2})) + 
+  scale_x_continuous(breaks=c(0,50, 100,158,200, 251,  318))
+```
 
-In intervention mode, as we saw in Lesson 28, it's important that the model formula reflect accurate the *causal connections* among the variables. The simple model `y ~ x`, without covariates, can sometimes give a misleading view of the effect of `x` on `y`. Including a covariate in the model might improve or worsen the estimate of effect size, depending on the causal connections in the real-world mechanism of the system. 
+The blue diagonal line in @fig-amazon-book-shuffle shows the theoretical average R^2^ as a function of the number of model coefficients when the explanatory variable is randomized. R^2^ will always be 1 when $k=n$, that is, when the number of coefficients is the same as the sample size.
 
-In prediction mode, capturing the real-world causal connections in the model formula is not essential. For example, even if `y` is the cause of `x`, the model formula `y ~ x` might do a good job of predicting `y` from a measured value of `x`.
+@fig-amazon-book-shuffle suggests a way to distinguish between R^2^ resulting from the ISBN-effect and R^2^ that shows some genuine explanatory power: Check if R^2^ is substantially above the blue diagnonal line, that is if R^2^$\gg k/n$ where $k$ is the number of modelel coefficients.
 
-In this Lesson, we'll examine the use of covariates in constructing prediction models.
+::: {.callout-note}
+## The F statistic
 
-## Prediction error
+A clever modification to using R^2^ as a check of the ISBN-effect combines $n$, $k$, and $R^2$ to produce YOU WERE HERE.
 
-The output of a prediction model is typically somewhat different from what happens in the real world. The difference between the real-world value of the response variable and the output of the prediction model is called the *prediction error*. As we saw in Lesson 26, in stating the output of a prediction model, it is helpful to also be able to state a typical size for the prediction error, usually in the form of a prediction interval. 
-
-
+:::
 
 
 ### Alternative accountings

@@ -1,13 +1,5 @@
 ---
 title: "Constructing a prediction interval"
-output:
-  html_document:
-    theme: lumen
-    toc: yes
-    toc_float: yes
-    css: NTI.css
-  pdf_document:
-    toc: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -163,6 +155,7 @@ For convenience, the `model_plot()` function will do this work for us, plotting 
 #| fig-subcap:
 #|  - "prediction interval"
 #|  - "confidence interval"
+#| column: page-right
 model_plot(Age_mod, x=age, interval="prediction", data_alpha=0.05)
 model_plot(Age_mod, x=age, interval="confidence", data_alpha=0.05)
 ```

@@ -22,16 +22,16 @@ Dr. Mary Meyer is a statistics professor at Colorado State University. In 2006, 
 
 > *Upon complaining about this state of affairs, I was told by sales representatives in two stores that boys actually had wider feet than girls, so needed wider shoes. Being very skeptical, I thought I would test this claim.*
 
-We'll return to Dr. Meyer's project in a little bit. But now let's imagine how this situation might be addressed by someone who has not yet developed good statistical thinking skills. We'll call this imagined protagonist "Mr. Shoebuyer." Since the salesmen's claim was that girl's feet are narrower than boys, Mr. Shoebuyer heads out to measure the widths of girls' and boys' shoes.
+We will return to Dr. Meyer's project in a little bit. However, for now, imagine how this situation might be addressed by someone who still needs to develop good statistical thinking skills. We will call this imagined protagonist "Mr. Shoebuyer." Since the salesmen claimed that girls' feet are narrower than boys, Mr. Shoebuyer heads out to measure the widths of girls' and boys' shoes.
 
-A shoe store provides convenient place to measure the widths of lots of different shoe styles. Mr. Shoebuyer gets to the shoe store, heads to the children's section and starts measuring. For each shoe on display he records the shoe width and whether the shoe is for girls or boys. Here are his data: 
+A shoe store provides a convenient place to measure the widths of many different shoe styles. Mr. Shoebuyer gets to the shoe store, heads to the children's section, and starts measuring. For each shoe on display, he records the shoe width and whether the shoe is for girls or boys. Here are his data: 
 
 ```{r echo=FALSE}
 set.seed(102)
 Shoebuyer_data <- KidsFeet %>% select(sex, width) %>% 
    group_by(sex) %>%
-  sample_n(size=4) %>% 
-  arrange(desc(sex))
+   sample_n(size=4) %>% 
+   arrange(desc(sex))
 knitr::kable(Shoebuyer_data)
 ```
 
@@ -42,40 +42,40 @@ sex   | mean width
 Girls | 9.0 cm
 Boys  | 8.8 cm
 
-Mr. Shoebuyer happens to be your uncle. He knows that you are taking a statistics course and writes you with a request to recheck his arithmetic. Putting on your statistical thinking hat, you see immediately that what's missing is a confidence interval on the effect size of sex on shoe width.
+Mr. Shoebuyer happens to be your uncle. He knows you are taking a statistics course and asks you to check his arithmetic. Putting on a statistical thinking hat to the effect size of sex on shoe width, you note the absence of a confidence interval. This omission is easy to fix.
 
 ```{r}
 Shoebuyer_data %>% lm(width ~ sex, data=.) %>% confint()
 ```
 
-At the Thanksgiving break, you see your uncle. You say, "Sorry, Uncle, but you don't have nearly enough data to conclude that girls' feet are wider than boys'." Translating your confidence interval into plus-or-minus format, you point out that the difference between the sexes is $0.2 \pm 0.8$ cm. "You'll need enough data to get that 0.8 margin of error down to something like 0.2." You also point out that a shoe store might not be an appropriate place to collect data. "It's the feet, not the shoes, that you want to look at." 
+Your uncle is at the table at Thanksgiving break. "Sorry, Uncle, but you don't have nearly enough data to conclude that girls' feet are wider than boys'." Translating the confidence interval into plus-or-minus format, you point out that the difference between the sexes is $0.2 \pm 0.8$ cm. "You'll need enough data to get that 0.8 margin of error down to something like 0.2." You also point out that there might be a better place to collect data than a shoe store. "It's the feet, not the shoes, that you want to look at." 
 
-Dr. Meyer worked worked with the third- and fourth-grade teachers at her daughter's school to collect data to illuminate the matter. Being a statistical thinker, before carrying out the data collection, she thought about what data would illuminate the matter. Her data, a sample of size $n=39$, are recorded in the `KidsFeet` data frame.
+Aware of these pitfalls, Dr. Meyer worked with the third- and fourth-grade teachers at her daughter's school to collect data. Being a statistical thinker, she thought about what data would illuminate the matter before carrying out the data collection. Her data, a sample of size $n=39$, are recorded in the `KidsFeet` data frame.
 
 ```{r}
 lm(width ~ sex, data = KidsFeet) %>% confint()
 ```
 
-Translated to plus-or-minus format, this confidence interval is $-0.4 \pm 0.3$. Whatever the format, Dr. Meyer's data provides some evidence that girls' feet are narrower than boys'.
+In plus-or-minus format, this confidence interval is $-0.4 \pm 0.3$. Whatever the format, Dr. Meyer's data provides some evidence that girls' feet are narrower than boys'.
 
-As a statistical thinker, Dr. Meyer knows that even though the foot width is the original quantity of interest, other factors might be playing a role in the system. For example, boys' feet might trend longer or, perhaps, shorter than girls' feet. This should be taken into account. What we want is the effect size of `sex` on width, holding length constant. After all, when buying shoes you tell the salesperson your foot length (or "size") and they bring you shoes of that size to choose among.
+As a statistical thinker, Dr. Meyer knows that even though the foot width is the original quantity of interest, other factors might play a role in the system. For example, boys' feet might trend longer or shorter than girls' feet. This possibility should be taken into account by looking at the effect size of `sex` on width, holding length constant. After all,  a shoe buyer first tells the salesperson their foot length (or "size"); the salesperson then brings shoes of that size to try on.
 
 ```{r}
 lm(width ~ sex + length, data=KidsFeet) %>% confint()
 ```
 
-Although `sex` is the explanatory variable of primary interest to Dr. Meyer's question, she knows to include other explanatory variables that might be playing a role. Such explanatory variables, not of direct interest, are called "**covariates**." Dr. Meyer's expertise led her to think about possible covariates *before* collecting her data. That's why she went to the trouble of measuring foot length in addition to foot width.
+Although `sex` is the explanatory variable of primary interest to Dr. Meyer's question, she knows to include other explanatory variables that might play a role. Such explanatory variables, not of direct interest, are called "**covariates**." Dr. Meyer's statistical expertise led her to consider possible covariates *before* collecting her data and took the trouble of measuring both foot length and width.
 
-The confidence interval on the `sexG` coefficient includes zero when `length` is taken into account. Dr. Meyer's little study provides evidence that, even if girls' shoes tend narrower than boys', the feet inside them have about the same shape for both sexes.
+The confidence interval on the `sexG` coefficient includes zero when `length` is taken into account. Dr. Meyer's little study provides evidence that even if girls' shoes tend to be narrower than boys', the feet inside them have about the same shape for both sexes.
 
 
-## "All other things being equal"
+## All other things being equal
 
-The common phrase "all other things being equal" is an important qualifier in describing relationships.  To illustrate: A simple claim in economics is that a high price for a commodity reduces the demand. For example increasing the price of heating fuel will reduce demand as people turn down thermostats in order to save money.  But the claim can be considered obvious only with the qualifier *all other things being equal*.  For instance, the fuel price might have increased because winter weather has increased the demand for heating compared to summer.  Thus, higher prices may be associated with higher demand. Unless you hold other variables constant – e.g., weather conditions – increased price may not in fact be associated with lower demand. 
+The common phrase "all other things being equal" is a critical qualifier in describing relationships.  To illustrate: A simple claim in economics is that a high price for a commodity reduces the demand. For example, increasing the price of heating fuel will reduce demand as people turn down thermostats to save money.  Nevertheless, the claim can be considered obvious only with the qualifier *all other things being equal*.  For instance, the fuel price might have increased because winter weather has increased the demand for heating compared to summer.  Thus, higher prices may be associated with higher demand. Therefore, increased price may not be associated with lower demand unless holding other variables, such as weather conditions, constant. 
 
-In fields such as economics, the Latin equivalent of "all other things being equal" is sometimes used: "**ceteris paribus**". So, the economics claim would be, "higher prices are associated with lower demand, *ceteris paribus*." 
+In economics, the Latin equivalent of "all other things being equal" is sometimes used: "**ceteris paribus**". So, the economics claim would be, "higher prices are associated with lower demand, *ceteris paribus*." 
 
-Although the phrase "all other things being equal" has a logical simplicity, it's impractical to implement "all."  Instead of the blanket "all other things," it's helpful to be able to consider just "some other things" to be held constant, being explicit about what those things are. Other phrases along these lines are "taking into account ..." and "controlling for ...."  Such phrases apply  when you want to examine the relationship between two variables, but there are additional variables that may be coming into play.  The additional variables are called "**covariates**" or "**confounders**".
+Although the phrase "all other things being equal" has a logical simplicity, it is impractical to implement "all." So instead of the blanket "all other things," it is helpful to consider just "some other things" to be held constant, being explicit about what those things are. Other phrases along the same lines are "taking into account ..." and "controlling for ...."  Those additional variables that are to be considered are called "**covariates**.
 
 ::: {.callout-note}
 ## Example: Covariates and Death
@@ -88,38 +88,42 @@ This news report appeared in 2007:
 > Bayer said in a statement that the findings are unreliable because Trasylol tends to be used in more complex operations, and the researchers' statistical analysis did not fully account for the complexity of the surgery cases.
 >The study followed 3,876 patients who had heart bypass surgery at 62 medical centers in 16 nations.  Researchers compared patients who received aprotinin to patients who got other drugs or no antibleeding drugs.  Over five years, 20.8 percent of the aprotinin patients died, versus 12.7 percent of the patients who received no antibleeding drug. [This is a 64% increase in the death rate.]
 >When researchers adjusted for other factors, they found that patients who got Trasylol ran a 48 percent higher risk of dying in the five years afterward.
-> The other drugs, both cheaper generics, did not raise the risk of death significantly. 
+> The other drugs, both cheaper generics, did not raise the risk of death significantly. ["Significant" has a specialized meaning in statistical language. It is *not* a synonym for "important." See Lessons 36 through 38]{.aside} 
 > The study was not a randomized trial, meaning that it did not randomly assign patients to get aprotinin or not.  In their analysis, the researchers took into account how sick patients were before surgery, but they acknowledged that some factors they did not account for may have contributed to the extra deaths. - Carla K. Johnson, Associated Press, 7 Feb. 2007
 
-The report involves several variables.  Of primary interest is the relationship between (1) the risk of dying after surgery and (2) the drug used to prevent excessive bleeding during surgery.  Also potentially important are (3) the complexity of the surgical operation and (4) how sick the patients were before surgery.  Bayer disputes the published results of the relationship between (1) and (2) holding (4) constant, saying that it's also important to hold variable (3) constant.  
+The report involves several variables.  Of primary interest is the relationship between (1) the risk of dying after surgery and (2) the drug used to prevent excessive bleeding during surgery.  Also potentially important are (3) the complexity of the surgical operation and (4) how sick the patients were before surgery.  Bayer disputes the published results of the relationship between (1) and (2) holding (4) constant, saying that it is also essential to hold variable (3) constant.  
 
-With aprotinin, the total relationship involves a death rate of 20.8 percent of patients who got aprotinin, versus 12.7 percent for others. This implies an increase in the death rate by a factor of 1.64.  When the researchers looked at a partial relationship (holding constant the patient sickness before the operation), the death rate was seen to increase by less: a factor of 1.48.    In evaluating the drug, it's best to examine its effects holding other factors constant.  So, even though the data directly show a 64% increase in the death rate, 48% is a more meaningful number since it adjusts for covariates such as patient sickness.  The difference between the two estimates reflect that sicker patients tended to be given aprotinin.  As the last paragraph of the story indicates, however, the researchers did not take into account all covariates. Consequently, it's hard to know whether the 48% number is a reliable guide for decision making. 
+The total relationship involves a death rate of 20.8 percent of patients who got aprotinin versus 12.7 percent for the patients taking the generic drugs: an increase in the death rate by a factor of 1.64. However, when the researchers looked at a partial relationship (holding constant patient sickness before the operation), the effect size of aprotinin on mortality was less: a factor of 1.48. In other words, the model `death ~ aprotinin` shows a 64% increase in the death rate, but the model `death ~ aprotinin + sickness` shows a slightly smaller increase in death rate: 48%. The difference between the two estimates reflects doctors being more likely to give aprotinin to sicker patients. 
+
+The story's last paragraph states that the choice of patients receiving aprotinin versus the generic drugs was not made at random. Some readers may find this reassuring. Why in the world would anyone prescribe a drug at random? The point, however, is to select randomly who gets which drug *among the patients for whom the drugs would be appropriate*. The phrase "randomized trial" used in the paragraph means specifically an *experiment* in which one treatment or the other---aprotinin versus the generic drugs---is assigned at random. The virtues of experiment and the vital role of random assignment are detailed in Lesson 32.
 :::
 
-## "*Mutatis mutandis*"
+## Letting things change as they will
 
-Using covariates in models enable the relationship between a response and an explanatory variable to be described "all other things being equal." Another phrase used in news stories is "after adjusting for ...", since the *all* in "all other things" is more properly restricted just to those factors represented by the covariates actually used in a model. So, Dr. Meyer's foot width results might be stated in everyday language as, "After adjusting for foot width, she found no difference in the widths of girls' and boys' feet."
+Using covariates in models enables the relationship between a response and an explanatory variable to be described *ceteris paribus*, that is, "all other things being equal." Another phrase used in news stories is "after adjusting for ...." This is appropriate since the *all* in "all other things" is, in reality, refers only to those particular factors used as the covariates in the model. So, Dr. Meyer's foot width results might be stated in everyday language as, "After adjusting for foot width, she found no difference in the widths of girls' and boys' feet."
 
-Not to include covariates in a model amounts to "letting other things change as they will." In Latin this is "*mutatis mutandis*." In the foot-width example, the model `width ~ sex` looks at the differences in foot width for the two sexes. But sex is not the only thing "changed" when comparing foot width. Since `width ~ sex` ignores all other factors than sex, it is comparing boys and girls letting other things change as they will. In this case, comparing boys and girls involves not just the possible differences in foot width but the differences as well in other factors: foot length, body weight, etc.
+Not including covariates in a model amounts to "letting other things change as they will." In Latin, this is "*mutatis mutandis*." In the foot-width example, the model `width ~ sex` looks at the differences in foot width for the two sexes. However, sex is not the only thing associated with foot width. The model  `width ~ sex` ignores all other factors than sex; it compares boys and girls *mutatis mutandis*, that is, letting other things change as they will. In this case, comparing boys and girls involves not just the possible differences in foot width but also the differences in other factors such as foot length and body weight.
 
 ::: {.callout-note}
 ## Example: One change can bring another
 
-I was once involved in a budget committee that recommended employee health benefits for the college at which I work. At the time, college employees who belonged to the college's insurance plan received a generous subsidy for their health insurance costs. Employees who did not belong to the plan received no subsidy but were instead given a modest monthly cash payment.  After the stock-market crashed in year 2000, the college needed to cut budgets. As part of this, it was proposed to eliminate the cash payment to the employees who did not belong to the insurance plan. This proposal was supported by a claim that this would save money without reducing health benefits. I argued that this claim was based on an "all other things being equal" analysis: how expenditures would change assuming that the number of people belonging to the insurance plan remained constant. But in reality, the policy change would play out *mutatis matandis*; the loss of the cash payment would cause some employees, who currently received health benefits through their spouse's health plan, to switch to the college's health plan. That's what happened, contributing to an increase of health-care expenses. 
+I was once involved in a budget committee that recommended employee health benefits for the college where I worked. At the time, college employees who belonged to the college's insurance plan received a generous subsidy for their health insurance costs. Employees who did not belong to the plan received no subsidy but were given a modest monthly cash payment.  After the stock market crashed in 2000, the college needed to cut budgets. One proposal called for eliminating the cash payment to employees who did not belong to the insurance plan. Proponents of the plan claimed that this would save money without reducing health benefits. I argued that this claim was an "all other things being equal" analysis: how expenditures would change assuming the number of people belonging to the insurance plan remained constant. In reality, however, the policy change would play out *mutatis matandis*; the loss of the cash payment would cause some employees, who currently received health benefits through their spouse's health plan, to switch to the college's health plan. That is what happened, contributing to an overall increase in healthcare expenses. 
 :::
 
 ::: {.callout-note}
 ## Example: Spending and student performance
 
-To illustrate how covariates set context, consider an issue of interest to public policy-makers in many societies: How much money to spend on children's education? In the United States, for instance, educational budget policy is set mainly on a state-by-state level. State lawmakers are understandably concerned with the quality of the public education provided, but they also have other concerns and constraints and constituencies who give budget priority to other matters. 
+To illustrate how covariates set context, consider an issue of interest to public policy-makers in many societies: How much money to spend on children's education? State lawmakers in the US are understandably concerned with the quality of public education provided. However, they also have other concerns and constraints and constituencies who give budget priority to other matters. 
 
-In evaluating the various trade-offs they face, lawmakers would be helped by knowing how increased educational spending will shape educational outcomes. What can available data tell us? Unfortunately, there are various political constraints that work against states adopting and publishing data on a common measure of genuine educational outcome. Instead, we have high-school graduation rates, student grades, etc. These have some genuine meaning but also can reflect the way the system is gamed by administrators and teachers and which cannot be easily compared across states. At a national level, we have college admissions tests such as the ACT and SAT. Perhaps because these tests are administered by private organizations and not state governments, it's possible to gather data on test-score outcomes on a state-by-state basis and collate these with public spending information.
+In evaluating their various trade-offs, lawmakers could benefit by knowing how increased educational spending will shape educational outcomes. What can available data tell us? Unfortunately, there are various political constraints that work against states adopting and publishing data on a standard, genuine measure of educational outcome. Instead, we have high-school graduation rates, student grades, and other non-standardized data. These data might have some meaning but can also reflect system gaming by administrators and teachers, for which there is little systematic data. 
 
-@fig-sat-1 shows average SAT score in 2010 in each state versus expenditures per pupil in public elementary and secondary schools. Laid on top of the data is a flexible linear model (and its confidence band) of SAT score versus expenditure. The overall impression given by the model is that the relationship is negative, with lower expenditures corresponding to higher SAT scores. But the confidence bands are broad and it is possible to find a smooth path through the confidence band that has almost zero slope. Either way, the conventional wisdom that higher spending produces better school outcomes is not supported by this graph.
+Although imperfect, college admissions tests such as the ACT and SAT provide consistent data between states. For example, @fig-sat-1 shows the average SAT score in 2010 in each state versus expenditures per pupil in public elementary and secondary schools. Layered on top of the data is a flexible linear model (and its confidence band) of SAT score versus expenditure.
+
+The overall impression given by the model is that the relationship is negative, with lower expenditures corresponding to higher SAT scores. However, the confidence band is broad; it is possible to find a smooth path with almost zero slope through the confidence band. Either way, this graph does not support the conventional wisdom that higher spending produces better school outcomes.
 
 ```{r echo = FALSE}
 #| label: fig-sat-1
-#| fig-cap: "State by state data (from 2010) on average score on the SAT college admissions test and expenditures for public education."
+#| fig-cap: "State by state data (from 2010) on average SAT college admissions test scores and expenditures for public education."
 data(SAT_2010, package = "mdsr")
 mod_1 <- lm(total ~ ns(expenditure, 2), data = SAT_2010)
 mod_plot(mod_1, interval = "confidence") %>%
@@ -127,14 +131,13 @@ mod_plot(mod_1, interval = "confidence") %>%
   gf_labs(y = "Average SAT score", x = "Public school expenditures per pupil ($1000s)")
 ```
 
-There are other factors that play a role in shaping education outcomes: poverty levels, parental education, how the educational money is spent (higher pay for teachers or smaller class sizes? administrative bloat?), and so on. Modeling educational outcomes solely by expenditures ignores these other factors. 
+Of course, other factors play a role in shaping education outcomes: for instance, poverty levels, parental education, and how the educational money is spent (higher pay for teachers or smaller class sizes? administrative bloat?). 
 
-At first glance, it's tempting to ignore these additional factors. We may not have data on them. And insofar as our interest is in understanding the relationship between expenditures and education outcomes, we are not directly concerned with the additional factors. This lack of direct concern, however, doesn't imply that we should totally ignore them but that we should do what we can to "hold them constant".
+At first glance, it is tempting to ignore these additional factors. For instance, we may not have data on them. Moreover, as our interest is in understanding the relationship between expenditures and education outcomes, we are not directly concerned with the additional factors. However, the lack of direct concern does not imply that we should ignore the factors but that we should do what we can to "hold them constant".
 
-To illustrate, let's consider a factor on which we do have data: the fraction of eligible students (those in their last year of high school) who actually take the test. This varies widely from state to state. In a poor state where few students go to college the fraction can be very small (Alabama 8%, Arkansas 5%, Mississippi 4%, Louisiana 8%). In some states, the large majority of students take the SAT (Maine 93%, Massachusetts 89%, New York 89%). In states with low SAT participation rates, the students who do take the test are applying to schools with competitive admissions. Such strong students can be expected to be get high scores. In contrast, the scores in  states with high participation rates reflect both strong and weak students; they will be lower on average than in the low-participation states. 
+To illustrate, consider the fraction of eligible students (those in their last year of high school) who take the college admission test. This fraction varies widely from state to state. In a poor state where few students go to college, the fraction can be tiny (Alabama 8%, Arkansas 5%, Mississippi 4%, Louisiana 8%). In some other states, the large majority of students take the SAT (Maine 93%, Massachusetts 89%, New York 89%). In states with low SAT participation rates, the students who take the test tend to be those applying to schools with competitive admissions. Such strong students will get high scores. In contrast, the scores in states with high participation rates reflect both strong and weak students. Consequently, the scores will be lower on average than in the low-participation states. 
 
-
-Putting the relationship between expenditure and SAT scores in the context of the fraction taking the SAT can be done by using fraction as a co-variate, that is, building the model `SAT ~ expenditure + fraction` rather than just `SAT ~ expenditure`. @fig-sat-3) shows a model with fraction taken into account. 
+Putting the relationship between expenditure and SAT scores in the context of the fraction taking the SAT is accomplished with the model `SAT ~ expenditure + fraction` rather than just `SAT ~ expenditure`. @fig-sat-3 shows a model with `fraction` as a covariate.
 
 ```{r echo = FALSE}
 #| label: fig-sat-3
@@ -144,91 +147,9 @@ mod_plot(mod, interval = "confidence") %>%
   gf_labs(y = "Average SAT score", x = "Public school expenditures per pupil ($1000s)")
 ```
 
-Note that the effect size of spending on SAT scores is positive when the expenditure level is less than $10,000 per pupil. And notice that when the fraction taking the SAT is near 0, the average scores don't depend on expenditure. This suggests that among elite students, expenditure doesn't make a discernable difference: it's the students, not the schools that matter.
+Note that the effect size of spending on SAT scores is positive when the expenditure level is less than $10,000 per pupil. Notice as well that when the fraction taking the SAT is tiny, the average scores do not depend on expenditure. This flat relationship suggests that, among elite students, state expenditure does not make a discernable difference. Perhaps the college-bound students in such states have other educational resources to draw on.
 
-The relationship shown in @fig-sat-1 is genuine. So is the very different relationship seen in @fig-sat-3. How can the same data be consistent with two utterly different displays? The answer, perhaps unexpectedly, has to do with the connections among the explanatory variables. Whatever the relationship between each individual explanatory variable and the response variable, the *appearance* of that relationship will depend on how explanatory variables are connected to each other.
-
-### Practice with a DAG 
-
-To demonstrate that the apparent relationship between an explanatory variable and a response variable -- for instance, school expenditures and education outcomes -- depends on the connections of the explanatory variable with covariates, let's move away from the controversies of political issues and study some systems where everyone can agree exactly how the variables are connected. We'll look at data produced by simulations where we specify exactly what the connections are.
-
-A simulation implements a hypothesis: a statement about that might or might not be true about the real world. As a starting point for our simulation, let's imagine that education outcomes increase with school expenditures in a very simple way: each $1000 increase in school expenditures per pupil results in an average increase of 10 points in the SAT score: an effect size of 0.01 points per dollar. Thus, the imagined relationship is:
-
-$$\mbox{sat} = 1100 + 0.01 * \mbox{dollar expenditure}$$
-
-Let's also imagine that the fraction of students taking the SAT test also influences the average test score with an effect size of -4 sat points per percentage point. Adding this effect into the simulation leads to an imagined relationship of 
-
-$$\mbox{sat} = 1100 + 0.01 * \mbox{dollar expenditure} - 4 * \mbox{participation percentage} .$$
-
-And, of course, there are other factors, but we'll treat their effect as random with a typical size of $\pm$ 50 points.
-
-To complete the simulation, we'll need to set values for dollar expenditures and participation percentage. We'll let the dollar expenditures vary randomly from $7000 to $18,000 from one state to another and the participation percentage vary randomly from 1 to 100 percentage points.
-
-Notice that in this simulation, both participation percentage and expenditures affect education outcomes, but there is no connection at all between the two explanatory variables. That is, the graphical causal network is that shown in Figure \@ref(fig:school-sim-1).
-
-```{r}
-#| label: fig-school-sim-1
-#| fig-cap: "A graphical causal network relating expenditures, participation percentage, and education outcome, where there is no connection between expenditures and participation."
-dag_school1
-dag_draw(dag_school1)
-```
-
-We can generate simulated data and use the data to train models. @fig-school-data-1 shows the data and two different models.
-
-```{r}
-#| label: fig-school-data-1
-#| fig-cap: "Data and models of the relationship between expenditures and education outcomes from a simulation in which expenditures and participation rate are unconnected as in @fig-school-sim-1.\n- (a) The model `outcome ~ expenditure` \n- (b) The model with participation as a covariate: `outcome ~ expenditure + participation` \nBoth models (a) and (b) show the same effect size for outcome with respect to expenditure."
-Dat1 <- sample(dag_school1, size=500)
-mod1_1 <- lm(outcome ~ ns(expenditure,2), data = Dat1)
-mod1_2 <- lm(outcome ~ ns(expenditure,2) * participation, data = Dat1)
-mod_plot(mod1_1, interval="prediction") %>%
-  gf_point(outcome ~ expenditure, data = Dat1)
-mod_plot(mod1_2, interval="prediction") %>%
-  gf_point(outcome ~ expenditure, alpha=~participation, data = Dat1, inherit=FALSE)
-```
-
-
-
-The relationship between outcome and expenditure can be quantified by the effect size, which appears as the slope of the function. 
-You can see that when the explanatory variables are unconnected, as in @fig-school-sim-1, the functions have the same slope.
-
-Now consider a somewhat different simulation. Rather than expenditures and participation being unconnected (as in the causal diagram shown in @fig-school-sim-1), in this new situation we will posit a connection between the two explanatory variables. We'll image that there is some broad factor, labeled "culture" in @fig-school-sim-2, that influences both the amount of expenditure and the participation in the tests used to measure education outcome. For instance, "culture" might be the importance that the community places on education or the wealth of the community.
-
-```{r}
-#| label: fig-school-sim2
-#| fig-cap: "A DAG for school outcomes that links `participation` and `expenditure` as a function of `culture`."
-dag_school2
-dag_draw(dag_school2)
-```
-
-Again, using data from this simulation, we can train models:
-
-* (a) `outcome ~ expenditures`, which has no covariates.
-* (b) `outcome ~ expenditures + participation`, which includes participation as a covariate. 
-
-@fig-school-data-2 shows the data from the new simulation (which is the same in both subplots) and the form of the function trained on the data. Now model (a) shows a very different relationship between expenditures and outcome than model (b). 
-
-
-```{r school-data2, echo = FALSE, fig.cap = "(ref:school-data-2-cap)", fig.fullwidth = TRUE, fig.show = "hold", out.width = "50%"}
-#| label: fig-school-data2
-#| fig-cap: "Similar to @fig-school-data-1 but using the simulation in which the explanatory variables -- expenditure and participation -- are connected by a common cause. The two models show very different relationships between outcomes and expenditures. Model (b) matches the mechanism used in the simulation, while that mechanism is obscured in model (a). "
-Dat2 <- sample(dag_school2, size = 500) %>%
-  mutate(.participation = ifelse(participation < 33, 0, 
-         ifelse(participation < 67, 50, 100)))
-mod2_1 <- lm(outcome ~ expenditure, data = Dat2)
-mod2_2 <- lm(outcome ~ expenditure * participation, data = Dat2)
-mod_plot(mod2_1) %>%
-  gf_point(outcome ~ expenditure, data = Dat2)
-mod_plot(mod2_2) %>%
-  gf_point(outcome ~ expenditure | .participation, alpha=~participation, 
-           data = Dat2, 
-           inherit=FALSE)
-```
-
-Since we know the exact mechanism in the simulation---`outcome` increases with `expenditure`---we know that model (b) matches the workings of the simulation while model (a) does not.
-
-
-For the simulation where expenditure and participation share a common cause, failing to stratify on `participation` -- that is, looking at the points in @fig:-school-data-2 (a) but ignoring color -- gives an utterly different result than if the stratification includes `participation`.
+The relationship shown in @fig-sat-1 is genuine. However, so is the very different relationship seen in @fig-sat-3. How can the same data be consistent with two utterly different displays? The answer, perhaps unexpectedly, has to do with the connections among the explanatory variables. Whatever the relationship between an individual explanatory variable and the response variable, the *appearance* of that relationship will depend on which covariates the modeler chooses to include.
 :::
 
 

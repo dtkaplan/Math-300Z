@@ -24,8 +24,7 @@ model_eval <- function(mod, input=NULL, data=NULL, ..., type=c("response", "link
     response_in_data <- FALSE
   } else {
     if (is.null(data) || nrow(data) == 0) {
-      training_data <- extract_training_data(mod)
-      eval_data <- model.frame(mod)
+      eval_data <- training_data <- model.frame(mod)
       response_in_data <- TRUE
     } else {
       eval_data <- training_data <- data
