@@ -208,7 +208,7 @@ tmp %>% head() %>%
 Altogether, there are $k=158$ coefficients relating to `shuffle(publisher)`.
 :::
 
-The rule relating R^2^ to the number of coefficients associated is very simple (for the case where the explanatory variable has been shuffled): R^2^ will be random with mean value $k/(n-1)$. For the `shuffle(publisher)` model, the mean across many trials will be R^2^ = 158/324 = 0.49. 
+The rule relating R^2^ to the number of coefficients associated is very simple (for the case where the explanatory variable has been shuffled): R^2^ will be random with mean value $\frac{k}{n-1}$. For the `shuffle(publisher)` model, the mean across many trials will be R^2^ = 158/324 = 0.49. 
 
 `r set.seed(101)`
 
@@ -257,7 +257,7 @@ ggplot(aes(x=k, y=Rsquared), data=All_trials) +
   geom_errorbar(aes(ymin=1, ymax=1, x=319), color="red",
                 width=30) +
   geom_abline(aes(intercept=0, slope=1/319), color="blue") +
-  geom_point(aes(x=0, y=0), alpha=0.3) + 
+  geom_point(aes(x=0, y=0), alpha=0) + 
   ylim(c(0,1)) +
   labs(subtitle="with shuffling") +
   ylab(expression(R^{2})) + 
@@ -266,40 +266,80 @@ ggplot(aes(x=k, y=Rsquared), data=All_trials) +
 
 The blue diagonal line in @fig-amazon-book-shuffle shows the theoretical average R^2^ as a function of the number of model coefficients when the explanatory variable is randomized. R^2^ will always be 1 when $k=n$, that is, when the number of coefficients is the same as the sample size.
 
-@fig-amazon-book-shuffle suggests a way to distinguish between R^2^ resulting from the ISBN-effect and R^2^ that shows some genuine explanatory power: Check if R^2^ is substantially above the blue diagnonal line, that is if R^2^$\gg k/n$ where $k$ is the number of modelel coefficients.
+@fig-amazon-book-shuffle suggests a way to distinguish between R^2^ resulting from the ISBN-effect and R^2^ that shows some genuine explanatory power: Check if R^2^ is substantially above the blue diagnonal line, that is if R^2^$\gg \frac{k}{n-1}$ where $k$ is the number of modelel coefficients.
 
-::: {.callout-note}
+
 ## The F statistic
 
-A clever modification to using R^2^ as a check of the ISBN-effect combines $n$, $k$, and $R^2$ to produce YOU WERE HERE.
+R^2^ must always be interpreted in the context of $k$ and $n$, looking to see if R^2^ is substantially above the blue line in @fig-amazon-book-shuffle. This is not difficult; the modeler always knows the size $n$ of the training data and can find $k$ as the number of coefficients in the model (not counting the Intercept term). The position of the blue line is also easily calculated for any model: $\frac{k}{n-1}$.
 
+Perhaps a little easier than interpreting R^2^ is the interpretation of another statistic, named F, which folds in the $k$, $n$, and R^2^ into a single number:
+$$F \equiv \frac{n-k-1}{k} \frac{\text{R}^2}{1 - \text{R}^2}$$
+@fig-amazon-book-shuffle-F is a remake of @fig-amazon-book-shuffle but using F instead of R^2^. The blue line, which had the formula R^2^$= k/(n-1)$ in @fig-amazon-book-shuffle, gets translated to the value 1.0 in @fig-amazon-book-shuffle-F, regardless of $k$. To decide when a model points to a connection stronger than the ISBN-effect, the threshold F $> 3$ is a good rule of thumb. (Lesson 37 introduces a more precise calculation for the F threshold, which is built into statistical software and presented as a "**p-value**.")
+
+```{r}
+ggplot(aes(x=k, y=F), data=All_trials) +
+  geom_jitter(width=15, alpha=.3) +
+  geom_abline(aes(intercept=1, slope=0), color="blue") +
+  geom_point(aes(x=0, y=0), alpha=0) + 
+  labs(subtitle="with shuffling") +
+  ylab(expression(F)) + 
+  scale_x_continuous(breaks=c(0,50, 100,158,200, 251,  318))
+```
+
+::: {.callout-note}
+## Adjusted R^2^
+
+An alternative to F is widely used in some fields, particularly economics. Called "**adjusted R^2^**" or $R^2_\text{adj}$, visualize it by moving the calculated R^2^ downward and leftward, more-or-less in the direction of the blue line in @fig-amazon-book-shuffle. This movement adjusts an $R^2$ that lies on the blue line to $R^2_\text{adj} = 0$.
+
+Debating the relative merits of using F or $R^2_\text{adj}$ can be left to the respective boosters of the disciplines that prefer one or the other. Before getting wrapped up in such debates, it is worth pointing out the $R^2_\text{adj}$ is just a rescaling of F.
+
+$$R^2_\text{adj} = 1 - \frac{n-1}{k} \frac{R^2}{F}\ .$$
 :::
 
+## Comparing models
 
-### Alternative accountings
+Modelers are often in the position of having a model that they like but are contemplating adding one or more additional explanatory variables. To illustrate, consider the following models:
 
-We've been using RMS prediction error to quantify how well the response variable has been accounted for by the explanatory variable(s). RMS prediction error is a convenient summary of the size of the typical prediction error because 1) it is an average over all the cases in the testing data and 2) it has the same units as the response variable. But RMS is not the only the only such accounting. In this section, we'll look at two others that are widely used in statistical reports: R^2^ and the "**sum of squares**".
+- Model 1: `list_price ~ 1`
+- Model 2: `list_price ~ 1 + hard_paper`
+- Model 3: `list_price ~ 1 + hard_paper + num_pages`
+- Model 4: `list_price ~ 1 + hard_paper + num_pages + weight_oz`
 
-We'll start with the *sum of squares* accounting. Recall that the letters in RMS each stand for a specific step:
+```{r echo=FALSE}
+#| label: fig-russian-dolls
+#| fig-cap: "Nesting Russian dolls"
+#| column: margin
+knitr::include_graphics("www/Russian-Matroshka_no_bg.jpeg")
+```
+Models with this structure, where all the explanatory variables in the smaller models also apply to the bigger models, are said to be "**nested**" in much the same way as for Russian dolls.
 
-- **S**: square the each of the values
-- **M**: average over the (squared) values
-- **R**: take the square root of the (average squared) values.
+For a nested set of models, R^2^ can never decrease when moving from a smaller model to a larger one---almost always there is an increase in R^2^. To demonstrate:
 
-The *order* of the steps is important; S first, M next, then finally R. 
+```{r}
+amazon_books <- amazon_books %>% 
+  select(list_price, weight_oz, num_pages, hard_paper) %>%
+  filter(complete.cases(.))
+model1 <- lm(list_price ~ 1, data=amazon_books)
+model2 <- lm(list_price ~ 1 + weight_oz, data = amazon_books)
+model3 <- lm(list_price ~ 1 + weight_oz + num_pages, data=amazon_books)
+model4 <- lm(list_price ~ 1 + weight_oz + num_pages + hard_paper, data=amazon_books)
 
-The *sum of squares*, often written SS, is a two-step process.
+R2(model1)
+R2(model2)
+R2(model3)
+R2(model4)
+```
 
-- **S**: square each of the values
-- **S**: sum (not average) the (squared) values.
+A good question, when adding explanatory variables to a model, is whether the new variable(s) add to the ability to account for the variability in the response variable. Since R^2^ never goes down when moving from a smaller to a larger model, we can't just check R^2^ on its own. A valuable technique called "**Analysis of Variance**," (ANOVA for short) looks at the incremental change in variance explained from a smaller model to a larger one, but puts this change in the context of the increase in $k$ from the small model to the large one. This increase-in-context can be converted to an F statistic. To illustrate:
 
-Again, the *order* of the steps is important: square first then finally sum. (The notation SS doesn't make the order clear, but the name "sum of squares" does. So remember that SS stands for "sum of squares".)
+```{r}
+anova(model1, model2, model3, model4)
+```
 
-::: {.callout-warning}
-## Note in draft
+Focus on the F column of the report. The move from Model 1 to Model 2 produces F=57, clearly indicating that the `weight_oz` variable accounts for some of the list price. Moving from Model 2 to Model 3 creates a much less impressive F of 3.8. It is as if the added explanatory variable, `num_pages`, is just barely pulling its own "weight." Moving from Model 3 to Model 4 produces a below-threshold F of 1.3. In other words, in the context of `weight_oz` and `num_pages`, the `hard_paper` variable doesn't carry additional information about the list price. 
 
-WHEN YOU GET TO THE ANOVA REPORT, make sure to point out that the so-called "mean square" is a confusing name because it wrongly brings to mind the MS in RMS.  The quantity is really the sum of squares divided by the degrees of freedom.
-:::
+The last column of the report, labeled `Pr(>F)`, gives a translation of F into a universal 0 to 1 scale called a p-value. A large F produces a small p-value. The rule of thumb for reading p-values is that a value $p < 0.05$ indicates that the added variable brings new information about the response variable. We'll return to p-values and the controversy they have entailed in Lessons 36 through 38.
 
 
 
