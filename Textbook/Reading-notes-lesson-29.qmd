@@ -15,7 +15,7 @@ lesson <- 29
 source("../_startup.R")
 ```
 
-In Lesson 28, we introduced covariates as a way to set in the correct context the relationship between an explanatory variable and the response variable. In Lesson 30 we will return to this context-setting role to show that which covariates to include in a model depends on the modeler's opinion about the relevant structure of a DAG. Here, we will treat covariates as commodity items to show an important but surprising property of models. This property is a boon to the modeler, enabling good decisions to be made about whether to include any given covariate. But it is also a pitfall lieing in wait for the wishful thinker.
+In Lesson 28, we introduced covariates to set the relationship between an explanatory variable and the response variable in the correct context. In Lesson 30, we will return to this context-setting role to show that the appropriate choice of covariates to include in a model depends on the modeler's opinion about the relevant structure of a DAG. Here, we will treat covariates as commodity items to show a surprising property of models. This property is a boon to the modeler, helping to enable sound decisions about whether to include any given covariate. However, it is also a pitfall lieing in wait for the wishful thinker.
 
 ## How much variation is explained
 
@@ -23,9 +23,9 @@ We start by returning to the definition of statistical thinking introduced at th
 
 > *Statistic thinking is the explanation or description of variation* in the context of *what remains unexplained or undescribed.*
 
-In this Lesson, we are going to work with a very simple measure of "what remains unexplained or undescribed." The fitted model values represent the explained part of the variation. The residuals are what is left over; the difference between the actual values of the response variable and the fitted model values. 
+In this Lesson, we will work with a straightforward measure of "what remains unexplained or undescribed." The fitted model values represent the explained part of the variation. The residuals are what is left over, the difference between the actual values of the response variable and the fitted model values. 
 
-As a reminder, we will construct a simple model of the list price of books as a function of the number of pages and whether the book is a paperback or hardcover.^[If you seek to duplicate the results presented in this chapter, please note that we have deleted six rows from `amazon_books`: 62, 103, 205, 211, 242, and 303. These rows are either duplicates or have one of the variables missing.]
+As a reminder, we will construct a simple model of the list price of books as a function of the number of pages and whether the book is a paperback or hardcover.^[If you seek to duplicate the results presented in this chapter, please note that we have deleted six rows from `amazon_books because the rows are either duplicates or have one of the variables missing. The deleted rows are 62, 103, 205, 211, 242, and 303.]
 
 
 ```{r echo=FALSE}
@@ -53,18 +53,18 @@ Results %>% head() %>%
   knitr::kable()
 ```
 
-The first book in the training data is a 304-page paperback and has a list price of $12.95. The fitted model value for that book is $16.60. (Ordinarily, we refer to the output of the model function simply as the "output" or the "model output." However, when the model function is applied to a row from the *training* data, the output is also called the *fitted model value*.)
+The first book in the training data is a 304-page paperback with a list price of $12.95. The fitted model value for that book is $16.60. (Ordinarily, we refer to the output of the model function simply as the "output" or the "model output." However, the output of the model function, when applied to rows from the *training* data also called the *fitted model value*.)
 
 At $16.60, the fitted model value is $3.65 *higher* than the list price. This difference is the residual for that book, the sign reflecting the definition 
 $$\text{residual} \equiv \text{response value} - \text{fitted model value}\ .$$
-When the residual is small in magnitude, the fitted model value is close to the response value. Conversely, a large residual means that the model was way off target for that book. 
+When the residual is small in magnitude, the fitted model value is close to the response value. Conversely, a large residual means the model was way off target for that book. 
 
 The standard measure of the typical size of a residual is the standard deviation or, equivalently, the variance. 
 
 ```{r}
 Results %>% summarize(se_resids = sd(.resid), v_resids=var(.resid))
 ```
-As always, the standard deviation is easier to read because it has sensible units, in this case, dollars. The variance has strange units (square dollars) because it is the square of the standard deviation. We will use the variance for measuring the typical size of a residual for the reasons described in Lesson 20; variances add nicely in a manner analogous to the Pythagorean Theorem.
+As always, the standard deviation is easier to read because it has sensible units, in this case, dollars. On the other hand, the variance has strange units (square dollars) because it is the square of the standard deviation. We will use the variance for measuring the typical size of a residual for the reasons described in Lesson 20; variances add nicely in a manner analogous to the Pythagorean Theorem.
 
 Similarly, the total amount of variation in the list price is simply the variance of the list price:
 
@@ -72,27 +72,26 @@ Similarly, the total amount of variation in the list price is simply the varianc
 Results %>% summarize(v_response = var(list_price))
 ```
 A simple measure of how much of the variation in list price remains unexplained is the ratio of these variances $190.96/206.51 = 92.5\%$.
-More than 90% of the variation remains unexplained by the `Price_model`. That might suggest the model does not have much to tell us. This is also indicated by the uselessly wide prediction intervals. 
-Perhaps in the spirit of putting a positive spin on things, statisticians typically work with the complement of the unexplained fraction. Since the unexplained fraction is 92.5%, the complement is 7.5%. This number is written R^2^, pronounced "R-squared." (It also has a formal name: the "coefficient of determination." In Lesson 30, we will meet the inventor of the coefficient of determination, Sewall Wright, who is an early hero of causal reasoning.)
+More than 90% of the variation remains unexplained by the `Price_model`. This high fraction of unexplained variance suggests the model has little to tell us. In the spirit of putting a positive spin on things, statisticians typically work with the complement of the unexplained fraction. Since the unexplained fraction is 92.5%, the complement is 7.5%. This number is written R^2^ and pronounced "R-squared." (It also has a formal name: the "coefficient of determination." In Lesson 30, we will meet the inventor of the coefficient of determination, Sewall Wright, who is an early hero of causal reasoning.)
 
-R^2^ is such a widely used summary of the ability of explanatory variables to account for the response variable, that there is a special extractor that calculates it. 
+R^2^ is such a widely used summary of how the explanatory variables account for the response variable that a software extractor calculates it and some related values. 
 
 ```{r}
 Price_model %>% R2()
 ```
 
-Many modelers act as if their goal is to build a model that makes R^2^ as big as possible. This is understandable, since large R^2^ means that the explanatory variables account for a lot of the variance in the response variables. But it is a naive goal; the focus should always be on the suitability of the model for the purpose at hand. Often, shooting for a large R^2^ imposes costs that can undermine the purpose for modeling. In any event, any fool can create a model with the largest possible R^2^ but which tells nothing about the response variable.
+Many modelers act as if their goal is to build a model that makes R^2^ as big as possible. Their thinking is that large R^2^ means that the explanatory variables account for much of the response variable's variance. Unfortunately, it is a naive goal. Instead, always focus on the model's suitability for the purpose at hand. Often, shooting for a large R^2^ imposes costs that can undermine the purpose for the model. Furthermore, even models with the largest possible R^2^ sometimes have nothing to say about the response variable.
 
 ## Getting to 1
 
-R^2^ can range from zero to one. Zero means that the model accounts for *none* of the variation in the response variable. We can construct such a model easily enough: `list_price ~ 1` has no explanatory variables and therefore no ability to distinguish one book from another.
+R^2^ can range from zero to one. Zero means that the model accounts for *none* of the variation in the response variable. We can construct such a model quickly enough: `list_price ~ 1` has no explanatory variables and, therefore, no ability to distinguish one book from another.
 
 ```{r}
 Null_model <- lm(list_price ~ 1, data = amazon_books)
 Null_model %>% R2()
 ```
 
-We are using the word "null" to name this model. This is part of statistics tradition. The dictionary definition of "null" is "having or associated with the value zero" or "lacking distinctive qualities; having no positive substance or content."^[Source: [Oxford Languages](https://languages.oup.com/dictionaries/)]
+We are using the word "null" to name this model. "Null" is part of the statistics tradition. The dictionary definition of "null" is "having or associated with the value zero" or "lacking distinctive qualities; having no positive substance or content."^[Source: [Oxford Languages](https://languages.oup.com/dictionaries/)]
 
 In the null model, the fitted model values are all the same; all the variation is in the residuals. 
 
@@ -109,13 +108,13 @@ Null_model %>% model_eval() %>% head() %>%
   knitr::kable()
 ```
 
-At the other extreme, where R^2^ = 1, the explanatory variables are account for every bit of variation in the response variable. We can try various combinations of explanatory variables to see if we can accomplish this. For example, `publisher` explains 67% of the variation in list price.
+At the other extreme, where R^2^ = 1, the explanatory variables account for every bit of variation in the response variable. We can try various combinations of explanatory variables to see if we can accomplish this. For example, `publisher` explains 67% of the variation in list price.
 
 ```{r}
 lm(list_price ~ publisher, data = amazon_books) %>% R2()
 ```
 
-Perhaps the book's author is the key explanatory factor?
+We can also check whether `author` has anything to say about the list price.
 
 ```{r}
 lm(list_price ~ author, data = amazon_books) %>% R2()
@@ -128,7 +127,7 @@ lm(list_price ~ publisher + author, data = amazon_books) %>%
   R2()
 ```
 
-The modeler discovering this amazing explanatory power of `publisher` and `author` can be forgiven for thinking he or she has found a real explanation. Unfortunately, the high R^2^ is largely an illusion.
+The modeler discovering this tremendous explanatory power of `publisher` and `author` can be forgiven for thinking he or she has found a meaningful explanation. But, unfortunately, the high R^2^ is an illusion in this case.
 
 To see why, consider another possible explanatory variable, the International Standard Book Number (ISBN). The ISBN is a ten- or thirteen-digit number that marks each book with a unique number.
 
@@ -139,18 +138,18 @@ To see why, consider another possible explanatory variable, the International St
 knitr::include_graphics("www/SM2-ISBN.png")
 ```
 
-There is a system behind the number, but effectively they are an arbitrary sequence of digits. In `amazon_books`, the `isbn_10` variable records each book's ISBN as a categorical level.
+There is a system behind ISBNs, but despite the "N" standing for "number," an ISBN is a character string or word (written using only digits). Consequently, the `isbn_10` variable in `amazon_books`is categorical.
 
 ```{r}
 ISBN_model <- lm(list_price ~ isbn_10, data = amazon_books)
 ISBN_model %>% R2()
 ```
 
-The `isbn_10` explains all the variation in list price!
+The `isbn_10` explains all variation in the list price!
 
-Given that the ISBN is, as we have said, an arbitrary sequence of digits, why does it do such a good job accounting for the list price? The answer lies not in the content of the ISBN but in each book having a unique ISBN. This ISBN identifies each book uniquely. Each book has a single price. So the ISBN identifies the price of each book. Cleverness is not involved; the list price could be anything at all and the ISBN would still identify it exactly. The model is storing the whole set of ISBNs and the corresponding set of list prices.
+Given that the ISBN is, as we have said, an arbitrary sequence of characters, why does it do such a good job of accounting for the list price? The answer lies not in the content of the ISBN but in another fact: each book has a unique ISBN. As well, each book has a single price. So the ISBN identifies the price of each book. Cleverness is not involved; the list price could be anything, and the ISBN would still identify it precisely. The model coefficients store the whole set of ISBNs and the corresponding set of list prices.
 
-We can substantiate the claim just made---that the list price could be anything at all---by synthesizing a data frame where the list prices are set at random:
+We can substantiate the claim just made---that the list price could be anything at all---by synthesizing a data frame with random list prices:
 
 ```{r}
 amazon_books %>% 
@@ -159,22 +158,22 @@ amazon_books %>%
   R2()
 ```
 
-A similar randomization can be accomplished by *shuffling* the `isbn_10` variable so that each ISBN no longer points to its authentic book. Shuffling destroys the link between the ISBN and the list price. Even so, the R^2^ remains high.
+Similar randomization can be accomplished by *shuffling* the `isbn_10` column of the data frame so that each ISBN points to a random book. Of course, such shuffling destroys the link between the ISBN and the list price. Even so, the R^2^ remains high.
 
 ```{r}
 lm(list_price ~ shuffle(isbn_10), data=amazon_books) %>% R2()
 lm(shuffle(list_price) ~ isbn_10, data=amazon_books) %>% R2()
 ```
 
-Statistical nomenclature is a bit obscure here, so we will call this incidental alignment, with no genuine explanatory power, the "**ISBN-effect**." 
+Statistical nomenclature is obscure here. So we will make up a name for such incidental alignment with no true explanatory power: the "**ISBN-effect**." 
 
-Statistical thinkers know to be aware of situations where there are many levels to categorical variables and check whether the ISBN-effect is in play.
+Statistical thinkers know to be aware of situations where categorical variables have many levels and check whether the ISBN effect is in play.
 
-## The ISBN-effect as a benchmark
+## The ISBN effect as a benchmark
 
-Shuffling an explanatory variable (while keeping the response variable in the original order) voids any possible explanatory connection between the two. An R^2^=0, as we get from any model of the form `y ~ 1`, signals that the `1` cannot account for any variation. However, this does not mean that shuffling will lead to R^2^ = 0. Instead, there is a systematic relationship between the number of model coefficients associated with the shuffled variable, the sample size $n$, and R^2^.
+Shuffling an explanatory variable (while keeping the response variable in the original order) voids any possible explanatory connection between the two. An R^2^=0, as we get from any model of the form `y ~ 1`, signals that the `1` cannot account for any variation. However, this does not mean shuffling will lead to R^2^ = 0. Instead, there is a systematic relationship between the number of model coefficients associated with the shuffled variable, the sample size $n$, and R^2^.
 
-We can demonstrate this relationship by conducting many trials with shuffling of the `list_price` modeled by i) `publisher`; ii) `author`; and iii) `isbn_10`.
+We can demonstrate this relationship by conducting many trials of modeling the `list_price` with a shuffled explanatory variable: either `publisher`, `author`, or `isbn_10`.
 
 ::: {.callout-warning}
 ## Demonstration: Counting coefficients
@@ -188,7 +187,7 @@ Coefficients <- Publisher_model %>% coefficients() %>% data.frame()
 nrow(Coefficients)
 ```
 
-There are 159 coefficients in the model, but the first one of them is the "Intercept". 
+There are 159 coefficients in the model, the first one being the "Intercept." 
 
 ```{r results="hide"}
 Coefficients %>% head()
@@ -208,7 +207,7 @@ tmp %>% head() %>%
 Altogether, there are $k=158$ coefficients relating to `shuffle(publisher)`.
 :::
 
-The rule relating R^2^ to the number of coefficients associated is very simple (for the case where the explanatory variable has been shuffled): R^2^ will be random with mean value $\frac{k}{n-1}$. For the `shuffle(publisher)` model, the mean across many trials will be R^2^ = 158/324 = 0.49. 
+The rule relating R^2^ to the number of coefficients associated is straightforward for shuffled explanatory variables: R^2^ will be random with mean value $\frac{k}{n-1}$. For the `shuffle(publisher)` model, the mean across many trials will be R^2^ = 158/324 = 0.49. 
 
 `r set.seed(101)`
 
@@ -234,7 +233,7 @@ ggplot(aes(x=k, y=Rsquared), data=Pub_trials) +
 
 :::
 
-We can carry out a similar set of trials for the models `list_price ~ shuffle(author)` and `list_price ~ shuffle(isbn_10)`, which have $k=251$ and $k=319$ respectively. 
+We can carry out similar trials for the models `list_price ~ shuffle(author)` and `list_price ~ shuffle(isbn_10)`, which have $k=251$ and $k=319$ respectively. 
 
 ```{r echo=FALSE, warning=FALSE}
 #| label: fig-amazon-book-shuffle
@@ -264,18 +263,18 @@ ggplot(aes(x=k, y=Rsquared), data=All_trials) +
   scale_x_continuous(breaks=c(0,50, 100,158,200, 251,  318))
 ```
 
-The blue diagonal line in @fig-amazon-book-shuffle shows the theoretical average R^2^ as a function of the number of model coefficients when the explanatory variable is randomized. R^2^ will always be 1 when $k=n$, that is, when the number of coefficients is the same as the sample size.
+The blue diagonal line in @fig-amazon-book-shuffle shows the theoretical average R^2^ as a function of the number of model coefficients when the explanatory variable is randomized. R^2^ will always be 1.0 when $k=n$, that is, when the number of coefficients is the same as the sample size.
 
-@fig-amazon-book-shuffle suggests a way to distinguish between R^2^ resulting from the ISBN-effect and R^2^ that shows some genuine explanatory power: Check if R^2^ is substantially above the blue diagnonal line, that is if R^2^$\gg \frac{k}{n-1}$ where $k$ is the number of modelel coefficients.
+@fig-amazon-book-shuffle suggests a way to distinguish between R^2^ resulting from the ISBN-effect and R^2^ that shows some true explanatory power: Check if R^2^ is substantially above the blue diagonal line, that is, check if R^2^$\gg \frac{k}{n-1}$ where $k$ is the number of model coefficients.
 
 
 ## The F statistic
 
-R^2^ must always be interpreted in the context of $k$ and $n$, looking to see if R^2^ is substantially above the blue line in @fig-amazon-book-shuffle. This is not difficult; the modeler always knows the size $n$ of the training data and can find $k$ as the number of coefficients in the model (not counting the Intercept term). The position of the blue line is also easily calculated for any model: $\frac{k}{n-1}$.
+$k$ and $n$ provide the necessary context for proper interpretation of R^2^; all three numbers are needed to establish whether R^2^ $\gg \frac{k}{n-1}$ to rule out the ISBN effect. The calculation is not difficult; the modeler always knows the size $n$ of the training data and can find $k$ as the number of coefficients in the model (not counting the Intercept term).
 
 Perhaps a little easier than interpreting R^2^ is the interpretation of another statistic, named F, which folds in the $k$, $n$, and R^2^ into a single number:
 $$F \equiv \frac{n-k-1}{k} \frac{\text{R}^2}{1 - \text{R}^2}$$
-@fig-amazon-book-shuffle-F is a remake of @fig-amazon-book-shuffle but using F instead of R^2^. The blue line, which had the formula R^2^$= k/(n-1)$ in @fig-amazon-book-shuffle, gets translated to the value 1.0 in @fig-amazon-book-shuffle-F, regardless of $k$. To decide when a model points to a connection stronger than the ISBN-effect, the threshold F $> 3$ is a good rule of thumb. (Lesson 37 introduces a more precise calculation for the F threshold, which is built into statistical software and presented as a "**p-value**.")
+@fig-amazon-book-shuffle-F is a remake of @fig-amazon-book-shuffle but using F instead of R^2^. The blue line, which had the formula R^2^$= k/(n-1)$ in @fig-amazon-book-shuffle, gets translated to the constant value 1.0 in @fig-amazon-book-shuffle-F, regardless of $k$. To decide when a model points to a connection stronger than the ISBN effect, the threshold F $> 3$ is a good rule of thumb. (Lesson 37 introduces a more precise calculation for the F threshold, which is built into statistical software and presented as a "**p-value**.")
 
 ```{r}
 ggplot(aes(x=k, y=F), data=All_trials) +
@@ -290,9 +289,9 @@ ggplot(aes(x=k, y=F), data=All_trials) +
 ::: {.callout-note}
 ## Adjusted R^2^
 
-An alternative to F is widely used in some fields, particularly economics. Called "**adjusted R^2^**" or $R^2_\text{adj}$, visualize it by moving the calculated R^2^ downward and leftward, more-or-less in the direction of the blue line in @fig-amazon-book-shuffle. This movement adjusts an $R^2$ that lies on the blue line to $R^2_\text{adj} = 0$.
+Some fields, notably economics, prefer an alternative to F called "**adjusted R^2^**" (or $R^2_\text{adj}$).  The adjustment comes from moving the raw R^2^ downward and leftward, more-or-less in the direction of the blue line in @fig-amazon-book-shuffle. This movement adjusts a raw $R^2$ that lies on the blue line to $R^2_\text{adj} = 0$.
 
-Debating the relative merits of using F or $R^2_\text{adj}$ can be left to the respective boosters of the disciplines that prefer one or the other. Before getting wrapped up in such debates, it is worth pointing out the $R^2_\text{adj}$ is just a rescaling of F.
+We leave the debate on the relative merits of using F or $R^2_\text{adj}$ their respective boosters. However, before getting wrapped up in such debates, it is worth pointing out that $R^2_\text{adj}$ is just a rescaling of F.
 
 $$R^2_\text{adj} = 1 - \frac{n-1}{k} \frac{R^2}{F}\ .$$
 :::
@@ -312,9 +311,9 @@ Modelers are often in the position of having a model that they like but are cont
 #| column: margin
 knitr::include_graphics("www/Russian-Matroshka_no_bg.jpeg")
 ```
-Models with this structure, where all the explanatory variables in the smaller models also apply to the bigger models, are said to be "**nested**" in much the same way as for Russian dolls.
+All the explanatory variables in the smaller models also apply to the bigger models. Such sets are said to be "**nested**" in much the same way as for Russian dolls.
 
-For a nested set of models, R^2^ can never decrease when moving from a smaller model to a larger one---almost always there is an increase in R^2^. To demonstrate:
+For a nested set of models, R^2^ can never decrease when moving from a smaller model to a larger one---almost always, there is an increase in R^2^. To demonstrate:
 
 ```{r}
 amazon_books <- amazon_books %>% 
@@ -331,15 +330,14 @@ R2(model3)
 R2(model4)
 ```
 
-A good question, when adding explanatory variables to a model, is whether the new variable(s) add to the ability to account for the variability in the response variable. Since R^2^ never goes down when moving from a smaller to a larger model, we can't just check R^2^ on its own. A valuable technique called "**Analysis of Variance**," (ANOVA for short) looks at the incremental change in variance explained from a smaller model to a larger one, but puts this change in the context of the increase in $k$ from the small model to the large one. This increase-in-context can be converted to an F statistic. To illustrate:
+When adding explanatory variables to a model, a good question is whether the new variable(s) add to the ability to account for the variability in the response variable. R^2^ never goes down when moving from a smaller to a larger model, so we cannot rely on the increase in R^2^. A valuable technique called "**Analysis of Variance**" (ANOVA for short) looks at the incremental change in variance explained from a smaller model to a larger one. The increase can be presented as an F statistic. To illustrate:
 
 ```{r}
 anova(model1, model2, model3, model4)
 ```
 
-Focus on the F column of the report. The move from Model 1 to Model 2 produces F=57, clearly indicating that the `weight_oz` variable accounts for some of the list price. Moving from Model 2 to Model 3 creates a much less impressive F of 3.8. It is as if the added explanatory variable, `num_pages`, is just barely pulling its own "weight." Moving from Model 3 to Model 4 produces a below-threshold F of 1.3. In other words, in the context of `weight_oz` and `num_pages`, the `hard_paper` variable doesn't carry additional information about the list price. 
+Focus on the F column of the report. The move from Model 1 to Model 2 produces F=57, well above the threshold described above and clearly indicating that the `weight_oz` variable accounts for some of the list price. Moving from Model 2 to Model 3 creates a much less impressive F of 3.8. It is as if the added explanatory variable, `num_pages`, is just barely pulling its own "weight." Finally, moving from Model 3 to Model 4 produces a below-threshold F of 1.3. In other words, in the context of `weight_oz` and `num_pages,` the `hard_paper` variable does not carry additional information about the list price. 
 
-The last column of the report, labeled `Pr(>F)`, gives a translation of F into a universal 0 to 1 scale called a p-value. A large F produces a small p-value. The rule of thumb for reading p-values is that a value $p < 0.05$ indicates that the added variable brings new information about the response variable. We'll return to p-values and the controversy they have entailed in Lessons 36 through 38.
-
+The last column of the report, labeled `Pr(>F)`, translates F into a universal 0 to 1 scale called a p-value. A large F produces a small p-value. The rule of thumb for reading p-values is that a value $p < 0.05$ indicates that the added variable brings new information about the response variable. We will return to p-values and the controversy they have entailed in Lessons 36 through 38.
 
 
