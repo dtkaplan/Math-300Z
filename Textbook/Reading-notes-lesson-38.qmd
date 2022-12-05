@@ -17,6 +17,8 @@ library("rpart")
 ```
 
 
+Use cancer/grass-treatment example from Lesson 30 to illustrate how failing to think about covariates *before* the study analysis can lead to false discovery.
+
 ## Interpreting a  p-value
 
 If the simulation trials rarely or never produce an association as strong as that found in real-world observations, you can fairly conclude that the assumptions embedded in the simulation ought to be *rejected* as a proper description of the real world. On the other hand, if the simulation shows good accord with the real-world observations, you can ... what? It's not a good idea to claim the simulation is a correct description of the real world; it's just a simulation. Instead, the proper statement is that you "*fail to reject*" the hypothesis hard-coded into the simulation.

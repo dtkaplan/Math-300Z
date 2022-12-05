@@ -125,10 +125,3 @@ save(dag00, dag01, dag02, dag03, dag04, dag05,
      dag_school1, dag_school2,
      file = "data/daglib.rda")
 
-# An experiment
-
-exp_test <- dag_make(
-  g ~ exo(),
-  x ~ g + exo(),
-  y ~ binom()
-)
