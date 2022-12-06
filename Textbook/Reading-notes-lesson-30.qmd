@@ -106,6 +106,38 @@ lm(zero_one(illness, one="cancer") ~ grass + wealth, data = Cancer_data) %>%
 
 With `wealth` as a covariate, the model shows that (all other things being equal) "organic" lawn treatment reduces cancer risk. However, we do not see this directly from the `grass` and `illness` variables because all other things are not equal: wealthier people are more likely to use chemical lawn treatment. (Keep in mind that this is **simulated data**. Do not conclude from this example anything about the safety of the chemicals used for lawn greening.)
 
+::: {.callout-note}
+## Example: The flu vaccine
+
+As you know, people are encouraged to get vaccinated before flu season. This recommendation is particularly emphasized for older adults, say, 60 and over. 
+
+In 2012, the *Lancet*, a leading medical journal, published a [systematic examination and comparison of many previous studies](https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(11)70295-X/fulltext). [Such a study of earlier studies is called a *meta-analysis*.]{.aside} The *Lancet* article describes a hypothesis that existing flu vaccines may not be as effective as was originally found.
+
+>  *A series of observational studies undertaken between 1980 and 2001 attempted to estimate the effect of seasonal influenza vaccine on rates of hospital admission and mortality in [adults 65 and older]. Reduction in all-cause mortality after vaccination in these studies ranged from 27% to 75%. In 2005, these results were questioned after reports that increasing vaccination in people aged 65 years or older did not result in a significant decline in mortality. Five different research groups in three countries have shown that these early observational studies had substantially overestimated the mortality benefits in this age group because of unrecognized confounding. This error has been attributed to a healthy vaccine recipient effect: reasonably healthy older adults are more likely to be vaccinated, and a small group of frail, undervaccinated elderly people contribute disproportionately to deaths, including during periods when influenza activity is low or absent.*
+
+```{r echo=FALSE}
+#| label: fig-healthy-vaccine
+#| fig-cap: 'A DAG diagramming the "healthy vaccine recipient" effect'
+#| fig-cap-location: margin
+#| out-width: 50%
+#| fig-align: center
+vaccine_dag <- dag_make(
+  age ~ exo(),
+  frailty ~ age(),
+  got_vaccinated ~ frailty,
+  mortality ~ frailty 
+)
+dag_draw(vaccine_dag, seed=104, vertex.label.cex=.7, vertex.size=40)
+```
+
+
+@fig-healthy-vaccine presents a network of causal influences that could shape the "healthy vaccine recipient." People are more likely to become frail as they get older. Frail people are *less* likely to get vaccinated, but more likely to die in the next few months. The result is that vaccination is associated with reduced mortality, even if there is no direct link between vaccination and mortality. 
+
+
+:::
+
+
+
 ## Block that path!
 
 Let us look more generally at the possible causal connections among three variables, which we will call X, Y, and C. We will stipulate that X points causally toward Y and that C is a possible covariate. Like all DAGs, there cannot be a cycle of causation.  These conditions leave three distinct DAGs that do not have a cycle, shown in @fig-three-dags-cancer.
