@@ -4,7 +4,7 @@ title: "Math 300R day-by-day Lessons"
 
 ```{r include=FALSE}
 lesson_links <- function(n) {
-  str <- "[NTI](NTI/NTI-Lesson{n}.html) : [Objectives](Objectives/Obj-lesson-{n}.html) : [LC](LC-lesson{n}.html) : [Reading](Reading-notes/Reading-notes-lesson-{n}.html) : [Student notes](Student-notes-lesson-{n}.Rmd)"
+  str <- "[NTI](NTI/NTI-Lesson{n}.html) : [Objectives](Objectives/Obj-lesson-{n}.html) : [LC](LC-lesson{n}.html) : [Reading](Textbook/Reading-notes-lesson-{n}.html) : [Student notes](Student-notes-lesson-{n}.Rmd)"
   return(glue::glue(str))
 }
 ```

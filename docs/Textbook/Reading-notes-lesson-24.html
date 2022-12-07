@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Spring 2023 Math 300 Revisions – reading-notes-lesson-24</title>
+<title>Lessons in Statistical Thinking - 24&nbsp; Effect size: Input to output</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -86,28 +86,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Reading-notes-lesson-25.html" rel="next">
+<link href="./Reading-notes-lesson-23.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
+  "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
+  "panel-placement": "start",
+  "type": "textbox",
   "limit": 20,
   "language": {
     "search-no-results-text": "No results",
@@ -124,379 +126,456 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
-    <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
-    </a>
-  </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../index.html">Proposal</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../lessons.html">Lessons</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../layout.html">Site layout</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../objective-list.html">Objectives</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../LC-list.html">LCs</a>
-  </li>  
-</ul>
-              <div id="quarto-search" class="" title="Search"></div>
-          </div> <!-- /navcollapse -->
-      </div> <!-- /container-fluid -->
-    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Lessons in Statistical Thinking</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">1-18 from ModernDive</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Lessons in Statistical Thinking</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-19.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Preliminaries</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-20.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Measuring and simulating variation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-21.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Signal and noise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-22.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Sampling and sampling variation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-23.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Estimating sampling variation from a single sample</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-25.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Mechanics of prediction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-26.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Constructing a prediction interval</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 1-8</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-28.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Covariates</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-29.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Covariates eat variance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-30.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Confounding</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-31.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Spurious correlation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-32.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Experiment and random assignment</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-33.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Measuring and accumulating risk</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-34.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Constructing a classifier</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-35.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Accounting for prevalence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-36.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-37.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Calculating a p-value</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-38.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">False discovery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 9-19</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#categorical-outputs" id="toc-categorical-outputs" class="nav-link active" data-scroll-target="#categorical-outputs">Categorical outputs</a></li>
+  <li><a href="#multiple-explanatory-variables" id="toc-multiple-explanatory-variables" class="nav-link" data-scroll-target="#multiple-explanatory-variables">Multiple explanatory variables</a></li>
+  <li><a href="#interval-estimates" id="toc-interval-estimates" class="nav-link" data-scroll-target="#interval-estimates">Interval estimates</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></h1>
+</div>
 
 
 
-<p>You now have a substantial toolbox for for summarizing data in ways that support statistical thinnking. Time to move to the next step: extracting actionable information from such summarizing. Why the word “actionable” in the previous sentence? Because much of the time the goal of summarizing data is to guide <strong>decision making</strong>. The setting is that you or your organization have to make a decision: administer a medicine, change a budget, raise or lower a price, respond to an evolving situation, and so on. Decisions ought to be made on an informed basis. Often, the information needed is hidden in tables of data. The statistical thinker knows how to extract information in a form that is as useful as possible to the decision maker.</p>
-<p>Setting for decisions vary widely, but a useful simplification splits support for decision making into two broad categories.</p>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Regression modeling and confidence intervals provide a substantial toolbox to support statistical thinking. This Lesson starts to develop methods using modeling to inform decision-making. Decision-making takes many guises: whether to administer medicine, change a budget, raise or lower a price, respond to an evolving situation, and so on.</p>
+<p>A useful simplification splits support for decision-making into two broad categories.</p>
 <ol type="1">
-<li><strong>Making a prediction</strong> for an individual choice. The need for predictions arises in both mundane and in critical settings. For instance, an airline needs to set prices. They want to maximize revenue. Higher prices will bring in more money per seat, but the seats may not be filled. To make the decision, the airline needs a prediction about what the demand will be for those seats, which may vary based on day of the week, time of day, time of year, origin and destination of the flight, and so on. Another example: Merchants and social media sites have to make choices about what products or posts to display to a viewer. Merchants have many products, social media has many news feeds, tweets, blog entries to choose from. They want to predict which ones are most likely to cause you to respond, either by buying a particular product or watching a video, “news” report, and so on.</li>
+<li><p><strong>Making a prediction</strong> for an individual choice. The need for predictions arises in both mundane and critical settings. For instance, an airline needs to set prices. They want to maximize revenue. Higher prices will bring in more money per seat but may reduce the number of people flying. To make the pricing decision, the airline needs a prediction about what the demand will be for those seats, which may vary based on price, day of the week, time of day, time of year, origin and destination of the flight, and so on. Another example: Merchants and social media sites must choose what products or posts to display to a viewer. Merchants have many products, and social media has many news feeds, tweets, and competing blog entries. The people who manage these websites want to promote the products or postings most likely to cause a viewer to respond. To identify viable products or postings, the site managers construct predictive models based on earlier viewers’ choices. We will study prediction models in Lessons 25 and 26,</p></li>
+<li><p><strong>Intervening</strong> in a system. Such interventions occur on both grand scales and small: changes in government policies such as funding for preschool education or subsidies for renewable energy, closing a road to redirect traffic or opening a new highway or bus line, changing the minimum wage, etc. Before making such interventions, it is wise to know what the consequences are likely to be. Figuring this out is often a matter of understanding how the system works: what causes what. As interventions often affect multiple individuals, influencing the overall trend of the effect across individuals might be the goal instead of predicting how each individual will be affected.</p></li>
 </ol>
-<p>Less mundane: A patient comes to an urgent-care clinic with symptoms. A decision needs to be made about what disease or illness the patient has in order to guide choices of tests and, in turn, possible treatment. The inputs to the prediction are the symptoms—neck stiffness, a tremor, and so on—as well as facts about the person—age, sex, occupation, etc. The output of the prediction will assign a probability to each of medical conditions that could cause the symptom. As new tests or measurements are done—temperature, blood pressure, white-blood-cell count, blood oxygenation, and others—they become new inputs for the prediction and the probabilities change accordingly. The television drama <em>House</em> provides in every episode an example of such evolving predictions, which clinicians call “differential diagnosis.” The word “prediction” suggests the future, but many predictions have to do with the current or past state that is as yet unknown to greater or lesser extent. Synonyms for “prediction” include “classification” (Lessons 34 and 35), “conjecture”, “guess”, “bet”, …. The phrase “informed guess” points to the idea: using information to support decision making.</p>
-<ol start="2" type="1">
-<li><strong>Intervening</strong> in a system. Such interventions occur on both grand scales and small: changes in government policies such as funding for pre-school education or subsidies for renewable energy, closing a road to redirect traffic or opening a new highway or bus line, changing the minimum wage, etc. Before making such interventions, it is wise to know what the consequences are likely to be. Figuring this out often requires understanding how the system works: what causes what. Without knowing this, how can you antipate the influence of the intervention on other components of the system? Also, interventions often affect many individuals: influencing the overall trend of the effect across individuals might be the goal, as opposed to a prediction for each individual affected.</li>
-</ol>
-<p>This lesson is focuses on two ideas that are useful for building and summarizing models of a system for the purposes of <em>intervening</em> in that system: effect size and interaction. We will need some additional concepts and tools in order to bring causality into the picture. This will have to wait until Lessons 28 through 31.</p>
-<section id="effect-size-input-to-output" class="level2">
-<h2 class="anchored" data-anchor-id="effect-size-input-to-output">Effect size: Input to output</h2>
-<p>In an intervention you change something about the world. That might be the budget for a program, the dose of a medicine, the fuel input to an engine. The thing you change is the input. In response, something else in the world changes: reading ability of students, the patient’s seratonin levels (a neurotransmitter), the power output from the engine. The thing that changes in response to the change in input is called the “output.” Systems such as education, mental state, or aircraft have many components. The context in which the modeler works dictates which of these components ought to be considered the input and which the output. Usually the input is something that you can directly change; the output is something that changes in response.</p>
-<p>The <strong>effect size</strong> is merely a statement of the amount of change in the output with respect to the input. There are two fundamental types of <em>inputs</em>, just as there are two fundamental types of variables:</p>
-<ul>
-<li><p>categorical: e.g., whether or not a person smokes.</p></li>
-<li><p>quantitative: e.g., how many cigarettes per day a person smokes</p></li>
-</ul>
-<p>Similarly, there are two fundamental types of <em>outputs</em>: categorical or quantitative.</p>
-<ul>
-<li><p>categorical: e.g.&nbsp;whether the person develops cancer</p></li>
-<li><p>quantitative: e.g.&nbsp;the lung capacity of the person</p></li>
-</ul>
-<p>How you properly describe an effect size depends on types of both the input and the output.</p>
-<table class="table">
-<colgroup>
-<col style="width: 21%">
-<col style="width: 28%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>input</th>
-<th>output</th>
-<th>effect size</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>categorical</td>
-<td>quantitative</td>
-<td>the **amount* by which the output changes when the input changes category</td>
-</tr>
-<tr class="even">
-<td>quantitative</td>
-<td>quantitative</td>
-<td>the <strong>rate</strong> of change in the output with respect to the input. Calculus students will recognize this rate as the partial derivative of the output with respect to the input.</td>
-</tr>
-<tr class="odd">
-<td>categorical</td>
-<td>categorical</td>
-<td>the <em>probability</em> of being in each of the output categories when the input category is changed</td>
-</tr>
-<tr class="even">
-<td>quantitative</td>
-<td>categorical</td>
-<td>the <em>rate of probability</em> of being in each of the output categories per unit of change in the input.</td>
-</tr>
-</tbody>
-</table>
-<p>Terms like “rate of probability” can be confusingly abstract. It helps to have some examples in mind to keep your thinking clear.</p>
-<p>Examples:</p>
-<ul>
-<li>System: an automobile
-<ul>
-<li>Selected input: Gallons of gasoline put in a car’s tank. Quantitative.</li>
-<li>Selected output: How far the car can be driven.</li>
-<li>Effect size will be a <em>rate</em>: miles per gallon.</li>
-</ul></li>
-<li>System: an autombile
-<ul>
-<li>Selected input: Whether to use a fuel additive the promises high fuel efficiency. Categorical.</li>
-<li>Selected output: Money spent on fuel (or, perhaps, tons of CO_2 emitted). Quantitative.</li>
-<li>Effect size is an <em>amount</em>: Dollars spent (or, tons of CO_2 emitted)</li>
-</ul></li>
-<li>System:
-<ul>
-<li>input categorical</li>
-<li>output quantitative</li>
-</ul></li>
-<li>System:
-<ul>
-<li>input categorical</li>
-<li>output quantitative</li>
-</ul></li>
-</ul>
-</section>
-<section id="calculating-an-effect-size" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="calculating-an-effect-size">Calculating an effect size</h2>
-<p>So long as you keep track of which of the four combinations of input and out are applicable to your case, calculating an effect size is easy. You evaluate the model at two values for the input then collect the two corresponding output values. For instance, you can use the <code>model_eval()</code> function. It takes as arguments the model whose effect size you’re interested in and, optionally, values for some or all of the inputs.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp, <span class="at">data=</span>mtcars)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod, <span class="at">hp=</span><span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">150</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   hp  .output     .lwr     .upr
-1 100 23.27603 15.20660 31.34547
-2 150 19.86462 11.85278 27.87645</code></pre>
-</div>
-</div>
-<p>The column labeled <code>.output</code> shows the model output for the corresponding input values for <code>hp</code>. Here, both the input and the output are quantitative, so the effect size will be a ratio: change in output divided by change in input. In this case: <span class="math display">\[\text{effect size:}\ \ \frac{23.28-19.86}{100-150} = -0.0684\]</span> It is wise to pay attention to the <em>units</em> of the effect size. Here, the output is <code>mpg</code>, which has units miles-per-gallon. The input has units horsepower, so the units of the effect size are miles gallon<sup>-1</sup> horsepower<sup>-1</sup>. Admittedly, that’s a mouthful of units. But it tells us something simple: A car with 100 additional horsepower will get worse fuel economy, down by 6.8 miles per gallon.</p>
-<p>Notice that the report from <code>model_eval()</code> has additional columns: <code>.lwr</code> and <code>.upr</code>. That s a glue that it is giving both a single-number, “point” estimate (<code>.output.</code>) and a two number interval estimate. We’ll talk about the meaning of the interval in the following section and in Lesson 26.</p>
-<div class="callout-warning callout callout-style-default callout-captioned page-columns page-full">
+<p>This Lesson focuses on “<strong>effect size</strong>,” a measure of how changing an explanatory variable will play out in the response variable. Built into the previous sentence is an assumption that the explanatory variable <em>causes</em> the response variable. In Lessons 28 through 31, we will look into ways to make responsible claims about whether a connection between variables is causal. Here, we will focus on the calculation and interpretation of effect size.</p>
+<p>An intervention changes something in the world. Some examples are the budget for a program, the dose of a medicine, or the fuel flow into an engine. The thing being changed is the <em>input</em>. In response, something else in the world changes, for instance, the reading ability of students, the patient’s serotonin levels (a neurotransmitter), or the power output from the engine. The thing that changes in response to the change in input is called the “output.”</p>
+<p>“<strong>Effect size</strong>” describes the change in the output with respect to the change in the input. The simplest case is when the output is a quantitative variable. In this case, the change in the output is a difference between two numbers. The form of the effect size depends on the input type. For example, for a quantitative input, the effect size will be a <em>ratio</em>, that is, a rate. (For calculus students: the effect size is a derivative of the output with respect to the input.)</p>
+<p>To measure an effect size from data, construct a model with the output as the response variable and the input as an explanatory variable.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Is horsepower the cause?
+Example: Fuel economy
 </div>
 </div>
-<div class="callout-body-container callout-body page-columns page-full">
-<p>It might seem from the negative sign on the effect size of engine horsepower on fuel economy that a more powerful engine is not as efficient than a less powerful engine at moving the car a given number of miles. That’s a reasonable conclusion. But the statistical thinker always keeps in mind other possibilities. For instance, another factor in fuel economy is the overall weight of the vehicle. A van designed to haul many passengers weighs more than a 2-passenger sporty vehicle. The van needs more horsepower because it is accelerating more weight.</p>
+<div class="callout-body-container callout-body">
+<p>A person buying a car typically has multiple objectives in mind. Perhaps the buyer is deciding whether to order a more powerful engine. This decision has consequences, including a reduction in fuel economy. The decision variable—the engine size—is the input; the fuel economy is the output.</p>
+<p>Since both input and output are quantitative, the effect size will be a rate: change in fuel economy per change in engine size. To inform a decision, use data such as the <code>math300::MPG</code> data frame, which compares various car models. <code>MPG</code> records the engine size in terms of <code>displacement</code>, in liters. Fuel economy is listed in miles per gallon, differently for city versus highway driving.</p>
+<p>The buyer is debating between a 2-liter and a 3-liter engine. Most driving will be in the city. To calculate the effect size, first build a model with the output (<code>mpg_city</code>) as the response variable and the input (<code>displacement</code>) as an explanatory variable.</p>
 <div class="cell">
-
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg_city <span class="sc">~</span> displacement, <span class="at">data=</span>MPG)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><a href="#fig-four-hp-mpg-dags">Figure&nbsp;1</a> shows four DAGs, each of which describe a plausible scenario.</p>
-<div class="page-columns page-full">
-<div id="fig-four-hp-mpg-dags" class="cell column-page-right quarto-layout-panel">
-<figure class="figure">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
-<div id="fig-four-hp-mpg-dags-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Reading-notes-lesson-24_files/figure-html/fig-four-hp-mpg-dags-1.png" class="img-fluid figure-img" data-ref-parent="fig-four-hp-mpg-dags"></p>
-<p></p><figcaption class="figure-caption">(a) Dag A</figcaption><p></p>
-</figure>
+<p>Second, evaluate that model for the range of inputs under consideration.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod, <span class="at">displacement=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  displacement  .output     .lwr     .upr
+1            2 24.01437 15.91915 32.10959
+2            3 20.86976 12.77698 28.96254</code></pre>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
-<div id="fig-four-hp-mpg-dags-2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Reading-notes-lesson-24_files/figure-html/fig-four-hp-mpg-dags-2.png" class="img-fluid figure-img" data-ref-parent="fig-four-hp-mpg-dags"></p>
-<p></p><figcaption class="figure-caption">(b) Dag B</figcaption><p></p>
-</figure>
+<p>The change in the input from 3 liters displacement to 2 liters leads to a change in fuel economy of <span class="math inline">\(24.0 - 20.9 = -3.1\)</span> miles per gallon. The change in displacement is <span class="math inline">\(3 - 2 = 1\)</span> liters. The effect size is the ratio between the output change and the input change. Here, that is -3.1 miles per gallon per liter.</p>
+<p>The decision-maker may be more concerned about the cost of driving than with the miles per gallon. Then the appropriate response variable might be <code>EPA_fuel_cost,</code> denominated in dollars per year.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(EPA_fuel_cost <span class="sc">~</span> displacement, <span class="at">data=</span>MPG)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod2, <span class="at">displacement=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  displacement  .output     .lwr     .upr
+1            2 1585.887 1000.649 2171.125
+2            3 1882.534 1297.473 2467.596</code></pre>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
-<div id="fig-four-hp-mpg-dags-3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Reading-notes-lesson-24_files/figure-html/fig-four-hp-mpg-dags-3.png" class="img-fluid figure-img" data-ref-parent="fig-four-hp-mpg-dags"></p>
-<p></p><figcaption class="figure-caption">(c) Dag C</figcaption><p></p>
-</figure>
+<p>The change in output is about $300 per year. However, the change in input is still 1 liter. The effect size is, therefore, $300 per year per liter.</p>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
-<div id="fig-four-hp-mpg-dags-4" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Reading-notes-lesson-24_files/figure-html/fig-four-hp-mpg-dags-4.png" class="img-fluid figure-img" data-ref-parent="fig-four-hp-mpg-dags"></p>
-<p></p><figcaption class="figure-caption">(d) Dag D</figcaption><p></p>
-</figure>
+<p>Some decision variables are categorical. For instance, the buyer might like the idea of an engine that automatically turns off when the car is stopped at a light or in traffic. The <code>start_stop</code> variable, which has categorical levels “Yes” and “No,” records whether the car has this feature. Effect size estimation is slightly different when the input is categorical rather than quantitative. Still, build a model and compare the change in output to the change in input:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Mod3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(EPA_fuel_cost <span class="sc">~</span> start_stop, <span class="at">data=</span>MPG)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod3, <span class="at">start_stop=</span><span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  start_stop  .output     .lwr     .upr
+1         No 1872.193 916.0164 2828.369
+2        Yes 1945.194 989.0637 2901.324</code></pre>
 </div>
 </div>
-</div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;1: Scenarios for the relationship between automobile fuel economy, weight, and horsepower</figcaption><p></p>
-</figure>
-</div>
-</div>
-<p>In DAG A, the vehicle’s design weight determines that an engine with high horsepower will be part of the design. The weight is also responsible for the lower fuel economy.</p>
-<p>The other DAGs describe other scenarios. In DAG C, for instance, the car designers decided to build a muscle car and put in a big engine. The engine itself adds to the vehicle’s weight, and the higher weight determines lower miles per gallon. DAG D expresses a slightly different belief: again the choice to build a muscle car (high <code>hp</code>) influences the weight. But in DAG B, the big engine also directly influences the fuel economy, perhaps because the fuel-to-air ratio of the car, in normal use, is not optimal.</p>
-<p>As we will see in Lesson 28, to reveal the direct causal link between engine power and fuel economy requires different choices for the model formula depending on which DAG you think might be relevant.</p>
-</div>
-</div>
+<p>In this case, the change in output is $73 per year; the change in input is “Yes” - “No.” But, of course, it is meaningless to subtract one categorical level from another. Consequently, the effect size of <code>start_stop</code> on fuel cost cannot be quantified as a ratio. So, instead, the effect size is simply the difference in the output: a $73 per year increase with the Start/Stop feature.</p>
+<p>The statistical thinker knows to pay attention to whether a calculated result makes sense. It seems unlikely that the Start/Stop feature causes more fuel to be consumed. Was there an error? Perhaps we did the subtraction backward? Check the report from <code>model_eval()</code> to make sure.</p>
+<p>Here, the problem is not arithmetic. However, there is another possibility. It might be that manufacturers include the Start/Stop feature with big cars but not little ones. Then, even if Start/Stop might save gas when everything else is held constant, because the big cars use more fuel than little cars, it only <em>appears</em> that Start/Stop hurts fuel economy. This theory is, at this point, speculation: a hypothesis. Such a mixture of effects—big versus small car mixed with availability of Start/Stop—is called “<strong>confounding</strong>.” In Lessons 28 through 30, we discuss identifying and dealing with possible confounding.</p>
 <div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Example for LCs: Price of book versus its page count.
+Confounding?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Another example: Are longer books more expensive? Intuition suggests so, because more editing, paper, printing and shipping goes into making a longer book. We have some data that might be informative, <code>moderndive::amazon_books</code>. We can build a model of, say, <code>list_price</code> versus <code>num_pages</code>. To look at the effect size, let’s compare a 200-page book to a 400-page book.</p>
+<p>The surprising positive effect size of the Start/Stop feature caused a double take and led us to think of ways to make sense of the result. Right now, we simply have a hypothesis that Start/Stop is associated with bigger cars. (We will check that out in a little bit.)</p>
+<p>The effect size of annual fuel cost with respect to engine displacement, $300 per year per liter, did not surprise us. Perhaps it should have. After all, larger vehicles tend to have larger engines. This relationship might lead to confounding between vehicle size and engine displacement. We think we are looking at engine displacement, but instead, the effect might be due to vehicle size. Again, just a hypothesis at this point. The statistical thinker knows to consider possible confounding from the start.</p>
+</div>
+</div>
+<section id="categorical-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="categorical-outputs">Categorical outputs</h2>
+<p>Sometimes the relevant effect size involves a categorical output variable. A case in point is the possible confounding of the Start/Stop feature with vehicle size. To investigate this, we should build a model with Start/Stop as the output and vehicle size as the input.</p>
+<p>In this case, the issue of whether vehicle size causes Start/Stop is not essential. We are not concerned with the decisions made by automobile designers so much as with the possible confounding.</p>
+<p>When the output variable is categorical, it is not reasonable to calculate the change in output as the difference in categories. As before, “Yes” - “No” is not a number. Still, there is a meaningful and helpful way to quantify a change in a categorical output.</p>
+<p>The essential insight is quantifying the change in output in terms of probabilities. For instance, a small effect size would reflect a slight chance of the output changing from one level to another.</p>
+<p>The appropriate model type for a categorical output is to transform the output to a zero-one variable, as introduced in Lesson 19. We will present this in a demonstration here and return to the topic more fully in Lesson 34.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Demonstration: Start/Stop and vehicle size
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As described earlier, we are interested in the possibility that Start/Stop is available mainly on large, higher-fuel-consumption cars. If so, that would explain why the effect size we calculated of fuel cost with respect to Start/Stop was positive.</p>
+<p>The model we build will have a zero-one encoding of Start/Stop as the response and the vehicle’s fuel cost as the explanatory variable.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(list_price <span class="sc">~</span> num_pages, <span class="at">data =</span> moderndive<span class="sc">::</span>amazon_books)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod, <span class="at">num_pages =</span> <span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">400</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>MPG <span class="ot">&lt;-</span> MPG <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">has_start_stop =</span> <span class="fu">zero_one</span>(start_stop, <span class="at">one=</span><span class="st">"Yes"</span>))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>Mod4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(has_start_stop <span class="sc">~</span> EPA_fuel_cost, <span class="at">data =</span> MPG)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod4, <span class="at">EPA_fuel_cost=</span><span class="fu">c</span>(<span class="dv">1600</span>, <span class="dv">2000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  EPA_fuel_cost   .output       .lwr     .upr
+1          1600 0.4901341 -0.4891981 1.469466
+2          2000 0.5207835 -0.4583924 1.499959</code></pre>
+</div>
+</div>
+<p>The <code>.output</code> here is interpreted as a <em>probability</em> of <code>start_stop</code> having the value “Yes.” (That is because we set <code>one="Yes"</code> in the <code>zero_one()</code> conversion.) The <code>model_eval()</code> report indicates $400 per year increase in fuel cost is associated with a three percentage point increase in the probability of a vehicle having a Start/Stop feature. That is a small effect, so we see little support for our hypothesis that Start/Stop tends to be installed on larger, more fuel-efficient vehicles.</p>
+</div>
+</div>
+</section>
+<section id="multiple-explanatory-variables" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-explanatory-variables">Multiple explanatory variables</h2>
+<p>When a model has more than one explanatory variable, each has a different effect size.</p>
+<p>As an example, consider the price of books. We have some data that might be informative, <code>moderndive::amazon_books</code>. What is the effect size of page count on price. The appropriate model here is <code>list_price ~ num_pages</code>. The effect size is easy to compute:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(list_price <span class="sc">~</span> num_pages, <span class="at">data =</span> moderndive<span class="sc">::</span>amazon_books)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod1, <span class="at">num_pages =</span> <span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">400</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  num_pages  .output       .lwr     .upr
 1       200 15.82014 -11.636987 43.27726
 2       400 19.79643  -7.637503 47.23037</code></pre>
 </div>
 </div>
-<p>The longer book costs about 4 dollars more. So the effect size, to judge from this model, is $4 dollars divided by 200 more pages, which comes to 2 cents per page.</p>
-</div>
-</div>
-<p>Another example: Are hardcovers more expensive than paperbacks? The output is a quantitative variable: price. The input is categorical. In the <code>moderndive::amazon_books</code> data frame the variable <code>hard_paper</code> has levels “P” and “H.” A possible model:</p>
+<p>We elected to compare 200-page books with 400-page books, simply because those seem like reasonable book lengths. However, the longer book costs about 4 dollars more. So the effect size, to judge from this model, is $4 divided by 200 more pages, which comes to 2 cents per page.</p>
+<p>Another effect size is needed to address the question: Are hardcovers more expensive than paperbacks? The output is still price. But now, the input is categorical. In the <code>moderndive::amazon_books</code> data frame, the variable <code>hard_paper</code> has levels “P” and “H.” A possible model: <code>list_price ~ hard_paper</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(list_price <span class="sc">~</span> hard_paper, <span class="at">data =</span> amazon_books)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod, <span class="at">hard_paper =</span> <span class="fu">c</span>(<span class="st">"P"</span>, <span class="st">"H"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(list_price <span class="sc">~</span> hard_paper, <span class="at">data =</span> amazon_books)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod2, <span class="at">hard_paper =</span> <span class="fu">c</span>(<span class="st">"P"</span>, <span class="st">"H"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  hard_paper  .output      .lwr     .upr
 1          P 17.13523 -10.62291 44.89338
 2          H 22.39393  -5.46052 50.24839</code></pre>
 </div>
 </div>
+<p>A hardcover book costs about $5.25 more than a paperback book. Since the input is categorical, there is no change of input to divide by, so the effect size is $5.25 when going from a paperback to a hardcover.</p>
+<p>We can look at the effects of page length and cover-type separately. Instead, we can include both as explanatory variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Mod3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(list_price <span class="sc">~</span> hard_paper <span class="sc">+</span> num_pages, <span class="at">data =</span> amazon_books)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod3, <span class="at">hard_paper =</span> <span class="fu">c</span>(<span class="st">"P"</span>, <span class="st">"H"</span>),  <span class="at">num_pages=</span><span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">400</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  hard_paper num_pages  .output       .lwr     .upr
+1          P       200 14.52494 -12.641928 41.69182
+2          H       200 19.48253  -7.785720 46.75077
+3          P       400 18.43605  -8.709404 45.58151
+4          H       400 23.39363  -3.847698 50.63497</code></pre>
+</div>
+</div>
+<p>This output requires some interpretation. We have got short and long paperback books and short and long hardcover books. What should we compare to what?</p>
+<p>The convention is to consider each of the two inputs separately and hold the other input constant when we compare.</p>
+<p><em>Effect size of <code>num_pages</code> on <code>list_price</code></em>. To hold <code>hard_paper</code> constant, we will compare the two rows of the <code>model_eval()</code> report that have a “P” value for <code>hard_paper</code>. The difference in output for these two rows is $3.90. The effect size divides by the change in input—200 pages—so the effect size is just under 2 cents per page. <em>Effect size of <code>hard_paper</code> on <code>list_price</code></em>. This time we will hold <code>num_pages</code> constant, say at 200 pages. Comparing the corresponding rows in the <code>model_eval()</code> output shows a change in list price of $4.96 when going from paper back to hard cover. There is no special reason we decided to hold <code>hard_paper</code> constant at “P” rather than “H” or hold <code>num_pages</code> constant at 200 rather than 400. In general, the effect size will depend on the value being held constant. Choose a value that’s relevant to the purpose at hand.</p>
+<p>In these Lessons we are building models with additive effects.That is what the <code>+</code> means in, say, <code>list_price ~ hard_paper + num_pages</code>. We do this to keep the effect-size story as simple as possible. (Occasionally, you will see examples with <em>multiplicative</em> effects, called “<strong>interactions</strong>.” The tilde expressions for such models involve <code>*</code> rather than <code>+</code>, as in <code>list_price ~ hard_paper + num_pages.</code></p>
 </section>
-<section id="multiple-explanatory-variables" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="multiple-explanatory-variables">Multiple explanatory variables</h2>
-<p>When a model has more than one explanatory variable, there is a separate effect size for each. To illustrate, let’s consider prices of houses as recorded in the <code>mosaicData::SaratogaHouses</code> data frame, based on house sales in Saratoga County, NY, USA in 2006. We’ll follow a question asked by then-student Candice Corvetti in her Stat 101 class at Williams College: “How much is a fireplace worth?” Response variable: <code>price</code>. Explanatory variable: <code>fireplaces</code>. Since a handful of the houses has multiple fireplaces, we will simplify by filtering out those houses to retain only the ones with a single fireplace or none.</p>
+<section id="interval-estimates" class="level2">
+<h2 class="anchored" data-anchor-id="interval-estimates">Interval estimates</h2>
+<p>Statistical thinkers know that any estimate they make, including estimates of effect sizes, involves sampling variation. Consequently, give an <em>interval</em> estimate. The interval communicates to the decision-maker the uncertainty in the estimated quantity. Sophisticated decision-makers keep this uncertainty in mind, considering the range of outcomes likely from whatever use they make of effect size. On the other hand, statistically naive decision makers—even highly educated decision-makers can be statistically naive—look at the interval and sometimes ask the modeler, “Just give me a number. I don’t know what to do with two numbers.” Such a request might elicit a frank response: “If you don’t know what to do with two numbers, you also won’t know what to do with one number.” Unfortunately, that kind of frankness is not often well received; a reasonable alternative is: “The interval indicates the amount of uncertainty in the result. We’ll need to collect more data if you want to reduce the uncertainty.” (Lesson 29 introduces a not-always-available alternative to collecting more data: building a better model!)</p>
+<p>For the additive models that we are mainly using in these Lessons, the effect size is identical to a model coefficient. For these models, the confidence interval on the coefficient is the confidence interval on the effect size. For instance,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Simplified <span class="ot">&lt;-</span> SaratogaHouses <span class="sc">%&gt;%</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(fireplaces <span class="sc">&lt;=</span> <span class="dv">1</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>Mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(price <span class="sc">~</span> fireplaces, <span class="at">data =</span> Simplified)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>Mod_values <span class="ot">&lt;-</span> <span class="fu">model_eval</span>(Mod, <span class="at">fireplaces =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>Mod_values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Mod3 <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  fireplaces  .output       .lwr     .upr
-1          0 174653.3  -751.4332 350058.1
-2          1 235162.9 59783.5404 410542.3</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Simplified <span class="sc">%&gt;%</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>fireplaces, <span class="at">y =</span> price)) <span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">data=</span>Mod_values, <span class="fu">aes</span>(<span class="at">ymin=</span>.output, <span class="at">ymax=</span>.output, <span class="at">x =</span> fireplaces), <span class="at">y=</span><span class="cn">NA</span>,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">color=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Reading-notes-lesson-24_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>From the graphic, you can see that houses with a fireplace tend to have higher prices. From the report of the evaluated model, you can calculate the effect size: $235K for a house with a fireplace, $175K for a house without one. This suggests the value of a fireplace is $60K.</p>
-<p>There are, of course, many other things that determine the price of a house. Real-estate agents famously list the three most important factors as “location, location, and location.” Common sense brings in other explanatory variables: how big the house is, how luxurious, how many bathrooms, and so on. The statistical thinker knows to put any one explanatory variable into the context of other plausable factors.</p>
-<p>For simplicity, let’s collect all the factors other than <code>fireplaces</code> into a hypothetical variable which we will call “<code>fancy</code>.” Here are three plausible DAGs that plausibly describe an affect of fireplace on <code>price</code> in the context of <code>fancy</code>.</p>
-<div class="page-columns page-full">
-<div id="fig-fireplace-dags" class="cell column-page-right quarto-layout-panel">
-<figure class="figure">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
-<div id="fig-fireplace-dags-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Reading-notes-lesson-24_files/figure-html/fig-fireplace-dags-1.png" class="img-fluid figure-img" data-ref-parent="fig-fireplace-dags"></p>
-<p></p><figcaption class="figure-caption">(a) Dag A</figcaption><p></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
-<div id="fig-fireplace-dags-2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Reading-notes-lesson-24_files/figure-html/fig-fireplace-dags-2.png" class="img-fluid figure-img" data-ref-parent="fig-fireplace-dags"></p>
-<p></p><figcaption class="figure-caption">(b) Dag B</figcaption><p></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
-<div id="fig-fireplace-dags-3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Reading-notes-lesson-24_files/figure-html/fig-fireplace-dags-3.png" class="img-fluid figure-img" data-ref-parent="fig-fireplace-dags"></p>
-<p></p><figcaption class="figure-caption">(c) Dag C</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2: Scenarios relating the price of a house to having a fireplace</figcaption><p></p>
-</figure>
-</div>
-</div>
-<p>In DAG A, <code>fancy</code> and <code>fireplace</code> both contribute to <code>price</code>, but independently. In DAG B, <code>fireplace</code> directly contributes to <code>price</code>, but whether or not a house has a fireplace depends on the level of <code>fancy</code>. In DAG D, <code>fireplace</code> has no direct affect on <code>price</code>, which is set entirely by <code>fancy</code>. The <code>fireplace</code> variable is just an indicator of <code>fancy</code>.</p>
-<p>We can’t say from the data alone which of these three DAGs is the closest description of the situation. In Lessons 28, 30, and 31 we will consider how the choice of explanatory variables in a model leads to a faithful or misleading picture of the connections. There you will find out that DAGS A &amp; B both imply that <code>fancy</code> should be an explanatory variable if we want the effect size from the model to represent the <strong>direct</strong> effect of a fireplace on price. Easy enough to fit that model, … except that we don’t have an actual variable <code>fancy</code> in the <code>SaratogaHouses</code> data frame. To keep things simple for the moment, we will use <code>livingArea</code>—the size of the house—as a rough approximation to the hypothetical <code>fancy</code>.</p>
-<p>The effect size of <code>fireplaces</code> on <code>price</code> is found by comparing the model output for houses with and without a fireplace, <em>holding the values of all the other explanatory variables</em> <strong>constant</strong>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(price <span class="sc">~</span> fireplaces <span class="sc">+</span> livingArea, <span class="at">data =</span> Simplified)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod2, <span class="at">fireplaces =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">livingArea =</span> <span class="dv">2000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  fireplaces livingArea  .output     .lwr     .upr
-1          0       2000 234706.4 101212.9 368199.9
-2          1       2000 240420.8 106988.7 373852.8</code></pre>
-</div>
-</div>
-<p>For a house with living area 2000 feet<sup>2</sup>, the model output is $235K with no fireplace and $240K with a fireplace, putting the effect size of <code>fireplace</code> on <code>price</code> at $5K. That’s much smaller than the previous model, <code>price ~ fireplace</code>, gave for the effect size. The reason for the difference in results from the two models is that houses with fireplaces tend to be larger in area.</p>
-</section>
-<section id="confidence-intervals" class="level2">
-<h2 class="anchored" data-anchor-id="confidence-intervals">Confidence intervals</h2>
-<p>Statistical thinkers know that any estimate they make, including estimates of effect sizes, are subject to sampling variation. Consequently, an <em>interval</em> estimate should be given. This communicates to the decision maker the uncertainty in the quantity being estimated. Sophisticated decision makes take this uncertainty into account, considering the range of outcomes likely from whatever use they make of an effect size. Statistically naive decision makers—even highly educated descision makers can be statistically naive—look at the interval and will sometimes ask the modeler, “Just give me a number. I don’t know what to do with two numbers.” Such a request might elicit a frank response: “If you don’t know what to do with two numbers, you also won’t know what to do with one number.” That kind of frankness is not often well received; a reasonable alternative is: “The interval indicates the amount of uncertainty in the result. If you would like to reduce the uncertainty, we’ll need to collect more data.” (In Lesson 29 you’ll meet a not-always-available alternative to collecting more data: building a better model!)</p>
-<p>The appropriate interval estimate for an effect size is called a “<strong>confidence interval</strong>.” It’s extremely important to keep this name in mind, since there is another kind of interval to quantify uncertainty, called a “prediction interval,” which will be introduced in Lesson’s 25 and 26. Confusing the two kinds of intervals is a serious blunder.</p>
-<p>Confidence interval can be constructed using the same sorts of techniques introduced in Lesson 23. For models that are constructed by adding together different terms, like the <code>price ~ fireplaces + livingArea</code> model of the previous example, the estimated effect size for a given term is the corresponding model coefficient. The confidence interval on that effect size is simply the confidence interval on the coefficient. For example, for fireplaces:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(price <span class="sc">~</span> fireplaces <span class="sc">+</span> livingArea, <span class="at">data =</span> Simplified) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                 2.5 %    97.5 %
-(Intercept)  6979.0960 27188.993
-fireplaces  -1521.3683 12950.131
-livingArea    102.7093   114.913</code></pre>
-</div>
-</div>
-<p>Thus, the confidence interval for the effect of a fireplace ranges from negative $1500 to positive $13,000. Broad though this may seem at first, it does carry genuine information. You can be confident that a fireplace alone will not add as much as $50,000 to the price of the house, nor will it cause the house’s value to fall by $10,000.</p>
-<p>The confidence interval on the <code>livingArea</code> is pretty narrow $103 to $115 per square foot. If you’re looking to save a bit of money by shopping for a slighly smaller house, say 200 square-feet smaller, you can adjust your budget downwards by something in the range of $206,000 to $230,000. The units here come from multiplying the area units (square feet) by the effect size units (dollars per square feet), producing a quantity denominated in dollars.</p>
-<p>It’s important always to keep in mind that an estimate of an effect size will likely be misleading if your choice of model seriously misrepresents reality. For instance, a salesperson hawking add-on fireplaces might show you results from the “obvious” model <code>price ~ fireplace</code>, leading to an effect size of $52,000 to $69,000, calculated this way.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(price <span class="sc">~</span> fireplaces, <span class="at">data =</span> Simplified) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                2.5 %    97.5 %
-(Intercept) 168209.69 181097.01
-fireplaces   51899.26  69119.92</code></pre>
-</div>
-</div>
-<p>It would be unfair to say that the $52,000 to $69,000 claim is a lie; it’s entirely consistent with the data. But it relies on a grossly implausible description of the factors that determine house price.</p>
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Note in draft: For the confounding section
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>An idea …</p>
-<p>Suppose the DAG is that fireplaces cause living area (<code>fancy</code>) and that both of these cause price. That’s distinct from DAG C in the above, because the causal arrow from <code>fancy</code> to <code>fireplace</code> is reversed. Could we decide between DAG C and this new DAG. How about the models <code>fireplace ~ livingArea</code> versus <code>fireplace</code> versus <code>fancy</code> plus <code>price</code>.</p>
-</div>
-</div>
-</section>
-<section id="interaction" class="level2">
-<h2 class="anchored" data-anchor-id="interaction">Interaction</h2>
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Note in draft:
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Not all effects are additive.</p>
+<pre><code>                 2.5 %     97.5 %
+(Intercept) 7.03901789 14.1886534
+hard_paperH 1.55803436  8.3571295
+num_pages   0.01023618  0.0288749</code></pre>
 </div>
 </div>
 
@@ -545,7 +624,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -581,27 +677,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Reading-notes-lesson-23.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Estimating sampling variation from a single sample</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Reading-notes-lesson-25.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Mechanics of prediction</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 

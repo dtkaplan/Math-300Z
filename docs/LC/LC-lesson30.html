@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,78 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -64,28 +132,35 @@ ul.task-list{list-style: none;}
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="../index.html">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">Proposal</a>
+    <a class="nav-link" href="../index.html">
+ <span class="menu-text">Proposal</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../lessons.html">Lessons</a>
+    <a class="nav-link" href="../lessons.html">
+ <span class="menu-text">Lessons</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../layout.html">Site layout</a>
+    <a class="nav-link" href="../layout.html">
+ <span class="menu-text">Site layout</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../objective-list.html">Objectives</a>
+    <a class="nav-link" href="../objective-list.html">
+ <span class="menu-text">Objectives</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../LC-list.html">LCs</a>
+    <a class="nav-link" href="../LC-list.html">
+ <span class="menu-text">LCs</span></a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -99,7 +174,7 @@ ul.task-list{list-style: none;}
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -111,12 +186,184 @@ ul.task-list{list-style: none;}
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
 
 </header>
 
+<div class="callout-warning callout callout-style-default callout-captioned page-columns page-full">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Is horsepower the cause?
+</div>
+</div>
+<div class="callout-body-container callout-body page-columns page-full">
+<p>It might seem from the negative sign on the effect size of engine horsepower on fuel economy that a more powerful engine is not as efficient than a less powerful engine at moving the car a given number of miles. That’s a reasonable conclusion. But the statistical thinker always keeps in mind other possibilities. For instance, another factor in fuel economy is the overall weight of the vehicle. A van designed to haul many passengers weighs more than a 2-passenger sporty vehicle. The van needs more horsepower because it is accelerating more weight.</p>
+<div class="cell">
+
+</div>
+<p><a href="#fig-four-hp-mpg-dags">Figure&nbsp;1</a> shows four DAGs, each of which describe a plausible scenario.</p>
+<div class="page-columns page-full">
+<div id="fig-four-hp-mpg-dags" class="cell column-page-right quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-four-hp-mpg-dags-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="LC-lesson30_files/figure-html/fig-four-hp-mpg-dags-1.png" class="img-fluid figure-img" data-ref-parent="fig-four-hp-mpg-dags"></p>
+<p></p><figcaption class="figure-caption">(a) Dag A</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-four-hp-mpg-dags-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="LC-lesson30_files/figure-html/fig-four-hp-mpg-dags-2.png" class="img-fluid figure-img" data-ref-parent="fig-four-hp-mpg-dags"></p>
+<p></p><figcaption class="figure-caption">(b) Dag B</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-four-hp-mpg-dags-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="LC-lesson30_files/figure-html/fig-four-hp-mpg-dags-3.png" class="img-fluid figure-img" data-ref-parent="fig-four-hp-mpg-dags"></p>
+<p></p><figcaption class="figure-caption">(c) Dag C</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-four-hp-mpg-dags-4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="LC-lesson30_files/figure-html/fig-four-hp-mpg-dags-4.png" class="img-fluid figure-img" data-ref-parent="fig-four-hp-mpg-dags"></p>
+<p></p><figcaption class="figure-caption">(d) Dag D</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Scenarios for the relationship between automobile fuel economy, weight, and horsepower</figcaption><p></p>
+</figure>
+</div>
+</div>
+<p>In DAG A, the vehicle’s design weight determines that an engine with high horsepower will be part of the design. The weight is also responsible for the lower fuel economy.</p>
+<p>The other DAGs describe other scenarios. In DAG C, for instance, the car designers decided to build a muscle car and put in a big engine. The engine itself adds to the vehicle’s weight, and the higher weight determines lower miles per gallon. DAG D expresses a slightly different belief: again the choice to build a muscle car (high <code>hp</code>) influences the weight. But in DAG B, the big engine also directly influences the fuel economy, perhaps because the fuel-to-air ratio of the car, in normal use, is not optimal.</p>
+<p>As we will see in Lesson 28, to reveal the direct causal link between engine power and fuel economy requires different choices for the model formula depending on which DAG you think might be relevant.</p>
+</div>
+</div>
+<hr>
+<p>To illustrate, let’s consider prices of houses as recorded in the <code>mosaicData::SaratogaHouses</code> data frame, based on house sales in Saratoga County, NY, USA in 2006. We’ll follow a question asked by then-student Candice Corvetti in her Stat 101 class at Williams College: “How much is a fireplace worth?” Response variable: <code>price</code>. Explanatory variable: <code>fireplaces</code>. Since a handful of the houses has multiple fireplaces, we will simplify by filtering out those houses to retain only the ones with a single fireplace or none.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Simplified <span class="ot">&lt;-</span> SaratogaHouses <span class="sc">%&gt;%</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(fireplaces <span class="sc">&lt;=</span> <span class="dv">1</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(price <span class="sc">~</span> fireplaces, <span class="at">data =</span> Simplified)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Mod_values <span class="ot">&lt;-</span> <span class="fu">model_eval</span>(Mod, <span class="at">fireplaces =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Mod_values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  fireplaces  .output       .lwr     .upr
+1          0 174653.3  -751.4332 350058.1
+2          1 235162.9 59783.5404 410542.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Simplified <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>fireplaces, <span class="at">y =</span> price)) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">data=</span>Mod_values, <span class="fu">aes</span>(<span class="at">ymin=</span>.output, <span class="at">ymax=</span>.output, <span class="at">x =</span> fireplaces), <span class="at">y=</span><span class="cn">NA</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">color=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="LC-lesson30_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>From the graphic, you can see that houses with a fireplace tend to have higher prices. From the report of the evaluated model, you can calculate the effect size: $235K for a house with a fireplace, $175K for a house without one. This suggests the value of a fireplace is $60K.</p>
+<p>There are, of course, many other things that determine the price of a house. Real-estate agents famously list the three most important factors as “location, location, and location.” Common sense brings in other explanatory variables: how big the house is, how luxurious, how many bathrooms, and so on. The statistical thinker knows to put any one explanatory variable into the context of other plausable factors.</p>
+<p>For simplicity, let’s collect all the factors other than <code>fireplaces</code> into a hypothetical variable which we will call “<code>fancy</code>.” Here are three plausible DAGs that plausibly describe an affect of fireplace on <code>price</code> in the context of <code>fancy</code>.</p>
+<div class="page-columns page-full">
+<div id="fig-fireplace-dags" class="cell column-page-right quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-fireplace-dags-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="LC-lesson30_files/figure-html/fig-fireplace-dags-1.png" class="img-fluid figure-img" data-ref-parent="fig-fireplace-dags"></p>
+<p></p><figcaption class="figure-caption">(a) Dag A</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-fireplace-dags-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="LC-lesson30_files/figure-html/fig-fireplace-dags-2.png" class="img-fluid figure-img" data-ref-parent="fig-fireplace-dags"></p>
+<p></p><figcaption class="figure-caption">(b) Dag B</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-fireplace-dags-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="LC-lesson30_files/figure-html/fig-fireplace-dags-3.png" class="img-fluid figure-img" data-ref-parent="fig-fireplace-dags"></p>
+<p></p><figcaption class="figure-caption">(c) Dag C</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: Scenarios relating the price of a house to having a fireplace</figcaption><p></p>
+</figure>
+</div>
+</div>
+<p>In DAG A, <code>fancy</code> and <code>fireplace</code> both contribute to <code>price</code>, but independently. In DAG B, <code>fireplace</code> directly contributes to <code>price</code>, but whether or not a house has a fireplace depends on the level of <code>fancy</code>. In DAG D, <code>fireplace</code> has no direct affect on <code>price</code>, which is set entirely by <code>fancy</code>. The <code>fireplace</code> variable is just an indicator of <code>fancy</code>.</p>
+<p>We can’t say from the data alone which of these three DAGs is the closest description of the situation. In Lessons 28, 30, and 31 we will consider how the choice of explanatory variables in a model leads to a faithful or misleading picture of the connections. There you will find out that DAGS A &amp; B both imply that <code>fancy</code> should be an explanatory variable if we want the effect size from the model to represent the <strong>direct</strong> effect of a fireplace on price. Easy enough to fit that model, … except that we don’t have an actual variable <code>fancy</code> in the <code>SaratogaHouses</code> data frame. To keep things simple for the moment, we will use <code>livingArea</code>—the size of the house—as a rough approximation to the hypothetical <code>fancy</code>.</p>
+<p>The effect size of <code>fireplaces</code> on <code>price</code> is found by comparing the model output for houses with and without a fireplace, <em>holding the values of all the other explanatory variables</em> <strong>constant</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(price <span class="sc">~</span> fireplaces <span class="sc">+</span> livingArea, <span class="at">data =</span> Simplified)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod2, <span class="at">fireplaces =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">livingArea =</span> <span class="dv">2000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  fireplaces livingArea  .output     .lwr     .upr
+1          0       2000 234706.4 101212.9 368199.9
+2          1       2000 240420.8 106988.7 373852.8</code></pre>
+</div>
+</div>
+<p>For a house with living area 2000 feet<sup>2</sup>, the model output is $235K with no fireplace and $240K with a fireplace, putting the effect size of <code>fireplace</code> on <code>price</code> at $5K. That’s much smaller than the previous model, <code>price ~ fireplace</code>, gave for the effect size. The reason for the difference in results from the two models is that houses with fireplaces tend to be larger in area.</p>
+<hr>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note in draft: For the confounding section
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An idea …</p>
+<p>Suppose the DAG is that fireplaces cause living area (<code>fancy</code>) and that both of these cause price. That’s distinct from DAG C in the above, because the causal arrow from <code>fancy</code> to <code>fireplace</code> is reversed. Could we decide between DAG C and this new DAG. How about the models <code>fireplace ~ livingArea</code> versus <code>fireplace</code> versus <code>fancy</code> plus <code>price</code>.</p>
+</div>
+</div>
+<hr>
+<p>For models that are constructed by adding together different terms, like the <code>price ~ fireplaces + livingArea</code> model of the previous example, the estimated effect size for a given term is the corresponding model coefficient. The confidence interval on that effect size is simply the confidence interval on the coefficient. For example, for fireplaces:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(price <span class="sc">~</span> fireplaces <span class="sc">+</span> livingArea, <span class="at">data =</span> Simplified) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 2.5 %    97.5 %
+(Intercept)  6979.0960 27188.993
+fireplaces  -1521.3683 12950.131
+livingArea    102.7093   114.913</code></pre>
+</div>
+</div>
+<p>Thus, the confidence interval for the effect of a fireplace ranges from negative $1500 to positive $13,000. Broad though this may seem at first, it does carry genuine information. You can be confident that a fireplace alone will not add as much as $50,000 to the price of the house, nor will it cause the house’s value to fall by $10,000.</p>
+<p>The confidence interval on the <code>livingArea</code> is pretty narrow $103 to $115 per square foot. If you’re looking to save a bit of money by shopping for a slighly smaller house, say 200 square-feet smaller, you can adjust your budget downwards by something in the range of $206,000 to $230,000. The units here come from multiplying the area units (square feet) by the effect size units (dollars per square feet), producing a quantity denominated in dollars.</p>
+<p>It’s important always to keep in mind that an estimate of an effect size will likely be misleading if your choice of model seriously misrepresents reality. For instance, a salesperson hawking add-on fireplaces might show you results from the “obvious” model <code>price ~ fireplace</code>, leading to an effect size of $52,000 to $69,000, calculated this way.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(price <span class="sc">~</span> fireplaces, <span class="at">data =</span> Simplified) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                2.5 %    97.5 %
+(Intercept) 168209.69 181097.01
+fireplaces   51899.26  69119.92</code></pre>
+</div>
+</div>
+<p>It would be unfair to say that the $52,000 to $69,000 claim is a lie; it’s entirely consistent with the data. But it relies on a grossly implausible description of the factors that determine house price.</p>
+<hr>
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section">30.1</h2>
 <p>Dags with longer confounding pathways. Is there mixing when leaving out an element in the pathway. Mix up the directions of the arrows and show that the mixing occurs when the covariate is <em>included</em> in the model.</p>
@@ -182,7 +429,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -210,31 +474,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>

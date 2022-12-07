@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -53,7 +58,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -66,7 +71,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -128,28 +133,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="../index.html">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html">Proposal</a>
+    <a class="nav-link" href="../index.html">
+ <span class="menu-text">Proposal</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../lessons.html">Lessons</a>
+    <a class="nav-link" href="../lessons.html">
+ <span class="menu-text">Lessons</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../layout.html">Site layout</a>
+    <a class="nav-link" href="../layout.html">
+ <span class="menu-text">Site layout</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../objective-list.html">Objectives</a>
+    <a class="nav-link" href="../objective-list.html">
+ <span class="menu-text">Objectives</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../LC-list.html">LCs</a>
+    <a class="nav-link" href="../LC-list.html">
+ <span class="menu-text">LCs</span></a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -175,6 +187,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
@@ -284,7 +297,7 @@ In draft
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>{ <span class="fu">do</span>(<span class="dv">5</span>) <span class="sc">*</span> {<span class="fu">sample</span>(Galton, <span class="at">size=</span><span class="dv">50</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(height))} } <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sz=</span><span class="fu">sd</span>(m))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         sz
-1 0.7253725</code></pre>
+1 0.7345861</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">5</span>) <span class="sc">*</span> {<span class="fu">sample</span>(Galton, <span class="at">size=</span><span class="dv">50</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(height))} <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sz =</span> <span class="fu">sd</span>(m))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -321,330 +334,330 @@ In draft
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(TenMileRace, <span class="at">size=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     state time  net age sex orig.id
-5200    VA 5826 5622  26   F    5200
-3621    NY 3710 3710  52   M    3621
-4319    VA 5187 5162  16   F    4319
-6236    DC 5086 4898  31   F    6236
-4850    VA 5005 4928  25   F    4850</code></pre>
+5524    VA 6884 6403  27   F    5524
+6142    DC 6263 6040  30   F    6142
+8067    VA 5260 4985  46   F    8067
+5228    DC 6101 5905  26   F    5228
+3996    VA 6310 6075  57   M    3996</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(TenMileRace, <span class="at">size=</span><span class="dv">100</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sz =</span> <span class="fu">sd</span>(net))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        sz
-1 989.7872</code></pre>
+1 975.1356</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">300</span>)<span class="sc">*</span> {<span class="fu">sample</span>(TenMileRace, <span class="at">size=</span><span class="dv">100</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sz =</span> <span class="fu">sd</span>(net))}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           sz
-1    935.2835
-2    864.1209
-3    991.9426
-4   1033.4450
-5   1107.1699
-6    999.3019
-7    979.6108
-8    984.8824
-9    893.9452
-10   896.9353
-11   909.7440
-12  1082.4825
-13   869.6667
-14   909.8586
-15   841.8605
-16   899.8305
-17  1098.6771
-18   903.9756
-19  1017.5757
-20  1009.8084
-21   947.4528
-22   866.5563
-23  1111.8237
-24   920.9881
-25  1114.2142
-26   989.2198
-27   904.5219
-28   942.2985
-29   975.0523
-30  1005.0565
-31  1045.0649
-32   804.7149
-33   984.5017
-34   931.1376
-35   987.1799
-36   966.1105
-37  1176.1742
-38   997.8880
-39   939.1997
-40   964.8751
-41  1023.9575
-42   894.5466
-43  1078.5738
-44   890.7672
-45   913.1032
-46   957.8719
-47   938.4455
-48  1198.2465
-49   960.2679
-50  1093.0112
-51   878.1397
-52   902.9950
-53   959.2964
-54   955.9949
-55   994.5670
-56   999.6098
-57   894.5494
-58   944.2706
-59   841.5120
-60   971.9427
-61   866.6388
-62   884.4254
-63  1005.0672
-64   859.3656
-65   869.6465
-66   928.4984
-67   882.3493
-68   929.3066
-69   961.0110
-70   954.7666
-71   995.1881
-72   910.8695
-73  1086.1882
-74   866.8875
-75   829.8607
-76   978.2121
-77   915.6285
-78   960.1390
-79  1075.9175
-80   806.8149
-81  1038.5203
-82   916.7681
-83   909.2274
-84   884.5920
-85   847.5868
-86  1000.2599
-87  1013.9214
-88   952.3603
-89  1032.1450
-90   960.9476
-91   938.9403
-92  1124.0317
-93  1117.8027
-94   813.1756
-95   899.5693
-96  1106.8892
-97   805.3640
-98   895.5305
-99  1041.5698
-100 1001.3925
-101 1033.3263
-102  967.3543
-103  992.1093
-104 1099.2348
-105 1006.7875
-106 1013.3553
-107 1100.3269
-108  821.2211
-109 1042.6789
-110  988.7332
-111  905.7325
-112 1025.8348
-113  909.8306
-114  880.0523
-115 1151.6035
-116  759.0052
-117 1021.5409
-118  887.0085
-119  915.8048
-120  882.4327
-121 1108.2071
-122  961.0029
-123  917.1378
-124 1022.6772
-125 1019.5482
-126 1034.1278
-127 1008.5512
-128  866.9532
-129  937.5872
-130  969.3005
-131  963.5933
-132  940.6535
-133  865.5862
-134  979.6695
-135  855.7436
-136  831.7585
-137  904.6226
-138  939.4044
-139  964.5623
-140  923.7244
-141 1035.8546
-142 1020.1612
-143  871.0645
-144  779.6602
-145 1018.4503
-146  980.4815
-147  895.1516
-148  903.2798
-149  933.7116
-150 1088.0078
-151  946.0003
-152 1085.4115
-153  836.6267
-154 1096.0999
-155 1001.8983
-156  937.0384
-157  932.4856
-158 1071.9284
-159  964.6650
-160  948.0608
-161  961.7802
-162 1086.2583
-163  881.6392
-164 1074.1256
-165 1014.8427
-166 1019.0670
-167  762.5020
-168  956.9975
-169 1013.7822
-170  961.2855
-171 1064.2289
-172  896.5258
-173  876.9779
-174 1002.3865
-175  902.0062
-176 1087.5041
-177  969.0666
-178  949.3226
-179  937.5604
-180  967.8846
-181  962.7566
-182  842.6570
-183  975.8517
-184  860.3817
-185  934.1456
-186  966.8410
-187 1054.9238
-188  864.7210
-189  897.6808
-190  975.0652
-191 1034.4298
-192 1028.2902
-193  994.6110
-194  864.5749
-195  909.5564
-196  917.8059
-197  785.3245
-198  869.8035
-199  948.1110
-200 1041.2221
-201  938.3919
-202  837.3169
-203  938.4763
-204  997.6952
-205  853.5572
-206  856.8444
-207  953.4682
-208  897.4692
-209  935.7548
-210  994.2567
-211  830.4893
-212 1009.4564
-213 1021.2338
-214  916.7626
-215  961.3999
-216 1026.8420
-217  955.5354
-218 1092.4335
-219  871.2790
-220 1022.1029
-221 1012.0510
-222  941.3925
-223  899.5408
-224  944.8411
-225  948.6405
-226 1013.6389
-227  979.0452
-228  923.8670
-229  919.9923
-230 1059.0503
-231  849.6150
-232 1115.5983
-233  948.7558
-234  823.0285
-235 1149.5049
-236 1012.8591
-237 1093.9288
-238  959.5887
-239 1001.5643
-240  830.0468
-241  984.8155
-242  962.4929
-243  920.9400
-244  874.5202
-245  933.4128
-246  899.6460
-247  939.2989
-248  971.5205
-249 1076.3141
-250 1077.4322
-251  915.0616
-252 1004.6463
-253  918.4548
-254 1053.7438
-255  984.9317
-256 1012.3069
-257  969.1277
-258  791.9972
-259  996.1261
-260  955.9223
-261 1010.5353
-262  906.0977
-263 1013.5866
-264  975.9976
-265  824.0274
-266  895.0678
-267  857.9002
-268  921.7147
-269  867.7880
-270 1114.6959
-271 1016.6237
-272 1010.3011
-273  916.3437
-274  942.8530
-275  990.4020
-276 1022.8936
-277 1010.1219
-278  945.0536
-279  962.7322
-280  966.1271
-281  769.4918
-282 1031.4658
-283  920.7142
-284  966.3896
-285 1046.1081
-286 1009.1230
-287  929.2753
-288 1011.5554
-289  856.8500
-290  916.3724
-291  962.7453
-292  865.7287
-293 1008.0288
-294 1032.9117
-295  898.6383
-296  871.3332
-297  985.6596
-298  911.9377
-299 1178.4605
-300  836.0317</code></pre>
+1    959.2438
+2    934.4931
+3    902.7186
+4   1004.3998
+5    945.9244
+6    833.2083
+7   1084.5855
+8    954.6535
+9    912.3901
+10   995.7918
+11  1042.0322
+12   982.1383
+13  1013.8613
+14   973.3382
+15   868.8083
+16   882.1596
+17   930.6375
+18   969.4653
+19   861.0170
+20   863.1551
+21   917.3276
+22   976.3435
+23   967.9830
+24   979.1732
+25  1093.7655
+26   872.7911
+27   985.4766
+28  1097.9533
+29  1000.4953
+30   930.4201
+31   891.1693
+32   918.4250
+33   890.3469
+34   998.7142
+35   956.7019
+36   922.2497
+37   978.6689
+38  1085.5178
+39   967.6515
+40   884.9708
+41   988.9340
+42   902.8769
+43   964.9145
+44  1018.4643
+45   970.9328
+46   901.6683
+47   864.7810
+48   965.4061
+49   946.0747
+50   882.1236
+51   984.0817
+52   984.4679
+53   899.1849
+54   903.5176
+55  1150.7143
+56   912.9922
+57  1027.8526
+58   982.6329
+59   929.1650
+60   902.0101
+61   988.0909
+62   952.8978
+63  1100.1091
+64   926.4893
+65   914.0777
+66   900.8727
+67  1109.5132
+68  1119.7061
+69   992.5568
+70  1021.6209
+71  1076.7835
+72   966.1313
+73  1004.1590
+74  1156.9103
+75   840.6673
+76   926.8184
+77   939.6269
+78  1016.1805
+79   995.6977
+80  1007.7892
+81  1066.5578
+82   981.6095
+83   854.4394
+84   886.8302
+85   935.1963
+86  1216.0214
+87   906.2919
+88   889.4195
+89   963.2870
+90   949.8067
+91  1036.6185
+92  1073.3345
+93   954.2095
+94  1141.1939
+95   952.1924
+96  1021.8267
+97   809.7284
+98  1048.6305
+99  1042.6614
+100 1131.7820
+101  943.6481
+102 1169.6773
+103  953.3547
+104  848.8096
+105  849.2869
+106  985.8172
+107  825.2414
+108  937.4161
+109  891.9053
+110 1037.3724
+111  877.5936
+112 1014.7396
+113  947.2007
+114  954.8917
+115  922.6524
+116 1046.5536
+117  966.0246
+118  938.6390
+119  960.6977
+120  879.0129
+121 1036.2257
+122  910.9719
+123 1010.0250
+124 1078.8867
+125  888.4951
+126  858.5824
+127  972.0682
+128 1109.6574
+129  849.3544
+130 1004.0963
+131  961.8095
+132  784.8440
+133 1115.5438
+134  998.9299
+135 1115.8560
+136  931.0851
+137  935.7776
+138  969.5563
+139  920.2575
+140  923.0128
+141  971.1214
+142  997.0698
+143  972.1763
+144  775.7842
+145 1063.2023
+146  975.4015
+147  918.7700
+148 1064.1902
+149  872.8863
+150 1039.3651
+151 1018.6946
+152  955.8719
+153  982.9815
+154  917.1532
+155  953.6226
+156  982.3155
+157 1030.6795
+158 1002.3261
+159  920.1648
+160  838.6909
+161  878.9505
+162  829.6094
+163  802.1561
+164  878.2401
+165 1079.2028
+166  936.0717
+167  950.5361
+168  890.8605
+169  799.3358
+170  897.8961
+171  849.0803
+172  969.3993
+173 1029.8031
+174  990.6682
+175  925.5050
+176  937.0910
+177  971.1083
+178 1027.6437
+179  965.4732
+180  947.4097
+181  862.0483
+182  978.1615
+183 1011.1505
+184  916.7871
+185  870.0635
+186  948.9761
+187  738.6006
+188  880.2537
+189 1132.9984
+190  936.7129
+191  974.7874
+192  830.0050
+193 1028.4885
+194  925.4232
+195  944.6962
+196 1010.6496
+197  895.0447
+198  999.6950
+199  943.9454
+200  998.0013
+201  954.2335
+202  885.1100
+203 1075.9155
+204  893.7337
+205  912.3288
+206 1071.6367
+207  995.9273
+208 1010.3681
+209  961.2334
+210  900.9868
+211 1072.2501
+212  994.5600
+213  893.5359
+214  971.3190
+215  956.0959
+216 1042.6597
+217  900.4032
+218  968.4890
+219 1003.1355
+220  899.7613
+221 1053.0005
+222  863.0198
+223  909.3720
+224 1007.0371
+225  972.8755
+226  903.5665
+227  830.5423
+228 1007.5047
+229  995.8490
+230 1001.6037
+231 1144.1433
+232  964.1477
+233  979.6971
+234  961.2329
+235  874.1971
+236 1070.5725
+237 1191.2779
+238  892.8464
+239 1011.2156
+240  960.1700
+241  840.5881
+242  932.5718
+243  989.4362
+244  893.0370
+245  959.4814
+246  958.7799
+247  924.1331
+248 1010.0642
+249  946.5351
+250  863.7615
+251 1000.0322
+252 1015.9743
+253 1011.4132
+254 1010.4164
+255 1043.1718
+256  881.4145
+257  948.0952
+258  893.7342
+259  953.5396
+260 1069.0680
+261  988.2130
+262  970.3683
+263  874.7507
+264  938.8513
+265  935.1249
+266  880.9166
+267  851.8317
+268 1104.5321
+269  915.6692
+270  990.3238
+271  975.4803
+272  953.9365
+273 1114.3836
+274  895.4929
+275 1092.3845
+276 1172.3690
+277  940.7486
+278  920.0572
+279  907.1867
+280 1035.7034
+281  862.5798
+282  962.2298
+283 1044.7607
+284  896.3378
+285  868.4049
+286 1116.9921
+287  993.4000
+288 1024.9986
+289 1003.5813
+290  982.7132
+291 1096.3792
+292  929.5512
+293  990.4498
+294 1005.9827
+295 1034.0473
+296  924.9723
+297 1000.3796
+298  846.3115
+299 1015.2422
+300  988.0119</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>{<span class="fu">do</span>(<span class="dv">300</span>)<span class="sc">*</span> {<span class="fu">sample</span>(TenMileRace, <span class="at">size=</span><span class="dv">100</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sz =</span> <span class="fu">sd</span>(net))}} <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(sz), <span class="at">s=</span><span class="fu">sd</span>(sz))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         m        s
-1 964.5374 78.20796</code></pre>
+1 969.3981 85.39019</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>{<span class="fu">do</span>(<span class="dv">300</span>)<span class="sc">*</span> {<span class="fu">sample</span>(TenMileRace, <span class="at">size=</span><span class="dv">400</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sz =</span> <span class="fu">sd</span>(net))}} <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(sz), <span class="at">s=</span><span class="fu">sd</span>(sz))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         m        s
-1 972.0645 40.66924</code></pre>
+1 971.7669 44.20284</code></pre>
 </div>
 </div>
 <ol start="5" type="1">
@@ -708,7 +721,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -736,31 +766,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>

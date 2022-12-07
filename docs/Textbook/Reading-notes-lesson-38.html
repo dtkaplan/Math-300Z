@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Spring 2023 Math 300 Revisions - False discovery</title>
+<title>Lessons in Statistical Thinking - 38&nbsp; False discovery</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,28 +23,30 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./QR2.html" rel="next">
+<link href="./Reading-notes-lesson-37.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
+  "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
+  "panel-placement": "start",
+  "type": "textbox",
   "limit": 20,
   "language": {
     "search-no-results-text": "No results",
@@ -59,62 +61,291 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-<script src="../site_libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
-    <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
-    </a>
-  </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../index.html">Proposal</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../lessons.html">Lessons</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../layout.html">Site layout</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../objective-list.html">Objectives</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../LC-list.html">LCs</a>
-  </li>  
-</ul>
-              <div id="quarto-search" class="" title="Search"></div>
-          </div> <!-- /navcollapse -->
-      </div> <!-- /container-fluid -->
-    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">False discovery</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Lessons in Statistical Thinking</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">1-18 from ModernDive</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Lessons in Statistical Thinking</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-19.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Preliminaries</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-20.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Measuring and simulating variation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-21.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Signal and noise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-22.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Sampling and sampling variation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-23.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Estimating sampling variation from a single sample</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-25.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Mechanics of prediction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-26.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Constructing a prediction interval</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 1-8</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-28.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Covariates</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-29.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Covariates eat variance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-30.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Confounding</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-31.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Spurious correlation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-32.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Experiment and random assignment</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-33.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Measuring and accumulating risk</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-34.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Constructing a classifier</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-35.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Accounting for prevalence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-36.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-37.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Calculating a p-value</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-38.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">False discovery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 9-19</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#interpreting-a-p-value" id="toc-interpreting-a-p-value" class="nav-link active" data-scroll-target="#interpreting-a-p-value">Interpreting a p-value</a></li>
+  <li><a href="#a-standard-operating-procedure" id="toc-a-standard-operating-procedure" class="nav-link" data-scroll-target="#a-standard-operating-procedure">A standard operating procedure</a></li>
+  <li><a href="#what-people-want-to-know" id="toc-what-people-want-to-know" class="nav-link" data-scroll-target="#what-people-want-to-know">What people want to know</a></li>
+  <li><a href="#example-falsely-discovering-purchasing-habits" id="toc-example-falsely-discovering-purchasing-habits" class="nav-link" data-scroll-target="#example-falsely-discovering-purchasing-habits">Example: Falsely discovering purchasing habits</a></li>
+  <li><a href="#sources-of-false-discovery" id="toc-sources-of-false-discovery" class="nav-link" data-scroll-target="#sources-of-false-discovery">Sources of false discovery</a></li>
+  <li><a href="#identifying-false-discovery" id="toc-identifying-false-discovery" class="nav-link" data-scroll-target="#identifying-false-discovery">Identifying false discovery</a></li>
+  <li><a href="#false-discovery-and-multiple-testing" id="toc-false-discovery-and-multiple-testing" class="nav-link" data-scroll-target="#false-discovery-and-multiple-testing">False discovery and multiple testing</a></li>
+  <li><a href="#example-organic-discovery" id="toc-example-organic-discovery" class="nav-link" data-scroll-target="#example-organic-discovery">Example: Organic discovery?</a></li>
+  <li><a href="#p_values" id="toc-p_values" class="nav-link" data-scroll-target="#p_values">p-values and “significance”</a></li>
+  <li><a href="#notes-in-draft" id="toc-notes-in-draft" class="nav-link" data-scroll-target="#notes-in-draft">NOTES IN DRAFT</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">False discovery</h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">False discovery</span></h1>
 </div>
 
 
@@ -122,12 +353,14 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
 
 </header>
 
+<p>Use cancer/grass-treatment example from Lesson 30 to illustrate how failing to think about covariates <em>before</em> the study analysis can lead to false discovery.</p>
 <section id="interpreting-a-p-value" class="level2">
 <h2 class="anchored" data-anchor-id="interpreting-a-p-value">Interpreting a p-value</h2>
 <p>If the simulation trials rarely or never produce an association as strong as that found in real-world observations, you can fairly conclude that the assumptions embedded in the simulation ought to be <em>rejected</em> as a proper description of the real world. On the other hand, if the simulation shows good accord with the real-world observations, you can … what? It’s not a good idea to claim the simulation is a correct description of the real world; it’s just a simulation. Instead, the proper statement is that you “<em>fail to reject</em>” the hypothesis hard-coded into the simulation.</p>
@@ -187,18 +420,18 @@ Note
 <p><em>Ask, and it shall be given you; seek, and ye shall find; knock, and it shall be opened unto you: For every one that asketh receiveth; and he that seeketh findeth; and to him that knocketh it shall be opened.</em> – Matthew 7:7-8</p>
 </blockquote>
 <p>The modeling techniques we’ve covered are surprisingly powerful at identifying patterns in data. With power comes responsibility. This chapter is about how spurious patterns can arise in data and processes you can use to help ensure that the patterns your models identify are genuine.</p>
-<p>It’s well known that people are particularly adept at finding patterns. To see this, spend a minute or two with <a href="#fig-random-scatter">Figure&nbsp;1</a>, which shows x-y pairs generated by a complex mathematical procedure called the Mersenne-Twister algorithm. How many of the structures created by Mersenne-Twister algorithm can you identify by eye? Take five of the stronger-looking patterns: clusters of points, large empty areas, strings of dots, etc. Write down a list of the patterns you spotted, including the coordinate location of each, a short description (e.g.&nbsp;“arc of dots”), and your subjective sense of how strong or convincing that pattern is.</p>
+<p>It’s well known that people are particularly adept at finding patterns. To see this, spend a minute or two with <a href="#fig-random-scatter">Figure&nbsp;<span>38.1</span></a>, which shows x-y pairs generated by a complex mathematical procedure called the Mersenne-Twister algorithm. How many of the structures created by Mersenne-Twister algorithm can you identify by eye? Take five of the stronger-looking patterns: clusters of points, large empty areas, strings of dots, etc. Write down a list of the patterns you spotted, including the coordinate location of each, a short description (e.g.&nbsp;“arc of dots”), and your subjective sense of how strong or convincing that pattern is.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-random-scatter" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="Reading-notes-lesson-38_files/figure-html/fig-random-scatter-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;1: Training data (n = 1000)</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;38.1: Training data (n = 1000)</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<p>With your list in hand, look at <a href="#fig-random-scatter-2">Figure&nbsp;2</a> at the end of this section, which displays another n = 1000 x-y pairs generated by the same mathematical procedure. You’re going to check which of the patterns you found in the testing data are confirmed by the training data. Go through your list, looking at each location where you found a pattern in the training data and checking whether a similar pattern appears at that location in the testing data.</p>
+<p>With your list in hand, look at <a href="#fig-random-scatter-2">Figure&nbsp;<span>38.2</span></a> at the end of this section, which displays another n = 1000 x-y pairs generated by the same mathematical procedure. You’re going to check which of the patterns you found in the testing data are confirmed by the training data. Go through your list, looking at each location where you found a pattern in the training data and checking whether a similar pattern appears at that location in the testing data.</p>
 <p>Were any of the patterns you saw in the training data confirmed by the testing data?</p>
 <p>There’s no denying that the patterns you saw were in the data. But the Mersenne-Twister algorithm is specifically designed <em>not</em> to produce regular patterns. Any that you saw were accidental alignments in the particular sample of data from the algorithm.</p>
 <p>The “patterns” abstractly referred to in the previous paragraphs appear in data. In data used for modeling, a pattern might be a relationship or correlation between two or more variables, or a cluster of rows in a data frame that have similar values for a response variable and explanatory variables.</p>
@@ -212,7 +445,7 @@ Note
 <div id="fig-random-scatter-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="Reading-notes-lesson-38_files/figure-html/fig-random-scatter-2-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2: Testing data (n = 1000).</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;38.2: Testing data (n = 1000).</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -227,7 +460,7 @@ Note
 <p>The no-input classifier gives a probability of about 16% that the customer will buy the product. Management hopes that you will be able to segment the market to identify the products that a given person is much more likely to buy.</p>
 <p>It’s a lot to ask of a person to sort through 100 potential explanatory variables to identify those that are predictive of buying a product. But it’s straightforward to use a model family that can <em>learn</em> on its own which variables are informative. You train the ten classifiers using a tree family of models.</p>
 <blockquote class="blockquote">
-<p>Heads up! The “data” has been created using random numbers, so that there are no actual relationships between the explanatory variables and the purchase outcomes. That is, no actual relationships aside from the accidental ones, such as the patterns encountered in <a href="#fig-random-scatter">Figure&nbsp;1</a>.</p>
+<p>Heads up! The “data” has been created using random numbers, so that there are no actual relationships between the explanatory variables and the purchase outcomes. That is, no actual relationships aside from the accidental ones, such as the patterns encountered in <a href="#fig-random-scatter">Figure&nbsp;<span>38.1</span></a>.</p>
 </blockquote>
 <p>To illustrate how the coupon assignment system works, Table @ref(tab:some-results) shows an intermediate step in the calculation, where a probability for each of the ten products is calculated for each customer.</p>
 <div class="cell">
@@ -704,18 +937,18 @@ Attaching package: 'formattable'</code></pre>
 <p>One source of false discovery stems from having multiple potential response variables. In the Potomac/Austin example, there were ten different classifiers at work, one for each of the ten Austin products. Even if the probability of finding an accidental pattern in one classifier is small, looking in ten different places dramatically increases the odds of finding something.</p>
 <p>Similarly, having a large number of explanatory variables – we had 100 in the coupon classifier – provides many opportunities for false discovery. The probability of an accidental pattern between one outcome and one explanatory variable is small, but with many explanatory variables each being considered it’s much more likely to find something.</p>
 <p>A third source of false discovery at work in the coupon classifier relates to the family of models selected to implement the classifier. We used a tree model classifier capable of searching through the (many) explanatory variables to find ones that are associated with the response outcome. Unbridled, the tree model is capable of very fine stratification. Each coupon classifiers stratified the customers into about 200 levels. On average, then, there were about 50 customers in each strata. But there is variation, so many of the strata are much smaller, with ten or fewer customers. The small groups were constructed by the tree-building algorithm to have similar outcomes among the members, so it’s not surprising to see a very strong pattern in each group. For each classifier, about 15% of all customers fall into a strata with 20 or fewer customers.</p>
-<p>To illustrate, <a href="#fig-tree-three">Figure&nbsp;3</a> shows the shape of the tree model for a typical coupon classifier. Each of the splits reflects an accidental alignment of the response variable with one of the explanatory variables. As more splits are made, the group of customers contained in the split becomes smaller. Many of the leaves on the tree contain just a handful of customers who accidentally had similar values for the several explanatory variables used in the splits.</p>
+<p>To illustrate, <a href="#fig-tree-three">Figure&nbsp;<span>38.3</span></a> shows the shape of the tree model for a typical coupon classifier. Each of the splits reflects an accidental alignment of the response variable with one of the explanatory variables. As more splits are made, the group of customers contained in the split becomes smaller. Many of the leaves on the tree contain just a handful of customers who accidentally had similar values for the several explanatory variables used in the splits.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-tree-three" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="www/purchase-classifier-3.png" class="img-fluid figure-img" width="1402"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;3: A sketch of one of the classifiers constructed for the coupon selection system. The tree-growing algorithm was allowed to keep going until the customer data was split up into very small strata.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;38.3: A sketch of one of the classifiers constructed for the coupon selection system. The tree-growing algorithm was allowed to keep going until the customer data was split up into very small strata.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<p>The tree is too complex to be plausible as a real-world mechanism. None of the details in <a href="#fig-tree-three">Figure&nbsp;3</a> have any validity beyond the training data itself.</p>
+<p>The tree is too complex to be plausible as a real-world mechanism. None of the details in <a href="#fig-tree-three">Figure&nbsp;<span>38.3</span></a> have any validity beyond the training data itself.</p>
 </section>
 <section id="identifying-false-discovery" class="level2">
 <h2 class="anchored" data-anchor-id="identifying-false-discovery">Identifying false discovery</h2>
@@ -729,12 +962,12 @@ Attaching package: 'formattable'</code></pre>
 <h2 class="anchored" data-anchor-id="false-discovery-and-multiple-testing">False discovery and multiple testing</h2>
 <p>When the main interest is in an effect size, standard procedure calls for calculating a confidence interval on the effect. For example, a 2008 study examined the possible relationship between a woman’s diet before conception and the sex of the conceived child. The popular press was particularly taken by this result from the study:</p>
 <blockquote class="blockquote">
-<p>Women producing male infants consumed more breakfast cereal than those with female infants. The odds ratio for a male infant was 1.87 (95% CI 1.31, 2.65) for women who consumed at least one bowl of breakfast cereal daily compared with those who ate less than or equal to one bowlful per week. <span class="citation" data-cites="fetal-sex-2008">[@fetal-sex-2008]</span></p>
+<p>Women producing male infants consumed more breakfast cereal than those with female infants. The odds ratio for a male infant was 1.87 (95% CI 1.31, 2.65) for women who consumed at least one bowl of breakfast cereal daily compared with those who ate less than or equal to one bowlful per week. <span class="citation" data-cites="fetal-sex-2008">(<a href="#ref-fetal-sex-2008" role="doc-biblioref"><strong>fetal-sex-2008?</strong></a>)</span></p>
 </blockquote>
 <p>The model here is a classifier of the sex of the baby based on the amount of breakfast cereal eaten. The effect size tells the change in the odds of a male when the explanatory variable changes from one bowlful of cereal per week to one bowl per day (or more). This effect size is sensibly reported as a ratio of the two odds. A ratio bigger than one means that boys are more likely outcomes for the one-bowl-a-day potential mother than the one-bowl-a-week potential mother. The 95% confidence interval is given as 1.31 to 2.65. This confidence interval does not contain 1. In a conventional interpretation, this provides compelling evidence that the relationship between cereal consumption and sex is not a false pattern.</p>
 <p>But the confidence interval is not the complete story. The authors are clear in stating their methodology: “Data of the 133 food items from our food frequency questionnaire were analysed, and we also performed additional analyses using broader food groups.” In other words, the authors had available more than 133 potential explanatory variables. For each of these explanatory variables, the study’s authors constructed a confidence interval on the odds ratio. Most of the confidence intervals included 1, providing no compelling evidence of a relationship between that food item and the sex of the conceived child. As it happens, breakfast cereal produced the confidence interval that was the most distant from an odds ratio of 1.</p>
 <p>Let’s look at the range of confidence intervals that can be found from studying 100 potential random variables that are each unrelated to the response variable. We’ll simulate a response randomly generated “sex” G and B where the odds of G is 1. Similarly, each explanatory variable will be a randomly generated “consumption” high or low where the odds of high is 1. A simple stratification of sex by consumption will generate the odds of G for those cases with consumption Y and also the odds of G for those cases with consumption N. Taking the ratio of these odds gives, naturally enough, the odds ratio. We can also calculate from the stratified data a 95% confidence interval on the odds ratio.</p>
-<p>So that the results will be somewhat comparable to the results in <span class="citation" data-cites="fetal-sex-2008">@fetal-sex-2008</span>, we’ll use a similar sample size, that is, n = 740. Table @ref(tab:sex-consumption-1) shows one trial of the simulation.</p>
+<p>So that the results will be somewhat comparable to the results in <span class="citation" data-cites="fetal-sex-2008">(<a href="#ref-fetal-sex-2008" role="doc-biblioref"><strong>fetal-sex-2008?</strong></a>)</span>, we’ll use a similar sample size, that is, n = 740. Table @ref(tab:sex-consumption-1) shows one trial of the simulation.</p>
 <div class="cell">
 
 </div>
@@ -783,7 +1016,7 @@ G
 </table>
 <p>(ref:sex-consumption-1-cap) A stratification of sex outcome (B or G) on consumption (high or low) for one trial of the simulation described in the text.</p>
 <p>Referring to Table @ref(tab:sex-consumption-1), you can see that the odds of G when consumption is low is 182 / 182 = 1. The odds of G when consumption is high is 211/165 = 1.28. The 95% confidence interval on the odds ratio can be calculated. It is 0.95 to 1.73. Since that includes 1, the data underlying Table @ref(tab:sex-consumption-1) provide little or no evidence for a relationship between sex and consumption. This is exactly what we expect, since the simulation involves entirely random data.</p>
-<p><a href="#fig-sex-consumption-simulation">Figure&nbsp;4</a> shows the 95% confidence interval on the odds ratio for 133 trials like that in Table @ref(tab:sex-consumption-1). The confidence interval from each trial is shown as a horizontal line. The large majority of them include 1. That’s to be expected because the data have been generated so that sex and consumption have no relationship except those arising by chance.</p>
+<p><a href="#fig-sex-consumption-simulation">Figure&nbsp;<span>38.4</span></a> shows the 95% confidence interval on the odds ratio for 133 trials like that in Table @ref(tab:sex-consumption-1). The confidence interval from each trial is shown as a horizontal line. The large majority of them include 1. That’s to be expected because the data have been generated so that sex and consumption have no relationship except those arising by chance.</p>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: geom_vline(): Ignoring `mapping` because `xintercept` was provided.</code></pre>
@@ -792,22 +1025,22 @@ G
 <div id="fig-sex-consumption-simulation" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="Reading-notes-lesson-38_files/figure-html/fig-sex-consumption-simulation-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;4: Confidence intervals on the odds ratio comparing female and male birth rates for many trials of simulated data with no genuine relationship between the explanatory and response variables.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;38.4: Confidence intervals on the odds ratio comparing female and male birth rates for many trials of simulated data with no genuine relationship between the explanatory and response variables.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Nonetheless, out of 133 simulations there are six where the confidence interval does not include 1. These are shown in red. By necessity, one of the intervals will be the most extreme. If instead of numbering the simulations, we had labelled them with food items – e.g.&nbsp;grapefruit, breakfast cereal, toast – we would have a situation very similar to what seems to have happened in the sex-vs-food study. (For a more detailed analysis of the impact of multiple testing in <span class="citation" data-cites="fetal-sex-2008">@fetal-sex-2008</span>, see <span class="citation" data-cites="young-2009">@young-2009</span>.)</p>
-<p>Suppose now that half of the data used in <span class="citation" data-cites="fetal-sex-2008">@fetal-sex-2008</span> had been held back as testing data. Using the training data, it would be an entirely legitimate practice to generate hypotheses about which specific food items might be related to the sex of the baby. The validity of any one selected hypothesis could then be established using the testing data without the ambiguity introduced by multiple testing. The testing data confidence interval can be taken at face value; the training data confidence interval cannot.</p>
+<p>Nonetheless, out of 133 simulations there are six where the confidence interval does not include 1. These are shown in red. By necessity, one of the intervals will be the most extreme. If instead of numbering the simulations, we had labelled them with food items – e.g.&nbsp;grapefruit, breakfast cereal, toast – we would have a situation very similar to what seems to have happened in the sex-vs-food study. (For a more detailed analysis of the impact of multiple testing in <span class="citation" data-cites="fetal-sex-2008">(<a href="#ref-fetal-sex-2008" role="doc-biblioref"><strong>fetal-sex-2008?</strong></a>)</span>, see <span class="citation" data-cites="young-2009">(<a href="#ref-young-2009" role="doc-biblioref"><strong>young-2009?</strong></a>)</span>.)</p>
+<p>Suppose now that half of the data used in <span class="citation" data-cites="fetal-sex-2008">(<a href="#ref-fetal-sex-2008" role="doc-biblioref"><strong>fetal-sex-2008?</strong></a>)</span> had been held back as testing data. Using the training data, it would be an entirely legitimate practice to generate hypotheses about which specific food items might be related to the sex of the baby. The validity of any one selected hypothesis could then be established using the testing data without the ambiguity introduced by multiple testing. The testing data confidence interval can be taken at face value; the training data confidence interval cannot.</p>
 </section>
 <section id="example-organic-discovery" class="level2 example">
 <h2 class="example anchored" data-anchor-id="example-organic-discovery">Example: Organic discovery?</h2>
 <p>It’s easy to find organic foods in many large grocery stores. Advocates of an organic diet are attracted by a view that it is sustainable, promotes small farms, and helps avoid contact with pesticides. There are also nay-sayers who make valid points, but that is not our purpose here. Informally, I find that many people and news reports point to the health benefits of an organic diet. Usually they believe that these benefits are an established fact.</p>
 <p>A 2018 New York <em>Times</em> article observed:</p>
 <blockquote class="blockquote">
-<p><em>People who buy organic food are usually convinced it’s better for their health, and they’re willing to pay dearly for it. But until now, evidence of the benefits of eating organic has been lacking.</em> <span class="citation" data-cites="NYT-2018-10-23-Rabin">[@NYT-2018-10-23-Rabin]</span></p>
+<p><em>People who buy organic food are usually convinced it’s better for their health, and they’re willing to pay dearly for it. But until now, evidence of the benefits of eating organic has been lacking.</em> <span class="citation" data-cites="NYT-2018-10-23-Rabin">(<a href="#ref-NYT-2018-10-23-Rabin" role="doc-biblioref"><strong>NYT-2018-10-23-Rabin?</strong></a>)</span></p>
 </blockquote>
-<p>The new evidence of health benefits is reported in an article in the <em>Journal of the American Medical Association: Internal Medicine</em> <span class="citation" data-cites="baudry-2018">[@baudry-2018]</span></p>
+<p>The new evidence of health benefits is reported in an article in the <em>Journal of the American Medical Association: Internal Medicine</em> <span class="citation" data-cites="baudry-2018">(<a href="#ref-baudry-2018" role="doc-biblioref"><strong>baudry-2018?</strong></a>)</span></p>
 <p>Describing the findings of the research, the <em>Times</em> article continued:</p>
 <blockquote class="blockquote">
 <p><em>Even after these adjustments [for covariates], the most frequent consumers of organic food had 76 percent fewer lymphomas, with 86 percent fewer non-Hodgkin’s lymphomas, and a 34 percent reduction in breast cancers that develop after menopause.</em></p>
@@ -828,7 +1061,7 @@ G
 </ul>
 <p>So where is the claimed 34% reduction in breast cancer cited in the New York Times article. It turns out the the study used two different indices of organic food consumption. The 0 to 32 scale which includes many items for which the amount consumed is very small (e.g., coffee, chocolate) and a “simplified, plant derived organic food score.” It’s only when you look at the full 0 to 32 scale that you see the reduction in post-menopausal breast cancer: the confidence interval is 0.45 to 0.96 (p = 0.03).</p>
 <p>What about cancer rates overall? For the 0 to 32 scale the risk ratio was 0.58 - 1.01 (p = 0.10). To see the claimed reduction clearly you need to look at the simplified food score which gives 0.63 - 0.89 (p &lt; 0.005). And it’s only in comparing the highest-index quarter of participants with the lowerest quarter participants that any difference at all is seen in any type of cancer: the middle-half of participants show no difference in relative risk from the lowest-organic quarter of participants. (Because of this, had the study compared the highest quarter to the next highest quarter, they would have seen basically the same relative risks reported in the highest-to-lowest quarter comparison. Then the conclusion would have had a different flavor, perhaps to be reported as “Typical organic food consumption levels show no cancer benefits.”)</p>
-<p>A further source of potential false discovery stems from the study’s starting and stop times. It’s not clear that these were pre-defined; the reported results are intermediate to a longer follow up. The choice to report intermediate results is another way that the number of opportunities for false discovery is increased. And the choice is important: for the follow-up time used, about 2% of the participants developed cancer. In an earlier study of more than 600,000 middle-aged UK women (average age 59), the incidence of cancer was four times larger: 8.6%. <span class="citation" data-cites="bradbury-2014">[@bradbury-2014]</span> That study did not find any relationship between organic food consumption and overall cancer rates, and found no relationship for 15 out of 16 different types of cancer. The exception is extremely interesting: non-Hodgkin lymphoma for which a similar result was found in the French study.</p>
+<p>A further source of potential false discovery stems from the study’s starting and stop times. It’s not clear that these were pre-defined; the reported results are intermediate to a longer follow up. The choice to report intermediate results is another way that the number of opportunities for false discovery is increased. And the choice is important: for the follow-up time used, about 2% of the participants developed cancer. In an earlier study of more than 600,000 middle-aged UK women (average age 59), the incidence of cancer was four times larger: 8.6%. <span class="citation" data-cites="bradbury-2014">(<a href="#ref-bradbury-2014" role="doc-biblioref"><strong>bradbury-2014?</strong></a>)</span> That study did not find any relationship between organic food consumption and overall cancer rates, and found no relationship for 15 out of 16 different types of cancer. The exception is extremely interesting: non-Hodgkin lymphoma for which a similar result was found in the French study.</p>
 <p>So is the study reported in the New York <em>Times</em> a matter of false discovery? It’s emotionally unsatisfying to discount a result about organic food and non-Hodgkin lymphoma simply because it’s part of a larger study that looked at many different combinations of cancer types and organic food indices. What if the researchers had only studied non-Hodgkin lymphoma – they would have gotten the same result and it wouldn’t have the deficiencies of being the strongest result of many possibilities. It would have stood on its own. But it doesn’t and we are left in a state of doubt.</p>
 </section>
 <section id="p_values" class="level2">
@@ -841,10 +1074,10 @@ G
 <li>Calculate a hypothetical quantity based on the null hypothesis: the probability that the test statistic produced in a world in which the null hypothesis holds true would be at least as large as the test statistic.</li>
 <li>If the probability in (3) is small, one is entitled to “reject the null hypothesis.” Typically, “small” is defined as 0.05 or less.</li>
 </ol>
-<p>In the 1890s, statistical pioneer Karl Pearson invented a test statistic he called <span class="math inline">\(\chi^2\)</span> (“chi”-squared, with “chi” pronounced “ki” as in “kite”) that can be applied in a variety of settings. In 1900, Pearson published a table <span class="citation" data-cites="pearson-1900">[@pearson-1900]</span> that makes it an easy matter to look up the probability in step (3) above. He called this theoretical probability “P”, a name that has stuck but is conventionally written as lower-case “p”.</p>
+<p>In the 1890s, statistical pioneer Karl Pearson invented a test statistic he called <span class="math inline">\(\chi^2\)</span> (“chi”-squared, with “chi” pronounced “ki” as in “kite”) that can be applied in a variety of settings. In 1900, Pearson published a table <span class="citation" data-cites="pearson-1900">(<a href="#ref-pearson-1900" role="doc-biblioref"><strong>pearson-1900?</strong></a>)</span> that makes it an easy matter to look up the probability in step (3) above. He called this theoretical probability “P”, a name that has stuck but is conventionally written as lower-case “p”.</p>
 <p>Data scientists tend to work with “big data”, but for many applications of statistics, data is so scarce that use of separate training and testing data is impractical. For such small data, the calculation of a p-value can be a sensible guard against false discovery. Still, a p-value does not address any of the sources of false discovery outlined in the previous sections of this chapter. When used with small data and simple modeling methods, those sources of false discovery are not so much of a problem. In small data there won’t be multiple explanatory variables that can be searched and there won’t be a choice of response variables. This doesn’t eliminate all problems, since in small data results can depend critically on the inclusion or exclusion of a single row of data. The name “<strong>p hacking</strong>” has been given to the various ways that researchers can manipulate p-values to get them below 0.05.</p>
 <p>Another problem with p-values stems from misinterpretation of the admittedly difficult logic that underlies them. The misinterpretations are encouraged by the use of the term “<strong>tests of significance</strong>” to the p-value method. Particularly galling is the use of the description “<strong>statistically significant</strong>” to describe a result where p &lt; 0.05. The everyday meaning of “significant” as something of importance is in no way justified by p &lt; 0.05. Instead, the practical importance or not is more clearly signaled by examining an effect size. (It’s extremely disappointing that journalists, who are writing for an audience that for the most part has no understanding of p-value methodology, use “significant” when reporting on the statistics of research findings. It would be more honest to use a neutral term such as “null-validated” or “p-validated” which does not confuse the statistical result with actual practical importance.)</p>
-<p>The p-value methodology has little or nothing to contribute to data science practice. When data is big there is a much more straightforward method to guard against false discovery: cross validation. And when data is big there is another, more fundamental problem with p-values. They are calculated with reference to a specific null hypothesis of “no effect” or “no relationship.” More realistically, they should be calculated with respect to a hypothesis of “trivial (but potentially non-zero) effect”. There are all sorts of mechanisms in the world (such as common causes) that can create the appearance of some effect or relationship. No matter how trivial in size this is, with sufficient data the p-value will become small. To illustrate, <a href="#fig-trivial-R">Figure&nbsp;5</a> shows the p-value as a function of the sample size n in a system with an R-squared of 0.001, which in most settings would be of no practical signficance.</p>
+<p>The p-value methodology has little or nothing to contribute to data science practice. When data is big there is a much more straightforward method to guard against false discovery: cross validation. And when data is big there is another, more fundamental problem with p-values. They are calculated with reference to a specific null hypothesis of “no effect” or “no relationship.” More realistically, they should be calculated with respect to a hypothesis of “trivial (but potentially non-zero) effect”. There are all sorts of mechanisms in the world (such as common causes) that can create the appearance of some effect or relationship. No matter how trivial in size this is, with sufficient data the p-value will become small. To illustrate, <a href="#fig-trivial-R">Figure&nbsp;<span>38.5</span></a> shows the p-value as a function of the sample size n in a system with an R-squared of 0.001, which in most settings would be of no practical signficance.</p>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: geom_hline(): Ignoring `mapping` because `yintercept` was provided.</code></pre>
@@ -853,7 +1086,7 @@ G
 <div id="fig-trivial-R" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="Reading-notes-lesson-38_files/figure-html/fig-trivial-R-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;5: The p-value as a function of sample size n when the test statistic R-squared has the trivial value 0.001. The horizontal line shows the usual threshold for “significance” of p &lt; 0.05.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;38.5: The p-value as a function of sample size n when the test statistic R-squared has the trivial value 0.001. The horizontal line shows the usual threshold for “significance” of p &lt; 0.05.</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -868,15 +1101,15 @@ G
 
 
 </section>
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
 <ol>
 <li id="fn1"><p>The word “science” comes from the Latin for “to know.” But a dictionary definition of “science” makes clear the “scientific” style for gaining knowledge: “The systematic study of the structure and behavior of the physical and natural world through observation, experimentation, and the testing of theories against the evidence obtained.” (Source: <a href="https://languages.oup.com/google-dictionary-en/">Oxford Languages</a>)<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Hazard ratios are analogous to risk ratios.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</section></div></main> <!-- /main -->
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -918,7 +1151,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -954,27 +1204,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Reading-notes-lesson-37.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Calculating a p-value</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./QR2.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 9-19</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 

@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Spring 2023 Math 300 Revisions - Constructing a prediction interval</title>
+<title>Lessons in Statistical Thinking - 26&nbsp; Constructing a prediction interval</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -86,28 +86,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./QR1.html" rel="next">
+<link href="./Reading-notes-lesson-25.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
+  "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
+  "panel-placement": "start",
+  "type": "textbox",
   "limit": 20,
   "language": {
     "search-no-results-text": "No results",
@@ -124,57 +126,277 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
-    <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
-    </a>
-  </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../index.html">Proposal</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../lessons.html">Lessons</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../layout.html">Site layout</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../objective-list.html">Objectives</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../LC-list.html">LCs</a>
-  </li>  
-</ul>
-              <div id="quarto-search" class="" title="Search"></div>
-          </div> <!-- /navcollapse -->
-      </div> <!-- /container-fluid -->
-    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Constructing a prediction interval</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Lessons in Statistical Thinking</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">1-18 from ModernDive</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Lessons in Statistical Thinking</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-19.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Preliminaries</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-20.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Measuring and simulating variation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-21.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Signal and noise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-22.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Sampling and sampling variation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-23.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Estimating sampling variation from a single sample</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-25.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Mechanics of prediction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-26.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Constructing a prediction interval</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 1-8</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-28.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Covariates</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-29.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Covariates eat variance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-30.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Confounding</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-31.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Spurious correlation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-32.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Experiment and random assignment</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-33.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Measuring and accumulating risk</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-34.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Constructing a classifier</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-35.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Accounting for prevalence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-36.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-37.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Calculating a p-value</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-38.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">False discovery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 9-19</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#where-does-the-prediction-interval-come-from" id="toc-where-does-the-prediction-interval-come-from" class="nav-link active" data-scroll-target="#where-does-the-prediction-interval-come-from">Where does the prediction interval come from</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Constructing a prediction interval</h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Constructing a prediction interval</span></h1>
 </div>
 
 
@@ -182,50 +404,82 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
 
 </header>
 
-<p>In Lesson 25 you encountered the <strong>prediction interval</strong>. A model is trained on historical data. When a prediction is needed, values for the known inputs are provided and the model function is used to produce the output from the model. For instance, here’s a model which relates the running times in Scottish hill races to the race distance and climb.</p>
+<p>Lesson 25 introduced predictions in two forms:</p>
+<ol type="1">
+<li>a <strong>point quantity</strong>, the direct output of the model function.</li>
+<li>the <strong>prediction interval</strong>, which indicates a range of likely values for the quantity being predicted.</li>
+</ol>
+<p>To clarify this distinction, consider this three-step procedure that trains a model, extracts the model function, and applies the model function to inputs to generate a prediction in point-estimate form.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>time_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(time <span class="sc">~</span> distance <span class="sc">+</span> climb, <span class="at">data =</span> Hill_racing)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Time_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(time <span class="sc">~</span> distance <span class="sc">+</span> climb, <span class="at">data =</span> Hill_racing)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Time_mod_fun <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(Time_mod)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Time_mod_fun</span>(<span class="at">distance=</span><span class="dv">10</span>, <span class="at">climb=</span><span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1 
+3372.985 </code></pre>
 </div>
-<p>Every model has a “model function” which calculates the value of the output when given values for the inputs. We won’t often have to work with the model function because there is additional information, not provided by the model function that lets us make better interpretations of the model. But, for the sake of illustration, here we will extract the model function and evaluate it for a 10-km-long race that climbs 500m.</p>
+</div>
+<p>In the first command, <code>lm()</code> is used to train a model.</p>
 <div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Demonstration: Extracting and evaluating the model function
+Demonstration: The “class” of an R object
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p>In R, the object produced by <code>lm()</code> has several components packaged together. The object has a particular “class,” which governs what operations can be applied to it. It is unusual at the level of these Lessons to need to know about classes, but for the sake of discussion, here is how to find out the class of an object.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>time_fun <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(time_mod) <span class="co"># Extract model function</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">time_fun</span>(<span class="at">distance=</span><span class="dv">10</span>, <span class="at">climb=</span><span class="dv">500</span>) <span class="co">#Evaluate it</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(Time_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "lm"</code></pre>
+</div>
+</div>
+<p>The class name, “lm,” obviously is a tribute to the most widely used function to train a linear model, <code>lm()</code>.</p>
+</div>
+</div>
+<p>The second command, <code>Time_mod_fun &lt;- makeFun(Time_mod)</code>, creates and names a <em>function</em> that implements the input/output relationship defined by the model. As a computer object, a function has a particular class:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(Time_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "lm"</code></pre>
+</div>
+</div>
+<p>R functions should be familiar at this point. The primary use for objects of class “function” is to apply them to arguments. The syntax from this involves a pair of parentheses with the arguments placed inside and separated by commas.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># applying the function to arguments</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Time_mod_fun</span>(<span class="at">distance=</span><span class="dv">10</span>, <span class="at">climb=</span><span class="dv">500</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       1 
 3372.985 </code></pre>
 </div>
 </div>
-<p>The output of the model function is a <strong>point prediction</strong>: a single value. Here, that value is 3373 seconds, or about 56 minutes.</p>
-</div>
-</div>
-<p>Many people like a point prediction, possibly because the single number suggests a single, correct answer, which is somehow emotionally comforting. <em>But the comfort is unjustified.</em></p>
-<p>A proper form for a prediction is a <strong>prediction interval</strong>; two numbers setting the lower and upper limits for likely outcome once the new 10-km/500m race is actually run. To construct a prediction interval, use the <code>model_eval()</code> function, giving as arguments the prediction model as well as the inputs:</p>
+<p>Applying a function to arguments instructs the computer to generate the corresponding output value.</p>
+<p>In these Lessons, whenever we refer to the “model function,” we mean a model translated into the form of a function. The point is to emphasize the input-to-output relationship implied by a model.</p>
+<p>In topics like calculus, functions are the primary objects of interest. Calculus operations such as differentiation, anti-differentiation, and zero-finding always act on functions. However, calculus software hardly ever lets one interrogate a function to find properties such as the range, domain, continuity, and asymptotes. Instead, students are expected to look at the formula of a function to deduce these properties.</p>
+<p>In statistical modeling, model functions are <em>not</em> an object of primary interest. Why? Because there are several other properties of models are essential to interpreting the results of using a model. These properties include the residuals from model training and more abstract and advanced ones, such as the model’s “degrees of freedom.” People design software to construct model objects—for us, objects of class “lm”—from which these properties can be accessed and translated by software into valuable forms.</p>
+<p>For this reason, there is no need to construct the model function explicitly. Consequently, one generally does not use the function application syntax directly as we did with <code>Time_mod_fun(distance=10, climb=500)</code>. Instead, one invokes the model function with other software that can use all the information in a model object. For us, that software will be the <code>model_eval()</code> extractor.</p>
+<p>Use <code>model_eval()</code> as you do the other familiar extractors such as <code>coefficients()</code> or <code>confint()</code>. To generate a prediction, give <code>model_eval()</code> arguments specifying the desired inputs to use with the model function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(time_mod, <span class="at">distance=</span><span class="dv">10</span>, <span class="at">climb=</span><span class="dv">500</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Time_mod <span class="sc">%&gt;%</span> <span class="fu">model_eval</span>(<span class="at">distance=</span><span class="dv">10</span>, <span class="at">climb=</span><span class="dv">500</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  distance climb  .output    .lwr    .upr
 1       10   500 3372.985 1664.41 5081.56</code></pre>
 </div>
 </div>
-<p>From this report, you can read off the same model output as provided by the model function. But added to it are the lower and upper bounds of the prediction interval, here 1660 s to 5082 d.&nbsp;That’s a big interval! The low end is less than one-third the time of the high end.</p>
-<p>This Lesson is about what goes into finding a prediction interval. Evidently, there are a lot of other factors in Scottish hill racing than distance and climb.</p>
-<section id="where-does-the-prediction-interval-come-from" class="level2">
+<p>Notice that the result from the above command includes a column <code>.output</code> which will always be an exact match to the output the model function will have generated. However, there is more to the output of <code>model_eval()</code>. The interval form of the prediction is of particular importance, contained in the columns <code>.lwr</code> and <code>.upr</code>.</p>
+<p>Many people prefer a point prediction, possibly because the single number suggests a single, correct answer, which is somehow emotionally comforting. <em>But the comfort is unjustified.</em></p>
+<p>The proper form for a prediction is a <strong>prediction interval</strong>: two numbers bounding the lower and upper limits for the likely outcome. For the hill-racing model, the point prediction is 3372.985 seconds, which is a running time of just under one hour. Nothing about this single number even tells us how many digits are appropriate. The prediction interval tells a different story. The interval, 1700 to 5100 seconds, conveys the appropriate uncertainty in the prediction.</p>
+<section id="where-does-the-prediction-interval-come-from" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="where-does-the-prediction-interval-come-from">Where does the prediction interval come from</h2>
 <p>The prediction interval has two distinct components:</p>
 <ol type="1">
@@ -234,16 +488,16 @@ Demonstration: Extracting and evaluating the model function
 </ol>
 <p>Consider first the model function. For the running-time model, we can construct the model function from the coefficients of the linear model. These are:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>time_mod <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Time_mod <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)    distance       climb 
 -469.976937  253.808295    2.609758 </code></pre>
 </div>
 </div>
-<p>The model function is therefore <span class="math display">\[t(d, c) \equiv -470 + 254 d  + 2.61 c\]</span> To get the point prediction, simply calculate <span class="math inline">\(t(d=10, c=500)\)</span>.</p>
-<p>The statistical thinker knows that rather than a point estimate for the coefficients, it is better to state the model in terms of the <em>confidence interval</em> on the coefficients. Here, that is:</p>
+<p>The algebraic expression for the model function is straightforward: <span class="math display">\[t(d, c) \equiv -470 + 254 d  + 2.61 c\ .\]</span></p>
+<p>The statistical thinker knows that such coefficients have uncertainty due to sampling variation. That uncertainty is, of course, quantified by the confidence interval.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>time_mod <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Time_mod <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  2.5 %      97.5 %
 (Intercept) -533.432471 -406.521402
@@ -251,132 +505,105 @@ distance     246.387096  261.229494
 climb          2.493307    2.726209</code></pre>
 </div>
 </div>
-<p>Since we cannot legitimately claim to know the values of the coefficients any better than indicated by these confidence intervals, we ought to temper our claims about the model function so that it reflects the uncertainty in the coefficients. For instance, we might provide an interval for the model output, using in an “upper” function the high ends of the confidence intervals on the coefficients and another, “lower” function that uses the low ends of the confidence interval. Like this:</p>
+<p>Since we cannot legitimately claim to know the values of the coefficients any better than indicated by these confidence intervals, we ought to temper our claims about the model function so that it reflects the uncertainty in the coefficients. For instance, we might provide an interval for the model output, using in an “upper” function the high ends of the confidence intervals on the coefficients and another “lower” function that uses the low ends of the confidence interval. Like this:</p>
 <p><span class="math display">\[t_{upr}(d,c) \equiv -407 + 261 d + 2.72 c\\
 t_{lwr}(d,c) \equiv -533 + 246 d + 2.49 c\]</span></p>
-<p>To get an <em>interval</em> on the model output, we can evaluate both the lower and upper functions. That would give us <span class="math inline">\(t_{lwr}(10, 500) = 3172\)</span> and <span class="math inline">\(t_{upr}(10, 500) = 3569\)</span>.</p>
-<p>This particular idea for generating the “lower” and “upper” functions has the right spirit, but is not on target mathematically. The reason is that using the low end of the confidence interval for all coefficients is overly pessimistic; usually the uncertainty in the different coefficients cancels out to some extent.</p>
-<p>This is not the place to go into the mathematics of making the “lower” and “upper” functions. Without going into any mathematical details we’ll just stipulate that <code>model_eval()</code> knows how to do the calculations correctly. To see the results of the correct calculation, ask <code>model_eval()</code> for a confidence interval on the model output.</p>
+<p>Evaluate both the lower and upper functions to get an <em>interval</em> on the model output. That would give us <span class="math inline">\(t_{lwr}(10, 500) = 3172\)</span> and <span class="math inline">\(t_{upr}(10, 500) = 3569\)</span>.</p>
+<p>This idea for generating the “lower” and “upper” functions has the right spirit but is not on target mathematically. The reason is that using the low end of the confidence interval for all coefficients is overly pessimistic; usually, the uncertainty in the different coefficients cancels out to some extent.</p>
+<p>The mathematics for the correct “lower” and “upper” functions are well understood but too advanced for the general reader. For our purposes, it suffices to know that <code>model_eval()</code> knows how to do the calculations correctly.</p>
+<p>The prediction interval produced by <code>model_eval()</code> includes both components (1) and (2) listed above. Insofar as we are interested in component (1) in isolation, the correct sort of interval—a <em>confidence interval</em>—can be requested from <code>model_eval()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(time_mod, <span class="at">distance=</span><span class="dv">10</span>, <span class="at">climb=</span><span class="dv">500</span>, <span class="at">interval=</span><span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Time_mod <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">model_eval</span>(<span class="at">distance=</span><span class="dv">10</span>, <span class="at">climb=</span><span class="dv">500</span>, <span class="at">interval=</span><span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  distance climb  .output     .lwr     .upr
 1       10   500 3372.985 3335.264 3410.706</code></pre>
 </div>
 </div>
-<p>Reading this report, you can see that the confidence interval on the model output for a 10km/500m race is pretty narrow: 3335 seconds to 3411 seconds, or, in plus-or-minus format, <span class="math inline">\(3373 \pm 38\)</span> seconds.</p>
-<p>Let’s compare the <strong>confidence</strong> interval on the model output to the <strong>prediction interval</strong> as calculated by <code>model_eval()</code>. To repeat a calculation that we did at the start of the Lesson, the prediction interval is</p>
+<p>This report shows that the confidence interval on the model output—that is, just component (1) of the prediction interval—is pretty narrow: 3335 seconds to 3411 seconds, or, in plus-or-minus format, <span class="math inline">\(3373 \pm 38\)</span> seconds.</p>
+<p>The prediction interval—that is, the sum of components (1) and (2)—is comparatively huge: 1700 to 5100 seconds or, in plus-or-minus format, <span class="math inline">\(3400 \pm 1700\)</span> seconds. That is almost 50 times wider than the confidence interval.</p>
+<p>Why is the prediction interval so much more comprehensive than the confidence interval? The confidence interval reports on the sampling variation of a model constructed as an average over all the data, the <span class="math inline">\(n=2236\)</span> participants recorded in the <code>Hill_racing</code> data frame. However, each runner in <code>Hill_racing</code> has their own individual time: not an average but just for the individual. The individual value might be larger or smaller than the average. How much larger or smaller? The residuals for the model provide this information. As always, we can measure the individual-to-individual variation with the standard deviation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(time_mod, <span class="at">distance=</span><span class="dv">10</span>, <span class="at">climb=</span><span class="dv">500</span>, <span class="at">interval=</span><span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Time_mod <span class="sc">%&gt;%</span> <span class="fu">model_eval</span>() <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">se_residuals =</span> <span class="fu">sd</span>(.resid))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  distance climb  .output    .lwr    .upr
-1       10   500 3372.985 1664.41 5081.56</code></pre>
+<pre><code>  se_residuals
+1     870.6588</code></pre>
 </div>
 </div>
-<p>The prediction interval is huge compared to the confidence interval: 1664 to 5082 seconds, or, in plus-or-minus format, <span class="math inline">\(3373 \pm 1709\)</span> seconds.</p>
-<p>Why is the prediction interval so much wider than the confidence interval? The confidence interval reports on the sampling variation of a model constructed as a kind of average over all the data, the <span class="math inline">\(n=2236\)</span> participants recorded in the <code>Hill_racing</code> data frame. But each individual runner in <code>Hill_racing</code> has their own individual time: not an average but just for the individual. The individual value might be larger or smaller than the average. How much larger or smaller? This is recorded in the residuals for the model. As always, we can measure the variation from individual to individual in their residuals with the standard deviation.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>time_mod <span class="sc">%&gt;%</span> <span class="fu">residuals</span>() <span class="sc">%&gt;%</span> <span class="fu">sd</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 870.6588</code></pre>
-</div>
-</div>
-<p>Keeping in mind that the overall spread of the residuals is plus-or-minus “twice” the standard deviation of the residuals, we can say that the residuals indicate an additional uncertainty in the prediction for a runner of about <span class="math inline">\(\pm 1700\)</span> seconds. This <span class="math inline">\(\pm 1700\)</span> seconds is our estimate of the <strong>noise</strong> in the measurements. The <strong>confidence interval</strong>, is about the sampling variation in the signal. This sampling variation is the portion of noise that is inherited by the averaging process that is involved in calculating the coefficient.</p>
-<p>The <strong>prediction interval</strong> is, in this case, completely dominated by noise; the sampling variability contributes only a tiny amount of addition uncertainty.</p>
-<div class="callout-warning callout callout-style-default callout-captioned">
+<p>Keeping in mind that the overall spread of the residuals is plus-or-minus “twice” the standard deviation of the residuals, we can say that the residuals indicate an additional uncertainty in the prediction for a runner of about <span class="math inline">\(\pm 1700\)</span> seconds. This <span class="math inline">\(\pm 1700\)</span> second is our estimate of the <strong>noise</strong> in the measurements. In contrast, the <strong>confidence interval</strong> is about the sampling variation in the signal.</p>
+<p>In this case, the <strong>prediction interval</strong> is wholly dominated by noise; the sampling variability contributes only a tiny amount of additional uncertainty.</p>
+<div class="callout-note callout callout-style-default callout-captioned page-columns page-full">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Demonstration: Simple-minded data analysis shows why
+Example: Graphics for the prediction interval
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<p>We constructed our model of running time using the “linear least-squares” modeling methodology implemented by the <code>lm()</code> model-training function. For the purpose of demonstration, we’ll show you a simple-minded method to make a prediction. This simple-minded method would give results more or less equivalent to the least squares method if we had an almost infinite amount of data. Since we don’t, the simple-minded method is not as reliable as the least-squares method.</p>
-<p>Remember our goal: to predict the running time for a 10km race with a 500m climb. All that we have to inform the prediction is the historical data contained in the <code>Hill_racing</code> data frame. The simple-minded method is … well … simple to understand. We will pull out from the <code>Hill_racing</code> data frame those rows where the race distance is close to 10km and the race climb is close to 500m. For example:</p>
+<div class="callout-body-container callout-body page-columns page-full">
+<p>We shift the running scene from Scotland to Washington, DC. The race now is a single 10-miler with almost 9000 registered participants. We wish to predict the running time of an individual based on his or her <code>age</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>close_rows <span class="ot">&lt;-</span> Hill_racing <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="dv">9</span> <span class="sc">&lt;=</span> distance, distance <span class="sc">&lt;=</span> <span class="dv">11</span>,</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>         <span class="dv">450</span> <span class="sc">&lt;=</span> climb, climb <span class="sc">&lt;=</span> <span class="dv">550</span>)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="do">## the prediction</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>close_rows <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sample_size=</span><span class="fu">n</span>(), <span class="at">pred =</span> <span class="fu">mean</span>(time))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 2
-  sample_size  pred
-        &lt;int&gt; &lt;dbl&gt;
-1          52 3523.</code></pre>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>Age_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(net <span class="sc">~</span> age, <span class="at">data =</span> TenMileRace)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<p>You might not agree with our definition of “close to 10km” as “between 9 and 11”, and similarly for <code>climb</code>.</p>
-<p>To get the confidence interval on this simple-minded prediction, we point out that the value of the mean time is the same as the coefficient from the model <code>time ~ 1</code>. Let’s fit that model formula to the <code>close_rows</code> and look at the coefficient and confidence interval.</p>
+<p>We can see the prediction interval for an individual runner using <code>mod_eval()</code>. For example, here it is for a 23-year-old.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>simple_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(time <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> close_rows)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>simple_mod <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Age_mod <span class="sc">%&gt;%</span> <span class="fu">model_eval</span>(<span class="at">age=</span><span class="dv">23</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>(Intercept) 
-   3523.481 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>simple_mod <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>               2.5 %   97.5 %
-(Intercept) 3363.901 3683.061</code></pre>
+<pre><code>  age  .output     .lwr     .upr
+1  23 5485.587 3592.054 7379.119</code></pre>
 </div>
 </div>
-<p>To interpret this confidence interval, we can plot the actual running times and compare them to the interval, as in <a href="#fig-running-prediction-conf">Figure&nbsp;1</a></p>
+<p>We can also calculate the prediction interval for several different ages and graph out the results with the “errorbar” glyph:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(close_rows, <span class="fu">aes</span>(<span class="at">y=</span>time, <span class="at">x=</span><span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width=</span><span class="fl">0.2</span>) <span class="sc">+</span> <span class="fu">xlim</span>(<span class="dv">0</span>,<span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">color=</span><span class="cn">NA</span>) <span class="sc">+</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span><span class="dv">3364</span>, <span class="at">ymax=</span><span class="dv">3683</span>), <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span><span class="dv">1665</span>, <span class="at">ymax=</span><span class="dv">5082</span>, <span class="at">x=</span><span class="fl">1.5</span>), <span class="at">color=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>Age_mod <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_eval</span>(<span class="at">age=</span><span class="fu">c</span>(<span class="dv">20</span>,<span class="dv">25</span>,<span class="dv">30</span>,<span class="dv">35</span>,<span class="dv">40</span>,<span class="dv">45</span>,<span class="dv">50</span>,<span class="dv">55</span>,<span class="dv">60</span>,<span class="dv">65</span>,<span class="dv">70</span>,<span class="dv">75</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>age)) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>.lwr, <span class="at">ymax=</span>.upr))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-running-prediction-conf" class="quarto-figure quarto-figure-center anchored">
+<p><img src="Reading-notes-lesson-26_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>For convenience, the <code>model_plot()</code> function will do this work for us, plotting the prediction interval along with the training data. We can also direct <code>model_plot()</code> to show the confidence interval.</p>
+<div class="page-columns page-full">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(Age_mod, <span class="at">x=</span>age, <span class="at">interval=</span><span class="st">"prediction"</span>, <span class="at">data_alpha=</span><span class="fl">0.05</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(Age_mod, <span class="at">x=</span>age, <span class="at">interval=</span><span class="st">"confidence"</span>, <span class="at">data_alpha=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-ten-mile-age-confidence" class="cell column-page-right quarto-layout-panel">
 <figure class="figure">
-<p><img src="Reading-notes-lesson-26_files/figure-html/fig-running-prediction-conf-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;1: The rows from <code>Hill_racing</code> with a distance close to 10km and climb close to 500m. The confidence interval on the mean time (shown in red) is narrow compared to the prediction interval (blue) calculated from the whole data frame and the model <code>time ~ distance + climb</code>.</figcaption><p></p>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-ten-mile-age-confidence-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Reading-notes-lesson-26_files/figure-html/fig-ten-mile-age-confidence-1.png" class="img-fluid figure-img" data-ref-parent="fig-ten-mile-age-confidence" width="672"></p>
+<p></p><figcaption class="figure-caption">(a) prediction interval</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-ten-mile-age-confidence-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Reading-notes-lesson-26_files/figure-html/fig-ten-mile-age-confidence-2.png" class="img-fluid figure-img" data-ref-parent="fig-ten-mile-age-confidence" width="672"></p>
+<p></p><figcaption class="figure-caption">(b) confidence interval</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-</div>
-</div>
-</section>
-<section id="example-predicting-running-time-from-age" class="level2">
-<h2 class="anchored" data-anchor-id="example-predicting-running-time-from-age">Example: Predicting running time from age</h2>
-<p>We shift the running scene from Scotland to Washington, DC. The race now is a single 10-miler with almost 9000 registered participants. We wish to predict the running time based on age. Since we’re looking at the prediction as a function of an input variable, what we formerly showed using the “errorbar” glyph is now shown using a ribbon or <strong>band</strong>. As you’ll see, the prediction band is so large as to be useless. But you’ll also see why the confidence band on the model output is completely misleading about the uncertainty in the prediction.</p>
-<p>The following commands train the model <code>net ~ age</code> (where <code>net</code> is the net running time, start line to finish line) and plot the confidence band on the model output along with the actual data.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>age_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(net <span class="sc">~</span> age, <span class="at">data =</span> TenMileRace)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(age_mod, <span class="at">x=</span>age, <span class="at">interval=</span><span class="st">"confidence"</span>, <span class="at">data_alpha=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="fig-ten-mile-age-confidence" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Reading-notes-lesson-26_files/figure-html/fig-ten-mile-age-confidence-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2: The confidence interval on the output from the model <code>net ~ age</code>. This includes only a tiny fraction of the actual data points.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;26.1: The prediction and model-function confidence intervals for the model <code>net ~ age</code>.</figcaption><p></p>
 </figure>
 </div>
 </div>
-</div>
-<p>You can see that the confidence band on the model output includes only a minute fraction of the actual running times recorded in <code>TenMileRace</code>. On the other hand, the prediction band—<a href="#fig-ten-mile-age-prediction">Figure&nbsp;3</a> —includes the large majority of the actual running times.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(age_mod, <span class="at">x=</span>age, <span class="at">interval=</span><span class="st">"prediction"</span>, <span class="at">data_alpha=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="fig-ten-mile-age-prediction" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Reading-notes-lesson-26_files/figure-html/fig-ten-mile-age-prediction-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;3: The prediction interval from the model <code>net ~ age</code>. This includes the vast majority of the actual data points.</figcaption><p></p>
-</figure>
+<p>Since we are looking at the intervals as a function of an input variable, what we formerly showed using the “errorbar” glyph is now shown using a ribbon or <strong>band</strong>.</p>
 </div>
 </div>
-</div>
-<p>The prediction interval doesn’t include <em>all</em> the actual running times, but it is not meant to. The prediction interval shown is a 95% prediction interval, and so ought to include only about 95% of the actual running times.</p>
+<p>Notice that the prediction interval covers almost all of the data points. There are hundreds of data points outside the interval, but with almost 9000 rows in the <code>TenMileRace</code> data frame, an interval that covers 95% of the data will have about 450 rows <em>outside</em> the interval.</p>
+<p>Such a prediction interval is of little use; it cannot give a precise prediction about the running time of an individual. The honest prediction of an individual’s outcome needs to reflect the spread of all the individuals with a similar age.</p>
+<p>In contrast, the <em>confidence</em> band on the model function is pleasingly narrow and precise. It covers only a tiny fraction of the raw data. For this very reason, the confidence interval is <em>inappropriate</em> for presenting a prediction. As always, confidence intervals only show general trends in the data, not the range of results for an individual prediction. For instance, <a href="#fig-ten-mile-age-confidence">Figure&nbsp;<span>26.1</span></a> shows a clear upward trend in running time with age. There is no flat or negatively sloping line compatible with the confidence interval.</p>
 <p>To summarize:</p>
 <ol type="1">
 <li>When making a prediction, report a prediction interval.</li>
-<li>The prediction interval is always larger than the confidence interval and often <em>much</em> larger.</li>
+<li>The prediction interval is always larger than the confidence interval and is usually <em>much</em> larger.</li>
 </ol>
-<p>The confidence interval is not useful for predictions. Use a confidence interval when looking at an effect size. Graphically, the confidence interval is useful to indicate whether there is an overall trend in the model. For instance, <a href="#fig-ten-mile-age-confidence">Figure&nbsp;2</a> shows a clear upward trend in running time with age. There is no level or negatively sloping line compatible with the confidence interval.</p>
+<p>The confidence interval is not for predictions. Use a confidence interval when looking at an effect size. Graphically, the confidence interval is to indicate whether there is an overall trend in the model.</p>
 
 
 </section>
@@ -423,7 +650,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -459,27 +703,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Reading-notes-lesson-25.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Mechanics of prediction</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./QR1.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 1-8</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 

@@ -1,0 +1,114 @@
+---
+title: "Estimating sampling variation from a single sample"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+```{r include=FALSE}
+lesson <- 23
+source("../_startup.R")
+```
+
+Lesson 21 introduced separating data into components: signal and noise. The *signal* is a summary of the data that tells us something we want to know. Often, the signal will be one or more coefficients from a regression report, but it might be something as simple as the mean, median, or standard deviation of a variable in a data frame.
+
+The *noise* comes into the data from various sources: e.g., error in measurement or a data-entry blunder. Another source of noise is omnipresent (except in a perfect census): sampling variation discussed in Lesson 22. Sampling variation arises because the particular sample we happen to be working with is, so far as sampling is concerned, the play of luck. If we had happened to select another sample, the results would be different.
+
+The Greek philosopher Heraclitus (c. 500 BC) said, "You can't step into the same river twice." A step into a river might be at the same place on the bank, but the water flowing by will be different. A data sample is like collecting water from a river or lake using a dipper. Imagine ten people standing side by side on the shore of a lake, each person dipping into the water to acquire a specimen and making one or more measurements from the specimen, for instance, the temperature, pH, and bacteria count. Each person collects a sample---that is, a series of specimens. These might be taken right after one another or by some protocol, say a weekly tracking of lake conditions over time.
+
+The ten people are each doing the same thing in approximately the same place and time, but each person's sample will be different, even if only by a little bit. That sample-to-sample variation will be noise. 
+
+If the ten people were fishing, each specimen would be the catch from one cast of the rod. Typically this is just an empty hook, lake weeds, or a stick, but sometimes it will be a fish. Each fisherman will have a sample at the end of the fishing day. These samples will not be identical; the fishermen's varying skills (or luck) will produce different results. That is sampling variation. To fishermen, the question of interest, the signal they want to measure, might be, "How good is the fishing today?" The fishermen's varying catches are the sampling variation. 
+
+In Lesson 21, we repeated trials over and over again to gain some feeling for sampling variation. Each trial consisted of collecting a sample and summarizing it. The individual trial is a summary of a sample. Then, to quantify the sampling variation, we summarized the set of individual trial results using the standard measure of variation: the standard deviation. 
+
+It is time to take off the DAG simulation training wheels and measure sampling variation from a *single* data frame. Our first approach will be to turn the single sample into several smaller samples: subsampling. Later, we will turn to another technique, resampling, which draws a sample of full size from the data frame.
+
+## Subsampling
+To "subsample" means to draw a smaller sample from a large one. "Small" and "large" are relative. For our example, we turn to the `TenMileRace` data frame containing the record of thousands of runners' times in a race, along with basic information about each runner. There are many ways we could summarize `TenMileRace.` Any summary would do for the example. We will summarize the relationship between the runners' ages and their start-to-finish times (variable `net`), that is, `net ~ age`. To avoid the complexity of a runner's improvement with age followed by a decline, we will limit the study to people over 40.
+
+```{r}
+TenMileRace %>% filter(age > 40) %>%
+  lm(net ~ age, data = .) %>% coefficients()
+```
+
+The units of `net` are seconds, and the units of `age` are years. The model coefficient on `age` tells us how the `net` time changes for each additional year of `age`: seconds per year. Using the entire data frame, we see that the time to run the race gets longer by about 28 seconds per year. So a 45-year-old runner who completed this year's 10-mile race in 3900 seconds (about 9.2 mph, a pretty good pace!) might expect that, in ten years, when she is 55 years old, her time will be longer by 280 seconds.
+
+It would be asinine to report the ten-year change as 281.3517 seconds. The runner's time ten years from now will be influenced by the weather, crowding, the course conditions, whether she finds a good pace runner, the training regime, improvements in shoe technology, injuries, and illnesses, among other factors. There is little or nothing we can say from the `TenMileRace` data about such factors.
+
+There's also sampling variation. There are 2898 people older than 40 in the `TenMileRace` data frame. The way the data was collected (radio-frequency interrogation of a dongle on the runner's shoe) suggests that the data is a census of finishers. However, it is also fair to treat it as a sample of the kind of people who run such races. People might have been interested in running but had a schedule conflict, lived too far away, or missed their train to the start line in the city.
+
+We see sampling variation by comparing multiple samples. To create those multiple samples from `TenMileRace`, we will draw, at random, subsamples of, say, one-tenth the size of the whole, that is, $n=290$
+
+```{r}
+Over40 <- TenMileRace %>% filter(age > 40)
+lm(time ~ age, data = Over40 %>% sample(size=290)) %>% coefficients()
+lm(time ~ age, data = Over40 %>% sample(size=290)) %>% coefficients()
+```
+
+The age coefficients from these two subsampling trials differ one from the other by about 0.5 seconds. To get a more systematic view, run more trials:
+
+```{r}
+# a sample of summaries
+Trials <- do(1000) * {
+  lm(time ~ age, data = sample(Over40, size=290)) %>% coefficients()
+}
+# a summary of the sample of summaries
+Trials %>%
+  summarize(se = sd(age))
+```
+
+We used the name `se` for the summary of samples of summaries because what we have calculated is the standard error of the age coefficient in a sample of size $n=290$. 
+
+In Lesson 22 we saw that the standard error is proportional to $1/\sqrt{\strut n}$, where $n$ is the sample size. From the subsamples, know that the SE for $n=290$ is about 9.0 seconds. This tells us that the SE for the full $n=2898$ samples would be about $9.0 \frac{\sqrt{290}}{\sqrt{2898}} = 2.85$. 
+
+So the interval summary of the `age` coefficient---the *confidence interval*--- is $$\underbrace{28.1}_\text{age coef.} \pm 2\times\!\!\!\!\!\!\! \underbrace{2.85}_\text{standard error} =\ \ \ \  28.1 \pm\!\!\!\!\!\!\!\! \underbrace{5.6}_\text{margin of error}\ \  \text{or, equivalently, 22.6 to 33.6}$$
+
+
+## Bootstrapping
+
+There is a trick, called "**resampling**," to generate a random subsample of a data frame with the same $n$ as the data frame: draw the new sample randomly from the original sample **with replacement**. An example will suffice to show what the "with replacement" does: `r set.seed(102)`
+
+```{r}
+example <- c(1,2,3,4,5)
+# without replacement
+sample(example)
+# now, with replacement
+sample(example, replace=TRUE)
+sample(example, replace=TRUE)
+sample(example, replace=TRUE)
+sample(example, replace=TRUE)
+```
+The "with replacement" leads to the possibility that some values will be repeated two or more times and other values will be left out entirely.
+
+The calculation of the SE using resampling is called "**bootstrapping**." 
+
+::: {.callout-warning}
+## Demonstration: Bootstrapping the standard error 
+
+We will apply bootstrapping to find the standard error of the `age` coefficient from the model `time ~ age` fit to the `Over40` data frame.
+
+There are two steps:
+
+1. Run many trials, each of which fits the model `time ~ age` using `lm()`. From trial to trial, the data used for fitting is a resampling of the `Over40` data frame. The result of each trial is the coefficients from the model. 
+
+2. Summarize the trials with the standard deviation of the `age` coefficients.
+
+`r set.seed(207)`
+
+```{r}
+# run many trials
+Trials <- do(1000) * {
+  lm(time ~ age, data = sample(Over40, replace=TRUE)) %>% 
+       coefficients()
+}
+# summarize the trials to find the SE
+Trials %>% summarize(se = sd(age))
+```
+
+:::

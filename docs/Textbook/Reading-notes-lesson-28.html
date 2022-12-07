@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Spring 2023 Math 300 Revisions - Covariates</title>
+<title>Lessons in Statistical Thinking - 28&nbsp; Covariates</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -86,28 +86,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Reading-notes-lesson-29.html" rel="next">
+<link href="./QR1.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
+  "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
+  "panel-placement": "start",
+  "type": "textbox",
   "limit": 20,
   "language": {
     "search-no-results-text": "No results",
@@ -124,57 +126,278 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
-    <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
-    </a>
-  </div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../index.html">Proposal</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../lessons.html">Lessons</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../layout.html">Site layout</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../objective-list.html">Objectives</a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../LC-list.html">LCs</a>
-  </li>  
-</ul>
-              <div id="quarto-search" class="" title="Search"></div>
-          </div> <!-- /navcollapse -->
-      </div> <!-- /container-fluid -->
-    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Covariates</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Lessons in Statistical Thinking</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">1-18 from ModernDive</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Lessons in Statistical Thinking</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-19.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Preliminaries</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-20.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Measuring and simulating variation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-21.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Signal and noise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-22.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Sampling and sampling variation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-23.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Estimating sampling variation from a single sample</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-25.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Mechanics of prediction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-26.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Constructing a prediction interval</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 1-8</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-28.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Covariates</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-29.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Covariates eat variance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-30.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Confounding</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-31.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Spurious correlation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-32.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Experiment and random assignment</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-33.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Measuring and accumulating risk</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-34.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Constructing a classifier</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-35.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Accounting for prevalence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-36.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-37.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Calculating a p-value</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-38.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">False discovery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 9-19</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#all-other-things-being-equal" id="toc-all-other-things-being-equal" class="nav-link active" data-scroll-target="#all-other-things-being-equal">All other things being equal</a></li>
+  <li><a href="#letting-things-change-as-they-will" id="toc-letting-things-change-as-they-will" class="nav-link" data-scroll-target="#letting-things-change-as-they-will">Letting things change as they will</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Covariates</h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Covariates</span></h1>
 </div>
 
 
@@ -182,6 +405,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
@@ -195,8 +419,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <blockquote class="blockquote">
 <p><em>Upon complaining about this state of affairs, I was told by sales representatives in two stores that boys actually had wider feet than girls, so needed wider shoes. Being very skeptical, I thought I would test this claim.</em></p>
 </blockquote>
-<p>We’ll return to Dr.&nbsp;Meyer’s project in a little bit. But now let’s imagine how this situation might be addressed by someone who has not yet developed good statistical thinking skills. We’ll call this imagined protagonist “Mr.&nbsp;Shoebuyer.” Since the salesmen’s claim was that girl’s feet are narrower than boys, Mr.&nbsp;Shoebuyer heads out to measure the widths of girls’ and boys’ shoes.</p>
-<p>A shoe store provides convenient place to measure the widths of lots of different shoe styles. Mr.&nbsp;Shoebuyer gets to the shoe store, heads to the children’s section and starts measuring. For each shoe on display he records the shoe width and whether the shoe is for girls or boys. Here are his data:</p>
+<p>We will return to Dr.&nbsp;Meyer’s project in a little bit. However, for now, imagine how this situation might be addressed by someone who still needs to develop good statistical thinking skills. We will call this imagined protagonist “Mr.&nbsp;Shoebuyer.” Since the salesmen claimed that girls’ feet are narrower than boys, Mr.&nbsp;Shoebuyer heads out to measure the widths of girls’ and boys’ shoes.</p>
+<p>A shoe store provides a convenient place to measure the widths of many different shoe styles. Mr.&nbsp;Shoebuyer gets to the shoe store, heads to the children’s section, and starts measuring. For each shoe on display, he records the shoe width and whether the shoe is for girls or boys. Here are his data:</p>
 <div class="cell">
 <div class="cell-output-display">
 
@@ -264,7 +488,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<p>Mr.&nbsp;Shoebuyer happens to be your uncle. He knows that you are taking a statistics course and writes you with a request to recheck his arithmetic. Putting on your statistical thinking hat, you see immediately that what’s missing is a confidence interval on the effect size of sex on shoe width.</p>
+<p>Mr.&nbsp;Shoebuyer happens to be your uncle. He knows you are taking a statistics course and asks you to check his arithmetic. Putting on a statistical thinking hat to the effect size of sex on shoe width, you note the absence of a confidence interval. This omission is easy to fix.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Shoebuyer_data <span class="sc">%&gt;%</span> <span class="fu">lm</span>(width <span class="sc">~</span> sex, <span class="at">data=</span>.) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -273,8 +497,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 sexG        -0.5272448 0.9272448</code></pre>
 </div>
 </div>
-<p>At the Thanksgiving break, you see your uncle. You say, “Sorry, Uncle, but you don’t have nearly enough data to conclude that girls’ feet are wider than boys’.” Translating your confidence interval into plus-or-minus format, you point out that the difference between the sexes is <span class="math inline">\(0.2 \pm 0.8\)</span> cm. “You’ll need enough data to get that 0.8 margin of error down to something like 0.2.” You also point out that a shoe store might not be an appropriate place to collect data. “It’s the feet, not the shoes, that you want to look at.”</p>
-<p>Dr.&nbsp;Meyer worked worked with the third- and fourth-grade teachers at her daughter’s school to collect data to illuminate the matter. Being a statistical thinker, before carrying out the data collection, she thought about what data would illuminate the matter. Her data, a sample of size <span class="math inline">\(n=39\)</span>, are recorded in the <code>KidsFeet</code> data frame.</p>
+<p>Your uncle is at the table at Thanksgiving break. “Sorry, Uncle, but you don’t have nearly enough data to conclude that girls’ feet are wider than boys’.” Translating the confidence interval into plus-or-minus format, you point out that the difference between the sexes is <span class="math inline">\(0.2 \pm 0.8\)</span> cm. “You’ll need enough data to get that 0.8 margin of error down to something like 0.2.” You also point out that there might be a better place to collect data than a shoe store. “It’s the feet, not the shoes, that you want to look at.”</p>
+<p>Aware of these pitfalls, Dr.&nbsp;Meyer worked with the third- and fourth-grade teachers at her daughter’s school to collect data. Being a statistical thinker, she thought about what data would illuminate the matter before carrying out the data collection. Her data, a sample of size <span class="math inline">\(n=39\)</span>, are recorded in the <code>KidsFeet</code> data frame.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(width <span class="sc">~</span> sex, <span class="at">data =</span> KidsFeet) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -283,8 +507,8 @@ sexG        -0.5272448 0.9272448</code></pre>
 sexG        -0.7125476 -0.09903131</code></pre>
 </div>
 </div>
-<p>Translated to plus-or-minus format, this confidence interval is <span class="math inline">\(-0.4 \pm 0.3\)</span>. Whatever the format, Dr.&nbsp;Meyer’s data provides some evidence that girls’ feet are narrower than boys’.</p>
-<p>As a statistical thinker, Dr.&nbsp;Meyer knows that even though the foot width is the original quantity of interest, other factors might be playing a role in the system. For example, boys’ feet might trend longer or, perhaps, shorter than girls’ feet. This should be taken into account. What we want is the effect size of <code>sex</code> on width, holding length constant. After all, when buying shoes you tell the salesperson your foot length (or “size”) and they bring you shoes of that size to choose among.</p>
+<p>In plus-or-minus format, this confidence interval is <span class="math inline">\(-0.4 \pm 0.3\)</span>. Whatever the format, Dr.&nbsp;Meyer’s data provides some evidence that girls’ feet are narrower than boys’.</p>
+<p>As a statistical thinker, Dr.&nbsp;Meyer knows that even though the foot width is the original quantity of interest, other factors might play a role in the system. For example, boys’ feet might trend longer or shorter than girls’ feet. This possibility should be taken into account by looking at the effect size of <code>sex</code> on width, holding length constant. After all, a shoe buyer first tells the salesperson their foot length (or “size”); the salesperson then brings shoes of that size to try on.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(width <span class="sc">~</span> sex <span class="sc">+</span> length, <span class="at">data=</span>KidsFeet) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -294,13 +518,13 @@ sexG        -0.4947759 0.02974084
 length       0.1202348 0.32181513</code></pre>
 </div>
 </div>
-<p>Although <code>sex</code> is the explanatory variable of primary interest to Dr.&nbsp;Meyer’s question, she knows to include other explanatory variables that might be playing a role. Such explanatory variables, not of direct interest, are called “<strong>covariates</strong>.” Dr.&nbsp;Meyer’s expertise led her to think about possible covariates <em>before</em> collecting her data. That’s why she went to the trouble of measuring foot length in addition to foot width.</p>
-<p>The confidence interval on the <code>sexG</code> coefficient includes zero when <code>length</code> is taken into account. Dr.&nbsp;Meyer’s little study provides evidence that, even if girls’ shoes tend narrower than boys’, the feet inside them have about the same shape for both sexes.</p>
-<section id="all-other-things-being-equal" class="level2">
-<h2 class="anchored" data-anchor-id="all-other-things-being-equal">“All other things being equal”</h2>
-<p>The common phrase “all other things being equal” is an important qualifier in describing relationships. To illustrate: A simple claim in economics is that a high price for a commodity reduces the demand. For example increasing the price of heating fuel will reduce demand as people turn down thermostats in order to save money. But the claim can be considered obvious only with the qualifier <em>all other things being equal</em>. For instance, the fuel price might have increased because winter weather has increased the demand for heating compared to summer. Thus, higher prices may be associated with higher demand. Unless you hold other variables constant – e.g., weather conditions – increased price may not in fact be associated with lower demand.</p>
-<p>In fields such as economics, the Latin equivalent of “all other things being equal” is sometimes used: “<strong>ceteris paribus</strong>”. So, the economics claim would be, “higher prices are associated with lower demand, <em>ceteris paribus</em>.”</p>
-<p>Although the phrase “all other things being equal” has a logical simplicity, it’s impractical to implement “all.” Instead of the blanket “all other things,” it’s helpful to be able to consider just “some other things” to be held constant, being explicit about what those things are. Other phrases along these lines are “taking into account …” and “controlling for ….” Such phrases apply when you want to examine the relationship between two variables, but there are additional variables that may be coming into play. The additional variables are called “<strong>covariates</strong>” or “<strong>confounders</strong>”.</p>
+<p>Although <code>sex</code> is the explanatory variable of primary interest to Dr.&nbsp;Meyer’s question, she knows to include other explanatory variables that might play a role. Such explanatory variables, not of direct interest, are called “<strong>covariates</strong>.” Dr.&nbsp;Meyer’s statistical expertise led her to consider possible covariates <em>before</em> collecting her data and took the trouble of measuring both foot length and width.</p>
+<p>The confidence interval on the <code>sexG</code> coefficient includes zero when <code>length</code> is taken into account. Dr.&nbsp;Meyer’s little study provides evidence that even if girls’ shoes tend to be narrower than boys’, the feet inside them have about the same shape for both sexes.</p>
+<section id="all-other-things-being-equal" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="all-other-things-being-equal">All other things being equal</h2>
+<p>The common phrase “all other things being equal” is a critical qualifier in describing relationships. To illustrate: A simple claim in economics is that a high price for a commodity reduces the demand. For example, increasing the price of heating fuel will reduce demand as people turn down thermostats to save money. Nevertheless, the claim can be considered obvious only with the qualifier <em>all other things being equal</em>. For instance, the fuel price might have increased because winter weather has increased the demand for heating compared to summer. Thus, higher prices may be associated with higher demand. Therefore, increased price may not be associated with lower demand unless holding other variables, such as weather conditions, constant.</p>
+<p>In economics, the Latin equivalent of “all other things being equal” is sometimes used: “<strong>ceteris paribus</strong>”. So, the economics claim would be, “higher prices are associated with lower demand, <em>ceteris paribus</em>.”</p>
+<p>Although the phrase “all other things being equal” has a logical simplicity, it is impractical to implement “all.” So instead of the blanket “all other things,” it is helpful to consider just “some other things” to be held constant, being explicit about what those things are. Other phrases along the same lines are “taking into account …” and “controlling for ….” Those additional variables that are to be considered are called “<strong>covariates</strong>.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -314,17 +538,18 @@ Example: Covariates and Death
 <p>This news report appeared in 2007:</p>
 <blockquote class="blockquote">
 <p><strong>Heart Surgery Drug Carries High Risk, Study Says.</strong> A drug widely used to prevent excessive bleeding during heart surgery appears to raise the risk of dying in the five years afterward by nearly 50 percent, an international study found. The researchers said replacing the drug—aprotinin, sold by Bayer under the brand name Trasylol—with other, cheaper drugs for a year would prevent 10,000 deaths worldwide over the next five years.<br>
-Bayer said in a statement that the findings are unreliable because Trasylol tends to be used in more complex operations, and the researchers’ statistical analysis did not fully account for the complexity of the surgery cases. The study followed 3,876 patients who had heart bypass surgery at 62 medical centers in 16 nations. Researchers compared patients who received aprotinin to patients who got other drugs or no antibleeding drugs. Over five years, 20.8 percent of the aprotinin patients died, versus 12.7 percent of the patients who received no antibleeding drug. [This is a 64% increase in the death rate.] When researchers adjusted for other factors, they found that patients who got Trasylol ran a 48 percent higher risk of dying in the five years afterward. The other drugs, both cheaper generics, did not raise the risk of death significantly. The study was not a randomized trial, meaning that it did not randomly assign patients to get aprotinin or not. In their analysis, the researchers took into account how sick patients were before surgery, but they acknowledged that some factors they did not account for may have contributed to the extra deaths. - Carla K. Johnson, Associated Press, 7 Feb.&nbsp;2007</p>
+Bayer said in a statement that the findings are unreliable because Trasylol tends to be used in more complex operations, and the researchers’ statistical analysis did not fully account for the complexity of the surgery cases. The study followed 3,876 patients who had heart bypass surgery at 62 medical centers in 16 nations. Researchers compared patients who received aprotinin to patients who got other drugs or no antibleeding drugs. Over five years, 20.8 percent of the aprotinin patients died, versus 12.7 percent of the patients who received no antibleeding drug. [This is a 64% increase in the death rate.] When researchers adjusted for other factors, they found that patients who got Trasylol ran a 48 percent higher risk of dying in the five years afterward. The other drugs, both cheaper generics, did not raise the risk of death significantly.  The study was not a randomized trial, meaning that it did not randomly assign patients to get aprotinin or not. In their analysis, the researchers took into account how sick patients were before surgery, but they acknowledged that some factors they did not account for may have contributed to the extra deaths. - Carla K. Johnson, Associated Press, 7 Feb.&nbsp;2007</p>
 </blockquote>
-<p>The report involves several variables. Of primary interest is the relationship between (1) the risk of dying after surgery and (2) the drug used to prevent excessive bleeding during surgery. Also potentially important are (3) the complexity of the surgical operation and (4) how sick the patients were before surgery. Bayer disputes the published results of the relationship between (1) and (2) holding (4) constant, saying that it’s also important to hold variable (3) constant.</p>
-<p>With aprotinin, the total relationship involves a death rate of 20.8 percent of patients who got aprotinin, versus 12.7 percent for others. This implies an increase in the death rate by a factor of 1.64. When the researchers looked at a partial relationship (holding constant the patient sickness before the operation), the death rate was seen to increase by less: a factor of 1.48. In evaluating the drug, it’s best to examine its effects holding other factors constant. So, even though the data directly show a 64% increase in the death rate, 48% is a more meaningful number since it adjusts for covariates such as patient sickness. The difference between the two estimates reflect that sicker patients tended to be given aprotinin. As the last paragraph of the story indicates, however, the researchers did not take into account all covariates. Consequently, it’s hard to know whether the 48% number is a reliable guide for decision making.</p>
+<p>The report involves several variables. Of primary interest is the relationship between (1) the risk of dying after surgery and (2) the drug used to prevent excessive bleeding during surgery. Also potentially important are (3) the complexity of the surgical operation and (4) how sick the patients were before surgery. Bayer disputes the published results of the relationship between (1) and (2) holding (4) constant, saying that it is also essential to hold variable (3) constant.</p>
+<p>The total relationship involves a death rate of 20.8 percent of patients who got aprotinin versus 12.7 percent for the patients taking the generic drugs: an increase in the death rate by a factor of 1.64. However, when the researchers looked at a partial relationship (holding constant patient sickness before the operation), the effect size of aprotinin on mortality was less: a factor of 1.48. In other words, the model <code>death ~ aprotinin</code> shows a 64% increase in the death rate, but the model <code>death ~ aprotinin + sickness</code> shows a slightly smaller increase in death rate: 48%. The difference between the two estimates reflects doctors being more likely to give aprotinin to sicker patients.</p>
+<p>The story’s last paragraph states that the choice of patients receiving aprotinin versus the generic drugs was not made at random. Some readers may find this reassuring. Why in the world would anyone prescribe a drug at random? The point, however, is to select randomly who gets which drug <em>among the patients for whom the drugs would be appropriate</em>. The phrase “randomized trial” used in the paragraph means specifically an <em>experiment</em> in which one treatment or the other—aprotinin versus the generic drugs—is assigned at random. The virtues of experiment and the vital role of random assignment are detailed in Lesson 32.</p>
 </div>
 </div>
-</section>
-<section id="mutatis-mutandis" class="level2">
-<h2 class="anchored" data-anchor-id="mutatis-mutandis">“<em>Mutatis mutandis</em>”</h2>
-<p>Using covariates in models enable the relationship between a response and an explanatory variable to be described “all other things being equal.” Another phrase used in news stories is “after adjusting for …”, since the <em>all</em> in “all other things” is more properly restricted just to those factors represented by the covariates actually used in a model. So, Dr.&nbsp;Meyer’s foot width results might be stated in everyday language as, “After adjusting for foot width, she found no difference in the widths of girls’ and boys’ feet.”</p>
-<p>Not to include covariates in a model amounts to “letting other things change as they will.” In Latin this is “<em>mutatis mutandis</em>.” In the foot-width example, the model <code>width ~ sex</code> looks at the differences in foot width for the two sexes. But sex is not the only thing “changed” when comparing foot width. Since <code>width ~ sex</code> ignores all other factors than sex, it is comparing boys and girls letting other things change as they will. In this case, comparing boys and girls involves not just the possible differences in foot width but the differences as well in other factors: foot length, body weight, etc.</p>
+<div class="no-row-height column-margin column-container"><span class="callout-margin-content">“Significant” has a specialized meaning in statistical language. It is <em>not</em> a synonym for “important.” See Lessons 36 through 38</span></div></section>
+<section id="letting-things-change-as-they-will" class="level2">
+<h2 class="anchored" data-anchor-id="letting-things-change-as-they-will">Letting things change as they will</h2>
+<p>Using covariates in models enables the relationship between a response and an explanatory variable to be described <em>ceteris paribus</em>, that is, “all other things being equal.” Another phrase used in news stories is “after adjusting for ….” This is appropriate since the <em>all</em> in “all other things” is, in reality, refers only to those particular factors used as the covariates in the model. So, Dr.&nbsp;Meyer’s foot width results might be stated in everyday language as, “After adjusting for foot width, she found no difference in the widths of girls’ and boys’ feet.”</p>
+<p>Not including covariates in a model amounts to “letting other things change as they will.” In Latin, this is “<em>mutatis mutandis</em>.” In the foot-width example, the model <code>width ~ sex</code> looks at the differences in foot width for the two sexes. However, sex is not the only thing associated with foot width. The model <code>width ~ sex</code> ignores all other factors than sex; it compares boys and girls <em>mutatis mutandis</em>, that is, letting other things change as they will. In this case, comparing boys and girls involves not just the possible differences in foot width but also the differences in other factors such as foot length and body weight.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -335,7 +560,7 @@ Example: One change can bring another
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>I was once involved in a budget committee that recommended employee health benefits for the college at which I work. At the time, college employees who belonged to the college’s insurance plan received a generous subsidy for their health insurance costs. Employees who did not belong to the plan received no subsidy but were instead given a modest monthly cash payment. After the stock-market crashed in year 2000, the college needed to cut budgets. As part of this, it was proposed to eliminate the cash payment to the employees who did not belong to the insurance plan. This proposal was supported by a claim that this would save money without reducing health benefits. I argued that this claim was based on an “all other things being equal” analysis: how expenditures would change assuming that the number of people belonging to the insurance plan remained constant. But in reality, the policy change would play out <em>mutatis matandis</em>; the loss of the cash payment would cause some employees, who currently received health benefits through their spouse’s health plan, to switch to the college’s health plan. That’s what happened, contributing to an increase of health-care expenses.</p>
+<p>I was once involved in a budget committee that recommended employee health benefits for the college where I worked. At the time, college employees who belonged to the college’s insurance plan received a generous subsidy for their health insurance costs. Employees who did not belong to the plan received no subsidy but were given a modest monthly cash payment. After the stock market crashed in 2000, the college needed to cut budgets. One proposal called for eliminating the cash payment to employees who did not belong to the insurance plan. Proponents of the plan claimed that this would save money without reducing health benefits. I argued that this claim was an “all other things being equal” analysis: how expenditures would change assuming the number of people belonging to the insurance plan remained constant. In reality, however, the policy change would play out <em>mutatis matandis</em>; the loss of the cash payment would cause some employees, who currently received health benefits through their spouse’s health plan, to switch to the college’s health plan. That is what happened, contributing to an overall increase in healthcare expenses.</p>
 </div>
 </div>
 <div class="callout-note callout callout-style-default callout-captioned">
@@ -348,140 +573,36 @@ Example: Spending and student performance
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>To illustrate how covariates set context, consider an issue of interest to public policy-makers in many societies: How much money to spend on children’s education? In the United States, for instance, educational budget policy is set mainly on a state-by-state level. State lawmakers are understandably concerned with the quality of the public education provided, but they also have other concerns and constraints and constituencies who give budget priority to other matters.</p>
-<p>In evaluating the various trade-offs they face, lawmakers would be helped by knowing how increased educational spending will shape educational outcomes. What can available data tell us? Unfortunately, there are various political constraints that work against states adopting and publishing data on a common measure of genuine educational outcome. Instead, we have high-school graduation rates, student grades, etc. These have some genuine meaning but also can reflect the way the system is gamed by administrators and teachers and which cannot be easily compared across states. At a national level, we have college admissions tests such as the ACT and SAT. Perhaps because these tests are administered by private organizations and not state governments, it’s possible to gather data on test-score outcomes on a state-by-state basis and collate these with public spending information.</p>
-<p><a href="#fig-sat-1">Figure&nbsp;1</a> shows average SAT score in 2010 in each state versus expenditures per pupil in public elementary and secondary schools. Laid on top of the data is a flexible linear model (and its confidence band) of SAT score versus expenditure. The overall impression given by the model is that the relationship is negative, with lower expenditures corresponding to higher SAT scores. But the confidence bands are broad and it is possible to find a smooth path through the confidence band that has almost zero slope. Either way, the conventional wisdom that higher spending produces better school outcomes is not supported by this graph.</p>
+<p>To illustrate how covariates set context, consider an issue of interest to public policy-makers in many societies: How much money to spend on children’s education? State lawmakers in the US are understandably concerned with the quality of public education provided. However, they also have other concerns and constraints and constituencies who give budget priority to other matters.</p>
+<p>In evaluating their various trade-offs, lawmakers could benefit by knowing how increased educational spending will shape educational outcomes. What can available data tell us? Unfortunately, there are various political constraints that work against states adopting and publishing data on a standard, genuine measure of educational outcome. Instead, we have high-school graduation rates, student grades, and other non-standardized data. These data might have some meaning but can also reflect system gaming by administrators and teachers, for which there is little systematic data.</p>
+<p>Although imperfect, college admissions tests such as the ACT and SAT provide consistent data between states. For example, <a href="#fig-sat-1">Figure&nbsp;<span>28.1</span></a> shows the average SAT score in 2010 in each state versus expenditures per pupil in public elementary and secondary schools. Layered on top of the data is a flexible linear model (and its confidence band) of SAT score versus expenditure.</p>
+<p>The overall impression given by the model is that the relationship is negative, with lower expenditures corresponding to higher SAT scores. However, the confidence band is broad; it is possible to find a smooth path with almost zero slope through the confidence band. Either way, this graph does not support the conventional wisdom that higher spending produces better school outcomes.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-sat-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="Reading-notes-lesson-28_files/figure-html/fig-sat-1-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;1: State by state data (from 2010) on average score on the SAT college admissions test and expenditures for public education.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;28.1: State by state data (from 2010) on average SAT college admissions test scores and expenditures for public education.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<p>There are other factors that play a role in shaping education outcomes: poverty levels, parental education, how the educational money is spent (higher pay for teachers or smaller class sizes? administrative bloat?), and so on. Modeling educational outcomes solely by expenditures ignores these other factors.</p>
-<p>At first glance, it’s tempting to ignore these additional factors. We may not have data on them. And insofar as our interest is in understanding the relationship between expenditures and education outcomes, we are not directly concerned with the additional factors. This lack of direct concern, however, doesn’t imply that we should totally ignore them but that we should do what we can to “hold them constant”.</p>
-<p>To illustrate, let’s consider a factor on which we do have data: the fraction of eligible students (those in their last year of high school) who actually take the test. This varies widely from state to state. In a poor state where few students go to college the fraction can be very small (Alabama 8%, Arkansas 5%, Mississippi 4%, Louisiana 8%). In some states, the large majority of students take the SAT (Maine 93%, Massachusetts 89%, New York 89%). In states with low SAT participation rates, the students who do take the test are applying to schools with competitive admissions. Such strong students can be expected to be get high scores. In contrast, the scores in states with high participation rates reflect both strong and weak students; they will be lower on average than in the low-participation states.</p>
-<p>Putting the relationship between expenditure and SAT scores in the context of the fraction taking the SAT can be done by using fraction as a co-variate, that is, building the model <code>SAT ~ expenditure + fraction</code> rather than just <code>SAT ~ expenditure</code>. <a href="#fig-sat-3">Figure&nbsp;2</a>) shows a model with fraction taken into account.</p>
+<p>Of course, other factors play a role in shaping education outcomes: for instance, poverty levels, parental education, and how the educational money is spent (higher pay for teachers or smaller class sizes? administrative bloat?).</p>
+<p>At first glance, it is tempting to ignore these additional factors. For instance, we may not have data on them. Moreover, as our interest is in understanding the relationship between expenditures and education outcomes, we are not directly concerned with the additional factors. However, the lack of direct concern does not imply that we should ignore the factors but that we should do what we can to “hold them constant”.</p>
+<p>To illustrate, consider the fraction of eligible students (those in their last year of high school) who take the college admission test. This fraction varies widely from state to state. In a poor state where few students go to college, the fraction can be tiny (Alabama 8%, Arkansas 5%, Mississippi 4%, Louisiana 8%). In some other states, the large majority of students take the SAT (Maine 93%, Massachusetts 89%, New York 89%). In states with low SAT participation rates, the students who take the test tend to be those applying to schools with competitive admissions. Such strong students will get high scores. In contrast, the scores in states with high participation rates reflect both strong and weak students. Consequently, the scores will be lower on average than in the low-participation states.</p>
+<p>Putting the relationship between expenditure and SAT scores in the context of the fraction taking the SAT is accomplished with the model <code>SAT ~ expenditure + fraction</code> rather than just <code>SAT ~ expenditure</code>. <a href="#fig-sat-3">Figure&nbsp;<span>28.2</span></a> shows a model with <code>fraction</code> as a covariate.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-sat-3" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="Reading-notes-lesson-28_files/figure-html/fig-sat-3-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2: The model of SAT score versus expenditures, including as a covariate the fraction of eligible students in the state who take the SAT.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;28.2: The model of SAT score versus expenditures, including as a covariate the fraction of eligible students in the state who take the SAT.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Note that the effect size of spending on SAT scores is positive when the expenditure level is less than $10,000 per pupil. And notice that when the fraction taking the SAT is near 0, the average scores don’t depend on expenditure. This suggests that among elite students, expenditure doesn’t make a discernable difference: it’s the students, not the schools that matter.</p>
-<p>The relationship shown in <a href="#fig-sat-1">Figure&nbsp;1</a> is genuine. So is the very different relationship seen in <a href="#fig-sat-3">Figure&nbsp;2</a>. How can the same data be consistent with two utterly different displays? The answer, perhaps unexpectedly, has to do with the connections among the explanatory variables. Whatever the relationship between each individual explanatory variable and the response variable, the <em>appearance</em> of that relationship will depend on how explanatory variables are connected to each other.</p>
-<section id="practice-with-a-dag" class="level3">
-<h3 class="anchored" data-anchor-id="practice-with-a-dag">Practice with a DAG</h3>
-<p>To demonstrate that the apparent relationship between an explanatory variable and a response variable – for instance, school expenditures and education outcomes – depends on the connections of the explanatory variable with covariates, let’s move away from the controversies of political issues and study some systems where everyone can agree exactly how the variables are connected. We’ll look at data produced by simulations where we specify exactly what the connections are.</p>
-<p>A simulation implements a hypothesis: a statement about that might or might not be true about the real world. As a starting point for our simulation, let’s imagine that education outcomes increase with school expenditures in a very simple way: each $1000 increase in school expenditures per pupil results in an average increase of 10 points in the SAT score: an effect size of 0.01 points per dollar. Thus, the imagined relationship is:</p>
-<p><span class="math display">\[\mbox{sat} = 1100 + 0.01 * \mbox{dollar expenditure}\]</span></p>
-<p>Let’s also imagine that the fraction of students taking the SAT test also influences the average test score with an effect size of -4 sat points per percentage point. Adding this effect into the simulation leads to an imagined relationship of</p>
-<p><span class="math display">\[\mbox{sat} = 1100 + 0.01 * \mbox{dollar expenditure} - 4 * \mbox{participation percentage} .\]</span></p>
-<p>And, of course, there are other factors, but we’ll treat their effect as random with a typical size of <span class="math inline">\(\pm\)</span> 50 points.</p>
-<p>To complete the simulation, we’ll need to set values for dollar expenditures and participation percentage. We’ll let the dollar expenditures vary randomly from $7000 to $18,000 from one state to another and the participation percentage vary randomly from 1 to 100 percentage points.</p>
-<p>Notice that in this simulation, both participation percentage and expenditures affect education outcomes, but there is no connection at all between the two explanatory variables. That is, the graphical causal network is that shown in Figure @ref(fig:school-sim-1).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dag_school1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>expenditure ~ unif(7000, 18000)
-participation ~ unif(1, 100)
-outcome ~ 1100 + 0.01 * expenditure - 4 * participation + eps(50)</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag_school1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="fig-school-sim-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Reading-notes-lesson-28_files/figure-html/fig-school-sim-1-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;3: A graphical causal network relating expenditures, participation percentage, and education outcome, where there is no connection between expenditures and participation.</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<p>We can generate simulated data and use the data to train models. <strong>?@fig-school-data-1</strong> shows the data and two different models.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Dat1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag_school1, <span class="at">size=</span><span class="dv">500</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>mod1_1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(outcome <span class="sc">~</span> <span class="fu">ns</span>(expenditure,<span class="dv">2</span>), <span class="at">data =</span> Dat1)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>mod1_2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(outcome <span class="sc">~</span> <span class="fu">ns</span>(expenditure,<span class="dv">2</span>) <span class="sc">*</span> participation, <span class="at">data =</span> Dat1)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_plot</span>(mod1_1, <span class="at">interval=</span><span class="st">"prediction"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_point</span>(outcome <span class="sc">~</span> expenditure, <span class="at">data =</span> Dat1)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_plot</span>(mod1_2, <span class="at">interval=</span><span class="st">"prediction"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_point</span>(outcome <span class="sc">~</span> expenditure, <span class="at">alpha=</span><span class="sc">~</span>participation, <span class="at">data =</span> Dat1, <span class="at">inherit=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="fig-school-data-1-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Reading-notes-lesson-28_files/figure-html/fig-school-data-1-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;4: Data and models of the relationship between expenditures and education outcomes from a simulation in which expenditures and participation rate are unconnected as in <a href="#fig-school-sim-1">Figure&nbsp;3</a>. - (a) The model <code>outcome ~ expenditure</code> - (b) The model with participation as a covariate: <code>outcome ~ expenditure + participation</code> Both models (a) and (b) show the same effect size for outcome with respect to expenditure.</figcaption><p></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="fig-school-data-1-2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Reading-notes-lesson-28_files/figure-html/fig-school-data-1-2.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;5: Data and models of the relationship between expenditures and education outcomes from a simulation in which expenditures and participation rate are unconnected as in <a href="#fig-school-sim-1">Figure&nbsp;3</a>. - (a) The model <code>outcome ~ expenditure</code> - (b) The model with participation as a covariate: <code>outcome ~ expenditure + participation</code> Both models (a) and (b) show the same effect size for outcome with respect to expenditure.</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<p>The relationship between outcome and expenditure can be quantified by the effect size, which appears as the slope of the function. You can see that when the explanatory variables are unconnected, as in <a href="#fig-school-sim-1">Figure&nbsp;3</a>, the functions have the same slope.</p>
-<p>Now consider a somewhat different simulation. Rather than expenditures and participation being unconnected (as in the causal diagram shown in <a href="#fig-school-sim-1">Figure&nbsp;3</a>), in this new situation we will posit a connection between the two explanatory variables. We’ll image that there is some broad factor, labeled “culture” in <strong>?@fig-school-sim-2</strong>, that influences both the amount of expenditure and the participation in the tests used to measure education outcome. For instance, “culture” might be the importance that the community places on education or the wealth of the community.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dag_school2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>culture ~ unif(-1, 1)
-expenditure ~ 12000 + 4000 * culture + eps(1000)
-participation ~ (50 + 30 * culture + eps(15)) %&gt;% pmax(0) %&gt;% 
-    pmin(100)
-outcome ~ 1100 + 0.01 * expenditure - 4 * participation + eps(50)</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag_school2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="fig-school-sim2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Reading-notes-lesson-28_files/figure-html/fig-school-sim2-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;6: A DAG for school outcomes that links <code>participation</code> and <code>expenditure</code> as a function of <code>culture</code>.</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Again, using data from this simulation, we can train models:</p>
-<ul>
-<li><ol type="a">
-<li><code>outcome ~ expenditures</code>, which has no covariates.</li>
-</ol></li>
-<li><ol start="2" type="a">
-<li><code>outcome ~ expenditures + participation</code>, which includes participation as a covariate.</li>
-</ol></li>
-</ul>
-<p><strong>?@fig-school-data-2</strong> shows the data from the new simulation (which is the same in both subplots) and the form of the function trained on the data. Now model (a) shows a very different relationship between expenditures and outcome than model (b).</p>
-<div class="cell" data-fig.fullwidth="true">
-<div class="cell-output-display">
-<div id="fig-school-data2-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Reading-notes-lesson-28_files/figure-html/fig-school-data2-1.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;7: Similar to <strong>?@fig-school-data-1</strong> but using the simulation in which the explanatory variables – expenditure and participation – are connected by a common cause. The two models show very different relationships between outcomes and expenditures. Model (b) matches the mechanism used in the simulation, while that mechanism is obscured in model (a).</figcaption><p></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="fig-school-data2-2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Reading-notes-lesson-28_files/figure-html/fig-school-data2-2.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;8: Similar to <strong>?@fig-school-data-1</strong> but using the simulation in which the explanatory variables – expenditure and participation – are connected by a common cause. The two models show very different relationships between outcomes and expenditures. Model (b) matches the mechanism used in the simulation, while that mechanism is obscured in model (a).</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Since we know the exact mechanism in the simulation—<code>outcome</code> increases with <code>expenditure</code>—we know that model (b) matches the workings of the simulation while model (a) does not.</p>
-<p>For the simulation where expenditure and participation share a common cause, failing to stratify on <code>participation</code> – that is, looking at the points in <span class="citation" data-cites="fig">@fig</span>:-school-data-2 (a) but ignoring color – gives an utterly different result than if the stratification includes <code>participation</code>.</p>
-</section>
+<p>Note that the effect size of spending on SAT scores is positive when the expenditure level is less than $10,000 per pupil. Notice as well that when the fraction taking the SAT is tiny, the average scores do not depend on expenditure. This flat relationship suggests that, among elite students, state expenditure does not make a discernable difference. Perhaps the college-bound students in such states have other educational resources to draw on.</p>
+<p>The relationship shown in <a href="#fig-sat-1">Figure&nbsp;<span>28.1</span></a> is genuine. However, so is the very different relationship seen in <a href="#fig-sat-3">Figure&nbsp;<span>28.2</span></a>. How can the same data be consistent with two utterly different displays? The answer, perhaps unexpectedly, has to do with the connections among the explanatory variables. Whatever the relationship between an individual explanatory variable and the response variable, the <em>appearance</em> of that relationship will depend on which covariates the modeler chooses to include.</p>
 </div>
 </div>
 
@@ -530,7 +651,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -566,27 +704,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./QR1.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 1-8</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Reading-notes-lesson-29.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Covariates eat variance</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 
