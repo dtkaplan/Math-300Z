@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -13,10 +13,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -55,7 +60,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -68,7 +73,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -123,15 +128,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link rel="stylesheet" href="../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="../index.html">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -162,9 +169,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -195,6 +204,151 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<p>Here’s a graph of the data in our standard response-vs-explanatory graphic frame:</p>
+<div class="cell page-columns page-full">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> smoker, <span class="at">y =</span> outcome)) <span class="sc">+</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width=</span><span class="fl">0.2</span>, <span class="at">height=</span><span class="fl">0.2</span>, <span class="at">alpha=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<p><img src="Student-notes-lesson-19_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div></div></div>
+<p>The graph suggests that non-smokers were more likely than smokers to be dead at the follow-up interview. But it’s hard to calculate proportions from such a graph. It’s reasonable to argue that for the purpose of showing the fraction of smokers and of non-smokers who died, a bar chart would be better.</p>
+<div id="fig-smoker-barplot" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>smoker, <span class="at">fill=</span>outcome)) <span class="sc">+</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>smoker, <span class="at">fill=</span>outcome)) <span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Proportions"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-smoker-barplot-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Student-notes-lesson-19_files/figure-html/fig-smoker-barplot-1.png" class="img-fluid figure-img" data-ref-parent="fig-smoker-barplot" width="672"></p>
+<p></p><figcaption class="figure-caption">(a) counts</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-smoker-barplot-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Student-notes-lesson-19_files/figure-html/fig-smoker-barplot-2.png" class="img-fluid figure-img" data-ref-parent="fig-smoker-barplot" width="672"></p>
+<p></p><figcaption class="figure-caption">(b) proportions</figcaption><p></p>
+</figure>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Barplots of the <code>Whickham</code>smoking and survival data.</figcaption><p></p>
+</figure>
+</div>
+<p>The left barplot, showing counts, suggests that a higher proportion of non-smokers died than of smokers. But its easy to instruct the <code>geom_bar()</code> to graph proportions rather than counts, as done in the left plot. This makes it easy to conclude at a glance that a higher proportion of non-smokers have died.</p>
+<p>The important question here, “Does smoking affect mortality?” translates well into the response/explanatory paradigm: <code>outcome</code> is the response variable while <code>smoker</code> is the explanatory variable. In the jitter-plot presentation of the data, these assignments are clearly indicated in the computer commands, which set <code>x=smoker, y=outcome</code>. In the barplot, a different notation is used: <code>x=smoker, fill=outcome</code>.</p>
+<p>Unfortunately, neither of the graphic styles—jitter or boxplot—answers the important question. At best they provide a description of the nurses in the <code>Whickham</code> data frame.</p>
+<p>To answer the important question, we need to invoke statistical thinking. In particular, we need an <em>interval summary</em> of the proportion who died, not the point summary produced by the barplot.</p>
+<p>This doesn’t mean that we can’t easily calculate the proportions from the categorical response variable: we just have to use the right commands. for instance:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">df_stats</span>(outcome <span class="sc">~</span> smoker, prop, ci.prop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  response smoker prop_Alive     lower    center     upper
+1  outcome     No  0.6857923 0.6507824 0.6857923 0.7192969
+2  outcome    Yes  0.7611684 0.7243939 0.7611684 0.7952677</code></pre>
+</div>
+</div>
+<p>The point summary—the <code>prop_Alive</code> column—suggests an obvious difference between the smokers and non-smokers. The interval summary—columns <code>lower</code> and <code>upper</code>—tempers this conclusion a little: the intervals almost touch.</p>
+<p>Although regression is our go-to technique for modeling relationships between variables, we can’t use it directly on a categorical response variable.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Here’s what happens if we try:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(outcome <span class="sc">~</span> smoker, <span class="at">data =</span> Whickham) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in model.response(mf, "numeric"): using type = "numeric" with a factor
+response will be ignored</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in Ops.factor(y, z$residuals): '-' not meaningful for factors</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in Ops.factor(r, 2): '^' not meaningful for factors</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            2.5 % 97.5 %
+(Intercept)    NA     NA
+smokerYes      NA     NA</code></pre>
+</div>
+</div>
+<p>The computer’s warning message is a reminder that the response variable is categorical. (The message uses the phrase “factor response,” which is just computerese for “categorical response.”)</p>
+</div>
+</div>
+<p>To use regression with a two-level categorical response variable, transform it into a zero-one encoding. In the following, we’ll use 1 to represent <code>"Alive"</code> and 0 to represent <code>"Dead"</code>, although we can equally well do things the other way around.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="fu">zero_one</span>(outcome, <span class="at">one=</span><span class="st">"Alive"</span>) <span class="sc">~</span> smoker, <span class="at">data =</span> Whickham) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 2.5 %    97.5 %
+(Intercept) 0.65329520 0.7182895
+smokerYes   0.02654662 0.1242054</code></pre>
+</div>
+</div>
+<p>You don’t yet know enough to interpret this interval summary. That will have to wait until Lesson 24. The significant<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> feature of the interval on <code>smokerYes</code> is that it does not include zero. In everyday terms, the interval means, “Smokers are 3 to 12 percentage points more likely to survive for 20 years than are non-smokers.”</p>
+<p>Using interval summaries instead of point summaries is an important aspect of statistical thinking, but there are other aspects that need to be taken into account. A simple, but important, question is whether the nurses recorded in the <code>Whickham</code> data frame are good representatives of all smokers. (It turns out that the nurses in <code>Whickham</code> are all women interviewed in the 1970s. At that moment of history, women were very different than men when it comes to smoking, and the Whickham smokers were also very different from today’s female smokers. We’ll say more about this in the demonstration below.)</p>
+<p>Statistical thinking also leads one to ask another sort of question: What else might be going on other than smoking? In technical language, the other-goings-on are called “<strong>covariates</strong>,” the topic of Lessons 28 &amp; 29.</p>
+<p>For instance, you might wonder about the overall result from our brief examination of the <code>Whickham</code> data. Is it really the case that the smokers were more likely to survive than the non-smokers? The answer is “yes,” as we have demonstrated from the previous analysis. But this answer is completely misleading. Tobacco companies worked hard to mislead people into thinking that smoking was not dangerous. They knew full well the negative health consequence of smoking, but they used statistical-sounding claims to hide this knowledge from the public.</p>
+<p>In the following demonstration, we’ll look at the <code>Whickham</code> data again using the power of regression models to incorporate covariates.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Demonstration: Smoking with covariates
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><em>Remember that you are not expected to master the calculations in these demonstrations. Focus your attention on the output from the calculations.</em></p>
+<p>It goes without saying that smoking is not the only thing that kills people. There are other risky behaviors such as heavy drinking, there’s environmental exposure to pollutants, and there’s disease (other than the smoking induced ones of lung cancer, emphysema, and high blood pressure). But there’s one risk factor for death that everyone knows about but nobody is doing anything about: getting old.</p>
+<p>In virtually every public health or clinical study, the participant’s age is taken into account. Not doing so can produce a completely misleading view of the situation. This is also the case with smoking and mortality in the <code>Whickham</code> study.</p>
+<p>Regression techniques enable us to take multiple explanatory variables into account. In this demonstration, we’ll use regression to study <code>outcome</code> as a function of <code>smoker</code> and, importantly, <code>age</code>.</p>
+<p>To get started, we need to remember to convert the categorical <code>outcome</code> variable into a zero-one encoding. After that, building the model is not so hard.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>survival_model <span class="ot">&lt;-</span> Whickham <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">survived =</span> <span class="fu">zero_one</span>(outcome, <span class="at">one=</span><span class="st">"Alive"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_train</span>(survived <span class="sc">~</span> age <span class="sc">+</span> smoker, <span class="at">data=</span>.)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>From this model, we can read off an interval summary of the effect of smoking on survival:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>survival_model <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 2.5 %     97.5 %
+(Intercept)  6.7686824  8.5002535
+age         -0.1382922 -0.1101260
+smokerYes   -0.5369777  0.1238805</code></pre>
+</div>
+</div>
+<p>A full understanding of this interval summary will need to wait until Lessons 22 through 24. For the present, we’ll simply point out that the summary interval on <code>smokerYes</code> includes zero, so <code>Whickham</code> provides no support for the mistaken conclusion that smoking improves survival. But seeing this requires taking into account <code>age</code>. A graphic may help explain why:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Model_output <span class="ot">&lt;-</span> <span class="fu">model_eval</span>(survival_model, <span class="at">interval=</span><span class="st">"confidence"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>Model_output <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> survived, <span class="at">ymin=</span>.lwr, <span class="at">ymax=</span>.upr, <span class="at">x=</span>age, <span class="at">color=</span>smoker, <span class="at">fill=</span>smoker)) <span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height=</span>.<span class="dv">1</span>, <span class="at">width=</span><span class="dv">0</span>, <span class="at">alpha=</span><span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.2</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Student-notes-lesson-19_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The interval summary in the graph shows how the probability of survival changes for different ages. The intervals for non-smokers and smokers entirely overlap. For both groups, 20-year survival goes down with greater initial age. So why did the model <code>outcome ~ smoker</code> suggest that smokers have a higher survival? The reason relates to the proportion of smokers with initial age 70+. In the 1970s, life expectancy was such that people 70+ were unlikely to survive 20 years. This pulls down the survival rate at that age. Notice that the 70+ nurses were unlikely to have been smokers compared to younger nurses. The 70+ nurses grew up in an era when social conventions caused smoking to be uncommon for women (even though it was very common for men).</p>
+</div>
+</div>
 <section id="key-ideas" class="level2">
 <h2 class="anchored" data-anchor-id="key-ideas">Key ideas</h2>
 <ol type="1">
@@ -218,16 +372,16 @@ In draft
 <div class="callout-body-container callout-body">
 <p>Make a jitter plot of gestation period versus smoking status. Then find the mean for each smoking status show this table. Then the ci.mean() as a table and graphed as an interval.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>values <span class="ot">&lt;-</span> <span class="fu">lm</span>(gestation <span class="sc">~</span> smoke, <span class="at">data =</span> Gestation) <span class="sc">%&gt;%</span> </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_eval</span>(<span class="at">interval=</span><span class="st">"confidence"</span>, <span class="at">skeleton=</span><span class="cn">TRUE</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Gestation <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> smoke, <span class="at">y =</span> gestation)) <span class="sc">+</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width=</span><span class="fl">0.2</span>, <span class="at">alpha=</span><span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">data =</span> values, <span class="fu">aes</span>(<span class="at">x=</span>smoke, <span class="at">ymin=</span>.lwr, <span class="at">ymax=</span>.upr), <span class="at">y=</span><span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>values <span class="ot">&lt;-</span> <span class="fu">lm</span>(gestation <span class="sc">~</span> smoke, <span class="at">data =</span> Gestation) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_eval</span>(<span class="at">interval=</span><span class="st">"confidence"</span>, <span class="at">skeleton=</span><span class="cn">TRUE</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>Gestation <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> smoke, <span class="at">y =</span> gestation)) <span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width=</span><span class="fl">0.2</span>, <span class="at">alpha=</span><span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">data =</span> values, <span class="fu">aes</span>(<span class="at">x=</span>smoke, <span class="at">ymin=</span>.lwr, <span class="at">ymax=</span>.upr), <span class="at">y=</span><span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 13 rows containing missing values (geom_point).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="Student-notes-lesson-19_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+<p><img src="Student-notes-lesson-19_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -255,10 +409,10 @@ In draft
 </ol></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># complete the code</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Hill_racing %&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  ggplot(aes(x=_____, y=______)) +</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  geom_point()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># complete the code</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Hill_racing %&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  ggplot(aes(x=_____, y=______)) +</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  geom_point()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -271,15 +425,15 @@ Solution
 </div>
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># complete the code</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Hill_racing <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>distance, <span class="at">y=</span>time)) <span class="sc">+</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">geom_point</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># complete the code</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>Hill_racing <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>distance, <span class="at">y=</span>time)) <span class="sc">+</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">geom_point</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 10 rows containing missing values (geom_point).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="Student-notes-lesson-19_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<p><img src="Student-notes-lesson-19_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -292,26 +446,33 @@ Solution
 <p>Surprisingly, an important model for starting the chain of comparisons <em>has no explanatory variable</em>. OR RATHER, WE MAKE UP AN EXPLANATORY variable. SHOW MEAN is a coefficient from such a model. Model formula: <code>y ~ 1</code></p>
 <p>Let’s use the standard data-graphic format to display to display <code>y ~ 1</code>,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">group =</span> <span class="st">"all"</span>) <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>age, <span class="at">x=</span>group)) <span class="sc">+</span> <span class="fu">geom_jitter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">group =</span> <span class="st">"all"</span>) <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>age, <span class="at">x=</span>group)) <span class="sc">+</span> <span class="fu">geom_jitter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Student-notes-lesson-19_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<p><img src="Student-notes-lesson-19_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <ol start="2" type="1">
 <li>A somewhat more complex model is <code>time ~ distance + climb</code>. In this model there are two explanatory variables. Only one of them can be mapped to the horizontal axis, the other will need to be mapped to some other aesthetic or to faceting.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># complete the code</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Hill_racing %&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  ggplot(aes(x=_____, y=______)) +</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  geom_point()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># complete the code</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Hill_racing %&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  ggplot(aes(x=_____, y=______)) +</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  geom_point()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<hr>
 
 
 </section>
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>In lesson 38 you’ll learn to be wary whenever a statistician uses the word “significant.”<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -381,7 +542,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);

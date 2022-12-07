@@ -2,21 +2,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-11-04">
+<meta name="dcterms.date" content="2022-11-29">
 
 <title>Spring 2023 Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 26)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -55,7 +60,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -68,7 +73,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -130,9 +135,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="../index.html">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -187,7 +194,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 4, 2022</p>
+      <p class="date">November 29, 2022</p>
     </div>
   </div>
     
@@ -213,9 +220,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simple correlation</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>dag04 <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(x <span class="sc">~</span> <span class="fu">eps</span>(), y <span class="sc">~</span> <span class="dv">2</span><span class="sc">*</span>x <span class="sc">+</span> <span class="fu">eps</span>(<span class="fl">0.5</span>))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>dag04 <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(x <span class="sc">~</span> <span class="fu">exo</span>(), y <span class="sc">~</span> <span class="dv">2</span><span class="sc">*</span>x <span class="sc">+</span> <span class="fu">exo</span>(<span class="fl">0.5</span>))</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># "Error in variables", that is, we don't measure x exactly.</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>dag05 <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(.latent <span class="sc">~</span> <span class="fu">eps</span>(), x <span class="sc">~</span> .latent <span class="sc">+</span> <span class="fu">eps</span>(<span class="fl">0.5</span>), y <span class="sc">~</span> <span class="dv">2</span><span class="sc">*</span>.latent <span class="sc">+</span> <span class="fu">eps</span>(<span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>dag05 <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(.latent <span class="sc">~</span> <span class="fu">exo</span>(), x <span class="sc">~</span> .latent <span class="sc">+</span> <span class="fu">exo</span>(<span class="fl">0.5</span>), y <span class="sc">~</span> <span class="dv">2</span><span class="sc">*</span>.latent <span class="sc">+</span> <span class="fu">exo</span>(<span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <ul>
@@ -543,6 +550,46 @@ Solution
 </div>
 </div>
 <hr>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+IN DRAFT
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+</section>
+<section id="move-to-lc" class="level2">
+<h2 class="anchored" data-anchor-id="move-to-lc">Move to LC</h2>
+<p>A prediction function takes values for explanatory variables as inputs and, as output, produces corresponding values for the prediction interval. Typically, the 95% prediction interval is shown. The graphic below shows both the 50% interval and a 95% interval for a model of winning time versus distance trained on the Scottish hill racing data.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="NTI-Lesson26_files/figure-html/crocodile-spend-magnet-1-1.png" class="img-fluid" style="width:45.0%"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="NTI-Lesson26_files/figure-html/crocodile-spend-magnet-1-2.png" class="img-fluid" style="width:45.0%"></p>
+</div>
+</div>
+<ol type="1">
+<li><p>Which graph, (a) or (b), corresponds to the 50% interval. -A- A 50% interval will be narrower than a 95% interval, so (b) is the 50% interval.</p></li>
+<li><p>Judging by eye in (a) and (b), give the top and bottom of the 95% prediction interval and the 50% prediction interval when the distance is 10 km. -A- 50% interval runs from about 670 to 950 seconds. The 90% interval runs from about 500 to 1300 seconds.</p></li>
+</ol>
+<p>Drawing the prediction intervals as bands gives the misleading idea that any value between the top and bottom of the band is equally likely. But values toward the center of the band are much more likely than those toward the edges or outside of the band.</p>
+<p>The following graphic gives a better idea of the relative probability of each outcome by overlaying several prediction bands: 25%, 50%, 75%, 95%. The darker regions are more likely than the lighter regions.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="NTI-Lesson26_files/figure-html/crocodile-spend-magnet-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol start="2" type="1">
+<li><p>About how much wider is the 95% band than the 75% band? -A- Almost twice as wide.</p></li>
+<li><p>What is the probability of an individual outcome being somewhere inside the 95% band, but <em>outside</em> the 75% band? -A- 20%. Events outside the 75% band will be seen only 25% of the time. Events outside the 95% band will be seen only 5% of the time. That leaves 20% for the region between the two bands.</p></li>
+</ol>
 </section>
 <section id="documenting-software" class="level2">
 <h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>
@@ -620,7 +667,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);

@@ -24,15 +24,15 @@ source("../_startup.R")
 knitr::include_graphics("www/correlation-ngram.png")
 ```
 
-The rise in use of "correlation" starts in the mid to late 1800s, reached an early peak in the 1930s, then peaked again around 1980. The use of "correlation" is tracked closely by that of "coefficient." This might seem obvious to historians of statistics; the quantitative measure called the "correlation coefficient" was introduced by Francis Galton in 1888 and quickly became a staple of statistics textbooks. 
+The use of "correlation" started in the mid to late 1800s, reached an early peak in the 1930s, then peaked again around 1980. "Correlation" is tracked closely by "coefficient." This parallel track might seem evident to historians of statistics; the quantitative measure called the "**correlation coefficient**" was introduced by Francis Galton in 1888 and quickly became a staple of statistics textbooks. 
 
-In contrast to mainstream statistics textbooks, "correlation" barely appears in these lessons (until this chapter). There is a good reason for this. The correlation coefficient is a measure of the "strength" of relationship between two variables. It is a special case of a more general and powerful method that appears throughout these Lessons: regression modeling.
+In contrast to mainstream statistics textbooks, "correlation" barely appears in these lessons (until this chapter). There is a good reason for this. Although the correlation coefficient measures the "strength" of the relationship between two variables, it is a special case of a more general and powerful method that appears throughout these Lessons: regression modeling.
 
-You can see in @fig-ngram that "regression" got a later start than correlation. That is likely because it took 30-40 years before it was appreciated that correlation could be generalized. Regression is more mathematically complicated than correlation, so practical use of regression relied on computing, and computers started to become available only around 1950.
+@fig-ngram shows that "regression" got a later start than correlation. That is likely because it took 30-40 years before it was appreciated that correlation could be generalized. Furthermore, regression is more mathematically complicated than correlation, so practical use of regression relied on computing, and computers started to become available only around 1950.
 
 ## Correlation
 
-A dictionary is a good place to start in understanding the use of a word. Here are four definitions of "correlation" from general-purpose dictionaries. 
+A dictionary is a starting point for understanding the use of a word. Here are four definitions of "correlation" from general-purpose dictionaries. 
 
 > "*A relation existing between phenomena or things or between mathematical or statistical variables which tend to vary, be associated, or occur together in a way not expected on the basis of chance alone*" Source: [Merriam-Webster Dictionary](https://www.merriam-webster.com/dictionary/correlation)
 
@@ -42,11 +42,11 @@ A dictionary is a good place to start in understanding the use of a word. Here a
 
 > "A mutual relationship or connection between two or more things," "interdependence of variable quantities." Source: [Oxford Languages]
 
-All four definitions use the words "connection" or "relation/relationship." That at the core of "correlation." Indeed, "relation" is part of the word "correlation." One of the definitions uses "causes" explicitly and the everyday meaning of "connection" and "relation" tend to point in this direction. The phrase "one thing changes as the other does" is awfully close to the idea of causality, as is "interdependence.:
+All four definitions use "connection" or "relation/relationship." That is at the core of "correlation." Indeed, "relation" is part of the word "correlation." One of the definitions uses "causes" explicitly, and the everyday meaning of "connection" and "relation" tend to point in this direction. The phrase "one thing changes as the other does" is close to the idea of causality, as is "interdependence.:
 
-Three of the definitions use the words "vary," "variable," or "changes." This also is on target, and appears directly in a closely related statistical word: "covariance."
+Three of the definitions use the words "vary," "variable," or "changes." The emphasis on variation also appears directly in a close statistical synonym for correlation: "covariance."
 
-Two of the definitions refer to "chance," that correlation "is not caused by chance," or "not expected on the basis of chance alone." These phrases might suggest to a general reader that correlation, since not based on chance, must be a matter of fate: pre-determination and the action of causal mechanisms.
+Two of the definitions refer to "chance," that correlation "is not caused by chance," or "not expected on the basis of chance alone." These phrases suggest to a general reader that correlation, since not based on chance, must be a matter of fate: pre-determination and the action of causal mechanisms.
 
 We can put the above definitions in the context of four major themes of these Lessons:
 
@@ -55,17 +55,17 @@ We can put the above definitions in the context of four major themes of these Le
 - Sampling variation
 - Causality
 
-Correlation is about relationships; the "correlation coefficient" is a way to describe quantitatively very simple relationships. The description summarizes the tandem variation of quantities, or, more simply stated, how "one thing changes as the other does."
+Correlation is about relationships; the "correlation coefficient" is a way to describe a straight-line relationship quantitatively. The correlation coefficient addresses the tandem variation of quantities, or, more simply stated, how "one thing changes as the other does."
 
-The concern about "chance" in the definitions is, to a statistical thinker, not about fate but about reliability. Sampling variation can lead to the appearance of a pattern in some samples that is not seen in others. Reliability means that the pattern will appear in a large majority of samples.
+To a statistical thinker, the concern about "chance" in the definitions is not about fate but reliability. Sampling variation can lead to the appearance of a pattern in some samples of a process that is not seen in other samples of that same process. Reliability means that the pattern will appear in a large majority of samples.
 
 
 ::: {.callout-note}
-One of the better explanations of "correlation" appears in an 1890 article by Francis Galton, who invented the correlation coefficient. Since the explanation is more than a century old, some words will be unfamiliar to the modern reader. A "clerk" is an office worker. An "omnibus" is, today, merely a means of public transportation.
+One of the better explanations of "correlation" appears in an 1890 article by Francis Galton, who invented the correlation coefficient. Since the explanation is more than a century old, some words will be unfamiliar to the modern reader. For example, a "clerk" is an office worker. An "omnibus" is merely a means of public transportation today.
 
 > *Two clerks leave their office together and travel homewards in the same and somewhat unpunctual omnibus every day. They both get out of the omnibus at the same halting-place, and thence both walk by their several ways to their respective homes. ... The upshot is that when either clerk arrives at his home later than his average time, there is some reason to expect that the other clerk will be late also, because the retardation of the first clerk may have been wholly or partly due to slowness of the omnibus on that day, which would equally have retarded the second clerk. Hence their unpunctualities are related. If the omnibus took them both very near to their homes, the relation would be very close. If they lodged in the same house and the omnibus dropped them at its door, the relation would become identity.*
 
-> *The problems of ... correlation deal wholly with departures or variations ; they pay no direct regard to the central form from which the departures or variations are meas ured. If we were measuring statures, and had made a mark on our rule at a height equal to the average height of the race of persons whom we were considering, then it would be the distance of the top of each man's head from that mark, upward or down ward as the case might be, that is wanted for our use, and not its distance upward from the ground.*^[Francis Galton 1890) "Kinship and Correlation" *The North American Review*Vo l. 150, No. 401 (Apr., 1890) [URL](https://www.jstor.org/stable/25101964)]
+> *The problems of ... correlation deal wholly with departures or variations ; they pay no direct regard to the central form from which the departures or variations are measured. If we were measuring statures, and had made a mark on our rule at a height equal to the average height of the race of persons whom we were considering, then it would be the distance of the top of each man's head from that mark, upward or downward as the case might be, that is wanted for our use, and not its distance upward from the ground.*^[Francis Galton (1890) "Kinship and Correlation" *The North American Review* 150(401) [URL](https://www.jstor.org/stable/25101964)]
 
 :::
 
@@ -73,32 +73,33 @@ One of the better explanations of "correlation" appears in an 1890 article by Fr
 
 ```{r echo=FALSE}
 #| label: fig-spurious-correlation
-#| fig-cap: "Two examples from the [Spurious correlations](http://www.tylervigen.com/spurious-correlations) web site"
+#| fig-cap: "Two examples from the [Spurious correlations](http://www.tylervigen.com/spurious-correlations) website"
 #| column: margin
 knitr::include_graphics("www/spurious-correlations.png")
 ```
 
-The "Spurious correlations" web site <http://www.tylervigen.com/spurious-correlations> is an source of entertaining examinations of correlations gone wrong. The running gag is that the two variables being correlated have no reasonable association to one another, yet the correlation coefficient is very close to its theoretical maximum of 1.0. Typically, one of the variables is morbid, as in @fig-spurious-correlation.
-
-According to Aldrich (1995)^[John Aldrich (1994) "Correlations Genuine and Spurious in Pearson and Yule" *Statistical Science* 10(4) [URL](https://www.jstor.org/stable/2246135) the idea of **spurious correlations** appears first in an 1897 paper by statistical pioneer and philosopher of science Karl Pearson. The correlation coefficient method itself was published only in 1888, so it is is understandable that early users would be caught up in pitfalls. One very early user, W.F.R. Weldon, published a study in 1892 on the correlations between the sizes of organs in shrimps. 
-
-```{r echo=FALSE}
-knitr::include_graphics("www/shrimp-correlations.png")
-```
-
-Pearson noticed a distinctive feature of Weldon's method. The quantities measured---the lengths of the tergum and the telson---were presented as a fraction of the overall body length. 
+The "Spurious correlations" website <http://www.tylervigen.com/spurious-correlations> provides entertaining examples of correlations gone wrong. The running gag is that the two correlated variables have no reasonable association, yet the correlation coefficient is very close to its theoretical maximum of 1.0. Typically, one of the variables is morbid, as in @fig-spurious-correlation.
 
 ```{r echo=FALSE}
 #| label: fig-telson-tergum
-#| fig-cap: "The telson and tergum are the units marked at the bottom."
+#| fig-cap: "The telson and tergum are anatomical parts of the shrimp. Their locations are marked at the bottom. Source: Weldon 1888"
 #| column: margin
+#| out-width: "150%"
 knitr::include_graphics("www/shrimp-organs.png")
 ```
+
+According to Aldrich (1995)^[John Aldrich (1994) "Correlations Genuine and Spurious in Pearson and Yule" *Statistical Science* 10(4) [URL](https://www.jstor.org/stable/2246135) the idea of **spurious correlations** appears first in an 1897 paper by statistical pioneer and philosopher of science Karl Pearson. The correlation coefficient method was published only in 1888, and, understandably, early users encountered pitfalls. One very early user, W.F.R. Weldon, published a study in 1892 on the correlations between the sizes of organs, such as the tergum and telson in shrimp. (See @fig-telson-tergum.) 
+
+```{r echo=FALSE, out.width="80%", fig.align="center"}
+knitr::include_graphics("www/shrimp-correlations.png")
+```
+
+Pearson noticed a distinctive feature of Weldon's method. Weldon measured the tergum and telson as a fraction of the overall body length. 
 
 @fig-shrimp-dag shows one possible DAG interpretation where `telson` and `tergum` are *not* connected by any causal path. Similarly, `length` is exogenous with no causal path between it and either `telson` or `tergum`. `r set.seed(101)`
 ```{r}
 #| label: fig-shrimp-dag
-#| fig-cap: "DAG for the shrimp measurements"
+#| fig-cap: "DAG for the shrimp measurements."
 #| column: margin
 shrimp_dag <- dag_make(
   tergum ~ unif(min=2, max=3),
@@ -107,12 +108,13 @@ shrimp_dag <- dag_make(
   x ~ tergum/length + exo(.01),
   y ~ telson/length + exo(.01)
 )
-dag_draw(shrimp_dag, seed=101, vertex.label.cex=1)
+# dag_draw(shrimp_dag, seed=101, vertex.label.cex=1)
+knitr::include_graphics("www/telson-tergum.png")
 ```
 
-The @fig-shrimp-dag shows a null hypothesis, that there is no causal relationship between telson and tergum. Pearson wondered whether dividing those quantities by `length` to produce variables `x` and `y`, might induce a correlation. Weldon had found a correlation coefficient between `x` and `y` of about 0.6. Pearson estimated that the method of dividing by `length` would induce a correlation between `x` and `y` of about 0.4-0.5, even if telson and tergum are not causally connected.
+The @fig-shrimp-dag shows a hypothesis where there is no causal relationship between telson and tergum. Pearson wondered whether dividing those quantities by `length` to produce variables `x` and `y`, might induce a correlation. Weldon had found a correlation coefficient between `x` and `y` of about 0.6. Pearson estimated that dividing by `length` would induce a correlation between `x` and `y` of about 0.4-0.5, even if telson and tergum are not causally connected.
 
-We can confirm Pearson's estimate by sampling from the DAG and modeling `y` by `x`. The confidence interval on `x` shows that there is a non-null relationship between `x` and `y`. Pearson would of course have used the correlation coefficient, which for more than a century has been understood to be a scaling of the `x` coefficient. 
+We can confirm Pearson's estimate by sampling from the DAG and modeling `y` by `x`. The confidence interval on `x` shows a relationship between `x` and `y`. In 1892, before the invention of regression, the correlation coefficient would have been used. In retrospect, we know the correlation coefficient is a simple scaling of the `x` coefficient. 
 
 ```{r}
 Sample <- sample(shrimp_dag, size=1000)
@@ -120,9 +122,9 @@ lm(y ~ x, data=Sample) %>% confint()
 cor(y ~ x, data=Sample)
 ```
 
-Pearson's works pre-dated by three decades even the earliest conception of DAGs, and a full century before DAGs were widely used. But we can see that `length` is a common cause of `x` and `y`.
+Pearson's 1897 work precedes the earliest conception of DAGs by three decades. An entire century would pass before DAGs came into widespread use. However, from the DAG of @fig-shrimp-dag] in front of us, we can see that `length` is a common cause of `x` and `y`.
 
-Within 20 years of Pearson's publication, a mathematical technique called "**partial correlation**" was in use that could deal with this particular problem of spurious correlation. The key is that `length` is a covariate that should be used in the model. This correctly blocks the path from `x` to `y` via `length`.
+Within 20 years of Pearson's publication, a mathematical technique called "**partial correlation**" was in use that could deal with this particular problem of spurious correlation. The key is that the model should include `length` as a covariate. The covariate correctly blocks the path from `x` to `y` via `length`.
 
 ```{r}
 lm(y ~ x + length, data=Sample) %>% confint()
@@ -130,33 +132,66 @@ lm(y ~ x + length, data=Sample) %>% confint()
 
 The confidence interval on the `x` coefficient includes zero once `length` is included in the model. So the data, properly analyzed, show no correlation between telson and tergum.
 
-In this case, "spurious correlation" stems from a method that's inappropriate. This situation, identified 130 years ago and addressed a century ago, is still a problem for those who use the correlation coefficient. Regression allows the incorporation of covariates, the correlation coefficient doesn't.
+In this case, "spurious correlation" stems from using an inappropriate method. This situation, identified 130 years ago and addressed a century ago, is still a problem for those who use the correlation coefficient. Although regression allows the incorporation of covariates, the correlation coefficient does not.
 
 ::: {.callout-note}
 ## Time series analysis
 
-Correlations such as those presented on the [Spurious correlation website](http://www.tylervigen.com/spurious-correlations) can also be attributed to methodological error.
+Some spurious correlations, such as those presented on the [eponymous website](http://www.tylervigen.com/spurious-correlations), can also be attributed to methodological error.
 
-One source of error was identified in 1904 by F.E. Cave-Browne-Cave in her paper "On the influence of the time factor on the correlation between the barometric heights at stations more than 1000 miles apart," published in the Proceedings of the Royal Society. "Miss Cave," as she was referred to in 1917 and 1921 respectively by eminent statisticians William Sealy Gosset (who published under the name "Student") and George Udny Yule, also offered a solution to the problem. Her solution is very much in the tradition of a technical area  known as time-series analysis. 
+One source of error was identified in 1904 by F.E. Cave-Browne-Cave in her paper "On the influence of the time factor on the correlation between the barometric heights at stations more than 1000 miles apart," published in the Proceedings of the Royal Society. "Miss Cave," as she was referred to in 1917 and 1921, respectively by eminent statisticians William Sealy Gosset (who published under the name "Student") and George Udny Yule, also offered a solution to the problem. Her solution is very much in the tradition of "**time-series analysis**, " a contemporary specialized area of statistics. 
 
-The unlikeliness of the correlations on the website is a clue to their origin as methodological. Nobody woke up one morning with the idea that cheese consumption and bedsheet mortality might be related. Instead, a search was made among a vast number of miscellaneous records. Imagine that data were available on 10,000 annually tabulated variables for the last decade. This creates the opportunity for 50 million pairs of variables. In statistics, this is called the "multiple comparisons problem" and ways to address it have been available since the 1950s. We will return to this topic under the label "false discovery" in Lesson 38. It is a serious problem in molecular genetics, where "micro-arrays" make a hundred thousand measurements of gene expression with the hope that a correlation in expression of two different genes will provide a clue to cellular function and disease.
+The unlikeliness of the correlations on the website is another clue to their origin as methodological. Nobody woke up one morning with the hypothesis that cheese consumption and bedsheet mortality are related. Instead, the correlation is the product of a search among many miscellaneous records. Imagine that data were available on 10,000 annually tabulated variables for the last decade. These 10,000 variables create the opportunity for 50 million pairs of variables.  Even if none of these 50 million pairs have a genuine relationship, sampling variation will lead to some of them having a strong correlation coefficient. 
+
+In statistics, such a blind search is called the "multiple comparisons problem." Ways to address the problem have been available since the 1950s. (We will return to this topic under the label "false discovery" in Lesson 38.) Multiple comparisons can be used as a trick, as with the website. However, multiple comparisons also arise naturally in some fields. For example, in molecular genetics, "micro-arrays" make a hundred thousand simultaneous measurements of gene expression.  Correlations in the expression of two genes give a clue to cellular function and disease. With so many pairs available, multiple comparisons will be an issue. 
 
 :::
 
 
 
-## "Correlation is not causation"
+## "Correlation implies causation."
 
-The 1890 example by Francis Galton introduces "correlation" as a story of causality: the bus trip causes variation in commute times. Two people riding the same bus will have correlated commute times. And in the dictionary definitions of "correlation" at the start of the Lesson, the words "connection," "relationship," and "interdependence" in the definition suggests causal connections. 
+Francis Galton's 1890 example of the clerks on the bus introduces "correlation" as a causality story. The bus trip causes variation in commute times. Two clerks riding the same bus will have correlated commute times. In the dictionary definitions of "correlation" at the start of the Lesson, the words "connection," "relationship," and "interdependence"  suggests causal connections. 
 
 ```{r echo=FALSE}
 #| column: margin
 knitr::include_graphics("www/correlation-tee-shirt.png")
 ```
 
-Insofar as the dictionary definitions suggest a causal relationship, they are at odds with the statistical mainstream which, famously, holds that "correlation is not causation." This view is so strong that it appears on tee-shirts, one style of which is available for sale by the American Statistical Association.
+Insofar as the dictionary definitions of correlation suggest a causal relationship, they are at odds with the statistical mainstream, which famously holds that "correlation does not imply causation." This view is so entrenched that it appears on tee shirts, one style of which is available for sale by the American Statistical Association.
 
-Historically, the rise of the expression "correlation is not causation"---@fig-ngram-corr-is-not-cause shows the ngram since the 1888 invention of the correlation coefficient---comes *after* the peak in the use of the word "correlation."
+The statement "A is not B" can be valid only if we know what A and B are. We have a handle on the meaning of "correlation." So what is the meaning of "causation?"
+
+Dictionaries define "causation" using the word "cause." So we look there for guidance.
+
+> A person or thing that gives rise to an action, phenomenon, or condition. Source: Oxford Languages
+
+> An event, thing, or person that makes something happen. Source: Macmillan Dictionary
+
+> A person or thing that acts, happens, or exists in such a way that some specific thing happens as a result; the producer of an effect. Source: Dictionary.com
+
+Interpreting these definitions requires making sense of "give rise to," "makes happen," or "happens as a result." All of them are synonyms for "cause."
+
+This circularity produces a muddle. Centuries of philosophical debate have yet to clarify things much. 
+
+Still, we can do something. The point of view of these Lessons is to support decision-making. Causation is a valuable concept for decision-making, particularly in cases where the decision-maker is considering an *intervention*. With this as an anchor, a pragmatic definition of "causation" is available:
+
+> Causation describes a class of hypotheses that DAGs can represent. In that representation, a causal relationship between two nodes X and Y is marked by a causal path connecting X to Y. In Lesson 30, we defined "causal path" in terms of the directions of arrows in a DAG.^[We will consider a "direct causal link" to be a form of causal path.] A definitive demonstration of a causal relationship between X and Y is that intervening to change X results reliably in a change in Y, *all other nodes not on the causal path being held constant.* (Lesson 32 treats the methodology behind this definitive sign.)
+
+Whether or not a definitive demonstration is feasible is not directly relevant to the decision-maker. A decision-maker acts under the guidance of one or more hypotheses. A good rule of thumb for decision-makers is to be guided only by plausible hypotheses. Whether a hypothesis is plausible is a matter of informed belief. A definitive demonstration should sharpen that belief. If no such definitive demonstration is available, the decision-maker must rely on alternative sources for belief. Austin Bradford Hill (1898-1991), an epidemiologist and eminent statistician, famously published a [list of nine criteria](https://en.wikipedia.org/wiki/Bradford_Hill_criteria) that support belief in a causal hypothesis.
+
+Using my definition of causation, and in marked disagreement with many statisticians, I submit that 
+
+> *Correlation implies causation.*
+
+"Correlation implies causation" is not the same as saying, "A correlation between A and B implies that A causes B." That statement is false. For instance, it might be instead that B causes A. Alternatively, there might be a common cause C for both A and B. Or, C might be a collider between A and B.
+
+There is no mechanism to produce correlation that I am aware of, other than the sources of spurious correlation described previously, that does not involve causation in some way.
+
+::: {.callout-note}
+## So why do many statisticians say different?
+
+Historically, the rise of the expression "correlation does not imply causation"---@fig-ngram-corr-is-not-cause shows the ngram since the 1888 invention of the correlation coefficient---comes *after* the peak in the use of the word "correlation."
 
 ```{r echo=FALSE}
 #| label: fig-ngram-corr-is-not-cause
@@ -165,105 +200,15 @@ Historically, the rise of the expression "correlation is not causation"---@fig-n
 knitr::include_graphics("www/ngram-correlation-not-causation.png")
 ```
 
-The first documented use of the phrase is in 1900 comes in a review of the second edition of a book, *The Grammar of Science*, by Karl Pearson (whom we have met before in this Lesson).
+The first documented use of the phrase is from 1900. It comes in a review of the second edition of a book, *The Grammar of Science*, by Karl Pearson (whom we have met before in this Lesson).
 
+*The Grammar of Science* is a metaphysically oriented prescription for a new type of science. It posited that sciences such as physics or chemistry unnecessarily drew on metaphors for causation, such as "force." Instead, the book advocated another framework as more appropriate, eschewing causation in favor of descriptions of "perceptions" with probability. 
 
-<!--
+Pearson illustrates his antipathy toward causation with an example of an ash tree in his garden:
 
-## Causality & Correlation
+> [T]he causes of its growth might be widened out into a description of the various past stages of the universe. One of the causes of its growth is the existence of my garden, which is conditioned by the existence of the metropolis [London]; another cause is the nature of the soil, gravel approaching the edge of the clay, which again is conditioned by the geological structure and past history of the earth. The causes of any *individual* thing thus widen out into the unmanageable history of the universe. *The Grammar of Science*, 2/e, p. 131
 
-Causality is about relationships among entities in the world, e.g. the immunological properties of the drug acetaminophen lead to a reduction in fever. Correlation is about relationships that are evident in data, which might or might not be due to direct causal connections. For example, people who take acetaminophen tend to have fever, but this is not because acetaminophen causes fever. Instead, people who are unwell, and perhaps have fever, are more likely to take acetaminophen than those who are asymptomatic.
-
-Correlations are properly part of the evidence to support a claim or quantification of causation. Indeed, whenever there is a correlation between two variables, it's likely that there is some chain of causal connections that links the two variables, even if that chain is not directly from one variable to the other. For instance, taking the flu vaccine is correlated with reduced mortality. Some of this correlation is due to the immunological properties of the vaccine itself. But some of the correlation results from healthy people being more likely to take the vaccine than sick people, and healthy people having a lower mortality than sick people.
-
-Seen as a pessimist, this chapter can help you understand some of the ways that correlations can be present without a direct causal pathway, and how you can be badly mislead if you rely purely on data without any causal theory of the way your system works in the real world. 
-
-Seen as an optimist, this chapter is about ways of calculating effect sizes from data that allow you to incorporate knowledge of the causal connections amongst the variables in your data. 
-
-The field of statistics comprises both optimists and pessimists. Perhaps to oversimplify, the pessimists think the proper domain of statistics is data and stylized mathematical models, and ought not include speculative notions of causal connections in the real world. The only sort of causal connection that the pessimists will accept is that of the experimenter who *sets* the values of inputs, for example by giving one "**treatment**" group of patients a drug and another "**control**" group a "**placebo**". This has been a highly productive attitude in statistics, resulting in the development of clever designs for experiments that give the most information with the least laboratory effort. Unfortunately, the no-causation-without-experimentation philosophy leaves us without recourse when working with a system where a controlled experiment is not feasible.
-
-Perhaps the outstanding historical example of the limits of the no-causation-without-experimentation philosophy relates to the health effects of smoking. Nowadays, the morbidity and mortality caused by tobacco smoking is mainstream knowledge. Among the other proofs of the causal relationship is the decline in mortality due to lung cancer amoung populations where smoking became much less popular. Until the mid 1960s, however, some statisticians were in the vanguard of challenging the idea of a causal connection between smoking and, e.g., lung cancer. Notably, Ronald Fisher, generally considered to be the leading statistical figure of the 20th century, vehemently and influentially criticized the evidence for the causal connection.
-
-```{r xkcd-correlation, echo = FALSE, fig.cap = "(ref:xkcd-correlation-cap)"}
-#| label: fig-xkcd-correlation
-#| fig-cap: 'Insisting that "correlation is not causation" can interfere with making useful judgements, as interpreted by Randall Munroe in his [XKCD cartoon series](https://xkcd.com/552/).'
-include_graphics("www/xkcd-correlation.png")
-```
-
-
-The optimists, again to oversimplify, believe it is possible to make useful statements (e.g. "the class helped" in @fig-xkcd-correlation) about the causal connections that underlie data. They emphasize that statistics can support decision making even when knowledge of causation is incomplete and uncertain.
-
-The optimists and the pessimists use the same set of mathematical and statistical tools for data analysis, particularly the calculation of effect sizes. The difference between them is the range of legitimate conclusions that can be drawn. The pessimists place in the center the idea that "correlation is not causation" and that *only* controlled experiment can be a justification for making causal conclusions. (We'll study experiment in [Lesson 32](Reading-notes-lesson-32.html).) The optimists also see the difference between correlation and causation: correlation is a mathematical property, causation is a physical one. And the optimists accept that controlled experiment is an excellent way to form strong conclusions. But they accept other sources of knowledge or theoretical speculations as potentially useful, and use effect-size calculations in a way that, contingent on that knowledge or speculation, creates through the process of data analysis situations analogous to those created in the laboratory by careful experimentation. 
-
---------
-
-## Old stuff
-
-Interest in data often stems from a desire to anticipate the consequences of an intervention. Is a new polio vaccine effective? Will increasing the consumption of organic food improve health generally? Does giving bed nets to poor people in malaria-prone regions reduce the incidence of malaria?  
-
-The previous chapters introduced techniques for modeling a response variable as a function of explanatory variables. Each model is a machine for turning inputs into outputs. Change the input and the output will change correspondingly. But this does not mean that nature works in the same way. Changing an input in the real world -- administering polio vaccine, eating organic food, providing bed nets to the poor -- may not *cause* the same change in the response variable as happens when you change the input to a model.
-
-*The key word here is "**cause**."*
-
-Statisticians are careful to distinguish between two different interpretations of relationship: **"correlation"** and **"causal."** Every successful prediction model `Y ~ X` is a demonstration that there is a correlation between the response Y and the explanatory variable X.^["Successful" means that the prediction performance of the model is better than the performance of a no-input model.] But the performance of the model does not itself tell us that X *causes* Y in the real world. There are other possible configurations that will produce a correlation between X and Y. For instance, both X and Y may themselves have a common cause C without X being otherwise related to Y. In such a circumstance, a real-world intervention to change X will have no effect on Y. To put this in the form of a story, consider that the start of the school year and leaves changing color are correlated. But an intervention to start the school year in mid-winter will not result in  leaves changing color. There's a common cause for the school year and colorful folliage that produces the relationship: the end of summer.
-
-This chapter considers simple networks of causality involving three variables, generically called X, Y, and C. Always, we'll imagine that the modeler's interest is in anticipating how an intervention to change X will create to a change in Y. To accomplish this, the modeler has two basic choices for structuring a model, either
-
-1. `Y ~ X`, or
-2. `Y ~ X + C`.
-
-It's surprising to many people that models (1) and (2) can have utterly different, even contradictory implications for how a change in model input X will produce a change in the model output Y. To the modeler trying to capture how the real world works, there's a fundamental choice to be made between using model (1) or model (2) to anticipate the consequences of a real-world intervention on X.
-
-Consider this hypothesis: "It's harder to learn to drive as you move into your 20s." The hypothesis might or might not be true. The way such hypotheses are formed is often by anecdote. Say, you're having dinner when the conversation turns to a friend who has been learning to drive in her 30s. She explains that even after taking many lessons last year, she failed her driving test twice. Others at the table, who started driving in their teens, learned in a much shorter amount of time.
-
-The hypothesis suggests a practical recommendation: It will be easier to learn to drive when younger, so better to start young. Such recommendations to take an action are always rooted in causality: starting young will *cause* you to have less difficulty learning to drive. A diagram, or *graphical causal model*, representing the causal hypothesis is seen in @fig-learn-to-drive-1.
-
-```{r echo=FALSE, out.width = "40%"}
-#| label: fig-learn-to-drive-1
-#| fig-cap: "A simple graphical causal model expressing the hypothesis that age when learning to drive is the causal factor for the difficulty of learning to drive."
-knitr::include_graphics("www/anxiety-drive-1.png")
-```
-
-The direction of the arrow in fig-learn-to-drive-1 is a crucial feature. The diagram asserts that a person's age when learning to drive *causes* difficulty, as opposed to the other way around. 
-
-So, does learning to drive when young make it easier to succeed? You might collect some data, perhaps a survey asking people at what age (if ever) they learned to drive (X) and how difficult it was (Y). Suppose you build a successful model Y ~ X. This establishes a correlation X and Y (and vice versa), confirming the dinner table anecdote.  
-
-If you were undertaking serious study of the hypothesis, you should consider how other factors might influence the situation. For instance, it might be that people who learn to drive in their 30s were more anxious about driving when in their teens. That anxiety is why they didn't learn in their teens.  The anxiety might also influence the drivers perception of the difficulty learning. Such a situation is expressed in the graphical causal models in @fig-learn-to-drive-2.
-
-
-```{r echo=FALSE}
-#| label: fig-learn-to-drive-2
-#| fig-cap: 'Two possible graphical causal models of the hypothesis, "Age causes difficulty learning to drive," which do not incorporate a direct link from age to difficulty learning.  Left: Anxiety itself leads to people deferring learning to drive, and to increased difficulty when learning. Right: Age is causally linked to difficulty, but the issue is really the diminished support available to older learners.'
-knitr::include_graphics("www/anxiety-drive-3.png")
-```
-
-
-Another possibility is that older learners have busier lives and less support for learning to drive. (@fig-learn-to-drive-2(right)) It's harder for older learners to schedule opportunities to practice or to find car owners who can help them learn. 
-
-There is nothing inevitable about graphical causal networks. We can, and often do, intervene in ways that alter the causal flow. For example, @fig-friend-drive shows the network when a later-in-life friend steps in to support a mature student.
-
-```{r echo=FALSE}
-#| label: fig-friend-drive
-#| fig-cap: "Intervening in a system can change the structure of the graphical causal network. Here, a friend has stepped in to provide the support needed to learn to drive, severing the link that previously connected age when learning to support. (That link -- now severed -- reflects the kind of learning support often available to teenage students of driving, but not to older learners.)"
-knitr::include_graphics("www/anxiety-drive-4.png")
-```
+It should not be surprising that the field of statistics, which uses probability very extensively as a description, and that developed correlation as a measure of probability, would advocate for more general use of its approach. In this spirit, I read "correlation does not imply causation" as "our new science framework of probability and correlation replaces the antiquated framework of causation." Outside of statistics, however, probability is merely a tool; causation does indeed have practical use. All the more so for decision-makers.
 
 
 
-::: {.callout-note icon=false}
-## Causal Caution
-
-Just because you've calculated an effect size doesn't mean that you have captured any sort of causal relationship between the variables. To illustrate, use `dag01` and fit two different models: `y ~ x` and `x ~ y`.
-
-```{r}
-Sample <- sample(dag01, size=500)
-lm(y ~ x, data = Sample)
-lm(x ~ y, data = Sample)
-```
-
-You can't tell from these coefficients whether `x` causes `y` or vice versa (or something entirely different). The words "correlation" or "association" are used when we don't want to claim that there is a causal connection. Many statisticians will only use those words unless the data come from an **experiment**. 
-
-We're going to use causal language ("relationship", "effect," etc.) because that is often the matter of concern to decision making. But using language doesn't doesn't make the connection causal.
-
-:::
--->

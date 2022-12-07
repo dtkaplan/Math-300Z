@@ -2,21 +2,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Prof.&nbsp;Danny Kaplan">
-<meta name="dcterms.date" content="2022-11-04">
+<meta name="dcterms.date" content="2022-11-29">
 
 <title>Spring 2023 Math 300 Revisions - Math 300R NTI Lesson r (lesson &lt;- 20)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -55,7 +60,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -68,7 +73,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -130,9 +135,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="../index.html">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -187,7 +194,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 4, 2022</p>
+      <p class="date">November 29, 2022</p>
     </div>
   </div>
     
@@ -247,11 +254,11 @@ Example
       x count
   &lt;int&gt; &lt;int&gt;
 1     1    17
-2     2    16
-3     3    17
+2     2    17
+3     3    16
 4     4    17
-5     5    16
-6     6    17</code></pre>
+5     5    17
+6     6    16</code></pre>
 </div>
 </div>
 <ol start="2" type="1">
@@ -266,17 +273,17 @@ Example
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print.data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    x  frac
-1   2 0.023
-2   3 0.048
-3   4 0.078
-4   5 0.110
-5   6 0.132
-6   7 0.149
-7   8 0.151
-8   9 0.117
-9  10 0.102
-10 11 0.072
-11 12 0.018</code></pre>
+1   2 0.042
+2   3 0.058
+3   4 0.084
+4   5 0.108
+5   6 0.141
+6   7 0.171
+7   8 0.150
+8   9 0.105
+9  10 0.073
+10 11 0.045
+11 12 0.023</code></pre>
 </div>
 </div>
 <p>Question: What do your results tell you about the possible results when summing 2 dice?</p>
@@ -298,34 +305,34 @@ Measuring noise
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Create a DAG where the X variable is simply noise: <code>eps()</code></p>
+<p>Create a DAG where the X variable is simply noise: <code>exo()</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Sim <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(x <span class="sc">~</span> <span class="fu">eps</span>())</span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Sim <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(x <span class="sc">~</span> <span class="fu">exo</span>())</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>Sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(Sim, <span class="at">size=</span><span class="dv">100</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>Sample <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="fu">sd</span>(x), <span class="fu">mean</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   `sd(x)` `mean(x)`
     &lt;dbl&gt;     &lt;dbl&gt;
-1   0.972    -0.126</code></pre>
+1    1.09   -0.0794</code></pre>
 </div>
 </div>
 <ul>
-<li>The argument to <code>eps()</code> sets the size of the noise. Confirm that this claim is true.</li>
+<li>The argument to <code>exo()</code> sets the size of the noise. Confirm that this claim is true.</li>
 </ul>
 </div>
 </div>
 <p>Sometimes we will want to repeat a simulation over and over again, collecting the results. Use <code>do()</code> for this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># one trial</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>Sim <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(x <span class="sc">~</span> <span class="fu">eps</span>())</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>Sim <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(x <span class="sc">~</span> <span class="fu">exo</span>())</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(Sim, <span class="at">size=</span><span class="dv">100</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">sd</span>(x), <span class="fu">mean</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   `sd(x)` `mean(x)`
     &lt;dbl&gt;     &lt;dbl&gt;
-1   0.989   0.00326</code></pre>
+1   0.929    0.0550</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># five trials</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">5</span>) <span class="sc">*</span></span>
@@ -333,13 +340,13 @@ Measuring noise
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">s =</span> <span class="fu">sd</span>(x), <span class="at">m =</span> <span class="fu">mean</span>(x))}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 4
-      s       m  .row .index
-  &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt;
-1 0.968  0.0195     1      1
-2 1.01  -0.0480     1      2
-3 1.02   0.112      1      3
-4 0.974 -0.0167     1      4
-5 1.03  -0.175      1      5</code></pre>
+      s        m  .row .index
+  &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt;
+1 1.05   0.158       1      1
+2 0.970  0.00189     1      2
+3 0.915  0.0641      1      3
+4 0.897 -0.104       1      4
+5 1.03  -0.0682      1      5</code></pre>
 </div>
 </div>
 <ul>
@@ -454,7 +461,7 @@ In draft
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>{ <span class="fu">do</span>(<span class="dv">5</span>) <span class="sc">*</span> {<span class="fu">sample</span>(Galton, <span class="at">size=</span><span class="dv">50</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(height))} } <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sz=</span><span class="fu">sd</span>(m))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         sz
-1 0.4400877</code></pre>
+1 0.1665197</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">5</span>) <span class="sc">*</span> {<span class="fu">sample</span>(Galton, <span class="at">size=</span><span class="dv">50</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(height))} <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sz =</span> <span class="fu">sd</span>(m))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -491,330 +498,330 @@ In draft
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(TenMileRace, <span class="at">size=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     state time  net age sex orig.id
-4728    DC 6001 5621  24   F    4728
-55      DC 5508 5185  20   M      55
-6512    VA 6698 6268  32   F    6512
-7923    MD 5108 5025  44   F    7923
-3413    MD 5596 5505  49   M    3413</code></pre>
+4885    DC 5425 5236  25   F    4885
+5006    DC 6330 5894  25   F    5006
+7106    MD 7024 6859  36   F    7106
+2855    NY 3647 3642  44   M    2855
+6538    VA 7396 7011  32   F    6538</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(TenMileRace, <span class="at">size=</span><span class="dv">100</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sz =</span> <span class="fu">sd</span>(net))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        sz
-1 983.5067</code></pre>
+1 1018.253</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">300</span>)<span class="sc">*</span> {<span class="fu">sample</span>(TenMileRace, <span class="at">size=</span><span class="dv">100</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sz =</span> <span class="fu">sd</span>(net))}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           sz
-1   1088.0685
-2    981.9648
-3    877.0179
-4   1083.8716
-5   1014.9870
-6   1033.8331
-7    883.7900
-8    915.7651
-9   1032.0508
-10  1014.5310
-11   962.0786
-12  1034.2405
-13   827.6131
-14   884.6835
-15   928.1791
-16  1004.3147
-17   974.9381
-18   862.6219
-19   885.1995
-20   912.4440
-21   904.7739
-22  1013.2277
-23  1047.6286
-24   956.9362
-25   974.2340
-26   953.7274
-27   925.8744
-28   953.8641
-29  1054.1516
-30   881.6278
-31  1131.1685
-32  1035.3177
-33  1037.5514
-34   958.6735
-35   867.6227
-36   893.4916
-37   907.0645
-38   867.8649
-39   947.8522
-40  1059.7123
-41   961.2976
-42   962.0685
-43   933.2096
-44   973.1526
-45   952.1392
-46   977.8271
-47   971.2292
-48   881.1031
-49   945.3066
-50   894.5663
-51  1019.1320
-52  1116.3086
-53   898.9907
-54   996.1117
-55   951.8663
-56   771.2958
-57   836.6947
-58  1138.9489
-59  1078.7559
-60  1033.1148
-61   780.7492
-62  1049.9157
-63  1035.4509
-64   886.5987
-65   920.8192
-66  1044.7876
-67  1123.2931
-68  1113.5959
-69   890.1757
-70   935.1158
-71  1058.2514
-72   939.6031
-73  1021.8851
-74   838.1524
-75   891.6907
-76   812.2912
-77   922.0821
-78   928.2796
-79   945.0228
-80  1027.5674
-81  1015.3656
-82  1051.7922
-83   880.8842
-84   902.0812
-85   986.7753
-86   962.2305
-87  1086.0427
-88  1032.0220
-89   932.3136
-90   920.0368
-91   964.8127
-92   908.8350
-93  1049.1017
-94  1062.9500
-95   936.4625
-96   942.7322
-97   999.1227
-98   864.8918
-99  1048.9151
-100 1052.8832
-101 1034.0839
-102  974.3864
-103  827.8094
-104 1029.5386
-105 1036.9545
-106  875.0869
-107  985.6777
-108  929.2088
-109 1028.8295
-110  923.3394
-111  925.6860
-112 1019.9948
-113 1103.1210
-114  861.4163
-115  991.9548
-116  975.8618
-117  875.8033
-118  922.2163
-119 1035.8215
-120  923.7254
-121  936.0397
-122  809.5769
-123  894.5484
-124  998.4276
-125  914.7333
-126 1034.5622
-127  948.1859
-128 1033.1976
-129  843.8485
-130  898.4823
-131 1028.2953
-132  960.6306
-133 1075.9369
-134 1124.7266
-135  966.2753
-136  833.5511
-137  894.8108
-138  961.2067
-139  985.0109
-140  892.2154
-141  891.3416
-142 1086.0827
-143  910.5050
-144 1117.5388
-145 1057.4509
-146  946.8055
-147  992.3492
-148  989.6637
-149 1000.3709
-150 1006.2028
-151  934.7986
-152 1046.1291
-153  979.3832
-154  887.2710
-155  896.3080
-156 1016.0631
-157 1012.4603
-158 1076.2943
-159  894.7222
-160  999.3782
-161  968.5805
-162 1149.4448
-163  927.7045
-164 1027.3449
-165  895.9948
-166  945.1812
-167  889.2022
-168  954.5458
-169  978.3123
-170 1002.9358
-171  842.3586
-172  987.3952
-173  991.5306
-174  925.6150
-175 1080.4505
-176  903.5733
-177  903.2560
-178  997.6480
-179 1068.0783
-180 1009.7914
-181  980.1932
-182 1000.4064
-183  953.9609
-184  775.1653
-185 1014.8994
-186  767.7329
-187 1085.3428
-188  954.2742
-189 1023.0161
-190 1082.1218
-191  956.4920
-192  931.7221
-193  954.9898
-194  925.7532
-195  948.4857
-196  941.9680
-197 1088.6142
-198  802.6590
-199 1088.4425
-200  917.8204
-201  940.8920
-202  981.7470
-203  995.4607
-204  900.8230
-205  984.8399
-206  950.6159
-207  841.6666
-208 1039.0751
-209  994.3768
-210  907.1644
-211 1066.1857
-212  914.4726
-213 1018.7521
-214  910.8762
-215  979.9607
-216  915.9789
-217  901.6188
-218  955.8538
-219 1028.0319
-220  942.9681
-221 1146.8162
-222 1022.8914
-223  932.5460
-224  944.4777
-225  961.7793
-226  997.7528
-227  988.2058
-228  932.9816
-229  968.2897
-230 1089.8083
-231  818.8978
-232  899.7383
-233 1044.5759
-234 1065.4404
-235 1089.8379
-236 1124.9363
-237  992.0065
-238  996.5198
-239  875.9668
-240 1024.4381
-241 1029.9852
-242 1005.8947
-243  978.1610
-244 1158.3218
-245 1076.1785
-246  862.3769
-247 1040.1553
-248  890.4250
-249 1049.4101
-250  826.2873
-251 1023.4003
-252  948.0782
-253  995.9391
-254 1007.0153
-255  941.8883
-256  849.4536
-257 1016.6681
-258 1021.1396
-259  837.0714
-260  955.1810
-261  894.5075
-262  846.8976
-263 1171.8938
-264  842.5024
-265 1049.6282
-266  834.1832
-267  897.9558
-268  866.1791
-269  941.5420
-270 1056.3081
-271 1003.3700
-272  920.3859
-273  985.4070
-274 1031.7715
-275  871.2185
-276  902.7157
-277  993.9614
-278  978.7251
-279  975.8355
-280 1070.3237
-281  827.5446
-282  893.2650
-283  934.0774
-284  955.6090
-285  864.7166
-286  908.4085
-287  952.1302
-288  839.2209
-289 1081.0026
-290  893.8673
-291  929.5023
-292 1020.3957
-293  911.1213
-294 1018.0386
-295  993.5868
-296 1019.9194
-297  932.2969
-298  940.6293
-299  844.0442
-300 1073.4053</code></pre>
+1   1009.2412
+2   1080.4088
+3   1076.7738
+4   1037.6262
+5    936.1272
+6    995.6997
+7    895.5608
+8   1006.1889
+9   1051.0661
+10   799.8472
+11   953.9587
+12   985.8862
+13   975.2823
+14   869.7755
+15   945.6848
+16  1009.4801
+17  1004.0570
+18   907.5737
+19  1060.0585
+20  1051.8909
+21  1005.5475
+22   934.6241
+23   821.5258
+24   913.3310
+25   913.1762
+26   796.2751
+27  1028.4195
+28   921.1232
+29   932.0399
+30   808.8562
+31  1054.6264
+32   934.1953
+33  1029.9414
+34   940.3727
+35   983.0229
+36   961.2394
+37   864.0049
+38  1027.8732
+39   997.0239
+40   937.9659
+41   962.1194
+42   980.9509
+43   909.5383
+44   940.6860
+45   830.9779
+46   945.6262
+47   938.0330
+48   864.0883
+49  1038.4482
+50   914.9510
+51  1017.9428
+52   826.7827
+53   865.6554
+54   976.6800
+55  1071.6430
+56   966.1145
+57   918.2089
+58  1000.9689
+59  1022.0730
+60   973.3334
+61   793.2800
+62   975.8773
+63   920.6931
+64   975.4634
+65  1056.1451
+66   976.6221
+67  1158.7964
+68   867.4664
+69  1047.3363
+70  1022.3132
+71   974.7377
+72   884.8199
+73   836.6617
+74   962.7713
+75   959.6849
+76  1008.0555
+77  1071.6863
+78  1023.8964
+79  1155.3710
+80  1091.9595
+81  1035.7381
+82   986.9692
+83   898.9379
+84  1014.9450
+85   936.3855
+86   848.3864
+87   848.1567
+88  1023.6363
+89  1043.8851
+90   928.5409
+91  1012.8730
+92  1035.7213
+93  1137.8530
+94  1047.3587
+95   930.2658
+96  1040.0849
+97   957.8035
+98   869.6763
+99   913.6973
+100  890.8468
+101  903.5271
+102 1014.4305
+103  915.7751
+104 1049.4911
+105  898.7698
+106  898.6557
+107  985.5365
+108  832.7227
+109 1012.2836
+110  958.7534
+111 1059.7042
+112  872.4493
+113 1093.3712
+114 1005.2114
+115  901.8604
+116  950.6236
+117  980.4132
+118  816.3332
+119 1034.4331
+120  942.5698
+121  914.1078
+122 1003.4177
+123  936.4748
+124  952.1055
+125  900.6898
+126 1004.2186
+127  805.5472
+128  948.3356
+129  938.8070
+130 1040.6385
+131  880.0175
+132 1149.6420
+133  923.1375
+134  954.1567
+135 1087.8328
+136  902.7879
+137  888.7876
+138  990.5352
+139  995.0679
+140 1051.9897
+141  997.2537
+142 1031.1998
+143 1041.7070
+144  974.6964
+145  936.4820
+146  890.9031
+147  997.8000
+148  913.1186
+149 1018.9110
+150  919.7213
+151 1097.0855
+152  847.9868
+153  935.8603
+154  894.7459
+155  834.0241
+156  933.3015
+157 1106.3504
+158 1008.7301
+159  938.5964
+160 1088.8669
+161  971.7746
+162 1030.5763
+163  934.2526
+164 1003.9518
+165 1010.2773
+166  945.4323
+167  919.8118
+168  942.9875
+169 1008.9996
+170 1041.0529
+171 1096.3182
+172  922.8049
+173  999.6727
+174 1071.4121
+175  947.8133
+176  873.5218
+177  851.4773
+178  967.9924
+179  821.2362
+180 1001.1583
+181  917.6957
+182 1076.4044
+183 1013.6176
+184  906.2569
+185  964.1698
+186  910.1412
+187 1080.9102
+188  952.7444
+189  990.3408
+190  972.2411
+191 1045.2739
+192  903.4322
+193  819.7990
+194  994.9339
+195  936.6365
+196  876.4379
+197  807.4809
+198 1074.0191
+199 1000.5393
+200  861.7573
+201  930.3602
+202  889.8167
+203  894.0057
+204 1004.3008
+205 1002.6039
+206  884.3742
+207  956.0467
+208 1052.0412
+209  994.3652
+210 1040.6446
+211 1096.6588
+212  972.5306
+213 1015.9175
+214  965.3648
+215  973.1470
+216  844.3301
+217  921.4419
+218 1032.8226
+219 1059.6224
+220  935.0110
+221  917.0129
+222  883.5507
+223 1037.4305
+224  825.5281
+225 1014.0070
+226  983.4747
+227 1058.7595
+228  889.2972
+229 1014.1845
+230  871.9563
+231  980.8193
+232  939.4574
+233 1002.4660
+234  893.8260
+235 1002.4629
+236  919.9417
+237  893.0585
+238  935.8634
+239  937.5459
+240  922.2556
+241  958.4362
+242 1112.9653
+243  862.6961
+244  921.6117
+245  920.9582
+246  822.1217
+247  970.7568
+248 1065.7065
+249  868.0343
+250  947.0101
+251  971.5025
+252 1038.7532
+253  987.7600
+254  961.7646
+255  964.7074
+256 1139.1386
+257  911.4628
+258 1016.6597
+259 1056.9211
+260  971.9472
+261  821.3213
+262 1019.6135
+263  867.1796
+264 1104.3334
+265  857.5102
+266  878.5161
+267  921.4474
+268  936.1544
+269 1063.7243
+270  954.4185
+271  874.3645
+272  836.4004
+273  908.2001
+274  983.2935
+275 1118.2780
+276  941.5816
+277 1127.5135
+278 1040.2463
+279  996.3490
+280 1008.9344
+281  858.1861
+282  997.6924
+283  939.2731
+284 1044.2731
+285 1075.8160
+286 1058.7314
+287 1005.5890
+288 1113.5925
+289  922.1158
+290  963.1264
+291 1163.6868
+292 1049.5876
+293 1001.8035
+294  847.2920
+295  886.5273
+296  923.6066
+297  974.7564
+298  859.2654
+299  991.8426
+300  878.5662</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>{<span class="fu">do</span>(<span class="dv">300</span>)<span class="sc">*</span> {<span class="fu">sample</span>(TenMileRace, <span class="at">size=</span><span class="dv">100</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sz =</span> <span class="fu">sd</span>(net))}} <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(sz), <span class="at">s=</span><span class="fu">sd</span>(sz))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>         m        s
-1 970.7459 77.94335</code></pre>
+<pre><code>        m       s
+1 964.737 78.9397</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>{<span class="fu">do</span>(<span class="dv">300</span>)<span class="sc">*</span> {<span class="fu">sample</span>(TenMileRace, <span class="at">size=</span><span class="dv">400</span>) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">sz =</span> <span class="fu">sd</span>(net))}} <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(sz), <span class="at">s=</span><span class="fu">sd</span>(sz))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         m        s
-1 969.3559 39.05807</code></pre>
+1 967.3298 39.10282</code></pre>
 </div>
 </div>
 <ol start="5" type="1">
@@ -836,7 +843,7 @@ In draft
 <section id="documenting-software" class="level2">
 <h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>
 <ul>
-<li>File creation date: 2022-11-04</li>
+<li>File creation date: 2022-11-29</li>
 <li>R version 4.2.1 (2022-06-23)</li>
 <li><code>tidyverse</code> package version: 1.3.2</li>
 <li><code>mosaic</code> package version: 1.8.4</li>
@@ -916,7 +923,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);

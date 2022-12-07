@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Spring 2023 Math 300 Revisions – reading-notes-lesson-20</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html">Proposal</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../lessons.html">Lessons</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../layout.html">Site layout</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../objective-list.html">Objectives</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../LC-list.html">LCs</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+
+
+<blockquote class="blockquote">
+<p><em>Variation itself is nature’s only irreducible essence. Variation is the hard reality, not a set of imperfect measures for a central tendency. Means and medians are the abstractions.</em> —– Stephen Jay Gould (1941- 2002), paleontologist and historian of science.</p>
+</blockquote>
+<p>This Lesson introduces two techniques: i) how to quantify variation and ii) how to represent our ideas about causal connections.</p>
+<section id="sec-size-of-variable" class="level2">
+<h2 class="anchored" data-anchor-id="sec-size-of-variable">Measuring variation</h2>
+<p>A data frame records observations. In a properly constructed data frame, each row holds the observations from one “unit of observation.” Each column stores the values of one “variable,” one type of observation. The “unit of observation” might be a winner in a Scottish Hill race (<code>Hill_racing</code>), it might be a pregnancy and the resulting birth (<code>Gestation</code>), it might be a nurse participating in a survey (<code>Whickham</code>), or any of an infinite range of things. All the rows of a data frame record the same kind of unit of analysis.</p>
+<p>Similarly, within a variable, all the recorded observations have the same type denominated in the same units: an age in years, a distance in kilometers, a price in dollars, or whatever.</p>
+<p>Although the unit of observation is the same <em>type</em> in every row, the units themselves can differ from one another. Consequently, the values recorded in a variable can differ; they are not all the same: they vary. The words “variable” and “variation” go hand in hand: a variable displays variation.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Statistical models decompose the response variable into components. Each component is associated with one or more explanatory variables, with one exception. The remaining component, called the “residual,” represents the part of the variation that is still unexplained. In order to make sure that we are not double-counting or omitting variation, it helps to measure the <strong>size</strong> of variation in each component.</p>
+<p>There are many possible ways to measure the “size.” <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> In these Lessons, we will use a standard measure with an awkward name: the “<strong>standard deviation</strong>.” In practice, however, we will work mainly with the <em>square of the standard deviation</em>, called the “<strong>variance</strong>.”</p>
+<p>Both variance and standard deviation are <strong>quantities</strong>, that is, a single number with associated units. The standard deviation of any variable has units that are the same as the variable itself. For instance, height is often denominated in cm. Therefore, the standard deviation of height, as it varies from person to person, will also be in cm.</p>
+<p>Since the variance is the square of the standard deviation, variance has units of the square of the units of the variable. So the variance of height, for instance, will be measured in cm<sup>2</sup>.</p>
+<p>Remember that variance and standard deviation are <em>summaries</em> of a variable. A variable in a data frame consists of multiple values, one for each row. The variance (or standard deviation) of that variable is a single number (with units), summarizing all of the values in the variable.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Why the variance?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The name “variance” is a good reminder of what it measures: the variation.</p>
+<p>But why use a squared measure?</p>
+<p>Consider this familiar equation: <span class="math inline">\(A^2 + B^2 = C^2\)</span>. The Pythagorean Theorem states that the equation describes the lengths of the sides of a right triangle: <span class="math inline">\(C\)</span> is the hypotenuse, while <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are the other two sides of the triangle. Surprisingly, the Pythagorean Theorem is highly relevant to statistical models.</p>
+<p><em>OpenIntro</em> chapters 5 &amp; 6 point out that the linear modeling technique produces two columns of numbers: the <strong>fitted values</strong> and the <strong>residuals</strong>. These columns have the same number of rows as the data frame used for training. The residuals are the row-by-row numerical <em>difference</em> between the response variable and the fitted values.</p>
+<p>These three columns of numbers—the response variable, the fitted model values, and the residuals—are exactly analogous to the three sides of a right triangle. (This is not an obvious fact, but it is important to remember.) In particular, the following numerical relationship is as true for linear models as it is for triangles: <span class="math display">\[\text{sd(fitted)}^2 + \text{sd(residuals)}^2 = \text{sd(response)}^2\]</span> where sd() refers to the standard deviation. Consequently, sd()<sup>2</sup> is the variance.</p>
+<p>The particular mathematical definition of variance and the standard deviation makes the Pythagorean relationship always describe models constructed using the <code>lm()</code> technique. (One of the names used for this technique, <strong>least squares</strong>, provides a hint that the Pythagorean relationship applies.)</p>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Calculating variance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Almost always, people use software for calculations. The relevant R functions are <code>sd()</code> and <code>var()</code> and are used in a <code>summarize()</code> statement, for instance</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">v =</span> <span class="fu">var</span>(hp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre class="column_margin"><code>         v
+1 4700.867</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">s =</span> <span class="fu">sd</span>(hp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre class="column_margin"><code>         s
+1 68.56287</code></pre>
+</div>
+</div>
+<p>Regrettably, the software does not indicate the units of the quantity. For that, read the documentation for the data frame.</p>
+</div>
+</div>
+<p>To understand <em>what</em> is being calculated by <code>var()</code>, we will describe an algorithm. This algorithm is not numerically efficient, but it highlights the essential feature of variation.</p>
+<p>Starting material:</p>
+<ul>
+<li><p>A single column of numbers created by pulling out from the data frame the variable whose variance is to be calculated.</p></li>
+<li><p>A long roll of paper on which to write numbers, one after the other.</p></li>
+</ul>
+<p>Repeat a basic calculation for each and every row in the column of numbers. To illustrate, let us detail the basic calculation for the k<sup>th</sup> row.</p>
+<ol type="i">
+<li><p>Take the data value from the k<sup>th</sup> row, and call it the “reference value.”</p></li>
+<li><p>Subtract the reference value from each and every other value in the column and <em>square</em> the results.</p></li>
+<li><p>Write those numbers, all of them, on the roll.</p></li>
+</ol>
+<p>Using the same roll of paper for all, carry out the basic calculation starting at each row in the data column. With this done, the paper roll contains many numbers, each of which is the square difference between the values from two rows in the data column. The mathematically inclined might like to know that there will be exactly <span class="math inline">\(n(n-1)\)</span> numbers written on the roll. (The term <span class="math inline">\(n-1\)</span> in that count might perk up the ears of statistics instructors.)</p>
+<p>The final result—the variance—will be half the average of the numbers on the roll.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Deconstructing “standard deviation”
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>“Standard deviation” is an antique term and is misleading to people who think about “deviation” in the ordinary sense. Nonetheless, “standard deviation” is so widely used in statistics that we can hardly avoid it. To limit the confusion, we will deconstruct the term.</p>
+<p>Step 1 in the deconstruction makes clear what “standard” means:</p>
+<blockquote class="blockquote">
+<p>standard deviation <span class="math inline">\(=\)</span> accepted <em>measure of</em> deviation.</p>
+</blockquote>
+<p>Step 2 in the deconstruction replaces the archaic word “deviation” with something more descriptive:</p>
+<blockquote class="blockquote">
+<p>standard deviation <span class="math inline">\(=\)</span> accepted <em>measure of</em> variation in the variable.</p>
+</blockquote>
+</div>
+</div>
+</section>
+<section id="representing-causal-connections" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="representing-causal-connections">Representing causal connections</h2>
+<p>Often, but not always, our interest in studying data is to reveal the causal connections between variables. Understanding causality is essential, for instance, if we are planning to intervene in the world and want to anticipate the consequences. Interventions are things like “increase the dose of medicine,” “stop smoking!”, “lower the budget,” “add more cargo to a plane (which will increase fuel consumption and reduce the range).”</p>
+<p>Historically, mainstream statisticians were hostile to using data to explore causal relationships. (The one exception was <strong>experiment</strong>, which gathers data from an actual intervention in the world. See Lesson 32.) Statistics teachers encouraged students to use phrases like “associated with” or “correlated with” and reminded them that “correlation is not causation.”</p>
+<p>Regrettably, this attitude made statistics irrelevant to the many situations where intervention is the core concern and experiment was not feasible. A tragic episode of this sort likely caused millions of unnecessary deaths. Starting in the 1940s, doctors and epidemiologists saw evidence that smoking causes lung cancer. In stepped the most famous statistician of the age, Ronald Fisher, to insist that the statement should be, “smoking is associated with lung cancer.” He speculated that smoking and lung cancer might have a common cause, perhaps genetic. Fisher argued that establishing causation requires running an experiment where people are randomly assigned to smoke or not smoke and then observed for decades to see if they developed lung cancer. Such an experiment is unfeasible and unethical, to say nothing of the need to wait decades to get a result.</p>
+<p>Fortunately, around 1960, a researcher at the US National Institutes of Health, Jerome Cornfield, was able to show mathematically that the strength of the association between smoking and cancer ruled out any genetic mechanism. Cornfield’s work prompted the development of a new area in statistics: “<strong>causal inference</strong>.”</p>
+<p>Causal inference is not about proving that one thing causes another but about formal ways to say something about how the world works that can be used, along with data, to make responsible conclusions about causal relationships.</p>
+<p>A core tool in thinking about causal connections is a mathematical structure called a “directed acyclic graph” (DAG, for short). DAGs are one of the most popular ways for statistical thinkers to express their ideas about what might be happening in the real world. Despite the long name, DAGs are very accessible to a broad audience.</p>
+<p>DAGs, despite the G for “graph,” are not about data graphics. The “graph” in DAG is a mathematical term of art; a suitable synonym is “network.” Mathematical graphs consist of a set of “nodes” and a set of “edges” connecting the nodes. For instance, <a href="#fig-graphs">Figure&nbsp;1</a> shows three different graphs, each with five nodes labeled A, B, C, D, and E.</p>
+<div id="fig-graphs" class="cell column-page-right quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-graphs-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Reading-notes-lesson-20_files/figure-html/fig-graphs-1.png" class="img-fluid figure-img" data-ref-parent="fig-graphs" width="672"></p>
+<p></p><figcaption class="figure-caption">(a) undirected graph</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-graphs-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Reading-notes-lesson-20_files/figure-html/fig-graphs-2.png" class="img-fluid figure-img" data-ref-parent="fig-graphs" width="672"></p>
+<p></p><figcaption class="figure-caption">(b) directed but cyclic</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-graphs-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Reading-notes-lesson-20_files/figure-html/fig-graphs-3.png" class="img-fluid figure-img" data-ref-parent="fig-graphs" width="672"></p>
+<p></p><figcaption class="figure-caption">(c) directed acyclic graph</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Graphs of various types</figcaption><p></p>
+</figure>
+</div>
+<p>The nodes are the same in all three graphs of <a href="#fig-graphs">Figure&nbsp;1</a>, but each graph is different from the others. It is not just the nodes that define a graph; the edges (drawn as lines) are part of the definition as well.</p>
+<p>The left-most graph in <a href="#fig-graphs">Figure&nbsp;1</a> is an “<strong>undirected</strong>” graph; there is no suggestion that the edges run one way or another. In contrast, the middle graph has the same nodes and edges, but the edges are <strong>directed</strong>. An excellent way to think about a directed graph is that each node is a pool of water; each directed edge shows how the water flows between pools. This analogy is also helpful in thinking about causality: the causal influences flow like water.</p>
+<p>Look more carefully at the middle graph. There is a couple of loops; the graph is <strong>cyclic</strong>. In one loop, water flows from E to C to D and back again to E. The other loop runs B, C, D, E, and back to B. Such a flow pattern cannot exist without pumps pushing the water back uphill.</p>
+<p>The rightmost graph reverses the direction of some of the edges. This graph has no cycles; it is <strong>acyclic</strong>. Using the flowing and pumped water analogy, an acyclic graph needs no pumps; the pools can be arranged at different heights to create a flow exclusively powered by gravity. The node-D pool will be the highest, E lower. C has to be lower than E for gravity to pull water along the edge from E to C. The node-B pool is the lowest, so water can flow in from E, C, and A.</p>
+<p>Directed acyclic graphs represent causal influences; think of “A causes B,” meaning that causal “water” flows naturally from A to B. In a DAG, a node can have multiple outputs, like D and E, and it might have multiple inputs, like B and C. In terms of causality, a node—like B—having multiple inputs means that more than one factor is responsible for the value of that node. A real-world example: the rising sun causes a rooster to crow, but so can another intruder to the coop.</p>
+<p>Often, nodes do not have any inputs. These are called “<strong>exogenous factors</strong>”at least by economists. The “genous” means “originates from.” “Exo” means “outside.” The value of an exogenous node is determined by something, just not something that we are interested in (or perhaps capable of) modeling. No edges are directed into an exogenous node since none of the other nodes influence its value.</p>
+<p>The point of a DAG is to make a clear statement of a hypothesis about causation. Drawing a DAG does not mean that the hypothesis is correct, just that we believe the hypothesis is, in some sense, a possibility. Different people might have different beliefs about what causes what in real-world systems. Comparing their different DAGs can help, sometimes, to discuss and resolve the disagreement.</p>
+<p>We are going to use DAGs for two distinct purposes. One purpose is to inform responsible conclusions from data about what causes what. The data on its own is insufficient to demonstrate the causal connections. However, data <em>combined with</em> a DAG can tell us something. Sometimes a DAG includes a causal connection that should create an association between variables. The DAG is incomplete if the association does not appear in the data.</p>
+<p>DAGs are also valuable aids for building models. For example, analysis of the paths in a DAG, as in Lesson 30, can tell us which explanatory variables to include and which to exclude from a model if our modeling goal is to represent the hypothetical causal connections.</p>
+<p>In these Lessons, we have a second, entirely different, use for DAGs: learning modeling technique. Our approach will be to outfit DAGs with specific formulas representing the mechanism imbued in each node. DAGs equipped with formulas can be used to generate simulated data.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> Training a model on those data leads to a model function that we can compare to the DAG’s formulas. Then check whether the formulas and the model function match. This practice helps us learn what can go right or wrong in building a model, just as practice in an aircraft simulator trains pilots to handle real-world situations in real aircraft.</p>
+<p>We start with a simple example. The DAG called <code>dag09</code> has two exogenous nodes (<code>a</code> and <code>b</code>) and another node, <code>c</code>, that gets input from both <code>a</code> and <code>b</code>.</p>
+<div class="cell page-columns page-full">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag09)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<p><img src="Reading-notes-lesson-20_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dag09)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>a ~ eps()
+b ~ eps()
+c ~ binom(2 * a + 3 * b)</code></pre>
+</div>
+</div>
+<p>The <code>dag_draw()</code> command draws a picture of the graph. Printing the dag displays the formulas that set the values of the nodes.</p>
+<p>The formulas for <code>dag09</code> show that the nodes <code>a</code> and <code>b</code> are exogenous, their values set randomly and independently of one another by the <code>exo()</code> function. In contrast, the formula for node <code>c</code> says that the value of <code>c</code> will be a linear combination of the values of <code>a</code> and <code>b</code>, translated into a zero-one format.</p>
+<p>Generate simulated data using the <code>sample()</code> function. For instance,</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+       a      b     c
+   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 -0.326  1.17      1
+2  0.552  0.619     0
+3 -0.675 -0.113     0
+4  0.214  0.917     1
+5  0.311 -0.223     0</code></pre>
+</div>
+</div>
+<p>Each row in the sample is one trial; in each trial, the node’s formula sets the value for that node. For example, the formula might use the values of other nodes as input. Alternatively, the formula might specify that the node is exogenous, without input from any other nodes.</p>
+<p>Models can be trained on the simulated data using the same techniques as for any other data. To illustrate, here we generate a sample of size <span class="math inline">\(n=10,000\)</span>, then fit the model <code>c ~ a + b</code> and summarize by taking the coefficients.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(c <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                2.5 %    97.5 %
+(Intercept) 0.4996543 0.5132192
+a           0.1927018 0.2062122
+b           0.2945928 0.3081950</code></pre>
+</div>
+</div>
+<p>The coefficients on <code>a</code> and <code>b</code> are inconsistent with the <code>dag09</code> formulas. This discrepancy suggests the existence of a flaw in the modeling technique. In the following box, we demonstrate another modeling technique that can do the job.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Demonstration: Modeling binomial variables
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><em>Keep in mind that this is just a demonstration. There is no need to master (or even understand) the calculations presented in this box.</em></p>
+<p>The printed version of <code>dag09</code> shows that the value of node <code>c</code> is a linear combination of <code>a</code> and <code>b</code> converted into a zero-one, binomial value. Unfortunately, the linear modeling trainer, <code>lm()</code>, is not well-tuned to work with binomial data. Another modeling technique, “logistic regression,” does a better job. The <code>glm()</code> function trains logistic regression models on data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(c <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> ., <span class="at">family=</span><span class="st">"binomial"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Waiting for profiling to be done...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  2.5 %     97.5 %
+(Intercept) -0.02973142 0.09550381
+a            1.86979872 2.05982255
+b            2.97350879 3.23088485</code></pre>
+</div>
+</div>
+<p>When we use the appropriate modeling technique, we can, in this case, recover the coefficients in the DAG formula: 2 for <code>a</code> and 3 for <code>b</code>.</p>
+</div>
+</div>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Reality check: DAGs and data
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>DAGs represent hypotheses about the connections between variables in the real world. They are a kind of scratchpad for constructing alternative scenarios and, as seen in Lesson 28, thinking about how models might go wrong in the face of a plausible alternative causal mechanism.</p>
+<p>In this book, we extend the use of DAGs beyond their scope in professional statistics; we use them as simulations from which we can generate data. Such simulations provide one way to learn about statistical methodology.</p>
+<p>DAGs are aides to reasoning, scratchpads that help us play out the consequences of our hypotheses about possible real-world mechanisms. However, take caution to distinguish data from DAG simulations from data from reality.</p>
+<p>Finding out about the real world requires collecting data from the real world. The proper role of DAGs in real work is to guide model building <strong>from real data</strong>.</p>
+<p>In this course, we sample from DAGs to learn statistical techniques. But never to make claims about real-world phenomena.</p>
+</div>
+</div>
+</section>
+<section id="samples-summaries-and-samples-of-summaries" class="level2">
+<h2 class="anchored" data-anchor-id="samples-summaries-and-samples-of-summaries">Samples, summaries, and samples of summaries</h2>
+<p>Beginners sometimes think that each row in a data frame is a sample. Better to say that each row is a “<strong>specimen</strong>.” A “<strong>sample</strong>” is a collection of specimens, the set of rows in a data frame.</p>
+<p>The “<strong>sample size</strong>” is the number of rows. “<strong>Sampling</strong>” is the process of collecting the specimens to be put into the data frame.</p>
+<p>The following command illustrates computing a summary of a sample from <code>dag09</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(c <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> ., <span class="at">family=</span><span class="st">"binomial"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Waiting for profiling to be done...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  2.5 %     97.5 %
+(Intercept) -0.07393373 0.04945966
+a            1.90174806 2.09051562
+b            2.81158596 3.05507077</code></pre>
+</div>
+</div>
+<p>An essential question in statistics is how the summary depends on the incidental specifics of a particular sample. DAGs provide a convenient way to address this question since we can generate multiple samples from the same DAG, summarize each, and compare those summaries.</p>
+<p>To generate a sample of summaries, re-run many trials of the summary. The <code>do()</code> function automates this process, accumulating the results from the trials in a single data frame: a “<strong>sample of summaries</strong>.” We will use <code>do()</code> mostly in demonstrations.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Demonstration: Conducting many trials with <code>do()</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In this demonstration, we will revisit a model used earlier in this Lesson to see how much the coefficients vary from one sample to another. Each trial consists of drawing a sample from <code>dag09</code>, training a model, and summarizing with the model coefficients. Curly braces (<code>{</code> and <code>}</code>) surround the commands needed for an individual trial.</p>
+<p>Preceding the curly braces, we have placed <code>do(5) *</code>. This instruction causes the trial to be repeated five times.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">5</span>) <span class="sc">*</span> {</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">glm</span>(c <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> ., <span class="at">family=</span><span class="st">"binomial"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coefficients</span>()</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Intercept        a        b
+1 -0.01315189 2.041331 3.049575
+2 -0.01027258 1.987569 3.074509
+3  0.02787421 1.934953 3.044001
+4 -0.03509540 1.973983 2.969853
+5 -0.09887196 1.978861 2.971170</code></pre>
+</div>
+</div>
+<p>The five trials are collected together by <code>do()</code> into the five rows of a single data frame. Such a data frame can be considered a “<strong>sample of summaries</strong>.”</p>
+</div>
+</div>
+<p>One of the things we will do with a “sample of summaries” is to … wait for it … summarize it. For instance, in the following code chunk, a sample of 40 summaries is stored under the name <code>Trials</code>. Then we will summarize <code>Trials</code>, in this case, to see how much the values of the <code>a</code> and <code>b</code> coefficients vary from trial to trial.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">40</span>) <span class="sc">*</span> {</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">glm</span>(c <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> ., <span class="at">family=</span><span class="st">"binomial"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coefficients</span>()</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>} </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>Trials <span class="sc">%&gt;%</span> </span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_a =</span> <span class="fu">mean</span>(a), <span class="at">spread_a =</span> <span class="fu">sd</span>(a), </span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_b =</span> <span class="fu">mean</span>(b), <span class="at">spread_b =</span> <span class="fu">sd</span>(b))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    mean_a   spread_a   mean_b   spread_b
+1 2.004514 0.04364563 3.012044 0.06410626</code></pre>
+</div>
+</div>
+<p>The result of summarizing the trials is a “summary of a sample of summaries.” This phrase is admittedly awkward, but we will use this technique often: summarizing trials, where each trial is a “summary of a sample” Often, the clue will be the use of <code>do()</code>, which repeats trials as many times as you ask.</p>
+<hr>
+<p>::: {.callout-warning} ## For the statistically experienced reader</p>
+<p><strong>Warning!</strong> This box contains mathematical formulas that are <strong>not needed for the course</strong>. The formulas might interest mathematically inclined statistics instructors, but others can skip this material.</p>
+<p>The algorithm for the variance described previously is not used by any statistical software package; there are much faster ways to arrive at the result. One way to see this is to compare the traditional formula for the variance to the formula version of the above algorithm:</p>
+<p><span class="math display">\[\underbrace{\frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2}_\text{traditional} \ \ \text{versus} \ \ \underbrace{\frac{1}{2n} \sum_{i=1}^n \left[\frac{1}{n-1}\sum_{j\neq i} (x_i - x_j)^2\right]}_\text{our algorithm}\]</span> The inefficiency of the algorithm stems from the double sum. The advantage of the algorithm is conceptual and two-fold:</p>
+<ol type="i">
+<li><p>The <span class="math inline">\(n-1\)</span> in the formula for the variance comes from the <span class="math inline">\(j \neq i\)</span> in the inner sum. Why not <span class="math inline">\(\sum_j=1^n\)</span>? Because that would put <span class="math inline">\(n\)</span> zeros on the roll and bias the result downward. We want to average the square distance between each value and <em>every other value</em>.</p></li>
+<li><p>There is no need to introduce the mean <span class="math inline">\(\bar{x}\)</span> of the values. Of course, <span class="math inline">\(\bar{x}\)</span> is easy and fast to calculate, so there is no numerical reason to avoid using it in the calculation. There is, however, a philosophical reason based on Stephen J. Gould’s observation, quoted at the start of this Lesson: “Variation is the hard reality. Means are the abstractions.”</p></li>
+</ol>
+<p>The usual definition given for the variance uses the mean as the reference point for calculating deviations. This use imbues the mean with an unjustified veneer of reality. The pairwise square difference algorithm demonstrates that the mean is not needed to calculate the variance; it is just, as Gould says, a mathematical abstraction.</p>
+<p>There is a factor <span class="math inline">\(\frac{1}{2}\)</span> in the formula for the variance based on the pairwise square-differences. The <span class="math inline">\(\frac{1}{2}\)</span> may seem inelegant to some readers. Stripping out the <span class="math inline">\(\frac{1}{2}\)</span>, the quantity has a name dating from at least 1885: the <strong>modulus</strong>. Writing the modulus as <span class="math inline">\(c = 2 s^2\)</span> makes the formula for the gaussian function cleaner than the formula usually given:</p>
+<p><span class="math display">\[\underbrace{\frac{1}{\sqrt{2 \pi s^2}} \exp\left[-\frac{(x-m)^2}{2s^2}\right]}_\text{using standard deviation}\ \ \text{vs}\ \ \ \underbrace{\frac{1}{\sqrt{\pi c^2}} \exp\left[-\frac{(x-m)^2}{c^2}\right]}_\text{using modulus}\]</span> In mathematical and scientific nomenclature, “modulus” is roughly synonymous with “size.” For example, in algebra, <span class="math inline">\(\left|x\right|\)</span> is the modulus of <span class="math inline">\(x\)</span>. “Modulus” is less off-putting than “standard deviation” and less redolent of the unfortunate early ties between statistics and eugenics. Looking back, perhaps “modulus” would have been the better choice for parameterizing the gaussian.</p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>A potential source of confusion is the unfortunate use of the word “variable” in algebra to mean a symbol, like <span class="math inline">\(x\)</span>, that represents a quantity symbolically.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The <em>OpenIntro</em> text introduced the standard deviation in <a href="https://moderndive.com/3-wrangling.html">Chapter 3</a>, where the authors described it as a measure of “spread.” In Chapter 6, <em>OpenIntro</em> introduced the variance as the square of the variance. All this is right, so far as it goes, but it dramatically understates the importance of the two measures. These measures are as crucial to statistical thinking as the Pythagorean Theorem is to geometry.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>The value of exogenous nodes is usually set randomly, without input from the other nodes in the DAG.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

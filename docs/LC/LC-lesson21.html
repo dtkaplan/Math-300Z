@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -53,7 +58,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -66,7 +71,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -128,9 +133,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="../index.html">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -191,27 +198,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 1 × 2
      vx    vy
   &lt;dbl&gt; &lt;dbl&gt;
-1  3.83 0.947</code></pre>
+1  4.13  1.06</code></pre>
 </div>
 </div>
 <p>Compare this result to the DAG tilde expressions</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dag00</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[[1]]
-x ~ eps(2) + 5
-
-[[2]]
-y ~ eps(1) - 7
-
-attr(,"class")
-[1] "list"      "dagsystem"</code></pre>
+<pre><code>x ~ exo(2) + 5
+y ~ exo(1) - 7</code></pre>
 </div>
 </div>
-<p>In the tilde expressions, <code>eps(2)</code> means to generate noise of magnitude 2.0.</p>
+<p>In the tilde expressions, <code>exo(2)</code> means to generate noise of magnitude 2.0.</p>
 <ol type="1">
-<li>Is the argument to <code>eps()</code> specified in terms of the variance or the standard deviation?</li>
-<li>The tilde expression for <code>x</code> specifies that the constant <code>5</code> is to be added to <code>eps(2)</code>. Similarly, the constant <code>-7</code> is added to <code>y</code>. How do these constants relate to the calculated magnitudes of <code>x</code> and <code>y</code>?</li>
+<li>Is the argument to <code>exo()</code> specified in terms of the variance or the standard deviation?</li>
+<li>The tilde expression for <code>x</code> specifies that the constant <code>5</code> is to be added to <code>exo(2)</code>. Similarly, the constant <code>-7</code> is added to <code>y</code>. How do these constants relate to the calculated magnitudes of <code>x</code> and <code>y</code>?</li>
 </ol>
 <section id="solution" class="level3">
 <h3 class="anchored" data-anchor-id="solution">Solution</h3>
@@ -305,7 +306,7 @@ lm(formula = y ~ x, data = .)
 
 Coefficients:
 (Intercept)            x  
-      3.998        1.583  </code></pre>
+      3.988        1.542  </code></pre>
 </div>
 </div>
 <p>The intercept corresponds to the additive constant (4) in the <code>y</code> tilde expression. The <code>x</code> coefficient corresponds to the multiplier on <code>x</code> in the tilde expression.</p>
@@ -321,7 +322,7 @@ lm(formula = x ~ y, data = .)
 
 Coefficients:
 (Intercept)            y  
-    -1.8432       0.4616  </code></pre>
+    -1.8684       0.4646  </code></pre>
 </div>
 </div>
 <p>These coefficients do not appear in the <code>dag01</code> tilde expressions.</p>
@@ -457,7 +458,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);

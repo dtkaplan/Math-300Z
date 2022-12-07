@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -53,7 +58,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -66,7 +71,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -128,9 +133,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="../index.html">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -217,7 +224,7 @@ Remove these hard-coded objectives after drafting problems
 <div id="fig-car-modelC" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/car-modelC.png" class="img-fluid figure-img" width="250"></p>
-<p></p><figcaption class="figure-caption">Figure 1: <strong>?(caption)</strong></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: <strong>?(caption)</strong></figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -276,7 +283,7 @@ Remove these hard-coded objectives after drafting problems
 <div id="fig-car-modelA" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/car-modelA.png" class="img-fluid figure-img" width="250"></p>
-<p></p><figcaption class="figure-caption">Figure 2: <strong>?(caption)</strong></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: <strong>?(caption)</strong></figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -447,7 +454,7 @@ Explanation
 <div id="fig-time-poll-2008" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/time-poll-july-2008.png" class="img-fluid figure-img" width="197"></p>
-<p></p><figcaption class="figure-caption">Figure 3: Results from a poll conducted by <em>Time</em> magazine. (Source: <em>Time</em>, July 28, 2008, p.&nbsp;41)</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3: Results from a poll conducted by <em>Time</em> magazine. (Source: <em>Time</em>, July 28, 2008, p.&nbsp;41)</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -541,7 +548,7 @@ Males | Given | 700 | 300 | 70% | Not given | 1800 | 1200 | 60%</p>
 <div id="fig-inflation1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/inflation-fig1.png" class="img-fluid figure-img" width="381"></p>
-<p></p><figcaption class="figure-caption">Figure 4: <strong>?(caption)</strong></figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;4: <strong>?(caption)</strong></figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -640,19 +647,37 @@ Solution
 <li><p>Now look at the graph of <code>dag12</code> and speculate whether the models <code>x ~ y</code> and <code>x ~ y + g</code> will give equivalent results. (Don’t include node <code>h</code> in the models.) Write down your speculation. (No penalty for being wrong, it’s just a speculation!) Then, generate a sample from <code>dag12</code> and, looking at the 95% confidence intervals on the coefficients, explain whether your speculation was correct or not.</p></li>
 </ol>
 <hr>
-<hr>
 </section>
 <section id="i" class="level2">
 <h2 class="anchored" data-anchor-id="i">28.I</h2>
+<p>In the hypothetical Mr.&nbsp;Shoebuyer’s data and model <code>width ~ sex</code>, 8 pairs of shoes produced a margin of error of <span class="math inline">\(\pm 0.8\)</span>, estimate how many shoes you would need to reduce the margin of error to <span class="math inline">\(\pm 0.1\)</span>.</p>
+<hr>
+</section>
+<section id="more-examples" class="level2">
+<h2 class="anchored" data-anchor-id="more-examples">More examples</h2>
+</section>
+<section id="example-sat-scores-and-school-spending" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="example-sat-scores-and-school-spending">Example: SAT Scores and School Spending</h2>
+<p>Chapter 7 showed some models relating school expenditures to SAT scores. The model <code>sat</code> ~ 1 + <code>expend</code> produced a negative coefficient on <code>expend</code>, suggesting that higher expenditures are associated with lower test scores. Including another variable, the fraction of students who take the SAT (variable <code>frac</code>) reversed this relationship.</p>
+<p>The model <code>sat</code> ~ 1 + <code>expend</code> + <code>frac</code> attempts to capture how SAT scores depend both on <code>expend</code> and <code>frac</code>. In interpreting the model, you can look at how the SAT scores would change with <code>expend</code> while holding <code>frac</code> constant. That is, from the model formula, you can study the partial relationship between SAT and <code>expend</code> while holding <code>frac</code> constant.</p>
+<p>The example also looked at a couple of other fiscally related variables: student-teacher ratio and teachers’ salary. The total relationship between each of the fiscal variables and SAT was negative – for instance, higher salaries were associated with lower SAT scores. But the partial relationship, holding <code>frac</code> constant, was the opposite: Simpson’s Paradox.</p>
+<p>For a moment, take at face value the idea that higher teacher salaries and smaller class sizes are associated with better SAT scores as indicated by the following models:</p>
+<p><em>sat</em> = 988 + 2.18 <code>salary</code> - 2.78 <code>frac</code></p>
+<p><em>sat</em> = 1119 - 3.73 <code>ratio</code> - 2.55 <code>frac</code></p>
+<p>In thinking about the impact of an intervention – changing teachers’ salaries or changing the student-teacher ratio – it’s important to think about what other things will be changing during the intervention. For example, one of the ways to make student-teacher ratios smaller is to hire more teachers. This is easier if salaries are held low. Similarly, salaries can be raised if fewer teachers are hired: increasing class size is one way to do this. So, salaries and student-teacher ratio are in conflict with each other.</p>
+<p>If you want to anticipate what might be the effect of a change in teacher salary while holding student-teacher ratio constant, then you should include <code>ratio</code> in the model along with <code>salary</code> (and <code>frac</code>, whose dominating influence remains confounded with the other variables if it is left out of the model):</p>
+<p><em>sat</em> = 1058 + 2.55 <code>salary</code> - 4.64 <code>ratio</code> - 2.91 <code>frac</code></p>
+<p>Comparing this model to the previous ones gives some indication of the trade-off between salaries and student-teacher ratios. When <code>ratio</code> is included along with <code>salary</code>, the salary coefficient is somewhat bigger: 2.55 versus 2.18. This suggests that if salary is increased while holding constant the student-teacher ratio, salary has a stronger relationship with SAT scores than if salary is increased while allowing student-teacher ratio to vary in the way it usually does, accordingly.</p>
+<p>Of course, you still need to have some way to determine whether the precision in the estimate of the coefficients is adequate to judge whether the detected difference in the <code>salary</code> coefficient is real – 2.18 in one model and 2.55 in the other. Such issues are introduced in Chapter 12.</p>
 
 
 </section>
 
 
-<div id="quarto-appendix" class="default"><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1" role="doc-endnote"><p>{Based on an example from Judea Pearl (2000) <em>Causality: Models, Reasoning, and Inference</em>, Cambridge Univ. Press, p.&nbsp;175}<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>{Based on an example from Judea Pearl (2000) <em>Causality: Models, Reasoning, and Inference</em>, Cambridge Univ. Press, p.&nbsp;175}<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -724,7 +749,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);

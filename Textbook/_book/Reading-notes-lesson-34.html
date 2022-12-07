@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lessons in Statistical Thinking - 16&nbsp; Constructing a classifier</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Reading-notes-lesson-35.html" rel="next">
+<link href="./Reading-notes-lesson-33.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Constructing a classifier</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Lessons in Statistical Thinking</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-19.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preliminaries</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-20.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Measuring variation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-21.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Signal and noise</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-22.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sampling and sampling variation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-23.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimating sampling variation from a single sample</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-25.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Mechanics of prediction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-26.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Constructing a prediction interval</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Review of Lessons 1-8</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-28.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Covariates</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-29.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Covariates eat variance</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-30.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Confounding</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-31.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Non-causal correlation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-32.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Experiment and random assignment</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-33.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Measuring and accumulating risk</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-34.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Constructing a classifier</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-35.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Accounting for prevalence</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-36.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-37.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Calculating a p-value</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-38.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">False discovery</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Review of Lessons 9-19</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#collecting-useful-data" id="toc-collecting-useful-data" class="nav-link active" data-scroll-target="#collecting-useful-data"><span class="toc-section-number">16.1</span>  Collecting useful data</a></li>
+  <li><a href="#setting-the-threshold-for" id="toc-setting-the-threshold-for" class="nav-link" data-scroll-target="#setting-the-threshold-for"><span class="toc-section-number">16.2</span>  Setting the threshold for +</a></li>
+  <li><a href="#test-performance" id="toc-test-performance" class="nav-link" data-scroll-target="#test-performance"><span class="toc-section-number">16.3</span>  Test performance</a></li>
+  <li><a href="#lc-34.a" id="toc-lc-34.a" class="nav-link" data-scroll-target="#lc-34.a"><span class="toc-section-number">16.4</span>  LC 34.A</a></li>
+  <li><a href="#lc-34.b" id="toc-lc-34.b" class="nav-link" data-scroll-target="#lc-34.b"><span class="toc-section-number">16.5</span>  LC 34.B</a></li>
+  <li><a href="#other-stuff" id="toc-other-stuff" class="nav-link" data-scroll-target="#other-stuff"><span class="toc-section-number">16.6</span>  Other stuff</a></li>
+  <li><a href="#incidence" id="toc-incidence" class="nav-link" data-scroll-target="#incidence"><span class="toc-section-number">16.7</span>  Incidence</a></li>
+  <li><a href="#sensitivity-and-specificity" id="toc-sensitivity-and-specificity" class="nav-link" data-scroll-target="#sensitivity-and-specificity"><span class="toc-section-number">16.8</span>  Sensitivity and specificity</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Constructing a classifier</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>There are many yes-or-no conditions. A patient has a disease or does not. A credit-card transaction is genuine or fraudulent.</p>
+<p>But it is not straightforward to figure out at the time the patient comes to the clinic or the credit-card transaction is made, whether the condition is yes or no. If we could wait, the condition might reveal itself: the patient gets critically ill or the credit-hard holder complains about an unauthorized charge. But we can’t wait. We want to treat the patient <em>before</em> he or she gets critically ill.&nbsp;We want to block the credit-card transaction before it is completed.</p>
+<p>Instead of waiting, we measure whatever relevant variables we can when the patient arrives at the clinic or the credit-card transaction has been submitted for approval. For the patient, we might look at the concentration of specific markers for cancer in the blood. For the transaction, we might look at the shipping address to see if it matches the credit-card holder’s genuine address. Such variables may provide an indication, imperfect though it may be, of whether the condition is yes or no.</p>
+<p>A <strong>classifier</strong> is a statistical model used to <em>predict</em> the unknown outcome of a yes-or-no situation from information that is already available. This Lesson concerns three closely related topics about classifiers: how we collect data for training the model, how we summarize the performance of the classifier, and how we “tune” the classifier.</p>
+<p>To help keep things straight, we will write the output of the classifier as + or -; a positive or a negative test result. But the actual condition of the person will be denoted <strong>C</strong> or <strong>H</strong>, as in “you have the <strong>C</strong>ondition or you are <strong>H</strong>ealthy.</p>
+<section id="collecting-useful-data" class="level2 page-columns page-full" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="collecting-useful-data"><span class="header-section-number">16.1</span> Collecting useful data</h2>
+<p>Consider this news report and note the time lag between collection of the dietary explanatory variables and the response variable—whether the patient developed pancreatic cancer.</p>
+<blockquote class="blockquote">
+<p>Higher vitamin D intake has been associated with a significantly reduced risk of pancreatic cancer, according to a study released last week. Researchers combined data from two prospective studies that included 46,771 men ages 40 to 75 and 75,427 women ages 38 to 65. They identified 365 cases of pancreatic cancer over 16 years. Before their cancer was detected, subjects filled out dietary questionnaires, including information on vitamin supplements, and researchers calculated vitamin D intake. After statistically adjusting<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> for age, smoking, level of physical activity, intake of calcium and retinol and other factors, the association between vitamin D intake and reduced risk of pancreatic cancer was still significant. Compared with people who consumed less than 150 units of vitamin D a day, those who consumed more than 600 units reduced their risk by 41 percent. - <em>New York Times</em>, 19 Sept.&nbsp;2006, p.&nbsp;D6.</p>
+</blockquote>
+<p>This was not an experiment; it was an observational study without any intervention to change anyone’s diet.</p>
+<p>In building a classifier, we have a similar situation. Perhaps we can perform the blood test today, but that gives us only the test result, not the subject’s true condition. We might have to wait years for that condition to reveal itself. Only at that point can we measure the performance of the classifier.</p>
+<p>To picture the situation, let’s imagine many people in the world, some of whom have the condition and some who don’t. On Day 1 of the study, we test everyone and get raw score on a scale from 0 to 40. The results are shown in <a href="#fig-whole-world">Figure&nbsp;<span>16.1</span></a>. Each glyph is a person. The varying locations are meant to help us later on; for now, just think of them as representing where each person lives in the world. The different shapes of glyph—circle, square, triangle—are meant to remind you that people are different from one another in age, gender, risk-factors, etc.</p>
+<p>Each person took a blood test. The raw result from that test is a score from 0 to 40. The distribution of scores is shown in the right panel of the figure. We also show the score in the world-plot; the higher the raw score, the more blue the glyph. On Day 1, it isn’t known who has the condition and who does not.</p>
+<div class="cell page-columns page-full">
+<div class="cell-output-display page-columns page-full">
+<div id="fig-whole-world" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="Reading-notes-lesson-34_files/figure-html/fig-whole-world-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;16.1: Day 1: The people participating in the study to develop the classifier. Each has been given a blood test which gives a score from zero (gray) to one (blue).</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Having recorded the raw test results for each person, we wait. In the pancreatic cancer study, they waited 16 years for the cancer to reveal itself. After the waiting period, we can add a new column to the original data; whether the person has the condition (C) or doesn’t (H). In <a href="#fig-world-condition">Figure&nbsp;<span>16.2</span></a> people who developed the condition have been re-drawn with filled glyphs to make them easier to spot.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-world-condition" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Reading-notes-lesson-34_files/figure-html/fig-world-condition-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;16.2: The same people as in <a href="#fig-whole-world">Figure&nbsp;<span>16.1</span></a>, but now we know who turned out to have the condition and who didn’t. The people with the condition are re-drawn with filled glyphs.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Only now, when we have found out the C-or-H state of each person, can we compare the raw scores on the blood test for those were found to have the condition and those who were not.</p>
+</section>
+<section id="setting-the-threshold-for" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="setting-the-threshold-for"><span class="header-section-number">16.2</span> Setting the threshold for +</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-compare-scores" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Reading-notes-lesson-34_files/figure-html/fig-compare-scores-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;16.3: The distribution of raw test scores. After we know the true condition, we can break down the test scores by condition.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>At the end of year 16, we can now divide the study participants into two groups: those who developed the condition and those who didn’t.</p>
+<p><a href="#fig-compare-scores">Figure&nbsp;<span>16.3</span></a> shows the distribution of raw test scores. The values are those recorded on Day 1, but after waiting to find out the patients’ conditions, we can subdivide them into those who have the condition (C) and those who don’t (H).</p>
+<p>The classifier we aim to build is not yet complete, even though we have all the data we need. To finish the classifier, we need to identify a “<strong>threshold score</strong>.” Raw scores above this threshold will generate a + test; scores below the threshold generate a - test.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+False positives and false negatives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Since each individual person is either C or H, and each has a test result that is + or -, we can divide the people into four distinct groups.</p>
+<ul>
+<li><p>C with a + test: This is called a “<strong>true positive</strong>”, since the test was + (that is, positive) and the test was right.</p></li>
+<li><p>H with a + test: This is a “<strong>false positive</strong>”; the test was + (positive) but wrong (false).</p></li>
+<li><p>H with a - test: A “<strong>true negative</strong>”</p></li>
+<li><p>C with a - test: A “<strong>false negative</strong>”</p></li>
+</ul>
+</div>
+</div>
+<p>It is you, the modeler, who decides what the threshold should be. In setting it, you have two objectives that happen to conflict. You want to avoid both false negatives and false positives. You do this by setting the threshold low enough that a large fraction of the people in column C are above the threshold. Those below the threshold are the false negatives. But you also want to set the threshold low enough so that only a small fraction of the people in column H are above the threshold—such people are false positives.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+The Loss Function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In order to set the threshold at an optimal level, it is important to measure the impact of the positive or negative test result. This impact of course will depend on whether the test is right or wrong about the person’s true condition. It is conventional to measure the impact as a “<strong>loss</strong>,” that is, the amount of harm that is done.</p>
+<p>If the test result is right, there’s no loss. Of course, it’s not nice that a person is C, but a + test result will steer our actions to treat the condition appropriately: no loss in that.</p>
+<p>Typically, the loss of a false negative is reckoned as more than the loss of a false positive. A false negative will lead to failure to treat the person for a condition that he or she actually has.</p>
+<p>In contrast, a false positive will lead to unnecessary treatment. This also is a loss that includes several components that would have been avoided if the test had be right. The cost of the treatment itself is one part of the loss. The harm that a treatment might do is another part of the loss. And the anxiety that the person and his or her family go through is still another part of the loss. These losses are not necessarily small. The woman who gets a false positive breast-cancer diagnosis will suffer from the effects of chemotherapy and the loss of breast tissue. The man who gets a false-positive prostate-cancer diagnosis may end up with urinary incontinence and impotence.</p>
+<p>The aim in setting the threshold is to minimize the total loss. This will be the loss incurred due to false negative times the number of false negatives plus the loss incurred from a false positive times the number of false positives.</p>
+<p>The term “<strong>loss function</strong>” is used to describe how the loss depends on whether the outcome is a false negative or a false positive.</p>
+<p>However, as you’ll see in Lesson 35, the number of false positives and false negatives depends on the “<strong>prevalence</strong>” of the condition. This can differ from group to group or location to location. Until we know the relevant prevalence and the loss function, we can’t sensibly pick a threshold.</p>
+</div>
+</div>
+</section>
+<section id="test-performance" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="test-performance"><span class="header-section-number">16.3</span> Test performance</h2>
+<p>As pointed out above, to know the impact of the test you need to know both the loss function and the prevalence. Even so, there is a simple way to describe the performance of the test itself that will enable us to apply the test optimally for any prevalence or loss function.</p>
+<p>Assume for the moment that we have already selected a threshold that turns the raw score from the test into the + or - final result from the test.</p>
+<p>The threshold lets us mark as + or - each of the people whose data we are using to develop the classifier. In terms of the graphics we have been drawing, the threshold turns what we were drawing as shades of blue to represent the raw score into a definite blue-or-not color code, as in <a href="#fig-after-threshold">Figure&nbsp;<span>16.4</span></a>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-after-threshold" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Reading-notes-lesson-34_files/figure-html/fig-after-threshold-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;16.4: Fixing the threshold turns the shades of blue into blue-or-not. Depending on the threshold, the picture will look somewhat different.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>There’s not much more we can do at this point. We know who has a positive test and who a negative test, but we don’t know which people are C and which H. We therefore wait to get more information. This might involve waiting for the condition to reveal itself, 16 years in the pancreatic cancer study.</p>
+<p>The day at last comes when we can identify the condition of each person in <a href="#fig-after-threshold">Figure&nbsp;<span>16.4</span></a>. At this point, we can split the people in <a href="#fig-after-threshold">Figure&nbsp;<span>16.4</span></a> into a C group and an H group, as in <a href="#fig-divided-by-condition">Figure&nbsp;<span>16.5</span></a>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-divided-by-condition" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Reading-notes-lesson-34_files/figure-html/fig-divided-by-condition-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;16.5: The people in the classifier-building project split up according to their condition. Everyone in one group has condition C. (Note that all the glyphs are filled in since everyone has the condition.) Everyone in the other group has condition H. (The glyphs of the H people are hollow.)</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>With the people divided according to their actual condition, it is easy to measure how well the test performed. There are two, distinct measures: the “<strong>sensitivity</strong>” and the “<strong>specificity</strong>.” The word “distinct” is important. The sensitivity applies only to the people in the C group. We get absolutely no information about the specificity from the C group. It’s the H group that we will look at to find the specificity.</p>
+<p>Both sensitivity and specificity describe the fraction of people who get the <em>correct</em> result from the test. But there are two distinct correct results, depending on which group, C or H, any person is in. Among the C people, a correct result is a positive test. Among the H people, a negative test is the correct result.</p>
+<p>From <a href="#fig-divided-by-condition">Figure&nbsp;<span>16.5</span></a> you can estimate by eye the sensitivity and specificity, keeping in mind that a <em>blue</em> symbol means a + test result. The sensitivity is the fraction of people in the C group who are marked by a blue symbol. The specificity is the fraction of people in the H group who are marked gray, the color for a - test. The vast majority of the C group are colored blue; counting marks puts the sensitivity at 90%. For the H group, most of the marks are gray. Count marks and you’ll find the specificity to be 85%.</p>
+</section>
+<section id="lc-34.a" class="level2" data-number="16.4">
+<h2 data-number="16.4" class="anchored" data-anchor-id="lc-34.a"><span class="header-section-number">16.4</span> LC 34.A</h2>
+<p>The following graph shows four hypothetical planets, each inhabited by a different population. Filled glyphs indicate people with condition C, hollow glyphs are for people with condition H. The blue glyphs have positive (+) test results, the gray glyphs have negative (-) test results.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Reading-notes-lesson-34_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol type="a">
+<li>Which planets is suited for measuring sensitivity and which for specificity?</li>
+<li>By eye, estimate the numerical values for sensitivity and specificity.</li>
+</ol>
+</section>
+<section id="lc-34.b" class="level2" data-number="16.5">
+<h2 data-number="16.5" class="anchored" data-anchor-id="lc-34.b"><span class="header-section-number">16.5</span> LC 34.B</h2>
+<p>Another case of four hypothetical planets, but in a different solar system than LC 34.A.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Reading-notes-lesson-34_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol type="a">
+<li>Which planets is suited for measuring sensitivity and which for specificity?</li>
+<li>By eye, estimate the numerical values for sensitivity and specificity.</li>
+</ol>
+</section>
+<section id="other-stuff" class="level2" data-number="16.6">
+<h2 data-number="16.6" class="anchored" data-anchor-id="other-stuff"><span class="header-section-number">16.6</span> Other stuff</h2>
+<p>Consider a credit-card company might building a classifier to predict at the time of the transaction whether a purchase of gasoline is fraudulent. The company knows how often and how much gasoline the individual cardholders buys, where the cardholder lives, whether the cardholder travels extensively, typical times of day for a purchase, and so on. <strong>Feature engineering</strong> is the process of using existing data—including, in our example, whether the purchase turned out to be fraudulent—to develop potential markers or signals of the outcome. For simplicity, imagine the features selected are the number of days since the last gasoline purchase and the distance from the last place of purchase.</p>
+<p>Once potential features have been proposed, the engineers building the classifier assemble training and testing data sets. Suppose, for the purpose of illustration, that the training data has 2000 fraudulent transactions and 4000 non-fraudulent ones, and the testing set is about the same.</p>
+<p>The word “assemble” was used intentionally to describe how the testing and training data were collected: a <strong>case-control study</strong>. Since the objective is to detect fraud, it is reasonable to have a lot of “yes” cases in the data. The “no” cases serve as a kind of control; they were included specifically to have balance in the data. If data had been collected as a simple random sample of credit card transactions, there would have been many, many more “no” cases than “yes.”</p>
+<p>With such training data it is easy to build a statistical model with <code>Fraud</code> as the response variable. That model can then be evaluated on the testing data to produce a model output for each row:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Fraud</th>
+<th>Feature 1</th>
+<th>Feature 2</th>
+<th>Model output</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>no</td>
+<td>6 days</td>
+<td>5 miles</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>no</td>
+<td>1 day</td>
+<td>250 miles</td>
+<td>+</td>
+</tr>
+<tr class="odd">
+<td>yes</td>
+<td>120 days</td>
+<td>75 miles</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>no</td>
+<td>5 days</td>
+<td>0 miles</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>yes</td>
+<td>0.2 days</td>
+<td>90 miles</td>
+<td>+</td>
+</tr>
+</tbody>
+</table>
+<p>It’s understandable that a classifier may not have perfect performance. After all, it iss trying to make a prediction based on limited data, and randomness may play a role.</p>
+<p>There are different ways of making a mistake, and these different ways have very different consequences. One kind of mistake, called a “<strong>false positive</strong>”, involves a classifier output that’s positive (i.e.&nbsp;the classifier indicates fraud) but which is wrong. The consequence of this sort of mistake in the present example is a customer who has to find another way to pay for gasoline.</p>
+<p>The other kind of mistake is called a “<strong>false negative</strong>”. Here, the classifer output is that the transaction is not fraudulent, but in actuality it was. The consequence of this kind of mistake is different: a successful theft.</p>
+<p>The nomenclature signals that a mistake has been made with the word “false.” The kind of mistake is either “positive” or “negative”, corresponding to the output of the classifier.</p>
+<p>When the classifier gets things right, that is a “true” result. As with the false results, a true result is possible both for a “positive” and a “negative” classifier output. So the two ways of getting things right are called “<strong>true positive</strong>” and “<strong>true negative</strong>”.</p>
+<p>Tabulating all 6000 rows of the testing data might produce something like this:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Fraud</th>
+<th>test +</th>
+<th>test -</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>yes</td>
+<td>1900</td>
+<td>100</td>
+</tr>
+<tr class="even">
+<td>no</td>
+<td>50</td>
+<td>3950</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="incidence" class="level2" data-number="16.7">
+<h2 data-number="16.7" class="anchored" data-anchor-id="incidence"><span class="header-section-number">16.7</span> Incidence</h2>
+</section>
+<section id="sensitivity-and-specificity" class="level2" data-number="16.8">
+<h2 data-number="16.8" class="anchored" data-anchor-id="sensitivity-and-specificity"><span class="header-section-number">16.8</span> Sensitivity and specificity</h2>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Example: Accuracy of airport security screening
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Airplane passengers have, for decades, gone through a security screening process involving identity checks, “no fly” lists, metal detection, imaging of baggage, random pat-downs, and such. How accurate is such screening? Almost certainly, the accuracy is not as good as an extremely simple, no-input, alternative process: automatically identify every passenger as “not a security problem.” We can estimate the accuracy of the “not a security problem” classifier by guessing what fraction of airplane passengers are indeed a threat to aircraft. In the US alone, there are about 2.5 million airplane passengers each day and security problems of any sort rarely happen. So the accuracy of the no-input classifier is something like 99.999%.</p>
+<p>The actual screening system, using metal detectors, baggage x-rays, etc. will have a lower accuracy. We know this since it regularly mis-identifies innocent people as security problems.</p>
+<p>The problem here is not with airport security screening, but with the flawed use of <em>accuracy</em> as a measure of performance. Indeed, achieving super-high accuracy is not the objective of the security screening process. Instead, the objective is to <em>deter</em> security problems by convincing potential terrorists that they are likely to get caught before they can get on a plane. This has to do with the <em>sensitivity</em> of the system. The <em>specificity</em> of the system, although important to the everyday traveller, is not what deters the terrorist.</p>
+</div>
+</div>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>That is, applying the methods of Lesson 28.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Reading-notes-lesson-33.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Measuring and accumulating risk</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Reading-notes-lesson-35.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Accounting for prevalence</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

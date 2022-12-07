@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lessons in Statistical Thinking - 19&nbsp; Calculating a p-value</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Reading-notes-lesson-38.html" rel="next">
+<link href="./Reading-notes-lesson-36.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Calculating a p-value</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Lessons in Statistical Thinking</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-19.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preliminaries</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-20.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Measuring variation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-21.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Signal and noise</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-22.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sampling and sampling variation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-23.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Estimating sampling variation from a single sample</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-25.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Mechanics of prediction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-26.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Constructing a prediction interval</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Review of Lessons 1-8</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-28.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Covariates</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-29.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Covariates eat variance</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-30.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Confounding</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-31.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Non-causal correlation</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-32.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Experiment and random assignment</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-33.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Measuring and accumulating risk</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-34.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Constructing a classifier</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-35.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Accounting for prevalence</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-36.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-37.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Calculating a p-value</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-38.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">False discovery</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Review of Lessons 9-19</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#incredibly-simple-interpretation" id="toc-incredibly-simple-interpretation" class="nav-link active" data-scroll-target="#incredibly-simple-interpretation"><span class="toc-section-number">19.1</span>  “Incredibly simple” interpretation</a></li>
+  <li><a href="#what-is-a-p-value" id="toc-what-is-a-p-value" class="nav-link" data-scroll-target="#what-is-a-p-value"><span class="toc-section-number">19.2</span>  What is a p-value?</a></li>
+  <li><a href="#the-world-of-the-null-hypothesis" id="toc-the-world-of-the-null-hypothesis" class="nav-link" data-scroll-target="#the-world-of-the-null-hypothesis"><span class="toc-section-number">19.3</span>  The world of the Null hypothesis</a></li>
+  <li><a href="#what-to-conclude" id="toc-what-to-conclude" class="nav-link" data-scroll-target="#what-to-conclude"><span class="toc-section-number">19.4</span>  What to conclude?</a></li>
+  <li><a href="#more-metaphors" id="toc-more-metaphors" class="nav-link" data-scroll-target="#more-metaphors"><span class="toc-section-number">19.5</span>  More metaphors?</a></li>
+  <li><a href="#the-conclusion" id="toc-the-conclusion" class="nav-link" data-scroll-target="#the-conclusion"><span class="toc-section-number">19.6</span>  The conclusion</a></li>
+  <li><a href="#which-p-value-is-relevant" id="toc-which-p-value-is-relevant" class="nav-link" data-scroll-target="#which-p-value-is-relevant"><span class="toc-section-number">19.7</span>  Which p-value is relevant?</a></li>
+  <li><a href="#analysis-of-variance" id="toc-analysis-of-variance" class="nav-link" data-scroll-target="#analysis-of-variance"><span class="toc-section-number">19.8</span>  Analysis of variance</a></li>
+  <li><a href="#a-simple-general-purpose-way-to-calculate-a-p-value" id="toc-a-simple-general-purpose-way-to-calculate-a-p-value" class="nav-link" data-scroll-target="#a-simple-general-purpose-way-to-calculate-a-p-value"><span class="toc-section-number">19.9</span>  A simple, general-purpose way to calculate a p-value</a></li>
+  <li><a href="#the-hypothesis-testing-zoo" id="toc-the-hypothesis-testing-zoo" class="nav-link" data-scroll-target="#the-hypothesis-testing-zoo"><span class="toc-section-number">19.10</span>  The hypothesis testing zoo</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Calculating a p-value</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>THE ROOT OF THE CALCULATION. CREATE A SIMULATION of what would happen if the null hypothesis were true. This is remarkably easy, which is why hypothesis testing is used so much.</p>
+<p>SPACE SHUFFLE TO PLANET NULL. Calculate the likelihood of the observed result on that planet, that is, assuming that the null hypothesis is true.</p>
+<hr>
+<p>If the simulation trials rarely or never produce an association as strong as that found in real-world observations, you can fairly conclude that the assumptions embedded in the simulation ought to be <em>rejected</em> as a proper description of the real world. On the other hand, if the simulation shows good accord with the real-world observations, you can … what? It’s not a good idea to claim the simulation is a correct description of the real world; it’s just a simulation. Instead, the proper statement is that you “<em>fail to reject</em>” the hypothesis hard-coded into the simulation.</p>
+<hr>
+<p>So far, we’ve used only the first three columns of the regression report: the name of the term to which the remaining entries belong, the estimate of the coefficient on that term, and the standard error of that estimate.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> hp, <span class="at">data =</span> mtcars) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">regression_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)  37.2      1.60        23.3  2.57e-20
+2 wt           -3.88     0.633       -6.13 1.12e- 6
+3 hp           -0.0318   0.00903     -3.52 1.45e- 3</code></pre>
+</div>
+</div>
+<p>There are two more columns to go. The fourth column is labelled “<strong>statistic</strong>” (short for “<strong>test statistic</strong>”) and the fifth column is the “<strong>p-value</strong>.”</p>
+<p>It’s the p-value that concerns us here, the “statistic” is just an intermediate on the way to calculating the p-value. Both are reported because, in some fields people are accustomed to reading the statistic to draw quick conclusions. But in every field, the p-value is used.</p>
+<p>The p-value is at once incredibly simple to interpret and impossibly difficult to make sense of. This contradiction is the reason many statisticians have called for moving away from the p-value as a summary of a result. We will discuss the reasons for the controversy in Lesson 38. In Lesson 37, we’ll show how the p-value is computed from the test statistic and introduce another report summarizing a model, the “<strong>ANOVA report</strong>,” which is useful for many purposes.</p>
+<p>In this Lesson, we’ll explain the “incredibly simple” interpretation of the p-value and the subtle logic behind it. This is important because frequently (pretty close to “always”) people mistake the p-value as addressing a completely different question than the question it actually pertains to. It’s useful to know about this misconception, because it points to a different question that often more directly addresses the needs of researchers and decision makers.</p>
+<section id="incredibly-simple-interpretation" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="incredibly-simple-interpretation"><span class="header-section-number">19.1</span> “Incredibly simple” interpretation</h2>
+<p>As you will see, the p-value is always a number between zero and one. When the p-value is small, the conclusion is that the corresponding explanatory variable is contributing to explaining the variation in the response variable. That is, a p-value that’s small is justification for believing that there is a connection of some sort between the explanatory variable and the response variable.</p>
+<p>“Small” in the phrase “when the p-value is small” is most usually taken to mean <span class="math inline">\(p &lt; 0.05\)</span>. But different fields have different standards for defining small. For instance, it’s common in psychology to consider <span class="math inline">\(p &lt; 0.10\)</span> as fairly small, while in physics, “small” means perhaps <span class="math inline">\(p &lt; 0.001\)</span> or even <span class="math inline">\(p &lt; 0.000001\)</span>.</p>
+<p>It may seem odd that there is no universal agreement about “small.” The reason is that p-values are part of a <em>standard operating procedure</em> for evaluating research results to know if they are worthy of publication.</p>
+<p>In physics, laws and models are meant to be exact or close to exact. Lord Rutherford (1871-1935), an important physicist who won the Nobel prize in 1908, famously disparaged the use of statistics, reportedly saying, “If your experiment needs statistics, you should have done a better experiment.” This was in an era where the p-value <em>standard operating procedure</em> had not yet been invented. Today, when p-values are common in most fields, Rutherford’s distaste for statistical method is reflected in p-value thresholds like <span class="math inline">\(p &lt; 0.000001\)</span>.</p>
+<p>In other fields such as economics or psychology or clinical medicine, models are sought that are <em>useful</em> but without any expectation that they be exact. (In the 19th and early 20th century, psychologists and economists sometimes used the vocabulary of “law” to describe their findings, but “model” is more appropriate, because, unlike physics, the laws are not strictly enforced!) Often, in economics or psychology or medicine, the size of a sample used to train a model is less than, say, <span class="math inline">\(n=100\)</span>. And the units of observation—people or countries, for instance—are different one from the other, quite unlike, say, electrons, which are all the same. Consequently, sampling variation is often an important source of noise, obscuring relationships or even suggesting relationships that are not really there. (See Lesson 31.) This situation—small sample size, variation in observational units, and large sampling variation—would cause many useful findings to go unreported, as would happen if <span class="math inline">\(p &lt; 0.000001\)</span> were the standard. So a less stringent threshold for publication is used, most commonly 0.05.</p>
+</section>
+<section id="what-is-a-p-value" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="what-is-a-p-value"><span class="header-section-number">19.2</span> What is a p-value?</h2>
+<p>A p-value is the result of a calculation based on data, but also involving a special hypothesis, called the “Null hypothesis.” The Null hypothesis is almost always a statement in line with the claim that “there is no relationship between these variables” or “nothing is going on.” For example, in a study about the effectiveness of a new drug, the Null hypothesis will be that the drug has no effect at all. Another example: In an economics study about the possible relationship between a country’s “corruption index” and interest rates, the Null hypothesis would be “corruption is unrelated to interest rates.”</p>
+<p>Perhaps it is helpful to envision the Null hypothesis as the belief of a skeptical devil, standing on the researcher’s shoulder and constantly whispering to the research that, “this study is useless, a waste of time, the result purely of sampling variation.” Note that in a world where researchers always took the devil’s advice, no study would be done. What motivates a researcher is a belief that the study will indeed produce results that are useful and represent something about the real world other than sampling variation, e.g.&nbsp;a relationship between two variables.</p>
+<p>The calculation that results in a p-value is done under the assumption that the devil is right. The point is to see if the data are consistent with the devil’s skeptical position. If they are consistent, then the p-value will be large. If not, the p-value will be “small.”</p>
+<p>The format of a p-value is that of a <strong>conditional probability</strong>. The condition is that the devil is right. The probability is that of seeing what the data analysis shows—typically summarized as a model coefficient—if the devil were right.</p>
+<p>Actually, the probability reported in the p-value is not that of seeing the exact value of the model coefficient shown in the regression report. The probability also includes the events where the coefficient was larger in magnitude than the coefficient. Why? Because larger coefficients are stronger evidence that the devil is not right.</p>
+</section>
+<section id="the-world-of-the-null-hypothesis" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="the-world-of-the-null-hypothesis"><span class="header-section-number">19.3</span> The world of the Null hypothesis</h2>
+<p>Recall that the Null hypothesis is the claim that “nothing is going on.” For a regression model, this amounts to saying that “there is no relationship between an explanatory variable and the response variable.” In order to help clarify the description in the previous section, let’s do an example calculation of a p-value. We will use for the example the possible relationship between a car’s fuel economy (<code>mpg</code>) and the maximum horsepower (<code>hp</code>) of the engine.</p>
+<p>A skeptic, such as the imaginary devil from the previous section, might argue this way: “The maximum horsepower is hardly ever used by a car. Instead, the driver throttles the engine so that it generates only that power needed to move the car along under the current conditions: acceleration, speed, wind, slope of the road. The maximum horsepower just affects the range of conditions under which the car can operate. But the fuel economy is based on a standard set of conditions which is the same for every car, regardless of the horsepower.”</p>
+<p>We will pick up the action at the point where the study has been designed and the design implemented to produce data. For the example, we have the <code>mtcars</code> data frame in hand. As should be familiar at this point, the data are modeled and the model coefficient on the explanatory variable of interest is recorded. Looking at the regression report presented at the beginning of this Lesson, that coefficient is -0.0318 mpg/horsepower.</p>
+<p>The data were collected in the real world, but that is not the world that’s relevant to the Null hypothesis. The world of the Null hypothesis is one where fuel economy is utterly unrelated to horsepower. To calculate the p-value, we construct a simulation of the Null-hypothesis world. But it is not sufficient for the simulation to generate Null-hypothesis data out of the blue. We want the simulation to be as much like the actual data as possible, except that there is no relationship between <code>mpg</code> and <code>hp</code>.</p>
+<p>Perhaps surprisingly, there is a very simple device for accomplishing this. It involves creating a new variable to use in place of <code>hp</code> in the model, but which is unrelated to <code>mpg</code>. Let’s call this new variable <code>hp_null</code>. We can generate <code>hp_null</code> by taking the values in <code>hp</code> and shuffling them. This randomized version of <code>hp</code> has no relationship to <code>mpg</code> because it is being dealt out to each row of the data frame at random.</p>
+<p>Here’s what the shuffling looks like, pretending for readability that there wee only ten rows in <code>mtcars</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Samp <span class="ot">&lt;-</span> mtcars <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(mpg, wt, hp) <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size=</span><span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">hp_null =</span> <span class="fu">shuffle</span>(hp))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>Samp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    mpg    wt  hp hp_null
+Merc 450SLC        15.2 3.780 180     230
+Porsche 914-2      26.0 2.140  91      52
+Toyota Corolla     33.9 1.835  65     175
+Honda Civic        30.4 1.615  52     175
+Cadillac Fleetwood 10.4 5.250 205      91
+Pontiac Firebird   19.2 3.845 175     180
+Hornet Sportabout  18.7 3.440 175      62
+Datsun 710         22.8 2.320  93      65
+Merc 240D          24.4 3.190  62      93
+Chrysler Imperial  14.7 5.345 230     205</code></pre>
+</div>
+</div>
+<p>We’ll use such data, replacing the actual <code>hp</code> with the shuffled <code>hp</code>, to find the model coefficient on <code>hp</code>. This can be done concisely:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">112</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> <span class="fu">shuffle</span>(hp), <span class="at">data =</span> mtcars) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">regression_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)  34.2      2.93        11.7  1.65e-12
+2 wt           -4.95     0.626       -7.90 1.03e- 8
+3 shuffle(hp)   0.0120   0.00894      1.34 1.90e- 1</code></pre>
+</div>
+</div>
+<p>In this trial, the coefficient on the shuffled <code>hp</code> is 0.0120. Of course the coefficient might well be different if the trial were repeated. Let’s run 1000 trials, from each of which we’ll extract the coefficient on the shuffled <code>hp</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">1000</span>) <span class="sc">*</span> { </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> <span class="fu">shuffle</span>(hp), <span class="at">data =</span> mtcars) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">regression_summary</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"shuffle(hp)"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(estimate)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><a href="#fig-mpg-null-trials">Figure&nbsp;<span>19.1</span></a> shows the distribution of the shuffled <code>hp</code> coefficient, compared to the coefficient we found from the original, unshuffled data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_jitter</span>(estimate <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> Trials, <span class="at">alpha=</span><span class="fl">0.3</span>, <span class="at">width=</span><span class="fl">0.3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_violin</span>(<span class="at">color=</span><span class="cn">NA</span>, <span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>, <span class="at">width=</span><span class="fl">0.1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_lims</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_hline</span>(<span class="at">yintercept =</span> <span class="sc">~</span> <span class="sc">-</span><span class="fl">0.03177295</span>, <span class="at">color=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-mpg-null-trials" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Reading-notes-lesson-37_files/figure-html/fig-mpg-null-trials-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;19.1: The sampling distribution of the shuffled <code>hp</code> coefficient</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You can see in <a href="#fig-mpg-null-trials">Figure&nbsp;<span>19.1</span></a> that the coefficient on the shuffled <code>hp</code> is near zero, as would be expected since we enforced <code>hp_null</code> to be unrelated to <code>mpg</code>. Almost always, the coefficients on <code>hp_null</code> are in the interval <span class="math inline">\(\pm 0.02\)</span>. That is to say, even though <code>hp_null</code> is unrelated to <code>mpg</code>, sampling variation will spread out the estimated coefficient away from the ideal of zero. The amount of spread due to sampling variation is <span class="math inline">\(\pm 0.02\)</span>.</p>
+<p>The estimated coefficient on <code>hp</code> in the original, unshuffled data is shown as a red horizontal line. You can see that this is farther from zero than any of the null-hypothesis trials. Since there were 1000 trials, the extreme nature of the coefficient from the original data let’s us eyeball the probability of that coefficient (or larger) coming out of the Null hypothesis simulation is something on the order of one-in-a-thousand. A detailed calculation—refer to the regression table at the start of this Lesson—puts that probability at <span class="math inline">\(p = 0.0015\)</span>.</p>
+</section>
+<section id="what-to-conclude" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="what-to-conclude"><span class="header-section-number">19.4</span> What to conclude?</h2>
+<p>Remember always that the p-value is a probability calculated in a <strong>hypothetical world</strong> the world of the Null hypothesis. In the calculation, we are able to place the data in this hypothetical world by shuffling the explanatory variable.</p>
+<p>No calculation done in the Null hypothesis world is going to tell us whether that hypothesis is correct or not. Nonetheless, that the Null hypothesis simulation did not generate a coefficient as large as that in the actual data suggests that the data are inconsistent with the Null hypothesis, that we can in the case of the <code>hp</code> coefficient regard the Null hypothesis as an implausible candidate to account for the data.</p>
+<p>Almost always, newcomers to this p-value based scheme of hypothesis testing misinterpret the p-value to be the probability that the Null hypothesis is right. Small p-value would thus mean a small probability that the Null is right.</p>
+<p>But suppose we want to do a calculation to produce something in the format “the probability that the Null is right?” The probability that decision-makers are usually interested in is the relative conditional probabilities for each of a set of hypotheses of interest. The “condition” under which these probabilities are calculated is, “<em>given the data at hand</em>.” Returning to the notation of Lesson 34, this is <span class="math inline">\(p(H | \text{data})\)</span>, where <span class="math inline">\(H\)</span> stands for each of the hypotheses of interest, say, that a drug has a large effect, a medium effect, no effect at all, or even a negative effect. The framework for calculation is called “<strong>Bayesian</strong>” statistics, the ideas of which date from the very beginnings of the emergence of statistical method.</p>
+<p>To illustrate the Bayesian approach, return to Lesson 35 when we were evaluating the performance of classifiers. There, we had two hypotheses that were relevant. In the context of health, these might be <span class="math inline">\(H_\text{sick}\)</span> and <span class="math inline">\(H_\text{healthy}\)</span>. The quantity of ultimate interest to the patient is p(sick given the test result). To calculate this probability we need to take a round-about route. We first find two completely different probabilities: p(test result given sick) and p(test result given healthy). In practice, these two probabilities are accessible: take a group of sick patients and see what fraction of them have positive tests, and take a different group of people who are healthy and see what fraction of that group have positive tests. With those two probabilities in hand, we take an estimate of the <strong>prevalence</strong> of sickness: p(sick). Then the probability of clinical interest, p(sick given test result) can be calculated using the Bayesian formula, just as we did in Lesson 35.</p>
+<p>In contrast, the p-value is a probability in a different format: <span class="math inline">\(p(\text{summary(data)} | H_0)\)</span>. Here, <span class="math inline">\(H_0\)</span>, the Null hypothesis, is indeed a specific hypothesis, but not any hypothesis that motivates the research. The quantity “summary(data)” is a particular summary computed from the data, say the sample mean or a regression coefficient.</p>
+<p>The p-value probability is bound to be confusing on first sight (and, for most people, on second, third, and later sightings). After all, we know exactly what is the “summary(data)”; we just calculated it from the data! The probability of “summary(data)” is therefore 1, at least until you understand what is the event being summarized by the p-value probability.</p>
+<p>For the p-value, the random event that lies behind the probability is a number generated by a process: Go to the world of the Null hypothesis, that boring world of “nothing happening” or “no relationship between variables.” <a href="#fig-four-planets">Figure&nbsp;<span>19.2</span></a> lays out the different worlds involved in statistical inference using the metaphor of planets.</p>
+<div id="fig-four-planets" class="quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-planet-alt" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="www/planet-alt.png" class="img-fluid figure-img" data-ref-parent="fig-four-planets"></p>
+<p></p><figcaption class="figure-caption">(a) Planet Alt</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-planet-earth" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="www/planet-earth.png" class="img-fluid figure-img" data-ref-parent="fig-four-planets"></p>
+<p></p><figcaption class="figure-caption">(b) The real world</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-planet-sample" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="www/planet-sample.png" class="img-fluid figure-img" data-ref-parent="fig-four-planets"></p>
+<p></p><figcaption class="figure-caption">(c) Planet Sample</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-planet-null" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="www/planet-null.png" class="img-fluid figure-img" data-ref-parent="fig-four-planets"></p>
+<p></p><figcaption class="figure-caption">(d) Planet Null</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;19.2: The four planets of the statistical solar system.</figcaption><p></p>
+</figure>
+</div>
+<p>What motivates the work of collecting and modeling data is a hypothesis about the world. Typically, such hypotheses are simplistic, cartoon-like ideas about the shape of things.</p>
+<p>Naturally, our ultimate interest is in the real world. But we don’t have the whole Earth at hand; we have only a sample from it. The sample is something like the real world, but being a sample it is somewhat patchy, assembled from the <span class="math inline">\(n\)</span> cases in our sample. Planet Sample lacks the detail of the real world, but each point on Planet Sample comes from a genuine place on Planet Earth.</p>
+<p>The p-value is a probability computed on Planet Null, that boring world where nothing is going on and any perceived patterns are illusions, the appearance produced by random and shifting gusts of the winds of chance.</p>
+<p>Almost all the work of calculating a p-value takes place on Planet Null. That work consists of simulation trials. Each trial involves taking a sample from Planet Null, summarizing it, and recording the result for later comparison the the summary calculated from Planet Sample.</p>
+<p>It may seem perverse to base conclusions for real-world data on an imagined planet of no direct interest. And it is! At a minimum, we should put into competition at least two hypotheses: for instance Planet Alt and Planet Null. But in the world of the first half of the 20th century, when statistical analysis of data was just coming into the mainstream, it was impractical to compute the competing probabilities of the Bayesian style of reasoning. The reason: the computers and algorithms we use now had not been invented.</p>
+<p>In addition, those early statisticians put a big premium on what they called “objectivity.” They did not think the subjective beliefs of researchers—the cartoon alternative hypothesis—should play any role in data analysis. The method they ended up inventing, p-values, was based only on a hypothesis that everyone could agree might be in play: the Null hypothesis. Unfortunately, the only valid conclusions that can be drawn from p-values are 1) “reject the Null hypothesis” and 2) “fail to reject the Null hypothesis.” These conclusions don’t guide us to favor any other particular hypothesis and so are inadequate to support decision-making in the real world. But the p-value conclusions can be the basis for a standard operating procedure: If the conclusion is “fail to reject the Null hypothesis,” don’t allow the work to be published.</p>
+<p>So, standard operating procedures were based on the tools at hand. We will return to the mismatch between hypothesis testing and the contemporary world in Lesson 38.</p>
+</section>
+<section id="more-metaphors" class="level2" data-number="19.5">
+<h2 data-number="19.5" class="anchored" data-anchor-id="more-metaphors"><span class="header-section-number">19.5</span> More metaphors?</h2>
+<p>Use this from Section 19.4 of <em>Computational Probability and Statistics</em>?</p>
+<blockquote class="blockquote">
+<p>A US court considers two possible claims about a defendant: she is either innocent or guilty. Imagine you are the prosecutor. If we set these claims up in a hypothesis framework, the null hypothesis is that the defendant is innocent and the alternative hypothesis is that the defendant is guilty. Your job as the prosecutor is to use evidence to demonstrate to the jury that the alternative hypothesis is the reasonable conclusion.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>The jury considers whether the evidence under the null hypothesis, innocence, is so convincing (strong) that there is no reasonable doubt regarding the person’s guilt. That is, the skeptical perspective (null hypothesis) is that the person is innocent until evidence is presented that convinces the jury that the person is guilty (alternative hypothesis).</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Jurors examine the evidence under the assumption of innocence to see whether the evidence is so unlikely that it convincingly shows a defendant is guilty. Notice that if a jury finds a defendant not guilty, this does not necessarily mean the jury is confident in the person’s innocence. They are simply not convinced of the alternative that the person is guilty.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>This is also the case with hypothesis testing: even if we fail to reject the null hypothesis, we typically do not accept the null hypothesis as truth. Failing to find strong evidence for the alternative hypothesis is not equivalent to providing evidence that the null hypothesis is true.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>There are two types of mistakes possible in this scenario, letting a guilty person go free and sending an innocent person to jail. The criteria for making the decision, reasonable doubt, establishes the likelihood of those errors.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Hypothesis tests are not flawless. Just think of the court system: innocent people are sometimes wrongly convicted and the guilty sometimes walk free. Similarly, data can point to the wrong conclusion. However, what distinguishes statistical hypothesis tests from a court system is that our framework allows us to quantify and control how often the data lead us to the incorrect conclusion.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>There are two competing hypotheses: the null and the alternative. In a hypothesis test, we make a statement about which one might be true, but we might choose incorrectly. There are four possible scenarios in a hypothesis test, which are summarized below.</p>
+</blockquote>
+<div>
+<p><span class="math display">\[
+\begin{array}{cc|cc} &amp; &amp; \textbf{Test Conclusion} &amp;\\
+&amp; &amp; \text{do not reject } H_0 &amp;  \text{reject } H_0 \text{ in favor of }H_A  \\
+\textbf{Truth} &amp; \hline H_0 \text{ true} &amp; \text{Correct Decision} &amp;  \text{Type 1 Error}  \\
+&amp; H_A \text{true} &amp; \text{Type 2 Error} &amp; \text{Correct Decision}  \\
+\end{array}
+\]</span></p>
+</div>
+<blockquote class="blockquote">
+<p>A <strong>Type 1 error</strong>, also called a <strong>false positive</strong>, is rejecting the null hypothesis when <span class="math inline">\(H_0\)</span> is actually true. Since we rejected the null hypothesis in the gender discrimination (from the Case Study) and the commercial length studies, it is possible that we made a Type 1 error in one or both of those studies. A <strong>Type 2 error</strong>, also called a <strong>false negative</strong>, is failing to reject the null hypothesis when the alternative is actually true. A Type 2 error was not possible in the gender discrimination or commercial length studies because we rejected the null hypothesis.</p>
+</blockquote>
+<hr>
+<p>Hypothesis tests are very easy to carry out. You don’t need to choose a particular hypothesis to test: it’s always the Null hypothesis. The test has only two possible conclusions: “rejecting the Null hypothesis” or “failing to reject the Null hypothesis.” The conclusion indicated by the test is signalled by a number called a “<strong>p-value</strong>.”</p>
+<p>In this Lesson, we will demonstrate a general way to calculate p-values that has a simple logic. Even simpler, model-building software such as <code>lm()</code> will do the calculation for you. Often, there will be more than one p-value, each describing a different aspect of the model, so you have to identify which of the p-values is relevant for your purpose. This lesson will show you how.</p>
+<p>Once you have the relevant p-value in hand, reaching the conclusion of the test is not hard, but it is confusing that there are different styles that are used in different journals or in different fields.</p>
+<p>We’ll start by talking about the conclusion, then move on to how to select the relevant p-value, and finish by showing you the logic(s) behind the calculation of the p-value.</p>
+</section>
+<section id="the-conclusion" class="level2" data-number="19.6">
+<h2 data-number="19.6" class="anchored" data-anchor-id="the-conclusion"><span class="header-section-number">19.6</span> The conclusion</h2>
+<p>Remember that there are only two possible conclusions from a hypothesis test: reject or fail to reject the Null hypothesis. The translation between a p-value and a hypothesis-test conclusion can be stated very simply because the p-value is always a number between zero and one.</p>
+<blockquote class="blockquote">
+<p><em>A small p-value points toward rejecting the Null hypothesis. A large p-value points to “failing to reject” the Null.</em></p>
+</blockquote>
+<p>The definition of “small” differs from one scientific field to another. Physics proudly declares “small” as something like 0.001. In most other fields, “small” is set at the threshold 0.05. Sometimes, as you’ll see in Lesson 38, the threshold for small should be adjusted downward, but for this Lesson we will do what is most common in many fields and use 0.05 as the dividing point between “small” and “not small.”</p>
+<p>Common sense suggests that the result of a hypothesis test should be to show the p-value. After all, it’s easy to see if a number if greater or less than 0.05. But scientific convention says otherwise in part because “hypothesis testing” is a merger of two different traditions with different styles.</p>
+<p>In principle, the result of a hypothesis test could be reported very simply either as “reject” or “fail.” Understandably, researchers prefer to use a notation that avoids the negative connotations of the everyday words “reject” and “fail.” Indeed, “reject” is often a very positive conclusion for a researcher. And “fail to reject” in no way means that the researcher did something wrong.</p>
+<p>Possibly the most common notation for the result of a hypothesis test is written <span class="math inline">\(p &lt; 0.05\)</span>. Researchers like to show off a small p-value. In order to avoid violating the convention that the number itself is not reported directly, they will hint at the smallness by writing <span class="math inline">\(p &lt; 0.01\)</span> or <span class="math inline">\(p &lt; 0.001\)</span>, whichever happens to be justified.</p>
+<p>In some fields the result of the hypothesis test is reported using the <code>*</code> character. A single <code>*</code> is exactly the same as <span class="math inline">\(p &lt; 0.05\)</span>. Vanity being an emotion that scientists share with the rest of us, sometimes <code>**</code> is used to mean <code>p &lt; 0.01</code> and <code>***</code> to mean <code>p &lt; 0.001</code>.</p>
+<p>Why not just report the p-value itself? One reason is that p-values can be minutely small (e.g.&nbsp;<span class="math inline">\(&lt; 10^{12}\)</span>) just because a lot of data is available.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Avoiding “fail”
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Nobody likes to summarize their work with the word “fail.” And so, when “fail to reject the Null hypothesis” is the correct conclusion, people express this in softer ways.</p>
+<p>It’s very common for the conclusion “fail to reject the Null” simply not to be reported at all. Historically, and even today, some journals will not accept for publication a scientific article with the conclusion “fail to reject the Null.”</p>
+<p>Consider the situation of a researcher whose years-long project has led to a p-value of 0.07. To soften the blow of “fail to reject,” the researcher will report the p-value itself so that the reader can see how close it is to small. In some literatures, you will see language like “tending to significance” instead of “fail to reject.” In some fields, research publications will show the notation <span class="math inline">\(p &lt; 0.1\)</span>. This also indicates failure to reject the null hypothesis.</p>
+<p>Journalists eager to publish reports about scientific work, but facing a p-value that is a little too large, will occasionally qualify their report with this phrase: “… although the work did not reach the rigorous scientific standard for statistical significance.”</p>
+<p>All of these are dodges. There’s nothing “rigorous” about <span class="math inline">\(p &lt; 0.05\)</span> although seems unfair that a researcher who had a plausible idea and did the work to test it honestly does not get to publish that work and receive acknowledgement that they are a hard-working part of the overall scientific enterprise.</p>
+</div>
+</div>
+</section>
+<section id="which-p-value-is-relevant" class="level2" data-number="19.7">
+<h2 data-number="19.7" class="anchored" data-anchor-id="which-p-value-is-relevant"><span class="header-section-number">19.7</span> Which p-value is relevant?</h2>
+<p>The regression-table summary of a model conveniently presents a p-value for each and every coefficient in the model. For instance,</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(time <span class="sc">~</span> climb <span class="sc">+</span> distance <span class="sc">+</span> sex, <span class="at">data=</span>Hill_racing) <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">regression_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  term        estimate std.error statistic   p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)  -863.     33.1        -26.0 1.10e-130
+2 climb           2.61    0.0529      49.3 0        
+3 distance      254.      3.37        75.3 0        
+4 sexW          792.     32.9         24.1 8.76e-114</code></pre>
+</div>
+</div>
+<p>Each term in the model has a coefficient, called the “estimate.” Like all estimates, that of the coefficient involves uncertainty due to sampling variation. This uncertainty is reported, as we’ve seen in Lessons 23 and 24, by the standard error. The column “statistic” in the regression table is an intermediate step in computing the final column: the p-value itself.</p>
+<p>This example of a regression table shows that p-values can sometimes be very, very small. Such smallness is often mis-interpreted as indicating that a very powerful result has been found. This is simply nonsense, which is why the more dignified notation <span class="math inline">\(p &lt; 0.05\)</span> or <code>*</code> is to be preferred.</p>
+<p>Which of these p-values is relevant depends on what you are interested in. If your focus is on the effect of the vertical <code>climb</code> on the winning time, then you should look at the p-value on the <code>climb</code> coefficient. If you’re interested in whether the race <code>distance</code> is a factor in determining the winning time, use the p-value on distance. The regression report gives p-values for every coefficient because it has no way of determining mathematically which variable is of interest and which variables are “covariates,” that is, not of direct interest.</p>
+<p>It’s important to note that when looking at model coefficients, a simpler report of the confidence interval on the coefficient carries exactly the same information as the comparison <span class="math inline">\(p &lt; 0.05\)</span>. Here’s that report on the hill racing model:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(time <span class="sc">~</span> climb <span class="sc">+</span> distance <span class="sc">+</span> sex, <span class="at">data=</span>Hill_racing) <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  2.5 %      97.5 %
+(Intercept) -927.815023 -797.864167
+climb          2.505975    2.713461
+distance     247.094192  260.316877
+sexW         726.981516  856.056286</code></pre>
+</div>
+</div>
+<p>When a confidence interval does not include zero—that’s the case for all of the coefficients here—then the p-value is <span class="math inline">\(p &lt; 0.05\)</span>. Most statisticians argue that the confidence interval is a better kind of report, since it also is informative about effect size. For instance, the p-value on <code>climb</code>, reported as 0, is only about the Null hypothesis. But the confidence interval, here [2.5 to 2.7] seconds per meter, gives insight into how much an extra meter of climb will prolong the race.</p>
+<p>Reporting p-values rather than confidence intervals on coefficients has no scientific merit. But it can be hard to change traditions. And, as you’ll see in the next section, it’s not only model coefficients that have p-values.</p>
+</section>
+<section id="analysis-of-variance" class="level2" data-number="19.8">
+<h2 data-number="19.8" class="anchored" data-anchor-id="analysis-of-variance"><span class="header-section-number">19.8</span> Analysis of variance</h2>
+<p>Sometimes the interest is more general: Do any of these terms contribute to explaining variation in the response variable? In such situations, the appropriate p-value is one that compares one model to another. This style of p-value—not on the individual coefficients but on model terms—comes from a calculation called “analysis of variance.”</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>FILL THIS IN.</p>
+</div>
+</div>
+</section>
+<section id="a-simple-general-purpose-way-to-calculate-a-p-value" class="level2" data-number="19.9">
+<h2 data-number="19.9" class="anchored" data-anchor-id="a-simple-general-purpose-way-to-calculate-a-p-value"><span class="header-section-number">19.9</span> A simple, general-purpose way to calculate a p-value</h2>
+<p>Since p-values are always given in the regression table and the ANOVA table, it’s rarely necessary (except in statistics classes!) to calculate one yourself.</p>
+<p>Even so, there is a simple method to calculate a p-value that provides good insight into what a p-value means. We will demonstrate this method so that you can gain that insight, but only in very specialized and esoteric circumstances would anyone use this method in place of reading the p-value from a regression table or ANOVA report.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Put shuffling here!</p>
+</div>
+</div>
+</section>
+<section id="the-hypothesis-testing-zoo" class="level2" data-number="19.10">
+<h2 data-number="19.10" class="anchored" data-anchor-id="the-hypothesis-testing-zoo"><span class="header-section-number">19.10</span> The hypothesis testing zoo</h2>
+<p>Zoos are fun and interesting because of the great diversity of animals on display. The person who, looking in on a huge elephant or a long-legged crane or a chimpanze, drones, “Oh, another animal. That’s all.”</p>
+<p>As statistics developed, early in the 20th century, distinct tests were developed for different kinds of situations. Each such test was given its own name, for example, a “t-test” or a “chi-squared test.” Honoring this history, statistics textbooks present hypothesis testing as if each test were a new and novel kind of animal.</p>
+<p>In fact, almost all the different tests named in introductory statistics books are really just different manifestations of regression. Regression is to “animal” the way t-test is to “elephant.” An important theme in the history of statistics is that out of the diversity of statistical methods, almost all of them are encompassed by one method: regression modeling.</p>
+<p>In these Lessons, we’ve focussed on that one method, rather than introducing all sorts of different formulas and calculations which, in the end, are just special cases of regression. Even so, most people who are taught statistics were never told that all the different methods fit into a single unified framework. Consequently, they use different names for the different methods. To communicate in a world where people learned the old-fashioned names, you have to be able to recognize those names know which regression model they refer to. In the table below, we will use different letters to refer to different kinds of explanatory and response variables.</p>
+<p>x and y - an ordinary quantitative variable</p>
+<p>group - a categorical variable with multiple (<span class="math inline">\(\geq 3\)</span>) levels.</p>
+<p>yesno - a categorical variable with exactly two levels (which can always be encoded as a zero-one quantitative variable)</p>
+<table class="table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 57%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model formula</th>
+<th>traditional name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>y ~ 1</code></td>
+<td><strong>t-test</strong> on a single mean</td>
+</tr>
+<tr class="even">
+<td><code>yesno ~ 1</code></td>
+<td><strong>p-test</strong> on a single proportion.</td>
+</tr>
+<tr class="odd">
+<td><code>y ~ yesno</code></td>
+<td><strong>t-test</strong> on the difference between two means</td>
+</tr>
+<tr class="even">
+<td><code>yesno1 ~ yesno2</code></td>
+<td><strong>p-test</strong> on the difference between two proportions</td>
+</tr>
+<tr class="odd">
+<td><code>y ~ x</code></td>
+<td><strong>t-test</strong> on a slope</td>
+</tr>
+<tr class="even">
+<td><code>y ~ group</code></td>
+<td><strong>ANOVA</strong> test on the difference among the means of multiple groups</td>
+</tr>
+<tr class="odd">
+<td><code>y ~ group1 * group2</code></td>
+<td><strong>Two-way ANOVA</strong></td>
+</tr>
+<tr class="even">
+<td><code>y ~ x * yesno</code></td>
+<td><strong>t-test</strong> on the difference between two slopes. (Note the <code>*</code>, indicating interaction)</td>
+</tr>
+</tbody>
+</table>
+<p>Another named test, the <strong>z-test</strong>, is a special kind of t-test where you know the variance of a variable without having to calculate it from data. This situation hardly every arises in practice, and mostly it is used as a soft introduction to the t-test.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+The chi-squared test
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Most statistics books include two versions of a test invented around 1900 that deals with counts at different levels of a categorical variable. This chi-squared test is genuinely different from regression. And, in theoretical statistics the chi-squared distribution has an important role to play.</p>
+<p>The chi-squared test of independence could be written, in regression notation, as <code>group1 ~ group2</code>. But regression does not handle the case of a categorical variable with multiple levels.</p>
+<p>However, in practice the chi-squared test of independence is very hard to interpret except when one or both of the variables has two levels. This is because there is nothing analogous to model coefficients or effect size that comes from the chi-squared test.</p>
+<p>The tendency in research, even when <code>group1</code> has more than two levels, is to combine groups to produce a <code>yesno</code> variable. Chi-squared can be used with the response variable being <code>yesno</code> and almost all textbook examples are of this nature.</p>
+<p>But for a <code>yesno</code> response variable, a superior, more flexible and more informative method is logistic regression.</p>
+</div>
+</div>
+<p>ANOVA, which is always a comparison of two models, say <code>y~1</code> versus <code>y~group</code> involves something called an F-test. For the simpler setting of the t-test, the model <code>y~yesno</code>, an F-test can also be done. Which to do, t or F? It turns out that t<sup>2</sup> is exactly the same as F.</p>
+<p>Statistics textbooks usually include several different settings for “hypothesis tests.” I’ve just pulled a best-selling book off my shelf and find listed the following tests spread across eight chapters occupying about 250 pages.</p>
+<ul>
+<li>hypothesis test on a single proportion</li>
+<li>hypothesis test on the mean of a variable</li>
+<li>hypothesis test on the difference in mean between two groups (with 3 test varieties in this category)</li>
+<li>hypothesis test on the paired difference (meaning, for example, measurements made both before and after)</li>
+<li>hypothesis test on counts of a single categorical variable</li>
+<li>hypothesis test on independence between two categorical variables</li>
+<li>hypothesis test on the slope of a regression line</li>
+<li>hypothesis test on differences among several groups</li>
+<li>hypothesis test on R<sup>2</sup></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Reading-notes-lesson-36.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Reading-notes-lesson-38.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">False discovery</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

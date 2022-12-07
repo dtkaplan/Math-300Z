@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -53,7 +58,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -66,7 +71,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -127,9 +132,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="../index.html">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -188,6 +195,75 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moderndive)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<ol type="1">
+<li><p>One of these pipeline commands will work and the other won’t. Which one will work? Explain why the other one doesn’t work.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(net <span class="sc">~</span> age, <span class="at">data =</span> TenMileRace)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span> <span class="fu">lm</span>(net <span class="sc">~</span> age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></li>
+<li><p>An example from the <em>OpenIntro</em> book uses data on promotions. Some data wrangling commands that might be relevant are these:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+      n
+  &lt;int&gt;
+1    48</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(decision) <span class="sc">%&gt;%</span> <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  decision     n
+  &lt;fct&gt;    &lt;int&gt;
+1 not         13
+2 promoted    35</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span> <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  gender     n
+  &lt;fct&gt;  &lt;int&gt;
+1 male      24
+2 female    24</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(gender, decision) <span class="sc">%&gt;%</span> <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+# Groups:   gender [2]
+  gender decision     n
+  &lt;fct&gt;  &lt;fct&gt;    &lt;int&gt;
+1 male   not          3
+2 male   promoted    21
+3 female not         10
+4 female promoted    14</code></pre>
+</div>
+</div></li>
+</ol>
+<p>You could use such wrangling to compare groups. For instance, you can use the results of the last command to calculate separately the proportion of males who were promoted and, similarly, the proportion of females.</p>
+<p>a. <strong>What are those proportions?</strong></p>
+<p>The following wrangling command will calculate the proportions for you, but it is a bit complicated:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">prop_promoted =</span> <span class="fu">sum</span>(decision<span class="sc">==</span><span class="st">"promoted"</span>) <span class="sc">/</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>b. <strong>Use the above command to check your calculations in (a).</strong></p>
+<p>c. In the regression paradigm, the comparison of proportions between the two groups is done directly in <code>lm()</code>, like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">promoted =</span> <span class="fu">zero_one</span>(decision, <span class="at">one=</span><span class="st">"promoted"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(promoted <span class="sc">~</span> gender, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> (Intercept) genderfemale 
+   0.8750000   -0.2916667 </code></pre>
+</div>
+</div>
+<p>We’ll explain the purpose of <code>zero_one()</code> in Lesson 19, but putting that matter aside for a moment, compare the two coefficients in the regression model to the proportion results you got from wrangling.</p>
+<ol type="i">
+<li><p><strong>What does the value of the intercept coefficient correspond to in the wrangling results?</strong></p></li>
+<li><p><strong>What does the <code>genderfemale</code> coefficient correspond to in the wrangling results?</strong> (Hint: you will have to do a bit of arithmetic on the wrangling results.)</p></li>
+</ol>
 </section>
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section">19.1</h2>
@@ -292,14 +368,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>The following commands model <code>score</code> versus <code>age</code> and plots the data as a point plot.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(score <span class="sc">~</span> age, <span class="at">data =</span> moderndive<span class="sc">::</span>evals) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(score <span class="sc">~</span> age, <span class="at">data =</span> moderndive<span class="sc">::</span>evals) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> (Intercept)          age 
  4.461932354 -0.005938225 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>openintro<span class="sc">::</span>evals <span class="sc">%&gt;%</span> <span class="fu">gf_point</span>(score <span class="sc">~</span> age, <span class="at">alpha=</span><span class="fl">0.2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>openintro<span class="sc">::</span>evals <span class="sc">%&gt;%</span> <span class="fu">gf_point</span>(score <span class="sc">~</span> age, <span class="at">alpha=</span><span class="fl">0.2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="LC-lesson19_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<p><img src="LC-lesson19_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <ol type="1">
@@ -333,9 +409,9 @@ Solution
 </div>
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>openintro<span class="sc">::</span>evals <span class="sc">%&gt;%</span> <span class="fu">gf_jitter</span>(score <span class="sc">~</span> age, <span class="at">alpha=</span><span class="fl">0.2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>openintro<span class="sc">::</span>evals <span class="sc">%&gt;%</span> <span class="fu">gf_jitter</span>(score <span class="sc">~</span> age, <span class="at">alpha=</span><span class="fl">0.2</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="LC-lesson19_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<p><img src="LC-lesson19_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>“Jittering” means to shift each dot by a small random amount. This reduces the number of instances where dots are overplotted.</p>
@@ -359,9 +435,9 @@ Solution
 </div>
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>openintro<span class="sc">::</span>evals <span class="sc">%&gt;%</span> <span class="fu">gf_jitter</span>(score <span class="sc">~</span> cls_level)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>openintro<span class="sc">::</span>evals <span class="sc">%&gt;%</span> <span class="fu">gf_jitter</span>(score <span class="sc">~</span> cls_level)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="LC-lesson19_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="LC-lesson19_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <ol type="a">
@@ -375,11 +451,11 @@ Solution
 <li><p>Are the scores, on average, different for the lower- vs upper-level classes? It’s hard to get more than a rough idea of the distribution of scores by looking at the “density” of points. The reason is that the number of points differs in the two columns. But there is an easy fix: add a layer to the graphic that shows the distribution (more or less like a histogram displays a distribution of values). You can do this by piping the jitter plot layer into a geom called a “violin,” like this:</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>openintro<span class="sc">::</span>evals <span class="sc">%&gt;%</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_jitter</span>(score <span class="sc">~</span> cls_level) <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_violin</span>(<span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">color=</span><span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>openintro<span class="sc">::</span>evals <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_jitter</span>(score <span class="sc">~</span> cls_level) <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_violin</span>(<span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">color=</span><span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="LC-lesson19_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="LC-lesson19_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Explain how to read the violins.</p>
@@ -390,13 +466,13 @@ Solution
 <p>The <code>openintro::promotions</code> data comes the the 1970s and records the gender of 38 people along with the result of a decision to promote (or not) the person. =</p>
 <p>Chapter 2 of ModernDive suggests graphically depicting <code>decision</code> versus <code>gender</code> by using a bar plot. There are two ways to make the bar plot, depending on which variable you assign to the horizontal axis and which to the fill color.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">gf_bar</span>(<span class="sc">~</span> decision, <span class="at">fill=</span><span class="sc">~</span> gender)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">gf_bar</span>(<span class="sc">~</span> gender, <span class="at">fill=</span><span class="sc">~</span>decision)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">gf_bar</span>(<span class="sc">~</span> decision, <span class="at">fill=</span><span class="sc">~</span> gender)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">gf_bar</span>(<span class="sc">~</span> gender, <span class="at">fill=</span><span class="sc">~</span>decision)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-promotion-bars-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="LC-lesson19_files/figure-html/fig-promotion-bars-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 1: Two different ways to plot promotion outcome and gender</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Two different ways to plot promotion outcome and gender</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -404,7 +480,7 @@ Solution
 <div id="fig-promotion-bars-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="LC-lesson19_files/figure-html/fig-promotion-bars-2.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 2: Two different ways to plot promotion outcome and gender</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: Two different ways to plot promotion outcome and gender</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -413,13 +489,13 @@ Solution
 <p>The choice of response and explanatory variables depends, of course, on what you are trying to display. But everyday English gives a big hint. For instance, you might describe the question at hand as, “Does gender affect promotion decisions.” Here, the variable doing the affecting is <code>gender</code>, and the outcome is the <code>decision</code>.</p>
 <p>Modeling decision as a function of gender is easy once you convert the response variable to a zero-one variable. Like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">zero_one</span>(decision, <span class="at">one=</span><span class="st">"promoted"</span>) <span class="sc">~</span> gender, <span class="at">data =</span> promotions)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coefficients</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">zero_one</span>(decision, <span class="at">one=</span><span class="st">"promoted"</span>) <span class="sc">~</span> gender, <span class="at">data =</span> promotions)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coefficients</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> (Intercept) genderfemale 
    0.8750000   -0.2916667 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mosaicModel<span class="sc">::</span><span class="fu">mod_eval</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>mosaicModel<span class="sc">::</span><span class="fu">mod_eval</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  gender model_output
 1   male    0.8750000
@@ -447,11 +523,11 @@ Solution
 <li>Make this plot and explain what the red lines show. (We don’t expect you to be able to write the command to generate such plots on your own, but we do expect you to be able to interpret them.)</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_jitter</span>(<span class="fu">zero_one</span>(decision) <span class="sc">~</span> gender, <span class="at">height=</span><span class="fl">0.2</span>, <span class="at">width=</span><span class="fl">0.2</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_errorbar</span>(model_output <span class="sc">+</span> model_output <span class="sc">~</span> gender, <span class="at">data=</span><span class="fu">mod_eval</span>(mod), </span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">color=</span><span class="st">"red"</span>, <span class="at">inherit=</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">label_zero_one</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_jitter</span>(<span class="fu">zero_one</span>(decision) <span class="sc">~</span> gender, <span class="at">height=</span><span class="fl">0.2</span>, <span class="at">width=</span><span class="fl">0.2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_errorbar</span>(model_output <span class="sc">+</span> model_output <span class="sc">~</span> gender, <span class="at">data=</span><span class="fu">mod_eval</span>(mod), </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">color=</span><span class="st">"red"</span>, <span class="at">inherit=</span><span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">label_zero_one</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -473,10 +549,10 @@ Solution
 <p>The <code>mosaicData::Whickham</code> data from comes from a survey of a thousand or so nurses in the UK in the 1970s. The data record the <code>age</code> of each nurse along with whether the nurse was still alive in a follow-up survey 20 years later (<code>outcome</code>).</p>
 <p>Make this graph from the <code>Whickham</code> data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_jitter</span>(<span class="fu">zero_one</span>(outcome) <span class="sc">~</span> age, <span class="at">data =</span> Whickham, <span class="at">alpha=</span><span class="fl">0.3</span>, <span class="at">height=</span><span class="fl">0.1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">label_zero_one</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_jitter</span>(<span class="fu">zero_one</span>(outcome) <span class="sc">~</span> age, <span class="at">data =</span> Whickham, <span class="at">alpha=</span><span class="fl">0.3</span>, <span class="at">height=</span><span class="fl">0.1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">label_zero_one</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="LC-lesson19_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<p><img src="LC-lesson19_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <ol type="1">
@@ -509,7 +585,7 @@ Solution
 <p>About the summarization of models. Pipe the model fit into any of four functions:</p>
 <ol type="i">
 <li><code>%&gt;% coefficients()</code></li>
-<li><code>%&gt;% broom::tidy()</code></li>
+<li><code>%&gt;% regression_summary()</code></li>
 <li><code>%&gt;% rsquared()</code></li>
 <li><code>%&gt;% confint()</code></li>
 </ol>
@@ -523,7 +599,7 @@ Solution
 <h2 class="anchored" data-anchor-id="obj.-19.3">19.5 (Obj. 19.3)</h2>
 <p>Calculation of a 95% coverage interval (or any other percent level interval) is straightforward with the right software. To illustrate, consider the efficiency of cars and light trucks in terms of CO_2 emissions per mile driven. We’ll use the <code>CO2city</code> variable in the <code>math300::MPG</code> data frame. The basic calculation using the <code>mosaic</code> package is:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>( <span class="sc">~</span> CO2city, <span class="at">data =</span> math300<span class="sc">::</span>MPG, <span class="fu">coverage</span>(<span class="fl">0.95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>( <span class="sc">~</span> CO2city, <span class="at">data =</span> math300<span class="sc">::</span>MPG, <span class="fu">coverage</span>(<span class="fl">0.95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  response   lower   upper
 1  CO2city 276.475 684.525</code></pre>
@@ -677,6 +753,19 @@ Solution
 </section>
 <section id="f" class="level2">
 <h2 class="anchored" data-anchor-id="f">19.F</h2>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Still in draft
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose there are other explanatory variables to be displayed. In that case, we will use color and faceting. If there are <em>no</em> explanatory variables, as in <code>y ~ 1</code>, we will jitter the data horizontally to avoid overplotting.]</p>
+</div>
+</div>
 
 
 </section>
@@ -751,7 +840,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);

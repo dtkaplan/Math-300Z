@@ -234,3 +234,11 @@ Admittedly, it is far-fetched that choosing to green the grass makes a household
 There is no way to block a direct link from an explanatory variable to a response. If there were a reason to do this, the modeler probably selected the wrong explanatory variable. 
 
 But there is a genuine choice to be made about whether to block pathway (ii). If the interest is the purely biochemical link between grass-greening chemicals and illness, then block pathway (ii). However, if the interest is in the *total* effect of `grass` and `illness`, including both biochemistry and the sociological reasons why `wealth` influences `illness`, then leave the pathway open.
+
+
+::: {.callout-warning}
+## In draft: Some resources
+
+https://towardsdatascience.com/causal-effects-via-dags-801df31da794
+
+https://towardsdatascience.com/causal-effects-via-the-do-operator-5415aefc834a
