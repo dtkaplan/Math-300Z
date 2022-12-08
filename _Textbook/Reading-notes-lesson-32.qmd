@@ -149,9 +149,9 @@ The first US polio epidemic occurred in 1916, just two years before the COVID-li
 
 There were many attempts to develop a vaccine against polio. Jonas Salk created the first really promising vaccine, the promise being based on laboratory tests. To establish the safety and effectiveness of the Salk vaccine, it needed to be tried in the field, with people. Two organizations, the US Public Health Service and the National Foundation for Infantile Paralysis got together to organize a clinical field trial which, all told, involved two-million students in grades 1 through 3. 
 
-The two study involved both a treatment and a control group. In some school districts, students in grades 1 and 3 were held as controls. The treatment group was students in grade 2 whose parents gave consent. In other school districts, the study design was different: the parents of all students in all three grades were asked for consent. The students with parental consent were then randomly split into two groups: a treatment and a control. 
+The two studies involved both a treatment and a control group. In some school districts, students in grades 1 and 3 were held as controls. The treatment group was students in grade 2 whose parents gave consent. We will call this "Study 1." In other school districts, the study design was different: the parents of all students in all three grades were asked for consent. The students with parental consent were then randomly split into two groups: a treatment and a control. Call this "Study 2."
 
-The second study design might seem inefficient; it reduced the number of children receiving the vaccine because half of the children with parental consent were left unvaccinated. On the other hand, it might be that children from families who consent to be given a vaccine are different in a systematic way from children whose families refuse, just as today's anti-vax families might be different from "pro-vax" families. 
+The Study 2 design might seem inefficient; it reduced the number of children receiving the vaccine because half of the children with parental consent were left unvaccinated. On the other hand, it might be that children from families who consent to be given a vaccine are different in a systematic way from children whose families refuse, just as today's anti-vax families might be different from "pro-vax" families. 
 
 As reported in Freedman (1998)^[D. Freedman, R Pisani, R Purves, *Statistics* 3/e, p.6], the different risk of symptomatic polio between children from consent versus refuse families became evident in the study. @tbl-polio1 shows the study results from the school districts which used half the consent group as controls.
 
@@ -167,7 +167,7 @@ The difference between treatment and control groups is very evident: a reduction
  
 :::
 
-In the other branch of the study, where no-consent 2nd-graders were used as control and vaccine was given to all whose parents did consent, the results (@tbl-polio2) were different because of confounding between treatment and consent. 
+In the other branch of the study, Study 1, where no-consent 2nd-graders were used as control and vaccine was given to all whose parents did consent, the results (@tbl-polio2) were different because of confounding between treatment and consent. 
 
 ```{r echo=FALSE}
 #| label: tbl-polio1
@@ -199,37 +199,92 @@ The effect of the vaccine from Study 1 under-estimated the biological link betwe
 :::
 
 
-## Randomization
+## Random assignment
 
-Show as a DAG
+The example of the Salk vaccine trial is a chastening reminder that care must be taken when assigning `treatment` or `control` to the units in an experiment. Without such care, confounding enters into the picture. Merely the possibility of confounding is damaging to the experiment's result; it invites skepticism and doubt.
+
+```{r echo=FALSE}
+#| label: fig-dag-polio
+#| fig-cap: "A DAG for the polio vaccine experiment."
+#| column: margin
+polio_dag <- dag_make(
+  socio_economic ~ exo(),
+  consent ~ socio_economic + exo(),
+  treatment ~ consent,
+  polio ~ consent + treatment + socio_economic
+)
+dag_draw(polio_dag, seed=109, vertex.label.cex=1)
+```
+
+It is illuminating to look at the vaccine trial as a DAG. The essential situation is diagrammed in @fig-dag-polio. The `socio_economic` node represents the idea that socio-economic status has an influence on susceptibility to symptomatic polio^[In contrast to the usual expectation that lower socio-economic status is associated higher risk of disease, with polio the opposite holds true. The explanation usually given is that children who are exposed to the polio virus as infants do not become sick but do gain immunity to later infection. People later in childhood and in adulthood are at risk of a severe, symptomatic response to exposure. Polio is transmitted mainly via a fecal-oral route. Conditions favoring this route are more common among those of low socio-economic status. Consequently, infants of well-to-do families are less exposed to the virus and do not develop immunity. When they are eventually exposed to polio as children or adults, the well-to-do are at greater risk of developing disease.] and also is a factor in shaping a family's decision about giving consent.
+
+The DAG in @fig-dag-polio has two pathways between `treatment` and `polio` that can produce confounding:
+
+- $\mathtt{treatment} \leftarrow \mathtt{consent} \rightarrow \mathtt{polio}$
+- $\mathtt{treatment} \leftarrow \mathtt{consent} \leftarrow \mathtt{socio.economic} \rightarrow \mathtt{polio}$
+
+```{r echo=FALSE}
+#| label: fig-dag-polio-consent
+#| fig-cap: "The DAG when `consent` $\equiv$ `vaccine`."
+#| column: margin
+polio_dag <- dag_make(
+  socio_economic ~ exo(),
+  consent ~ socio_economic + exo(),
+  polio ~ consent + socio_economic
+)
+dag_draw(polio_dag, seed=110, vertex.label.cex=1)
+```
+
+The approach emphasized in Lesson 30 to avoid such confounding is to block the relevant pathways. Both can be blocked by including `consent` as a covariate. However, ni Study 1, assignment to vaccine was purely a matter of consent; `consent` and `treatment` are essentially the same variable. @fig-dag-polio-consent shows the corresponding DAG, where `consent` and `treatment` are merged into a single variable. Holding `consent` constant deprives the system of the explanatory variable and still introduces confounding through `socio_economic`.
+
+
+In Study 2, all the children participating had parents give consent. This means that `consent` is not actually a variable; it doesn't vary! The corresponding DAG, without `consent` as a factor, is drawn in @fig-dag-polio3. This Study 2 DAG is unfolded; there are no confounding pathways! Thus the model `polio ~ treatment` is appropriate.  
+
+```{r echo=FALSE}
+#| label: fig-dag-polio3
+#| fig-cap: "The Study 2 DAG."
+#| column: margin
+polio_dag <- dag_make(
+  socio_economic ~ exo(),
+  assignment ~ exo(),
+  treatment ~ assignment,
+  polio ~ treatment + socio_economic
+)
+dag_draw(polio_dag, seed=109, vertex.label.cex=1)
+```
+
+The assignment to treatment or control in @fig-dag-polio3 is made by the people running the study. Although the DAG doesn't show any inputs to `assignment`, the involvement of people in making the assignment opens up a possibility that their assignment of treatment or control might have been influenced by other factors, such as socio-economic status. To guard against this, or even skepticism raised by the possibility, experimentalists have developed a simple safeguard: "**random assignment**." In random assignment, assignment is made by a computer generating random numbers. Nobody believes that the computer algorithm is influenced by socio-economic status or any other factor that might be connected to polio in any way.
+
+## SAVE these for NTIs?
+
 
 
 ```{r}
-polio_dag <- dag_make(
-  consent ~ exo(),
-  vaccine ~ consent,
-  polio ~ consent + vaccine
-)
-dag_draw(polio_dag, seed=108, vertex.label.cex=1.3)
-
-
+#| label: bednet_dag1
+#| fig-cap: "The bed net experiment without random assignment" 
+#| column: margin
 bednet_dag <- dag_make(
   region ~ exo(),
   enthusiasm ~ exo(),
   nutrition ~ exo(), 
-  bed_nets ~ region + enthusiasm + nutrition,
-  polio ~ bed_nets + region + enthusiasm + nutrition
+  treatment ~ region + enthusiasm + nutrition,
+  polio ~ treatment + region + enthusiasm + nutrition
 )
 dag_draw(bednet_dag, seed=110, vertex.label.cex=1, vertex.size=30)
+```
 
+```{r}
+#| label: bednet_dag1
+#| fig-cap: "The bed net experiment with random assignment."
+#| column: margin
 bednet_dag2 <- dag_make( 
   region ~ exo(),
   enthusiasm ~ exo(),
   nutrition ~ exo(),
-  randomization ~ exo(),
-  bed_nets ~ randomization,
-  polio ~ bed_nets + region + enthusiasm + nutrition)
-dag_draw(bednet_dag2, seed=110, vertex.label.cex=1, vertex.size=30)
+  random_assignment ~ exo(),
+  treatment ~ random_assignment,
+  polio ~ treatment + region + enthusiasm + nutrition)
+dag_draw(bednet_dag2, seed=111, vertex.label.cex=1, vertex.size=30)
 ```
 
 
