@@ -2,9 +2,12 @@
 % Please edit documentation in R/regression_summary.R
 \name{regression_summary}
 \alias{regression_summary}
+\alias{anova_summary}
 \title{Generate a regression report in the frm of a data frame.}
 \usage{
 regression_summary(model, ...)
+
+anova_summary(...)
 }
 \arguments{
 \item{model}{A model as produced by \code{lm()}, \code{glm()}, and so on}

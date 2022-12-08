@@ -1,6 +1,6 @@
-#' Generate a regression report in the frm of a data frame.
+#' Generate a regression or ANOVA report in the form of a data frame.
 #'
-#' @details This is simply a wrapper around `broom::tidy()` used to
+#' @details These are simply wrappers around `broom::tidy()` used to
 #' emphasize to students that the results are a summary in the form of a regression
 #' report, similar to the summaries produced by `confint()`, `coefficients()`, etc.
 #'
@@ -10,3 +10,10 @@
 regression_summary <- function(model, ...) {
   broom::tidy(model)
 }
+
+#' @rdname regression_summary
+#' @export
+anova_summary <- function(...) {
+  broom::tidy(anova(...))
+}
+

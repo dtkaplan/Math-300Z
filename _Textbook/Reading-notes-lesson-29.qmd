@@ -218,7 +218,7 @@ Pub_trials <- do(100) * {
 }
 ```
 
-```{r echo=FALSE}
+```{r echo=FALSE, warning=FALSE}
 #| label: fig-pub-trials
 #| fig-cap: "100 trials of R^2^ from `list_price ~ shuffled(publisher)`. The theoretical value $k/n=160/324=0.49$ is marked in red."
 #| column: margin
@@ -276,7 +276,10 @@ Perhaps a little easier than interpreting R^2^ is the interpretation of another 
 $$F \equiv \frac{n-k-1}{k} \frac{\text{R}^2}{1 - \text{R}^2}$$
 @fig-amazon-book-shuffle-F is a remake of @fig-amazon-book-shuffle but using F instead of R^2^. The blue line, which had the formula R^2^$= k/(n-1)$ in @fig-amazon-book-shuffle, gets translated to the constant value 1.0 in @fig-amazon-book-shuffle-F, regardless of $k$. To decide when a model points to a connection stronger than the ISBN effect, the threshold F $> 3$ is a good rule of thumb. (Lesson 37 introduces a more precise calculation for the F threshold, which is built into statistical software and presented as a "**p-value**.")
 
-```{r}
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-amazon-book-shuffle-F
+#| fig-cap: "Like @fig-amazon-book-shuffle, but using the F statistic to summarize each trial."
+#| fig-cap-location: margin
 ggplot(aes(x=k, y=F), data=All_trials) +
   geom_jitter(width=15, alpha=.3) +
   geom_abline(aes(intercept=1, slope=0), color="blue") +
@@ -300,10 +303,12 @@ $$R^2_\text{adj} = 1 - \frac{n-1}{k} \frac{R^2}{F}\ .$$
 
 Modelers are often in the position of having a model that they like but are contemplating adding one or more additional explanatory variables. To illustrate, consider the following models:
 
+::: {.column-page-right}
 - Model 1: `list_price ~ 1`
 - Model 2: `list_price ~ 1 + hard_paper`
 - Model 3: `list_price ~ 1 + hard_paper + num_pages`
 - Model 4: `list_price ~ 1 + hard_paper + num_pages + weight_oz`
+:::
 
 ```{r echo=FALSE}
 #| label: fig-russian-dolls
@@ -316,6 +321,7 @@ All the explanatory variables in the smaller models also apply to the bigger mod
 For a nested set of models, R^2^ can never decrease when moving from a smaller model to a larger one---almost always, there is an increase in R^2^. To demonstrate:
 
 ```{r}
+#| column: page-right
 amazon_books <- amazon_books %>% 
   select(list_price, weight_oz, num_pages, hard_paper) %>%
   filter(complete.cases(.))
@@ -332,11 +338,14 @@ R2(model4)
 
 When adding explanatory variables to a model, a good question is whether the new variable(s) add to the ability to account for the variability in the response variable. R^2^ never goes down when moving from a smaller to a larger model, so we cannot rely on the increase in R^2^. A valuable technique called "**Analysis of Variance**" (ANOVA for short) looks at the incremental change in variance explained from a smaller model to a larger one. The increase can be presented as an F statistic. To illustrate:
 
+
 ```{r}
-anova(model1, model2, model3, model4)
+#| column: page-right
+anova_summary(model1, model2, model3, model4)
 ```
 
-Focus on the F column of the report. The move from Model 1 to Model 2 produces F=57, well above the threshold described above and clearly indicating that the `weight_oz` variable accounts for some of the list price. Moving from Model 2 to Model 3 creates a much less impressive F of 3.8. It is as if the added explanatory variable, `num_pages`, is just barely pulling its own "weight." Finally, moving from Model 3 to Model 4 produces a below-threshold F of 1.3. In other words, in the context of `weight_oz` and `num_pages,` the `hard_paper` variable does not carry additional information about the list price. 
+
+Focus on the F column (`statistic`) of the report. The move from Model 1 to Model 2 produces F=57, well above the threshold described above and clearly indicating that the `weight_oz` variable accounts for some of the list price. Moving from Model 2 to Model 3 creates a much less impressive F of 3.8. It is as if the added explanatory variable, `num_pages`, is just barely pulling its own "weight." Finally, moving from Model 3 to Model 4 produces a below-threshold F of 1.3. In other words, in the context of `weight_oz` and `num_pages,` the `hard_paper` variable does not carry additional information about the list price. 
 
 The last column of the report, labeled `Pr(>F)`, translates F into a universal 0 to 1 scale called a p-value. A large F produces a small p-value. The rule of thumb for reading p-values is that a value $p < 0.05$ indicates that the added variable brings new information about the response variable. We will return to p-values and the controversy they have entailed in Lessons 36 through 38.
 

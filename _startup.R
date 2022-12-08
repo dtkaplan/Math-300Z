@@ -10,7 +10,46 @@ library(mosaicModel)
 library(math300)
 library(moderndive)
 
-knitr::opts_chunk$set(echo = TRUE)
+confint <- function(mod) {
+  Tmp <- stats::confint(mod) |> as.data.frame()
+  names(Tmp) <- c("lwr", "upr")
+  Tmp
+}
+
+coefficients <- function(mod) {
+  Tmp <- stats::coefficients(mod) |> as.data.frame()
+  names(Tmp) <- "coefficient"
+  Tmp
+}
+
+tbl_style1 <- function(tbl, ...) {
+  kbl(tbl) %>%
+  kable_paper(bootstrap_options = c("striped", "responsive"), full_width = FALSE,
+              ...)
+}
+
+library(knitr)
+
+knit_print.data.frame <- function (x, options, ...) {
+  # rmarkdown::paged_table(x, options) |>
+  #   rmarkdown:::print.paged_df()
+  if ("digits" %in% names(options)) {
+    fix_signif <- function(x) {
+      signif(x, digits=as.numeric(options$digits))
+    }
+    x |>
+      mutate_if(is.numeric, fix_signif) |>
+      tbl_style1() |>
+      asis_output()
+  } else {
+    tbl_style1(x) |> asis_output()
+  }
+}
+
+
+
+registerS3method("knit_print", "data.frame", knit_print.data.frame)
+
 
 # Functions for transcluding content
 LC_file <- function(n) {

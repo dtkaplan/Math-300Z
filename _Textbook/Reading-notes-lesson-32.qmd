@@ -19,7 +19,7 @@ In its everyday meaning, the word "experiment" is similar in meaning to the word
 
 From movies and other experiences, people associate experiments with science. Indeed, one of the dictionary definitions of "experiment" is: "a scientific procedure undertaken to make a discovery, test a hypothesis, or demonstrate a known fact."
 
-Almost all the knowledge needed to perform a scientific experiment relates to the science itself: what reagents to use, how to measure, say, the concentration of a neurotransmitter, how to administer a drug safely, and so on. This is why people who carry out scientific procedures are trained primarily in their area of science.
+Almost all the knowledge needed to perform a scientific experiment relates to the science itself: what reagents to use, how to measure the concentration of a neurotransmitter, how to administer a drug safely, and so on. This is why people who carry out scientific procedures are trained primarily in their area of science.
 
 ::: {.callout-note}
 ## Example: Malaria and bed nets
@@ -30,11 +30,14 @@ There are many possible ways to reduce the burden of malaria. Vaccination (altho
 
 To find out, try it: do an experiment. For instance, run a trial program where nets are given away to everyone in an area and observed whether and to what extent rates of malarial illness go down.
 
-Such a trial is certainly and experiment. But it may not be the best way to get meaningful information.
+Such a trial is certainly an experiment. But it may not be the best way to get meaningful information.
 
 :::
 
-To understand the contribution that statistical thinking can make to experiment, recall our earlier definition:
+
+## Replication
+
+To understand some of the contribution that statistical thinking can make to experiment, recall our earlier definition:
 
 > *Statistic thinking is the explanation/description of variation* in the context of *what remains unexplained/undescribed.*
 
@@ -45,99 +48,193 @@ A key concept that statistical thinking brings to experiment is the idea of **va
 
 One way to improve the simple experiment bed net described above is to carry out many trials. One reason is that the results from any single trial might be shaped by accidental or particular circumstances: the weather in the trial area was less favorable to mosquito reproduction; another government agency decided to help out by spraying pesticides broadly, and so on. Setting up trials in different areas can help to balance out these influences.
 
-Replicated trials also allow us to estimate the size of the variability caused by the accidental or particular factors. To illustrate, suppose a single trial is done and the rate of malarial illness goes down by 5 percentage points. What can we conclude? The result is promising but we can't rule out that it occurred because of accidental factors other than bed nets. Why not? Because we have no idea how much unexplained variation is in play.
+Replicated trials also allow us to estimate the size of the variability caused by the accidental or particular factors. To illustrate, suppose a single trial is done and the rate of malarial illness goes down by 5 percentage points. What can we conclude? The result is promising but we can't rule out that it is due to accidental factors other than bed nets. Why not? Because we have no idea how much unexplained variation is in play.
 
-In contrast, suppose four trials at different sites are done, showing reductions by 5, 8, 2, and -1 percentage points. (Reduction by a negative number, like -1, is an *increase*.) Now we know something about the amount of variation due to accidental, site-to-site factors. The replication introduces *observed* variation in results, the observed variation can be quantified and used to place the overall trend in context. 
+:::: {.column-margin}
+```{r echo=FALSE}
+#| label: tbl-bed-net
+#| tbl-cap: "`Bed_net_data`"
+#| column: margin
+Bed_net_data <- tibble::tribble(
+  ~ site, ~ reduction,
+  "A", 5,
+  "B", 8,
+  "C", 2,
+  "D", -1,
+  "E", 3,
+  "F", 1,
+  "G", 4,
+  "H", 0,
+  "I", 2,
+  "J", 6
+)
+Bed_net_data
+```
+::::
 
-Common sense correctly suggests summarizing the results of the four trials by their mean: a reduction in the rate of malarial diseases of $\frac{5 + 8 + 2 -1}{4} = 3.5$ percentage points. Statistical thinking tells us that this exact number, 3.5, is somewhat of an accident. This is because the four numbers tell us that there is site-to-site variation that remains unexplained by the bed nets: the residual variation. The residual variation gives us a handle on the amount of sampling variation to expect, the variation in results if we had collected a different sample of trials from different sites or at different times. 
 
-As usual, we quantify the sampling variation by a "standard error," which in turn gets translated into a "margin of error," and transformed yet again into an interval estimate. Here, that interval is $3.5 \pm 4.5$. Generations of statistics students have learned how to carry out the standard-error/margin-of-error/confidence-interval calculations and how to interpret them. $3.5 \pm 4.5$ means that the results from our trials are entirely consistent with the bed nets having zero effect on rates of malarial illness. 
+@tbl-bed-net shows data from four imagined trials of the effect of bed nets. (Reduction by a negative number, like -1, is an *increase*.) The mean reduction is 3 percentage points, but this number is not much use unless we can put it in the context of sampling variation. Conducting multiple trials gives us a handle on the amount of sampling variation. By We can easilyNow we know something about the amount of variation due to site-to-site factors. The replication introduces *observed* variation in results, the observed variation can be quantified and used to place the overall trend in context. 
 
-Put another way, the replication of trials---the $n=4$ trials in this example---provides us a way to quantify the amount of noise in our results. Here, the observed 3.5 percentage point reduction cannot be distinquished from noise so we have no confidence that we have seen a signal.
+Using the regression framework makes it easy to estimate the amount of sampling variation. The mean reduction corresponds to the coefficient from the model `reduction ~ 1`. 
+
+:::: {.column-margin}
+```{r digits=3}
+lm(reduction ~ 1, 
+     data=Bed_net_data) %>% 
+  coefficients()
+```
+
+```{r digits=3}
+lm(reduction ~ 1, 
+     data=Bed_net_data) %>% 
+  confint()
+```
+
+::::
+
+The observed 3 percentage point mean reduction in the incidence of malaria does stand out from the noise: the confidence interval does not include zero. In these (imagined) data, we have confidence that we have seen a signal.
 :::
 
-Replication is a comparatively modern idea. Experiments go back into pre-history. For instance, a biblical example is [DAVID's experiment as described by Judea Pearl.]
+## Control
 
-Galileo, taken by many historians to mark the appearance of "science," didn't replicate his trials. He had no clear knowledge of the idea of "signal" versus "noise," let alone ......
+However, there is still a problem with the design of the imagined bed-net experiment. What if the year the experiment was done was unusually dry, reducing the mosquito population and, with it, the rate of malaria infection? Then we don't know whether the observed 3 point reduction is due to the weather or the bed nets, or even something else, e.g. better nutrition due to a drop in international prices for rice.
 
-GALILEO didn't do replication.
+We need to measure what the change in malarial infection would have been without the bed-net intervention. Care needs to be taken here. If the trial sites were rural, it would not be appropriate to look at malarial rates in urban areas where there was no bed-net program. We want to compare the trial sites with non-trial sites where the intervention was not carried out, so-called "**control**" sites. The `With_controls` data frame imagines what data might look like if in half the sites no bed-net program was involved.
+
+```{r echo=FALSE}
+#| label: tbl-bed-net-controls
+#| tbl-cap: "`With_controls`"
+#| column: margin
+With_controls <- tibble::tribble(
+  ~ site, ~ reduction, ~nets,
+  "A", 2, "control",
+  "B", 8, "treatment",
+  "C", 4, "treatment",
+  "D", 1, "treatment",
+  "E", -1, "control",
+  "F", -2, "control",
+  "G", 0, "control",
+  "H", 2, "treatment",
+  "I", 3, "treatment",
+  "J", 2, "control"
+)
+With_controls
+```
+
+The proper regression model for the `With_controls` data is `reduction ~ treatment`:
+
+:::: {.column-margin}
+```{r digits=2}
+lm(reduction ~ nets, 
+       data=With_controls) %>% 
+  coefficients() 
+lm(reduction ~ nets, 
+       data=With_controls) %>% 
+  confint() 
+```
+::::
+
+The effect of the bed nets is summarized by the `netstreatment` coefficient, which compares the `reduction` between the `treatment` and `control` groups. In this new (imagined) data frame, the confidence interval on `netstreatment` touches very close to zero; the signal is just barely discernible from the noise.
+
+The reader might wonder why, in moving to the controlled design, the ten sites were not all treated with nets and another ten or so sites found to use as the control. Perhaps, even, the control sites could be selected as villages nearby to the bed net villages. 
+
+One reason is pragmatic: the larger study would require more effort and money. The larger study might be worthwhile; larger $n$ would presumably narrow the confidence interval. Another reason, to be expanded on in the next section, is that the treatment and control sites should be as similar as possible. This can be surprising hard to achieve. Other factors such as the enthusiasm or skepticism of the town leaders toward public-health interventions might be behind the choice of the original sites for the bed-net program. The control sites might be towns that turned down the original offer of the bed-net program and, accordingly, have different attitudes toward public health.
+
+::: {.callout-note}
+## Example: Testing the Salk polio vaccine
+
+Today, most children are vaccinated against polio, though a smaller fraction than in previous years. This might be because symptomatic polio is very rare, lessening the perceived urgency of protecting against it. Partly, the reduction reflects the growth in the "anti-vax" movement, which became especially notable with the advent of COVID-19.
+
+The first US polio epidemic occurred in 1916, just two years before the COVID-like "Spanish flu" pandemic.^["Spanish" is in quotes because Spain was not the source of the pandemic.] Up through the early 1950s, polio injured or killed hundreds of thousands of people, particularly children. Anxiety about the disease was similar to that seen in the first year of the COVID-19 pandemic.
+
+There were many attempts to develop a vaccine against polio. Jonas Salk created the first really promising vaccine, the promise being based on laboratory tests. To establish the safety and effectiveness of the Salk vaccine, it needed to be tried in the field, with people. Two organizations, the US Public Health Service and the National Foundation for Infantile Paralysis got together to organize a clinical field trial which, all told, involved two-million students in grades 1 through 3. 
+
+The two study involved both a treatment and a control group. In some school districts, students in grades 1 and 3 were held as controls. The treatment group was students in grade 2 whose parents gave consent. In other school districts, the study design was different: the parents of all students in all three grades were asked for consent. The students with parental consent were then randomly split into two groups: a treatment and a control. 
+
+The second study design might seem inefficient; it reduced the number of children receiving the vaccine because half of the children with parental consent were left unvaccinated. On the other hand, it might be that children from families who consent to be given a vaccine are different in a systematic way from children whose families refuse, just as today's anti-vax families might be different from "pro-vax" families. 
+
+As reported in Freedman (1998)^[D. Freedman, R Pisani, R Purves, *Statistics* 3/e, p.6], the different risk of symptomatic polio between children from consent versus refuse families became evident in the study. @tbl-polio1 shows the study results from the school districts which used half the consent group as controls.
+
+The difference between treatment and control groups is very evident: a reduction from 71 cases per 100,000 children to 28 cases per 100,000. The no-consent children had a rate between the two, 46 per 100,000. Since both the "control" and "no consent" groups did not get the vaccine, one might expect those rates to be similar. That they are not shows that the "no-consent" children are systematically different from those children whose parents gave consent. 
+
+::: {.column-margin}
+ 
+
+ 
+
+ 
+
+ 
+:::
+
+In the other branch of the study, where no-consent 2nd-graders were used as control and vaccine was given to all whose parents did consent, the results (@tbl-polio2) were different because of confounding between treatment and consent. 
+
+```{r echo=FALSE}
+#| label: tbl-polio1
+#| tbl-cap: "Results from Study 2."
+#| column: margin
+Polio1 <- tibble::tribble(
+  ~ vaccine, ~ size, ~ rate,
+  "Treatment", 200000, 28,
+  "Control", 200000, 71, 
+  "No consent", 350000, 46,
+)
+Polio1
+```
+
+```{r echo=FALSE}
+#| label: tbl-polio2
+#| tbl-cap: "Results from Study 1"
+#| column: margin
+Polio2 <- tibble::tribble(
+  ~ vaccine, ~ size, ~ rate,
+  "Treatment", 225000, 25,
+  "No consent", 125000, 44,
+)
+Polio2
+```
+
+The effect of the vaccine from Study 1 under-estimated the biological link between vaccination and reduction of polio risk.
+
+:::
 
 
+## Randomization
+
+Show as a DAG
 
 
-
-Statistics contributes to experiment in two, very different ways. The first is that statistical methods are used to summarize the measurements made during the experiment. For instance, if your experiment involves 
-
-Go back to definition of statistics: explanation/description of variation in the context of what remains unexplained.
-
-Purpose of a "scientif
-
-
-
+```{r}
+polio_dag <- dag_make(
+  consent ~ exo(),
+  vaccine ~ consent,
+  polio ~ consent + vaccine
+)
+dag_draw(polio_dag, seed=108, vertex.label.cex=1.3)
 
 
+bednet_dag <- dag_make(
+  region ~ exo(),
+  enthusiasm ~ exo(),
+  nutrition ~ exo(), 
+  bed_nets ~ region + enthusiasm + nutrition,
+  polio ~ bed_nets + region + enthusiasm + nutrition
+)
+dag_draw(bednet_dag, seed=110, vertex.label.cex=1, vertex.size=30)
 
-
-## From SM2
-
-One of the most important ideas in science is "**experiment**". In a simple, ideal form of an experiment, you cause one explanatory factor to vary, hold all the other conditions constant, and observe the response.  A famous story of such an experiment involves Galileo Galilei (1564-1642) `r index_entry('C','Galileo Galilei')` `r index_entry('C', 'Pisa, Leaning Tower')`  dropping balls of different masses but equal diameter from the Leaning Tower of Pisa.^[The picturesque story of balls dropped from the Tower of Pisa may not be true. Galileo did record experiments done by rolling balls down ramps.] Would a heavy ball fall faster than a light ball, as theorized by Aristotle 2000 years previously?  The quantity that Galileo varied was the weight of the ball, the quantity he observed was how fast the balls fell, the conditions he held constant were the height of the fall and the diameter of the balls.  The experimental method of dropping balls side by side also holds constant the atmospheric conditions: temperature, humidity, wind, air density, etc.
-
-Of course, Galileo had no control over the atmospheric conditions.  By carrying out the experiment in a short period, while atmospheric conditions were steady, he effectively held them constant.
-
-Today, Galileo's experiment seems obvious.  But not at the time.  In the history of science, Galileo's work was a landmark: he put *observation* at the fore, rather than the beliefs passed down from authority.  Aristotle's ancient theory, still considered authoritative in Galileo's time, was that heavier objects fall faster. 
-
-`r index_entry('C', 'experiment! vs observation')` 
-`r index_entry('C', 'relationship!partial vs total')` 
-`r index_entry('C', 'partial relationship')` 
-`r index_entry('C', 'total relationship')` 
-`r index_entry('C', 'aprotinin (drug)')` 
-`r index_entry('C', 'heart surgery')` 
-
-The ideal of "holding all other conditions constant" is not always so simple as with dropping balls from a tower in steady weather.  Consider an experiment to test the effect of a blood-pressure drug. Take two groups of people, give the people in one group the drug and give nothing to the other group.  Observe how blood pressure changes in the two groups.  The factor being caused to vary is whether or not a person gets the drug. But what is being held constant?  Presumably the researcher took care to make the two groups as similar as possible: similar medical conditions and histories, similar weights, similar ages.  But "similar" is not "constant." 
-
-
-
-## DAG interpretation of experiment
-
-Albert Einstein is reputed to have said:
-
-> *A theory is something nobody believes, except the person who made it. An experiment is something everybody believes, except the person who made it.*
-
-A graphical causal network is a kind of theory. As a theory, it's natural for people to be skeptical about results stem from the theory. Experiments are more persuasive. Let's consider what an experiment looks like when represented by a graphical causal networks.
-
-In an experiment, you have some real-world system and a means to intervene physically on at least one of the variables in that system and to read out the response of the system to the intervention. You don't necessarily know much about the actual structure of the real world system. In @fig-experiment-system the real-world system is shown in the rounded box. The intervention is on X and the output is Y.
-
-```{r echo = FALSE}
-#| label: fig-experiment-system
-#| fig-cap: "An experiment is a system in which there is an intervention and an output."
-knitr::include_graphics("www/experiment-system.png")
+bednet_dag2 <- dag_make( 
+  region ~ exo(),
+  enthusiasm ~ exo(),
+  nutrition ~ exo(),
+  randomization ~ exo(),
+  bed_nets ~ randomization,
+  polio ~ bed_nets + region + enthusiasm + nutrition)
+dag_draw(bednet_dag2, seed=110, vertex.label.cex=1, vertex.size=30)
 ```
 
 
-Note that in @fig-experiment-system X is, potentially, affected by other variables in the system.
 
-Ideally, the experiment is set up to eliminate all other effects on X except the intervention as in @fig-experiment-pure. And the intervention is done in a way that none of the variables in the system can have any effect on it, for instance by assigning the intervention using a **computer random-number generator**. The lovely thing about this configuration is that the correct model to capture the effect of `X` on `Y` is simply `Y ~ X`. Whatever different people might believe about the real-world mechanism doesn't matter. The correct model is always `Y ~ X`. This is why Einstein's statement, "An experiment is something everybody believes," is justified.
+## Blocking
 
-```{r echo = FALSE}
-#| label: fig-experiment-pure
-#| fig-cap: "An ideal experiment is one where the *only* influence on X is the intervention. Any effect on X or the intervention of the other variables in the system has been eliminated. The input paths to X from C and D that appear in @fig-experiment-system have been deleted by the experimenter. This is not always possible in practice."
-knitr::include_graphics("www/experiment-pure.png")
-```
-
-
-But there is another part to Einstein's statement: "... except the person who made it." Why shouldn't the experimenter believe her own experiment? The experimenter might know that she didn't or couldn't conduct an ideal experiment. She wasn't actually able to eliminate the arrows D $\rightarrow$ X and C $\rightarrow$ X. The other variables in the system might also be influencing X as in @fig-experiment-system. In this situation, the right model may not be Y `~` X. In fact, for the particular system shown in @fig-experiment-system the correct model would be Y `~` X + C + D. But how could the experimenter know this for sure if she didn't know all about the real-world mechanism?
-
-It turns out that for either of the causal systems in [Figures @fig-experiment-system or @fig-experiment-pure] there is always a correct model to show the link between the intervention and output: Output `~` Intervention. Rather than modeling the output by the physical quantity X, model the output by the random numbers generated by the computer that were used to set the intervention. This modeling approach is called **intent to treat**.
-
-Typically, experiments are done using a specially constructed system that is thought to resemble the system on which the intervention will actually be done. Insofar as the experimental system does resemble the real-world system, the experimental results will anticipate the effect of the real-world intervention. But often it's hard to establish that the experimental system is a match to the system on which the real-world intervention will be applied. As such, subjective belief is still a factor in accepting that the experiment will be informative about the real-world systems we work with.
- 
---------
-
-It's appropriate to show some humility about models and recognize that they can be no better than the assumptions that go into them.  Useful object lessons are given by the episodes where conclusions from modeling (with careful adjustment for covariates) can be compared to experimental results.  Some examples (from [@freedman-editorial-2008]):
-
-* Does it help to use telephone canvassing to get out the vote? Models suggest it does, but experiments indicate otherwise.
-* Is a diet rich in vitamins, fruits, vegetables and low in fat protective against cancer, heart disease or cognitive decline? Models suggest yes, but experiments generally do not.
-
-The divergence between models and experiment suggests that an important covariate has been left out of the models. `r index_entry('C', 'covariate!leaving out')`  `r index_entry('C', 'adjustment!faulty')` 
 
 
