@@ -58,3 +58,26 @@ These are absolute risks: probabilities. The effect size is 2.2 - 1.4 = 0.8 perc
 3. Put yourself in the place of the baseline woman who has just found out that a close relative developed breast cancer. Which way of reporting a change of risk is more pertinent to your personal life? -A- The change in absolute risk. Even though the risk ratios are the same in (1) and (2), the change in absolute  risk is much greater in (2).
 
 --------
+
+## Example: Fraction attributable
+
+US Federal law forbids employment discrimination based on age. (There are some exceptions, such as air-traffic controllers, whose mandatory retirement age is 56). In a discrimination lawsuit, data on who was and who was not laid-off was used to construct a model of the probability of layoff. The effect size is, as usual for a probability model, expressed in log odds.
+
+- baseline: risk of 20%, so log odds of of -1.4.
+- age over 50, add log odds of 1 ± 0.3
+- software engineer, subtract log odds of 0.5 ± 0.25
+- paid different from company average, subtract log odds of 0.2 ± 0.1 per $10,000 high than company average.
+
+These estimates come from a logistic regression model `laid_off ~ over50 +  software_engineer + pay_above_average`.
+
+1. For a laid-off employee over 50, what is the fraction attributable to age?
+
+::: {.callout-note} 
+## Solution
+The baseline risk of being laid off is 20%. For the employee aged over 50 years, the log odds of the risk is -1.4 + 1 ± 0.3, or -0.7 to -0.1. Translating these log odds into probabilities gives a risk of  33% to 47%, with the range reflecting the uncertainty in the  effect size from the model. The estimated relative risk (risk ratio) for the employees over 50 ranges from 33/20 to 47/20, that is, from 1.65 to 2.35. The attributable fraction is $(RR - 1) / RR$ and therefore ranges from (1.65 - 1)/1.65 to (2.35 - 1) / 2.35 or 40% to 57%. 
+:::
+
+2. What fraction of all layoffs can be attributed to age over 50? (Population attributable fraction.) Assume that one-third of the employees are over 50.
+
+
+

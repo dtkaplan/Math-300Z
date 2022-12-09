@@ -255,6 +255,12 @@ dag_draw(polio_dag, seed=109, vertex.label.cex=1)
 
 The assignment to treatment or control in @fig-dag-polio3 is made by the people running the study. Although the DAG doesn't show any inputs to `assignment`, the involvement of people in making the assignment opens up a possibility that their assignment of treatment or control might have been influenced by other factors, such as socio-economic status. To guard against this, or even skepticism raised by the possibility, experimentalists have developed a simple safeguard: "**random assignment**." In random assignment, assignment is made by a computer generating random numbers. Nobody believes that the computer algorithm is influenced by socio-economic status or any other factor that might be connected to polio in any way.
 
+::: {.callout-warning}
+## Under construction
+:::
+
+## Blocking
+
 ## SAVE these for NTIs?
 
 
@@ -286,10 +292,6 @@ bednet_dag2 <- dag_make(
   polio ~ treatment + region + enthusiasm + nutrition)
 dag_draw(bednet_dag2, seed=111, vertex.label.cex=1, vertex.size=30)
 ```
-
-
-
-## Blocking
 
 
 
