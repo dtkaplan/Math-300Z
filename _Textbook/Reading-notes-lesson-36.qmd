@@ -15,6 +15,151 @@ lesson <- 36
 source("../_startup.R")
 ```
 
+In Lesson 35, we looked at the accounting process that is used for building a classifier and interpreting the results. That accounting process is also applicable, in whole or part, to much more general procedures in statistics that go by the names "**hypothesis testing**" or, equivalently, "**significance testing**." 
+
+The word "test" is familiar to all who have ever been students, but it will still be useful to have a definition. This one seems reasonable:
+
+> "*A procedure intended to establish the quality, performance, or reliability of something, especially before it is taken into widespread use.*" -- Oxford Languages
+
+Based on this general definition, one would expect that "hypothesis test" will be "a procedure intended to establish the correctness or applicability of a hypothesis, especially before relying on that hypothesis to guide action in the world." Regrettably, this definition does not align well with the statistical procedure called "hypothesis testing." This lack of alignment causes confusion and error. It has also led to controversy about the use of the procedure.
+
+The educator's response to the controversy is often, and reasonably, "We need to teach the procedure, whatever its flaws, because that is the procedure that everyone follows." Educational reformer George Cobb followed up with a question: Why does everyone use it? His [answer](https://escholarship.org/uc/item/6hb3k0nz): "Because it's the centerpiece of the introductory statistics curriculum."
+
+In this Lesson, we will introduce the logic of hypothesis testing and compare it to other procedures that also have a claim to be the way to test hypotheses. In Lesson 37, we will show how to do the computations involved to create the number that summarizes a hypothesis test: the **p-value**. And in Lesson 38, we will return to the controversy, with the goal of helping the reader avoid pitfalls in interpretation of the p-value.
+
+## Likelihood functions
+
+In everyday language, "likelihood" is a synonym for "probability." But in statistics, the meaning is specialized to refer to a certain kind of probability that applies in a particular circumstance relating to hypotheses.
+
+We have seen likelihood functions already in Lesson 35: the *sensitivity* and *specificity*. Recall that the sensitivity is the probability of a positive test result in a person who has the condition. The specificity is the probability of a negative test result in a person who does not have the condition. To make the nature of a likelihood function more clear, we will deal with one minus the specificity, that is, the probability of a positive test in a person who does not have the condition. In Lesson 35, we wrote the two quantities as:
+
+$$\text{Lesson 35:}\ \ \ \ \ \ \ \ \underbrace{{\cal L}(+ | C)}_\text{sensitivity} \ \ \ \text{and}\ \ \ \ \underbrace{{\cal L}(+ | H)}_\text{1-specificity} \ .$$
+
+For this Lesson, we are going to simplify the notation. In Lessons 34 and 35, the classifiers we built had two possible outputs, + or -. The classifier is part of a bigger procedure. The first step in the procedure usually involves a measurement procedure, for instance, counting white blood cells or measuring the concentration of prostate-specific antigen (PSA). 
+
+The second step is purely arithmetical, comparing the measurement result to a threshold, thereby determining if the output should be + or -. Lessons 34 and 35 were largely about how to set a good value for the threshold and involved stating a *loss function* and considering the prevalence of the condition involved. 
+
+Such procedures are called "tests." The procedures are analogous to, say, an algebra test. In an algebra test, the subject is made to answer questions, the number of correct answers counted, and that count applied to a threshold to determine whether the overall result is "pass" or "fail." 
+
+The algebra-test analogy is imperfect, however. Academic tests are generally not the product of the careful development phase described in Lesson 35. There is no sample of subjects who have already been classified as "pass" or "fail." There is no calculation of a sensitivity or specificity to characterize the test and no use of a loss function to bend sensitivity, specificity, and prevalence into a threshold dividing "pass" from "fail." Academicians never tell their students what the false positive and false negative rates are. Students and teachers think of an academic test as that part of the procedure where questions are asked and answered, not including the phases where the correct answers are counted and the count converted to a pass/fail result. Sometimes the threshold between pass and fail is not fixed, but is set by the instructor to achieve a desired pass rate. This is called "grading on a curve," the threshold depends on the observed counts.
+
+A "hypothesis test" is like the "grading on a curve" part of an academic test. The measurement is **not part of the procedure**. Like "grading on a curve", a "hypothesis test" starts at the point where the observations have already been made and "counted." Typically, the "count" is actually the summary is the coefficient from a regression model or some other statistical measure like R^2^. 
+
+The "hypothesis test" is only about comparing the summary to a threshold. The threshold, as in "grading on a curve," is based on the observations already made. 
+
+Since, in a hypothesis test, the observations and their summary is already known before the test begins, it would be misleading to use notation like ${\cal L}(-|H)$. Instead, we will write ${\cal L}_-(H)$, emphasizing that there is only one input at play.
+
+:::: {.callout-note}
+## Example: The ${\cal L}_+()$ function
+
+Suppose that the sensitivity of a test is 90% and the specificity is 85%. A person has a + test result. Since the observation is +, the likelihood function ${\cal L}_\mathbf{+}()$ is relevant The domain of ${\cal L}_\mathbf{+}()$ is simply the two possibilities for the subject's condition: C or H.
+
+
+$${\cal L_{\mathbf +}}(X) \equiv\left\{\begin{array}{l}90\%\  \text{given}\ \  X=C\\15\%\ \text{given}\ \  X = H\end{array}\right.$$
+
+If the observation had been different, a different likelihood function would be relevant. In testing, there are only the two possible observations, + and -. For a - observation, the relevant likelihood is ${\cal L}_{\mathbf -}()$
+
+$${\cal L_\mathbf{-}}(X) \equiv\left\{\begin{array}{l}10\%\  \text{given}\ \  X=C\\85\%\ \text{given}\ \  X = H\end{array}\right.$$
+
+Note that the argument to the likelihood functions, which we have written as $X$ is **not the result of the test**. Instead, $X$ is related to the condition of the person who underwent the test. 
+
+It's essential to remember that a "hypothesis test" can be performed only *after* the observation has been made. In that situation, there is only one relevant likelihood function, the one corresponding to the actual observation.
+
+In Lesson 35, we used the likelihood function for a particular purpose, to calculate the implications of a + result into terms relevant to the patient. The patient receiving a + result is naturally interested in what this means about the chances that she has the condition C. We will write this as a probability, but it is a probability that applies only for the patient with a + result. We will write it $p_\mathbf{+} (C)$. The probability is labeled with a + as a reminder that it is relevant only to a patient with a + result.
+
+As described in Lesson 35, to calculate $p_\mathbf{+} (C)$, we need some more information. Specifically, we need to know the prevalence of the condition. Our notation for the prevalence of C is $p(C)$. Pay attention to two things about this notation. First, we have written it as a function that we are evaluating for the input C. The output of the evaluated function is a number. In Lesson 34, we showed an example where $p(C) = 4\%$, meaning that 4% of the population has condition C. That same function can be evaluated at input H, giving $p(H)$, producing another number. Given that $p(C) = 4\%$, and that C or H are the only possible states a patient can be in, then $p(H) = 1 - p(C) = 96\%$.
+
+The second thing to pay attention to is the *absence* of any subscript on $p(C)$. That is because the prevalence of the disease is known *before* our particular patient has received her result. Such probabilities, being known *before* the test leading to the + result, are called "**prior**" probabilities. In contrast, $p_\mathbf{+}(C)$ is called a **posterior** probability. 
+
+::: {.callout-warning}
+## Demonstration: From prior to posterior *via* likelihood
+
+Lesson 35 gives the formula, called "**Bayes' Rule**", for converting prior probabilities into posterior probabilities relevant to a particular observation +. This formula is where the likelihood function comes into play. Of course, only ${\cal L}_\mathbf{+}(\ )$ is relevant because the posterior being calculated is relevant to the + observation.
+
+
+
+$$p_\mathbf{+}(C) = \frac{{\cal L}_{\mathbf +}(C)\cdot  p(C)}{{\cal L}_{\mathbf +}( C)\cdot p(C) + {\cal L}_\mathbf{+}(H)\cdot p(H)}$$
+
+Had the result been -, the probability relevant to the patient would have been $p_\mathbf{-}(C)$, that is, the chances of having condition C even though the test result is -. This probability would also be calculated with Bayes' Rule, but the relevant likelihood function would be ${\cal L}_{\mathbf -}(\ )$ rather than ${\cal L}_{\mathbf +}(\ )$. 
+
+$$p_\mathbf{-}(C) = \frac{{\cal L}_{\mathbf -}(C)\cdot  p(C)}{{\cal L}_{\mathbf -}( C)\cdot p(C) + {\cal L}_\mathbf{-}(H)\cdot p(H)}$$
+
+The *prior* probabilities are the same in both formulas since the prevalence in the population is known *before* the test result.
+:::
+
+::::
+
+## Hypotheses
+
+In the Bayes' Rule formulas just shown, the likelihood function is evaluated at two different inputs, C and H. This evaluation produces the numerical outputs ${\cal L}_{\mathbf +}(C)$ and ${\cal L}_{\mathbf +}(H)$, respectively. Since the patient has either condition C or condition H, and not both, it may seem surprising to see both C and H being used in the same formula as inputs to ${\cal L}_{\mathbf +}(\ )$. 
+
+The input to ${\cal L}_\mathbf{+}( )$ is not whether the person is in state C or in state H, but something a little more abstract: a hypothesis.
+
+- The hypothesis C says that the person has the condition.
+- The hypothesis H says that the person does not have the condition.
+
+A hypothesis is a statement about the world that might or might not be true. Imagine a person being picked at random from the overall population. Suppose her name is Emma. What is Emma's condition? Emma might have condition C or she might have condition H; she can't have both conditions. In contrast, the *hypotheses* C and H are both applicable to Emma, "Emma might have C or she might have H." C and H are the competing hypotheses relevant to Emma. The priors $p(C)$ and $p(H)$ are "the probability that hypothesis C is true for Emma" and "the probability that hypothesis H is true for Emma." Not yet having any information specific to Emma, setting $p(C)$ to be the prevalence in the population is a good start.
+
+Emma takes the medical test and receives a + result. Now we do have information specifically about Emma. This information changes are assessment of the probabilities of the two hypotheses. The probability of hypothesis C being true for Emma, after she gets the + result, is different than the probability of C being true for Emma before she got the result. Intuitively, getting a + test result is bad news. Which is to say that the hypothesis C has become more probable because of the + result. That intuition is correct but there is more to say. We can use Bayes' Rule to calculate numerically the probability of the hypothesis C being true for Emma. This personalized probability, could appropriately be writen $p_\textbf{emma}(C)$. But, in fact, the only thing that's specific to Emma is that her test result was +. So we generalize and refer not only to Emma but to all the people who have a + result: $p_\mathbf{+}(C)$.
+
+## "Hypothesis testing"
+
+In the everyday use of language, to "test a hypothesis" might reasonably mean "to perform a procedure to establish whether the hypothesis is true. A statistical thinker, being aware of the omnipresence of noise, would translate this everyday meaning just a little bit: "to perform a procedure to establish the probability that the hypothesis is true." The procedure will presumably include collecting relevant data, perhaps in the form of an experiment, perhaps in the form of observations made without experimental intervention. If the statistical thinker was entertaining just two hypothetical possibilities, $H_1$ and $H_2$, the theory behind the hypotheses would provide the likelihood function ${\cal L}_\textbf{data}(H_1)$. 
+
+To give a historical example, Aristotle's physics stated that two balls of the same size, released from the same height at the same time, will hit the ground simultaneously. Galileo suspected that this Aristotelian claim might not be true. His hypothesis was that the balls would hit at different times if the balls had different weights. To test Aristotle's hypothesis, Galileo famously ascended the Tower of Pisa, conveniently tilted so that balls dropped from the top would go directly to the ground. Dropping the balls, one metal, one wooden, from the top of the Tower, it was found that the metal ball hit discernibly before the wooden ball. In our modern way of thinking, we can say that Galileo's observation *lowered* the probability that the Aristotelian hypothesis was true. (In historical actuality, Galileo predated the development of even simple notions of probability.)
+
+Statistical thinkers who use data to calculate posterior probabilities using Bayes' Rule are called, sensibly enough, "Bayesians." The Bayes' Rule calculations are a routine part of many engineering disciplines, medicine, and so-called artificial intelligence and machine learning.
+
+There is another group of statistical thinkers, called "Frequentists," who also accept Bayes' Rule as mathematically correct, but who define "hypothesis testing" in a very different way. Frequentists have dominated the academic discipline of statistics for a full century. This dominance is now beginning to fade, but generations of scientists have been taught the frequentist "hypothesis testing" framework and express their conclusions using Frequentist terminology, sometimes correctly and sometimes not.
+
+There a fundamental aspect of the Bayesian procedure for testing hypotheses that the Frequentists reject. Frequentists point out that the prior probabilities---that is, probabilities before data has been observed---are subjective. Scientific procedures, according to the Frequentists, ought to be entirely objective, that is, should not depend on opinions that are not yet supported by data. Since most people associate science with objectivity, the Frequentist point of view is attractive. (We won't argue the point here except to point out that saying, "Science should be as objective as possible" warrants keeping track of the ways subjectivity does influence scientific results. There are ways to do this within the framework of Bayesian calculations by looking at many different priors and checking the sensitivity of the results to the choice of prior.)
+
+Owing to this rejection of priors as subjective, the frequentist procedure for hypothesis testing has to be built without the use of priors. Looking back at Bayes' Rule, and eliminating any mention of priors, leaves only the likelihood function. Frequentists do make extensive use of likelihood functions and even compare likelihoods of different hypotheses,^[As in "maximum likelihood" estimation] but they don't accept the use of priors in a scientific context, nor the assignment of probabilities to competing hypotheses.
+
+Frequentist "hypothesis testing" centers on a specific hypothesis that, surprisingly, has no scientific content. This is called the "**Null hypothesis**" and abbreviated H_0_. In a modeling context, the Null hypothesis typically is about an effect size, but often it is about a measure such as R^2^ that can combine multiple model terms. In either case, the Null hypothesis is that the effect size (or R^2^) is zero, but that sampling variation may push away from zero the quantity estimated from data. 
+
+::: {.callout-note}
+## The Null in everyday language
+
+It suffices to say that the Null hypothesis is a claim that the effect size is zero (or that R^2^ is zero) except for sampling variation. Making sense of thise requires that one know what an "effect size" (or "R^2^") is and what "sampling variation" means. At this point in these Lessons, you ought to know all of these things. But how to talk about hypothesis testing to a general audience?
+
+One strategy is to describe the Null as the "absence of any effect" or "relationship." Another common strategy is to avoid mentioning the Null at all and use as alternative to "reject the null" with phrases such as "the result is significant" or "not due to chance."
+:::
+
+The "test" is not about whether the Null hypothesis is true, and certainly not about the probability that the Null hypothesis is true. Instead, the test, like the + or - tests we have already studied, has **two possible results**. We might encode these results as + or -, or as yes/no, but conventionally the two outcomes are properly encoded as "**reject the null hypothesis**" or "**fail to reject the null hypothesis**." Unlike the + or - testing framework, in hypothesis testing the result is not to be used to calculate a posterior probability, in the "hypothesis testing" process you either "reject" or "fail to reject" the Null hypothesis.
+
+Since "fail" and "reject" are unattractive words, in practice other expressions are used. One of the notations is $p < 0.05$, another is to put a asterisk ($^\star$) next to the value of the effect size or R^2^. Both of these correspond to "reject the Null." The notation used for "fail to reject" is to put nothing next to the effect size or R^2^, but it would be more appropriate simply to list the effect size as "n.s." to stand for "not significant."
+
+## The alternative hypothesis
+
+The Null is the only hypothesis being evaluated in "hypothesis testing." But the intuition that a test should compare at least two hypotheses is strong, as is the idea that we should be testing a hypothesis of an effect of interest. To satisfy this intuition, many descriptions of "hypothesis testing" appeal to another hypothesis, called the "alternative hypothesis." This alternative hypothesis, denoted H_a_, is mainly found in statistics textbooks.^[A more complete explanation of the situation would refer to the history of the development of hypothesis testing. The method originally introduced, the "Fisherian theory of significance testing," is more-or-less the form described in this Lesson. Dissatisfied with the Fisherian approach, statisticians Jerzy Neyman and Egon Pearson proposed an expanded framework in 1933. Concepts such as "alternative hypothesis" and "power" come from the Neyman-Pearson framework.]
+
+The textbook form of the alternative hypothesis is stated in terms of the Null; the alternative hypothesis is that the null is not so, or, reaching back to the definition of the Null, that the effect size (or R^2^) would be non-zero even if sampling variation could be entirely avoided. Statistics books try to create a role for the alternative hypothesis by offering some choices for it. These choices are usually written $H_a \neq H_0$ or as $H_a < H_0$ or as $H_a > H_0$, and amount to saying "the effect size is non-zero," "the effect size is negative," or "the effect size is positive."
+
+Outside of textbooks, only $H_a \neq H_0$ is properly used. The other two textbook choices provide at best exam questions and at worst, the opportunity to bias the "hypothesis test" in favor of "rejecting the Null."
+
+There is a genuine use for an alternative hypothesis when it is given in the form of a specific hypothesis ("the drug reduces blood pressure by 10 mmHg") rather than simply "not the Null." Stating a specific alternative hypothesis is helpful when designing a study to decide on an appropriate sample size. (We will return to this issue, relating to the "**power**" of a study, in Lesson 38.) Good study design is important, but the outcome of the hypothesis test is entirely about the Null hypothesis.
+
+
+
+
+
+
+
+
+
+
+
+
+## Many hypotheses
+
+Self-driving car safety here?
+
+But there are also different situations. For instance, the observation might be the mean of a sampled variable, or it might be the difference in sample means  between two groups, or even the calculated effect size from a model fitted to a sample. In such situations, the possible hypotheses form a continuum, one hypothesis for each point on the number line.
+
+
+## Orthodox
+
 We are nearing the end of our journey through the world of statistical thinking. But I think it's time to get off the well-travelled road and take a detour of a few paragraphs. Detours are usually not the straightest path between two points, but they often have some advantage: safety, a scenic view or inspiring experience, and such.
 
 Our detour starts with a turn onto a lane marked with the word "orthodox." There are, as you know, religions denominated by "orthodox." But the word has a more general meaning that can be seen by translating the Greek origin words "ortho" and "doxa" into a familiar language: "ortho" means "straight" or "right"; "doxa" means "belief".  Synonyms for "belief" include creed, dogma, teaching, doctrine (which stems from the Latin for "to teach"), conviction, and article of faith. A line is straight and the phrase "the party line" indicates attitudes that fall into line with the party leadership. "Ortho" appears in "orthodonture" (straightening the teeth), "orthography" (correct spelling), and "orthogonal" (being at a right angle).^[The link between words for "straight" and thinking according to the rule book has ancient origins.  The word "canon," meaning the set of officially accepted writings, comes from the Sumerian word for a straight reed.]

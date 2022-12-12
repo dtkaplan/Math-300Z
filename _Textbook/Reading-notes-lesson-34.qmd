@@ -17,7 +17,7 @@ source("../_startup.R")
 
 There are many yes-or-no conditions. A patient has a disease or does not. A credit-card transaction is genuine or fraudulent. 
 
-But it is not straightforward to figure out at the time the patient comes to the clinic or the credit-card transaction is made, whether the condition is yes or no. If we could wait, the condition might reveal itself: the patient gets critically ill or the credit-hard holder complains about an unauthorized charge. But we can't wait. We want to treat the patient *before* he or she gets critically ill. We want to block the credit-card transaction before it is completed.
+But it is not always straightforward to figure out at the time the patient comes to the clinic or the credit-card transaction is made, whether the condition is yes or no. If we could wait, the condition might reveal itself: the patient gets critically ill or the credit-hard holder complains about an unauthorized charge. But we can't wait. We want to treat the patient *before* he or she gets critically ill. We want to block the credit-card transaction before it is completed.
 
 Instead of waiting, we measure whatever relevant variables we can when the patient arrives at the clinic or the credit-card transaction has been submitted for approval. For the patient, we might look at the concentration of specific markers for cancer in the blood. For the transaction, we might look at the shipping address to see if it matches the credit-card holder's genuine address. Such variables may provide an indication, imperfect though it may be, of whether the condition is yes or no.
 

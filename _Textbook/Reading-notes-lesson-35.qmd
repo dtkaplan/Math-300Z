@@ -212,7 +212,7 @@ Having created and populated the realistic world, we can compute quantities that
 
 On the realistic world, there are two groups who get a positive test. One group is the people who genuinely have C and who also have a positive test. These are the true positives. The relative size of this group is $P(+ \text{ given } C) \equiv \text{proportion of true positives} = {\cal L}(+ \text{ given } C)\cdot p(C)}$.
 
-The other group is the false positives, the people who have condition H but nonetheless received a + test. The relative size of this group is $P(+ \text{ given } H) \equiv \text{proportion of false positives} = {\cal L}(+ \text{ given } H)\cdot p(H)$. We can calculate the size of this group since $p(H) = 1-p(C)$ and ${\cal L}(+ \text{ given } H) = 1 - {\cal L}(+ \text{ given } H)$.
+The other group is the false positives, the people who have condition H but nonetheless received a + test. The relative size of this group is $P(+ \text{ given } H) \equiv \text{proportion of false positives} = {\cal L}(+ \text{ given } H)\cdot p(H)$. We can calculate the size of this group since $p(H) = 1-p(C)$ and ${\cal L}(+ \text{ given } H) = 1 - {\cal L}(- \text{ given } H)$.
 
 Consequently, the probability that a + test result will be true is
 $$\frac{{\cal L}(+ \text{ given } C)\cdot  p(C)}{{\cal L}(+ \text{ given } C)\cdot p(C) + {\cal L}(+ \text{ given } H)\cdot p(H)}$$
