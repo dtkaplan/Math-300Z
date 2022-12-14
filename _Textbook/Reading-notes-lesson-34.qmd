@@ -15,6 +15,14 @@ lesson <- 34
 source("../_startup.R")
 ```
 
+::: {.hidden}
+$$\newcommand{\Ptest}{\mathbb{P}}
+\newcommand{\Ntest}{\mathbb{N}}
+\newcommand{\given}{\ |\!\!|\  }$$
+:::
+
+
+
 There are many yes-or-no conditions. A patient has a disease or does not. A credit-card transaction is genuine or fraudulent. 
 
 But it is not always straightforward to figure out at the time the patient comes to the clinic or the credit-card transaction is made, whether the condition is yes or no. If we could wait, the condition might reveal itself: the patient gets critically ill or the credit-hard holder complains about an unauthorized charge. But we can't wait. We want to treat the patient *before* he or she gets critically ill. We want to block the credit-card transaction before it is completed.
@@ -23,9 +31,34 @@ Instead of waiting, we measure whatever relevant variables we can when the patie
 
 A **classifier** is a statistical model used to *predict* the unknown outcome of a yes-or-no situation from information that is already available. This Lesson concerns three closely related topics about classifiers: how we collect data for training the model, how we summarize the performance of the classifier, and how we "tune" the classifier.
 
-To help keep things straight, we will write the output of the classifier as + or -; a positive or a negative test result. But the actual condition of the person will be denoted **C** or **H**, as in "you have the **C**ondition or you are **H**ealthy.
+::: {.callout-warning}
+## Important! Notation used {#sec-notation-probs}
 
-## Collecting useful data
+It is important to keep in mind the distinction between the actual condition that the patient has and the result of a test for that condition.
+
+- Actual condition: **C** or **H**, as in "you have the **C**ondition or you are **H**ealthy.
+- Test result: $\Ptest$ or $\Ntest$ respectively for a positive or negative test result.
+
+We will also be using some probabilities. Sometimes we will estimate the probabilities from data, sometimes they will just be a way of expressing knowledge that we have from other sources.
+
+- $p(C)$ --- the probability that someone from the relevant population has the disease. This is also called the "**prevalence**" of the disease.
+- $p(H) = 1 - p(C)$ --- the probability that someone from the relevant population does *not* have the disease.
+- $p(\Ptest \given  C)$ --- this is called a "**conditional probability**". The symbol $\given$ is pronounced "given," or "assuming." The math phrase $p(\Ptest \given  C)$ should be pronounced "the probability of a $\Ptest$ result **given** condition C. In more everyday language, this is the probability of a $\Ptest$ result for someone who has the disease.
+- $p(\Ptest \given H)$ --- another conditional probability.if someone who does not have the disease takes the test, the probability that they will nevertheless get an $\Ptest$ result.
+- $p(C \given \Ptest)$ --- for a person who gets a $\Ptest$, the probability that they really do have the disease.
+- $p(H \given \Ntest)$ --- for a person who gets a $\Ntest$, the probability that they do not have the disease, that is, the probability that they are healthy.
+- $p(H \given \Ptest) = 1 - p(C \given \Ptest)$ the probability that someone with a $\Ptest$ test result nevertheless is healthy.
+- $p(C \given \Ntest) = 1 - p(H \given \Ntest)$ the probability that someone with a $\Ntest$ result nevertheless has the disease. 
+
+Mathematicians use the word "**given**" to mean "under the circumstances that," or "assuming," or "under the hypothesis that." I like to think about "given" in terms of **planets**. For instance, $\given$Earth) means "on the planet Earth." $\given$Mars) means on Mars. The planets used involved in this Lesson are hypothetical. For instance:
+
+- $\given \Ptest)$ is the hypothetical planet on which all the people with a $\Ptest$ test result live, and where nobody else lives.
+- $\given C$ is the hypotherical planet inhabited only by people with condition C. Everyone with C lives on $\given C)$. 
+
+Whenever you see a notation $p(y \given x)$, remember that this is the probability of $y$ on planet $\given x)$. The similar-looking notation $p(x \given y)$ is actually utterly different: a probability on $\given y)$ which, obviously, is a different planet than $\given x)$.
+:::
+
+## Collecting training data
 
 Consider this news report and note the time lag between collection of the dietary explanatory variables and the response variable---whether the patient developed pancreatic cancer.
 
@@ -38,232 +71,242 @@ This was not an experiment; it was an observational study without any interventi
 
 In building a classifier, we have a similar situation. Perhaps we can perform the blood test today, but that gives us only the test result, not the subject's true condition. We might have to wait years for that condition to reveal itself. Only at that point can we measure the performance of the classifier.
 
-To picture the situation, let's imagine many people in the world, some of whom have the condition and some who don't. On Day 1 of the study, we test everyone and get raw score on a scale from 0 to 40. The results are shown in @fig-whole-world. Each glyph is a person. The varying locations are meant to help us later on; for now, just think of them as representing where each person lives in the world. The different shapes of glyph---circle, square, triangle---are meant to remind you that people are different from one another in age, gender, risk-factors, etc. 
+To picture the situation, let's imagine many people enrolled in the study, some of whom have the condition and some who don't. On Day 1 of the study, we test everyone and get raw score on a scale from 0 to 40. The results are shown in @fig-case-control. Each glyph is a person. The varying locations are meant to help us later on; for now, just think of them as representing where each person lives in the world. The different shapes of glyph---circle, square, triangle---are meant to remind you that people are different from one another in age, gender, risk-factors, etc. 
 
 Each person took a blood test. The raw result from that test is a score from 0 to 40. The distribution of scores is shown in the right panel of the figure. We also show the score in the world-plot;
 the higher the raw score, the more blue the glyph. On Day 1, it isn't known who has the condition and who does not.
 
-
-
 ```{r echo=FALSE}
-#| label: fig-whole-world
-#| fig-cap: "Day 1: The people participating in the study to develop the classifier. Each has been given a blood test which gives a score from zero (gray) to one (blue). "
+#| label: fig-case-control
+#| fig-cap: "Day 1: The people participating in the study to develop the classifier. Each has been given a blood test which gives a score from zero (gray) to forty (blue). "
 #| fig-cap-location: margin
-P1 <- plot_people_score(People)   # from _startup.R
+P1 <- plot_people_score(Case_control)   # from _startup.R
 set.seed(101)
-P2 <- ggplot(People %>% mutate(cond = "?"), 
-       aes(y = raw_result, x = cond, color=raw_result)) +
-  geom_jitter(width=0.2, size=.1, alpha=0.4) +
+P2 <- ggplot(Case_control %>% mutate(cond = "?"), 
+       aes(y = raw_result, x = cond, color=log(1+raw_result)/log(41))) +
+  geom_jitter(width=0.2, size=.2, alpha=0.9) +
   scale_shape_identity(guide="none") +
-  scale_color_gradient(low="#A0A0A0", high="#0000FF", guide="none") +
+  scale_color_gradient(low="#AAAAAA", high="#0000FF", guide="none") +
   ylab("Test score") + xlab("") + theme_minimal()
 gridExtra::grid.arrange(P1, P2, widths = c(.8, .2))
 ```
 
-Having recorded the raw test results for each person, we wait. In the pancreatic cancer study, they waited 16 years for the cancer to reveal itself. After the waiting period, we can add a new column to the original data; whether the person has the condition (C) or doesn't (H). In @fig-world-condition people who developed the condition have been re-drawn with filled glyphs to make them easier to spot.
+Having recorded the raw test results for each person, we wait. In the pancreatic cancer study, they waited 16 years for the cancer to reveal itself. After the waiting period, we can add a new column to the original data; whether the person has the condition (C) or doesn't (H). 
+
+There's not much more we can do at this point. We know who has a positive test and who a negative test, but we don't know which people are C and which H. We therefore wait to get more information. They waited 16 years in the pancreatic cancer study. 
+
+... waiting ...
+
+The day at last comes when we can identify the condition of each person in @fig-after-threshold.  At this point, we can split the people in @fig-after-threshold into a C group and an H group, as in @fig-divided-by-condition.
+
+In @fig-case-control-condition people who developed the condition have been re-drawn with filled glyphs to make them easier to spot.
 
 ```{r echo=FALSE}
-#| label: fig-world-condition
-#| fig-cap: "The same people as in @fig-whole-world, but now we know who turned out to have the condition and who didn't. The people with the condition are re-drawn with filled glyphs."
-P3 <- plot_people_score_condition(People)
+#| label: fig-case-control-condition
+#| fig-cap: "The same people as in @fig-case-control, but now we know who turned out to have the condition and who didn't. The people with the condition are re-drawn with filled glyphs. The color shade corresponds to the raw test score; deep blue is a high score."
+P3 <- plot_people_score_condition(Case_control)
 P3
 ```
 
-Only now, when we have found out the C-or-H state of each person, can we compare the raw scores on the blood test for those were found to have the condition and those who were not. 
-
-## Setting the threshold for +
 
 
-```{r echo=FALSE}
+
+## Setting the threshold
+
+Now that we know the C-or-H state of each person, we can return to the raw test scores (collected 16 years ago!). @fig-compare-scores compares the raw scores on the blood test for those were found to have the condition and those who were not. 
+
+@fig-compare-scores shows the distribution of raw test scores for the C group and the H group. The scores are those recorded on Day 1, but after waiting to find out the patients' conditions, we can subdivide them into those who have the condition (C) and those who don't (H).
+
+```{r echo=FALSE, warning=FALSE}
 #| label: fig-compare-scores
 #| fig-cap: "The distribution of raw test scores. After we know the true condition, we can break down the test scores by condition."
+#| fig-cap-location: margin
 set.seed(101)
-P4 <- ggplot(People, 
+P4 <- ggplot(Case_control, 
        aes(y = raw_result, x = cond)) +
   geom_jitter(width=0.2, size=0.2, alpha=0.4) +
   geom_violin(color=NA, width=0.9, fill="blue", alpha=0.5)+
   scale_shape_identity(guide="none") +
   scale_color_gradient(low="#A0A0A0", high="#0000FF", guide="none") +
-  ylab("") + xlab("") + theme_minimal() + labs(title="After waiting to find out")
+  ylab("") + xlab("") + theme_minimal() + labs(title="After waiting to find out ...")
 gridExtra::grid.arrange(P2 + labs(title="Day 1") , P4, widths = c(.4, .6))
 ```
 
-At the end of year 16, we can now divide the study participants into two groups: those who developed the condition and those who didn't.
+The classifier we aim to build is not yet complete, even though we have all the data we need. To finish the classifier, we need to identify a "**threshold score**." Raw scores above this threshold will generate a + test; scores below the threshold generate a $\Ntest$ test.
 
-@fig-compare-scores shows the distribution of raw test scores. The values are those recorded on Day 1, but after waiting to find out the patients' conditions, we can subdivide them into those who have the condition (C) and those who don't (H).
+We can make a good guess at an appropriate threshold score from the presentation in the right panel of @fig-compare-scores. The objective in setting the threshold is distinguish the C group from the H group. Setting the threshold at a score around 3 does a pretty good job. Anyone with a score above 3 will be deemed to have condition C, anyone with a score below 3 will be deemed to have condition H.
 
-The classifier we aim to build is not yet complete, even though we have all the data we need. To finish the classifier, we need to identify a "**threshold score**." Raw scores above this threshold will generate a + test; scores below the threshold generate a - test.
-
-::: {.callout-note}
 ## False positives and false negatives
-
-Since each individual person is either C or H, and each has a test result that is + or -, we can divide the people into four distinct groups.
-
-- C with a + test: This is called a "**true positive**", since the test was + (that is, positive) and the test was right.
-
-- H with a + test: This is a "**false positive**"; the test was + (positive) but wrong (false).
-
-- H with a - test: A "**true negative**"
-
-- C with a - test: A "**false negative**"
-:::
-
-It is you, the modeler, who decides what the threshold should be. In setting it, you have two objectives that happen to conflict. You want to avoid both false negatives and false positives. You do this by setting the threshold low enough that a large fraction of the people in column C are above the threshold. Those below the threshold are the false negatives. But you also want to set the threshold low enough so that only a small fraction of the people in column H are above the threshold---such people are false positives.
-
-::: {.callout-note}
-## The Loss Function
-
-In order to set the threshold at an optimal level, it is important to measure the impact of the positive or negative test result. This impact of course will depend on whether the test is right or wrong about the person's true condition. It is conventional to measure the impact as a "**loss**," that is, the amount of harm that is done.
-
-If the test result is right, there's no loss. Of course, it's not nice that a person is C, but a + test result will steer our actions to treat the condition appropriately: no loss in that.
-
-Typically, the loss of a false negative is reckoned as more than the loss of a false positive. A false negative will lead to failure to treat the person for a condition that he or she actually has.
-
-In contrast, a false positive will lead to unnecessary treatment. This also is a loss that includes several components that would have been avoided if the test had be right. The cost of the treatment itself is one part of the loss. The harm that a treatment might do is another part of the loss. And the anxiety that the person and his or her family go through is still another part of the loss. These losses are not necessarily small. The woman who gets a false positive breast-cancer diagnosis will suffer from the effects of chemotherapy and the loss of breast tissue. The man who gets a false-positive prostate-cancer diagnosis may end up with urinary incontinence and impotence. 
-
-The aim in setting the threshold is to minimize the total loss. This will be the loss incurred due to false negative times the number of false negatives plus the loss incurred from a false positive times the number of false positives.
-
-The term "**loss function**" is used to describe how the loss depends on whether the outcome is a false negative or a false positive.
-
-However, as you'll see in Lesson 35, the number of false positives and false negatives depends on the "**prevalence**" of the condition. This can differ from group to group or location to location. Until we know the relevant prevalence and the loss function, we can't sensibly pick a threshold. 
-:::
-
-## Test performance
-
-As pointed out above, to know the impact of the test you need to know both the loss function and the prevalence. Even so, there is a simple way to describe the performance of the test itself that will enable us to apply the test optimally for any prevalence or loss function.
-
-Assume for the moment that we have already selected a threshold that turns the raw score from the test into the + or - final result from the test.
-
-The threshold lets us mark as + or - each of the people whose data we are using to develop the classifier. In terms of the graphics we have been drawing, the threshold turns what we were drawing as shades of blue to represent the raw score into a definite blue-or-not color code, as in @fig-after-threshold.
-
-```{r echo=FALSE}
-#| label: fig-after-threshold
-#| fig-cap: "Fixing the threshold turns the shades of blue into blue-or-not. Depending on the threshold, the picture will look somewhat different."
-plot_people_final(People)
-```
-
-
-There's not much more we can do at this point. We know who has a positive test and who a negative test, but we don't know which people are C and which H. We therefore wait to get more information. This might involve waiting for the condition to reveal itself, 16 years in the pancreatic cancer study. 
-
-The day at last comes when we can identify the condition of each person in @fig-after-threshold.  At this point, we can split the people in @fig-after-threshold into a C group and an H group, as in @fig-divided-by-condition.
-
 
 
 ```{r echo=FALSE}
 #| label: fig-divided-by-condition
-#| fig-cap: "The people in the classifier-building project split up according to their condition. Everyone in one group has condition C. (Note that all the glyphs are filled in since everyone has the condition.) Everyone in the other group has condition H. (The glyphs of the H people are hollow.)"
-pC <- plot_people_final(People %>% filter(cond=="C"))
-pNC <- plot_people_final(People %>% filter(cond != "C"))
+#| fig-cap: "The people in the classifier-building project split up according to their condition (solid for C, hollow for H) and colored blue or gray according to the classifier output $\\Ptest\\ \\text{or}\\  \\Ntest$."
+#| fig-cap-location: margin
+pC <- plot_people_final(Case_control %>% filter(cond=="C"))
+pNC <- plot_people_final(Case_control %>% filter(cond != "C"))
 gridExtra::grid.arrange(pC + labs(title="C group"), pNC + labs(title="H group") , ncol=2)
 ```
 
-With the people divided according to their actual condition, it is easy to measure how well the test performed. There are two, distinct measures: the "**sensitivity**" and the "**specificity**." The word "distinct" is important. The sensitivity applies only to the people in the C group. We get absolutely no information about the specificity from the C group. It's the H group that we will look at to find the specificity.
 
-Both sensitivity and specificity describe the fraction of people who get the *correct* result from the test. But there are two distinct correct results, depending on which group, C or H, any person is in. Among the C people, a correct result is a positive test. Among the H people, a negative test is the correct result. 
+Dividing the people according to their actual condition lets us identify errors made by the classifier. There are two distinct types of error, one type relevant to the C group only, the other to the H group only.
+In @fig-divided-by-condition the erroneous cases in the H group---the ones drawn in blue---are called "**false-positives**." The "positive" refers to the + test result, the "false" simply means the test result was wrong.
 
-From @fig-divided-by-condition you can estimate by eye the sensitivity and specificity, keeping in mind that a *blue* symbol means a + test result. The sensitivity is the fraction of people in the C group who are marked by a blue symbol. The specificity is the fraction of people in the H group who are marked gray, the color for a - test. The vast majority of the C group are colored blue; counting marks puts the sensitivity at 90%. For the H group, most of the marks are gray. Count marks and you'll find the specificity to be 85%.
+Likewise, an error in the C group means that a person was wrongly classified as $\Ntest$.  (These are the people in C drawn in gray.) Such mistakes are called "**false-negatives**."
 
-
-## LC 34.A
-
-The following graph shows four hypothetical planets, each inhabited by a different population. Filled glyphs indicate people with condition C, hollow glyphs are for people with condition H. The blue glyphs have positive (+) test results, the gray glyphs have negative (-) test results.
-
-```{r echo=FALSE}
-A <- patient_group(0, n=500, p=0.25, probs=c(.75, .30))
-Planet1 <- plot_people_final(A %>% filter(cond=="H")) + 
-  labs(title="Planet 1")
-Planet2 <- plot_people_final(A %>% filter(test_result=="+")) + 
-  labs(title="Planet 2")
-Planet3 <- plot_people_final(A %>% filter(test_result=="-")) + 
-  labs(title="Planet 3")
-Planet4 <- plot_people_final(A %>% filter(cond=="C")) + 
-  labs(title="Planet 4")
-gridExtra::grid.arrange(
-  Planet1, Planet2, Planet3, Planet4, ncol=2
-)
-
-```
-
-
-a. Which planets is suited for measuring sensitivity and which for specificity?
-b. By eye, estimate the numerical values for sensitivity and specificity. 
-
-## LC 34.B
-
-Another case of four hypothetical planets, but in a different solar system than LC 34.A.
-
-```{r echo=FALSE}
-B <- patient_group(0, n=300, p=0.45, probs=c(.35, .65))
-Planet4 <- plot_people_final(B %>% filter(cond=="H")) + 
-  labs(title="Planet 1")
-Planet1 <- plot_people_final(B %>% filter(test_result=="+")) + 
-  labs(title="Planet 2")
-Planet3 <- plot_people_final(B %>% filter(test_result=="-")) + 
-  labs(title="Planet 3")
-Planet2 <- plot_people_final(B %>% filter(cond=="C")) + 
-  labs(title="Planet 4")
-gridExtra::grid.arrange(
-  Planet4, Planet1, Planet3, Planet2, ncol=2
-)
-```
-
-a. Which planets is suited for measuring sensitivity and which for specificity?
-b. By eye, estimate the numerical values for sensitivity and specificity. 
-
-
-## Other stuff
-
-
-
-Consider a credit-card company might building a classifier to predict at the time of the transaction whether a purchase of gasoline is fraudulent. The company knows how often and how much gasoline the individual cardholders buys, where the cardholder lives, whether the cardholder travels extensively, typical times of day for a purchase, and so on. **Feature engineering** is the process of using existing data---including, in our example, whether the purchase turned out to be fraudulent---to develop potential markers or signals of the outcome. For simplicity, imagine the features selected are the number of days since the last gasoline purchase and the distance from the last place of purchase. 
-
-Once potential features have been proposed, the engineers building the classifier assemble training and testing data sets. Suppose, for the purpose of illustration, that the training data has 2000 fraudulent transactions and 4000 non-fraudulent ones, and the testing set is about the same. 
-
-The word "assemble" was used intentionally to describe how the testing and training data were collected: a **case-control study**. Since the objective is to detect fraud, it is reasonable to have a lot of "yes" cases in the data. The "no" cases serve as a kind of control; they were included specifically to have balance in the data. If data had been collected as a simple random sample of credit card transactions, there would have been many, many more "no" cases than "yes."
-
-With such training data it is easy to build a statistical model with `Fraud` as the response variable. That model can then be evaluated on the testing data to produce a model output for each row:
-
-Fraud | Feature 1 | Feature 2 | Model output
-------|-----------|-----------|-------------
-no    |  6 days   | 5 miles   |  -
-no    |  1 day    | 250 miles |  +
-yes   | 120 days  | 75 miles  |  -
-no    | 5 days    | 0 miles   |  -
-yes   | 0.2 days  | 90 miles  |  +
-
-It's understandable that a classifier may not have perfect performance. After all, it iss trying to make a prediction based on limited data, and randomness may play a role. 
-
-There are different ways of making a mistake, and these different ways  have very different consequences. One kind of mistake, called a "**false positive**", involves a classifier output that's positive (i.e. the classifier indicates fraud) but which is wrong. The consequence of this sort of mistake in the present example is a customer who has to find another way to pay for gasoline.
-
-The other kind of mistake is called a "**false negative**". Here, the classifer output is that the transaction is not fraudulent, but in actuality it was. The consequence of this kind of mistake is different: a successful theft.
-
-The nomenclature signals that a mistake has been made with the word "false." The kind of mistake is either "positive" or "negative", corresponding to the output of the classifier.
-
-When the classifier gets things right, that is a "true" result. As with the false results, a true result is possible both for a "positive" and a "negative" classifier output. So the two ways of getting things right are called "**true positive**" and "**true negative**". 
-
-Tabulating all 6000 rows of the testing data might produce something like this:
-
-Fraud   | test +    | test -
-----|------|------
-yes | 1900 | 100      
-no  |   50 | 3950
-
-
-## Incidence
-
-## Sensitivity and specificity
-
-
+Naturally, the objective when building a classifier is to avoid errors. One way to avoid errors is by careful "**feature engineering**." Here, "features" refers to the inputs to the classifier model. Often, the designer of the classifier has multiple variables ("features") to work with. (See example.) Choosing a good set of features can be the difference between a successful classifier and one that makes so many mistakes as to be useless. 
 
 ::: {.callout-note}
-## Example: Accuracy of airport security screening 
+## Selling dog food
 
-Airplane passengers have, for decades, gone through a security screening process involving identity checks, "no fly" lists, metal detection, imaging of baggage, random pat-downs, and such. How accurate is such screening? Almost certainly, the accuracy is not as good as an extremely simple, no-input, alternative process: automatically identify every passenger as "not a security problem." We can estimate the accuracy of the "not a security problem" classifier by guessing what fraction of airplane passengers are indeed a threat to aircraft. In the US alone, there are about 2.5 million airplane passengers each day and security problems of any sort rarely happen. So the accuracy of the no-input classifier is something like 99.999%. 
+We will use the name "Bullseye" to refer to 
+a major, national, big-box retailing chain which sells, among many other products, dog food. Sales are largely determined by customer habits; people tend to buy where and what they have previously bought. There are many places to buy dog food, for instance pet supermarkets and grocery stores. 
 
-The actual screening system, using metal detectors, baggage x-rays, etc. will have a lower accuracy. We know this since it regularly mis-identifies innocent people as security problems.
+One strategy for increasing sales involves discount coupons. A steep discount provides a consumer incentive to try something new and, maybe, leads to consumers forming new habits. But, from a sales perspective, there is little point in providing discounts to people who already have the habit of buying dog food from the retailer. Instead, it is most efficient to provide the discount only to people who don't yet have that habit  
 
-The problem here is not with airport security screening, but with the flawed use of *accuracy* as a measure of performance. Indeed, achieving super-high accuracy is not the objective of the security screening process. Instead, the objective is to *deter* security problems by convincing potential terrorists that they are likely to get caught before they can get on a plane. This has to do with the *sensitivity* of the system. The *specificity* of the system, although important to the everyday traveller, is not what deters the terrorist.
+The Bullseye marketing staff decided to build a classifier to identify pet owners who already shop at Bullseye but do not purchase dog food there. The data available, from Bullseye's "loyalty" program, consisted of individual customers' past purchases of the tens of thousands of products sold at Bullseye. 
+
+Which of these many products to use as indicators of a customer's potential to switch to Bullseye's dog food? This is where feature engineering comes in. Searching through Bullseye's huge database, the feature engineers identified that customers who buy dog food also buy carpet cleaner. But many people buy carpet cleaner who don't buy dog food. The engineers searched for purchases might distinguish dog owners from other users of carpet cleaner. 
+
+The feature engineers' conclusion: Send dog-food coupons to people who buy carpet cleaner but do not buy diapers. Admittedly, this will leave out the people who have both dogs and babies: these are false negatives. It will also lead to coupons being sent to petless, spill-prone people whose children, if any, have moved beyond diapers: false-positives. 
 
 :::
 
+
+## Threshold, sensitivity and specificity
+
+Another way to control classifier errors involves the threshold used to turn the output of the model function into a $\Ptest\ \text{or}\  \Ntest$ result. To understand this, lets return to the score data in @fig-compare-scores. That graph is hard to read because the scores have a very long-tailed distribution; the large majority of scores are below 2 but the scores go up to 40. To make it easier to compare scores betwee the C and H groups,  @fig-compare-scores2 shows the scores on a nonlinear axis. 
+
+```{r echo=FALSE}
+f <- with(Case_control, 
+          splinefun(x = rank(raw_result), 
+                    y = raw_result, 
+                    method="monoH.FC"))
+finv <- with(Case_control, 
+          splinefun(x = raw_result, 
+                    y = rank(raw_result), 
+                    method="monoH.FC"))
+```
+
+```{r echo=FALSE}
+#| label: fig-compare-scores2
+#| fig-cap: "Redrawing the participants' scores from @fig-compare-scores on a nonlinear axis. Color marks whether the classifier gave a correct output."
+#| fig-cap-location: margin
+
+Plot_data <- Case_control %>%
+  mutate(test_result = raw_result <=3, 
+         wrong = (cond=="H" & test_result) | 
+           (cond=="C" & !test_result),
+         test_shape = ifelse(test_result, "N", "P")) 
+ggplot(Plot_data, 
+       aes(y = rank(raw_result), x = cond, color=as.factor(wrong), shape=test_shape)) +
+  geom_jitter(width=0.2, size=2, alpha=0.8) +
+  scale_shape_identity() + 
+  scale_color_manual(values=c("blue", "brown"), guide="none") +
+  ylab("") + xlab("Condition") +
+  geom_hline(aes(yintercept = finv(3)), color="orange") + 
+  scale_y_continuous(breaks = c(), sec.axis = sec_axis(~ f(.), breaks=c(0,0.5, 1,2,3, 5, 10, 40), name="Raw score")) + 
+  theme_minimal() 
+```
+
+In @fig-compare-scores2, we have set the threshold to be a raw score of 3.0. Scores above the threshold translate to a $\Ptest$ result, scores below threshold are $\Ntest$.
+
+False results are shown in red, true results in green. The false-negatives are the red minus signs, that is, C participants below the threshold. The false-positives are the red $\Ptest$ signs. These are the H participants above the threshold. 
+
+Moving the threshold up would reduce the number of false-positives. At the same time, the larger threshold would *increase* the number of false-negatives. This trade-off between the number of false-positives and the number of false-negatives is characteristic of classifiers.
+
+@fig-fraction-correct shows the overall pattern for false results versus threshold. At a threshold of 0, all test results are $\Ptest$. Hence, none of the C group results are false; if there are no $\Ntest$ results, there cannot be any false-negatives. On the other hand, all of the H group are false-positives.  
+
+Increasing the threshold changes the results. At a threshold of 1, many of the H group---about 50%---are being correctly classified as $\Ntest$. Unfortunately, the higher threshold introduces some negative results for the C group. So the fraction of correct results in the C group goes down to about 90%.  This pattern continues: raising the threshold raises the fraction correct in the H group and lowers the fraction correct in the C group.  
+
+```{r echo=FALSE}
+#| label: fig-fraction-correct
+#| fig-cap: "The choice of threshold determines the number of correct results."
+#| fig-cap-location: margin
+
+For_graph <- Plot_data %>%
+  mutate(rank_score=finv(raw_result)) %>%
+  arrange(raw_result) %>%
+  group_by(cond) %>%
+  mutate(frac_below = row_number()/150) %>%
+  mutate(
+    frac_wrong = ifelse(cond=="H", frac_below, 1-frac_below)) 
+  
+ggplot(For_graph, aes(x=raw_result, y=frac_wrong, color=cond)) +
+  geom_line() +
+  scale_x_sqrt(breaks=c(0, 1, 2, 3, 5, 10, 20, 30, 40)) +
+  annotate("text", label="sensitivity vs threshold", x=10, y=.48,  color="red",angle=-45) +
+  annotate("text", label="specificity vs threshold", x=.5, y=.45,  color="cyan3",angle=70) +
+  ylab("Fraction correct") + xlab("Threshold") 
+```
+
+At any specified threshold, the fraction of correct results in the H group is called the "**specificity**." The fraction of correct results in the C group is called the "**sensitivity**." Ideally, both the sensitivity and specificity would be 100%. In practice, high sensitivity means lower specificity and *vice versa*. 
+
+## Likelihood
+
+A "clue" is a piece of information or an observation that tells something about a mystery, but not usally everything. As an example, consider a patient who has just woken up from a coma and doesn't know what month it is. It is a mystery. With no information at all, it is almost equally likely to be any month. So the hypotheses in contention might be labeled Jan, Feb, March, and so on.
+
+The person looks out the window and observes snow falling. The observation of snow is a clue. It tells something about what month it might be, but not everything. For instance, the possibility that it is July becomes much less likely if snow has been observed; the possibility that it is February (or January or March) becomes more likely.
+
+Statistical thinkers often have to make use of clues. Suppose the coma patient is a statistician. She might try to quantify the likelihood of each month given the observation of snow. Here's a reasonable try:
+
+Month | Probability of seeing snow when looking out the window for the first time each day | Notation
+------|------------------ |------
+January | 2.3%  | $p(\text{snow}\given \text{January})$
+February | 3.5% | $p(\text{snow}\given \text{February})$
+March | 2.1% | $p(\text{snow}\given \text{March})$
+April | 1.2% | $p(\text{snow}\given \text{April})$
+May   | 0.5% | ... and so on ...
+June  | 0.1%
+July  | 0
+August| 0
+September | 0.2%
+October | 0.6%
+November | 0.9%
+December | 1.4%
+
+The table lists 12 probabilities, one for each month. For the coma patient, these probabilities let her look up which months it is likely to be. For this reason, the probabilities are called "**likelihoods**."
+
+The coma patient has 12 hypotheses for which month it is. The table as a whole is a "**likelihood function**" describing how the likelihood varies from one hypothesis to another. Think of the entries in the table as having been radioed back to Earth from the 12 hypothetical planets $\given \text{January})$ through $\given \text{December})$.
+
+It is helpful, I think, to have a notation that reminds us when we are dealing with a likelihood and a likelihood function. We will use the fancy ${\cal L}$ to identify a quantity as a likelihood. The coma patient is interested in the likelihood of snow, which we will write ${\cal L}_\text{snow}$. From the table we can see that the likelihood of snow is a function of the month, that is ${\cal L}_\text{snow}(\text{month})$, where month can be any of January through December.
+
+This likelihood function has a valuable purpose: It will allow the coma patient to calculate the probability of it being any of the twelve months given her observation of snow, that is $p(\text{month} \given \text{snow})$. 
+
+In general, likelihoods are useful for converting knowledge like ${\cal L}_a(b)$ into the form $p(b \given a)$. The formula for doing the conversion is called "**Bayes' Rule**." 
+
+The form of Bayes' rule appropriate to the coma patient allows her to calculate the probability of it being any given month from the likelihoods. We also need to account for February, with only 28 days, being shorter than the other months. So we will define a probability function, $p(\text{month}) = \frac{\text{number of days in month}}{365}$
+
+::: {.column-page-right}
+**Bayes' Rule**
+$$p(\text{month} \given \text{snow}) = \frac{{\cal L}_\text{snow}(\text{month}) \cdot p(\text{month})}{{\cal L}_\text{snow}(\text{Jan}) \cdot p(\text{Jan}) + 
+  {\cal L}_\text{snow}(\text{Feb}) \cdot p(\text{Feb}) + \cdots + 
+  {\cal L}_\text{snow}(\text{Dec}) \cdot p(\text{Dec})}$$
+:::
+
+::: {.callout-warning}
+## LC
+
+Calculate the probability of it being February for the coma patient. Use the likelihood function given in the month-by-month table.
+:::
+
+## How serious is it, Doc?
+
+Imagine a patient getting a $\Ptest$ test result and wondering what the probability is of his having condition C. That is, he wants to know $p(C \given \Ptest)$. This is equivalent to asking, "How serious is it, Doc?" 
+In answering, what the doctor has to work with is the two likelihoods ${\cal L}_\Ptest(C)$ and ${\cal L}_\Ptest(H)$, which came from the breakdown of the testing data shown in @fig-divided-by-condition. Note that both likelihoods are for the observation $\Ptest$, which is what the patient had.
+
+But the person wasn't in the sample used for the testing data. He is from the general population. The doctor can look up on the CDC web site what the prevalence of C is in the community or state or the entire country. The doctor, knowing the patient's age, might even look at the "**age-specific prevalence**." Whatever the source, the doctor gets a value for the prevalence, $p(C)$. From that, it is simple to calculate $p(H) = 1 - p(C)$.
+
+Bayes' Rule in this situation is
+
+$$p(C\given \Ptest) = \frac{{\cal L}_\Ptest(C) \cdot p(C)}{{\cal L}_\Ptest(C) \cdot p(C) + {\cal L}_\Ptest(H) \cdot p(H)}$$
+
+Suppose that $p(C) = 1\%$ for this age of patient. (Consequently, $p(H) = 99\%$.) And imagine that the test taken by the patient has a threshold score of 1. From @fig-fraction-correct we can look up the sensitivity (${\cal L}_\Ptest(C) = 0.95$) and specificity (${\cal L}_\Ptest(H) = 0.50) for the test. Substituting these numerical values into Bayes' Rule gives
+
+$$p(C \given \Ptest) = \frac{0.95\times 0.01}{0.95\times 0.01 + 0.50*0.99} = 1.9\%$$
+The $\Ptest$ result has changed the probability that the patient has C from 1% to 1.9%. That's big proportionally, but not so big in absolute terms.
+
+The doctor's next appointment is for another patient: an 80-year-old with a family history of C. The doctor looks up the prevalence of C in this population: 20%. For this patient:
+
+$$p(C \given \Ptest) = \frac{0.95\times 0.2}{0.95\times 0.2 + 0.50*0.8} = 32\%$$
 

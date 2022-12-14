@@ -130,3 +130,12 @@ The question is about the relative admissions probability of females and males.
 We want to compare two groups: females and males. Here, we're comparing the probability of being admitted in each of the comparison groups. Table **B** is formatted to enable this comparison. 
 :::
 
+--------
+
+::: {.callout-warning}
+
+Explain how come the output of `model_function()` in the classifier example can be bigger than one?
+
+Use logistic regression to produce a model whose output can be interpreted directly as the probability of being alive at follow up.
+:::
+

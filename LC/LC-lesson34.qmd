@@ -225,3 +225,66 @@ It's always a good idea to be concerned for your friend, but the data reported h
 
 The selected scale doesn't include zero and so tends to over-emphasize what amount to small differences in the probability of failure.
 :::
+
+--------
+
+## LC 34.A
+
+The following graph shows four hypothetical planets, each inhabited by a different population. Filled glyphs indicate people with condition C, hollow glyphs are for people with condition H. The blue glyphs have positive (+) test results, the gray glyphs have negative (-) test results.
+
+```{r echo=FALSE}
+A <- patient_group(0, n=500, p=0.25, probs=c(.75, .30))
+Planet1 <- plot_people_final(A %>% filter(cond=="H")) + 
+  labs(title="Planet 1")
+Planet2 <- plot_people_final(A %>% filter(test_result=="+")) + 
+  labs(title="Planet 2")
+Planet3 <- plot_people_final(A %>% filter(test_result=="-")) + 
+  labs(title="Planet 3")
+Planet4 <- plot_people_final(A %>% filter(cond=="C")) + 
+  labs(title="Planet 4")
+gridExtra::grid.arrange(
+  Planet1, Planet2, Planet3, Planet4, ncol=2
+)
+
+```
+
+
+a. Which planets is suited for measuring sensitivity and which for specificity?
+b. By eye, estimate the numerical values for sensitivity and specificity. 
+
+## LC 34.B
+
+Another case of four hypothetical planets, but in a different solar system than LC 34.A.
+
+```{r echo=FALSE}
+B <- patient_group(0, n=300, p=0.45, probs=c(.35, .65))
+Planet4 <- plot_people_final(B %>% filter(cond=="H")) + 
+  labs(title="Planet 1")
+Planet1 <- plot_people_final(B %>% filter(test_result=="+")) + 
+  labs(title="Planet 2")
+Planet3 <- plot_people_final(B %>% filter(test_result=="-")) + 
+  labs(title="Planet 3")
+Planet2 <- plot_people_final(B %>% filter(cond=="C")) + 
+  labs(title="Planet 4")
+gridExtra::grid.arrange(
+  Planet4, Planet1, Planet3, Planet2, ncol=2
+)
+```
+
+a. Which planets is suited for measuring sensitivity and which for specificity?
+b. By eye, estimate the numerical values for sensitivity and specificity. 
+
+--------
+
+## Basics
+
+Calculate the number of false positives and false negatives as a function of the threshold. 
+
+Turn the results in the Training group into a sensitivity and specificity. 
+
+---------
+
+Explain in everyday terms why the following is true:
+$p(H \given \Ptest) = 1 - p(C \given \Ptest)$
+
+--------

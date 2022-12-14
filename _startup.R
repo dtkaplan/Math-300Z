@@ -137,14 +137,14 @@ plot_people_final <- function(data) {
 }
 
 plot_people_score <- function(data) {
-  gf_point(y ~ x, shape=~raw_shape, color=~raw_result, data=data) +
+  gf_point(y ~ x, shape=~raw_shape, color=~log(1+raw_result)/log(41), data=data) +
     scale_shape_identity(guide="none") +
     scale_color_gradient(low="#A0A0A0", high="#0000FF", guide="none") +
     theme_void() + coord_fixed()
 }
 
 plot_people_score_condition <- function(data) {
-  gf_point(y ~ x, shape = ~shape, color=~raw_result, data=data) +
+  gf_point(y ~ x, shape = ~shape, color=~log(1+raw_result)/log(41), data=data) +
     scale_shape_identity(guide="none") +
     scale_color_gradient(low="#A0A0A0", high="#0000FF", guide="none") +
     theme_void() + coord_fixed()

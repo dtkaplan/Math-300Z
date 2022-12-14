@@ -15,139 +15,81 @@ lesson <- 35
 source("../_startup.R")
 ```
 
-Lesson 34 introduced classifiers, model functions where the output is one of two values which we called + and -. 
 
-The designer of the classifier chooses what inputs to use and the architecture of the model. The model is fit to training data, thereby producing a specific classifier function.
-
-::: {.callout-note}
-## Example: Survival
-
-To illustrate the construction of a classifier function, imagine yourself participating in the 1970s-1990s Whickham study of nurses in the UK. Your task in 1991 is to follow up on more of the nurses who were interviewed in the 1970s. You have already done some of the work and stored the results in the `Whickham`. To make your search for the remaining nurses more productive, you want to build a classifier whose output, + or -, will direct you to look first in the death records or, for those with a - output, in the employment and pension records.
-
-The inputs to the classifier will be the data you have already assembled: the `age` and `smoker` status of the nurse when first interviewed. Since `Whickham` includes an `outcome` variable---you've already followed up on those nurses---you can train your classifer with that data frame. You have decided on the model `outcome ~ age*smoker`, but since `outcome` is categorical with levels `"Alive"` and `"Dead"`, you will use a zero-one encoding.
-
-```{r warning=FALSE}
-Whickham_model <- lm(zero_one(outcome, one="Alive") ~ age*smoker, data=Whickham)
-Whickham_function <- makeFun(Whickham_model)
-```
-
-To get a sense for the range of outputs of the model, you try out the model function:
-
-```{r}
-Whickham_function(age = 75, smoker="Yes")
-Whickham_function(age = 20, smoker="No")
-```
-
-::: {.callout-warning}
-## Move to Learning Checks: LC 35.H
-
-Explain how come the output of `Whickham_function()` can be bigger than one?
-
-Use logistic regression to produce a model whose output can be interpreted directly as the probability of being alive at follow up.
-:::
-
-You are not quite done with the task of building a classifier. The final step is to choose a threshold to translate the numerical output of `Whickham_function()` into one of the classifer outputs, + or -.
-
-Probably you are not sure what that threshold should be. A good step in such situations is to take a guess and see what you get by way of model performance. Then you can improve the guess if need be. In the following demonstration, we write an R function that takes the `age` and `smoker` inputs, uses `Whickham_function()` to translate them into a number, and applies a threshold to that number to translate it into a + or - output.
-
-::: {.callout-warning}
-## Demonstration: Turning a model function into a classifier function
-
-```{r}
-Whickham_classifier <- function(age, smoker, threshold) {
-  number <- Whickham_function(age=age, smoker=smoker)
-  ifelse(number >= threshold, "+", "-")
-}
-```
-
-Try it out to make sure that the `Whickham_classifier()` takes appropriate inputs and returns an output in the right form. We'll use a threshold of 0.6---just a guess.
-
-```{r}
-Examples <- data.frame(age = c(75, 20), smoker=c("Yes", "No"))
-Examples %>%
-  mutate(test_result = Whickham_classifier(age, smoker, threshold=0.6))
-```
+::: {.hidden}
+$$\newcommand{\Ptest}{\mathbb{P}}
+\newcommand{\Ntest}{\mathbb{N}}
+\newcommand{\given}{\ |\!\!|\  }$$
 :::
 
 
 
-Having built a classifier, we are ready to check the performance of the classifier in terms of false positive and false negative rates:
+Lesson 34 introduced classifiers: model functions where the output is one of two values which we called $\Ptest \ \text{and}\ \mathbb{N}$. The classifier is trained based on data from recruited subjects, some with the condition C and some without. Typically care is taken to make sure that both C and H groups are well represented, as in the training data displayed in @fig-divided-by-condition2. 
 
-```{r}
-Whickham %>%
-  mutate(test_result = Whickham_classifier(age, smoker, threshold=0.6)) %>%
-  group_by(outcome, test_result) %>%
-  tally() %>%
-  mutate(proportion = n/nrow(Whickham))
+```{r echo=FALSE}
+#| label: fig-divided-by-condition2
+#| fig-cap: "The people used as subjects in building the Lesson 34 classifier."
+#| column: margin
+pC <- plot_people_final(Case_control %>% filter(cond=="C"))
+pNC <- plot_people_final(Case_control %>% filter(cond != "C"))
+gridExtra::grid.arrange(pC + labs(title="C group"), pNC + labs(title="H group") , ncol=1)
 ```
 
-Evidently, a + test result is a prediction that the person will be alive on follow-up. Consequently, the (Alive, -) row has the false negatives (a negative result that is wrong).
-The (Dead, +) row is the false negatives. So the false-positive rate---false positives per test---is 5.2%. The false-negative rate is 13.6%.
+In the training data shown in @fig-divided-by-condition, there are 300 people altogether and 17 false-negatives (the gray dots in the C group). This gives a false-negative rate of about 6%. Similarly there are 30 false-negatives (the blue dots in the H group), a false-positive rate of 10%. 
 
-We still have to explore which choice of the threshold will make the test as good as possible. Our ultimate measure is based on the consequences of the test being wrong. These consequences are encoded into the *loss function*. 
+Slicing things the other way, of the 163 people in @fig-divided-by-condition with a $\Ptest$ test result (blue dots), 133 of them in are in the C group. This implies, for the people in the training data, that a $\Ptest$ test result indicates that the probability of having C is 82%. This probability might be useful for a patient or a doctor in interpreting what a positive test result means for them. 
 
-For our purposes here, where the classifier will guide how we search for each person, the loss function could be based on the difficulty of the different kinds of searching. It is comparatively easy to check the death records, they are public, stored in a central database, and searchable by the nurse's social insurance ID number. It's hard to go through employment and pension records; they are private and decentralized. So we'll define the loss function like this:
+Except ... the patients in question will not be coming from the people in the training data. The real-life patients will be coming from the general population. To interpret the results of the test, we need to adjust for the differences between the people in training data and people in the general population. If C is an uncommon condition, the C group in the general population will be much smaller than the H group in the general population, as depicted in @fig-divided-by-condition3.
 
-- loss_function(false positive) $\equiv$ 10 loss units
-- loss_function(false negative) $\equiv$ 1 loss unit
 
-With this loss function, the expected loss per test is 
-$$10 \times 0.052 + 1 \times 0.136 = 6.56\  \text{loss units per test}$$
-To find the *best* value for the threshold, try other possible values for the threshold. Here, we'll try 0.8, re-apply the test with that threshold, and tabulate the false-positive and false-negative rates.
-
-```{r}
-Whickham %>%
-  mutate(test_result = Whickham_classifier(age, smoker, threshold=0.8)) %>%
-  group_by(outcome, test_result) %>%
-  tally() %>%
-  mutate(proportion = n/nrow(Whickham))
+```{r echo=FALSE}
+#| label: fig-divided-by-condition3
+#| fig-cap: "The population on which the classifier will be used."
+#| fig-cap-location: margin
+pC <- plot_people_final(People %>% filter(cond=="C"))
+pNC <- plot_people_final(People %>% filter(cond != "C"))
+gridExtra::grid.arrange(pC + labs(title="C group"), pNC + labs(title="H group") , ncol=2)
 ```
 
-The 0.8 threshold lowers the false positive rate to 1.6%, but raises the false negative rate to 30%. That's the typical behavior of classifiers, changing the threshold to lower the false positive rate will raise the false negative rate, and *vice versa*.
+@fig-divided-by-condition2 and @fig-divided-by-condition3 are clearly different in terms of the number of people displayed and the relative "**prevalence**" of condition C. In @fig-divided-by-condition2, the prevalence is 50%, that is, half the subjects have condition C. But in @fig-divided-by-condition3 the prevalence is much smaller; only about 7% of the people in the population have condition C.
 
-With a threshold of 0.8, the expected loss per test is
-$$10 \times 0.16 + 1 \times 0.30 = 1.9\ \text{loss units per test}$$
-Better. 
+Despite the differences between the figures, the sensitivity and specificity of the test are exactly the same in both figures. Why? Because the same test is being applied in both figures. Despite the prevalence being much smaller in @fig-divided-by-condition3, restricting things just to the C group and applying the test will produce the same fraction of correct results as in the training data. Restricting just to the H group and applying the test will similarly give the same fracton of correct results as in the H group of the training data.
 
-Before we continue on the find the *best* threshold, we need to do a *reality check.* The loss rates we just calculated are based on the training data. In that training data, there were 945 subjects who survived out of $n=1314$ altogether. That's a prevalence of $\frac{945}{1314} = 72\%$ in the training data. It might well be that the prevalence among the remaining nurses in the study is different. 
+The prevalence has an important role to play in determining what a $\Ptest$ test result means. In the general population, according to @fig-divided-by-condition3, 17% of the people have a $\Ptest$ test result, as opposed to 53% in the training data. Of the 17% with a $\Ptest$ test result, what fraction actually have condition C? This is the proportion of blue dots in the C group and works out to just 36%. (In the training data, this proportion was 82%.) In other words, the probability calculated from the training data is misleading. 
 
-Accordingly, we need to adjust the loss calculations to reflect the actual prevalence. The first step in doing this is to find the *sensitivity* and *specificity*, as we did in Lesson 35.
+## Prevalence, sensitivity, specificity
 
-Sensitivity and specificity are easy to calculate so long as you keep in mind that sensitivity is only relevant to that part of the population who actually have the condition intended to be marked by a + test. In the Whickham example, the sensitivity is the percentage of correct results **only** among the people whose outcome is "Alive."  There are 395 + 550 such people, of whom 550 had a correct result, so
+The training data are useless when it comes to representing the prevalence of condition C in the general population. On the other hand, the sensitivity and specificity calculated from the training data are the same in the general population. 
 
-sensitivity (using the theshold 0.8) is $550/(395+550) = 58\%$.
+We can put together the prevalence in the general population along with the sensitivity and specificity from the training data, to create an accurate picture of how the test will perform in the general population. Indeed, that is just what we did to draw @fig-divided-by-condition3. First, we divided the general population into C and H groups. The prevalence tells us how many people to put into the C group; the remaining people go into the H group. Then, we apply the specificity to the people in the H group to determine the fraction of $\mathbb{N}$ results in the H group. The remaining people in the H group got a $\Ptest$ test result; these are the false positives.
 
-Similarly, specificity is only relevant to the people whose outcome is "Dead". There are 348 + 21 such people, of whom 348 got the correct test result.
+Similarly, we apply the sensitivity to find the number of $\Ptest$ people in the C group. The remaining C people tested -; there are the false negatives. Lets do this arithmetically so that we can calculate false-positive and false-negative rates. 
 
-specificity (using the threshold 0.8) is $348/(348 + 21) = 94\%$.
+ $\ $  | in C group   | in H group
+--------|:----------:|:----------:
+Overall proportion | 7%        | 93%
+Testing positive   | $7\% \times\text{sensitivity}$ | $93\% \times (1 -\text{specificity})$
+Testing negative   | $7\% \times (1-\text{sensitivity})$ | $93\% \times \text{specificity}$
 
-Sensitivity and specificity measure the test itself. False positive and false negative rates measure the test as applied to a specific population. The relevant fact of the population is the "**prevalence**" of the condition. 
 
-## Prevalence in the population
+The total number of people who test positive is $$7\% \times\text{sensitivity} + 93\% \times (1 -\text{specificity})\ .$$ Of these, $7\% \times\text{sensitivity}$ actually have the condition C. Consequently, the probability that a person with a $\Ptest$ test result has condition C is 
 
-It often happens that the data used to *train* a classifier function is not representative of the population in which it will be used. For example, classifiers are often trained on "**case-control**" data. People with a particular condition, say, having strong symptoms of COVID-19 are easily recruited at health clinics. These are the "cases." 
+$$\frac{7\% \times\text{sensitivity}}{7\% \times\text{sensitivity} + 93\% \times (1 -\text{specificity})}$$
 
-The "controls" are people who don't have any symptoms. These can be recruited by, say, door-to-door canvasing of a neighborhood. If we recruit 500 cases and 500 controls, then the prevalence of COVID-19 symptoms in our database will be 50%.
+Similarly, for the people who get a $\mathbb{N}$ test result, the fraction who have condition C is 
 
-Assume for the sake of an example that the sensitivity of an inexpensive, over-the-counter COVID-19 test is 90%, and the specificity is 95%. From these numbers, we can calculate the false-positive and false-negative rates.
+$$\frac{7\% \times(1-\text{sensitivity})}{7\% \times(1-\text{sensitivity}) + 93\% \times \text{specificity}}$$
+These two formulas are very similar. The difference is only whether the (1 -  x) is applied to specificity (the top formula) or sensitivity (the bottom formula).
 
-False negatives can only arise in the part of the population who have the condition. For the 500 cases in our database, the sensitivity of 90% will work out to 450 correct positive tests and 50 incorrect negative tests.
+$$p(C | \Ptest) = \frac{p(\Ptest | C) \cdot p(C) }{p(\Ptest | C) \cdotp(C) + p(\Ptest|H) \cdotp(H)}$$
 
-False positives can only arise among the people who do not have the condition. For the 500 controls in our database, the specificity of 95% will work out to 475 correct negative tests and 25 incorrect positive tests. 
-
-There are 1000 people in the database, so the false-positive rate is 25/1000 = 2.5%. The false-negative rate is 50/1000 = 5%.
-
-However, these rates are not necessarily representative of the rates we will find when the test is used in the general population. Fortunately, we can calculate the false-positive and false-negative rates for a population with any given prevalence.
-
-Imagine, say, that we think the prevalence of COVID-19 in the general population is 4%. This puts the false-negative rate---remember, false-negative only applies to people with the condition---at $4\% \times (1-\text{sensitivity|) = 0.04 \times 0.10 = 0.004$.
-
-In that population, 96% do not have COVID-19. This, combined with the specificity, allows calculation of the false-positive rate: $96\% \times (1-\text{specificity}) = 0.96 \times 0.05 = 0.48. 
+$$p(C\ |\!\!|\  \mathbb{N}) = \frac{p(\mathbb{N} | C) \cdot p(C) }{p(\mathbb{N} | C) \cdotp(C) + p(\mathbb{N}|H) \cdotp(H)}$$
 
 ## Sensitivity and specificity as likelihoods
 
 In Lesson 34, we used training data to estimate the sensitivity and specificity of the test in the C vs H classifier. In that example, the sensitivity was 90% and the specificity was 85%. We can use those facts to construct the test results on a hypothetical population with whatever *prevalence* we think is relevant to the actual population we will be testing. The arithmetic is straightforward, but we will use graphics to illustrate the calculations.
 
-First, we synthesis a data frame that has many rows, half corresponding to imaginary people with condition C and the other half with condition H. Next, we assign a *test outcome* for each of the people. We do this in a way that duplicates the sensitivity and specificity that we measured earlier. That is, for the C people, we randomly generate a + or - test result, setting the probability of a + result to be the measured *sensitivity*. We do similarly for the H people, the only difference being that the probability of a - result will be the *specificity*. Figure @fig-planets-of-C-and-H shows 2000 rows of simulated data, with 1000 C cases and 1000 H cases. 
+First, we synthesis a data frame that has many rows, half corresponding to imaginary people with condition C and the other half with condition H. Next, we assign a *test outcome* for each of the people. We do this in a way that duplicates the sensitivity and specificity that we measured earlier. That is, for the C people, we randomly generate a $\Ptest\ \text{or}\ \mathbb{N}$ test result, setting the probability of a $\Ptest$ result to be the measured *sensitivity*. We do similarly for the H people, the only difference being that the probability of a $\mathbb{N}$ result will be the *specificity*. Figure @fig-planets-of-C-and-H shows 2000 rows of simulated data, with 1000 C cases and 1000 H cases. 
 
 ```{r echo=FALSE}
 #| label: fig-planets-of-C-and-H
@@ -164,27 +106,173 @@ gridExtra::grid.arrange(pC + labs(title="Planet of the C"), pNC + labs(title="Pl
 
 @fig-planets-of-C-and-H shows the simulated data split up into two groups, one for the C cases and the other for the H cases.
 
-Now we are going to push hard on a fanciful metaphor in order to introduce some new terminology that will be important for Lessons 36 and 37. The metaphor is that C people originate in a *planet* populated exclusively by C people. The H people live on another planet, inhabited only by the H. On both planets, the classifier has been applied to everyone so that we know their test results: + is shown in blue, - in gray, as in Lesson 34.
+Now we are going to push hard on a fanciful metaphor in order to introduce some new terminology that will be important for Lessons 36 and 37. The metaphor is that C people originate in a *planet* populated exclusively by C people. The H people live on another planet, inhabited only by the H. On both planets, the classifier has been applied to everyone so that we know their test results: $\Ptest$ is shown in blue, $\mathbb{N}$ in gray, as in Lesson 34.
 
-Needless to say, these planets are imaginary. Let's call them "**hypothetical**" planets, planets where a particular hypothesis is known to apply. The hypothesis on the C planet is that all the inhabitants are C. Likewise for the H planet. The proportion of + test results on Planet C has been set to match the actual *sensitivity* of the classifier. Similarly, the - test results on Planet H match the actual *specificity* of the classifer. 
+Needless to say, these planets are imaginary. Let's call them "**hypothetical**" planets, planets where a particular hypothesis is known to apply. The hypothesis on the C planet is that all the inhabitants are C. Likewise for the H planet. The proportion of $\Ptest$ test results on Planet C has been set to match the actual *sensitivity* of the classifier. Similarly, the $\mathbb{N}$ test results on Planet H match the actual *specificity* of the classifer. 
 
-A new bit of statistical vocabulary that will be important in Lessons 36 and 37. A 
-"**likelihood**" is a special kind of probability. Like all probabilities, it's a number between zero and one. Likelihoods are always conditional probabilities, that is a probability calculated on the assumption that a specific assumption holds. In terms of our metaphor, a likelihood is a probability calculated on a hypothetical planet.
 
-The sensitivity is a likelihood. The hypothetical planet is Planet C, the planet where all inhabitants have condition C. On that planet, the sensitivity is the probability that a randomly selected inhabitant will get a test result +. But, since the probability is being calculated on the condition that all inhabitants have condition C, it is a conditional probability: a likelihood. 
+::: {.callout-note}
+## Example: Studying the impact of smoking
 
-The specificity is similarly a likelihood. The hypothetical planet is H, where all inhabitants have condition H. The conditional probability is that of getting a - result on the hypothetical planet.
+Imagine being on the staff of a study of the effects of mortality on smoking. We will model the example on the kind of data recorded in `Whickham`, which we will pretend is just a small part of a broader study involving 10,000 participants. The participants recorded in `Whickham` are nurses. The remaining participants come from a variety of occupations.  
 
-We will denote likelihoods using the letter ${\cal L}$. The fanciful script reminds us that the likelihood is a fanciful probability, a probability on a hypothetical world.
+Much work went into completing the `Whickham` data, but a huge amount of work lies ahead of us. Following up on the 9000 non-Whickham participants will be difficult. Consequently, headquarters has directed the staff to streamline the remaining work using "artificial intelligence." The AI system will determine, for each person who still needs following-up, whether to look first at national death records or search the employment and pension records. 
 
-The sensitivity is ${\cal L}(+ \text{ given } C)$. The specificity is ${\cal L}(- \text{ given } H)$. The "given C" means "on hypothetical planet C. The "given H" means "on hypothetical planet H." It would be just as correct to write $p(+\text{ given }C)$ and $p(-\text{ given }H)$, but I want to remind you that the the sensitivity and specificity apply only to their respective conditions, C and H. Also, phrases like "assuming H, the probability of - is ..." or "under the assumption H, the probability of - is ...."
+The AI system might less romantically be called a "classifier." The inputs to the classifier will be the `age` and `smoker` status of the person when first interviewed. `Whickham`, the follow-up work you have already completed, will be used to train the classifier. The model will be `outcome ~ age + smoker`. The `outcome` variable is categorical and has levels "Alive" and "Dead." The level "Dead" indicates that the person could be found via the national death records.
+:::
+
+We build the model function relevant to the example just given using `Whickham` as training data:
+
+```{r warning=FALSE}
+Whickham_model <- lm(zero_one(outcome, one="Alive") ~ age*smoker, data=Whickham)
+AI_function <- makeFun(Whickham_model)
+```
+
+To get a sense for `model_function()` , try it out:
+
+```{r}
+AI_function(age = 75, smoker="Yes")
+AI_function(age = 20, smoker="No")
+```
+
+Notice that the output of `model_function()` is a *number*.
+
+## Sensitivity and specificity
+
+The model function will work in conjunction with a **threshold** to constitute the classifier. The classifier output---call it "employment" or "mortality"--- will be the result of comparing the model function output to the threshold. 
+
+We will turn to the question of setting the threshold later on. To illustrate the calculation of sensitivity and specificity, assume we have decided to try a threshold of 0.6. 
+
+::: {.callout-warning}
+## Demonstration: Turning a model function into a classifier function
+
+To support the choice of the threshold value, we will build a simple function that implements the classifier. The threshold is an argument to this function, allowing us to check the classifier performance for any given threshold.
+
+```{r}
+AI_classifier <- function(age, smoker, threshold=0.6) {
+  number <- AI_function(age=age, smoker=smoker)
+  ifelse(number >= threshold, "employment", "mortality")
+}
+```
+To illustrate what `AI_classifier` is doing, we try it out on a few cases with typical inputs.  
+
+```{r}
+Examples <- data.frame(age = c(75, 20), smoker=c("Yes", "No"))
+Examples %>%
+  mutate(test_result = AI_classifier(age, smoker, threshold=0.6))
+```
+:::
+
+By applying `AI_classifier()` to the training data, we can find the sensitivity and specificity of the test (at the assumed threshold of 0.6).
+```{r}
+Whickham %>%
+  mutate(test_result = AI_classifier(age, smoker, threshold=0.6)) %>%
+  group_by(outcome, test_result) %>%
+  tally() %>%
+  mutate(proportion = n/nrow(Whickham))
+```
+
+The sensitivity looks only at the cases where the classifier reported "employment." In 766 of those cases, the classifier output is correct, in 68 the classifier output is incorrect. So the sensitivity is $\frac{766}{766 + 68} = 92\%$.
+
+Similarly, the specificity comes from those cases where the classifier reported "mortality." The specificity is $\frac{301}{301 + 179) = 63\%$.
+
+## False-positive and false-negative rates
+
+The sensitivity and specificity describe the performance of the classifier function. To calculate the false-positive and false-negative rates, we need to know the **prevalence** of the condition in the population of interviewees. 
+
+In the training data, there were 945 subjects who survived out of $n=1314$ altogether: a prevalence of $\frac{945}{1314} = 72\%$. In practice, the training data used to build a classifier is not a fair sample of the overall population. Instead, data for building classifiers are a sample constructed to provide many instances of both levels of `outcome`.  
+
+The `Whickham` training data is about nurses. Nurses tend to have better health outcomes than the population, so for the sake of this example of building a classifier, we will claim that the prevalence in the population is lower than the prevalence among nurses, say 50%.
+
+
+## Selecting a threshold
+
+To select a threshold, start with a guess. Using that guess and calculate the classifier's performance using the appropriate loss function. Then try another guess to see if that results in better performance. Continue searching until finding the threshold that optimizes performance.  
+
+
+Using the training data, we can compute the sensitivity and specificity of the test.
+
+
+The proper choice of a threshold is based on the false-positive and false-negative rates, as well as the loss function. 
+
+
+
+
+
+For the purposes given in the example, where the classifier will guide how we search for each person, base the loss function on the difficulty of the different kinds of searching. It is comparatively easy to check the death records; they are public, stored in a central database, and searchable by the nurse's social insurance ID number. It is comparatively difficult to go through employment and pension records; they are private and decentralized. The loss function reflects this difficulty:
+
+- loss_function(false positive) $\equiv$ 10 loss units
+- loss_function(false negative) $\equiv$ 1 loss unit
+
+As for the false-positive and false-negative rates themselves, we can compute them from the sensitivity and specificity of the test combined with the **prevalence**.  
+
+For the sake of
+
+are selected with a prevalence higher than that in the background population, because we want to have It might well be that the prevalence among the remaining interviewees from the study is different. 
+
+
+Having built a classifier, we are ready to check the classifier's performance in terms of false positive and false negative rates. Here, we will treat "employment" as the positive test outcome and "mortality" as the negative outcome. A false-positive will be a classifier output of  "employment" for a person who is, in reality, dead. A false-negative is a classifier output of "mortality" for a person who is alive. 
+
+The (Alive, "mortality") row counts the false-negatives while the (Dead, "Employment records") row counts the false positives. So the false-positive rate---false positives per test---is 5.2%. The false-negative rate is 13.6%.
+
+We still have to explore which choice of the threshold will make the test as good as possible. Our ultimate measure is based on the consequences of the test being wrong. These consequences are encoded into the *loss function*. 
+
+
+
+With this loss function, the expected loss per test is 
+$$10 \times 0.052 + 1 \times 0.136 = 6.56\  \text{loss units per test}$$
+To find the *best* value for the threshold, try other possible values for the threshold. Here, we'll try 0.8, re-apply the test with that threshold, and tabulate the false-positive and false-negative rates.
+
+
+
+The 0.8 threshold lowers the false positive rate to 1.6% but raises the false negative rate to 30%. That is a typical behavior for classifiers; changing the threshold to lower the false positive rate will raise the false negative rate, and *vice versa*.
+
+With a threshold of 0.8, the expected loss per test is
+$$10 \times 0.16 + 1 \times 0.30 = 1.9\ \text{loss units per test}$$
+Better. 
+
+Before we continue on to the find the *best* threshold, we need to do a *reality check.* The loss rates we just calculated are based on the training data. In that training data, there were 945 subjects who survived out of $n=1314$ altogether. That's a prevalence of $\frac{945}{1314} = 72\%$ in the training data. It might well be that the prevalence among the remaining interviewees from the study is different. 
+
+Accordingly, we need to adjust the loss calculations to reflect the actual prevalence. The first step in doing this is to find the *sensitivity* and *specificity*, as we did in Lesson 34.
+
+Sensitivity and specificity are easy to calculate so long as one keeps in mind that sensitivity is only relevant to that part of the population who genuinely have the condition to be marked by an "Employment records" test output. In the Whickham example, the sensitivity is the percentage of correct results **only** among the people whose `outcome` value is "Alive."  There are 395 + 550 such people, of whom 550 had a correct result, so
+
+-sensitivity (using the threshold 0.8) is $550/(395+550) = 58\%$.
+
+Similarly, specificity is only relevant to the people whose `outcome` value is "Dead". There are 348 + 21 such people, of whom 348 got the correct test result.
+
+-specificity (using the threshold 0.8) is $348/(348 + 21) = 94\%$.
+
+Sensitivity and specificity measure the test itself. False positive and false negative rates measure the test as applied to a specific population. The relevant fact of the population is the "**prevalence**" of the condition. 
+
+## Prevalence in the population
+
+It often happens that the data used to *train* a classifier function is not representative of the population in which it will be used. For example, classifiers are often trained on "**case-control**" data. People with a particular condition, say, having strong symptoms of COVID-19 are easily recruited at health clinics. These are the "cases." 
+
+The "controls" are people who do not have any symptoms. These can be recruited by, say, door-to-door canvasing of a neighborhood. For example, if we recruit 500 cases and 500 controls, the prevalence of COVID-19 symptoms in our database will be 50%.
+
+Assume for the sake of an example that the sensitivity of an inexpensive, over-the-counter COVID-19 test is 90%, and the specificity is 95%. From these numbers, we can calculate the false-positive and false-negative rates.
+
+False negatives can only arise in the part of the population who have the condition. For the 500 cases in our database, the sensitivity of 90% will work out to 450 correct positive tests and 50 incorrect negative tests.
+
+False positives can only arise among the people who do not have the condition. For the 500 controls in our database, the specificity of 95% will work out to 475 correct negative tests and 25 incorrect positive tests. 
+
+There are 1000 people in the database, so the false-positive rate is 25/1000 = 2.5%. The false-negative rate is 50/1000 = 5%.
+
+However, these rates are not necessarily representative of the rates we will find when the test is used in the general population. Fortunately, we can calculate the false-positive and false-negative rates for a population with any given prevalence.
+
+Imagine, say, that we think the prevalence of COVID-19 in the general population is 4%. This puts the false-negative rate---remember, false-negative only applies to people with the condition---at $4\% \times (1-\text{sensitivity|) = 0.04 \times 0.10 = 0.004$.
+
+In that population, 96% do not have COVID-19. This, combined with the specificity, allows calculation of the false-positive rate: $96\% \times (1-\text{specificity}) = 0.96 \times 0.05 = 0.48. 
+
+
 
 ::: {.callout-note}
 ## Constructing a world with a given prevalence 
 
 Now to use the hypothetical planets C and H to construct a realistic world. By "realistic" we mean that the sensitivity and specificity are right *and* that the prevalence matches that of the target population in which the classifier is going to be used.
 
-As notation, let's write the prevalence as $p(C)$. This is a probability, one that we will make up in order to define the target population. Notice that $p(C)$ does not have any condition. We knew it from previous studies of the target population. For this reason, it's appropriate to call $p(C)$ by a special name: the **prior** probability. The twin probability, $p(H)$ is also a prior probability. Since C and H are the only possibilities it must be that $p(H) = 1 - p(C)$.
+As notation, let's write the prevalence as $p(C)$. This is a probability, one that we will make up in order to define the target population. Notice that $p(C)$ does not have any condition. We knew it from previous studies of the target population. For this reason, it's appropriate to call $p(C)$ by a special name: the **prior** probability. The twin probability, $p(H)$ is also a prior probability. Since C and H are the only possibilities, it must be that $p(H) = 1 - p(C)$.
 
 To construct a realistic world, we're going to import people from hypothetical planets C and H. Remember, on C everyone has condition C; on H, everyone has condition H. How many people to import from each hypothetical planet? To put $N$ people on the realistic world, we will take $N p(C)$ from planet C, and $N (1-p(C))$ from planet H. The world thus populated, with $N=500$ and $p(C)$ set to 30% is shown in @fig-prevalence-world.
 
@@ -200,9 +288,9 @@ plot_people_final(New_world) + labs(title="A realistic world")
 
 While it's feasible to do the calculations as a simulation on a computer, the mathematics is not so tricky. For example, we can compute the false-positive and false-negative rates on the realistic world:
 
-- False positive rate:  $\left(1 - \underbrace{{\cal L}(+ \text{ given } C)}_\text{sensitivity}\right)\cdot \underbrace{p(C)}_\text{prevalence}$
+- False positive rate:  $\left(1 - \underbrace{{\cal L}(\Ptest \text{ given } C)}_\text{sensitivity}\right)\cdot \underbrace{p(C)}_\text{prevalence}$
 
-- False negative rate: $\left(1 - \underbrace{{\cal L}(- \text{ given } H)}_\text{specificity}\right) \cdot \left(1-\underbrace{p(C)}_\text{prevalence}\right)$
+- False negative rate: $\left(1 - \underbrace{{\cal L} (\mathbb{N} \text{ given } H)}_\text{specificity}\right) \cdot \left(1-\underbrace{p(C)}_\text{prevalence}\right)$
 
 :::
 
@@ -210,32 +298,32 @@ While it's feasible to do the calculations as a simulation on a computer, the ma
 
 Having created and populated the realistic world, we can compute quantities that are useful in communicating with patients and doctors. For example, suppose a patient has just gotten a positive test. How certain an indication is this of the patient's having the condition C?
 
-On the realistic world, there are two groups who get a positive test. One group is the people who genuinely have C and who also have a positive test. These are the true positives. The relative size of this group is $P(+ \text{ given } C) \equiv \text{proportion of true positives} = {\cal L}(+ \text{ given } C)\cdot p(C)}$.
+On the realistic world, there are two groups who get a positive test. One group is the people who genuinely have C and who also have a positive test. These are the true positives. The relative size of this group is $P(\Ptest \text{ given } C) \equiv \text{proportion of true positives} = {\cal L}(\Ptest \text{ given } C)\cdot p(C)}$.
 
-The other group is the false positives, the people who have condition H but nonetheless received a + test. The relative size of this group is $P(+ \text{ given } H) \equiv \text{proportion of false positives} = {\cal L}(+ \text{ given } H)\cdot p(H)$. We can calculate the size of this group since $p(H) = 1-p(C)$ and ${\cal L}(+ \text{ given } H) = 1 - {\cal L}(- \text{ given } H)$.
+The other group is the false positives, the people who have condition H but nonetheless received a $\Ptest$ test. The relative size of this group is $P(\Ptest \text{ given } H) \equiv \text{proportion of false positives} = {\cal L}(\Ptest \text{ given } H)\cdot p(H)$. We can calculate the size of this group since $p(H) = 1-p(C)$ and ${\cal L}(\Ptest \text{ given } H) = 1 - {\cal L} (\mathbb{N} \text{ given } H)$.
 
-Consequently, the probability that a + test result will be true is
-$$\frac{{\cal L}(+ \text{ given } C)\cdot  p(C)}{{\cal L}(+ \text{ given } C)\cdot p(C) + {\cal L}(+ \text{ given } H)\cdot p(H)}$$
+Consequently, the probability that a $\Ptest$ test result will be true is
+$$\frac{{\cal L}(\Ptest \text{ given } C)\cdot  p(C)}{{\cal L}(\Ptest \text{ given } C)\cdot p(C) + {\cal L}(\Ptest \text{ given } H)\cdot p(H)}$$
 
-## For the patient with a + test result
+## For the patient with a \Ptest test result
 
 The above formula looks daunting, but we know each of the quantities and can do the arithmetic.
 
 ::: {.callout-warning}
 ## Demonstration
-For instance, in the example in Lesson 34 we stipulated that the prevalence $p(C) = 4\%$. This, of course, implies that $p(H) = 96\%$. The sensitivity was stipulated at 90%, that is, ${\cal L}(+ \text{ given } C) = 90\%$. The specificity was 85%, meaning that ${\cal L}(+ \text{ given } H) = 15\%$. Putting these values together in the formula tells us that the probability that a person with a + test actually having the condition C is:
+For instance, in the example in Lesson 34 we stipulated that the prevalence $p(C) = 4\%$. This, of course, implies that $p(H) = 96\%$. The sensitivity was stipulated at 90%, that is, ${\cal L}(\Ptest \text{ given } C) = 90\%$. The specificity was 85%, meaning that ${\cal L}(\Ptest \text{ given } H) = 15\%$. Putting these values together in the formula tells us that the probability that a person with a $\Ptest$ test actually having the condition C is:
 
 $$\frac{0.90 \cdot 0.04}{0.90 \cdot 0.04 + 0.15\cdot 0.96} = 20\%$$
 That's good news to the Lesson 34 patient who gets a positive test result: He or she has only a 20% chance of having condition C.
 
-Now consider the situation of a patient in the world of @fig-prevalence-world. There, the population has a prevalence of 30% rather than 4%. This changes the meaning of a + test. The probability of being C given a + test is:
+Now consider the situation of a patient in the world of @fig-prevalence-world. There, the population has a prevalence of 30% rather than 4%. This changes the meaning of a $\Ptest$ test result. The probability of being C given a $\Ptest$ test is:
 
 $$\frac{0.90 \cdot 0.30}{0.90 \cdot 0.30 + 0.15\cdot 0.70} = 72\%$$
 
-In a population where the prevalence is high, a + test is more likely to mean what it suggests.
+In a population where the prevalence is high, a $\Ptest$ test is more likely to mean what it suggests.
 :::
 
-Since the reliability of a + result differs depending on the prevalence of C, it often happens that medical screening tests are recommended for one group of people but not for another.
+Since the reliability of a $\Ptest$ result differs depending on the prevalence of C, it often happens that medical screening tests are recommended for one group of people but not for another.
 
 For instance, the US Preventative Services Task Force (USPSTF) issues recommendations about a variety of medical screening tests. According to the Centers for Disease Control (CDC) summary:  
 
@@ -247,7 +335,71 @@ The CDC summary needs decoding. For instance, the "talk to [your] doctor" recomm
 
 The reason mammograms are not recommended for women 40-49 is that the prevalence for breast cancer is much lower in that group of people than in the 50-74 group. The prevalence of breast cancer is even lower in women younger than 40.
 
-So what about women 75+? The prevalence of breast cancer is high in this group, but at that age non-treatment is likely to be the most sensible option. Cancers can take a long while to develop from the stage identified on a mammogram, and at age 75+ it's not likely to be the cause of eventual death.
+So what about women 75+? The prevalence of breast cancer is high in this group, but at that age, non-treatment is likely to be the most sensible option. Cancers can take a long while to develop from the stage identified on a mammogram, and at age 75+ it's not likely to be the cause of eventual death.
 
 The [USPSTF web site](https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/breast-cancer-screening) goes into some detail about the reasoning for their recommendations. It's worthwhile reading to see what considerations went into their decision-making process.
+
+
+
+## Pending
+
+### The Loss Function
+
+In order to set the threshold at an optimal level, it is important to measure the impact of the positive or negative test result. This impact of course will depend on whether the test is right or wrong about the person's true condition. It is conventional to measure the impact as a "**loss**," that is, the amount of harm that is done.
+
+If the test result is right, there's no loss. Of course, it's not nice that a person is C, but a $\Ptest$ test result will steer our actions to treat the condition appropriately: no loss in that.
+
+Typically, the loss of a false negative is reckoned as more than the loss of a false positive. A false negative will lead to failure to treat the person for a condition that he or she actually has.
+
+In contrast, a false positive will lead to unnecessary treatment. This also is a loss that includes several components that would have been avoided if the test had be right. The cost of the treatment itself is one part of the loss. The harm that a treatment might do is another part of the loss. And the anxiety that the person and his or her family go through is still another part of the loss. These losses are not necessarily small. The woman who gets a false positive breast-cancer diagnosis will suffer from the effects of chemotherapy and the loss of breast tissue. The man who gets a false-positive prostate-cancer diagnosis may end up with urinary incontinence and impotence. 
+
+The aim in setting the threshold is to minimize the total loss. This will be the loss incurred due to false negative times the number of false negatives plus the loss incurred from a false positive times the number of false positives.
+
+The term "**loss function**" is used to describe how the loss depends on whether the outcome is a false negative or a false positive.
+
+
+
+### Test performance
+
+As pointed out above, to know the impact of the test you need to know both the loss function and the prevalence. Even so, there is a simple way to describe the performance of the test itself that will enable us to apply the test optimally for any prevalence or loss function.
+
+Assume for the moment that we have already selected a threshold that turns the raw score from the test into the $\Ptest\ \text{or}\  \Ntest$ final result from the test.
+
+The threshold lets us mark as $\Ptest\ \text{or}\  \Ntest$ each of the people whose data we are using to develop the classifier. In terms of the graphics we have been drawing, the threshold turns what we were drawing as shades of blue to represent the raw score into a definite blue-or-not color code, as in @fig-after-threshold.
+
+```{r echo=FALSE}
+#| label: fig-after-threshold
+#| fig-cap: "Applying the threshold to the raw scores lets us distinguish the people into $\\Ptest$ and $\\Ntest$ groups. The $\Ptest$ people are drawn in blue, the $\Ntest$ in gray. Depending on the threshold, the picture will look somewhat different."
+#| fig-cap-location: margin
+plot_people_final(People)
+```
+
+
+------
+```{r echo=FALSE}
+cost_at_thresh <- function(results, threshold, multiplier=5) {
+  test_results <- results$raw_result > threshold
+  false_positives <- sum(test_results & results$cond=="H")
+  false_negatives <- sum(!test_results & results$cond=="C")
+  
+  multiplier*false_negatives + false_positives
+}
+
+Costs <- data.frame(threshold = seq(0,8, by=0.1)) %>%
+  mutate(
+    cost5 = sapply(threshold, FUN =function(x) cost_at_thresh(Case_control, x, 3)),
+    cost1 = sapply(threshold, FUN =function(x) cost_at_thresh(Case_control, x, 1)),
+    cost.1 = sapply(threshold, FUN =function(x) cost_at_thresh(Case_control, x, 0.1)))
+```
+
+```{r echo=FALSE}
+## GRAPH OF COST
+ggplot(Costs, aes(x=threshold)) +
+  geom_line(aes(y=cost5), color="blue") + 
+  geom_line(aes(y=cost1), color="orange") + 
+  geom_line(aes(y=cost.1), color="red") +
+  ylab("Total loss") + xlab("Threshold") 
+```
+
+
 
