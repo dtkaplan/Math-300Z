@@ -290,7 +290,7 @@ $$p(\text{month} \given \text{snow}) = \frac{{\cal L}_\text{snow}(\text{month}) 
 Calculate the probability of it being February for the coma patient. Use the likelihood function given in the month-by-month table.
 :::
 
-## How serious is it, Doc?
+## How serious is it, Doc? {#sec-bayes-rule}
 
 Imagine a patient getting a $\Ptest$ test result and wondering what the probability is of his having condition C. That is, he wants to know $p(C \given \Ptest)$. This is equivalent to asking, "How serious is it, Doc?" 
 In answering, what the doctor has to work with is the two likelihoods ${\cal L}_\Ptest(C)$ and ${\cal L}_\Ptest(H)$, which came from the breakdown of the testing data shown in @fig-divided-by-condition. Note that both likelihoods are for the observation $\Ptest$, which is what the patient had.

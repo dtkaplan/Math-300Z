@@ -16,6 +16,21 @@ source("../_startup.R")
 library("rpart")
 ```
 
+::: {.callout-note}
+## Use the confidence interval instead
+
+NHT applied to an effect size is intended to demonstrate whether the effect size is sufficiently far from zero that we can reasonably conclude that it is non-zero. There is a simpler way to do this: look at the confidence interval on the effect size.
+
+But, for those journals that (unwisely) require p-values, you'll have to use NHT to generate them. 
+:::
+
+
+::: {.callout-warning}
+## In Draft: Power {#sec-power}
+
+Mention the idea of power and why it's helpful to look at power when interpreting a "failure to reject."
+:::
+
 
 Use cancer/grass-treatment example from Lesson 30 to illustrate how failing to think about covariates *before* the study analysis can lead to false discovery.
 

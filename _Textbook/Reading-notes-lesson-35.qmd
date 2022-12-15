@@ -23,6 +23,12 @@ $$\newcommand{\Ptest}{\mathbb{P}}
 :::
 
 
+::: {.callout-warning}
+## Note in draft
+
+Medical "screening" is about a test where the subject has no symptoms. Medical "testing" is about a test when the subject has symptoms. Translate this into terms of prevalence. Prevalence is much higher for a person with symptoms.
+:::
+
 
 Lesson 34 introduced classifiers: model functions where the output is one of two values which we called $\Ptest \ \text{and}\ \mathbb{N}$. The classifier is trained based on data from recruited subjects, some with the condition C and some without. Typically care is taken to make sure that both C and H groups are well represented, as in the training data displayed in @fig-divided-by-condition2. 
 
@@ -94,6 +100,7 @@ First, we synthesis a data frame that has many rows, half corresponding to imagi
 ```{r echo=FALSE}
 #| label: fig-planets-of-C-and-H
 #| fig-cap: "Knowing the specificity and sensitivity of the test, we can create hypothetical worlds to use in a simulation.)"
+#| fig-cap-location: margin
 PeopleHyp <- bind_rows(
   patient_group(0, n=600, p=0.5),
   patient_group(1, n=800, p=0.5),

@@ -391,3 +391,63 @@ The actual screening system, using metal detectors, baggage x-rays, etc. will ha
 
 The problem here is not with airport security screening, but with the flawed use of *accuracy* as a measure of performance. Indeed, achieving super-high accuracy is not the objective of the security screening process. Instead, the objective is to *deter* security problems by convincing potential terrorists that they are likely to get caught before they can get on a plane. This has to do with the *sensitivity* of the system. The *specificity* of the system, although important to the everyday traveller, is not what deters the terrorist.
 
+## From Lesson 36
+
+BUT THIS IS ALREADY COVERED IN LESSONS 34 and 35.
+
+## Example: The ${\cal L}_+()$ function
+
+Suppose that the sensitivity of a test is 90% and the specificity is 85%. A person has a + test result. Since the observation is +, the likelihood function ${\cal L}_\mathbf{+}()$ is relevant The domain of ${\cal L}_\mathbf{+}()$ is simply the two possibilities for the subject's condition: C or H.
+
+
+$${\cal L_{\mathbf +}}(X) \equiv\left\{\begin{array}{l}90\%\  \text{given}\ \  X=C\\15\%\ \text{given}\ \  X = H\end{array}\right.$$
+
+If the observation had been different, a different likelihood function would be relevant. In testing, there are only the two possible observations, + and -. For a - observation, the relevant likelihood is ${\cal L}_{\mathbf -}()$
+
+$${\cal L_\mathbf{-}}(X) \equiv\left\{\begin{array}{l}10\%\  \text{given}\ \  X=C\\85\%\ \text{given}\ \  X = H\end{array}\right.$$
+
+Note that the argument to the likelihood functions, which we have written as $X$ is **not the result of the test**. Instead, $X$ is related to the condition of the person who underwent the test. 
+
+It's essential to remember that a "hypothesis test" can be performed only *after* the observation has been made. In that situation, there is only one relevant likelihood function, the one corresponding to the actual observation.
+
+In Lesson 35, we used the likelihood function for a particular purpose, to calculate the implications of a + result into terms relevant to the patient. The patient receiving a + result is naturally interested in what this means about the chances that she has the condition C. We will write this as a probability, but it is a probability that applies only for the patient with a + result. We will write it $p_\mathbf{+} (C)$. The probability is labeled with a + as a reminder that it is relevant only to a patient with a + result.
+
+As described in Lesson 35, to calculate $p_\mathbf{+} (C)$, we need some more information. Specifically, we need to know the prevalence of the condition. Our notation for the prevalence of C is $p(C)$. Pay attention to two things about this notation. First, we have written it as a function that we are evaluating for the input C. The output of the evaluated function is a number. In Lesson 34, we showed an example where $p(C) = 4\%$, meaning that 4% of the population has condition C. That same function can be evaluated at input H, giving $p(H)$, producing another number. Given that $p(C) = 4\%$, and that C or H are the only possible states a patient can be in, then $p(H) = 1 - p(C) = 96\%$.
+
+The second thing to pay attention to is the *absence* of any subscript on $p(C)$. That is because the prevalence of the disease is known *before* our particular patient has received her result. Such probabilities, being known *before* the test leading to the + result, are called "**prior**" probabilities. In contrast, $p_\mathbf{+}(C)$ is called a **posterior** probability. 
+
+::: {.callout-warning}
+## Demonstration: From prior to posterior *via* likelihood
+
+Lesson 35 gives the formula, called "**Bayes' Rule**", for converting prior probabilities into posterior probabilities relevant to a particular observation +. This formula is where the likelihood function comes into play. Of course, only ${\cal L}_\mathbf{+}(\ )$ is relevant because the posterior being calculated is relevant to the + observation.
+
+
+
+$$p_\mathbf{+}(C) = \frac{{\cal L}_{\mathbf +}(C)\cdot  p(C)}{{\cal L}_{\mathbf +}( C)\cdot p(C) + {\cal L}_\mathbf{+}(H)\cdot p(H)}$$
+
+Had the result been -, the probability relevant to the patient would have been $p_\mathbf{-}(C)$, that is, the chances of having condition C even though the test result is -. This probability would also be calculated with Bayes' Rule, but the relevant likelihood function would be ${\cal L}_{\mathbf -}(\ )$ rather than ${\cal L}_{\mathbf +}(\ )$. 
+
+$$p_\mathbf{-}(C) = \frac{{\cal L}_{\mathbf -}(C)\cdot  p(C)}{{\cal L}_{\mathbf -}( C)\cdot p(C) + {\cal L}_\mathbf{-}(H)\cdot p(H)}$$
+
+The *prior* probabilities are the same in both formulas since the prevalence in the population is known *before* the test result.
+:::
+
+---------
+
+## "Hypothesis testing"
+
+In the everyday use of language, to "test a hypothesis" might reasonably mean "to perform a procedure to establish whether the hypothesis is true. A statistical thinker, being aware of the omnipresence of noise, would translate this everyday meaning just a little bit: "to perform a procedure to establish the probability that the hypothesis is true." The procedure will presumably include collecting relevant data, perhaps in the form of an experiment, perhaps in the form of observations made without experimental intervention. If the statistical thinker was entertaining just two hypothetical possibilities, $H_1$ and $H_2$, the theory behind the hypotheses would provide the likelihood function ${\cal L}_\textbf{data}(H_1)$. 
+
+To give a historical example, Aristotle's physics stated that two balls of the same size, released from the same height at the same time, will hit the ground simultaneously. Galileo suspected that this Aristotelian claim might not be true. His hypothesis was that the balls would hit at different times if the balls had different weights. To test Aristotle's hypothesis, Galileo famously ascended the Tower of Pisa, conveniently tilted so that balls dropped from the top would go directly to the ground. Dropping the balls, one metal, one wooden, from the top of the Tower, it was found that the metal ball hit discernibly before the wooden ball. In our modern way of thinking, we can say that Galileo's observation *lowered* the probability that the Aristotelian hypothesis was true. (In historical actuality, Galileo predated the development of even simple notions of probability.)
+
+Statistical thinkers who use data to calculate posterior probabilities using Bayes' Rule are called, sensibly enough, "Bayesians." The Bayes' Rule calculations are a routine part of many engineering disciplines, medicine, and so-called artificial intelligence and machine learning.
+
+There is another group of statistical thinkers, called "Frequentists," who also accept Bayes' Rule as mathematically correct, but who define "hypothesis testing" in a very different way. Frequentists have dominated the academic discipline of statistics for a full century. This dominance is now beginning to fade, but generations of scientists have been taught the frequentist "hypothesis testing" framework and express their conclusions using Frequentist terminology, sometimes correctly and sometimes not.
+
+There a fundamental aspect of the Bayesian procedure for testing hypotheses that the Frequentists reject. Frequentists point out that the prior probabilities---that is, probabilities before data has been observed---are subjective. Scientific procedures, according to the Frequentists, ought to be entirely objective, that is, should not depend on opinions that are not yet supported by data. Since most people associate science with objectivity, the Frequentist point of view is attractive. (We won't argue the point here except to point out that saying, "Science should be as objective as possible" warrants keeping track of the ways subjectivity does influence scientific results. There are ways to do this within the framework of Bayesian calculations by looking at many different priors and checking the sensitivity of the results to the choice of prior.)
+
+Owing to this rejection of priors as subjective, the frequentist procedure for hypothesis testing has to be built without the use of priors. Looking back at Bayes' Rule, and eliminating any mention of priors, leaves only the likelihood function. Frequentists do make extensive use of likelihood functions and even compare likelihoods of different hypotheses,^[As in "maximum likelihood" estimation] but they don't accept the use of priors in a scientific context, nor the assignment of probabilities to competing hypotheses.
+
+Frequentist "hypothesis testing" centers on a specific hypothesis that, surprisingly, has no scientific content. This is called the "**Null hypothesis**" and abbreviated H_0_. In a modeling context, the Null hypothesis typically is about an effect size, but often it is about a measure such as R^2^ that can combine multiple model terms. In either case, the Null hypothesis is that the effect size (or R^2^) is zero, but that sampling variation may push away from zero the quantity estimated from data. 
+
+------------------

@@ -21,6 +21,17 @@ SPACE SHUFFLE TO PLANET NULL. Calculate the likelihood of the observed result on
 
 --------
 
+In talking about the regression report, show that the confidence interval on a coefficient is constructed using exactly the same information as a hypothesis test. 
+
+--------
+
+Since "fail" and "reject" are unattractive words, in practice other expressions are used. One of the notations is $p < 0.05$, another is to put a asterisk ($^\star$) next to the value of the effect size or R^2^. Both of these correspond to "reject the Null." The notation used for "fail to reject" is to put nothing next to the effect size or R^2^, but it would be more appropriate simply to list the effect size as "n.s." to stand for "not significant."
+
+----------
+
+The "test" is not about whether the Null hypothesis is true, and certainly not about the probability that the Null hypothesis is true. Instead, the test, like the + or - tests we have already studied, has **two possible results**. We might encode these results as + or -, or as yes/no, but conventionally the two outcomes are properly encoded as "**reject the null hypothesis**" or "**fail to reject the null hypothesis**." Unlike the + or - testing framework, in hypothesis testing the result is not to be used to calculate a posterior probability, in the "hypothesis testing" process you either "reject" or "fail to reject" the Null hypothesis.
+
+---------
 
 If the simulation trials rarely or never produce an association as strong as that found in real-world observations, you can fairly conclude that the assumptions embedded in the simulation ought to be *rejected* as a proper description of the real world. On the other hand, if the simulation shows good accord with the real-world observations, you can ... what? It's not a good idea to claim the simulation is a correct description of the real world; it's just a simulation. Instead, the proper statement is that you "*fail to reject*" the hypothesis hard-coded into the simulation.
 
