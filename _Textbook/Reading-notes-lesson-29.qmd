@@ -299,7 +299,7 @@ We leave the debate on the relative merits of using F or $R^2_\text{adj}$ their 
 $$R^2_\text{adj} = 1 - \frac{n-1}{k} \frac{R^2}{F}\ .$$
 :::
 
-## Comparing models
+## Comparing models {#sec-partial-R2}
 
 Modelers are often in the position of having a model that they like but are contemplating adding one or more additional explanatory variables. To illustrate, consider the following models:
 

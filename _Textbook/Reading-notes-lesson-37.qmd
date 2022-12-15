@@ -15,9 +15,103 @@ lesson <- 37
 source("../_startup.R")
 ```
 
-THE ROOT OF THE CALCULATION. CREATE A SIMULATION of what would happen if the null hypothesis were true. This is remarkably easy, which is why hypothesis testing is used so much.
 
-SPACE SHUFFLE TO PLANET NULL. Calculate the likelihood of the observed result on that planet, that is, assuming that the null hypothesis is true.
+This Lesson continues the discussion of Null hypothesis testing (NHP) started in Lesson 36. Recall from that lesson that the Null hypothesis is a statement in line with the claim that "there is no relationship between these variables" or "nothing is going on." For example, in a study about the effectiveness of a new drug, the Null hypothesis will be that the drug has no effect at all. Another example: In an economics study about the possible relationship between a country's "corruption index" and interest rates, the Null hypothesis would be "corruption is unrelated to interest rates."
+
+The work that *precedes* an NHP involves acquiring data, modeling it in a way that illuminates the *relationship of interest*, then summarizing that model. Often, the summary takes the form of a model coefficient, but it might be the model's R^2^ or the incremental R^2^ from a nested set of models. (See @sec-partial-R2.) Whatever the details, we will call the summary $\mathbb{Sreal}$.
+
+The primary calculation of an NHP, described in @sec-under-the-null, is to generate simulated data frames, each involving shuffling to annul the *relationship of interest*. Then, model and summarize the simulated data frames in exactly the same way as for the actual data. The result for the first simulated data frame is $\mathbb{Snull}_1$, for the second $\mathbb{Snull}_2$, and up to, say, $\mathbb{Snull}_{1000}$. [The exact number of simulated data frames does not matter. We will use 1000 to simplify the arithmetic.]{.aside}
+
+At this point, there are 1001 summaries: one $\mathbb{Sreal}$ and 1000 $\mathbb{Snull}_i$, where $i=1, 2, \ldots, 1000$. These become the raw material for calculating numerical culmination of the NHT: the **p-value**. 
+
+
+## The p-value
+
+@fig-shuffle-mother (reproduced in the margin) shows an example of the raw material: 1000 values of $\mathbb{Snull}_i$ and the single, unique value of $\mathbb{Sreal}$ from the model `lm(height ~ mother, data=Galton)`.
+
+```{r}
+#| column: margin
+knitr::include_graphics("www/fig-shuffle-mother.png")
+```
+
+The p-value comes from the fraction of the $\mathbb{Snull}_i$ that are larger in value than the $\mathbb{Sreal}$. In @fig-shuffle-mother, *none* of the 1000 $\mathbb{Snull}$ are larger than $\mathbb{Sreal}$. Therefore, we write $p < 1/1000$ or $p < 0.001$.
+
+The p-value is the final result of an NHT. TALK ABOUT how to write about the p-value LATER ON.
+
+NHT is such a popular technique that statistical software will find the p-values from regression models for you. Consequently, in practice the shuffling technique is reserved for more specialized situations. 
+For these Lessons, the specialized "situation" is pedagogical; we are trying to help you understand the *concept* of p-values and shuffling provides a concrete way to do this. In most modeling work, however, pedagogy is not an issue. So expect to use software to calculate p-values. 
+
+
+The p-value software we use in these Lessons is the two summary functions, `regression_summary()` and `anova_summary()`.
+
+```{r}
+lm(height ~ mother, data = Galton) %>% regression_summary()
+```
+
+The regression model `height ~ mother` has two coefficients (the "estimate" column from `regression_summary()`). Insofar as our concern is the relationship between child's `height` and `mother`, only the p-value for `mother` is of interest. 
+
+::: {.callout-warning}
+## Software for P-values 
+
+In these Lessons, we use the `regression_summary()` and `anova_summary()` R functions to calculate p-values from models. These two functions come from the `{math300}` package, which was written specially for these Lessons. In standard R, the equivalents are `summary()` and `anova()`. 
+
+In fact, `regression_summary()` and `anova_summary()` are merely *wrappers* around `summary()` and `anova()`. The wrappers make sure that the output is in the form of a data frame and therefore suitable for data wrangling. The output from `summary()` and `anova()`, however, are not in a data-frame format.
+:::
+
+## Basic interpretation of p-values
+
+When the p-value is small, the likelihood of $\mathbb{Sreal}$ under the Null hypothesis, that is, ${\cal L}_\mathbb{Sreal}(\text{Null hypothesis})$ is also small. A small likelihood of a given hypothesis means that the hypothesis is not a compelling explanation for the observed $\mathbb{Sreal}$.
+
+There is a formal vocabulary for NHT. Instead of saying, casually, "The Null hypothesis is not a compelling explanation for $\mathbb{Sreal}$, the formal NHT statement is, "The Null hypothesis is **rejected**."
+
+Commonly, the threshold 0.05 is given as the numerical definition of "small" in "small likelihood." For example, the p-value on the `mother` coefficient in the model `lm(height ~ mother, data=Galton)` is $p < 0.01$. This is obviously less than 0.05, so the outcome of the NHT is to "reject the Null hypothesis."
+
+Suppose, on the other hand, that the p-value had been "large," that is $0.05 < p$. What phrase should we use to summarize this situation. It is tempting---but wrong---to think that this leads to "accepting" the Null hypothesis. Instead the proper NHT phrase to use is "fail to reject the Null." 
+
+We will return in Lesson 38 to the question of whether 0.05 is a good threshold to use. That's part of a broader controversy. 
+
+Another part of the NHT formal vocabulary is the phrase "statistically significant." In the everyday sense of the word, "significant" suggests "important,", "worthy of attention," or "noteworthy." In NHT speak, "statistically significant" is a synonym for "reject the Null." The NHT meaning of "statistically significant" has nothing at all to do with utility of the result.
+
+::: {.callout-note}
+## "Significance" and significant digits
+
+In the regression summary of the `height ~ mother` model, the p-value on the `mother` coefficient was reported as `1.079105e-09`. This is a symptom of the choice by software designers to report more digits than are genuinely useful. 
+
+Statistician Jeffrey Witmer, in an editorial in the [*Journal of Statistics Education*](https://www.tandfonline.com/doi/full/10.1080/10691898.2019.1702415), distinguishes between the "mathematical" information in a p-value and the "statistical" information. Mathematically, the p-value is the result of a calculation. Statistically, the p-value is used as a symbol to indicate whether the Null hypothesis is a plausible explanation for a statistical result. 
+
+Witmer proposes a simple rule for printing p-values: Round to 1 significant digit. This means that a p-value computed to be 0.382 would be reported as 0.4. A p-value of 0.0079 would be reported as 0.008. The justification for this rule is that there is no information in the second non-zero digit of a p-value that can meaningfully guide a conclusion about whether the Null hypothesis is a plausible explanation for a statistical result. There may be a mathematical difference between 0.0079 and 0.008, but there is no meaningful statistical difference.
+
+Witmer also offers a simple solution to the problem of people misinterpreting "statistically significant" as related to the everyday meaning of "significant." Replace the term "statistically significant" with "statistically discernible." There is no difference between the everyday sense of "discernible"---able to be perceived---and the statistical implications. In conveying statistical information, "discernible" is more descriptive than "significant." For example, it would be appropriate to describe the implications of a p-value $p < 0.03$ as, "the relationship is barely discernible from the sampling variation."
+:::
+
+## P-values for coefficients
+
+For any regression model, the "regression report" contains one row for every coefficient for the model. Each of these rows will have a coefficient value ("`estimate`") and a p-value. There are two additional columns: a standard error for the coefficient ("`std.error`") and a value (labeled "`statistic`") that is *always* just the estimate divided by the standard error. 
+
+The idea of the standard error was introduced in Lesson 23 (@sec-subsampling). The point of the standard error is to summarize the amount of sampling variation in the coefficient. But we standardized on the confidence interval format to summarize sampling variation.
+
+Many statisticians think there is little point to calculating a p-value on a model coefficient because the confidence interval contains all the information needed.
+
+
+t-tests 
+
+p-tests
+
+::: {.callout-note}
+## p-values in context: covariates
+
+Use age at marriage data.
+
+
+:::
+
+
+## P-values for F 
+
+Say how a model coefficient is different from a set of terms. The question is whether the new term adds information on top of the existing terms. 
+
+
+
 
 --------
 
@@ -72,15 +166,11 @@ In other fields such as economics or psychology or clinical medicine, models are
 
 ## What is a p-value?
 
-A p-value is the result of a calculation based on data, but also involving a special hypothesis, called the "Null hypothesis." The Null hypothesis is almost always a statement in line with the claim that "there is no relationship between these variables" or "nothing is going on." For example, in a study about the effectiveness of a new drug, the Null hypothesis will be that the drug has no effect at all. Another example: In an economics study about the possible relationship between a country's "corruption index" and interest rates, the Null hypothesis would be "corruption is unrelated to interest rates."
 
-Perhaps it is helpful to envision the Null hypothesis as the belief of a skeptical devil, standing on the researcher's shoulder and constantly whispering to the research that, "this study is useless, a waste of time, the result purely of sampling variation." Note that in a world where researchers always took the devil's advice, no study would be done. What motivates a researcher is a belief that the study will indeed produce results that are useful and represent something about the real world other than sampling variation, e.g. a relationship between two variables.
 
 The calculation that results in a p-value is done under the assumption that the devil is right. The point is to see if the data are consistent with the devil's skeptical position. If they are consistent, then the p-value will be large. If not, the p-value will be "small."
 
-The format of a p-value is that of a **conditional probability**. The condition is that the devil is right. The probability is that of seeing what the data analysis shows---typically summarized as a model coefficient---if the devil were right.
 
-Actually, the probability reported in the p-value is not that of seeing the exact value of the model coefficient shown in the regression report. The probability also includes the events where the coefficient was larger in magnitude than the coefficient. Why? Because larger coefficients are stronger evidence that the devil is not right.
 
 ## The world of the Null hypothesis
 

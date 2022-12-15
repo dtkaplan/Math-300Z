@@ -29,7 +29,8 @@ In Lesson 21, we repeated trials over and over again to gain some feeling for sa
 
 It is time to take off the DAG simulation training wheels and measure sampling variation from a *single* data frame. Our first approach will be to turn the single sample into several smaller samples: subsampling. Later, we will turn to another technique, resampling, which draws a sample of full size from the data frame.
 
-## Subsampling
+## Subsampling {#sec-subsampling}
+
 To "subsample" means to draw a smaller sample from a large one. "Small" and "large" are relative. For our example, we turn to the `TenMileRace` data frame containing the record of thousands of runners' times in a race, along with basic information about each runner. There are many ways we could summarize `TenMileRace.` Any summary would do for the example. We will summarize the relationship between the runners' ages and their start-to-finish times (variable `net`), that is, `net ~ age`. To avoid the complexity of a runner's improvement with age followed by a decline, we will limit the study to people over 40.
 
 ```{r}
