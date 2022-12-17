@@ -51,9 +51,9 @@ In today's lesson, we're going to use gaming so that we know exactly what the ca
 ```{r}
 dag02
 Sample <- sample(dag02, size=500)
-lm(y ~ x, data = Sample) %>% coefficients()
-lm(y ~ a, data = Sample) %>% coefficients()
-lm(y ~ a + x, data = Sample) %>% coefficients()
+lm(y ~ x, data = Sample) %>% coef()
+lm(y ~ a, data = Sample) %>% coef()
+lm(y ~ a + x, data = Sample) %>% coef()
 ```
 
 Conclusion: Ignoring one of the explanatory variables prevents us (of course!) from seeing that variable's relationship with `y`. But the other variable's connection shows up correctly. Using both explanatory variables let's us capture the correct mechanism behind `y`.
@@ -68,9 +68,9 @@ Here both `c` and `x` have a causal relationship with `y`. They often happen to 
 ```{r}
 dag08
 Sample <- sample(dag08, size=500)
-lm(y ~ x, data = Sample) %>% coefficients()
-lm(y ~ c, data = Sample) %>% coefficients()
-lm(y ~ c + x, data = Sample) %>% coefficients()
+lm(y ~ x, data = Sample) %>% coef()
+lm(y ~ c, data = Sample) %>% coef()
+lm(y ~ c + x, data = Sample) %>% coef()
 ```
 
 Here we need to include both `c` and `x` in the model to see the correct causal relationships. If we leave out either `x` or `c` the other variable will "inherit" some of the causal connection between the left-out variable and the response.

@@ -14,7 +14,7 @@ Consider these three data frames:
 One <- sample(dag01, size=25)
 Two <- do(10) * {
   lm(y ~ x, data = sample(dag01, size=25)) %>%
-    coefficients()
+    coef()
   }
 Three <- Two %>% 
   summarize(mx = mean(x), sx = sd(x))
@@ -42,7 +42,7 @@ You are going to write a *procedure* that automates the following process:
 
 i. sampling from a DAG, specifically `dag01`, using `sample()` with a size of 25.
 ii. fitting a model `y ~ x` using `lm()`
-iii. reporting the coefficient on `x` using `coefficients()`.
+iii. reporting the coefficient on `x` using `coef()`.
 
 Call the procedure `proc1()`.
 
@@ -92,7 +92,7 @@ or, more concisely
 proc1 <- function() {
   sample(dag01, size=25) %>%
     lm(y ~ x, data = .) %>%
-    coefficients()
+    coef()
 }
 ```
 

@@ -244,7 +244,7 @@ The coefficients on `a` and `b` are inconsistent with the `dag09` formulas. This
 
 The printed version of `dag09` shows that the value of node `c` is a linear combination of `a` and `b` converted into a zero-one, binomial value. Unfortunately, the linear modeling trainer, `lm()`,  is not well-tuned to work with binomial data. Another modeling technique, "logistic regression," does a better job. The `glm()` function trains logistic regression models on data. 
 
-```{r}
+```{r message=FALSE}
 sample(dag09, size=10000) %>% 
   glm(c ~ a + b, data = ., family="binomial") %>%
   confint()
@@ -279,7 +279,7 @@ The "**sample size**" is the number of rows. "**Sampling**" is the process of co
 
 The following command illustrates computing a summary of a sample from `dag09`.
 
-```{r}
+```{r message=FALSE}
 sample(dag09, size=10000) %>% 
   glm(c ~ a + b, data = ., family="binomial") %>%
   confint()
@@ -300,7 +300,7 @@ Preceding the curly braces, we have placed `do(5) *`. This instruction causes th
 do(5) * {
   sample(dag09, size=10000) %>% 
     glm(c ~ a + b, data = ., family="binomial") %>%
-    coefficients()
+    coef()
 }
 ```
 
@@ -313,7 +313,7 @@ One of the things we will do with a "sample of summaries" is to ... wait for it 
 Trials <- do(40) * {
   sample(dag09, size=10000) %>% 
     glm(c ~ a + b, data = ., family="binomial") %>%
-    coefficients()
+    coef()
 } 
 Trials %>% 
   summarize(mean_a = mean(a), spread_a = sd(a), 
@@ -344,3 +344,4 @@ There is a factor $\frac{1}{2}$ in the formula for the variance based on the pai
 
 $$\underbrace{\frac{1}{\sqrt{2 \pi s^2}} \exp\left[-\frac{(x-m)^2}{2s^2}\right]}_\text{using standard deviation}\ \ \text{vs}\ \ \ \underbrace{\frac{1}{\sqrt{\pi c^2}} \exp\left[-\frac{(x-m)^2}{c^2}\right]}_\text{using modulus}$$
 In mathematical and scientific nomenclature, "modulus" is roughly synonymous with "size." For example, in algebra, $\left|x\right|$ is the modulus of $x$. "Modulus" is less off-putting than "standard deviation" and less redolent of the unfortunate early ties between statistics and eugenics. Looking back, perhaps "modulus" would have been the better choice for parameterizing the gaussian.
+:::

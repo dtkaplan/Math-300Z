@@ -83,7 +83,7 @@ Toward the end of the class, you might want to bring things back to real data. B
 ```{r}
 sample(Hill_racing) %>%
   lm(time ~ distance, data = .) %>%
-  coefficients()
+  coef()
 ```
 
 Attentive students will howl at using `sample()` on a data frame rather than on a DAG. You can show them that the result of `sample()` is just to shuffle the order of the rows, and that the model coefficients don't depend on the order of the rows.
@@ -94,7 +94,7 @@ Then construct the trials and the summary of the trials:
 Trials <- do(10) * {
   sample(Hill_racing) %>%
     lm(time ~ distance, data = .) %>%
-    coefficients()
+    coef()
 }
 Trials %>%
   summarize(sIntercept = sd(Intercept), sdistance = sd(distance))

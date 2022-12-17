@@ -64,7 +64,7 @@ Newcomers to technical computing tend to confuse the printed form of an object w
 We have already used some other functions to extract information from a model object. For instance,
 
 ```{r}
-Mod1 %>% coefficients()
+Mod1 %>% coef()
 Mod1 %>% confint()
 Mod1 %>% regression_summary()
 ```

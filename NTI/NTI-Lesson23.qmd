@@ -50,7 +50,7 @@ Let's use the `moderndive::amazon_books` data set and the model tilde `list_pric
 
 Here's the results on the actual data:
 ```{r}
-lm(list_price ~ num_pages, data = moderndive::amazon_books) %>% coefficients()
+lm(list_price ~ num_pages, data = moderndive::amazon_books) %>% coef()
 ```
 Interpretation: books cost about $12 plus 2 cents per page.
 
@@ -58,7 +58,7 @@ Here is our first stab at sampling from the data. Note that when sampling from a
 ```{r}
 trial <- function() {
   lm(list_price ~ num_pages, data = sample(moderndive::amazon_books)) %>% 
-    coefficients()
+    coef()
 }
 {do(100) * trial()} %>% summarize(sd(Intercept), sd(num_pages))
 ```

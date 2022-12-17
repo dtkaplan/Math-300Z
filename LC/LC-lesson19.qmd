@@ -49,7 +49,7 @@ c\. In the regression paradigm, the comparison of proportions between the two gr
 promotions %>%
   mutate(promoted = zero_one(decision, one="promoted")) %>%
   lm(promoted ~ gender, data = .) %>%
-  coefficients()
+  coef()
 ```
 
 We'll explain the purpose of `zero_one()` in Lesson 19, but putting that matter aside for a moment, compare the two coefficients in the regression model to the proportion results you got from wrangling.
@@ -76,7 +76,7 @@ sample_n(moderndive::evals %>% select(ID, score, age, bty_avg, cls_students, cls
 The following commands model `score` versus `age` and plots the data as a point plot.
 
 ```{r}
-lm(score ~ age, data = moderndive::evals) %>% coefficients()
+lm(score ~ age, data = moderndive::evals) %>% coef()
 openintro::evals %>% gf_point(score ~ age, alpha=0.2 )
 ```
 1. Explain why some of the dots are darker than others?
@@ -214,7 +214,7 @@ gf_jitter(zero_one(outcome) ~ age, data = Whickham, alpha=0.3, height=0.1) %>%
 
 About the summarization of models. Pipe the model fit into any of four functions:
 
-i. `%>% coefficients()`
+i. `%>% coef()`
 ii. `%>% regression_summary()`
 iii. `%>% rsquared()`
 iv. `%>% confint()`

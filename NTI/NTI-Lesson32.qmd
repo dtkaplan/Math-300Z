@@ -24,6 +24,43 @@ source("../_startup.R")
 ```{r child=Obj_file(lesson)}
 ```
 
+## SAVE these for NTIs?
+
+
+
+```{r}
+#| label: bednet_dag1
+#| fig-cap: "The bed net experiment without random assignment" 
+#| column: margin
+bednet_dag <- dag_make(
+  region ~ exo(),
+  enthusiasm ~ exo(),
+  nutrition ~ exo(), 
+  treatment ~ region + enthusiasm + nutrition,
+  polio ~ treatment + region + enthusiasm + nutrition
+)
+dag_draw(bednet_dag, seed=110, vertex.label.cex=1, vertex.size=30)
+```
+
+```{r}
+#| label: bednet_dag1
+#| fig-cap: "The bed net experiment with random assignment."
+#| column: margin
+bednet_dag2 <- dag_make( 
+  region ~ exo(),
+  enthusiasm ~ exo(),
+  nutrition ~ exo(),
+  random_assignment ~ exo(),
+  treatment ~ random_assignment,
+  polio ~ treatment + region + enthusiasm + nutrition)
+dag_draw(bednet_dag2, seed=111, vertex.label.cex=1, vertex.size=30)
+```
+
+
+
+
+
+
 ## Reading
 
 TBD
@@ -84,7 +121,7 @@ As we've done before, we can simulate data from `dag08` and use regression to ob
 
 ```{r}
 Sample <- sample(dag08, size=1000) # big, so that the noise is not a strong issue
-lm(y ~ x, data = Sample) %>% coefficients()
+lm(y ~ x, data = Sample) %>% coef()
 lm(y ~ x, data = Sample) %>% confint()
 ```
 

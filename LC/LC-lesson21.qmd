@@ -143,7 +143,7 @@ These coefficients do not appear in the `dag01` tilde expressions.
 You are trying to understand why automobile fuel economy varies from model to model. Using the `mtcars` data frame (documentation at `help("mtcars")`) ...
 
 i. What's an appropriate choice of a response variable?
-ii. Pick two explanatory variables of interest to you. Build an appropriate model from the data, extracting the `coefficients()` of the model. Explain what the coefficients mean in everyday terms that your cylinder-head uncle would approve of.
+ii. Pick two explanatory variables of interest to you. Build an appropriate model from the data, extracting the `coef()` of the model. Explain what the coefficients mean in everyday terms that your cylinder-head uncle would approve of.
 iii. Which of the other variables are covariates? 
 iv.Pick a covariate that your intuition suggests would be important. Include that covariate in the model from (ii) and say whether the covariate shows up as important in the model coefficients.
 
@@ -157,7 +157,7 @@ iii. All of the other variables are covariates. A covariate is merely a potentia
 
 ## 21.6 (Obj 21.3)
 
-Generate a sample of size $n=100$ from `dag03`. Use the data to construct a model of `y` versus `x`. But instead of using `coefficients()` to look at the model coefficients, use `confint()`. While `coefficients()` reports a single value for each coefficient, `confint()` reports a plausible interval for coefficients that is consistent with the data. 
+Generate a sample of size $n=100$ from `dag03`. Use the data to construct a model of `y` versus `x`. But instead of using `coef()` to look at the model coefficients, use `confint()`. While `coef()` reports a single value for each coefficient, `confint()` reports a plausible interval for coefficients that is consistent with the data. 
 
 i. For $n=100$, how wide is the interval reported by `confint()` on the `x` coefficient.
 ii. Repeat the process of sampling and modeling, but this time use $n=400$. How wide is the interval reported by `confint()` on the `x` coefficient.

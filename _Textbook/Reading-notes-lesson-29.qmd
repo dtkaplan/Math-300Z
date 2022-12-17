@@ -49,8 +49,7 @@ Results %>% head() %>%
   mutate(.output = round(.output, 2),
          .resid = round(.resid, 2),
          .lwr = round(.lwr, 2), 
-         .upr = round(.upr, 2)) %>%
-  knitr::kable()
+         .upr = round(.upr, 2)) 
 ```
 
 The first book in the training data is a 304-page paperback with a list price of $12.95. The fitted model value for that book is $16.60. (Ordinarily, we refer to the output of the model function simply as the "output" or the "model output." However, the output of the model function, when applied to rows from the *training* data also called the *fitted model value*.)
@@ -64,6 +63,7 @@ The standard measure of the typical size of a residual is the standard deviation
 ```{r}
 Results %>% summarize(se_resids = sd(.resid), v_resids=var(.resid))
 ```
+
 As always, the standard deviation is easier to read because it has sensible units, in this case, dollars. On the other hand, the variance has strange units (square dollars) because it is the square of the standard deviation. We will use the variance for measuring the typical size of a residual for the reasons described in Lesson 20; variances add nicely in a manner analogous to the Pythagorean Theorem.
 
 Similarly, the total amount of variation in the list price is simply the variance of the list price:
@@ -131,7 +131,7 @@ The modeler discovering this tremendous explanatory power of `publisher` and `au
 
 To see why, consider another possible explanatory variable, the International Standard Book Number (ISBN). The ISBN is a ten- or thirteen-digit number that marks each book with a unique number.
 
-```{r}
+```{r echo=FALSE}
 #| label: fig-isbn-sm2
 #| fig-cap: "The ISBN number from one of the Project MOSAIC textbooks."
 #| column: margin
@@ -183,40 +183,46 @@ The `amazon_books` data frame has $n=319$ rows.^[The data frame in the `moderndi
 ```{r}
 Publisher_model <- lm(list_price ~ shuffle(publisher),
                       data=amazon_books)
-Coefficients <- Publisher_model %>% coefficients() %>% data.frame()
+Coefficients <- Publisher_model %>% coef() %>% data.frame()
 nrow(Coefficients)
 ```
 
-There are 159 coefficients in the model, the first one being the "Intercept." 
+There are 161 coefficients in the model, the first one being the "Intercept." We will show only the first few.
 
 ```{r results="hide"}
 Coefficients %>% head()
 ```
 
 ```{r echo=FALSE}
-#| label: tbl-shuffle-publisher
-#| tbl-cap: "Confidence intervals on the first six of 161 coefficients in `list_price ~ publisher`" 
-#| column: margin
 tmp <- Coefficients %>% head()
 colnames(tmp) <- c("value")
 tmp %>% head() %>%
-  mutate(value = round(value, 2)) %>%
-  knitr::kable()
+  mutate(value = round(value, 2)) 
 ```
 
-Altogether, there are $k=158$ coefficients relating to `shuffle(publisher)`.
+Altogether, there are $k=160$ coefficients relating to `shuffle(publisher)`.
 :::
 
-The rule relating R^2^ to the number of coefficients associated is straightforward for shuffled explanatory variables: R^2^ will be random with mean value $\frac{k}{n-1}$. For the `shuffle(publisher)` model, the mean across many trials will be R^2^ = 158/324 = 0.49. 
+The theory relating R^2^ to the number of coefficients associated is straightforward for shuffled explanatory variables: R^2^ will be random with mean value $\frac{k}{n-1}$. 
+
+
 
 `r set.seed(101)`
+
+::: {.callout-warning}
+## Demonstration: The mean R^2^ across many trials
+
+For the `shuffle(publisher)` model, the theoretical mean across many trials will be R^2^ = 158/324 = 0.49. The demonstration below confirms this using 100 trials: `r set.seed(1023)`
 
 ```{r}
 Pub_trials <- do(100) * {
   lm(list_price ~ shuffle(publisher), data=amazon_books) %>%
     R2()
 }
+Pub_trials %>% summarize(meanR2 = mean(Rsquared))
 ```
+:::
+
 
 ```{r echo=FALSE, warning=FALSE}
 #| label: fig-pub-trials
@@ -231,7 +237,7 @@ ggplot(aes(x=k, y=Rsquared), data=Pub_trials) +
                      breaks=c(0,50, 100,158,200, 256, 300, 319))
 ```
 
-:::
+
 
 We can carry out similar trials for the models `list_price ~ shuffle(author)` and `list_price ~ shuffle(isbn_10)`, which have $k=251$ and $k=319$ respectively. 
 
@@ -329,7 +335,10 @@ model1 <- lm(list_price ~ 1, data=amazon_books)
 model2 <- lm(list_price ~ 1 + weight_oz, data = amazon_books)
 model3 <- lm(list_price ~ 1 + weight_oz + num_pages, data=amazon_books)
 model4 <- lm(list_price ~ 1 + weight_oz + num_pages + hard_paper, data=amazon_books)
+```
 
+`r options(digits=2)`
+```{r}
 R2(model1)
 R2(model2)
 R2(model3)
@@ -338,14 +347,17 @@ R2(model4)
 
 When adding explanatory variables to a model, a good question is whether the new variable(s) add to the ability to account for the variability in the response variable. R^2^ never goes down when moving from a smaller to a larger model, so we cannot rely on the increase in R^2^. A valuable technique called "**Analysis of Variance**" (ANOVA for short) looks at the incremental change in variance explained from a smaller model to a larger one. The increase can be presented as an F statistic. To illustrate:
 
+`r options(digits=2)`
 
 ```{r}
 #| column: page-right
 anova_summary(model1, model2, model3, model4)
 ```
 
+`r options(digits=4)`
 
-Focus on the F column (`statistic`) of the report. The move from Model 1 to Model 2 produces F=57, well above the threshold described above and clearly indicating that the `weight_oz` variable accounts for some of the list price. Moving from Model 2 to Model 3 creates a much less impressive F of 3.8. It is as if the added explanatory variable, `num_pages`, is just barely pulling its own "weight." Finally, moving from Model 3 to Model 4 produces a below-threshold F of 1.3. In other words, in the context of `weight_oz` and `num_pages,` the `hard_paper` variable does not carry additional information about the list price. 
+
+Focus on the column named `statistic`. This records the F statistic. The move from Model 1 to Model 2 produces F=57, well above the threshold described above and clearly indicating that the `weight_oz` variable accounts for some of the list price. Moving from Model 2 to Model 3 creates a much less impressive F of 3.8. It is as if the added explanatory variable, `num_pages`, is just barely pulling its own "weight." Finally, moving from Model 3 to Model 4 produces a below-threshold F of 1.3. In other words, in the context of `weight_oz` and `num_pages,` the `hard_paper` variable does not carry additional information about the list price. 
 
 The last column of the report, labeled `Pr(>F)`, translates F into a universal 0 to 1 scale called a p-value. A large F produces a small p-value. The rule of thumb for reading p-values is that a value $p < 0.05$ indicates that the added variable brings new information about the response variable. We will return to p-values and the controversy they have entailed in Lessons 36 through 38.
 

@@ -23,16 +23,25 @@ coefficients <- function(mod) {
 }
 
 tbl_style1 <- function(tbl, ...) {
-  kbl(tbl) %>%
-  kable_paper(bootstrap_options = c("striped", "responsive"), full_width = FALSE,
-              ...)
+  columns <- 1:ncol(tbl)
+  kable(tbl, width_min = "3cm") %>%
+  kable_styling(bootstrap_options = c("striped", "condensed"),
+                full_width = FALSE,
+              html_font = "Courier", position="left",
+              ...) #|> column_spec(columns, width="3cm")
 }
 
 library(knitr)
 
 knit_print.data.frame <- function (x, options, ...) {
+
+
+  if ("displayrows" %in% names(options)) {
   # rmarkdown::paged_table(x, options) |>
   #   rmarkdown:::print.paged_df()
+    x <- head(x, options$displayrows)
+  }
+
   if ("digits" %in% names(options)) {
     fix_signif <- function(x) {
       signif(x, digits=as.numeric(options$digits))
@@ -149,7 +158,4 @@ plot_people_score_condition <- function(data) {
     scale_color_gradient(low="#A0A0A0", high="#0000FF", guide="none") +
     theme_void() + coord_fixed()
 }
-
-
-
 

@@ -52,14 +52,14 @@ Cancer_data <- sample(dag_lawn2, size=1000)
 
 
 ```{r echo=FALSE}
-Cancer_data[330:339,] %>% select(-wealth) %>% knitr::kable()
+Cancer_data[330:339,] %>% select(-wealth) 
 ```
 
 Analyzing such data is straightforward. First, check the overall cancer rate:
 
 ```{r}
 # overall cancer rate
-lm(zero_one(illness, one="cancer") ~ 1, data = Cancer_data) %>% coefficients()
+lm(zero_one(illness, one="cancer") ~ 1, data = Cancer_data) %>% coef()
 ```
 
 In these data, 2.6% of the sampled households had cancer in the last five years. How does the grass treatment affect that rate?
@@ -95,7 +95,7 @@ The first definition seems relevant to our story since the protagonist expected 
 Using covariates in models is one such technique. Our wised-up study designers go back to collect a covariate representing household wealth. Here is a glimpse at the updated data.
 
 ```{r echo=FALSE}
-Cancer_data[330:339,] %>%  knitr::kable()
+Cancer_data[330:339,]
 ```
 Having measured `wealth`, we can use it as a covariate in the model of `illness`: 
 
@@ -118,16 +118,16 @@ In 2012, the *Lancet*, a leading medical journal, published a [systematic examin
 ```{r echo=FALSE}
 #| label: fig-healthy-vaccine
 #| fig-cap: 'A DAG diagramming the "healthy vaccine recipient" effect'
-#| fig-cap-location: margin
-#| out-width: 50%
-#| fig-align: center
+#| column: margin
+#| out-width: 120%
 vaccine_dag <- dag_make(
   age ~ exo(),
   frailty ~ age(),
   got_vaccinated ~ frailty,
   mortality ~ frailty 
 )
-dag_draw(vaccine_dag, seed=104, vertex.label.cex=.7, vertex.size=40)
+# dag_draw(vaccine_dag, seed=104, vertex.label.cex=.7, vertex.size=40)
+knitr::include_graphics("www/healthy-vaccine-dag.png")
 ```
 
 
@@ -211,8 +211,6 @@ knitr::include_graphics("www/abc-collider.png")
 Look back to @fig-three-dags-cancer(a), where `wealth` is a confounder. A confounder is always an intermediate node in a *correlating path*. 
 
 
-:::
-
 Including a covariate either blocks or opens the pathway on which that covariate lies. Which it will be depends on the kind of pathway. A causal path, as in @fig-dags-paths(b), is blocked by including the covariate. Otherwise, it is open. A correlating path (@fig-dags-path(c)) is similar: the path is open unless the covariate is included in the model. A colliding path, as in @fig-dags-paths(d), is blocked *unless* the covariate is included---the opposite of a causal path.  
 
 Often, covariates are selected to block all paths except the direct link between the explanatory and response variable. This means *do* include the covariate if it is on a correlating path and *do not* include it if the covariate is at the collision point.
@@ -242,3 +240,5 @@ But there is a genuine choice to be made about whether to block pathway (ii). If
 https://towardsdatascience.com/causal-effects-via-dags-801df31da794
 
 https://towardsdatascience.com/causal-effects-via-the-do-operator-5415aefc834a
+
+:::

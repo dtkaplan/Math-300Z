@@ -79,7 +79,7 @@ The demonstrations will often contain new computer commands that perform tasks u
     - **`zero_one()`** converts a two-level categorical variable to a 0/1 encoding.
     
 * Summarizing models. These invariably take as input a model produced by `lm()` (or `glm()`) and generate a summary report about that model.
-    - **`coefficients()`**: displays model coefficients as a single number.
+    - **`coef()`**: displays model coefficients. Each coefficient is a single number.
     - **`confint()`**: displays model coefficients as an *interval* with a lower and upper value.
     - **`rsquared()`** reduces a model to a single number, called R^2^.
     - **`regression_summary()`**, like `confint()`, but with more detail.

@@ -90,7 +90,7 @@ All these confidence intervals include zero, as expected.
 
 ```{r echo=FALSE}
 #| label: fig-planet-null
-#| fig-cap: "Planet Null, known symbolically as $\given H_0)$. Any pattern on Planet Null is attributed to chance, in the form of sampling variation."
+#| fig-cap: "Planet Null, known symbolically as $\\given H_0)$. Any pattern on Planet Null is attributed to chance, in the form of sampling variation."
 #| column: margin
 knitr::include_graphics("www/planet-null.png")
 ```
@@ -116,7 +116,7 @@ There has been a controversy since the 1930s about whether hypothesis testing---
 
 ```{r echo=FALSE}
 #| label: fig-planet-alt
-#| fig-cap: "Planet Alt, that is,  $\given H_a)$ might look like this. We draw it as a cartoon planet, since any particular hypothesis is a simplified description."
+#| fig-cap: "Planet Alt, that is, $\\given H_a)$ might look like this. We draw it as a cartoon planet, since any particular hypothesis is a product of the imagination."
 #| column: margin
 knitr::include_graphics("www/planet-alt.png")
 ```
@@ -149,7 +149,7 @@ We will use the `Galton` data, and the model `height ~ mother`, to illustrate co
 
 ```{r}
 mod <- lm(height ~ mother, data=Galton) 
-mod %>% coefficients()
+mod %>% coef()
 mod %>% confint()
 
 ```
@@ -161,13 +161,13 @@ Now we rocket off to Planet Null. On Planet Null, children are not related to th
 To calculate the `mother` coefficient on Planet Null, use `shuffle()`. Here's the result from one sample:
 
 ```{r}
-lm(height ~ shuffle(mother), data=Galton) %>% coefficients()
+lm(height ~ shuffle(mother), data=Galton) %>% coef_summary()
 ```
 
 Repeating the above generates another sample from Planet Null:
 
 ```{r}
-lm(height ~ shufflree(mother), data=Galton) %>% coefficients()
+lm(height ~ shuffle(mother), data=Galton) %>% coef_summary()
 ```
 
 From these two Planet Null samples, it is already evident that the `shuffle(mother)` coefficient on Planet Null tends to be closer to zero than the `mother` coefficient from Planet Earth.
@@ -176,23 +176,23 @@ We can make a more compelling and precise statement if we look at a large number
 
 ```{r}
 Trials <- do(1000) * {
-  lm(height ~ shuffle(mother), data=Galton) %>% coefficients()
+  lm(height ~ shuffle(mother), data=Galton) %>% coef()
 }
 ```
 
-The set of `mother` coefficients in these trials shows us the "sampling distribution under the Null." We can graph it:
+
 
 ```{r}
 #| label: fig-shuffle-mother
 #| fig-cap: "Values of the `shuffle(mother)` coefficient. Each gray dot is the result from one shuffling trial. The violin shows the sampling distribution under the null. The red dot is the `mother` coefficient found without shuffling."
 #| column: margin
+#| code-fold: true
 Trials %>%
-  filter(term == "shuffle(mother)") %>%
-  ggplot(aes(y = coefficient, x = "All")) +
+  ggplot(aes(y = mother, x = "All")) +
   geom_jitter(alpha = 0.2, width=.15) +
   geom_violin(alpha = .2, fill = "blue", color = NA) +
   geom_point(aes(y = 0.31, x = 1), color="red") +
   xlab("")
 ```
 
-The "sampling distribution under the Null" is represented by the gray dots. The violin gives an easier to read representation. For this model, the `mother` coefficient from the sample from Planet Earth is so far different that it cannot pretend to be an instance from Planet Null.
+The set of `mother` coefficients in these trials reflects us the "sampling distribution under the Null."  (@fig-shuffle-mother) The "sampling distribution under the Null" is represented by the gray dots. The violin gives an easier to read representation. For this model, the `mother` coefficient from the sample from Planet Earth is so far different that it cannot pretend to be an instance from Planet Null.

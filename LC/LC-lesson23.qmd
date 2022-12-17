@@ -149,7 +149,7 @@ Return to the `amazon_books` data frame and the model `list_price ~ amazon_price
 The basic process is to train a model using *resampled* data, like this:
 
 ```{r}
-lm(list_price ~ amazon_price, data = resample(amazon_books)) %>% coefficients()
+lm(list_price ~ amazon_price, data = resample(amazon_books)) %>% coef()
 ```
 
 Then, using `do(500)`, carry out 500 trials, saving the result in a data frame named `Trials`.
@@ -167,7 +167,7 @@ THE PROBLEM IS a handful of books where the Amazon price is very different from 
 2. This is an object lesson in outliers. Since the dollar discount is presumably *proportional* to the price, we should have used log transforms.
 
 ```{r}
-Trials <- do(500) * {lm(list_price ~ amazon_price, data = resample(amazon_books)) %>% coefficients()}
+Trials <- do(500) * {lm(list_price ~ amazon_price, data = resample(amazon_books)) %>% coef()}
 Trials %>% summarize(m1 = mean(Intercept), 
                      m2 = mean(amazon_price), 
                      sintercept = sd(Intercept), 

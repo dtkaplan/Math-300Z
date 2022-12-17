@@ -32,6 +32,7 @@ TenMileRace %>%
 
 `summarize()` works hand-in-hand with `group_by()` to calculate groupwise summaries. The following wrangling statement, for instance, looks at the average `net` running time broken up according to the runner's state of residence and presents the results from the fastest state downwards:
 
+::: {.column-page-right}
 ```{r}
 TenMileRace %>%
   group_by(state) %>%
@@ -39,6 +40,7 @@ TenMileRace %>%
   arrange(ave) %>%
   head(10)
 ```
+:::
 
 Wrangling is essential for many statistical purposes, not just summarizing but also setting up for making graphical displays, cleaning data, and assembling data from multiple sources. 
 
@@ -53,8 +55,8 @@ In its simplest mode, a regression can calculate means. The result will be ident
 
 Here is the mean `net` running time calculated using both approaches.
 
-```{r}
-TenMileRace %>% lm(net ~ 1, data=.) %>% coefficients()
+```{r nrows=7}
+TenMileRace %>% lm(net ~ 1, data=.) %>% coef()
 TenMileRace %>% summarize(mn = mean(net))
 ```
 
@@ -63,8 +65,8 @@ TenMileRace %>% summarize(mn = mean(net))
 The groupwise calculations also produce equivalent results, although the results are formatted in different ways.
 
 ```{r}
-TenMileRace %>% lm(net ~ sex, data=.) %>% coefficients()
-TenMileRace %>% group_by(sex) %>%summarize(mn = mean(net))
+TenMileRace %>% lm(net ~ sex, data=.) %>% coef()
+TenMileRace %>% group_by(sex) %>% summarize(mn = mean(net))
 ```
 Regression of this sort calculates the mean of a reference group and the **difference in means** between the two groups, whereas the wrangling command presents the mean of each group.
 :::
@@ -72,32 +74,48 @@ Regression of this sort calculates the mean of a reference group and the **diffe
 In regression, "grouping" is extended to quantitative variables. For instance,
 
 ```{r}
-TenMileRace %>% lm(net ~ age, data = .) %>% coefficients()
+TenMileRace %>% lm(net ~ age, data = .) %>% coef()
 ``` 
 This report indicates a trend of `net` running time increasing with `age` by about 8 seconds per year.
 
 The `group_by()` function can use a quantitative variable, but the result is a different number for each group rather than a trend.
 
-```{r}
+```{r displayrows=5, digits = 3}
 TenMileRace %>% group_by(age) %>% summarize(mn = mean(net)) 
 ```
 
 With multiple grouping variables, say `age` and `sex`, the output of `summarize()` becomes increasingly complicated. For example:
 
-```{r}
-TenMileRace %>% group_by(sex, age) %>% summarize(mn = mean(net)) 
+```{r message=FALSE, results="hide"}
+TenMileRace %>% 
+  group_by(sex, age) %>% 
+  summarize(mn = mean(net)) 
 ```
 
-Regression keeps things simpler, reporting on trends:
+```{r echo=FALSE, displayrows=8, digits=4, message=FALSE}
+TenMileRace %>% 
+  group_by(sex, age) %>% 
+  summarize(mn = mean(net)) %>%
+  ungroup() %>%
+  sample(size=10) %>%
+  select(-orig.id) %>%
+  arrange(age)
+```  
 
-```{r}
-TenMileRace %>% lm(net ~ sex + age, data = .) %>% coefficients() 
+
+
+Regression keeps things simpler, reporting on trends: `r options(digits=4)`
+
+```{r digits=4}
+TenMileRace %>% lm(net ~ sex + age, data = .) %>% coef() 
 ```
 
 The trend reported from this regression model is an increase in `net` of about 16 seconds per year of age. Regression can summarize relationships in more detailed ways as well. The following model looks at the trend with age separately for males and females:
 
+`r options(digits=3)`
+
 ```{r}
-TenMileRace %>% lm(net ~ sex * age, data = .) %>% coefficients() 
+TenMileRace %>% lm(net ~ sex * age, data = .) %>% coef() 
 ```
 
 Here, the age trend for women is an increase in `net` running time of 16 seconds per year of age, while for men, that increase is bigger, an extra 1.6 seconds per year of age.
@@ -148,6 +166,7 @@ The `Gestation` data frame records more than 1200 births. `gestation` records th
 #| label: fig-gestation-jitter
 #| fig-cap: "Gestational period for pregnancies where the mother had five or fewer previous pregnancies. The `width=0.2` controls the amount of horizontal jittering. We chose it to make the columns of data clear. There is no need to jitter in the vertical direction, so we set `height=0`"
 #| fig-cap-location: margin
+#| code-fold: true
 Gestation %>% 
   filter(parity <= 5) %>%
   #mutate(parity = as.character(parity)) %>%
@@ -164,25 +183,29 @@ It is easy to see a pattern in @fig-gestation-jitter: It looks like mothers with
 
 One way to explore this idea is to plot the density of the dots as a function of gestation for each of the parity levels individually. A "violin" layer will make it easier to compare the distributions in the different columns, despite the unevenness in the case count. @fig-violin-intro gives an example.
 
+::: {.column-page-right}
 ```{r warning=FALSE}
 #| label: fig-violin-intro
 #| fig-cap: "A violin plot. The long axis of the violin-like shape is oriented along the response-variable axis (that is, the vertical axis in our standard format). The width of the violin for each possible value of the response variable is proportional to the density of data near that value."
 #| fig-cap-location: margin
+#| code-fold: true
 Gestation %>% 
   filter(parity <= 5) %>%
   ggplot(aes(x=parity, y=gestation)) + 
   geom_jitter(alpha=0.2, width=0.2, height=0) +
   geom_violin(aes(group=parity), fill="blue", alpha=0.2, color=NA)
 ```
+:::
 
 The violin plot is a more flexible display of the distribution of gestation period than a histogram. The histogram has all those bars that clutter up the display. Even worse, one of the axes in the frame of a histogram plot is "count" or maybe "density." Such a frame is inconsistent with the response/explanatory axes used for the data. The violin is drawn in the no-mans-land between the different levels of parity, just as the jittering moves data away from a single vertical line into that same no-mans-land. 
 
 This idea of using the graphical no-mans-land between levels of a categorical explanatory variable is not new. You encountered it earlier when you drew box plots. @fig-density-box adds a box-plot annotation layer on top of the violin-plot layer.
 
 ```{r warning=FALSE}
-#| label: fig-density-plot
+#| label: fig-density-box
 #| fig-cap: "A box and whisker plot uses the no-mans-land between levels of a categorical explanatory variable."
 #| fig-cap-location: margin
+#| code-fold: true
 Gestation %>% 
   filter(parity <= 5) %>%
   ggplot(aes(x=parity, y=gestation)) + 
@@ -207,14 +230,11 @@ Yes/no response variables can be represented using 0 for one level and 1 for the
 ## R technique: Using `zero_one()`.
 The `zero_one()` function converts a yes/no variable to the numerical zero-one format. `zero_one()` allows you to specify which of the two levels is represented by 1.
 
-To illustrate, consider the `mosaicData::Whickham` data frame, which records a 1972-1974 survey, part of a study of the relationship between smoking and mortality. Twenty years after the initial survey, a follow-up established whether or not each person was still alive. 
+To illustrate, consider the `mosaicData::Whickham` data frame, which records a 1972-1974 survey, part of a study of the relationship between smoking and mortality. Twenty years after the initial survey, a follow-up established whether or not each person was still alive. Here are a few rows from the data frame:
 
 ```{r echo=FALSE}
-#| label: tbl-Whickham-short
-#| tab.cap: "A few rows of the `Whickham` data frame."
-#| tab.location: margin
 set.seed(201)
-head(mosaicData::Whickham) %>% knitr::kable()
+head(mosaicData::Whickham) 
 ```
 
 The `outcome` variable in `Whickham` records the result of the follow-up survey. It is a categorical variable with levels "Alive" and "Dead." To examine what the data have to say about the relationship between smoking and mortality, we construct a model with `outcome` as the response variable and `smoking` as an explanatory variable. Before doing so, we translate `outcome` into a zero-one format. Like this:
@@ -226,8 +246,7 @@ Whickham %>%
 
 ```{r echo=FALSE}
 Whickham %>% head() %>%
-  mutate(alive = zero_one(outcome, one="Alive")) %>%
-    knitr::kable()
+  mutate(alive = zero_one(outcome, one="Alive")) 
 ```
 
 Note the correspondence between the `outcome` and the newly created `alive` variable.
@@ -244,11 +263,15 @@ Starbucks is a famous coffee-shop franchise with more than 30,000 branches (as o
 
 First, a **point summary** of the calories in the different types of food products available at Starbucks:
 
-```{r}
+```{r echo=FALSE}
 point_summary <- 
   df_stats(calories ~ type, 
            data = openintro::starbucks, mean)
-point_summary
+```
+
+```{r}
+df_stats(calories ~ type, 
+         data = openintro::starbucks, mean)
 ```
 
 This summary supports the sensible advice to choose salads or smaller portions (type "petite") to avoid calories. One might go further, for example, concluding that a sandwich is a poor choice (in terms of calorie content), so lean toward parfaits or hot breakfasts. We can even imagine someone concluding from this summary that a bistro box is a better calorie-conscious choice than a sandwich.
@@ -259,6 +282,7 @@ This summary supports the sensible advice to choose salads or smaller portions (
 #| label: fig-starbucks-food
 #| fig-cap: "Calories of the various food items sold by Starbucks, annotated with point and interval summaries."
 #| fig-cap-location: margin
+#| code-fold: true
 openintro::starbucks %>% 
   ggplot(aes(x=type, y=calories)) +
   geom_jitter(width=0.2, alpha=0.5) +
@@ -275,6 +299,7 @@ A point summary is compact but cannot represent the *variation* within each food
 #| label: fig-starbucks-food2
 #| fig-cap: "Calories of the various food items sold by Starbucks, annotated with point and interval summaries."
 #| fig-cap-location: margin
+#| code-fold: true
 openintro::starbucks %>% 
   ggplot(aes(x=type, y=calories)) +
   geom_jitter(width=0.2, alpha=0.5) +

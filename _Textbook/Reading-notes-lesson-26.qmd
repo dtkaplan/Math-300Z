@@ -14,39 +14,24 @@ Lesson 25 introduced predictions in two forms:
 
 To clarify this distinction, consider this three-step procedure that trains a model, extracts the model function, and applies the model function to inputs to generate a prediction in point-estimate form.
 
-```{r}
+```{r results="hide", attr.source='.numberLines'}
 Time_mod <- lm(time ~ distance + climb, data = Hill_racing)
 Time_mod_fun <- makeFun(Time_mod)
 Time_mod_fun(distance=10, climb=500)
 ```
-In the first command, `lm()` is used to train a model.  
 
-::: {.callout-warning}
-## Demonstration: The "class" of an R object
+In the first line, `lm()` is used to train a model.
 
-In R, the object produced by `lm()` has several components packaged together. The object has a particular "class," which governs what operations can be applied to it. It is unusual at the level of these Lessons to need to know about classes, but for the sake of discussion, here is how to find out the class of an object.
 
-```{r}
-class(Time_mod)
-```
+The second line, `Time_mod_fun <- makeFun(Time_mod)`, creates and names a *function* that implements the input/output relationship defined by the model. 
 
-The class name, "lm," obviously is a tribute to the most widely used function to train a linear model, `lm()`.
-:::
-
-The second command, `Time_mod_fun <- makeFun(Time_mod)`, creates and names a *function* that implements the input/output relationship defined by the model. As a computer object, a function has a particular class:
-
-```{r}
-class(Time_mod)
-```
-
-R functions should be familiar at this point. The primary use for objects of class "function" is to apply them to arguments. The syntax from this involves a pair of parentheses with the arguments placed inside and separated by commas.
+The third line uses the ordinary parentheses notation to apply the newly created `Time_mod_fun()` to specific values of the argument, generating the corresponding output value.
 
 ```{r}
 # applying the function to arguments
 Time_mod_fun(distance=10, climb=500) 
 ```
 
-Applying a function to arguments instructs the computer to generate the corresponding output value. 
 
 In these Lessons, whenever we refer to the "model function," we mean a model translated into the form of a function. The point is to emphasize the input-to-output relationship implied by a model.
 
@@ -56,7 +41,7 @@ In statistical modeling, model functions are *not* an object of primary interest
 
 For this reason, there is no need to construct the model function explicitly. Consequently, one generally does not use the function application syntax directly as we did with `Time_mod_fun(distance=10, climb=500)`. Instead, one invokes the model function with other software that can use all the information in a model object. For us, that software will be the `model_eval()` extractor.
 
-Use `model_eval()` as you do the other familiar extractors such as `coefficients()` or `confint()`. To generate a prediction, give `model_eval()` arguments specifying the desired inputs to use with the model function.
+Use `model_eval()` as you do the other familiar extractors such as `coef()` or `confint()`. To generate a prediction, give `model_eval()` arguments specifying the desired inputs to use with the model function.
 
 ```{r}
 Time_mod %>% model_eval(distance=10, climb=500) 
@@ -78,7 +63,7 @@ The prediction interval has two distinct components:
 Consider first the model function. For the running-time model, we can construct the model function from the coefficients of the linear model. These are:
 
 ```{r}
-Time_mod %>% coefficients()
+Time_mod %>% coef()
 ```
 
 The algebraic expression for the model function is straightforward:

@@ -107,7 +107,7 @@ The `mosaicData::SaratogaHouses` data frame contains information about the sales
 Do a regression of `price ~ bedrooms` and explain what the regression coefficients mean.
 
 ```{r}
-lm(price ~ bedrooms, data=SaratogaHouses) |> coefficients()
+lm(price ~ bedrooms, data=SaratogaHouses) |> coef()
 ```
 
 1. What are the units of the intercept and of the `bedrooms` coefficient? *Intercept in dollars, `bedrooms` in dollars per bedroom.
@@ -119,7 +119,7 @@ lm(price ~ bedrooms, data=SaratogaHouses) |> coefficients()
 Of course, bedrooms are not the only important thing about a house. Let's include `livingArea` along with `bedrooms` in the model.
 
 ```{r}
-lm(price ~ livingArea + bedrooms, data=SaratogaHouses) |> coefficients()
+lm(price ~ livingArea + bedrooms, data=SaratogaHouses) |> coef()
 ```
 
 1. What are the units of the `livingArea` coefficient? *dollars per square foot*

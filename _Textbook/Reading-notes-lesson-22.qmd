@@ -68,7 +68,7 @@ To illustrate, here is one trial using a sample of $n=25$ and a simple model, `y
 Sample <- sample(dag01, size=25) 
 Sample %>% 
   lm(y ~ 1, data = .) %>%
-  coefficients()
+  coef()
 ```
 
 We cannot see sampling variation directly in the above result because there is only one trial. The sampling variation becomes evident when we run *many* trials. In each trial, a new sample (of size $n=25$ is taken and summarized.) `r set.seed(301)`
@@ -78,7 +78,7 @@ Trials <- do(100) * {
   Sample <- sample(dag01, size=25) 
   Sample %>% 
     lm(y ~ 1, data = .) %>%
-    coefficients()
+    coef()
 }
 ```
 
@@ -110,7 +110,7 @@ Trials <- do(1000) * {
   Sample <- sample(dag01, size=25) 
   Sample %>% 
     lm(y ~ 1, data = .) %>%
-    coefficients()
+    coef()
 }
 Trials %>% summarize(se400 = sd(Intercept))
 ```

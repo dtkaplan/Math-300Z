@@ -3,11 +3,14 @@
 \name{regression_summary}
 \alias{regression_summary}
 \alias{anova_summary}
+\alias{coef_summary}
 \title{Generate a regression or ANOVA report in the form of a data frame.}
 \usage{
 regression_summary(model, ...)
 
 anova_summary(...)
+
+coef_summary(mod)
 }
 \arguments{
 \item{model}{A model as produced by \code{lm()}, \code{glm()}, and so on}
@@ -18,5 +21,5 @@ Generate a regression or ANOVA report in the form of a data frame.
 \details{
 These are simply wrappers around \code{broom::tidy()} used to
 emphasize to students that the results are a summary in the form of a regression
-report, similar to the summaries produced by \code{confint()}, \code{coefficients()}, etc.
+report, similar to the summaries produced by \code{confint()}, \code{coef()}, etc.
 }

@@ -19,7 +19,7 @@ The *linear models* (`lm()`) we have mostly been using up until now accumulate t
 
 ```{r}
 mpg_mod <- lm(mpg ~ hp + wt, data = mtcars) 
-mpg_mod %>% coefficients()
+mpg_mod %>% coef()
 ```
 
 These coefficients mean that the model output is a **sum**. For instance, a 100 horsepower car weighting 2500 pounds has a predicted fuel economy of `37.2 - 0.032*100 - 3.88*2.5=``r 37.2 - 0.032*100 - 3.88*2.5` miles per gallon.^[The `wt` variable is measured in units of 1000 lbs, so a 2500 pound vehicle has a `wt` value of 2.5.]
@@ -152,19 +152,4 @@ A big mathematical advantage to using odds is that the odds number can be anythi
 
 
 
-## Modeling log odds
 
-When a model output is intended to be interpreted as a probability, we have a similar problem.  THATS what the LOG-ODDS transformation DOES. WITH LOG-ODDS we can model probability using linear combinations of inputs.
-
-## Probability as prediction?
-
-DOES IT MAKE SENSE TO FRAME a PREDICTION IN TERMS OF A PROBABILITY? So long as the probability is not exactly zero or one, observing either of the two kinds of events---e.g., yes/no, alive/dead, diseased/healthy---does not contradict the model output. So how can we judge if a model is on-target or not. Or, equivalently, how can we decide which of two models is better.
-
-In Lesson 26 we introduced the idea of a prediction interval OUTPUT SHOULD ALMOST ALWAYS (95% of the time) be within the interval.
-
-The problem for us now is to create something like the PREDICTION INTERVAL when the model output is a probability.
-
-INTRODUCE the variance as a measure of uncertainty. The variance of a probability is $p(1-p)$.
-
-
-::: {.callout-note}
