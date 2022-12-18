@@ -1,5 +1,6 @@
+# Constructing a classifier {#sec-lesson-34}
+
 ---
-title: "Constructing a classifier"
 output:
   html_document:
     theme: lumen
@@ -10,16 +11,18 @@ output:
     toc: yes
 ---
 
-```{r setup, include=FALSE}
+```{r setup34, include=FALSE}
 lesson <- 34
 source("../_startup.R")
 ```
+
 
 ::: {.hidden}
 $$\newcommand{\Ptest}{\mathbb{P}}
 \newcommand{\Ntest}{\mathbb{N}}
 \newcommand{\given}{\ |\!\!|\  }$$
 :::
+
 
 
 
@@ -38,7 +41,7 @@ Consider this news report and note the time lag between collection of the dietar
 
 > Higher vitamin D intake has been associated with a significantly reduced risk of pancreatic cancer, according to a study released last week.
 > Researchers combined data from two prospective studies that included 46,771 men ages 40 to 75 and 75,427 women ages 38 to 65.  They identified 365 cases of pancreatic cancer over 16 years.
-> Before their cancer was detected, subjects filled out dietary questionnaires, including information on vitamin supplements, and researchers calculated vitamin D intake.  After statistically adjusting^[That is, applying the methods of Lesson 28.] for age, smoking, level of physical activity, intake of calcium and retinol and other factors, the association between vitamin D intake and reduced risk of pancreatic cancer was still significant.
+> Before their cancer was detected, subjects filled out dietary questionnaires, including information on vitamin supplements, and researchers calculated vitamin D intake.  After statistically adjusting^[That is, applying the methods of [Lesson -@sec-lesson-28].] for age, smoking, level of physical activity, intake of calcium and retinol and other factors, the association between vitamin D intake and reduced risk of pancreatic cancer was still significant.
 > Compared with people who consumed less than 150 units of vitamin D a day, those who consumed more than 600 units reduced their risk by 41 percent. - *New York Times*, 19 Sept. 2006, p. D6.
 
 This was not an experiment; it was an observational study without any intervention to change anyone's diet.
@@ -93,16 +96,16 @@ gridExtra::grid.arrange(P2 + labs(title="Day 1") , P4, widths = c(.3, .7))
 
 ## Applying a threshold
 
-To finish the classifier, we need to identify a "**threshold score**." Raw scores above this threshold will generate a $\Ptest$ test; scores below the threshold generate a $\Ntest$ test.
+To finish the classifier, we need to identify a "**threshold score**." Raw scores above this threshold will generate a ${\mathbb{P}}$ test; scores below the threshold generate a ${\mathbb{N}}$ test.
 
 We can make a good guess at an appropriate threshold score from the presentation in the right panel of @fig-compare-scores. The objective in setting the threshold is to distinguish the C group from the H group. Setting the threshold at a score around 3 does a pretty good job. 
 
-It helps to give names to the two test results: $\Ptest$ and $\Ntest$.
-Anyone with a score above 3 has result $\Ptest$, anyone with a score below 3 has an $\Ntest$ result.
+It helps to give names to the two test results: ${\mathbb{P}}$ and ${\mathbb{N}}$.
+Anyone with a score above 3 has result ${\mathbb{P}}$, anyone with a score below 3 has an ${\mathbb{N}}$ result.
 
 ```{r echo=FALSE}
 #| label: fig-divided-by-condition
-#| fig-cap: "Blue is a $\\Ptest$ result, gray a $\\Ntest$ result."
+#| fig-cap: "Blue is a $\\mathbb{P}$ result, gray a $\\mathbb{N}$ result."
 P3a <- plot_people_final(Case_control %>% filter(cond=="C")) +
   labs(title="C group")
 P3b <- plot_people_final(Case_control %>% filter(cond=="H")) +
@@ -127,9 +130,9 @@ gridExtra::grid.arrange(P3a, P4, P3b, widths = c(.4, .2, .4))
 
 NARRATE @fig-divided-by-condition to point out the gray dots in the C group and the blue dots in the H group. These are errors. But there are two kinds of errors.
 
-- False-positive: blue dots in the H group. The "positive" refers to the $\Ptest$ test result, the "false" simply means the test result was wrong.
+- False-positive: blue dots in the H group. The "positive" refers to the ${\mathbb{P}}$ test result, the "false" simply means the test result was wrong.
 
-- False-negative: gray dots in the C group. The "negative" refers to the $\Ntest$ result. Again, the "false" means simply that the test result is out of line with the actual condition of the person.
+- False-negative: gray dots in the C group. The "negative" refers to the ${\mathbb{N}}$ result. Again, the "false" means simply that the test result is out of line with the actual condition of the person.
 
 
 In the training sample shown in @fig-divided-by-condition, there are 300 people altogether and 17 false-negatives. This gives a false-negative rate of about 6%. Similarly there are 30 false-negatives, a false-positive rate of 10%. 
@@ -157,9 +160,9 @@ The feature engineers' conclusion: Send dog-food coupons to people who buy carpe
 
 ## Threshold, sensitivity and specificity
 
-In @fig-divided-by-condition the threshold between $\Ptest$ and $\Ntest$ is set at a score of 3. That might have been a good choice, but it pays to take a more careful look.
+In @fig-divided-by-condition the threshold between ${\mathbb{P}}$ and ${\mathbb{N}}$ is set at a score of 3. That might have been a good choice, but it pays to take a more careful look.
 
-That graph is hard to read because the scores have a very long-tailed distribution; the large majority of scores are below 2 but the scores go up to 40. To make it easier to compare scores between the C and H groups,  @fig-compare-scores2 shows the scores on a nonlinear axis. Each score is marked as a letter: "P" means $\Ptest$, "N" means $\Ntest$. False results are colored red.
+That graph is hard to read because the scores have a very long-tailed distribution; the large majority of scores are below 2 but the scores go up to 40. To make it easier to compare scores between the C and H groups,  @fig-compare-scores2 shows the scores on a nonlinear axis. Each score is marked as a letter: "P" means ${\mathbb{P}}$, "N" means ${\mathbb{N}}$. False results are colored red.
 
 
 ```{r echo=FALSE, warning=FALSE}
@@ -174,9 +177,6 @@ finv <- with(Case_control,
 ```
 
 ```{r echo=FALSE}
-#| label: fig-compare-scores2
-#| fig-cap: "Redrawing the participants' scores from @fig-compare-scores on a nonlinear axis. Color marks whether the classifier gave a correct output."
-#| fig-cap-location: margin
 PNplot <- function(threshold=3) {
   Plot_data <- Case_control %>%
     mutate(test_result = raw_result <= threshold, 
@@ -200,7 +200,14 @@ PNplot <- function(threshold=3) {
                                   name="Raw score")) + 
     theme_minimal() 
 }
-PNplot(threshold=3)
+```
+
+```{r}
+#| label: fig-compare-scores2
+#| fig-cap: "Redrawing the participants' scores from @fig-compare-scores on a nonlinear axis. Color marks whether the classifier gave a correct output."
+#| fig-cap-location: margin
+## PNplot(threshold=3)
+knitr::include_graphics("www/PN-threshold1.png")
 ```
 
 
@@ -210,23 +217,25 @@ Moving the threshold up would reduce the number of false-positives. At the same 
 #| label: fig-two-thresholds1
 #| fig-cap: "A **higher** threshold increases the number of false-negatives, but decreases false-positives."
 #| column: margin
-PNplot(threshold=10) + xlab("")
+#   PNplot(threshold=10) + xlab("")
+knitr::include_graphics("www/PN-threshold1.png")
 ```
 
 ```{r echo=FALSE}
 #| label: fig-two-thresholds2
 #| fig-cap: "A **lower** threshold increases the number of false-positives, but decreases false-negatives."
 #| column: margin
-PNplot(threshold=0.5) + xlab("")
+# PNplot(threshold=0.5) + xlab("")
+knitr::include_graphics("www/PN-threshold3.png")
 ```
 
 By setting the threshold larger, the number of false-negatives (red Ns in @fig-two-thresholds) increases, but the number of false-positives (red Ps) goes down. Setting the threshold lower reduces the number of false-negatives but increases the number of false-positives.
 
 This trade-off between the number of false-positives and the number of false-negatives is characteristic of classifiers.
 
-@fig-fraction-correct shows the overall pattern for false results versus threshold. At a threshold of 0, all test results are $\Ptest$. Hence, none of the C group results are false; if there are no $\Ntest$ results, there cannot be any false-negatives. On the other hand, all of the H group are false-positives.  
+@fig-fraction-correct shows the overall pattern for false results versus threshold. At a threshold of 0, all test results are ${\mathbb{P}}$. Hence, none of the C group results are false; if there are no ${\mathbb{N}}$ results, there cannot be any false-negatives. On the other hand, all of the H group are false-positives.  
 
-Increasing the threshold changes the results. At a threshold of 1, many of the H group---about 50%---are being correctly classified as $\Ntest$. Unfortunately, the higher threshold introduces some negative results for the C group. So the fraction of correct results in the C group goes down to about 90%.  This pattern continues: raising the threshold improves the fraction correct in the H group and lowers the fraction correct in the C group.  
+Increasing the threshold changes the results. At a threshold of 1, many of the H group---about 50%---are being correctly classified as ${\mathbb{N}}$. Unfortunately, the higher threshold introduces some negative results for the C group. So the fraction of correct results in the C group goes down to about 90%.  This pattern continues: raising the threshold improves the fraction correct in the H group and lowers the fraction correct in the C group.  
 
 There are two names given to the fraction of correct classifications, depending on whether one is looking at the C group or the H group. The fraction correct in the C group is called the "**sensitivity**" of the test. The fraction correct in the H group is the "**specificity**" of the test.
 
@@ -259,6 +268,6 @@ ggplot(For_graph, aes(x=raw_result, y=frac_wrong, color=cond)) +
 
 Ideally, both the sensitivity and specificity would be 100%. In practice, high sensitivity means lower specificity and *vice versa*. 
 
-Sensitivity and specificity will be particularly important in Lesson 35 when we take into consideration the **prevalence**, that is, the fraction of the population with condition C 
+Sensitivity and specificity will be particularly important in [Lesson -@sec-lesson-35] when we take into consideration the **prevalence**, that is, the fraction of the population with condition C 
 
 

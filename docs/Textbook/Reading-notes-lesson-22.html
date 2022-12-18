@@ -265,7 +265,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Lessons in Statistical Thinking</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Statistical Thinking</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -313,7 +313,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 1-8</span></a>
+  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 19-26</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -373,7 +373,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 9-19</span></a>
+  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 28-38</span></a>
   </div>
 </li>
       </ul>
@@ -389,6 +389,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#sampling-bias" id="toc-sampling-bias" class="nav-link active" data-scroll-target="#sampling-bias">Sampling bias</a></li>
   <li><a href="#measuring-sampling-variation" id="toc-measuring-sampling-variation" class="nav-link" data-scroll-target="#measuring-sampling-variation">Measuring sampling variation</a></li>
+  <li><a href="#demonstration-samples-and-specimens" id="toc-demonstration-samples-and-specimens" class="nav-link" data-scroll-target="#demonstration-samples-and-specimens">Demonstration: Samples and specimens</a></li>
   <li><a href="#se-depends-on-the-sample-size" id="toc-se-depends-on-the-sample-size" class="nav-link" data-scroll-target="#se-depends-on-the-sample-size">SE depends on the sample size</a></li>
   <li><a href="#the-confidence-interval" id="toc-the-confidence-interval" class="nav-link" data-scroll-target="#the-confidence-interval">The confidence interval</a></li>
   </ul>
@@ -425,7 +426,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Professional work, such as collecting unemployment data, often requires government-level resources. Assembling representative samples uses specialized statistical techniques such as stratification and weighting of the results. We will not cover the specialized techniques in this introductory course, even though they are essential in creating representative samples. The table of contents of a classic text, William Cochran’s <a href="https://ia801409.us.archive.org/35/items/Cochran1977SamplingTechniques_201703/Cochran_1977_Sampling%20Techniques.pdf"><em>Sampling techniques</em></a> shows what is involved.</p>
 <p>All statistical thinkers, whether expert in sampling techniques or not, should be aware of factors that can bias a sample away from being representative. In political polls, many (most?) people will not respond to the questions. If this non-response stems from, for example, an expectation that the response will be unpopular, then the poll sample will not adequately reflect unpopular opinions. Such <strong>non-response bias</strong> can be significant, even overwhelming, in surveys.</p>
 <p><strong>Survival bias</strong> plays a role in many settings. The <code>mosaicData::TenMileRace</code> data frame provides an example, recording the running times of 8636 participants in a 10-mile road race and including information about each runner’s age. Can such data carry information about changes in running performance as people age? The data frame includes runners aged 10 to 87. Nevertheless, a model of running time as a function of age from this data frame is seriously biased. The reason? As people age, casual runners tend to drop out of such races. So the older runners are skewed toward higher performance. (We can see this by taking a different approach to the sample: collecting data over multiple years and tracking individual runners as they age.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-note callout callout-style-default callout-captioned page-columns page-full">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -434,37 +435,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Examples: Returned to base
 </div>
 </div>
-<div class="callout-body-container callout-body">
+<div class="callout-body-container callout-body page-columns page-full">
 <p>An inspiring story about dealing with survival bias comes from a World War II study of the damage sustained by bombers due to enemy guns. The sample, by necessity, included only those bombers that survived the mission and returned to base. The holes in those surviving bombers tell a story of survival bias. Shell holes on the surviving planes were clustered in certain areas, as depicted in <a href="#fig-airplane-holes">Figure&nbsp;<span>22.1</span></a>. The clustering stems from survivor bias. The unfortunate planes hit in the middle of the wings, cockpit, engines, and the back of the fuselage did not return to base. Shell hits in those areas never made it into the record.</p>
-<div class="cell">
-
-</div>
-</div>
-</div>
-<div class="no-row-height column-margin column-container"><div class="cell-output-display callout-margin-content">
-<div id="fig-airplane-holes" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
+<div class="cell page-columns page-full">
+<div class="cell-output-display page-columns page-full">
+<div id="fig-airplane-holes" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="www/bomber-holes.png" class="img-fluid figure-img" width="600"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;22.1: An illustration of shell-hole locations in planes that returned to base. <a href="https://en.wikipedia.org/wiki/Survivorship_bias">Source: Wikipedia</a></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;22.1: An illustration of shell-hole locations in planes that returned to base. <a href="https://en.wikipedia.org/wiki/Survivorship_bias">Source: Wikipedia</a></figcaption><p></p>
 </figure>
 </div>
-</div></div></section>
-<section id="measuring-sampling-variation" class="level2 page-columns page-full">
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="measuring-sampling-variation" class="level2">
 <h2 class="anchored" data-anchor-id="measuring-sampling-variation">Measuring sampling variation</h2>
 <p>Sampling variation is a form of noise. Unlike some other forms of noise, modeling cannot filter out sampling variation or reduce its magnitude. Sampling variation is easiest to see by collecting multiple samples from the same source and summarizing each one. The summaries likely will vary from sample to sample: sampling variation.</p>
 <p>Typically, the data frame at hand is our only sample. With no other samples to compare it to, it may seem impossible to measure sampling variation. In this Lesson, we will use simulations from DAGs to study sampling variation. DAG simulations are suited to this because we can effortlessly collect as many samples as we wish from a DAG. In Lesson 23, we will use the knowledge gained from the simulations to see how to measure sampling variation even when there is only one sample.</p>
 <p>In the spirit of starting simply, we return to <code>dag01</code>. This DAG is <span class="math inline">\(\mathtt{x}\longrightarrow\mathtt{y}\)</span>. The causal formula setting the value of <code>y</code> is <code>y ~ 4 + 1.5 * x + exo()</code>.</p>
 <p>It is crucial to remember that sampling variation is not about the row-to-row variation in a single sample. Rather, it is about the variation in the summary from one sample to another. So our initial process for exploring sampling variation will be to carry out many trials, each trial being a summary of a sample.</p>
-<p>::: {.callout-warning} ## Demonstration: Samples and specimens</p>
+</section>
+<section id="demonstration-samples-and-specimens" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="demonstration-samples-and-specimens">Demonstration: Samples and specimens</h2>
 <p>To illustrate, here is one trial using a sample of <span class="math inline">\(n=25\)</span> and a simple model, <code>y ~ 1</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">25</span>) </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Sample <span class="sc">%&gt;%</span> </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept) 
-    4.68847 </code></pre>
+   4.033278 </code></pre>
 </div>
 </div>
 <p>We cannot see sampling variation directly in the above result because there is only one trial. The sampling variation becomes evident when we run <em>many</em> trials. In each trial, a new sample (of size <span class="math inline">\(n=25\)</span> is taken and summarized.)</p>
@@ -473,7 +476,7 @@ Examples: Returned to base
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  Sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">25</span>) </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  Sample <span class="sc">%&gt;%</span> </span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coefficients</span>()</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coef</span>()</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell page-columns page-full">
@@ -572,9 +575,20 @@ Examples: Returned to base
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="sc">%&gt;%</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">se =</span> <span class="fu">sd</span>(Intercept))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>        se
-1 0.356543</code></pre>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> se </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 0.356543 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>This summary quantity, which we have named <code>se</code>, has a technical name in statistics: the <strong>standard error</strong>. The standard error is an ordinary standard deviation in a particular context: the standard deviation of a sample of summaries. The words <strong>standard error</strong> should be followed by a description of the summary and the size of the individual samples involved. Here it would be, “The standard error of the Intercept coefficient from a sample of size <span class="math inline">\(n=25\)</span> is around 0.36.”</p>
@@ -585,21 +599,45 @@ Examples: Returned to base
 <p>We found an SE of 0.36 on the Intercept in a sample of size <span class="math inline">\(n=25\)</span>. We can see how the SE depends on sample size by repeating the trials for several different sizes, say, <span class="math inline">\(n=25\)</span>, 100, 400, 1600, 6400, 25,000, and 100,000.</p>
 <p>The following command estimates the SE a sample of size 400:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">1000</span>) <span class="sc">*</span> {</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  Sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">25</span>) </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  Sample <span class="sc">%&gt;%</span> </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coefficients</span>()</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>Trials <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">se400 =</span> <span class="fu">sd</span>(Intercept))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>      se400
-1 0.3538538</code></pre>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">1000</span>) <span class="sc">*</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  Sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">25</span>) </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  Sample <span class="sc">%&gt;%</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coef</span>()</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>Trials <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">se400 =</span> <span class="fu">sd</span>(Intercept))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> se400 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 0.3538538 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>We repeated this process for each of the other sample sizes. <a href="#tbl-se-sizes">Table&nbsp;<span>22.2</span></a> reports the results.</p>
 <div class="cell">
 
+</div>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The caption was commented out on this table.</p>
+</div>
 </div>
 <div class="cell page-columns page-full">
 
@@ -655,14 +693,37 @@ Examples: Returned to base
 <p>The “confidence interval” is a more user-friendly format than SE for describing the amount of sampling variation. Being an interval, write it either as [lower, upper] or center<span class="math inline">\(\pm\)</span>half-width. These styles are equivalent; both styles are correct. (The preferred style can depend on the field or the journal publishing the report.)</p>
 <p>In practice, confidence intervals are calculated using special-purpose software such as the <code>confint()</code> function, for instance:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Hill_racing <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(time <span class="sc">~</span> distance <span class="sc">+</span> climb, <span class="at">data=</span>.) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                  2.5 %      97.5 %
-(Intercept) -533.432471 -406.521402
-distance     246.387096  261.229494
-climb          2.493307    2.726209</code></pre>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Hill_racing <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(time <span class="sc">~</span> distance <span class="sc">+</span> climb, <span class="at">data=</span>.) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> lwr </th>
+   <th style="text-align:right;"> upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> -533.432471 </td>
+   <td style="text-align:right;"> -406.521402 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> distance </td>
+   <td style="text-align:right;"> 246.387096 </td>
+   <td style="text-align:right;"> 261.229494 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> climb </td>
+   <td style="text-align:right;"> 2.493307 </td>
+   <td style="text-align:right;"> 2.726209 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>Notice that there is a separate confidence interval for each model coefficient. The sampling variation is essentially the same, but that variation appears different when translated to the various coefficients’ units.</p>
@@ -680,16 +741,45 @@ Demonstration: How many digits?
 <p>To know how many digits are worth reporting to humans, look toward the standard error. The standard error is a part of a different kind of summary of a model: the “regression report.” We will only need to look at regression reports in the last few Lessons of the course. Here we want to point out how many digits are worth reporting to humans. That requires looking at the standard error itself.</p>
 <p>Previously, we looked at the confidence intervals on coefficients from the <code>Hill_racing</code> model. Now we look at the regression summary, which contains the information on sampling variation in a different format.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Hill_racing <span class="sc">%&gt;%</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(time <span class="sc">~</span> distance <span class="sc">+</span> climb, <span class="at">data=</span>.) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">regression_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 5
-  term        estimate std.error statistic   p.value
-  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-1 (Intercept)  -470.     32.4        -14.5 9.92e- 46
-2 distance      254.      3.78        67.1 0        
-3 climb           2.61    0.0594      43.9 4.08e-304</code></pre>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Hill_racing <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(time <span class="sc">~</span> distance <span class="sc">+</span> climb, <span class="at">data=</span>.) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">regression_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:right;"> estimate </th>
+   <th style="text-align:right;"> std.error </th>
+   <th style="text-align:right;"> statistic </th>
+   <th style="text-align:right;"> p.value </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> -469.976937 </td>
+   <td style="text-align:right;"> 32.3582241 </td>
+   <td style="text-align:right;"> -14.52419 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> distance </td>
+   <td style="text-align:right;"> 253.808295 </td>
+   <td style="text-align:right;"> 3.7843322 </td>
+   <td style="text-align:right;"> 67.06819 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> climb </td>
+   <td style="text-align:right;"> 2.609758 </td>
+   <td style="text-align:right;"> 0.0593826 </td>
+   <td style="text-align:right;"> 43.94821 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>Each coefficient’s standard error appears in the <code>std.error</code> column of the regression summary.</p>

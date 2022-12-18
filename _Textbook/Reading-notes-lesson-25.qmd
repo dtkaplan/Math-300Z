@@ -1,5 +1,6 @@
+# Mechanics of prediction {#sec-lesson-25}
+
 ---
-title: "Mechanics of prediction"
 output:
   html_document:
     theme: lumen
@@ -15,9 +16,9 @@ output:
 source("../_startup.R")
 ```
 
-An effect size describes the relationship between two variables in an input/output format. Lesson 24 introduced effect size in the context of causal connections as if turning a knob to change the input will produce a change in the output. Such mechanistic connections make for a nice mental image for those considering intervening in the world but can be misleading. 
+An effect size describes the relationship between two variables in an input/output format. [Lesson -@sec-lesson-24] introduced effect size in the context of causal connections as if turning a knob to change the input will produce a change in the output. Such mechanistic connections make for a nice mental image for those considering intervening in the world but can be misleading. 
 
-First, the mere calculation of an effect size does not establish a causal connection. The statistical thinker has more work to do to justify a causal claim, as we will see in Lesson 30. 
+First, the mere calculation of an effect size does not establish a causal connection. The statistical thinker has more work to do to justify a causal claim, as we will see in [Lesson -@sec-lesson-30]. 
 
 Second, owing to noise, the input/output relationship quantified by an effect size may not be evident in a single intervention, say, increasing a drug dose for any given individual patient. Instead, effect sizes are descriptions of *average* effects---trends---across a large group of individuals. 
 
@@ -90,4 +91,4 @@ Mod3 <- lm(height ~ mother + father + sex, data = Galton)
 Mod3 %>% model_eval(mother=63, father=68, sex=c("F", "M"))
 ```
 
-In Lesson 26, we will look at the components that make up the prediction interval and some ways to use it.
+In [Lesson -@sec-lesson-26], we will look at the components that make up the prediction interval and some ways to use it.

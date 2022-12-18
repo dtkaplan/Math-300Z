@@ -1,5 +1,6 @@
+# Covariates eat variance {#sec-lesson-29}
+
 ---
-title: "Covariates eat variance"
 output:
   html_document:
     theme: lumen
@@ -10,12 +11,12 @@ output:
     toc: yes
 ---
 
-```{r setup, include=FALSE}
+```{r setup29, include=FALSE}
 lesson <- 29
 source("../_startup.R")
 ```
 
-In Lesson 28, we introduced covariates to set the relationship between an explanatory variable and the response variable in the correct context. In Lesson 30, we will return to this context-setting role to show that the appropriate choice of covariates to include in a model depends on the modeler's opinion about the relevant structure of a DAG. Here, we will treat covariates as commodity items to show a surprising property of models. This property is a boon to the modeler, helping to enable sound decisions about whether to include any given covariate. However, it is also a pitfall lieing in wait for the wishful thinker.
+In [Lesson -@sec-lesson-28], we introduced covariates to set the relationship between an explanatory variable and the response variable in the correct context. In Lesson 30, we will return to this context-setting role to show that the appropriate choice of covariates to include in a model depends on the modeler's opinion about the relevant structure of a DAG. Here, we will treat covariates as commodity items to show a surprising property of models. This property is a boon to the modeler, helping to enable sound decisions about whether to include any given covariate. However, it is also a pitfall lieing in wait for the wishful thinker.
 
 ## How much variation is explained
 
@@ -64,7 +65,7 @@ The standard measure of the typical size of a residual is the standard deviation
 Results %>% summarize(se_resids = sd(.resid), v_resids=var(.resid))
 ```
 
-As always, the standard deviation is easier to read because it has sensible units, in this case, dollars. On the other hand, the variance has strange units (square dollars) because it is the square of the standard deviation. We will use the variance for measuring the typical size of a residual for the reasons described in Lesson 20; variances add nicely in a manner analogous to the Pythagorean Theorem.
+As always, the standard deviation is easier to read because it has sensible units, in this case, dollars. On the other hand, the variance has strange units (square dollars) because it is the square of the standard deviation. We will use the variance for measuring the typical size of a residual for the reasons described in [Lesson -@sec-lesson-20]; variances add nicely in a manner analogous to the Pythagorean Theorem.
 
 Similarly, the total amount of variation in the list price is simply the variance of the list price:
 
@@ -72,7 +73,7 @@ Similarly, the total amount of variation in the list price is simply the varianc
 Results %>% summarize(v_response = var(list_price))
 ```
 A simple measure of how much of the variation in list price remains unexplained is the ratio of these variances $190.96/206.51 = 92.5\%$.
-More than 90% of the variation remains unexplained by the `Price_model`. This high fraction of unexplained variance suggests the model has little to tell us. In the spirit of putting a positive spin on things, statisticians typically work with the complement of the unexplained fraction. Since the unexplained fraction is 92.5%, the complement is 7.5%. This number is written R^2^ and pronounced "R-squared." (It also has a formal name: the "coefficient of determination." In Lesson 30, we will meet the inventor of the coefficient of determination, Sewall Wright, who is an early hero of causal reasoning.)
+More than 90% of the variation remains unexplained by the `Price_model`. This high fraction of unexplained variance suggests the model has little to tell us. In the spirit of putting a positive spin on things, statisticians typically work with the complement of the unexplained fraction. Since the unexplained fraction is 92.5%, the complement is 7.5%. This number is written R^2^ and pronounced "R-squared." (It also has a formal name: the "coefficient of determination." In [Lesson -@sec-lesson-30], we will meet the inventor of the coefficient of determination, Sewall Wright, who is an early hero of causal reasoning.)
 
 R^2^ is such a widely used summary of how the explanatory variables account for the response variable that a software extractor calculates it and some related values. 
 
@@ -280,7 +281,7 @@ $k$ and $n$ provide the necessary context for proper interpretation of R^2^; all
 
 Perhaps a little easier than interpreting R^2^ is the interpretation of another statistic, named F, which folds in the $k$, $n$, and R^2^ into a single number:
 $$F \equiv \frac{n-k-1}{k} \frac{\text{R}^2}{1 - \text{R}^2}$$
-@fig-amazon-book-shuffle-F is a remake of @fig-amazon-book-shuffle but using F instead of R^2^. The blue line, which had the formula R^2^$= k/(n-1)$ in @fig-amazon-book-shuffle, gets translated to the constant value 1.0 in @fig-amazon-book-shuffle-F, regardless of $k$. To decide when a model points to a connection stronger than the ISBN effect, the threshold F $> 3$ is a good rule of thumb. (Lesson 37 introduces a more precise calculation for the F threshold, which is built into statistical software and presented as a "**p-value**.")
+@fig-amazon-book-shuffle-F is a remake of @fig-amazon-book-shuffle but using F instead of R^2^. The blue line, which had the formula R^2^$= k/(n-1)$ in @fig-amazon-book-shuffle, gets translated to the constant value 1.0 in @fig-amazon-book-shuffle-F, regardless of $k$. To decide when a model points to a connection stronger than the ISBN effect, the threshold F $> 3$ is a good rule of thumb. ([Lesson -@sec-lesson-37] introduces a more precise calculation for the F threshold, which is built into statistical software and presented as a "**p-value**.")
 
 ```{r echo=FALSE, warning=FALSE}
 #| label: fig-amazon-book-shuffle-F

@@ -265,7 +265,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Lessons in Statistical Thinking</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Statistical Thinking</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -313,7 +313,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 1-8</span></a>
+  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 19-26</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -373,7 +373,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 9-19</span></a>
+  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 28-38</span></a>
   </div>
 </li>
       </ul>
@@ -442,52 +442,94 @@ Noise in hiring
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Tiny <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell">
+<div class="cell-output-display">
 
-<div class="no-row-height column-margin column-container"><div id="tbl-tiny-dag01" class="cell tbl-parent quarto-layout-panel anchored" data-tbl-cap="A `Tiny` ($n=10$) sample from `dag01`">
-<div class="panel-caption table-caption">
-<p><strong>?(caption)</strong></p>
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> x </th>
+   <th style="text-align:right;"> y </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> -0.3260365 </td>
+   <td style="text-align:right;"> 2.836001 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.5524619 </td>
+   <td style="text-align:right;"> 5.043052 </td>
+  </tr>
+</tbody>
+</table>
 </div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<pre><code># A tibble: 2 × 2
-       x     y
-   &lt;dbl&gt; &lt;dbl&gt;
-1 -0.326  2.84
-2  0.552  5.04</code></pre>
 </div>
-</div>
-</div></div><p>The DAG simulation implements a relationship between <code>x</code> and <code>y</code>. In statistics, this <em>relationship</em> is the signal.</p>
+<p>The DAG simulation implements a relationship between <code>x</code> and <code>y</code>. In statistics, this <em>relationship</em> is the signal.</p>
 <blockquote class="blockquote">
 <p>Look at the 2-row sample (<span class="quarto-unresolved-ref">?tbl-tiny-dag01</span>) from the DAG and guess what the relationship might be.</p>
 </blockquote>
 <p>Any of an infinite number of possible relationships could account for the <code>x</code> and <code>y</code> data. The noise reduction problem of statistics is to make a guess that is as good as possible. Unfortunately, for a sample with <span class="math inline">\(n=2\)</span>, as “good as possible” is not very good!</p>
 <p>More data—a bigger sample—gives us a better shot at revealing the relationship hidden by the noise. <span class="quarto-unresolved-ref">?tbl-small-dag01</span> shows a sample of size <span class="math inline">\(n=10\)</span>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Small <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Small <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell">
+<div class="cell-output-display">
 
-<div class="no-row-height column-margin column-container"><div id="tbl-small-dag01" class="cell tbl-parent quarto-layout-panel anchored" data-tbl-cap="A `Small` ($n=10$) sample from `dag01`">
-<div class="panel-caption table-caption">
-<p><strong>?(caption)</strong></p>
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> x </th>
+   <th style="text-align:right;"> y </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> -0.7859732 </td>
+   <td style="text-align:right;"> 1.8888204 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.0547389 </td>
+   <td style="text-align:right;"> 4.1153256 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -1.1725603 </td>
+   <td style="text-align:right;"> 2.3632792 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.1673128 </td>
+   <td style="text-align:right;"> 6.3287614 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -1.8650316 </td>
+   <td style="text-align:right;"> 0.9329524 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.1204402 </td>
+   <td style="text-align:right;"> 2.9310384 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.8259787 </td>
+   <td style="text-align:right;"> 5.6981878 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1.1901595 </td>
+   <td style="text-align:right;"> 5.9006170 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -1.0914519 </td>
+   <td style="text-align:right;"> 2.1314570 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.3751124 </td>
+   <td style="text-align:right;"> 4.2296648 </td>
+  </tr>
+</tbody>
+</table>
 </div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output cell-output-stdout quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<pre><code># A tibble: 10 × 2
-         x     y
-     &lt;dbl&gt; &lt;dbl&gt;
- 1 -0.786  1.89 
- 2  0.0547 4.12 
- 3 -1.17   2.36 
- 4 -0.167  6.33 
- 5 -1.87   0.933
- 6 -0.120  2.93 
- 7  0.826  5.70 
- 8  1.19   5.90 
- 9 -1.09   2.13 
-10 -0.375  4.23 </code></pre>
 </div>
-</div>
-</div></div><p>A careful perusal of the <code>Small</code> sample suggests some patterns. <code>x</code> is never larger than about 2 in magnitude and can be positive or negative. <code>y</code> is always positive. Furthermore, when <code>x</code> is negative, the corresponding <code>y</code> value is relatively small compared to the <code>y</code> values for positive <code>x</code>.</p>
+<p>A careful perusal of the <code>Small</code> sample suggests some patterns. <code>x</code> is never larger than about 2 in magnitude and can be positive or negative. <code>y</code> is always positive. Furthermore, when <code>x</code> is negative, the corresponding <code>y</code> value is relatively small compared to the <code>y</code> values for positive <code>x</code>.</p>
 <p>A sample of size <span class="math inline">\(n=10\)</span> provides more information than a sample of <span class="math inline">\(n=2\)</span>, so we can make a more informed guess about the relationship between variables <code>x</code> and <code>y</code>.</p>
 <p>Human cognition is not well suited to looking at long columns of numbers. Often, we can make better use of our natural human talents by translating the sample into a graphic:</p>
 <div class="cell">
@@ -497,7 +539,7 @@ Noise in hiring
 </div>
 <p>Collecting more data can make the relationship clearer. <a href="#fig-xy-relationship-large">Figure&nbsp;<span>21.1</span></a> displays an <span class="math inline">\(n=10,000\)</span> sample.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Large <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">10000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Large <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">10000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell page-columns page-full">
 <div class="cell-output-display page-columns page-full">
@@ -511,7 +553,7 @@ Noise in hiring
 </div>
 <p>There are many possible ways to describe the x-y relationship in <a href="#fig-xy-relationship-large">Figure&nbsp;<span>21.1</span></a>. For instance, we can see that when <code>x</code> is positive, <code>y</code> is almost always greater than 4, but for negative <code>x</code>, the value of <code>y</code> tends to be less than 4. Such a description might be apt for some purposes, but in these Lessons, we describe relationships by fitting models to data. For example, the following command uses the small sample (n=10) as the training data:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Small) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()  <span class="co"># n = 10 sample</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Small) <span class="sc">%&gt;%</span> <span class="fu">coef</span>()  <span class="co"># n = 10 sample</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)           x 
    4.262846    1.741758 </code></pre>
@@ -520,7 +562,7 @@ Noise in hiring
 <p>The coefficients provide the information needed to construct the formula for the <em>model function</em>: <span class="math display">\[y = 4.26 + 1.74 x\ .\]</span> This formula is a guess of the <em>signal</em>—the relationship between the two variables in <code>dag01</code>. Unfortunately, the formula tells us nothing about the noise obscuring the signal nor how good the guess is.</p>
 <p>The model coefficients produced by training the model on a much larger sample will presumably be a better guess:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Large) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>() <span class="co">#  n = 10,000 sample</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> Large) <span class="sc">%&gt;%</span> <span class="fu">coef</span>() <span class="co">#  n = 10,000 sample</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)           x 
    4.008928    1.495904 </code></pre>
@@ -529,7 +571,7 @@ Noise in hiring
 <p>Unfortunately, we cannot tell from the coefficients how good the guess is.</p>
 <p>Luckily for us, since the data are a simulation from a DAG, we can see what the coefficients <em>should be</em> as well as the origin of the noise mixing in with the signal.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dag01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dag01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>x ~ exo()
 y ~ 1.5 * x + 4 + exo()</code></pre>
@@ -544,19 +586,34 @@ y ~ 1.5 * x + 4 + exo()</code></pre>
 <h2 class="anchored" data-anchor-id="measuring-variation">Measuring variation</h2>
 <p>Lesson 20 introduced the standard way to measure variation in a single variable: the <strong>variance</strong> or its square root, the <strong>standard deviation</strong>. For instance, we can measure the variation in the variables from the <code>Large</code> sample using <code>sd()</code> and <code>var()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Large <span class="sc">%&gt;%</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sx =</span> <span class="fu">sd</span>(x), <span class="at">sy =</span> <span class="fu">sd</span>(y), <span class="at">vx =</span> <span class="fu">var</span>(x), <span class="at">vy =</span> <span class="fu">var</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 4
-     sx    sy    vx    vy
-  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 0.983  1.78 0.966  3.16</code></pre>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Large <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sx =</span> <span class="fu">sd</span>(x), <span class="at">sy =</span> <span class="fu">sd</span>(y), <span class="at">vx =</span> <span class="fu">var</span>(x), <span class="at">vy =</span> <span class="fu">var</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> sx </th>
+   <th style="text-align:right;"> sy </th>
+   <th style="text-align:right;"> vx </th>
+   <th style="text-align:right;"> vy </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 0.9830639 </td>
+   <td style="text-align:right;"> 1.779003 </td>
+   <td style="text-align:right;"> 0.9664146 </td>
+   <td style="text-align:right;"> 3.164851 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>According to the standard deviation, the size of the <code>x</code> variation is about 1. The size of the <code>y</code> variation is about 1.7.</p>
 <p>Look again at the formulas that compose <code>dag01</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dag01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dag01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>x ~ exo()
 y ~ 1.5 * x + 4 + exo()</code></pre>
@@ -580,9 +637,9 @@ y ~ 1.5 * x + 4 + exo()</code></pre>
 <h2 class="anchored" data-anchor-id="dags-from-data">DAGs from data</h2>
 <p>In modeling data from <code>dag01</code> we could recover a good approximation to the formula for <code>y</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Large <span class="sc">%&gt;%</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Large <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)           x 
    4.008928    1.495904 </code></pre>
@@ -590,9 +647,9 @@ y ~ 1.5 * x + 4 + exo()</code></pre>
 </div>
 <p>A DAG describes the causal links between variables. Data modeling reveals the formula implementing the causal link in <code>dag01</code>. Nevertheless, it is wrong to think we can determine the DAG that generated the data from the data alone. Only if we already know the structure of the data-generation DAG can we recover the mechanism inside that DAG. For instance, another statistical thinker might believe that the causal mechanism behind the data is <code>y</code> causing <code>x</code>. Based on this assumption, she also can find the mechanism inside her hypothesized DAG:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(x <span class="sc">~</span> y, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(x <span class="sc">~</span> y, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)           y 
  -1.8261448   0.4559782 </code></pre>
@@ -611,8 +668,8 @@ X \rightarrow C \leftarrow Y\]</span></p>
 <div class="cell-output-display page-columns page-full">
 <div id="fig-ten-triples" class="quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="www/ten-triples.png" class="img-fluid figure-img" width="167"></p>
-<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;21.2: Ten DAG configurations involving three variables X, Y, and C and where there is no causal path going from Y to X.</figcaption><p></p>
+<p><img src="www/ten-triples.png" class="img-fluid figure-img" style="width:120.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;21.2: Ten DAG configurations involving three variables X, Y, and C.</figcaption><p></p>
 </figure>
 </div>
 </div>

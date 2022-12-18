@@ -1,5 +1,5 @@
+# Signal and noise {#sec-lesson-21}
 ---
-title: "Signal and noise"
 output:
   html_document:
     theme: lumen
@@ -133,7 +133,7 @@ The key to the puzzle is the variation *within* the sample.
 
 ## Measuring variation
 
-Lesson 20 introduced the standard way to measure variation in a single variable: the **variance** or its square root, the **standard deviation**.
+[Lesson -@sec-lesson-20] introduced the standard way to measure variation in a single variable: the **variance** or its square root, the **standard deviation**.
 For instance, we can measure the variation in the variables from the `Large` sample using `sd()` and `var()`:
 
 
@@ -214,7 +214,7 @@ There are many other DAG configurations involving three variables. To keep thing
 knitr::include_graphics("www/ten-triples.png")
 ```
 
-With the conceptual tool of DAGs, the statistical thinker can consider multiple possibilities for what might cause what. Sometimes she can discard some of the possibilities based on common sense. (Think: roosters and the sun.) However, in other settings, there may be possibilities that she does not favor but might be plausible to other people. In Lesson 28, we will explore how each configuration of DAG has implications for which model formulas can or cannot reveal the hypothesized causal mechanism.
+With the conceptual tool of DAGs, the statistical thinker can consider multiple possibilities for what might cause what. Sometimes she can discard some of the possibilities based on common sense. (Think: roosters and the sun.) However, in other settings, there may be possibilities that she does not favor but might be plausible to other people. In [Lesson -@sec-lesson-28], we will explore how each configuration of DAG has implications for which model formulas can or cannot reveal the hypothesized causal mechanism.
 
 
 

@@ -1,7 +1,6 @@
+# Effect size {#sec-lesson-24}
+
 ---
-title: "Effect size"
-
-
 output:
   html_document:
     theme: lumen
@@ -93,7 +92,7 @@ When the output variable is categorical, it is not reasonable to calculate the c
 
 The essential insight is quantifying the change in output in terms of probabilities. For instance, a small effect size would reflect a slight chance of the output changing from one level to another. 
 
-The appropriate model type for a categorical output is to transform the output to a zero-one variable, as introduced in Lesson 19. We will present this in a demonstration here and return to the topic more fully in Lesson 34.
+The appropriate model type for a categorical output is to transform the output to a zero-one variable, as introduced in [Lesson -@sec-lesson-19]. We will present this in a demonstration here and return to the topic more fully in Lesson 34.
 
 ::: {.callout-warning}
 ## Demonstration: Start/Stop and vehicle size
@@ -153,7 +152,7 @@ In these Lessons we are building models with additive effects.That is what the `
 
 ## Interval estimates
 
-Statistical thinkers know that any estimate they make, including estimates of effect sizes, involves sampling variation. Consequently, give an *interval* estimate. The interval communicates to the decision-maker the uncertainty in the estimated quantity. Sophisticated decision-makers keep this uncertainty in mind, considering the range of outcomes likely from whatever use they make of effect size. On the other hand, statistically naive decision makers---even highly educated decision-makers can be statistically naive---look at the interval and sometimes ask the modeler, "Just give me a number. I don't know what to do with two numbers." Such a request might elicit a frank response: "If you don't know what to do with two numbers, you also won't know what to do with one number." Unfortunately, that kind of frankness is not often well received; a reasonable alternative is: "The interval indicates the amount of uncertainty in the result. We'll need to collect more data if you want to reduce the uncertainty." (Lesson 29 introduces a not-always-available alternative to collecting more data: building a better model!) 
+Statistical thinkers know that any estimate they make, including estimates of effect sizes, involves sampling variation. Consequently, give an *interval* estimate. The interval communicates to the decision-maker the uncertainty in the estimated quantity. Sophisticated decision-makers keep this uncertainty in mind, considering the range of outcomes likely from whatever use they make of effect size. On the other hand, statistically naive decision makers---even highly educated decision-makers can be statistically naive---look at the interval and sometimes ask the modeler, "Just give me a number. I don't know what to do with two numbers." Such a request might elicit a frank response: "If you don't know what to do with two numbers, you also won't know what to do with one number." Unfortunately, that kind of frankness is not often well received; a reasonable alternative is: "The interval indicates the amount of uncertainty in the result. We'll need to collect more data if you want to reduce the uncertainty." ([Lesson -@sec-lesson-29] introduces a not-always-available alternative to collecting more data: building a better model!) 
 
 For the additive models that we are mainly using in these Lessons, the effect size is identical to a model coefficient. For these models, the confidence interval on the coefficient is the confidence interval on the effect size. For instance, 
 

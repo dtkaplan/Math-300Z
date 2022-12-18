@@ -1,6 +1,5 @@
+# Measuring and simulating variation {#sec-lesson-20}
 ---
-title: "Measuring and simulating variation"
-
 output:
   html_document:
     theme: lumen
@@ -109,7 +108,7 @@ Step 2 in the deconstruction replaces the archaic word "deviation" with somethin
 
 Often, but not always, our interest in studying data is to reveal the causal connections between variables. Understanding causality is essential, for instance, if we are planning to intervene in the world and want to anticipate the consequences. Interventions are things like "increase the dose of medicine," "stop smoking!", "lower the budget," "add more cargo to a plane (which will increase fuel consumption and reduce the range)."
 
-Historically, mainstream statisticians were hostile to using data to explore causal relationships. (The one exception was **experiment**, which gathers data from an actual intervention in the world. See Lesson 32.) Statistics teachers encouraged students to use phrases like "associated with" or "correlated with" and reminded them that "correlation is not causation."
+Historically, mainstream statisticians were hostile to using data to explore causal relationships. (The one exception was **experiment**, which gathers data from an actual intervention in the world. See [Lesson -@sec-lesson-32].) Statistics teachers encouraged students to use phrases like "associated with" or "correlated with" and reminded them that "correlation is not causation."
 
 Regrettably, this attitude made statistics irrelevant to the many situations where intervention is the core concern and experiment was not feasible. A tragic episode of this sort likely caused millions of unnecessary deaths. Starting in the 1940s, doctors and epidemiologists saw evidence that smoking causes lung cancer. In stepped the most famous statistician of the age, Ronald Fisher, to insist that the statement should be, "smoking is associated with lung cancer." He speculated that smoking and lung cancer might have a common cause, perhaps genetic. Fisher argued that establishing causation requires running an experiment where people are randomly assigned to smoke or not smoke and then observed for decades to see if they developed lung cancer. Such an experiment is unfeasible and unethical, to say nothing of the need to wait decades to get a result. 
 
@@ -200,7 +199,7 @@ The point of a DAG is to make a clear statement of a hypothesis about causation.
 
 We are going to use DAGs for two distinct purposes. One purpose is to inform responsible conclusions from data about what causes what. The data on its own is insufficient to demonstrate the causal connections. However, data *combined with* a DAG can tell us something. Sometimes a DAG includes a causal connection that should create an association between variables. The DAG is incomplete if the association does not appear in the data.
 
-DAGs are also valuable aids for building models. For example, analysis of the paths in a DAG, as in Lesson 30, can tell us which explanatory variables to include and which to exclude from a model if our modeling goal is to represent the hypothetical causal connections.
+DAGs are also valuable aids for building models. For example, analysis of the paths in a DAG, as in [Lesson -@sec-lesson-30], can tell us which explanatory variables to include and which to exclude from a model if our modeling goal is to represent the hypothetical causal connections.
 
 In these Lessons, we have a second, entirely different, use for DAGs: learning modeling technique. Our approach will be to outfit DAGs with specific formulas representing the mechanism imbued in each node. DAGs equipped with formulas can be used to generate simulated data.^[The value of exogenous nodes is usually set randomly, without input from the other nodes in the DAG.] Training a model on those data leads to a model function that we can compare to the DAG's formulas. Then check whether the formulas and the model function match. This practice helps us learn what can go right or wrong in building a model, just as practice in an aircraft simulator trains pilots to handle real-world situations in real aircraft. 
 
@@ -255,7 +254,7 @@ When we use the appropriate modeling technique, we can, in this case, recover th
 ::: {.callout-warning}
 ## Reality check: DAGs and data
 
-DAGs represent hypotheses about the connections between variables in the real world. They are a kind of scratchpad for constructing alternative scenarios and, as seen in Lesson 28, thinking about how models might go wrong in the face of a plausible alternative causal mechanism.
+DAGs represent hypotheses about the connections between variables in the real world. They are a kind of scratchpad for constructing alternative scenarios and, as seen in [Lesson -@sec-lesson-28], thinking about how models might go wrong in the face of a plausible alternative causal mechanism.
 
 In this book, we extend the use of DAGs beyond their scope in professional statistics; we use them as simulations from which we can generate data. Such simulations provide one way to learn about statistical methodology. 
 

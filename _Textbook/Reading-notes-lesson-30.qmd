@@ -1,5 +1,6 @@
+# Confounding {#sec-lesson-30}
+
 ---
-title: "Confounding"
 output:
   html_document:
     theme: lumen
@@ -118,8 +119,7 @@ In 2012, the *Lancet*, a leading medical journal, published a [systematic examin
 ```{r echo=FALSE}
 #| label: fig-healthy-vaccine
 #| fig-cap: 'A DAG diagramming the "healthy vaccine recipient" effect'
-#| column: margin
-#| out-width: 120%
+### #| column: margin
 vaccine_dag <- dag_make(
   age ~ exo(),
   frailty ~ age(),

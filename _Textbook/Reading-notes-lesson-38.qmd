@@ -1,5 +1,6 @@
+# False discovery {#sec-lesson-38}
+
 ---
-title: "False discovery"
 output:
   html_document:
     theme: lumen
@@ -10,11 +11,18 @@ output:
     toc: yes
 ---
 
-```{r setup, include=FALSE}
+```{r setup38, include=FALSE}
 lesson <- 38
 source("../_startup.R")
 library("rpart")
 ```
+
+::: {.hidden}
+$$\newcommand{\Ptest}{\mathbb{P}}
+\newcommand{\Ntest}{\mathbb{N}}
+\newcommand{\given}{\ |\!\!|\  }$$
+:::
+
 
 ## Avoid bad habits
 

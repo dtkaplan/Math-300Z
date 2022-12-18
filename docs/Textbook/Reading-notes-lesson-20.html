@@ -265,7 +265,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Lessons in Statistical Thinking</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Statistical Thinking</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -313,7 +313,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 1-8</span></a>
+  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 19-26</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -373,7 +373,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 9-19</span></a>
+  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 28-38</span></a>
   </div>
 </li>
       </ul>
@@ -458,14 +458,36 @@ Calculating variance
 <p>Almost always, people use software for calculations. The relevant R functions are <code>sd()</code> and <code>var()</code> and are used in a <code>summarize()</code> statement, for instance</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">v =</span> <span class="fu">var</span>(hp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre class="column_margin"><code>         v
-1 4700.867</code></pre>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> v </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 4700.867 </td>
+  </tr>
+</tbody>
+</table>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">s =</span> <span class="fu">sd</span>(hp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre class="column_margin"><code>         s
-1 68.56287</code></pre>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">s =</span> <span class="fu">sd</span>(hp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> s </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 68.56287 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>Regrettably, the software does not indicate the units of the quantity. For that, read the documentation for the data frame.</p>
@@ -559,13 +581,13 @@ Deconstructing “standard deviation”
 <p>In these Lessons, we have a second, entirely different, use for DAGs: learning modeling technique. Our approach will be to outfit DAGs with specific formulas representing the mechanism imbued in each node. DAGs equipped with formulas can be used to generate simulated data.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> Training a model on those data leads to a model function that we can compare to the DAG’s formulas. Then check whether the formulas and the model function match. This practice helps us learn what can go right or wrong in building a model, just as practice in an aircraft simulator trains pilots to handle real-world situations in real aircraft.</p>
 <p>We start with a simple example. The DAG called <code>dag09</code> has two exogenous nodes (<code>a</code> and <code>b</code>) and another node, <code>c</code>, that gets input from both <code>a</code> and <code>b</code>.</p>
 <div class="cell page-columns page-full">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag09)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag09)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
 <p><img src="Reading-notes-lesson-20_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div></div></div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dag09)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dag09)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>a ~ exo()
 b ~ exo()
@@ -576,29 +598,81 @@ c ~ binom(2 * a + 3 * b)</code></pre>
 <p>The formulas for <code>dag09</code> show that the nodes <code>a</code> and <code>b</code> are exogenous, their values set randomly and independently of one another by the <code>exo()</code> function. In contrast, the formula for node <code>c</code> says that the value of <code>c</code> will be a linear combination of the values of <code>a</code> and <code>b</code>, translated into a zero-one format.</p>
 <p>Generate simulated data using the <code>sample()</code> function. For instance,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 3
-       a      b     c
-   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-1 -0.326  1.17      1
-2  0.552  0.619     0
-3 -0.675 -0.113     0
-4  0.214  0.917     1
-5  0.311 -0.223     0</code></pre>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> a </th>
+   <th style="text-align:right;"> b </th>
+   <th style="text-align:right;"> c </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> -0.3260365 </td>
+   <td style="text-align:right;"> 1.1739663 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.5524619 </td>
+   <td style="text-align:right;"> 0.6187899 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.6749438 </td>
+   <td style="text-align:right;"> -0.1127343 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.2143595 </td>
+   <td style="text-align:right;"> 0.9170283 </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.3107692 </td>
+   <td style="text-align:right;"> -0.2232594 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>Each row in the sample is one trial; in each trial, the node’s formula sets the value for that node. For example, the formula might use the values of other nodes as input. Alternatively, the formula might specify that the node is exogenous, without input from any other nodes.</p>
 <p>Models can be trained on the simulated data using the same techniques as for any other data. To illustrate, here we generate a sample of size <span class="math inline">\(n=10,000\)</span>, then fit the model <code>c ~ a + b</code> and summarize by taking the coefficients.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(c <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                2.5 %    97.5 %
-(Intercept) 0.4996543 0.5132192
-a           0.1927018 0.2062122
-b           0.2945928 0.3081950</code></pre>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(c <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> lwr </th>
+   <th style="text-align:right;"> upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 0.4996543 </td>
+   <td style="text-align:right;"> 0.5132192 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> a </td>
+   <td style="text-align:right;"> 0.1927018 </td>
+   <td style="text-align:right;"> 0.2062122 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> b </td>
+   <td style="text-align:right;"> 0.2945928 </td>
+   <td style="text-align:right;"> 0.3081950 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>The coefficients on <code>a</code> and <code>b</code> are inconsistent with the <code>dag09</code> formulas. This discrepancy suggests the existence of a flaw in the modeling technique. In the following box, we demonstrate another modeling technique that can do the job.</p>
@@ -615,17 +689,37 @@ Demonstration: Modeling binomial variables
 <p><em>Keep in mind that this is just a demonstration. There is no need to master (or even understand) the calculations presented in this box.</em></p>
 <p>The printed version of <code>dag09</code> shows that the value of node <code>c</code> is a linear combination of <code>a</code> and <code>b</code> converted into a zero-one, binomial value. Unfortunately, the linear modeling trainer, <code>lm()</code>, is not well-tuned to work with binomial data. Another modeling technique, “logistic regression,” does a better job. The <code>glm()</code> function trains logistic regression models on data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(c <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> ., <span class="at">family=</span><span class="st">"binomial"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Waiting for profiling to be done...</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                  2.5 %     97.5 %
-(Intercept) -0.02973142 0.09550381
-a            1.86979872 2.05982255
-b            2.97350879 3.23088485</code></pre>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(c <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> ., <span class="at">family=</span><span class="st">"binomial"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> lwr </th>
+   <th style="text-align:right;"> upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> -0.0297314 </td>
+   <td style="text-align:right;"> 0.0955038 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> a </td>
+   <td style="text-align:right;"> 1.8697987 </td>
+   <td style="text-align:right;"> 2.0598225 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> b </td>
+   <td style="text-align:right;"> 2.9735088 </td>
+   <td style="text-align:right;"> 3.2308848 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>When we use the appropriate modeling technique, we can, in this case, recover the coefficients in the DAG formula: 2 for <code>a</code> and 3 for <code>b</code>.</p>
@@ -655,17 +749,37 @@ Reality check: DAGs and data
 <p>The “<strong>sample size</strong>” is the number of rows. “<strong>Sampling</strong>” is the process of collecting the specimens to be put into the data frame.</p>
 <p>The following command illustrates computing a summary of a sample from <code>dag09</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(c <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> ., <span class="at">family=</span><span class="st">"binomial"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Waiting for profiling to be done...</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                  2.5 %     97.5 %
-(Intercept) -0.07393373 0.04945966
-a            1.90174806 2.09051562
-b            2.81158596 3.05507077</code></pre>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(c <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> ., <span class="at">family=</span><span class="st">"binomial"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> lwr </th>
+   <th style="text-align:right;"> upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> -0.0739337 </td>
+   <td style="text-align:right;"> 0.0494597 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> a </td>
+   <td style="text-align:right;"> 1.9017481 </td>
+   <td style="text-align:right;"> 2.0905156 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> b </td>
+   <td style="text-align:right;"> 2.8115860 </td>
+   <td style="text-align:right;"> 3.0550708 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>An essential question in statistics is how the summary depends on the incidental specifics of a particular sample. DAGs provide a convenient way to address this question since we can generate multiple samples from the same DAG, summarize each, and compare those summaries.</p>
@@ -683,18 +797,49 @@ Demonstration: Conducting many trials with <code>do()</code>
 <p>In this demonstration, we will revisit a model used earlier in this Lesson to see how much the coefficients vary from one sample to another. Each trial consists of drawing a sample from <code>dag09</code>, training a model, and summarizing with the model coefficients. Curly braces (<code>{</code> and <code>}</code>) surround the commands needed for an individual trial.</p>
 <p>Preceding the curly braces, we have placed <code>do(5) *</code>. This instruction causes the trial to be repeated five times.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">5</span>) <span class="sc">*</span> {</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">glm</span>(c <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> ., <span class="at">family=</span><span class="st">"binomial"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coefficients</span>()</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    Intercept        a        b
-1 -0.01315189 2.041331 3.049575
-2 -0.01027258 1.987569 3.074509
-3  0.02787421 1.934953 3.044001
-4 -0.03509540 1.973983 2.969853
-5 -0.09887196 1.978861 2.971170</code></pre>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">do</span>(<span class="dv">5</span>) <span class="sc">*</span> {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">glm</span>(c <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> ., <span class="at">family=</span><span class="st">"binomial"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coef</span>()</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> Intercept </th>
+   <th style="text-align:right;"> a </th>
+   <th style="text-align:right;"> b </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> -0.0131519 </td>
+   <td style="text-align:right;"> 2.041331 </td>
+   <td style="text-align:right;"> 3.049575 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.0102726 </td>
+   <td style="text-align:right;"> 1.987569 </td>
+   <td style="text-align:right;"> 3.074509 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.0278742 </td>
+   <td style="text-align:right;"> 1.934953 </td>
+   <td style="text-align:right;"> 3.044001 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.0350954 </td>
+   <td style="text-align:right;"> 1.973983 </td>
+   <td style="text-align:right;"> 2.969853 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.0988720 </td>
+   <td style="text-align:right;"> 1.978861 </td>
+   <td style="text-align:right;"> 2.971170 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>The five trials are collected together by <code>do()</code> into the five rows of a single data frame. Such a data frame can be considered a “<strong>sample of summaries</strong>.”</p>
@@ -702,22 +847,48 @@ Demonstration: Conducting many trials with <code>do()</code>
 </div>
 <p>One of the things we will do with a “sample of summaries” is to … wait for it … summarize it. For instance, in the following code chunk, a sample of 40 summaries is stored under the name <code>Trials</code>. Then we will summarize <code>Trials</code>, in this case, to see how much the values of the <code>a</code> and <code>b</code> coefficients vary from trial to trial.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">40</span>) <span class="sc">*</span> {</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">glm</span>(c <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> ., <span class="at">family=</span><span class="st">"binomial"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coefficients</span>()</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>} </span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>Trials <span class="sc">%&gt;%</span> </span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_a =</span> <span class="fu">mean</span>(a), <span class="at">spread_a =</span> <span class="fu">sd</span>(a), </span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_b =</span> <span class="fu">mean</span>(b), <span class="at">spread_b =</span> <span class="fu">sd</span>(b))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    mean_a   spread_a   mean_b   spread_b
-1 2.004514 0.04364563 3.012044 0.06410626</code></pre>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">40</span>) <span class="sc">*</span> {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">glm</span>(c <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> ., <span class="at">family=</span><span class="st">"binomial"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coef</span>()</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>} </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>Trials <span class="sc">%&gt;%</span> </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_a =</span> <span class="fu">mean</span>(a), <span class="at">spread_a =</span> <span class="fu">sd</span>(a), </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_b =</span> <span class="fu">mean</span>(b), <span class="at">spread_b =</span> <span class="fu">sd</span>(b))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> mean_a </th>
+   <th style="text-align:right;"> spread_a </th>
+   <th style="text-align:right;"> mean_b </th>
+   <th style="text-align:right;"> spread_b </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 2.004514 </td>
+   <td style="text-align:right;"> 0.0436456 </td>
+   <td style="text-align:right;"> 3.012044 </td>
+   <td style="text-align:right;"> 0.0641063 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>The result of summarizing the trials is a “summary of a sample of summaries.” This phrase is admittedly awkward, but we will use this technique often: summarizing trials, where each trial is a “summary of a sample” Often, the clue will be the use of <code>do()</code>, which repeats trials as many times as you ask.</p>
 <hr>
-<p>::: {.callout-warning} ## For the statistically experienced reader</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+For the statistically experienced reader
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p><strong>Warning!</strong> This box contains mathematical formulas that are <strong>not needed for the course</strong>. The formulas might interest mathematically inclined statistics instructors, but others can skip this material.</p>
 <p>The algorithm for the variance described previously is not used by any statistical software package; there are much faster ways to arrive at the result. One way to see this is to compare the traditional formula for the variance to the formula version of the above algorithm:</p>
 <p><span class="math display">\[\underbrace{\frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2}_\text{traditional} \ \ \text{versus} \ \ \underbrace{\frac{1}{2n} \sum_{i=1}^n \left[\frac{1}{n-1}\sum_{j\neq i} (x_i - x_j)^2\right]}_\text{our algorithm}\]</span> The inefficiency of the algorithm stems from the double sum. The advantage of the algorithm is conceptual and two-fold:</p>
@@ -728,6 +899,8 @@ Demonstration: Conducting many trials with <code>do()</code>
 <p>The usual definition given for the variance uses the mean as the reference point for calculating deviations. This use imbues the mean with an unjustified veneer of reality. The pairwise square difference algorithm demonstrates that the mean is not needed to calculate the variance; it is just, as Gould says, a mathematical abstraction.</p>
 <p>There is a factor <span class="math inline">\(\frac{1}{2}\)</span> in the formula for the variance based on the pairwise square-differences. The <span class="math inline">\(\frac{1}{2}\)</span> may seem inelegant to some readers. Stripping out the <span class="math inline">\(\frac{1}{2}\)</span>, the quantity has a name dating from at least 1885: the <strong>modulus</strong>. Writing the modulus as <span class="math inline">\(c = 2 s^2\)</span> makes the formula for the gaussian function cleaner than the formula usually given:</p>
 <p><span class="math display">\[\underbrace{\frac{1}{\sqrt{2 \pi s^2}} \exp\left[-\frac{(x-m)^2}{2s^2}\right]}_\text{using standard deviation}\ \ \text{vs}\ \ \ \underbrace{\frac{1}{\sqrt{\pi c^2}} \exp\left[-\frac{(x-m)^2}{c^2}\right]}_\text{using modulus}\]</span> In mathematical and scientific nomenclature, “modulus” is roughly synonymous with “size.” For example, in algebra, <span class="math inline">\(\left|x\right|\)</span> is the modulus of <span class="math inline">\(x\)</span>. “Modulus” is less off-putting than “standard deviation” and less redolent of the unfortunate early ties between statistics and eugenics. Looking back, perhaps “modulus” would have been the better choice for parameterizing the gaussian.</p>
+</div>
+</div>
 
 
 </section>

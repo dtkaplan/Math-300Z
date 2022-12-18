@@ -30,7 +30,7 @@ book:
       - bogus.qmd
       - bogus.qmd
 
-    - part: Lessons in Statistical Thinking
+    - part: Statistical Thinking
       chapters:
         - Reading-notes-lesson-19.qmd
         - Reading-notes-lesson-20.qmd
@@ -53,7 +53,7 @@ book:
         - Reading-notes-lesson-37.qmd
         - Reading-notes-lesson-38.qmd
         - QR2.qmd
-    # - More-detail.qmd
+    # # - More-detail.qmd
 
 
 bibliography: references.bib
@@ -69,6 +69,7 @@ format:
     df-print: kable
   pdf:
     documentclass: scrreprt
-
+    include-in-header:
+      - latex-macros.tex
 
 

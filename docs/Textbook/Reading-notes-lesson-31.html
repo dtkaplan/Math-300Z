@@ -264,7 +264,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Lessons in Statistical Thinking</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Statistical Thinking</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -312,7 +312,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 1-8</span></a>
+  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 19-26</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -372,7 +372,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 9-19</span></a>
+  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 28-38</span></a>
   </div>
 </li>
       </ul>
@@ -532,12 +532,31 @@ Note
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(shrimp_dag, <span class="at">size=</span><span class="dv">1000</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data=</span>Sample) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                 2.5 %     97.5 %
-(Intercept) 0.04576651 0.05227149
-x           0.61475492 0.75661135</code></pre>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> lwr </th>
+   <th style="text-align:right;"> upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 0.0457665 </td>
+   <td style="text-align:right;"> 0.0522715 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> x </td>
+   <td style="text-align:right;"> 0.6147549 </td>
+   <td style="text-align:right;"> 0.7566114 </td>
+  </tr>
+</tbody>
+</table>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(y <span class="sc">~</span> x, <span class="at">data=</span>Sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(y <span class="sc">~</span> x, <span class="at">data=</span>Sample)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.514812</code></pre>
 </div>
@@ -545,12 +564,35 @@ x           0.61475492 0.75661135</code></pre>
 <p>Pearson’s 1897 work precedes the earliest conception of DAGs by three decades. An entire century would pass before DAGs came into widespread use. However, from the DAG of <a href="#fig-shrimp-dag">Figure&nbsp;<span>31.4</span></a>] in front of us, we can see that <code>length</code> is a common cause of <code>x</code> and <code>y</code>.</p>
 <p>Within 20 years of Pearson’s publication, a mathematical technique called “<strong>partial correlation</strong>” was in use that could deal with this particular problem of spurious correlation. The key is that the model should include <code>length</code> as a covariate. The covariate correctly blocks the path from <code>x</code> to <code>y</code> via <code>length</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x <span class="sc">+</span> length, <span class="at">data=</span>Sample) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                   2.5 %       97.5 %
-(Intercept)  0.150768730  0.163510774
-x           -0.036259801  0.083354349
-length      -0.001397519 -0.001250762</code></pre>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x <span class="sc">+</span> length, <span class="at">data=</span>Sample) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> lwr </th>
+   <th style="text-align:right;"> upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 0.1507687 </td>
+   <td style="text-align:right;"> 0.1635108 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> x </td>
+   <td style="text-align:right;"> -0.0362598 </td>
+   <td style="text-align:right;"> 0.0833543 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> length </td>
+   <td style="text-align:right;"> -0.0013975 </td>
+   <td style="text-align:right;"> -0.0012508 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>The confidence interval on the <code>x</code> coefficient includes zero once <code>length</code> is included in the model. So the data, properly analyzed, show no correlation between telson and tergum.</p>

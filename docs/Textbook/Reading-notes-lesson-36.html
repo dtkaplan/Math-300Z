@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -66,7 +129,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -202,7 +265,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Lessons in Statistical Thinking</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Statistical Thinking</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -250,7 +313,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 1-8</span></a>
+  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 19-26</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -310,7 +373,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 9-19</span></a>
+  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 28-38</span></a>
   </div>
 </li>
       </ul>
@@ -320,10 +383,19 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#tests-generally" id="toc-tests-generally" class="nav-link active" data-scroll-target="#tests-generally">Tests, generally</a></li>
+  <li><a href="#the-null-hypothesis" id="toc-the-null-hypothesis" class="nav-link" data-scroll-target="#the-null-hypothesis">The Null hypothesis</a></li>
+  <li><a href="#the-alternative-hypothesis" id="toc-the-alternative-hypothesis" class="nav-link" data-scroll-target="#the-alternative-hypothesis">The Alternative hypothesis</a></li>
+  <li><a href="#sec-under-the-null" id="toc-sec-under-the-null" class="nav-link" data-scroll-target="#sec-under-the-null">“Under the Null”</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -342,34 +414,324 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>We are nearing the end of our journey through the world of statistical thinking. But I think it’s time to get off the well-travelled road and take a detour of a few paragraphs. Detours are usually not the straightest path between two points, but they often have some advantage: safety, a scenic view or inspiring experience, and such.</p>
-<p>Our detour starts with a turn onto a lane marked with the word “orthodox.” There are, as you know, religions denominated by “orthodox.” But the word has a more general meaning that can be seen by translating the Greek origin words “ortho” and “doxa” into a familiar language: “ortho” means “straight” or “right”; “doxa” means “belief”. Synonyms for “belief” include creed, dogma, teaching, doctrine (which stems from the Latin for “to teach”), conviction, and article of faith. A line is straight and the phrase “the party line” indicates attitudes that fall into line with the party leadership. “Ortho” appears in “orthodonture” (straightening the teeth), “orthography” (correct spelling), and “orthogonal” (being at a right angle).<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>To “true a wheel” means to set it straight, and the phrase “true believer” does not refer to someone whose beliefs are correct but rather to someone who stays in line with to a particular system of belief. There can be many different systems of belief, many different orthodoxies, and disagreeing parties can each have their distinct line.</p>
-<p>There are two major orthodoxies of statistical thought, “frequentists” and “Bayesians,” a fact that’s important to keeping straight the variety of statistical nomenclature. The key distinction between the frequentist orthodoxy and that of the Bayesians, is their attitude toward the meaning of “probability.” One sect, the “frequentists,” bases their methodology in a supreme being they call the “population.” Coin flips are an example of a population; an abstractly infinite supply of events. The probability of “heads” is the <em>frequency</em> of a head turning up in <span class="math inline">\(n\)</span> trials, where <span class="math inline">\(n \rightarrow\infty\)</span>. Flipping coins an infinite number of times is still a work in progress. Until it is complete, we need to work with the probability of heads as the proportion of a large but finite number of trials in which the outcome is “heads.”</p>
-<p>In contrast, the “Bayesian” sect holds that a probability is a statement about belief. Different people, depending on their experiences, will rightly come to different conclusions about the probability of the outcome of an event. Bayesians will happily deal with a statement like, “the probability of rain tomorrow is 60%,” while frequentists might respond (while packing an umbrella in their knapsack for tomorrow’s weather) by pointing out that there is no “population” of “tomorrows” from which we can draw a sample to estimate the frequency of rain.</p>
-<p>For a frequentist, the hypothesis “April showers bring May flowers” is an assumption. There is no actual population from which to draw many trials, so a probability cannot be assigned to the hypothesis. In the frequentist liturgy, to <em>test the hypothesis</em> means to make a <em>simulation</em> of the world. Typically the simulation implements a world in which it is hard coded that the connection described by the hypothesis <em>does not exist</em>. This no-connection hypothesis is generically called the “<strong>Null hypothesis</strong>.” In this case, the Null hypothesis states that there is no association between April showers and May flowers.</p>
-<p>Constructing a simulation that generates data from the Null hypothesis is easy. Take the real-world data recording the observations of April precipitation and May floration. Randomly shuffle the entries in the April column while holding the May column fixed. The shuffling destroys any systematic association between the April and May columns. Any measured association in the shuffled data is incidental and accidental.</p>
-<p>Run many trials of the shuffling simulation. In each trial, record the measured association. It’s reasonable to expect that the measured association across the trials will be close to zero. Indeed, you use the trial results to <em>define</em> what “close to zero” means. Then look back at the association found in the real-world, unshuffled data. If that observed association falls within the definition of “close to zero,” then it is not fair to insist that the real-data is inconsistent with the Null hypothesis. That is, you “<strong>fail to reject</strong>” the Null hypothesis. On the other hand, if the observed association falls outside the bounds of “close to zero,” then you are entitled to <strong>reject</strong> the Null hypothesis.</p>
-<p>Notice that the simulation mechanism provides a population— a “hypothetical planet” to use the language of Lesson 34—from which many samples could be drawn. Thus, it’s straight thinking for the frequentists to assign a probability to the event “a simulation trial will generate a result at least as extreme as what was observed in the real world.” This probability, in the lingo of hypothesis testing, is called a “<strong>p-value</strong>”.</p>
-<p>In my opinion, it would have been better for everyone to rename the p-value as the <span class="math inline">\({\cal L}\)</span>-value. After all, it’s a <strong>likelihood</strong>, a proportion calculated on a hypothetical planet.</p>
-<p>For many people, the orthodoxy that “hypothesis testing” can properly lead only to one of two conclusions—“reject” or “fail to reject” the Null hypothesis—seems stilted and overly rigid. Like others who are not aligned with orthodoxy, they will translate the orthodox result into language that they find reasonable and more comfortable. For instance, they will say that the p-value is the probability that the Null hypothesis is true. Or, they interpret a small probability for the Null hypothesis—what should properly lead to “rejecting” the Null hypothesis—as an indication that the original hypothesis is to be “accepted” as true. And “failing to reject” often gets (mis-)interpreted as meaning the original hypothesis is not true.</p>
-<p>The ministers of orthodoxy—statistics professors, for example—will point out that such (mis-)statements are a sign of wrong thinking. The ministers exert such power as they have to set straight the strays among the flock, for instance by giving low scores on a course final examination. In practice, limited as it is to the examination room, this punishment rarely leads to a repentant and binding return to frequentist orthodoxy.</p>
-<p>The Bayesian orthodoxy is more permissive. It accepts as legitimate statements involving probability, such as “Hypothesis A is less likely than Hypothesis B.”</p>
-<p>In Lesson 35 we used a Bayesian approach to address two hypotheses that were relevant to a disease C. Once the data are in—say, a test result of + in the Lesson 35 example—we can use the likelihoods (sensitivity and specificity) and the disease prevalence to calculate the probability that, for a + test result, the patient actually has C.</p>
-<p>The frequentists don’t disaggree with the legitimacy of a <strong>likelihood</strong>. That is just a probability under the assumption that a given hypothesis is true. Where they depart from the Bayesians is in accepting the “probability of a hypothesis.” For, in order to calculate the relative probability of two hypotheses, you need to combine the likelihoods with a prior idea of how likely the hypotheses were in the first place. Frequentists assert that any such prior ideas are subjective.</p>
-<p>Few people will disagree with the idea that good science ought to be objective. Yet allowing some scope for subjectivity can lead to better informed decision-making. To illustrate, let’s tell a story that illustrates the benefits of assigning a probability, subjective though it may be, to a hypothesis.</p>
-<p>Imagine you are a doctor. A long-time patient comes to your clinic. His recent symptoms have him thinking that there is a strong chance he might have cancer. You, the doctor, ask questions about the patient’s symptoms and do a brief physical examination.</p>
-<p>A standard medical practice is to construct a “<strong>differential diagnosis</strong>”. In doing this, you construct a mental list of the medical disorders that might account for the symptoms and examination results. Since you have extensive training and experience, this list might be long and contain disorders that are relatively common and some that are rare.</p>
-<p>To keep the story simple, let’s make the list of plausible disorders unrealistically short: the patient either has cancer or has the flu. Each of these is a hypothesis. Continuing the process of differential diagnosis, you, the doctor, consider what medical steps might point in favor of one hypothesis or the other. For instance, you could order a tissue biopsy. Less invasive and less costly, you could decide on ordering a magnetic resonance imaging (MRI) or, simpler, using a medical screening test for cancer. Or you might even direct the patient to take some over-the-counter flu treatment and report back in two weeks if the symptoms haven’t resolved.</p>
-<p>In medical school, you learned a mantra: “When you hear hoofbeats, think horses, not zebras.” Zebras are very rare in most parts of the world, horses much less so. So horses are a much more likely source of hoofbeats than are zebras.</p>
-<p>To make an appropriate decision, you consider what you know about the patient. Had he just finished a round of chemo-therapy six months ago? If so, an MRI might be a good choice. Is the patient elderly? The elderly as a group have a greater risk of developing cancer than the young. So for an elderly patient, you might decide on ordering a screening test. Does the patient have a history of good health and an active imagination? Then the flu medication might be the right road to go down.</p>
-<p>A Bayesian would interpret this decision-making process in terms of probabilities. You assign, based on your observations, a probability to each hypothesis. If the probability of the cancer hypothesis is much smaller than the probability of flu, and if the cost of making a mistake (as measured by a “loss function,” see Lesson 34) is small, the flu medication is a good next step. But if the probability of cancer is not so small, and the cost of a delay is high, then ordering the screening test seems appropriate.</p>
+<div class="hidden">
+<p><span class="math display">\[\newcommand{\Ptest}{\mathbb{P}}
+\newcommand{\Ntest}{\mathbb{N}}
+\newcommand{\given}{\ |\!\!|\  }\]</span></p>
+</div>
+<p>In Lesson 35, we looked at the accounting process that is used for building a classifier and interpreting the results. That accounting process is also applicable, in whole or part, to a more general procedure in statistics called, variously, “<strong>hypothesis testing</strong>” or “<strong>Null hypothesis testing</strong>” (NHT), or “<strong>Null hypothesis significance testing</strong>” (NHST). Textbooks tend to use the shorter name: “hypothesis testing.” But these Lessons will use NHT as the name, because that is a more complete description of the actual process.</p>
+<p>The word “test” is familiar to all who have ever been students, but it will still be useful to have a definition. This one seems reasonable:</p>
+<blockquote class="blockquote">
+<p>“<em>A procedure intended to establish the quality, performance, or reliability of something, especially before it is taken into widespread use.</em>” – Oxford Languages</p>
+</blockquote>
+<p>Based on this general definition, one would expect that “hypothesis test” will be “a procedure intended to establish the correctness or applicability of a hypothesis, especially before relying on that hypothesis to guide action in the world.” Regrettably, this definition does not align well with the statistical procedure called NHT. This lack of alignment causes confusion and error. It has also led to controversy about the use of the procedure.</p>
+<p>The educator’s response to the controversy is often, and reasonably, “We need to teach NHT, whatever its flaws, because that is the procedure that everyone follows.” Educational reformer George Cobb followed up with a question: Why does everyone use it? His <a href="https://escholarship.org/uc/item/6hb3k0nz">answer</a>: “Because it’s the centerpiece of the introductory statistics curriculum.”</p>
+<p>In this Lesson, we will introduce the logic of Null hypothesis testing (NHT) and compare it to other procedures that also have a claim to be the way to test hypotheses. In Lesson 37, we will show how to do the computations involved to create the number—called the <strong>p-value</strong>—that is usually taken as the end-result of NHT. And in Lesson 38, we will return to the controversy, with the goal of helping the reader avoid pitfalls in interpretation of the p-value.</p>
+<section id="tests-generally" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="tests-generally">Tests, generally</h2>
+<div class="page-columns page-full"><p>In Lessons 34 and 35, the classifiers we built had two possible outputs, <span class="math inline">\(\Ptest\)</span> or <span class="math inline">\(\Ntest\)</span>. The classifier is only part of a bigger procedure which we called a “test.” To avoid unnecessary abstraction, our examples featured medical tests.</p><div class="no-row-height column-margin column-container"><span class="">Medical tests often have three or more outcomes such as “high,” “normal,” or “low.” This does not fundamentally change the situation from our <span class="math inline">\(\Ptest\)</span> or <span class="math inline">\(\Ntest\)</span> paradigm.</span></div></div>
+<p>In a medical test, the first step in the procedure usually involves a measurement procedure for an individual, for instance, counting white blood cells or measuring the concentration of prostate-specific antigen (PSA).</p>
+<p>The second step is purely arithmetical, comparing the measurement result to a threshold, thereby determining if the output should be <span class="math inline">\(\Ptest\)</span> or <span class="math inline">\(\Ntest\)</span>. Lessons 34 and 35 were largely about how to set a good value for the threshold and involved stating a <em>loss function</em> and considering the prevalence of the condition involved.</p>
+<p>A more familiar kind of test is the one taken by students in school, for instance, an algebra test. As the reader knows, in an algebra test, the subject is made to answer questions, the number of correct answers counted, and that count applied to a threshold to determine whether the overall result is “pass” or “fail.” There is not an explicit underlying condition, say, “expert” or “dilettante.” Consequently, there is no such thing as a false-negative (an expert who fails the test) or a false-positive (a dilettante who passes the test). All that matters is the test result itself</p>
+<p>Unlike medical tests, academic tests are generally not the product of the sort of careful development phase described in Lesson 35. In an algebra test, there is no training data, that is, no sample of subjects who have been observed definitively to be “experts” or “dilettantes” and who take the test to be classified as “pass” or “fail.” There is no calculation of a sensitivity or specificity to characterize the test and no use of a loss function to bend sensitivity, specificity, and prevalence into a threshold dividing “pass” from “fail.” Academicians never tell their students what the false positive and false negative rates are.</p>
+<p>Students and teachers think of an academic test as that part of the overall procedure where questions are asked and answered. Of course, there is a follow-up procedure that we call “grading,” where the correct answers are counted and the count converted to a pass/fail result. Sometimes the threshold between pass and fail is not fixed, but is set by the instructor to achieve a desired pass rate. This is called “grading on a curve,” the threshold depends on the observed counts.</p>
+<p>NHT is like “grading on a curve.” The data collection and summary of the data is <strong>not part of the procedure</strong>. Like “grading on a curve”, NHT starts at the point where the data have already been recorded and summarized. (Typically, the summary is the coefficient from a regression model or some other statistical measure like R<sup>2</sup>.)</p>
+<p>NHT is only about grading the summary, which is done on a curve. The grading is accomplished by examining a likelihood calculated from the summary. As notation for this likelihood, we will write <span class="math inline">\({\cal L}_{\mathbb{S}}(\text{Null hypothesis})\)</span>.</p>
+<p>The phrase “Null hypothesis” is too long to make for pleasant mathematical reading. Consequently, a shorter symbol, H_0_, is often used. The subscript <em>0</em> is a shorthand for “null.” The “H” indicates a hypothesis.</p>
+</section>
+<section id="the-null-hypothesis" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="the-null-hypothesis">The Null hypothesis</h2>
+<p>The key to understanding Null hypothesis testing is to know what the Null hypothesis is claiming.</p>
+<p>In a technical sense, it would suffice to say that the Null hypothesis is a claim that the effect size is zero (or that R<sup>2</sup> is zero) except for sampling variation. Making sense of this requires that one know what an “effect size” (or “R<sup>2</sup>”) is and what “sampling variation” means. At this point in these Lessons, you ought to know all of these things. But how to talk about hypothesis testing to a general audience?</p>
+<p>One strategy is to describe the Null as the “absence of any effect” or “relationship.” Another common strategy is to avoid mentioning the Null at all and use alternates such as “the result is significant” or “not due to chance.”</p>
+<p>Another way to think about the Null hypothesis is algorithmically. A Null-hypothesis relationship—really, a lack of relationship—can be created between two variables by <strong>shuffling</strong> one of them. Shuffling was introduced briefly in Lesson 29, where it was used to simulate an explanatory variable unrelated to the response.</p>
+<p>To illustrate, consider the <code>Galton</code> data about the heights of adult children and their parents. We will make a simple model of <code>height</code> as a function of <code>sex</code>—everyday experience suggests a relationship between the two variables.</p>
+<div class="cell" data-digits="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> sex, <span class="at">data=</span>Galton) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> lwr </th>
+   <th style="text-align:right;"> upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 64.0 </td>
+   <td style="text-align:right;"> 64.0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sexM </td>
+   <td style="text-align:right;"> 4.8 </td>
+   <td style="text-align:right;"> 5.4 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>If the Null hypothesis were true, that is, if <code>sex</code> were unrelated to <code>height</code>, the <code>sexM</code> coefficient ought to be close to zero and a confidence interval on the coefficient will usually include zero. But for <code>height ~ sex</code> the confidence interval does not include zero.</p>
+<p>Now consider what happens if we shuffle one or both of the variables.</p>
+<div class="cell" data-digits="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> <span class="fu">shuffle</span>(sex), <span class="at">data=</span>Galton) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> lwr </th>
+   <th style="text-align:right;"> upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 66.00 </td>
+   <td style="text-align:right;"> 67.00 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> shuffle(sex)M </td>
+   <td style="text-align:right;"> -0.35 </td>
+   <td style="text-align:right;"> 0.59 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell" data-digits="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="fu">shuffle</span>(height) <span class="sc">~</span> sex, <span class="at">data=</span>Galton) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> lwr </th>
+   <th style="text-align:right;"> upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 66.00 </td>
+   <td style="text-align:right;"> 67.00 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sexM </td>
+   <td style="text-align:right;"> -0.47 </td>
+   <td style="text-align:right;"> 0.47 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell" data-digits="2">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="fu">shuffle</span>(height) <span class="sc">~</span> <span class="fu">shuffle</span>(sex), <span class="at">data=</span>Galton) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> lwr </th>
+   <th style="text-align:right;"> upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 67.00 </td>
+   <td style="text-align:right;"> 67.00 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> shuffle(sex)M </td>
+   <td style="text-align:right;"> -0.75 </td>
+   <td style="text-align:right;"> 0.19 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>All these confidence intervals include zero, as expected.</p>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-planet-null" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="www/planet-null.png" class="img-fluid figure-img" width="140"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;36.1: Planet Null, known symbolically as <span class="math inline">\(\given H_0)\)</span>. Any pattern on Planet Null is attributed to chance, in the form of sampling variation.</figcaption><p></p>
+</figure>
+</div>
+</div></div></div>
+<p>In terms of the planet metaphor for hypotheses, the Null hypothesis <span class="math inline">\(\given H_0)\)</span> is a planet. Variables on this planet are always unrelated to one another. The possible indication of a pattern is due to sampling variation, not a genuine relationship.</p>
+<blockquote class="blockquote">
+<p><strong>Riddle</strong>: How do we get to Planet Null?</p>
+</blockquote>
+<pre><code>Take the space shuffle.</code></pre>
+<p>Before the advent of ubiquitous computing, the Null hypothesis was implemented using algebra and probability theory. An example of such theory appeared in Lesson 29. The blue diagonal line in <a href="Reading-notes-lesson-29.html#fig-amazon-book-shuffle">Figure&nbsp;<span>29.3</span></a> reflects what the average value of R<sup>2</sup> would be if a large number of trials were run on the model <code>y ~ x1 + x2 + ... + xk</code> where the <code>x</code>’s are unrelated to the <code>y</code>. Another part of the theory has to do with the “distribution” of the F statistic from Lesson 29, which we will discuss in Lesson 37.</p>
+</section>
+<section id="the-alternative-hypothesis" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="the-alternative-hypothesis">The Alternative hypothesis</h2>
+<p>In Null hypothesis testing, there is only the one hypothesis—the Null—under consideration. Since the world <span class="math inline">\(\given H_0)\)</span> can be created by shuffling, the computations for NHT can be done pretty easily even without the probability theory just mentioned.</p>
+<p>There has been a controversy since the 1930s about whether hypothesis testing—in the broad sense—should involve two (or more) competing hypotheses. One of these could be the Null hypothesis, the other, which we call the “Alternative hypothesis” (<span class="math inline">\(H_a\)</span>) a statement of a specific non-null relationship.</p>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-planet-alt" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="www/planet-alt.png" class="img-fluid figure-img" width="82"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;36.2: Planet Alt, that is, <span class="math inline">\(\given H_a)\)</span> might look like this. We draw it as a cartoon planet, since any particular hypothesis is a product of the imagination.</figcaption><p></p>
+</figure>
+</div>
+</div></div></div>
+<p>The situation with two hypotheses would be very similar to that presented in Lessons 34 and 35. In those lessons, the two hypotheses were C and H. In developing a classifier, one starts by collecting a training sample which is a mixture of cases of C and H. But, in general, with a competition of hypothesis—<span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_a\)</span>—we don’t have any real-world objects to sample that are known to be examples of the two hypotheses. Instead, we have to create them computationally. Instances of <span class="math inline">\(H_0\)</span> can be made by data shuffling. But instances of <span class="math inline">\(H_a\)</span> need to be generated by some other mechanism, perhaps one akin to the DAGs we have used in these lessons.</p>
+<p>With mechanisms to generate data from both the Null and Alternative hypotheses, we would take the statistical summary <span class="math inline">\(\mathbb{S}\)</span> of the actual data, and compute the likelihoods for each hypothesis: <span class="math inline">\({\cal L}_{\mathbb{S}}(H_0)\)</span> and <span class="math inline">\({\cal L}_{\mathbb{S}}(H_a)\)</span>. It should not be too controversial in a practical process to set the prior probability for each hypothesis at the same value: <span class="math inline">\(p(H_0) = p(H_a) = {\small \frac{1}{2}}\)</span>. Then, turn the crank of Bayes’ Rule (<a href="Reading-notes-lesson-35.html#sec-bayes-rule"><span>Section&nbsp;35.4</span></a>) to compute the posterior probabilities. If the posterior of one or the other hypothesis is <strong>much greater</strong> than <span class="math inline">\({\small \frac{1}{2}}\)</span>, we would have compelling evidence in favor of that hypothesis.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>There are specialized methods of Bayesian statistics and whole courses on the topic. An excellent online course is <a href="https://www.youtube.com/channel/UCNJK6_DZvcMqNSzQdEkzvzA"><em>Statistical Rethinking</em></a>.</p>
+<p>Before the widespread acceptance of the Bayesian approach, statisticians Jerzy Neyman and Egon Pearson proposed a two-hypothesis framework in 1933. We will discuss this in <span class="quarto-unresolved-ref">?sec-power</span>.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Not an alternative!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you have studied statistics before, you likely have been exposed to NHT. Many textbook descriptions of NHT appear to make use of an “alternative hypothesis” within NHT. This style is traditional and so common in textbooks that it seems disrepectful to state plainly that it is wrong. There is only one hypothesis being tested in NHT: the Null.</p>
+<p>In the textbook presentation of NHT, the “alternative” hypothesis is not a specific claim—for instance, “the drug reduces blood pressure by 10 mmHg”. Instead, the student is given a pointless choice of three versions of the alternative. These are usually written <span class="math inline">\(H_a \neq H_0\)</span> or as <span class="math inline">\(H_a &lt; H_0\)</span> or as <span class="math inline">\(H_a &gt; H_0\)</span>, and amount to saying “the effect size is non-zero,” “the effect size is negative,” or “the effect size is positive.”</p>
+<p>Outside of textbooks, only <span class="math inline">\(H_a \neq H_0\)</span> is properly used. The other two textbook choices provide, at best, variations on exam questions. At worst, they are a way to put a thumb on the scale to disadvantage the Null.</p>
+</div>
+</div>
+</section>
+<section id="sec-under-the-null" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="sec-under-the-null">“Under the Null”</h2>
+<p>Using the shuffling algorithm, the computation underlying NHT is very much like the technique introduced in Lesson 23: create a set of trials to represent the sampling distribution. The twist in NHT is that the sampling distribution is calculated on Planet Null. Or, in conventional statistical language, what’s computed is the “sampling distribution under the Null.”</p>
+<p>The phrase “under the Null” is often described as being shorthand for “assuming the Null to be true.” When doing a calculation, “assuming the Null to be true” might be better expressed more emphatically: “arranging things so that the Null is true” or “enforcing the Null.”</p>
+<p>We will use the <code>Galton</code> data, and the model <code>height ~ mother</code>, to illustrate computing the “sampling distribution under the Null.” The relationship being expressed by <code>height ~ mother</code> is that the adult child’s height is related at least in part to the mother’s height. As always, the effect size is a good way to quantify that relationship. Here it is:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(height <span class="sc">~</span> mother, <span class="at">data=</span>Galton) </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>mod <span class="sc">%&gt;%</span> <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)      mother 
+ 46.6907659   0.3131795 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mod <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> lwr </th>
+   <th style="text-align:right;"> upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 40.2951224 </td>
+   <td style="text-align:right;"> 53.0864094 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> mother </td>
+   <td style="text-align:right;"> 0.2134437 </td>
+   <td style="text-align:right;"> 0.4129153 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>These reports says that changing the model input by one inch will translate to about 0.3 inches in the output. The uncertainly due to sampling variation broadens the 0.3 into an interval, 0.2 to 0.4 inches of height per inch of mother.</p>
+<p>Now we rocket off to Planet Null. On Planet Null, children are not related to their mothers. Or, put another way, the unique relationship between a mother and her child is a Planet-Earth concept. On Planet Null, each mothers and children are paired at random.</p>
+<p>To calculate the <code>mother</code> coefficient on Planet Null, use <code>shuffle()</code>. Here’s the result from one sample:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> <span class="fu">shuffle</span>(mother), <span class="at">data=</span>Galton) <span class="sc">%&gt;%</span> <span class="fu">coef_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:right;"> coefficient </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 67.1960085 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> shuffle(mother) </td>
+   <td style="text-align:right;"> -0.0067929 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Repeating the above generates another sample from Planet Null:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> <span class="fu">shuffle</span>(mother), <span class="at">data=</span>Galton) <span class="sc">%&gt;%</span> <span class="fu">coef_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:right;"> coefficient </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 62.7905224 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> shuffle(mother) </td>
+   <td style="text-align:right;"> 0.0619522 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>From these two Planet Null samples, it is already evident that the <code>shuffle(mother)</code> coefficient on Planet Null tends to be closer to zero than the <code>mother</code> coefficient from Planet Earth.</p>
+<p>We can make a more compelling and precise statement if we look at a large number of Planet-Null samples:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="ot">&lt;-</span> <span class="fu">do</span>(<span class="dv">1000</span>) <span class="sc">*</span> {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(height <span class="sc">~</span> <span class="fu">shuffle</span>(mother), <span class="at">data=</span>Galton) <span class="sc">%&gt;%</span> <span class="fu">coef</span>()</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell page-columns page-full">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> mother, <span class="at">x =</span> <span class="st">"All"</span>)) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">width=</span>.<span class="dv">15</span>) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="at">alpha =</span> .<span class="dv">2</span>, <span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fl">0.31</span>, <span class="at">x =</span> <span class="dv">1</span>), <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-shuffle-mother" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Reading-notes-lesson-36_files/figure-html/fig-shuffle-mother-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;36.3: Values of the <code>shuffle(mother)</code> coefficient. Each gray dot is the result from one shuffling trial. The violin shows the sampling distribution under the null. The red dot is the <code>mother</code> coefficient found without shuffling.</figcaption><p></p>
+</figure>
+</div>
+</div></div></div>
+<p>The set of <code>mother</code> coefficients in these trials reflects us the “sampling distribution under the Null.” (<a href="#fig-shuffle-mother">Figure&nbsp;<span>36.3</span></a>) The “sampling distribution under the Null” is represented by the gray dots. The violin gives an easier to read representation. For this model, the <code>mother</code> coefficient from the sample from Planet Earth is so far different that it cannot pretend to be an instance from Planet Null.</p>
 
 
+</section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>The link between words for “straight” and thinking according to the rule book has ancient origins. The word “canon,” meaning the set of officially accepted writings, comes from the Sumerian word for a straight reed.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>In the same spirit, we might simply look at the likelihood ratio, <span class="math inline">\({\cal L}_{\mathbb{S}}(H_a) \div {\cal L}_{\mathbb{S}}(H_0)\)</span> and draw a confident conclusion only when the ratio turns out to be much greater than 1, say, 5 or 10.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

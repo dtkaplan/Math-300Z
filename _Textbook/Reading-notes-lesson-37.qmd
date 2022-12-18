@@ -1,5 +1,6 @@
+# Calculating a p-value {#sec-lesson-37}
+
 ---
-title: "Calculating a p-value"
 output:
   html_document:
     theme: lumen
@@ -10,13 +11,19 @@ output:
     toc: yes
 ---
 
-```{r setup, include=FALSE}
+```{r setup37, include=FALSE}
 lesson <- 37
 source("../_startup.R")
 ```
 
+::: {.hidden}
+$$\newcommand{\Ptest}{\mathbb{P}}
+\newcommand{\Ntest}{\mathbb{N}}
+\newcommand{\given}{\ |\!\!|\  }$$
+:::
 
-This Lesson continues the discussion of Null hypothesis testing (NHP) started in Lesson 36. Recall from that lesson that the Null hypothesis is a statement in line with the claim that "there is no relationship between these variables" or "nothing is going on." For example, in a study about the effectiveness of a new drug, the Null hypothesis will be that the drug has no effect at all. Another example: In an economics study about the possible relationship between a country's "corruption index" and interest rates, the Null hypothesis would be "corruption is unrelated to interest rates."
+
+This Lesson continues the discussion of Null hypothesis testing (NHP) started in [Lesson -@sec-lesson-36]. Recall from that lesson that the Null hypothesis is a statement in line with the claim that "there is no relationship between these variables" or "nothing is going on." For example, in a study about the effectiveness of a new drug, the Null hypothesis will be that the drug has no effect at all. Another example: In an economics study about the possible relationship between a country's "corruption index" and interest rates, the Null hypothesis would be "corruption is unrelated to interest rates."
 
 The work that *precedes* an NHP involves acquiring data, modeling it in a way that illuminates the *relationship of interest*, then summarizing that model. Often, the summary takes the form of a model coefficient, but it might be the model's R^2^ or the incremental R^2^ from a nested set of models. (See @sec-partial-R2.) Whatever the details, we will call the summary $\mathbb{Sreal}$.
 
@@ -60,7 +67,7 @@ In fact, `regression_summary()` and `anova_summary()` are merely *wrappers* arou
 
 ## Basic interpretation of p-values
 
-When the p-value is small, the likelihood of $\mathbb{Sreal}$ under the Null hypothesis, that is, ${\cal L}_\mathbb{Sreal}(\text{Null hypothesis})$ is also small. A small likelihood of a given hypothesis means that the hypothesis is not a compelling explanation for the observed $\mathbb{Sreal}$.
+When the p-value is small, the likelihood of $\mathbb{Sreal}$ under the Null hypothesis, that is, ${\cal L}_{\mathbb{Sreal}}(\text{Null hypothesis})$ is also small. A small likelihood of a given hypothesis means that the hypothesis is not a compelling explanation for the observed $\mathbb{Sreal}$.
 
 There is a formal vocabulary for NHT. Instead of saying, casually, "The Null hypothesis is not a compelling explanation for $\mathbb{Sreal}$, the formal NHT statement is, "The Null hypothesis is **rejected**."
 
@@ -68,7 +75,7 @@ Commonly, the threshold 0.05 is given as the numerical definition of "small" in 
 
 Suppose, on the other hand, that the p-value had been "large," that is $0.05 < p$. What phrase should we use to summarize this situation. It is tempting---but wrong---to think that this leads to "accepting" the Null hypothesis. Instead the proper NHT phrase to use is "fail to reject the Null." 
 
-We will return in Lesson 38 to the question of whether 0.05 is a good threshold to use. That's part of a broader controversy. 
+We will return in [Lesson -@sec-lesson-38] to the question of whether 0.05 is a good threshold to use. That's part of a broader controversy. 
 
 Another part of the NHT formal vocabulary is the phrase "statistically significant." In the everyday sense of the word, "significant" suggests "important,", "worthy of attention," or "noteworthy." In NHT speak, "statistically significant" is a synonym for "reject the Null." The NHT meaning of "statistically significant" has nothing at all to do with utility of the result.
 
@@ -80,13 +87,13 @@ It may seem odd that there is no universal agreement about "small." The reason i
 
 In physics, laws and models are meant to be exact or close to exact. Lord Rutherford (1871-1935), an important physicist who won the Nobel prize in 1908, famously disparaged the use of statistics, reportedly saying, "If your experiment needs statistics, you should have done a better experiment." This was in an era where the p-value *standard operating procedure* had not yet been invented. Today, when p-values are common in most fields, Rutherford's distaste for statistical method is reflected in p-value thresholds like $p < 0.000001$.
 
-In other fields such as economics or psychology or clinical medicine, models are sought that are *useful* but without any expectation that they be exact. (In the 19th and early 20th century, psychologists and economists sometimes used the vocabulary of "law" to describe their findings, but "model" is more appropriate, because, unlike physics, the laws are not strictly enforced!) Often, in economics or psychology or medicine, the size of a sample used to train a model is less than, say, $n=100$. And the units of observation---people or countries, for instance---are different one from the other, quite unlike, say, electrons, which are all the same. Consequently, sampling variation is often an important source of noise, obscuring relationships or even suggesting relationships that are not really there. (See Lesson 31.) This situation---small sample size, variation in observational units, and large sampling variation---would cause many useful findings to go unreported, as would happen if $p < 0.000001$ were the standard. So a less stringent threshold for publication is used, most commonly 0.05.
+In other fields such as economics or psychology or clinical medicine, models are sought that are *useful* but without any expectation that they be exact. (In the 19th and early 20th century, psychologists and economists sometimes used the vocabulary of "law" to describe their findings, but "model" is more appropriate, because, unlike physics, the laws are not strictly enforced!) Often, in economics or psychology or medicine, the size of a sample used to train a model is less than, say, $n=100$. And the units of observation---people or countries, for instance---are different one from the other, quite unlike, say, electrons, which are all the same. Consequently, sampling variation is often an important source of noise, obscuring relationships or even suggesting relationships that are not really there. (See [Lesson -@sec-lesson-31].) This situation---small sample size, variation in observational units, and large sampling variation---would cause many useful findings to go unreported, as would happen if $p < 0.000001$ were the standard. So a less stringent threshold for publication is used, most commonly 0.05.
 
 ## P-values for coefficients
 
 For any regression model, the "regression report" contains one row for every coefficient for the model. Each of these rows will have a coefficient value ("`estimate`") and a p-value. There are two additional columns: a standard error for the coefficient ("`std.error`") and a value (labeled "`statistic`") that is *always* just the estimate divided by the standard error. 
 
-The idea of the standard error was introduced in Lesson 23 (@sec-subsampling). The point of the standard error is to summarize the amount of sampling variation in the coefficient. But we standardized on the confidence interval format to summarize sampling variation.
+The idea of the standard error was introduced in [Lesson -@sec-lesson-23] (@sec-subsampling). The point of the standard error is to summarize the amount of sampling variation in the coefficient. But we standardized on the confidence interval format to summarize sampling variation.
 
 Many statisticians think there is little point to calculating a p-value on a model coefficient because the confidence interval contains all the information needed. Importantly, model coefficients and their confidence intervals come with units; the units are the connection between the number and the real world. P-values are without units, and their value depends strongly on the sample size. Thus, they mix together relevant information about the magnitude of the effect and incidental information about the size of the sample used for training. 
 
@@ -144,7 +151,7 @@ Another named test, the **z-test**, is a special kind of t-test where you know t
 
 ## P-values and covariates
 
-Use cancer/grass-treatment example from Lesson 30 to illustrate how failing to think about covariates *before* the study analysis can lead to false discovery.
+Use cancer/grass-treatment example from [Lesson -@sec-lesson-30] to illustrate how failing to think about covariates *before* the study analysis can lead to false discovery.
 
 Use age in marriage data.
 
@@ -153,7 +160,7 @@ Use age in marriage data.
 
 
 
-So, standard operating procedures were based on the tools at hand. We will return to the mismatch between hypothesis testing and the contemporary world in Lesson 38.
+So, standard operating procedures were based on the tools at hand. We will return to the mismatch between hypothesis testing and the contemporary world in [Lesson -@sec-lesson-38].
 
 
 

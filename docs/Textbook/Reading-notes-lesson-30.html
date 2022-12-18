@@ -265,7 +265,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Lessons in Statistical Thinking</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Statistical Thinking</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -313,7 +313,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 1-8</span></a>
+  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 19-26</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -373,7 +373,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 9-19</span></a>
+  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 28-38</span></a>
   </div>
 </li>
       </ul>
@@ -424,7 +424,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="cell-output-display">
 
-<table>
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
  <thead>
   <tr>
    <th style="text-align:left;"> grass </th>
@@ -474,13 +474,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </tr>
 </tbody>
 </table>
-
 </div>
 </div>
 <p>Analyzing such data is straightforward. First, check the overall cancer rate:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># overall cancer rate</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="fu">zero_one</span>(illness, <span class="at">one=</span><span class="st">"cancer"</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> Cancer_data) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="fu">zero_one</span>(illness, <span class="at">one=</span><span class="st">"cancer"</span>) <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> Cancer_data) <span class="sc">%&gt;%</span> <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept) 
       0.026 </code></pre>
@@ -490,18 +489,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">zero_one</span>(illness, <span class="at">one=</span><span class="st">"cancer"</span>) <span class="sc">~</span> grass, <span class="at">data =</span> Cancer_data)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coefficients</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> (Intercept) grassorganic 
-  0.01246883   0.02258960 </code></pre>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> coefficient </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 0.0124688 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> grassorganic </td>
+   <td style="text-align:right;"> 0.0225896 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>For households whose lawn treatment is “organic,” the risk of cancer is higher by 2.3 percentage points compared to households that treat their grass with chemicals. We were expecting the reverse, but it is what the data show. On the other hand, there is sampling variability to take into account. Look at the confidence intervals:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                    2.5 %     97.5 %
-(Intercept)  -0.003103381 0.02804104
-grassorganic  0.002469193 0.04271001</code></pre>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> lwr </th>
+   <th style="text-align:right;"> upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> -0.0031034 </td>
+   <td style="text-align:right;"> 0.028041 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> grassorganic </td>
+   <td style="text-align:right;"> 0.0024692 </td>
+   <td style="text-align:right;"> 0.042710 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>The confidence interval on <code>grassorganic</code> does not include zero, but it comes close. So might the chemical treatment of grass be protective against cancer? Only at this point do the study designers do what they should have from the start: think about covariates.</p>
@@ -522,7 +557,7 @@ grassorganic  0.002469193 0.04271001</code></pre>
 <div class="cell">
 <div class="cell-output-display">
 
-<table>
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
  <thead>
   <tr>
    <th style="text-align:right;"> wealth </th>
@@ -583,22 +618,44 @@ grassorganic  0.002469193 0.04271001</code></pre>
   </tr>
 </tbody>
 </table>
-
 </div>
 </div>
 <p>Having measured <code>wealth</code>, we can use it as a covariate in the model of <code>illness</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="fu">zero_one</span>(illness, <span class="at">one=</span><span class="st">"cancer"</span>) <span class="sc">~</span> grass <span class="sc">+</span> wealth, <span class="at">data =</span> Cancer_data) <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                   2.5 %        97.5 %
-(Intercept)   0.02468113  0.0574819325
-grassorganic -0.04508107 -0.0009698601
-wealth       -0.05680934 -0.0356454288</code></pre>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="fu">zero_one</span>(illness, <span class="at">one=</span><span class="st">"cancer"</span>) <span class="sc">~</span> grass <span class="sc">+</span> wealth, <span class="at">data =</span> Cancer_data) <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> lwr </th>
+   <th style="text-align:right;"> upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 0.0246811 </td>
+   <td style="text-align:right;"> 0.0574819 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> grassorganic </td>
+   <td style="text-align:right;"> -0.0450811 </td>
+   <td style="text-align:right;"> -0.0009699 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> wealth </td>
+   <td style="text-align:right;"> -0.0568093 </td>
+   <td style="text-align:right;"> -0.0356454 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>With <code>wealth</code> as a covariate, the model shows that (all other things being equal) “organic” lawn treatment reduces cancer risk. However, we do not see this directly from the <code>grass</code> and <code>illness</code> variables because all other things are not equal: wealthier people are more likely to use chemical lawn treatment. (Keep in mind that this is <strong>simulated data</strong>. Do not conclude from this example anything about the safety of the chemicals used for lawn greening.)</p>
-<div class="callout-note callout callout-style-default callout-captioned page-columns page-full">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -607,26 +664,26 @@ wealth       -0.05680934 -0.0356454288</code></pre>
 Example: The flu vaccine
 </div>
 </div>
-<div class="callout-body-container callout-body page-columns page-full">
+<div class="callout-body-container callout-body">
 <p>As you know, people are encouraged to get vaccinated before flu season. This recommendation is particularly emphasized for older adults, say, 60 and over.</p>
 <p>In 2012, the <em>Lancet</em>, a leading medical journal, published a <a href="https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(11)70295-X/fulltext">systematic examination and comparison of many previous studies</a>.  The <em>Lancet</em> article describes a hypothesis that existing flu vaccines may not be as effective as was originally found.</p>
 <blockquote class="blockquote">
 <p><em>A series of observational studies undertaken between 1980 and 2001 attempted to estimate the effect of seasonal influenza vaccine on rates of hospital admission and mortality in [adults 65 and older]. Reduction in all-cause mortality after vaccination in these studies ranged from 27% to 75%. In 2005, these results were questioned after reports that increasing vaccination in people aged 65 years or older did not result in a significant decline in mortality. Five different research groups in three countries have shown that these early observational studies had substantially overestimated the mortality benefits in this age group because of unrecognized confounding. This error has been attributed to a healthy vaccine recipient effect: reasonably healthy older adults are more likely to be vaccinated, and a small group of frail, undervaccinated elderly people contribute disproportionately to deaths, including during periods when influenza activity is low or absent.</em></p>
 </blockquote>
-<div class="cell page-columns page-full" data-layout-align="center">
-<div class="cell-output-display page-columns page-full">
-<div id="fig-healthy-vaccine" class="quarto-figure quarto-figure-center anchored page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="Reading-notes-lesson-30_files/figure-html/fig-healthy-vaccine-1.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;30.1: A DAG diagramming the “healthy vaccine recipient” effect</figcaption><p></p>
-</figure>
-</div>
-</div>
+<div class="cell">
+
 </div>
 <p><a href="#fig-healthy-vaccine">Figure&nbsp;<span>30.1</span></a> presents a network of causal influences that could shape the “healthy vaccine recipient.” People are more likely to become frail as they get older. Frail people are <em>less</em> likely to get vaccinated, but more likely to die in the next few months. The result is that vaccination is associated with reduced mortality, even if there is no direct link between vaccination and mortality.</p>
 </div>
+</div><div class="no-row-height column-margin column-container"><span class="callout-margin-content">Such a study of earlier studies is called a <em>meta-analysis</em>.</span><div class="cell-output-display callout-margin-content">
+<div id="fig-healthy-vaccine" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="www/healthy-vaccine-dag.png" class="img-fluid figure-img" width="318"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;30.1: A DAG diagramming the “healthy vaccine recipient” effect</figcaption><p></p>
+</figure>
 </div>
-<div class="no-row-height column-margin column-container"><span class="callout-margin-content">Such a study of earlier studies is called a <em>meta-analysis</em>.</span></div><section id="block-that-path" class="level2 page-columns page-full">
+</div></div>
+<section id="block-that-path" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="block-that-path">Block that path!</h2>
 <p>Let us look more generally at the possible causal connections among three variables, which we will call X, Y, and C. We will stipulate that X points causally toward Y and that C is a possible covariate. Like all DAGs, there cannot be a cycle of causation. These conditions leave three distinct DAGs that do not have a cycle, shown in <a href="#fig-three-dags-cancer">Figure&nbsp;<span>30.2</span></a>.</p>
 <div id="fig-three-dags-cancer" class="cell column-page-inset-right quarto-layout-panel">
@@ -708,7 +765,6 @@ Example: The flu vaccine
 <li><p>A “<strong>collider</strong>” <code>wealth</code>. In other words, both X and Y are causes of C.</p></li>
 </ul>
 <p>Look back to <a href="#fig-three-dags-cancer">Figure&nbsp;<span>30.2</span></a>(a), where <code>wealth</code> is a confounder. A confounder is always an intermediate node in a <em>correlating path</em>.</p>
-<p>:::</p>
 <p>Including a covariate either blocks or opens the pathway on which that covariate lies. Which it will be depends on the kind of pathway. A causal path, as in <a href="#fig-dags-paths">Figure&nbsp;<span>30.3</span></a>(b), is blocked by including the covariate. Otherwise, it is open. A correlating path (<span class="quarto-unresolved-ref">?fig-dags-path</span>(c)) is similar: the path is open unless the covariate is included in the model. A colliding path, as in <a href="#fig-dags-paths">Figure&nbsp;<span>30.3</span></a>(d), is blocked <em>unless</em> the covariate is included—the opposite of a causal path.</p>
 <p>Often, covariates are selected to block all paths except the direct link between the explanatory and response variable. This means <em>do</em> include the covariate if it is on a correlating path and <em>do not</em> include it if the covariate is at the collision point.</p>
 <p>As for a causal path, the choice depends on what is to be studied. Consider the DAG drawn in <a href="#fig-three-dags-cancer">Figure&nbsp;<span>30.2</span></a>(b), reproduced here for convenience:</p>
@@ -725,9 +781,20 @@ Example: The flu vaccine
 <p>Admittedly, it is far-fetched that choosing to green the grass makes a household wealthier, but focus on the topology of the DAG and not the unlikeliness of this specific causal scenario.</p>
 <p>There is no way to block a direct link from an explanatory variable to a response. If there were a reason to do this, the modeler probably selected the wrong explanatory variable.</p>
 <p>But there is a genuine choice to be made about whether to block pathway (ii). If the interest is the purely biochemical link between grass-greening chemicals and illness, then block pathway (ii). However, if the interest is in the <em>total</em> effect of <code>grass</code> and <code>illness</code>, including both biochemistry and the sociological reasons why <code>wealth</code> influences <code>illness</code>, then leave the pathway open.</p>
-<p>::: {.callout-warning} ## In draft: Some resources</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+In draft: Some resources
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>https://towardsdatascience.com/causal-effects-via-dags-801df31da794</p>
 <p>https://towardsdatascience.com/causal-effects-via-the-do-operator-5415aefc834a</p>
+</div>
+</div>
 
 
 </section>

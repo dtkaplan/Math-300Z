@@ -265,7 +265,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Lessons in Statistical Thinking</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Statistical Thinking</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -313,7 +313,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 1-8</span></a>
+  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 19-26</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -373,7 +373,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 9-19</span></a>
+  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 28-38</span></a>
   </div>
 </li>
       </ul>
@@ -442,21 +442,65 @@ Example: Fuel economy
 <p>Second, evaluate that model for the range of inputs under consideration.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod, <span class="at">displacement=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  displacement  .output     .lwr     .upr
-1            2 24.01437 15.91915 32.10959
-2            3 20.86976 12.77698 28.96254</code></pre>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> displacement </th>
+   <th style="text-align:right;"> .output </th>
+   <th style="text-align:right;"> .lwr </th>
+   <th style="text-align:right;"> .upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 24.01437 </td>
+   <td style="text-align:right;"> 15.91915 </td>
+   <td style="text-align:right;"> 32.10959 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 20.86976 </td>
+   <td style="text-align:right;"> 12.77698 </td>
+   <td style="text-align:right;"> 28.96254 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>The change in the input from 3 liters displacement to 2 liters leads to a change in fuel economy of <span class="math inline">\(24.0 - 20.9 = -3.1\)</span> miles per gallon. The change in displacement is <span class="math inline">\(3 - 2 = 1\)</span> liters. The effect size is the ratio between the output change and the input change. Here, that is -3.1 miles per gallon per liter.</p>
 <p>The decision-maker may be more concerned about the cost of driving than with the miles per gallon. Then the appropriate response variable might be <code>EPA_fuel_cost,</code> denominated in dollars per year.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(EPA_fuel_cost <span class="sc">~</span> displacement, <span class="at">data=</span>MPG)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod2, <span class="at">displacement=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  displacement  .output     .lwr     .upr
-1            2 1585.887 1000.649 2171.125
-2            3 1882.534 1297.473 2467.596</code></pre>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(EPA_fuel_cost <span class="sc">~</span> displacement, <span class="at">data=</span>MPG)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod2, <span class="at">displacement=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> displacement </th>
+   <th style="text-align:right;"> .output </th>
+   <th style="text-align:right;"> .lwr </th>
+   <th style="text-align:right;"> .upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 1585.887 </td>
+   <td style="text-align:right;"> 1000.649 </td>
+   <td style="text-align:right;"> 2171.125 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 1882.534 </td>
+   <td style="text-align:right;"> 1297.473 </td>
+   <td style="text-align:right;"> 2467.596 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>The change in output is about $300 per year. However, the change in input is still 1 liter. The effect size is, therefore, $300 per year per liter.</p>
@@ -464,12 +508,34 @@ Example: Fuel economy
 </div>
 <p>Some decision variables are categorical. For instance, the buyer might like the idea of an engine that automatically turns off when the car is stopped at a light or in traffic. The <code>start_stop</code> variable, which has categorical levels “Yes” and “No,” records whether the car has this feature. Effect size estimation is slightly different when the input is categorical rather than quantitative. Still, build a model and compare the change in output to the change in input:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Mod3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(EPA_fuel_cost <span class="sc">~</span> start_stop, <span class="at">data=</span>MPG)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod3, <span class="at">start_stop=</span><span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  start_stop  .output     .lwr     .upr
-1         No 1872.193 916.0164 2828.369
-2        Yes 1945.194 989.0637 2901.324</code></pre>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Mod3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(EPA_fuel_cost <span class="sc">~</span> start_stop, <span class="at">data=</span>MPG)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod3, <span class="at">start_stop=</span><span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> start_stop </th>
+   <th style="text-align:right;"> .output </th>
+   <th style="text-align:right;"> .lwr </th>
+   <th style="text-align:right;"> .upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> No </td>
+   <td style="text-align:right;"> 1872.193 </td>
+   <td style="text-align:right;"> 916.0164 </td>
+   <td style="text-align:right;"> 2828.369 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Yes </td>
+   <td style="text-align:right;"> 1945.194 </td>
+   <td style="text-align:right;"> 989.0637 </td>
+   <td style="text-align:right;"> 2901.324 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>In this case, the change in output is $73 per year; the change in input is “Yes” - “No.” But, of course, it is meaningless to subtract one categorical level from another. Consequently, the effect size of <code>start_stop</code> on fuel cost cannot be quantified as a ratio. So, instead, the effect size is simply the difference in the output: a $73 per year increase with the Start/Stop feature.</p>
@@ -509,14 +575,36 @@ Demonstration: Start/Stop and vehicle size
 <p>As described earlier, we are interested in the possibility that Start/Stop is available mainly on large, higher-fuel-consumption cars. If so, that would explain why the effect size we calculated of fuel cost with respect to Start/Stop was positive.</p>
 <p>The model we build will have a zero-one encoding of Start/Stop as the response and the vehicle’s fuel cost as the explanatory variable.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>MPG <span class="ot">&lt;-</span> MPG <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">has_start_stop =</span> <span class="fu">zero_one</span>(start_stop, <span class="at">one=</span><span class="st">"Yes"</span>))</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>Mod4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(has_start_stop <span class="sc">~</span> EPA_fuel_cost, <span class="at">data =</span> MPG)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod4, <span class="at">EPA_fuel_cost=</span><span class="fu">c</span>(<span class="dv">1600</span>, <span class="dv">2000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  EPA_fuel_cost   .output       .lwr     .upr
-1          1600 0.4901341 -0.4891981 1.469466
-2          2000 0.5207835 -0.4583924 1.499959</code></pre>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>MPG <span class="ot">&lt;-</span> MPG <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">has_start_stop =</span> <span class="fu">zero_one</span>(start_stop, <span class="at">one=</span><span class="st">"Yes"</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>Mod4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(has_start_stop <span class="sc">~</span> EPA_fuel_cost, <span class="at">data =</span> MPG)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod4, <span class="at">EPA_fuel_cost=</span><span class="fu">c</span>(<span class="dv">1600</span>, <span class="dv">2000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> EPA_fuel_cost </th>
+   <th style="text-align:right;"> .output </th>
+   <th style="text-align:right;"> .lwr </th>
+   <th style="text-align:right;"> .upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1600 </td>
+   <td style="text-align:right;"> 0.4901341 </td>
+   <td style="text-align:right;"> -0.4891981 </td>
+   <td style="text-align:right;"> 1.469466 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2000 </td>
+   <td style="text-align:right;"> 0.5207835 </td>
+   <td style="text-align:right;"> -0.4583924 </td>
+   <td style="text-align:right;"> 1.499959 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>The <code>.output</code> here is interpreted as a <em>probability</em> of <code>start_stop</code> having the value “Yes.” (That is because we set <code>one="Yes"</code> in the <code>zero_one()</code> conversion.) The <code>model_eval()</code> report indicates $400 per year increase in fuel cost is associated with a three percentage point increase in the probability of a vehicle having a Start/Stop feature. That is a small effect, so we see little support for our hypothesis that Start/Stop tends to be installed on larger, more fuel-efficient vehicles.</p>
@@ -528,36 +616,117 @@ Demonstration: Start/Stop and vehicle size
 <p>When a model has more than one explanatory variable, each has a different effect size.</p>
 <p>As an example, consider the price of books. We have some data that might be informative, <code>moderndive::amazon_books</code>. What is the effect size of page count on price. The appropriate model here is <code>list_price ~ num_pages</code>. The effect size is easy to compute:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(list_price <span class="sc">~</span> num_pages, <span class="at">data =</span> moderndive<span class="sc">::</span>amazon_books)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod1, <span class="at">num_pages =</span> <span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">400</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  num_pages  .output       .lwr     .upr
-1       200 15.82014 -11.636987 43.27726
-2       400 19.79643  -7.637503 47.23037</code></pre>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(list_price <span class="sc">~</span> num_pages, <span class="at">data =</span> moderndive<span class="sc">::</span>amazon_books)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod1, <span class="at">num_pages =</span> <span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">400</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> num_pages </th>
+   <th style="text-align:right;"> .output </th>
+   <th style="text-align:right;"> .lwr </th>
+   <th style="text-align:right;"> .upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 200 </td>
+   <td style="text-align:right;"> 15.82014 </td>
+   <td style="text-align:right;"> -11.636987 </td>
+   <td style="text-align:right;"> 43.27726 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 400 </td>
+   <td style="text-align:right;"> 19.79643 </td>
+   <td style="text-align:right;"> -7.637503 </td>
+   <td style="text-align:right;"> 47.23037 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>We elected to compare 200-page books with 400-page books, simply because those seem like reasonable book lengths. However, the longer book costs about 4 dollars more. So the effect size, to judge from this model, is $4 divided by 200 more pages, which comes to 2 cents per page.</p>
 <p>Another effect size is needed to address the question: Are hardcovers more expensive than paperbacks? The output is still price. But now, the input is categorical. In the <code>moderndive::amazon_books</code> data frame, the variable <code>hard_paper</code> has levels “P” and “H.” A possible model: <code>list_price ~ hard_paper</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(list_price <span class="sc">~</span> hard_paper, <span class="at">data =</span> amazon_books)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod2, <span class="at">hard_paper =</span> <span class="fu">c</span>(<span class="st">"P"</span>, <span class="st">"H"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  hard_paper  .output      .lwr     .upr
-1          P 17.13523 -10.62291 44.89338
-2          H 22.39393  -5.46052 50.24839</code></pre>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(list_price <span class="sc">~</span> hard_paper, <span class="at">data =</span> amazon_books)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod2, <span class="at">hard_paper =</span> <span class="fu">c</span>(<span class="st">"P"</span>, <span class="st">"H"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> hard_paper </th>
+   <th style="text-align:right;"> .output </th>
+   <th style="text-align:right;"> .lwr </th>
+   <th style="text-align:right;"> .upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> P </td>
+   <td style="text-align:right;"> 17.13523 </td>
+   <td style="text-align:right;"> -10.62291 </td>
+   <td style="text-align:right;"> 44.89338 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 22.39393 </td>
+   <td style="text-align:right;"> -5.46052 </td>
+   <td style="text-align:right;"> 50.24839 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>A hardcover book costs about $5.25 more than a paperback book. Since the input is categorical, there is no change of input to divide by, so the effect size is $5.25 when going from a paperback to a hardcover.</p>
 <p>We can look at the effects of page length and cover-type separately. Instead, we can include both as explanatory variables.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Mod3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(list_price <span class="sc">~</span> hard_paper <span class="sc">+</span> num_pages, <span class="at">data =</span> amazon_books)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod3, <span class="at">hard_paper =</span> <span class="fu">c</span>(<span class="st">"P"</span>, <span class="st">"H"</span>),  <span class="at">num_pages=</span><span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">400</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  hard_paper num_pages  .output       .lwr     .upr
-1          P       200 14.52494 -12.641928 41.69182
-2          H       200 19.48253  -7.785720 46.75077
-3          P       400 18.43605  -8.709404 45.58151
-4          H       400 23.39363  -3.847698 50.63497</code></pre>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Mod3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(list_price <span class="sc">~</span> hard_paper <span class="sc">+</span> num_pages, <span class="at">data =</span> amazon_books)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(Mod3, <span class="at">hard_paper =</span> <span class="fu">c</span>(<span class="st">"P"</span>, <span class="st">"H"</span>),  <span class="at">num_pages=</span><span class="fu">c</span>(<span class="dv">200</span>, <span class="dv">400</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> hard_paper </th>
+   <th style="text-align:right;"> num_pages </th>
+   <th style="text-align:right;"> .output </th>
+   <th style="text-align:right;"> .lwr </th>
+   <th style="text-align:right;"> .upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> P </td>
+   <td style="text-align:right;"> 200 </td>
+   <td style="text-align:right;"> 14.52494 </td>
+   <td style="text-align:right;"> -12.641928 </td>
+   <td style="text-align:right;"> 41.69182 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 200 </td>
+   <td style="text-align:right;"> 19.48253 </td>
+   <td style="text-align:right;"> -7.785720 </td>
+   <td style="text-align:right;"> 46.75077 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> P </td>
+   <td style="text-align:right;"> 400 </td>
+   <td style="text-align:right;"> 18.43605 </td>
+   <td style="text-align:right;"> -8.709404 </td>
+   <td style="text-align:right;"> 45.58151 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> H </td>
+   <td style="text-align:right;"> 400 </td>
+   <td style="text-align:right;"> 23.39363 </td>
+   <td style="text-align:right;"> -3.847698 </td>
+   <td style="text-align:right;"> 50.63497 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>This output requires some interpretation. We have got short and long paperback books and short and long hardcover books. What should we compare to what?</p>
@@ -570,12 +739,35 @@ Demonstration: Start/Stop and vehicle size
 <p>Statistical thinkers know that any estimate they make, including estimates of effect sizes, involves sampling variation. Consequently, give an <em>interval</em> estimate. The interval communicates to the decision-maker the uncertainty in the estimated quantity. Sophisticated decision-makers keep this uncertainty in mind, considering the range of outcomes likely from whatever use they make of effect size. On the other hand, statistically naive decision makers—even highly educated decision-makers can be statistically naive—look at the interval and sometimes ask the modeler, “Just give me a number. I don’t know what to do with two numbers.” Such a request might elicit a frank response: “If you don’t know what to do with two numbers, you also won’t know what to do with one number.” Unfortunately, that kind of frankness is not often well received; a reasonable alternative is: “The interval indicates the amount of uncertainty in the result. We’ll need to collect more data if you want to reduce the uncertainty.” (Lesson 29 introduces a not-always-available alternative to collecting more data: building a better model!)</p>
 <p>For the additive models that we are mainly using in these Lessons, the effect size is identical to a model coefficient. For these models, the confidence interval on the coefficient is the confidence interval on the effect size. For instance,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Mod3 <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                 2.5 %     97.5 %
-(Intercept) 7.03901789 14.1886534
-hard_paperH 1.55803436  8.3571295
-num_pages   0.01023618  0.0288749</code></pre>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Mod3 <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> lwr </th>
+   <th style="text-align:right;"> upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 7.0390179 </td>
+   <td style="text-align:right;"> 14.1886534 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> hard_paperH </td>
+   <td style="text-align:right;"> 1.5580344 </td>
+   <td style="text-align:right;"> 8.3571295 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> num_pages </td>
+   <td style="text-align:right;"> 0.0102362 </td>
+   <td style="text-align:right;"> 0.0288749 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 

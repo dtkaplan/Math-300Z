@@ -1,10 +1,10 @@
-# Preliminaries
+# Preliminaries {#sec-lesson-19}
 
 ---
 status: "proofed on Nov 28, 2022"
 ---
 
-```{r setup, include=FALSE}
+```{r setup19, include=FALSE}
 lesson <- 19
 source("../_startup.R")
 ```
@@ -132,7 +132,7 @@ Prediction is another context benefiting from an interval display. Prediction is
 ::: {.callout-note}
 ## Example: 1.6 seconds per year?
 
-It is appropriate to be skeptical of a claim that male runners slow down by  1.6 seconds per year compared to females. After all, people differ; some age more gently than others. As we will see in Lesson 20, the results presented from a regression model depend partly on the play of chance in determining the particular people represented in the data. It is helpful to know *how much* chance affects the results. A summary can indicate this by a range of plausible values, in other words, an "**interval**" summary. Here is an interval summary on the coefficients from the running time versus age model:
+It is appropriate to be skeptical of a claim that male runners slow down by  1.6 seconds per year compared to females. After all, people differ; some age more gently than others. As we will see in [Lesson -@sec-lesson-20], the results presented from a regression model depend partly on the play of chance in determining the particular people represented in the data. It is helpful to know *how much* chance affects the results. A summary can indicate this by a range of plausible values, in other words, an "**interval**" summary. Here is an interval summary on the coefficients from the running time versus age model:
 
 ```{r}
 TenMileRace %>% lm(net ~ sex * age, data = .) %>% confint() 

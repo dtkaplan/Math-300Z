@@ -1,16 +1,7 @@
----
-title: "Experiment and random assignment"
-output:
-  html_document:
-    theme: lumen
-    toc: yes
-    toc_float: yes
-    css: NTI.css
-  pdf_document:
-    toc: yes
----
+# Experiment and random assignment {#sec-lesson-32}
 
-```{r setup, include=FALSE}
+
+```{r setup32, include=FALSE}
 lesson <- 32
 source("../_startup.R")
 ```
@@ -43,18 +34,14 @@ To understand some of the contribution that statistical thinking can make to exp
 
 A key concept that statistical thinking brings to experiment is the idea of **variation**. Simply put, a good experiment should involve some variation. The simplest way to create variation is to repeat each experimental trial multiple times. This is called "**replication**."
 
-::: {.callout-note}
+
 ## Example: Replicated bed net trials
 
 One way to improve the simple experiment bed net described above is to carry out many trials. One reason is that the results from any single trial might be shaped by accidental or particular circumstances: the weather in the trial area was less favorable to mosquito reproduction; another government agency decided to help out by spraying pesticides broadly, and so on. Setting up trials in different areas can help to balance out these influences.
 
 Replicated trials also allow us to estimate the size of the variability caused by the accidental or particular factors. To illustrate, suppose a single trial is done and the rate of malarial illness goes down by 5 percentage points. What can we conclude? The result is promising but we can't rule out that it is due to accidental factors other than bed nets. Why not? Because we have no idea how much unexplained variation is in play.
 
-:::: {.column-margin}
 ```{r echo=FALSE}
-#| label: tbl-bed-net
-#| tbl-cap: "`Bed_net_data`"
-#| column: margin
 Bed_net_data <- tibble::tribble(
   ~ site, ~ reduction,
   "A", 5,
@@ -68,16 +55,25 @@ Bed_net_data <- tibble::tribble(
   "I", 2,
   "J", 6
 )
+```
+
+
+
+:::: {.column-margin}
+```{r echo=FALSE, eval=FALSE}
+#| label: tbl-bed-net
+#| tbl-cap: "`Bed_net_data`"
+#| column: margin
+
 Bed_net_data
 ```
-::::
+
 
 
 @tbl-bed-net shows data from four imagined trials of the effect of bed nets. (Reduction by a negative number, like -1, is an *increase*.) The mean reduction is 3 percentage points, but this number is not much use unless we can put it in the context of sampling variation. Conducting multiple trials gives us a handle on the amount of sampling variation. By We can easilyNow we know something about the amount of variation due to site-to-site factors. The replication introduces *observed* variation in results, the observed variation can be quantified and used to place the overall trend in context. 
 
 Using the regression framework makes it easy to estimate the amount of sampling variation. The mean reduction corresponds to the coefficient from the model `reduction ~ 1`. 
 
-:::: {.column-margin}
 ```{r digits=3}
 lm(reduction ~ 1, 
      data=Bed_net_data) %>% 
@@ -90,10 +86,8 @@ lm(reduction ~ 1,
   confint()
 ```
 
-::::
-
 The observed 3 percentage point mean reduction in the incidence of malaria does stand out from the noise: the confidence interval does not include zero. In these (imagined) data, we have confidence that we have seen a signal.
-:::
+
 
 ## Control
 
@@ -101,10 +95,8 @@ However, there is still a problem with the design of the imagined bed-net experi
 
 We need to measure what the change in malarial infection would have been without the bed-net intervention. Care needs to be taken here. If the trial sites were rural, it would not be appropriate to look at malarial rates in urban areas where there was no bed-net program. We want to compare the trial sites with non-trial sites where the intervention was not carried out, so-called "**control**" sites. The `With_controls` data frame imagines what data might look like if in half the sites no bed-net program was involved.
 
+
 ```{r echo=FALSE}
-#| label: tbl-bed-net-controls
-#| tbl-cap: "`With_controls`"
-#| column: margin
 With_controls <- tibble::tribble(
   ~ site, ~ reduction, ~nets,
   "A", 2, "control",
@@ -118,12 +110,18 @@ With_controls <- tibble::tribble(
   "I", 3, "treatment",
   "J", 2, "control"
 )
+```
+
+```{r echo=FALSE}
+#| label: tbl-bed-net-controls
+#| tbl-cap: "`With_controls`"
+### #| column: margin
 With_controls
 ```
 
 The proper regression model for the `With_controls` data is `reduction ~ treatment`:
 
-:::: {.column-margin}
+<!-- :::: {.column-margin} -->
 ```{r digits=2}
 lm(reduction ~ nets, 
        data=With_controls) %>% 
@@ -132,7 +130,7 @@ lm(reduction ~ nets,
        data=With_controls) %>% 
   confint() 
 ```
-::::
+
 
 The effect of the bed nets is summarized by the `netstreatment` coefficient, which compares the `reduction` between the `treatment` and `control` groups. In this new (imagined) data frame, the confidence interval on `netstreatment` touches very close to zero; the signal is just barely discernible from the noise.
 
@@ -140,7 +138,7 @@ The reader might wonder why, in moving to the controlled design, the ten sites w
 
 One reason is pragmatic: the larger study would require more effort and money. The larger study might be worthwhile; larger $n$ would presumably narrow the confidence interval. Another reason, to be expanded on in the next section, is that the treatment and control sites should be as similar as possible. This can be surprising hard to achieve. Other factors such as the enthusiasm or skepticism of the town leaders toward public-health interventions might be behind the choice of the original sites for the bed-net program. The control sites might be towns that turned down the original offer of the bed-net program and, accordingly, have different attitudes toward public health.
 
-::: {.callout-note}
+<!-- ::: {.callout-note} -->
 ## Example: Testing the Salk polio vaccine
 
 Today, most children are vaccinated against polio, though a smaller fraction than in previous years. This might be because symptomatic polio is very rare, lessening the perceived urgency of protecting against it. Partly, the reduction reflects the growth in the "anti-vax" movement, which became especially notable with the advent of COVID-19.
@@ -157,6 +155,7 @@ As reported in Freedman (1998)^[D. Freedman, R Pisani, R Purves, *Statistics* 3/
 
 The difference between treatment and control groups is very evident: a reduction from 71 cases per 100,000 children to 28 cases per 100,000. The no-consent children had a rate between the two, 46 per 100,000. Since both the "control" and "no consent" groups did not get the vaccine, one might expect those rates to be similar. That they are not shows that the "no-consent" children are systematically different from those children whose parents gave consent. 
 
+<!---
 ::: {.column-margin}
  
 
@@ -166,13 +165,14 @@ The difference between treatment and control groups is very evident: a reduction
 
  
 :::
+-->
 
 In the other branch of the study, Study 1, where no-consent 2nd-graders were used as control and vaccine was given to all whose parents did consent, the results (@tbl-polio2) were different because of confounding between treatment and consent. 
 
 ```{r echo=FALSE}
 #| label: tbl-polio1
 #| tbl-cap: "Results from Study 2."
-#| column: margin
+### #| column: margin
 Polio1 <- tibble::tribble(
   ~ vaccine, ~ size, ~ rate,
   "Treatment", 200000, 28,
@@ -185,7 +185,7 @@ Polio1
 ```{r echo=FALSE}
 #| label: tbl-polio2
 #| tbl-cap: "Results from Study 1"
-#| column: margin
+### #| column: margin
 Polio2 <- tibble::tribble(
   ~ vaccine, ~ size, ~ rate,
   "Treatment", 225000, 25,
@@ -196,7 +196,7 @@ Polio2
 
 The effect of the vaccine from Study 1 under-estimated the biological link between vaccination and reduction of polio risk.
 
-:::
+<!-- ::: -->
 
 
 ## Random assignment
@@ -237,7 +237,7 @@ polio_dag <- dag_make(
 knitr::include_graphics("www/DAG-consent2.png")
 ```
 
-The approach emphasized in Lesson 30 to avoid such confounding is to block the relevant pathways. Both can be blocked by including `consent` as a covariate. However, ni Study 1, assignment to vaccine was purely a matter of consent; `consent` and `treatment` are essentially the same variable. @fig-dag-polio-consent shows the corresponding DAG, where `consent` and `treatment` are merged into a single variable. Holding `consent` constant deprives the system of the explanatory variable and still introduces confounding through `socio_economic`.
+The approach emphasized in [Lesson -@sec-lesson-30] to avoid such confounding is to block the relevant pathways. Both can be blocked by including `consent` as a covariate. However, in Study 1, assignment to vaccine was purely a matter of consent; `consent` and `treatment` are essentially the same variable. @fig-dag-polio-consent shows the corresponding DAG, where `consent` and `treatment` are merged into a single variable. Holding `consent` constant deprives the system of the explanatory variable and still introduces confounding through `socio_economic`.
 
 
 In Study 2, all the children participating had parents give consent. This means that `consent` is not actually a variable; it doesn't vary! The corresponding DAG, without `consent` as a factor, is drawn in @fig-dag-polio3. This Study 2 DAG is unfolded; there are no confounding pathways! Thus the model `polio ~ treatment` is appropriate.  

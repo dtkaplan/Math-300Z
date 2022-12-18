@@ -1,13 +1,12 @@
----
-title: "Constructing a prediction interval"
----
+# Constructing a prediction interval {#sec-lesson-26}
 
-```{r setup, include=FALSE}
+
+```{r setup26, include=FALSE}
 lesson <- 26
 source("../_startup.R")
 ```
 
-Lesson 25 introduced predictions in two forms:
+[Lesson -@sec-lesson-25] introduced predictions in two forms:
 
 1. a **point quantity**, the direct output of the model function.
 2. the **prediction interval**, which indicates a range of likely values for the quantity being predicted. 
@@ -140,7 +139,7 @@ For convenience, the `model_plot()` function will do this work for us, plotting 
 #| fig-subcap:
 #|  - "prediction interval"
 #|  - "confidence interval"
-#| column: page-right
+### #| column: page-right
 model_plot(Age_mod, x=age, interval="prediction", data_alpha=0.05)
 model_plot(Age_mod, x=age, interval="confidence", data_alpha=0.05)
 ```

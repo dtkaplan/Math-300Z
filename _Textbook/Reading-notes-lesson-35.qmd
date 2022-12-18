@@ -1,5 +1,6 @@
+# Accounting for prevalence {#sec-lesson-35}
+
 ---
-title: "Accounting for prevalence"
 output:
   html_document:
     theme: lumen
@@ -10,11 +11,10 @@ output:
     toc: yes
 ---
 
-```{r setup, include=FALSE}
+```{r setup35, include=FALSE}
 lesson <- 35
 source("../_startup.R")
 ```
-
 
 ::: {.hidden}
 $$\newcommand{\Ptest}{\mathbb{P}}
@@ -43,7 +43,7 @@ P3b <- plot_people_final(Case_control %>% filter(cond=="H")) +
 P3b
 ```
 
-Lesson 34 used a **training sample**, first shown in @fig-divided-by-condition and duplicated here in the margin. The training sample allowed us look at the consequences of the choice of threshold used in the test. That training sample had roughly equal numbers of people from the C and H groups. It's sensible to use such a training sample in order to make sure both the C and H groups are well represented.
+[Lesson -@sec-lesson-34] used a **training sample**, first shown in @fig-divided-by-condition and duplicated here in the margin. The training sample allowed us look at the consequences of the choice of threshold used in the test. That training sample had roughly equal numbers of people from the C and H groups. It's sensible to use such a training sample in order to make sure both the C and H groups are well represented.
 
 The prevalence among the actual population is usually very different than in the training sample. @fig-divided-by-condition3 illustrates the typical situation: many people in the H group and few people in the C group.
 
@@ -75,7 +75,7 @@ pNC <- plot_people_final(People_before_test %>% filter(cond != "C"))
 gridExtra::grid.arrange(pC + labs(title="C group: p(C) N"), pNC + labs(title="H group: (1-p(C)) N") , ncol=2)
 ```
 
-Consider now the sensitivity. Sensitivity is relevant only to the C group; it tells the fraction in the C group who will be correctly classified. That's enough information to know how many people in C to color blue (for $\Ptest$) or gray (for $\Ntest$). 
+Consider now the sensitivity. Sensitivity is relevant only to the C group; it tells the fraction in the C group who will be correctly classified. That's enough information to know how many people in C to color blue (for $\mathbb{P}$) or gray (for $\mathbb{H}$). 
 
 Similarly, the specificity tells us what fraction among the H group to color blue and gray. 
 
@@ -83,9 +83,9 @@ This is how @fig-divided-by-condition3 was generated: specifying population size
 
 ## From the patient's point of view
 
-@fig-divided-by-condition3 is drawn from the perspective of the epidemiologist or test developer. But it doesn't directly provide information of use to the patient, simply because the patient has only a test result ($\Ptest$ or $\Ntest$) but no definitive knowledge of the actual condition (C or H). 
+@fig-divided-by-condition3 is drawn from the perspective of the epidemiologist or test developer. But it doesn't directly provide information of use to the patient, simply because the patient has only a test result ($\mathbb{P}$ or $\mathbb{H}$) but no definitive knowledge of the actual condition (C or H). 
 
-Re-organizing the epidemiologist's graph can put it in a form relevant to the patient. Instead of plotting people by C or H, we can plot them by $\Ptest$ or $\Htest$. This perspective is shown in @fig-divided-by-condition5, which is exactly the same people as in @fig-divided-by-condition2 but arranged differently.
+Re-organizing the epidemiologist's graph can put it in a form relevant to the patient. Instead of plotting people by C or H, we can plot them by $\mathbb{P}$ or $\mathbb{H}$. This perspective is shown in @fig-divided-by-condition5, which is exactly the same people as in @fig-divided-by-condition2 but arranged differently.
 
 
 ```{r echo=FALSE}
@@ -97,9 +97,9 @@ pNC <- plot_people_final(People %>% filter(test_result != "+"))
 gridExtra::grid.arrange(pC + labs(title="Ptest group"), pNC + labs(title="Ntest group") , ncol=2)
 ```
 
-For the patient who has gotten a $\Ptest$ result, the left panel of @fig-divided-by-condition5 is highly informative. The patient can see that only a small fraction of the people testing $\Ptest$ actually have condition C. (The people with C are shown as filled symbols.)
+For the patient who has gotten a $\mathbb{P}$ result, the left panel of @fig-divided-by-condition5 is highly informative. The patient can see that only a small fraction of the people testing $\mathbb{P}$ actually have condition C. (The people with C are shown as filled symbols.)
 
-The test result $\Ptest$ is not definitive, it is merely a clue.
+The test result $\mathbb{P}$ is not definitive, it is merely a clue.
 
 
 ## Likelihood
@@ -112,10 +112,10 @@ Statistical thinkers often have to make use of clues. Suppose the coma patient i
 
 Month | Probability of seeing snow when looking out the window for the first time each day | Notation
 ------|------------------ |------
-January | 2.3%  | $p(\text{snow}\given \text{January})$
-February | 3.5% | $p(\text{snow}\given \text{February})$
-March | 2.1% | $p(\text{snow}\given \text{March})$
-April | 1.2% | $p(\text{snow}\given \text{April})$
+January | 2.3%  | $p(\text{snow}{\ |\!\!|\  } \text{January})$
+February | 3.5% | $p(\text{snow}{\ |\!\!|\  } \text{February})$
+March | 2.1% | $p(\text{snow}{\ |\!\!|\  } \text{March})$
+April | 1.2% | $p(\text{snow}{\ |\!\!|\  } \text{April})$
 May   | 0.5% | ... and so on ...
 June  | 0.1%
 July  | 0
@@ -127,57 +127,57 @@ December | 1.4%
 
 The table lists 12 probabilities, one for each month. For the coma patient, these probabilities let her look up which months it is likely to be. For this reason, the probabilities are called "**likelihoods**."
 
-The coma patient has 12 hypotheses for which month it is. The table as a whole is a "**likelihood function**" describing how the likelihood varies from one hypothesis to another. Think of the entries in the table as having been radioed back to Earth from the 12 hypothetical planets $\given \text{January})$ through $\given \text{December})$.
+The coma patient has 12 hypotheses for which month it is. The table as a whole is a "**likelihood function**" describing how the likelihood varies from one hypothesis to another. Think of the entries in the table as having been radioed back to Earth from the 12 hypothetical planets ${\ |\!\!|\  } \text{January})$ through ${\ |\!\!|\  } \text{December})$.
 
 It is helpful, I think, to have a notation that reminds us when we are dealing with a likelihood and a likelihood function. We will use the fancy ${\cal L}$ to identify a quantity as a likelihood. The coma patient is interested in the likelihood of snow, which we will write ${\cal L}_\text{snow}$. From the table we can see that the likelihood of snow is a function of the month, that is ${\cal L}_\text{snow}(\text{month})$, where month can be any of January through December.
 
-This likelihood function has a valuable purpose: It will allow the coma patient to calculate the probability of it being any of the twelve months given her observation of snow, that is $p(\text{month} \given \text{snow})$. 
+This likelihood function has a valuable purpose: It will allow the coma patient to calculate the probability of it being any of the twelve months given her observation of snow, that is $p(\text{month} {\ |\!\!|\  } \text{snow})$. 
 
-In general, likelihoods are useful for converting knowledge like ${\cal L}_a(b)$ into the form $p(b \given a)$. The formula for doing the conversion is called "**Bayes' Rule**." 
+In general, likelihoods are useful for converting knowledge like ${\cal L}_a(b)$ into the form $p(b {\ |\!\!|\  } a)$. The formula for doing the conversion is called "**Bayes' Rule**." 
 
 The form of Bayes' rule appropriate to the coma patient allows her to calculate the probability of it being any given month from the likelihoods. We also need to account for February, with only 28 days, being shorter than the other months. So we will define a probability function, $p(\text{month}) = \frac{\text{number of days in month}}{365}$
 
 ::: {.column-page-right}
 **Bayes' Rule**
-$$p(\text{month} \given \text{snow}) = \frac{{\cal L}_\text{snow}(\text{month}) \cdot p(\text{month})}{{\cal L}_\text{snow}(\text{Jan}) \cdot p(\text{Jan}) + 
+$$p(\text{month} {\ |\!\!|\  } \text{snow}) = \frac{{\cal L}_\text{snow}(\text{month}) \cdot p(\text{month})}{{\cal L}_\text{snow}(\text{Jan}) \cdot p(\text{Jan}) + 
   {\cal L}_\text{snow}(\text{Feb}) \cdot p(\text{Feb}) + \cdots + 
   {\cal L}_\text{snow}(\text{Dec}) \cdot p(\text{Dec})}$$
 :::
 
 ## How serious is it, Doc? {#sec-bayes-rule}
 
-Imagine a patient getting a $\Ptest$ test result and wondering what the probability is of his having condition C. That is, he wants to know $p(C \given \Ptest)$. This is equivalent to asking, "How serious is it, Doc?" 
+Imagine a patient getting a $\mathbb{P}$ test result and wondering what the probability is of his having condition C. That is, he wants to know $p(C {\ |\!\!|\  } \mathbb{P})$. This is equivalent to asking, "How serious is it, Doc?" 
 
-The doctor could point to @fig-divided-by-condition4 as her answer. That figure was generated by creating a population with the relevant prevalence, using the sensitivity and specificity to determine the fraction of the C and H groups with $\Ptest$ or $\Htest$ respectively, the *re-organizing* into new groups: the $\Ptest$ group and the $\Ntest$ group.
+The doctor could point to @fig-divided-by-condition4 as her answer. That figure was generated by creating a population with the relevant prevalence, using the sensitivity and specificity to determine the fraction of the C and H groups with $\mathbb{P}$ or $\mathbb{H}$ respectively, the *re-organizing* into new groups: the $\mathbb{P}$ group and the $\mathbb{H}$ group.
 
-Alternatively, we can do the calculation in the same way we did for the coma patient seeing snow. There, the observation of snow was the clue. Now, the test result $\Ptest$ is the clue. One of the relevant likelihoods to interpret $\Ptest$ is ${\cal L}_\Ptest(C)$: the likelihood for a person who genuinely has condition C of getting a $\Ptest$ result. Of course, this is just another way of writing the sensitivity. 
+Alternatively, we can do the calculation in the same way we did for the coma patient seeing snow. There, the observation of snow was the clue. Now, the test result $\mathbb{P}$ is the clue. One of the relevant likelihoods to interpret $\mathbb{P}$ is ${\cal L}_{\mathbb{P}}(C)$: the likelihood for a person who genuinely has condition C of getting a $\mathbb{P}$ result. Of course, this is just another way of writing the sensitivity. 
 
-Similarly, the specificity is ${\cal L}_\Ntest(H)$. But since our person got a $\Ptest$ result, the likelihood ${\cal L}_\Ntest(H)$ is not directly relevant. (It would be relevant only to a person with a $\Ntest$ result.) Fortunately, there is a simple relationship between ${\cal L}_\Ptest(H)$ and ${\cal L}_\Ntest(H)$. If we know the probability of an H person getting a $\Ntest$ result we can figure out the probability of an H person getting a $\Ptest$ result.
-$${\cal L}_\Ptest(H) = 1 - {\cal L}_\Ntest(H)$$
+Similarly, the specificity is ${\cal L}_{\mathbb{H}}(H)$. But since our person got a $\mathbb{P}$ result, the likelihood ${\cal L}_{\mathbb{H}}(H)$ is not directly relevant. (It would be relevant only to a person with a $\mathbb{H}$ result.) Fortunately, there is a simple relationship between ${\cal L}_{\mathbb{P}}(H)$ and ${\cal L}_{\mathbb{H}}(H)$. If we know the probability of an H person getting a $\mathbb{H}$ result we can figure out the probability of an H person getting a $\mathbb{P}$ result.
+$${\cal L}_{\mathbb{P}}(H) = 1 - {\cal L}_{\mathbb{H}}(H)$$
 
-Bayes' Rule for the person with a $\Ptest$ result is
+Bayes' Rule for the person with a $\mathbb{P}$ result is
 
-$$p(C\given \Ptest) = \frac{{\cal L}_\Ptest(C) \cdot p(C)}{{\cal L}_\Ptest(C) \cdot p(C) + {\cal L}_\Ptest(H) \cdot p(H)}$$
+$$p(C{\ |\!\!|\  } \mathbb{P}) = \frac{{\cal L}_{\mathbb{P}}(C) \cdot p(C)}{{\cal L}_{\mathbb{P}}(C) \cdot p(C) + {\cal L}_{\mathbb{P}}(H) \cdot p(H)}$$
 
 ::: {.callout-note}
-## Calculating $p(C\given \Ptest)$
+## Calculating $p(C{\ |\!\!|\  } \mathbb{P})$
 
-Suppose that $p(C) = 1\%$ for this age of patient. (Consequently, $p(H) = 99\%$.) And imagine that the test taken by the patient has a threshold score of 1. From @fig-fraction-correct we can look up the sensitivity (${\cal L}_\Ptest(C) = 0.95$) and specificity (${\cal L}_\Ptest(H) = 0.50) for the test. Substituting these numerical values into Bayes' Rule gives
+Suppose that $p(C) = 1\%$ for this age of patient. (Consequently, $p(H) = 99\%$.) And imagine that the test taken by the patient has a threshold score of 1. From @fig-fraction-correct we can look up the sensitivity (${\cal L}_{\mathbb{P}}(C) = 0.95$) and specificity (${\cal L}_{\mathbb{P}}(H) = 0.50)$ for the test. Substituting these numerical values into Bayes' Rule gives
 
-$$p(C \given \Ptest) = \frac{0.95\times 0.01}{0.95\times 0.01 + 0.50*0.99} = 1.9\%$$
-The $\Ptest$ result has changed the probability that the patient has C from 1% to 1.9%. That's big proportionally, but not so big in absolute terms.
+$$p(C {\ |\!\!|\  } \mathbb{P}) = \frac{0.95\times 0.01}{0.95\times 0.01 + 0.50*0.99} = 1.9\%$$
+The $\mathbb{P}$ result has changed the probability that the patient has C from 1% to 1.9%. That's big proportionally, but not so big in absolute terms.
 :::
 
-The advantage of the Bayes' Rule form of the calculation over the $\Ptest$ group in @fig-divided-by-condition4 is that it is very easy to do the Bayes' Rule calculation for any value of prevalence $p(C)$. Why would we be interested in doing this?
+The advantage of the Bayes' Rule form of the calculation over the $\mathbb{P}$ group in @fig-divided-by-condition4 is that it is very easy to do the Bayes' Rule calculation for any value of prevalence $p(C)$. Why would we be interested in doing this?
 
-Typically the prevalence of a condition is different for different groups in the population. For example, for an 80-year-old with a family history of C the prevalence might be 20% rather than the 1% that applied to the patient in the previous example. For the 80-year-old, the probability of having C given a $\Ptest$ result is substantially different from the 1.9% found in the example: 
+Typically the prevalence of a condition is different for different groups in the population. For example, for an 80-year-old with a family history of C the prevalence might be 20% rather than the 1% that applied to the patient in the previous example. For the 80-year-old, the probability of having C given a $\mathbb{P}$ result is substantially different from the 1.9% found in the example: 
 
-$$p(C \given \Ptest) = \frac{0.95\times 0.2}{0.95\times 0.2 + 0.50*0.8} = 32\%$$
+$$p(C {\ |\!\!|\  } \mathbb{P}) = \frac{0.95\times 0.2}{0.95\times 0.2 + 0.50*0.8} = 32\%$$
 
 
 ## Screening tests
 
-The reliability of a $\Ptest$ result differs depending on the prevalence of C. A consequence of this is that medical screening tests are recommended for one group of people but not for another.
+The reliability of a $\mathbb{P}$ result differs depending on the prevalence of C. A consequence of this is that medical screening tests are recommended for one group of people but not for another.
 
 For instance, the US Preventative Services Task Force (USPSTF) issues recommendations about a variety of medical screening tests. According to the Centers for Disease Control (CDC) summary:  
 
@@ -204,7 +204,7 @@ NEED TO FIX THIS. The prevalence wasn't included in the calculation.
 
 In order to set the threshold at an optimal level, it is important to measure the impact of the positive or negative test result. This impact of course will depend on whether the test is right or wrong about the person's true condition. It is conventional to measure the impact as a "**loss**," that is, the amount of harm that is done.
 
-If the test result is right, there's no loss. Of course, it's not nice that a person is C, but a $\Ptest$ test result will steer our actions to treat the condition appropriately: no loss in that.
+If the test result is right, there's no loss. Of course, it's not nice that a person is C, but a $\mathbb{P}$ test result will steer our actions to treat the condition appropriately: no loss in that.
 
 Typically, the loss stemming from a false negative is reckoned as more than the loss of a false positive. A false negative will lead to failure to treat the person for a condition that he or she actually has.
 
@@ -215,7 +215,7 @@ The aim in setting the threshold is to minimize the total loss. This will be the
 ::: {.callout-warning}
 ## Demonstration: Setting the optimal threshold
 
-In Lesson 34, we saw that the threshold for transforming a raw test score into a $\Ptest$ or $\Ntest$ result determined the sensitivity and specificity of the test. (See @fig-fraction-correct.) Of course, its best if both sensitivity and specificity are as high as possible, but there is a trade-off between the two: increasing sensitivity by lowering the threshold will decrease specificity. Likewise, raising the threshold will improve specificity but lower sensitivity. 
+In [Lesson -@sec-lesson-34], we saw that the threshold for transforming a raw test score into a $\mathbb{P}$ or $\mathbb{H}$ result determined the sensitivity and specificity of the test. (See @fig-fraction-correct.) Of course, its best if both sensitivity and specificity are as high as possible, but there is a trade-off between the two: increasing sensitivity by lowering the threshold will decrease specificity. Likewise, raising the threshold will improve specificity but lower sensitivity. 
 
 The "**loss function**" provides a way to set an optimal value for the threshold. It is a function, because the loss depends on whether the test result is a false-positive or a false-negative.
 

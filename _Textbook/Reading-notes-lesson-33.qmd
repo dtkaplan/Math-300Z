@@ -1,16 +1,7 @@
----
-title: "Measuring and accumulating risk"
-output:
-  html_document:
-    theme: lumen
-    toc: yes
-    toc_float: yes
-    css: NTI.css
-  pdf_document:
-    toc: yes
----
+# Measuring and accumulating risk {#sec-lesson-33}
 
-```{r setup, include=FALSE}
+
+```{r setup33, include=FALSE}
 lesson <- 33
 source("../_startup.R")
 ```

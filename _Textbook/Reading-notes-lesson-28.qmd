@@ -1,5 +1,6 @@
+# Covariates {#sec-lesson-28}
+
 ---
-title: "Covariates"
 output:
   html_document:
     theme: lumen
@@ -95,7 +96,7 @@ The report involves several variables.  Of primary interest is the relationship 
 
 The total relationship involves a death rate of 20.8 percent of patients who got aprotinin versus 12.7 percent for the patients taking the generic drugs: an increase in the death rate by a factor of 1.64. However, when the researchers looked at a partial relationship (holding constant patient sickness before the operation), the effect size of aprotinin on mortality was less: a factor of 1.48. In other words, the model `death ~ aprotinin` shows a 64% increase in the death rate, but the model `death ~ aprotinin + sickness` shows a slightly smaller increase in death rate: 48%. The difference between the two estimates reflects doctors being more likely to give aprotinin to sicker patients. 
 
-The story's last paragraph states that the choice of patients receiving aprotinin versus the generic drugs was not made at random. Some readers may find this reassuring. Why in the world would anyone prescribe a drug at random? The point, however, is to select randomly who gets which drug *among the patients for whom the drugs would be appropriate*. The phrase "randomized trial" used in the paragraph means specifically an *experiment* in which one treatment or the other---aprotinin versus the generic drugs---is assigned at random. The virtues of experiment and the vital role of random assignment are detailed in Lesson 32.
+The story's last paragraph states that the choice of patients receiving aprotinin versus the generic drugs was not made at random. Some readers may find this reassuring. Why in the world would anyone prescribe a drug at random? The point, however, is to select randomly who gets which drug *among the patients for whom the drugs would be appropriate*. The phrase "randomized trial" used in the paragraph means specifically an *experiment* in which one treatment or the other---aprotinin versus the generic drugs---is assigned at random. The virtues of experiment and the vital role of random assignment are detailed in [Lesson -@sec-lesson-32].
 :::
 
 ## Letting things change as they will

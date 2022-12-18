@@ -1,16 +1,6 @@
----
-title: "Hypothesis testing"
-output:
-  html_document:
-    theme: lumen
-    toc: yes
-    toc_float: yes
-    css: NTI.css
-  pdf_document:
-    toc: yes
----
+# Hypothesis testing {#sec-lesson-36}
 
-```{r setup, include=FALSE}
+```{r setup36, include=FALSE}
 lesson <- 36
 source("../_startup.R")
 ```
@@ -21,7 +11,7 @@ $$\newcommand{\Ptest}{\mathbb{P}}
 \newcommand{\given}{\ |\!\!|\  }$$
 :::
 
-In Lesson 35, we looked at the accounting process that is used for building a classifier and interpreting the results. That accounting process is also applicable, in whole or part, to a more general procedure in statistics called, variously, "**hypothesis testing**" or "**Null hypothesis testing**" (NHT), or "**Null hypothesis significance testing**" (NHST). Textbooks tend to use the shorter name: "hypothesis testing." But these Lessons will use NHT as the name, because that is a more complete description of the actual process. 
+In [Lesson -@sec-lesson-35], we looked at the accounting process that is used for building a classifier and interpreting the results. That accounting process is also applicable, in whole or part, to a more general procedure in statistics called, variously, "**hypothesis testing**" or "**Null hypothesis testing**" (NHT), or "**Null hypothesis significance testing**" (NHST). Textbooks tend to use the shorter name: "hypothesis testing." But these Lessons will use NHT as the name, because that is a more complete description of the actual process. 
 
 The word "test" is familiar to all who have ever been students, but it will still be useful to have a definition. This one seems reasonable:
 
@@ -35,21 +25,21 @@ In this Lesson, we will introduce the logic of Null hypothesis testing (NHT) and
 
 ## Tests, generally
 
-In Lessons 34 and 35, the classifiers we built had two possible outputs, $\Ptest$ or $\Ntest$. The classifier is only part of a bigger procedure which we called a "test." To avoid unnecessary abstraction, our examples featured medical tests.[Medical tests often have three or more outcomes such as "high," "normal," or "low." This does not fundamentally change the situation from our $\Ptest$ or $\Ntest$ paradigm.]{.aside}
+In Lessons 34 and 35, the classifiers we built had two possible outputs, ${\mathbb{P}}$ or ${\mathbb{N}}$. The classifier is only part of a bigger procedure which we called a "test." To avoid unnecessary abstraction, our examples featured medical tests.[Medical tests often have three or more outcomes such as "high," "normal," or "low." This does not fundamentally change the situation from our ${\mathbb{P}}$ or ${\mathbb{N}}$ paradigm.]{.aside}
 
 In a medical test, the first step in the procedure usually involves a measurement procedure for an individual, for instance, counting white blood cells or measuring the concentration of prostate-specific antigen (PSA). 
 
-The second step is purely arithmetical, comparing the measurement result to a threshold, thereby determining if the output should be $\Ptest$ or $\Ntest$. Lessons 34 and 35 were largely about how to set a good value for the threshold and involved stating a *loss function* and considering the prevalence of the condition involved. 
+The second step is purely arithmetical, comparing the measurement result to a threshold, thereby determining if the output should be ${\mathbb{P}}$ or ${\mathbb{N}}$. Lessons 34 and 35 were largely about how to set a good value for the threshold and involved stating a *loss function* and considering the prevalence of the condition involved. 
 
 A more familiar kind of test is the one taken by students in school, for instance, an algebra test. As the reader knows, in an algebra test, the subject is made to answer questions, the number of correct answers counted, and that count applied to a threshold to determine whether the overall result is "pass" or "fail." There is not an explicit underlying condition, say, "expert" or "dilettante." Consequently, there is no such thing as a false-negative (an expert who fails the test) or a false-positive (a dilettante who passes the test). All that matters is the test result itself
 
-Unlike medical tests, academic tests are generally not the product of the sort of careful development phase described in Lesson 35. In an algebra test, there is no training data, that is, no sample of subjects who have been observed definitively to be "experts" or "dilettantes" and who take the test to be classified as "pass" or "fail." There is no calculation of a sensitivity or specificity to characterize the test and no use of a loss function to bend sensitivity, specificity, and prevalence into a threshold dividing "pass" from "fail." Academicians never tell their students what the false positive and false negative rates are. 
+Unlike medical tests, academic tests are generally not the product of the sort of careful development phase described in [Lesson -@sec-lesson-35]. In an algebra test, there is no training data, that is, no sample of subjects who have been observed definitively to be "experts" or "dilettantes" and who take the test to be classified as "pass" or "fail." There is no calculation of a sensitivity or specificity to characterize the test and no use of a loss function to bend sensitivity, specificity, and prevalence into a threshold dividing "pass" from "fail." Academicians never tell their students what the false positive and false negative rates are. 
 
 Students and teachers think of an academic test as that part of the overall procedure where questions are asked and answered. Of course, there is a follow-up procedure that we call "grading," where the correct answers are counted and the count converted to a pass/fail result. Sometimes the threshold between pass and fail is not fixed, but is set by the instructor to achieve a desired pass rate. This is called "grading on a curve," the threshold depends on the observed counts.
 
 NHT is like "grading on a curve." The data collection and summary of the data is **not part of the procedure**. Like "grading on a curve", NHT starts at the point where the data have already been recorded and summarized. (Typically, the summary is the coefficient from a regression model or some other statistical measure like R^2^.) 
 
-NHT is only about grading the summary, which is done on a curve. The grading is accomplished by examining a likelihood calculated from the summary. As notation for this likelihood, we will write ${\cal L}_\mathbb{S}(\text{Null hypothesis})$. 
+NHT is only about grading the summary, which is done on a curve. The grading is accomplished by examining a likelihood calculated from the summary. As notation for this likelihood, we will write ${\cal L}_{\mathbb{S}}(\text{Null hypothesis})$. 
 
 The phrase "Null hypothesis" is too long to make for pleasant mathematical reading. Consequently, a shorter symbol, H_0_, is often used. The subscript _0_ is a shorthand for "null." The "H" indicates a hypothesis. 
 
@@ -63,7 +53,7 @@ In a technical sense, it would suffice to say that the Null hypothesis is a clai
 
 One strategy is to describe the Null as the "absence of any effect" or "relationship." Another common strategy is to avoid mentioning the Null at all and use alternates such as "the result is significant" or "not due to chance."
 
-Another way to think about the Null hypothesis is algorithmically. A Null-hypothesis relationship---really, a lack of relationship---can be created between two variables by **shuffling** one of them. Shuffling was introduced briefly in Lesson 29, where it was used to simulate an explanatory variable unrelated to the response.
+Another way to think about the Null hypothesis is algorithmically. A Null-hypothesis relationship---really, a lack of relationship---can be created between two variables by **shuffling** one of them. Shuffling was introduced briefly in [Lesson -@sec-lesson-29], where it was used to simulate an explanatory variable unrelated to the response.
 
 To illustrate, consider the `Galton` data about the heights of adult children and their parents. We will make a simple model of `height` as a function of `sex`---everyday experience suggests a relationship between the two variables. 
 
@@ -90,40 +80,40 @@ All these confidence intervals include zero, as expected.
 
 ```{r echo=FALSE}
 #| label: fig-planet-null
-#| fig-cap: "Planet Null, known symbolically as $\\given H_0)$. Any pattern on Planet Null is attributed to chance, in the form of sampling variation."
+#| fig-cap: "Planet Null, known symbolically as $\\ |\\!\\!|   H_0)$. Any pattern on Planet Null is attributed to chance, in the form of sampling variation."
 #| column: margin
 knitr::include_graphics("www/planet-null.png")
 ```
 
 
-In terms of the planet metaphor for hypotheses, the Null hypothesis $\given H_0)$ is a planet. Variables on this planet are always unrelated to one another. The possible indication of a pattern is due to sampling variation, not a genuine relationship.
+In terms of the planet metaphor for hypotheses, the Null hypothesis ${\ |\!\!|\  } H_0)$ is a planet. Variables on this planet are always unrelated to one another. The possible indication of a pattern is due to sampling variation, not a genuine relationship.
 
 > **Riddle**: How do we get to Planet Null?
     
     Take the space shuffle.
 
-Before the advent of ubiquitous computing, the Null hypothesis was implemented using algebra and probability theory. An example of such theory appeared in Lesson 29. The blue diagonal line in @fig-amazon-book-shuffle reflects what the average value of R^2^ would be if a large number of trials were run on the model `y ~ x1 + x2 + ... + xk` where the `x`'s are unrelated to the `y`. Another part of the theory has to do with the "distribution" of the F statistic from Lesson 29, which we will discuss in Lesson 37. 
+Before the advent of ubiquitous computing, the Null hypothesis was implemented using algebra and probability theory. An example of such theory appeared in [Lesson -@sec-lesson-29]. The blue diagonal line in @fig-amazon-book-shuffle reflects what the average value of R^2^ would be if a large number of trials were run on the model `y ~ x1 + x2 + ... + xk` where the `x`'s are unrelated to the `y`. Another part of the theory has to do with the "distribution" of the F statistic from Lesson 29, which we will discuss in Lesson 37. 
 
 
 
 
 ## The Alternative hypothesis
 
-In Null hypothesis testing, there is only the one hypothesis---the Null---under consideration. Since the world $\given H_0)$ can be created by shuffling, the computations for NHT can be done pretty easily even without the probability theory just mentioned.
+In Null hypothesis testing, there is only the one hypothesis---the Null---under consideration. Since the world ${\ |\!\!|\  } H_0)$ can be created by shuffling, the computations for NHT can be done pretty easily even without the probability theory just mentioned.
 
 There has been a controversy since the 1930s about whether hypothesis testing---in the broad sense---should involve two (or more) competing hypotheses. One of these could be the Null hypothesis, the other, which we call the "Alternative hypothesis" ($H_a$) a statement of a specific non-null relationship. 
 
 
 ```{r echo=FALSE}
 #| label: fig-planet-alt
-#| fig-cap: "Planet Alt, that is, $\\given H_a)$ might look like this. We draw it as a cartoon planet, since any particular hypothesis is a product of the imagination."
+#| fig-cap: "Planet Alt, that is, $\\ |\\!\\!|\\   H_a)$ might look like this. We draw it as a cartoon planet, since any particular hypothesis is a product of the imagination."
 #| column: margin
 knitr::include_graphics("www/planet-alt.png")
 ```
 
 The situation with two hypotheses would be very similar to that presented in Lessons 34 and 35. In those lessons, the two hypotheses were C and H. In developing a classifier, one starts by collecting a training sample which is a mixture of cases of C and H. But, in general, with a competition of hypothesis---$H_0$ and $H_a$---we don't have any real-world objects to sample that are known to be examples of the two hypotheses. Instead, we have to create them computationally. Instances of $H_0$ can be made by data shuffling. But instances of $H_a$ need to be generated by some other mechanism, perhaps one akin to the DAGs we have used in these lessons. 
 
-With mechanisms to generate data from both the Null and Alternative hypotheses, we would take the statistical summary $\mathbb{S}$ of the actual data, and compute the likelihoods for each hypothesis: ${\cal L}_\mathbb{S}(H_0)$ and ${\cal L}_\mathbb{S}(H_a)$. It should not be too controversial in a practical process to set the prior probability for each hypothesis at the same value: $p(H_0) = p(H_a) = {\small \frac{1}{2}}$. Then, turn the crank of Bayes' Rule (@sec-bayes-rule) to compute the posterior probabilities. If the posterior of one or the other hypothesis is **much greater** than ${\small \frac{1}{2}}$, we would have compelling evidence in favor of that hypothesis.^[In the same spirit, we might simply look at the likelihood ratio, ${\cal L}_\mathbb{S}(H_a) \div {\cal L}_\mathbb{S}(H_0)$ and draw a confident conclusion only when the ratio turns out to be much greater than 1, say, 5 or 10.]
+With mechanisms to generate data from both the Null and Alternative hypotheses, we would take the statistical summary $\mathbb{S}$ of the actual data, and compute the likelihoods for each hypothesis: ${\cal L}_{\mathbb{S}}(H_0)$ and ${\cal L}_{\mathbb{S}}(H_a)$. It should not be too controversial in a practical process to set the prior probability for each hypothesis at the same value: $p(H_0) = p(H_a) = {\small \frac{1}{2}}$. Then, turn the crank of Bayes' Rule (@sec-bayes-rule) to compute the posterior probabilities. If the posterior of one or the other hypothesis is **much greater** than ${\small \frac{1}{2}}$, we would have compelling evidence in favor of that hypothesis.^[In the same spirit, we might simply look at the likelihood ratio, ${\cal L}_{\mathbb{S}}(H_a) \div {\cal L}_{\mathbb{S}}(H_0)$ and draw a confident conclusion only when the ratio turns out to be much greater than 1, say, 5 or 10.]
 
 There are specialized methods of Bayesian statistics and whole courses on the topic. An excellent online course is [*Statistical Rethinking*](https://www.youtube.com/channel/UCNJK6_DZvcMqNSzQdEkzvzA).
 
@@ -141,7 +131,7 @@ Outside of textbooks, only $H_a \neq H_0$ is properly used. The other two textbo
 
 ## "Under the Null" {#sec-under-the-null}
 
-Using the shuffling algorithm, the computation underlying NHT is very much like the technique introduced in Lesson 23: create a set of trials to represent the sampling distribution. The twist in NHT is that the sampling distribution is calculated on Planet Null. Or, in conventional statistical language, what's computed is the "sampling distribution under the Null."  
+Using the shuffling algorithm, the computation underlying NHT is very much like the technique introduced in [Lesson -@sec-lesson-23]: create a set of trials to represent the sampling distribution. The twist in NHT is that the sampling distribution is calculated on Planet Null. Or, in conventional statistical language, what's computed is the "sampling distribution under the Null."  
 
 The phrase "under the Null" is often described as being shorthand for "assuming the Null to be true." When doing a calculation, "assuming the Null to be true" might be better expressed more emphatically: "arranging things so that the Null is true" or "enforcing the Null."
 

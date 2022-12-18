@@ -1,5 +1,6 @@
+# Sampling and sampling variation {#sec-lesson-22}
+
 ---
-title: "Sampling and sampling variation"
 output:
   html_document:
     theme: lumen
@@ -11,7 +12,7 @@ output:
 status: "Proofread Nov 29, 2022"
 ---
 
-```{r setup, include=FALSE}
+```{r setup22, include=FALSE}
 lesson <- 22
 source("../_startup.R")
 ```
@@ -44,7 +45,7 @@ An inspiring story about dealing with survival bias comes from a World War II st
 ```{r echo=FALSE}
 #| label: fig-airplane-holes
 #| fig-cap: "An illustration of shell-hole locations in planes that returned to base. [Source: Wikipedia](https://en.wikipedia.org/wiki/Survivorship_bias)" 
-#| column: margin
+#| fig-cap-location: margin
 knitr::include_graphics("www/bomber-holes.png")
 ```
 ::::
@@ -53,13 +54,12 @@ knitr::include_graphics("www/bomber-holes.png")
 
 Sampling variation is a form of noise. Unlike some other forms of noise, modeling cannot filter out sampling variation or reduce its magnitude. Sampling variation is easiest to see by collecting multiple samples from the same source and summarizing each one. The summaries likely will vary from sample to sample: sampling variation.
 
-Typically, the data frame at hand is our only sample. With no other samples to compare it to, it may seem impossible to measure sampling variation. In this Lesson, we will use simulations from DAGs to study sampling variation. DAG simulations are suited to this because we can effortlessly collect as many samples as we wish from a DAG. In Lesson 23, we will use the knowledge gained from the simulations to see how to measure sampling variation even when there is only one sample.
+Typically, the data frame at hand is our only sample. With no other samples to compare it to, it may seem impossible to measure sampling variation. In this Lesson, we will use simulations from DAGs to study sampling variation. DAG simulations are suited to this because we can effortlessly collect as many samples as we wish from a DAG. In [Lesson -@sec-lesson-23], we will use the knowledge gained from the simulations to see how to measure sampling variation even when there is only one sample.
 
 In the spirit of starting simply, we return to `dag01`. This DAG is $\mathtt{x}\longrightarrow\mathtt{y}$. The causal formula setting the value of `y` is `y ~ 4 + 1.5 * x + exo()`.
 
 It is crucial to remember that sampling variation is not about the row-to-row variation in a single sample. Rather, it is about the variation in the summary from one sample to another. So our initial process for exploring sampling variation will be to carry out many trials, each trial being a summary of a sample. 
 
-::: {.callout-warning}
 ## Demonstration: Samples and specimens 
 
 To illustrate, here is one trial using a sample of $n=25$ and a simple model, `y ~ 1`.
@@ -82,14 +82,17 @@ Trials <- do(100) * {
 }
 ```
 
+
+
+
 ```{r echo=FALSE}
 #| label: tbl-sampling-trials
 #| tbl-cap: "`Trials` for seeing sampling variation."
-#| column: margin
-Trials %>% head(25) %>% knitr::kable()
+### #| column: margin
+Trials %>% head(25) 
 ```
 
-`Trials` is a *sample of summaries*. (See Lesson 20). The row-to-row variation in`Trials` comes from sampling variation. We can *summarize* the variation in the *sample of summaries*. As always, our standard measure of variation is the standard deviation (or, equivalently, variance):
+`Trials` is a *sample of summaries*. (See [Lesson -@sec-lesson-20]). The row-to-row variation in`Trials` comes from sampling variation. We can *summarize* the variation in the *sample of summaries*. As always, our standard measure of variation is the standard deviation (or, equivalently, variance):
 
 ```{r}
 Trials %>%
@@ -130,12 +133,15 @@ SE <- tibble::tribble(
 )
 ```
 
+
 ```{r echo=FALSE}
 #| label: tbl-se-sizes
 #| tbl-cap: "Results of repeating the sampling variability trials for samples of varying sizes."
-#| column: margin
-SE  %>% knitr::kable()
+### #| column: margin
+SE 
 ```
+
+
 
 There is a pattern in @tbl-se-sizes. Every time we double $n$, the standard error goes down by a factor of 2, that is, $\sqrt{4}$. (The pattern is not exact because there is also sampling variation in the trials.)
 
