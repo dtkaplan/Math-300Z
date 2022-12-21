@@ -6,6 +6,24 @@ title: "A little more detail"
 source("../_startup.R")
 ```
 
+
+## Lesson 19
+
+Regression can summarize relationships in more detailed ways as well. The following model looks at the trend with age separately for males and females:
+
+`r options(digits=3)`
+
+```{r}
+TenMileRace %>% lm(net ~ sex * age, data = .) %>% coef() 
+```
+
+Here, the age trend for women is an increase in `net` running time of 16 seconds per year of age, while for men, that increase is bigger, an extra 1.6 seconds per year of age.
+
+There are good reasons why `lm()` organizes summaries the way it does. The `lm()` paradigm can make much more efficient use of data than `group_by()`. It also offers much more flexibility. `lm()` can handle multiple "grouping" variables together and even lets you "group" by quantitative variables.
+
+## More stuff
+
+
 Put the odds and ends here, then sort them out.
 
 ## Standard errors, margins of error, and confidence intervals

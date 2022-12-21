@@ -22,19 +22,24 @@ coefficients <- function(mod) {
   Tmp
 }
 
-tbl_style1 <- function(tbl, ...) {
+tbl_style_html <- function(tbl, ...) {
   columns <- 1:ncol(tbl)
-  kable(tbl, width_min = "3cm") %>%
+  kable(tbl) %>%
   kable_styling(bootstrap_options = c("striped", "condensed"),
                 full_width = FALSE,
               html_font = "Courier", position="left",
               ...) #|> column_spec(columns, width="3cm")
 }
 
+tbl_style_tex <- function(tbl, ...) {
+  paste("\\ttfamily", kable(tbl, booktabs=TRUE, format="latex"), "\\normalfont\n\\bigskip")
+}
+
 library(knitr)
 
 knit_print.data.frame <- function (x, options, ...) {
 
+  tbl_style <- ifelse(knitr::is_html_output(), tbl_style_html, tbl_style_tex)
 
   if ("displayrows" %in% names(options)) {
   # rmarkdown::paged_table(x, options) |>
@@ -48,10 +53,10 @@ knit_print.data.frame <- function (x, options, ...) {
     }
     x |>
       mutate_if(is.numeric, fix_signif) |>
-      tbl_style1() |>
+      tbl_style() |>
       asis_output()
   } else {
-    tbl_style1(x) |> asis_output()
+    tbl_style(x) |> asis_output()
   }
 }
 

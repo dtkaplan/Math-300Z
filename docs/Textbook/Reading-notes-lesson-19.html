@@ -297,7 +297,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -386,10 +386,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#regression-as-a-data-summary" id="toc-regression-as-a-data-summary" class="nav-link active" data-scroll-target="#regression-as-a-data-summary">Regression as a data summary</a></li>
-  <li><a href="#presentation-using-intervals" id="toc-presentation-using-intervals" class="nav-link" data-scroll-target="#presentation-using-intervals">Presentation using intervals</a></li>
-  <li><a href="#point-plot-as-a-graphical-foundation" id="toc-point-plot-as-a-graphical-foundation" class="nav-link" data-scroll-target="#point-plot-as-a-graphical-foundation">Point plot as a graphical foundation</a></li>
-  <li><a href="#displaying-density" id="toc-displaying-density" class="nav-link" data-scroll-target="#displaying-density">Displaying density</a></li>
+  <li><a href="#statistical-thinking" id="toc-statistical-thinking" class="nav-link active" data-scroll-target="#statistical-thinking">Statistical thinking</a></li>
+  <li><a href="#preliminaries" id="toc-preliminaries" class="nav-link" data-scroll-target="#preliminaries">Preliminaries</a></li>
   <li><a href="#categorical-response-variables" id="toc-categorical-response-variables" class="nav-link" data-scroll-target="#categorical-response-variables">Categorical response variables</a></li>
   </ul>
 </nav>
@@ -399,7 +397,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Preliminaries</span></h1>
+<h1 class="title"><span id="sec-lesson-19" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Preliminaries</span></span></h1>
 </div>
 
 
@@ -414,482 +412,152 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>This Lesson covers some preliminaries: techniques we use throughout the remaining lessons.</p>
-<ol type="1">
-<li>Using regression to summarize relationships.</li>
-<li>The presentation of descriptions using <strong>intervals</strong> rather than a number like the mean or proportion.</li>
-<li>Promotion of the point plot (sometimes jittered) as the standard form for displaying data. Statistical summaries appear as annotations on top of the data layer.</li>
-<li>A modern format called a “<strong>violin plot</strong>” for displaying the <em>distribution</em> of a quantitative variable. Unlike a histogram, the violin plot can be layered as an annotation on top of a point plot.</li>
-<li>Extending regression modeling to handle <em>categorical</em> response variables.</li>
-</ol>
-<section id="regression-as-a-data-summary" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="regression-as-a-data-summary">Regression as a data summary</h2>
-<p>The first half of this course emphasized data wrangling and visualization. The well-named <code>summarize()</code> function is the natural wrangling choice to compute summaries such as means, medians, or standard deviations. For instance, this command calculates four summary statistics on the <code>net</code> running time recorded in the <code>TenMileRace</code> data frame:</p>
-<div class="column-page-right">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">ave =</span> <span class="fu">mean</span>(net), <span class="at">middle =</span> <span class="fu">median</span>(net), <span class="at">sd =</span> <span class="fu">sd</span>(net), <span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
- <thead>
-  <tr>
-   <th style="text-align:right;"> ave </th>
-   <th style="text-align:right;"> middle </th>
-   <th style="text-align:right;"> sd </th>
-   <th style="text-align:right;"> n </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 5599.065 </td>
-   <td style="text-align:right;"> 5555 </td>
-   <td style="text-align:right;"> 969.6564 </td>
-   <td style="text-align:right;"> 8636 </td>
-  </tr>
-</tbody>
-</table>
+<section id="statistical-thinking" class="level2">
+<h2 class="anchored" data-anchor-id="statistical-thinking">Statistical thinking</h2>
+<p>These lessons are about “<strong>statistical thinking</strong>,” a phrase which includes habits of mind, routine questions to ask, and understanding of which statistical measures are informative—and which not—in different contexts. The goal of statistical thinking is to understand “how and when we can draw valid inferences from data.” [<a href="https://nobaproject.com/modules/statistical-thinking">Source</a>] The word “valid” means several things at once: faithful to the data, consistent with the process used to assemble the data, and informative for the uses to which the inferences are to be directed.</p>
+<p>Every person has a natural ability to think. We train our thinking skills by observing and emulating the logic and language of people and sources deemed authoritative. We have resources spanning several millennia to hone our ability to think. However, statistical thinking is a comparatively recent arrival on the intellectual scene, germinating and developing over only the last 150 years. As a result, hardly anything that we hear or read exemplifies statistical thinking.</p>
+<p>In general, effective thinking requires us to grasp various intellectual tools, for example, logic. Our mode of logical thinking was promulgated by Aristotle (384–322 BC) and, to quote the <a href="https://plato.stanford.edu/entries/aristotle-logic/">Stanford Encyclopedia of Philosophy</a>, “has had an unparalleled influence on the history of Western thought.” In the 2500 years since Aristotle’s time, the use of Aristotelian logic has been so pervasive that we expect any well-educated person to be able to identify logical thinking. For example, the statement “John’s car is red” has implications. Which of these two statements are among those implications? “That red car is necessarily John’s,” or “The blue car is not John’s car.” Not so hard!</p>
+<p>The intellectual tools needed for statistical thinking are, by and large, unfamiliar and non-intuitive. These Lessons are intended to provide the tools you will need to engage in effective statistical thinking.</p>
+<p>To get started, consider <a href="https://www.economist.com/international/2022/12/15/the-pandemics-indirect-effects-on-small-children-could-last-a-lifetime">this headline</a> from <em>The Economist</em>, a well-reputed international news magazine: “The pandemic’s indirect effects on small children could last a lifetime.” As support for this claim, the headlined article provides more detail. For instance:</p>
+<blockquote class="blockquote">
+<p>“Stress and distraction made some patients more distant. LENA, a charity in Colorado, has for years used wearable microphones to keep track of how much chatter babies and the care-givers exchange. During the pandemic the number of such "conversations" declined. ….”[g]etting lots of interaction in the early years of life is essential for healthy development, so these kinds of data "are a red flag".” The article goes on to talk of “<em>children starved of stimulation at home ….</em>.”</p>
+</blockquote>
+<p>This short excerpt might raise some questions. Think about it briefly and note what questions come to mind.</p>
+<p>For those already along the road toward statistical thinking, the phrase, “the number of such conversations declined” might prompt this question: “By how much?” Similarly, reading the claim that “getting lots of interactions … is essential for healthy development,” your mind might insist on these questions: How much is “lots?” How does the decline in the number compare to “lots?”</p>
+<p>Not finding the answer to these questions in the article’s text, it would be sensible to look for the primary source of the information. In our Internet age, that’s comparatively easy to do. The LENA website includes <a href="https://www.lena.org/covid-infant-vocalizations-conversational-turns/">an article</a>, “COVID-era infants vocalize less and experience fewer conversational turns, says LENA research team.” The article contains two graphs. (<span class="quarto-unresolved-ref">?fig-lena-two-graphs</span>)</p>
+<div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"www/Lena-fig1.png"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"www/Lena-fig2.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell caption-margin quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.1%;justify-content: center;">
+<div id="fig-lena-two-graphs-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="www/Lena-fig1.png" class="img-fluid figure-img" width="436"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;19.1: Graphics from the LENA website. The left is captioned, “Children from the COVID-era sample produced significantly fewer vocalizations than their pre-COVID peers.” The right, “The differences in vocalizations and turns were greatest among children from families in the lowest SES [socio-economic status] quartile.”</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 49.9%;justify-content: center;">
+<div id="fig-lena-two-graphs-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="www/Lena-fig2.png" class="img-fluid figure-img" width="434"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;19.2: Graphics from the LENA website. The left is captioned, “Children from the COVID-era sample produced significantly fewer vocalizations than their pre-COVID peers.” The right, “The differences in vocalizations and turns were greatest among children from families in the lowest SES [socio-economic status] quartile.”</figcaption><p></p>
+</figure>
 </div>
 </div>
 </div>
-<p><code>summarize()</code> works hand-in-hand with <code>group_by()</code> to calculate groupwise summaries. The following wrangling statement, for instance, looks at the average <code>net</code> running time broken up according to the runner’s state of residence and presents the results from the fastest state downwards:</p>
-<div class="column-page-right">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(state) <span class="sc">%&gt;%</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">ave =</span> <span class="fu">mean</span>(net), <span class="at">middle =</span> <span class="fu">median</span>(net), <span class="at">sd =</span> <span class="fu">sd</span>(net), <span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(ave) <span class="sc">%&gt;%</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
- <thead>
-  <tr>
-   <th style="text-align:left;"> state </th>
-   <th style="text-align:right;"> ave </th>
-   <th style="text-align:right;"> middle </th>
-   <th style="text-align:right;"> sd </th>
-   <th style="text-align:right;"> n </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> Australia </td>
-   <td style="text-align:right;"> 2872.000 </td>
-   <td style="text-align:right;"> 2872.0 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> 1 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Kenya </td>
-   <td style="text-align:right;"> 2933.786 </td>
-   <td style="text-align:right;"> 2874.5 </td>
-   <td style="text-align:right;"> 141.1612 </td>
-   <td style="text-align:right;"> 14 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Lithuania </td>
-   <td style="text-align:right;"> 2961.000 </td>
-   <td style="text-align:right;"> 2961.0 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> 1 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Japan </td>
-   <td style="text-align:right;"> 2992.000 </td>
-   <td style="text-align:right;"> 2992.0 </td>
-   <td style="text-align:right;"> 131.5219 </td>
-   <td style="text-align:right;"> 2 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Colombia </td>
-   <td style="text-align:right;"> 2998.000 </td>
-   <td style="text-align:right;"> 2998.0 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> 1 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Ethiopia </td>
-   <td style="text-align:right;"> 3185.000 </td>
-   <td style="text-align:right;"> 3185.0 </td>
-   <td style="text-align:right;"> 356.3818 </td>
-   <td style="text-align:right;"> 2 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> EN </td>
-   <td style="text-align:right;"> 3251.000 </td>
-   <td style="text-align:right;"> 3251.0 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> 1 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Ukraine </td>
-   <td style="text-align:right;"> 3256.000 </td>
-   <td style="text-align:right;"> 3256.0 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> 1 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Russia </td>
-   <td style="text-align:right;"> 3267.000 </td>
-   <td style="text-align:right;"> 3197.0 </td>
-   <td style="text-align:right;"> 271.8455 </td>
-   <td style="text-align:right;"> 3 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Romania </td>
-   <td style="text-align:right;"> 3287.333 </td>
-   <td style="text-align:right;"> 3297.0 </td>
-   <td style="text-align:right;"> 161.7168 </td>
-   <td style="text-align:right;"> 3 </td>
-  </tr>
-</tbody>
-</table>
 </div>
 </div>
-</div>
-<p>Wrangling is essential for many statistical purposes, not just summarizing but also setting up for making graphical displays, cleaning data, and assembling data from multiple sources.</p>
-<p>Regression modeling is used only for summarizing. The summary describes the <em>relationship</em> between the response and explanatory variables. Think of it as a kind of substitute for <code>summarize()</code> when you want to describe relationships.</p>
-<p>As we saw above, <code>summarize()</code> and <code>group_by()</code> are two different stages of wrangling that, used together, produce a separate summary for each group. Regression modeling, however, offers a rich alternative to grouping. The spirit of what one accomplishes in wrangling with <code>group_by()</code> is achieved in regression by <em>using additional explanatory variables</em>.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-The mean as summary
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>In its simplest mode, a regression can calculate means. The result will be identical to <code>group_by()</code>/<code>summarize()</code> but in a different format.</p>
-<p>Here is the mean <code>net</code> running time calculated using both approaches.</p>
-<div class="cell" data-nrows="7">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span> <span class="fu">lm</span>(net <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data=</span>.) <span class="sc">%&gt;%</span> <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>(Intercept) 
-   5599.065 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">mn =</span> <span class="fu">mean</span>(net))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
- <thead>
-  <tr>
-   <th style="text-align:right;"> mn </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 5599.065 </td>
-  </tr>
-</tbody>
-</table>
-</div>
-</div>
-<p></p>
-<p>The groupwise calculations also produce equivalent results, although the results are formatted in different ways.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span> <span class="fu">lm</span>(net <span class="sc">~</span> sex, <span class="at">data=</span>.) <span class="sc">%&gt;%</span> <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>(Intercept)        sexM 
-  5916.3979   -635.6958 </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">mn =</span> <span class="fu">mean</span>(net))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
- <thead>
-  <tr>
-   <th style="text-align:left;"> sex </th>
-   <th style="text-align:right;"> mn </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> F </td>
-   <td style="text-align:right;"> 5916.398 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> M </td>
-   <td style="text-align:right;"> 5280.702 </td>
-  </tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Regression of this sort calculates the mean of a reference group and the <strong>difference in means</strong> between the two groups, whereas the wrangling command presents the mean of each group.</p>
-</div>
-</div>
-<div class="no-row-height column-margin column-container"><span class="callout-margin-content">Notice something new in the above command: the <code>data=.</code> argument inside <code>lm()</code>. The simple <code>.</code> is doing something important, carrying the output of the earlier stages of the pipeline into the <code>data=</code> argument of <code>lm()</code>.</span></div><p>In regression, “grouping” is extended to quantitative variables. For instance,</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span> <span class="fu">lm</span>(net <span class="sc">~</span> age, <span class="at">data =</span> .) <span class="sc">%&gt;%</span> <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>(Intercept)         age 
-5297.219248    8.189886 </code></pre>
-</div>
-</div>
-<p>This report indicates a trend of <code>net</code> running time increasing with <code>age</code> by about 8 seconds per year.</p>
-<p>The <code>group_by()</code> function can use a quantitative variable, but the result is a different number for each group rather than a trend.</p>
-<div class="cell" data-displayrows="5" data-digits="3">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(age) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">mn =</span> <span class="fu">mean</span>(net)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
- <thead>
-  <tr>
-   <th style="text-align:right;"> age </th>
-   <th style="text-align:right;"> mn </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 10 </td>
-   <td style="text-align:right;"> 5640 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:right;"> 5980 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 13 </td>
-   <td style="text-align:right;"> 5410 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 14 </td>
-   <td style="text-align:right;"> 5620 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 15 </td>
-   <td style="text-align:right;"> 5170 </td>
-  </tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>With multiple grouping variables, say <code>age</code> and <code>sex</code>, the output of <code>summarize()</code> becomes increasingly complicated. For example:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex, age) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mn =</span> <span class="fu">mean</span>(net)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-displayrows="8" data-digits="4">
-<div class="cell-output-display">
-
-<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
- <thead>
-  <tr>
-   <th style="text-align:left;"> sex </th>
-   <th style="text-align:right;"> age </th>
-   <th style="text-align:right;"> mn </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> M </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:right;"> 5978 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> M </td>
-   <td style="text-align:right;"> 18 </td>
-   <td style="text-align:right;"> 4799 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> M </td>
-   <td style="text-align:right;"> 19 </td>
-   <td style="text-align:right;"> 4075 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> M </td>
-   <td style="text-align:right;"> 27 </td>
-   <td style="text-align:right;"> 4961 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> F </td>
-   <td style="text-align:right;"> 46 </td>
-   <td style="text-align:right;"> 5899 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> M </td>
-   <td style="text-align:right;"> 51 </td>
-   <td style="text-align:right;"> 5390 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> F </td>
-   <td style="text-align:right;"> 55 </td>
-   <td style="text-align:right;"> 6382 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> F </td>
-   <td style="text-align:right;"> 66 </td>
-   <td style="text-align:right;"> 5733 </td>
-  </tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Regression keeps things simpler, reporting on trends:</p>
-<div class="cell" data-digits="4">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span> <span class="fu">lm</span>(net <span class="sc">~</span> sex <span class="sc">+</span> age, <span class="at">data =</span> .) <span class="sc">%&gt;%</span> <span class="fu">coef</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>(Intercept)        sexM         age 
-    5339.16     -726.62       16.89 </code></pre>
-</div>
-</div>
-<p>The trend reported from this regression model is an increase in <code>net</code> of about 16 seconds per year of age. Regression can summarize relationships in more detailed ways as well. The following model looks at the trend with age separately for males and females:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span> <span class="fu">lm</span>(net <span class="sc">~</span> sex <span class="sc">*</span> age, <span class="at">data =</span> .) <span class="sc">%&gt;%</span> <span class="fu">coef</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>(Intercept)        sexM         age    sexM:age 
-    5371.00     -785.15       15.96        1.61 </code></pre>
-</div>
-</div>
-<p>Here, the age trend for women is an increase in <code>net</code> running time of 16 seconds per year of age, while for men, that increase is bigger, an extra 1.6 seconds per year of age.</p>
-<p>There are good reasons why <code>lm()</code> organizes summaries the way it does. The <code>lm()</code> paradigm can make much more efficient use of data than <code>group_by()</code>. It also offers much more flexibility. <code>lm()</code> can handle multiple “grouping” variables together and even lets you “group” by quantitative variables.</p>
+<p>To make any proper sense of the graphs in <span class="quarto-unresolved-ref">?fig-lena-two-graphs</span>, you need some basic technical knowledge. For example, what do the vertical bars in the graph mean? And the subcaptions, “t(628) = 3.03, p = 0.003” and “t(216)= 2.13, p=0.002”: What do they mean, if anything? Turning back to the text of <em>The Economist</em>, do these graphs justify raising a “red flag?” More basically, are these graphs the “data,” or is there more data behind the graphs? What would that data show?</p>
+<p>The LENA article does not link to supporting data, that is, what lies behind the graphs in <span class="quarto-unresolved-ref">?fig-lena-two-graphs</span>. But the LENA article does point to other publications.</p>
+<blockquote class="blockquote">
+<p>“<em>These findings from LENA support a growing body of evidence that babies born during the COVID pandemic are, on average, experiencing developmental delays. For example, researchers from the COMBO (COVID-19 Mother Baby Outcomes) consortium at Columbia University published findings in the <a href="www/jamapediatrics_shuffrey_2022_oi_210081_1653493590.2509.pdf">January 2022 issue of JAMA Pediatrics</a> showing that children born during the pandemic achieved significantly lower gross motor, fine motor, and personal-social scores at six months of age.</em>”</p>
+</blockquote>
+<p>To the statistical thinker, phrases like “red flag,” “growing body of evidence,” and “significantly lower” are <strong>weasel words</strong>, that is, terms “used in order to evade or retreat from a direct or forthright statement or position.” [<a href="https://www.merriam-webster.com/dictionary/weasel%20word">Source</a>] In ordinary thinking, such evasiveness or lack of forthrightness would naturally prompt concern about the reliability of the claim. It makes sense to look deeper, for instance, by checking out the JAMA article. Many people would be hesitant to do this, anticipating that the article would be incomprehensible and filled with jargon. An important reason to study statistical thinking is to tear down barriers to substantiating or debunking claims. In fact, the JAMA article contains very little that requires knowledge of pediatrics or the meaning of “gross motor, fine motor, and personal-social scores,” but a lot that depends on understanding statistical notation and convention and—more critical —the reasoning behind the conventions.</p>
+<p>The tools of statistical thinking are the tools for making sense of data. Evaluating data is essential to determine whether to rely on claims supposedly based on those data. In the words of eminent engineer and statistician <a href="https://en.wikipedia.org/wiki/W._Edwards_Deming">W. Edwards Demming</a>: “In God we trust. All others must bring data.” And former President Ronald Reagan famously quoted a Russian proverb: “Trust, but verify.” Unfortunately, until you have the statistical thinking tools needed to interpret data reliably, all you can do is trust, not verify.</p>
 </section>
-<section id="presentation-using-intervals" class="level2">
-<h2 class="anchored" data-anchor-id="presentation-using-intervals">Presentation using intervals</h2>
-<p>Statistical thinking often involves quantifying uncertainty. Uncertainty appears where a newcomer to statistical thinking might not expect it. For example, consider “<strong>point</strong>” summaries such as the mean or median. So long as the arithmetic is correct, the result is inevitable; everyone doing the calculation will get the same result. The statistical thinker, however, includes the <em>data collection process</em> in the calculation. Each person carrying out his or her data collection process will get different results. The study-to-study variation calls for an interval display, where the interval covers the likely range of results.</p>
-<p>Prediction is another context benefiting from an interval display. Prediction is imperfect. The predicted result—for instance, the baby’s due date—is typically different from the actual outcome. The statistical thinker knows how to estimate the likely range of the difference between the predicted and actual outcomes.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Example: 1.6 seconds per year?
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>It is appropriate to be skeptical of a claim that male runners slow down by 1.6 seconds per year compared to females. After all, people differ; some age more gently than others. As we will see in Lesson 20, the results presented from a regression model depend partly on the play of chance in determining the particular people represented in the data. It is helpful to know <em>how much</em> chance affects the results. A summary can indicate this by a range of plausible values, in other words, an “<strong>interval</strong>” summary. Here is an interval summary on the coefficients from the running time versus age model:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span> <span class="fu">lm</span>(net <span class="sc">~</span> sex <span class="sc">*</span> age, <span class="at">data =</span> .) <span class="sc">%&gt;%</span> <span class="fu">confint</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
- <thead>
-  <tr>
-   <th style="text-align:left;">   </th>
-   <th style="text-align:right;"> lwr </th>
-   <th style="text-align:right;"> upr </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:right;"> 5269.77 </td>
-   <td style="text-align:right;"> 5472.23 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> sexM </td>
-   <td style="text-align:right;"> -927.31 </td>
-   <td style="text-align:right;"> -642.98 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> age </td>
-   <td style="text-align:right;"> 13.11 </td>
-   <td style="text-align:right;"> 18.82 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> sexM:age </td>
-   <td style="text-align:right;"> -2.14 </td>
-   <td style="text-align:right;"> 5.36 </td>
-  </tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Notice that the interval on <code>sexM:age</code> includes zero.</p>
-<p>Construct interval summaries using the appropriate <em>extractor</em> on a regression model. For instance, <code>confint()</code> generates an interval summary suggesting there might be no difference in the age trend for males and females.</p>
-</div>
-</div>
-</section>
-<section id="point-plot-as-a-graphical-foundation" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="point-plot-as-a-graphical-foundation">Point plot as a graphical foundation</h2>
-<p>Regression models, which will be the primary means of summarizing data in these Lessons, always have a response variable and typically have one or more explanatory variables.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>In these Lessons, we will place graphical depictions of model summaries in the context of actual data. Consequently, the graphical frame will reflect the choice of response and explanatory variables. The vertical axis will <em>always</em> represent the response variable. The horizontal axis will represent one of the explanatory variables. A point plot will display the data, or a jitter plot when there are categorical variables to be shown.</p>
-<p>Another aspect of our unified data graphic format is that it will <em>always</em> be a point plot or, closely related, a jitter plot.</p>
-<div class="callout-note callout callout-style-default callout-captioned page-columns page-full">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Example: When is the baby due?
-</div>
-</div>
-<div class="callout-body-container callout-body page-columns page-full">
-<p>As all expecting parents know, a baby’s “due date” is hardly exact. Pregnancies vary in length. What accounts for this variation?</p>
-<p>In this example, we will entertain the hypothesis that experienced mothers have systematically different gestation periods than first-time mothers. An appropriate response variable is duration of <code>gestation</code>. The explanatory variable needs to measure “experience,” which is a vague idea. We will make it concrete by representing it by the number of the mother’s pregnancies before the one reported in the data.</p>
-<p>The <code>Gestation</code> data frame records more than 1200 births. <code>gestation</code> records the length of the pregnancy and will be our response variable. <code>parity</code> gives the number of previous births to the mother, starting at zero for a first-time mother. Although <code>parity</code> is encoded as a number, it has only <em>discrete</em> values—0, 1, 2, … We will therefore graph it as a <em>categorical</em> variable, using jittering to avoid overplotting. There are not many rows with parity greater than five; we will focus on those.</p>
+<section id="preliminaries" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="preliminaries">Preliminaries</h2>
+<p>Statistical thinking builds on the data wrangling, visualization, and modeling skills that you have already started to develop. This Lesson introduces a handful of additional tools. In particular, we will look at how to place graphics like those in <span class="quarto-unresolved-ref">?fig-lena-two-graphs</span> in the context of the data behind them, a first step to avoiding mis-interpretation. We will introduce the idea of <strong>inverval summaries</strong> of data, which provide essential information about what data can tell us. The Lesson also introduces a simple technique for encoding <em>categorical</em> data that allows us to apply the powerful tools of regression in a wider set of circumstances.</p>
+<p>I don’t have access to the data behind <span class="quarto-unresolved-ref">?fig-lena-two-graphs</span>, so I’ll use another data set to illustrate some principles.</p>
+<p>As all expecting parents know, a baby’s “due date” is hardly exact. Pregnancies vary in length. <a href="#fig-gestation-jitter">Figure&nbsp;<span>19.3</span></a> shows data from the <code>Gestation</code> data frame which records more than 1200 births. The <code>gestation</code> variable records the length of the pregnancy (in days).</p>
 <div class="cell page-columns page-full">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Gestation <span class="sc">%&gt;%</span> </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(parity <span class="sc">&lt;=</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#mutate(parity = as.character(parity)) %&gt;%</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>parity, <span class="at">y=</span>gestation)) <span class="sc">+</span> </span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">width=</span><span class="fl">0.2</span>, <span class="at">height=</span><span class="dv">0</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Gestation <span class="ot">&lt;-</span> Gestation <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">parity =</span> <span class="fu">ifelse</span>(parity<span class="sc">==</span><span class="dv">0</span>, <span class="st">"first-time"</span>, <span class="st">"previous-preg"</span>)) </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Plot1 <span class="ot">&lt;-</span> Gestation <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>parity, <span class="at">y=</span>gestation)) <span class="sc">+</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">width=</span><span class="fl">0.2</span>, <span class="at">height=</span><span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">200</span>,<span class="dv">340</span>))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>Plot1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display page-columns page-full">
 <div id="fig-gestation-jitter" class="quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="Reading-notes-lesson-19_files/figure-html/fig-gestation-jitter-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;19.1: Gestational period for pregnancies where the mother had five or fewer previous pregnancies. The <code>width=0.2</code> controls the amount of horizontal jittering. We chose it to make the columns of data clear. There is no need to jitter in the vertical direction, so we set <code>height=0</code></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;19.3: Gestational period for first-time mothers and mothers with a previous pregancy.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<p>This graph shows some things at a glance. For example, a typical gestation period is about 275 days (about nine months), and it is much more common to have a low parity than a very high one.</p>
-</div>
-</div>
-</section>
-<section id="displaying-density" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="displaying-density">Displaying density</h2>
-<p>It is easy to see a pattern in <a href="#fig-gestation-jitter">Figure&nbsp;<span>19.1</span></a>: It looks like mothers with high parity tend to have gestation periods more reliably close to 280 days than mothers with low parity. However, on the other hand, maybe this pattern is an illusion, an artifact of the small number of pregnancies with parity 3, 4, or 5 and, therefore, less opportunity to see extreme values for <code>gestation</code>.</p>
-<p>One way to explore this idea is to plot the density of the dots as a function of gestation for each of the parity levels individually. A “violin” layer will make it easier to compare the distributions in the different columns, despite the unevenness in the case count. <a href="#fig-violin-intro">Figure&nbsp;<span>19.2</span></a> gives an example.</p>
-<div class="column-page-right page-columns page-full">
+<p>Such data could be made to serve more than one use. The statistical thinker always has in mind the purpose of the data presentation and uses statistical techniques appropriate for that purpose. Here are three distinct purposes:</p>
+<ol type="a">
+<li><p>Predict how long a first-time expectant mother’s preganancy will last.</p></li>
+<li><p>Display whether the prediction of the length of pregnancy depends on how many previous pregnancies (<code>parity</code>) the mother has had.</p></li>
+<li><p>Detect whether <code>parity</code> has anything at all to do with the length of pregancy.</p></li>
+</ol>
+<p>Note that all three questions are fundamentally about the length of pregnancy, that is, the <code>gestation</code> variable. Since we are trying to say something about <code>gestation</code>, it is appropriate to use <code>gestation</code> as the <em>response variable</em>. Therefore, it is graphed along the vertical axis.</p>
+<p>A simple and reasonable way to make a prediction is to look at the outcomes for the the relevant rows of the data. For question (a), we can focus on those data for mothers with <code>parity</code> zero. The dots themselves tell the story: pregnancy lasts approximately 280 days but it can vary. The large majority of pregancies are between 260 and 300 days long.</p>
+<p>A simpler say to describe the prediction summarizes the distribution of dots with a density plot. A good principle for presenting summaries is to do so within the context of the data themselves. So rather than make a histogram, which leaves out the raw data, we will use <strong>violin</strong> plot to smooth the data, as in <a href="#fig-violin-intro">Figure&nbsp;<span>19.4</span></a>.</p>
 <div class="cell page-columns page-full">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>Gestation <span class="sc">%&gt;%</span> </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(parity <span class="sc">&lt;=</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>parity, <span class="at">y=</span>gestation)) <span class="sc">+</span> </span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">width=</span><span class="fl">0.2</span>, <span class="at">height=</span><span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">group=</span>parity), <span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">color=</span><span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Plot1 <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">group=</span>parity), <span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">alpha=</span><span class="fl">0.65</span>, <span class="at">color=</span><span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display page-columns page-full">
 <div id="fig-violin-intro" class="quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="figure page-columns page-full">
 <p><img src="Reading-notes-lesson-19_files/figure-html/fig-violin-intro-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;19.2: A violin plot. The long axis of the violin-like shape is oriented along the response-variable axis (that is, the vertical axis in our standard format). The width of the violin for each possible value of the response variable is proportional to the density of data near that value.</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;19.4: A violin plot. The long axis of the violin-like shape is oriented along the response-variable axis (that is, the vertical axis in our standard format). The width of the violin for each possible value of the response variable is proportional to the density of data near that value.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-</div>
-<p>The violin plot is a more flexible display of the distribution of gestation period than a histogram. The histogram has all those bars that clutter up the display. Even worse, one of the axes in the frame of a histogram plot is “count” or maybe “density.” Such a frame is inconsistent with the response/explanatory axes used for the data. The violin is drawn in the no-mans-land between the different levels of parity, just as the jittering moves data away from a single vertical line into that same no-mans-land.</p>
-<p>This idea of using the graphical no-mans-land between levels of a categorical explanatory variable is not new. You encountered it earlier when you drew box plots. <a href="#fig-density-box">Figure&nbsp;<span>19.3</span></a> adds a box-plot annotation layer on top of the violin-plot layer.</p>
+<p>One reason to use a violin plot rather than the raw data on their own is to avoid reading too much into the raw data. Not all the gaps between data points are telling; the smooth violin plot emphasizes the overall pattern.</p>
+<p>An even simpler summary of the prediction is called a <strong>prediction interval</strong>. <a href="#fig-gestation-prediction-interval">Figure&nbsp;<span>19.5</span></a> shows prediction intervals separately for each level of <code>parity</code>.</p>
 <div class="cell page-columns page-full">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Gestation <span class="sc">%&gt;%</span> </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(parity <span class="sc">&lt;=</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>parity, <span class="at">y=</span>gestation)) <span class="sc">+</span> </span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">width=</span><span class="fl">0.2</span>, <span class="at">height=</span><span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">group=</span>parity), <span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">color=</span><span class="cn">NA</span>) <span class="sc">+</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">group=</span>parity), <span class="at">color=</span><span class="st">"blue"</span>, <span class="at">fill=</span><span class="cn">NA</span>, <span class="at">alpha=</span>.<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(gestation <span class="sc">~</span> parity, <span class="at">data =</span> Gestation)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Predictions <span class="ot">&lt;-</span> <span class="fu">model_eval</span>(model, <span class="at">skeleton=</span><span class="cn">TRUE</span>, <span class="at">interval=</span><span class="st">"prediction"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Plot1 <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>.lwr, <span class="at">ymax=</span>.upr, <span class="at">x=</span>parity), <span class="at">y=</span><span class="cn">NA</span>, <span class="at">color=</span><span class="st">"blue"</span>, <span class="at">width=</span><span class="fl">0.3</span>, <span class="at">data=</span>Predictions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display page-columns page-full">
-<div id="fig-density-box" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<div id="fig-gestation-prediction-interval" class="quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="figure page-columns page-full">
-<p><img src="Reading-notes-lesson-19_files/figure-html/fig-density-box-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;19.3: A box and whisker plot uses the no-mans-land between levels of a categorical explanatory variable.</figcaption><p></p>
+<p><img src="Reading-notes-lesson-19_files/figure-html/fig-gestation-prediction-interval-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;19.5: Prediction intervals for each level of parity.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<p>In practice, there is little reason to layer a box plot on top of a violin. The violin does the job nicely on its own.</p>
+<p><a href="#fig-gestation-prediction-interval">Figure&nbsp;<span>19.5</span></a> shows that the prediction intervals includes most, but not all, of the raw data. In fact, it includes about 95% of the raw data and the full name for the prediction intervals is “95% prediction intervals.”</p>
+<p><a href="#fig-gestation-prediction-interval">Figure&nbsp;<span>19.5</span></a> provides a pretty clear display for purpose (b): “Does the predicted duration of my pregnancy depend on whether I am a first-time mother?” The answer: “Yes, but <code>parity</code> has only a very small effect.”</p>
+<p>Purpose (c) has to do with a different question: Do the data enable us to detect an effect of <code>parity</code> on <code>gestation</code>? With this question we are not seeking to make a prediction for an individual mother but to answer a question about the average across the population of all mothers. Such an average is an abstraction: it is not informative about a single mother.</p>
+<p><a href="#fig-gestation-confidence-interval">Figure&nbsp;<span>19.6</span></a> shows the so-called “95% confidence intervals” on the duration of pregnancy. The left panel puts the confidence intervals in the context of the data, the right in isolation. Because of the zoomed in scale on the right, the difference between the intervals looks much more “significant.” (Indeed, it has a similar “significance” to the intervals in <span class="quarto-unresolved-ref">?fig-lena-two-graphs</span>.)</p>
+<div id="fig-gestation-confidence-interval" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>CIs <span class="ot">&lt;-</span> <span class="fu">model_eval</span>(model, <span class="at">interval=</span><span class="st">"confidence"</span>, <span class="at">skeleton=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">parity =</span> <span class="fu">relevel</span>(parity, <span class="st">"first-time"</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>Plot2 <span class="ot">&lt;-</span> Gestation <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>parity, <span class="at">y=</span>gestation)) <span class="sc">+</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha=</span><span class="fl">0.05</span>, <span class="at">width=</span><span class="fl">0.2</span>, <span class="at">height=</span><span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">200</span>,<span class="dv">340</span>)) <span class="sc">+</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>.lwr, <span class="at">ymax=</span>.upr, <span class="at">x=</span>parity), <span class="at">y=</span><span class="cn">NA</span>, <span class="at">color=</span><span class="st">"blue"</span>, <span class="at">width=</span><span class="fl">0.3</span>, <span class="at">data=</span>CIs)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>Plot3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(CIs[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>),], <span class="fu">aes</span>(<span class="at">x=</span>parity)) <span class="sc">+</span> </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>.lwr, <span class="at">ymax=</span>.upr), <span class="at">y=</span><span class="cn">NA</span>, <span class="at">color=</span><span class="st">"blue"</span>, <span class="at">width=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>.output), <span class="at">ymin=</span><span class="cn">NA</span>, <span class="at">ymax=</span><span class="cn">NA</span>, <span class="at">color=</span><span class="st">"red"</span>, <span class="at">data =</span> CIs) </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(Plot2, Plot3, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-gestation-confidence-interval" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="Reading-notes-lesson-19_files/figure-html/fig-gestation-confidence-interval-1.png" class="img-fluid figure-img" data-ref-parent="fig-gestation-confidence-interval" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">(a) Plotted with the data</figcaption><p></p>
+</figure>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;19.6: Confidence intervals for the mean gestation duration for each level of parity.</figcaption><p></p>
+</figure>
+</div>
+<p><a href="#fig-gestation-confidence-interval">Figure&nbsp;<span>19.6</span></a> address a different question than <a href="#fig-gestation-prediction-interval">Figure&nbsp;<span>19.5</span></a>. From the perspective of an individual mother seeking to plan for her pregnancy, <a href="#fig-gestation-prediction-interval">Figure&nbsp;<span>19.5</span></a> is relevant and gives a clear message: “Don’t plan differently for your second pregancy than your first.” In contrast, <a href="#fig-gestation-confidence-interval">Figure&nbsp;<span>19.6</span></a> is about comparing two <em>groups</em> of mothers, not comparing a mother from each group.</p>
+<p>Understanding the difference between questions (b) and (c) is not easy going for a person new to statistical thinking. Typically, research journals look for answers to (c), but this is not always relevant to (b). It will take some time before we can start to think clearly about whether the data presented in <span class="quarto-unresolved-ref">?fig-lena-two-graphs</span> points to effects that “could last a lifetime.”</p>
 </section>
 <section id="categorical-response-variables" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="categorical-response-variables">Categorical response variables</h2>
@@ -956,8 +624,8 @@ R technique: Using <code>zero_one()</code>.
 </div>
 <p>The <code>outcome</code> variable in <code>Whickham</code> records the result of the follow-up survey. It is a categorical variable with levels “Alive” and “Dead.” To examine what the data have to say about the relationship between smoking and mortality, we construct a model with <code>outcome</code> as the response variable and <code>smoking</code> as an explanatory variable. Before doing so, we translate <code>outcome</code> into a zero-one format. Like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span> </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">alive =</span> <span class="fu">zero_one</span>(outcome, <span class="at">one=</span><span class="st">"Alive"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">alive =</span> <span class="fu">zero_one</span>(outcome, <span class="at">one=</span><span class="st">"Alive"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -1015,128 +683,8 @@ R technique: Using <code>zero_one()</code>.
 <p>Note the correspondence between the <code>outcome</code> and the newly created <code>alive</code> variable.</p>
 </div>
 </div>
-<hr>
-<div class="callout-warning callout callout-style-default callout-captioned page-columns page-full">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Demonstration: Predicting calorie content
-</div>
-</div>
-<div class="callout-body-container callout-body page-columns page-full">
-<p>Starbucks is a famous coffee-shop franchise with more than 30,000 branches (as of 2021). People go to Starbucks for coffee, but they often buy something to eat as well. In this demonstration, we will look at the calorie content of Starbucks’ food offerings. As always, when conducting a statistical analysis, it is helpful to have in mind the motivation for the task. So we will imagine, tongue in cheek, that we want to make food recommendations for the calorie-conscious consumer.</p>
-<p>First, a <strong>point summary</strong> of the calories in the different types of food products available at Starbucks:</p>
-<div class="cell">
-
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df_stats</span>(calories <span class="sc">~</span> type, </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> openintro<span class="sc">::</span>starbucks, mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
- <thead>
-  <tr>
-   <th style="text-align:left;"> response </th>
-   <th style="text-align:left;"> type </th>
-   <th style="text-align:right;"> mean </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> calories </td>
-   <td style="text-align:left;"> bakery </td>
-   <td style="text-align:right;"> 369 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> calories </td>
-   <td style="text-align:left;"> bistro box </td>
-   <td style="text-align:right;"> 378 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> calories </td>
-   <td style="text-align:left;"> hot breakfast </td>
-   <td style="text-align:right;"> 325 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> calories </td>
-   <td style="text-align:left;"> parfait </td>
-   <td style="text-align:right;"> 300 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> calories </td>
-   <td style="text-align:left;"> petite </td>
-   <td style="text-align:right;"> 178 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> calories </td>
-   <td style="text-align:left;"> salad </td>
-   <td style="text-align:right;"> 80 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> calories </td>
-   <td style="text-align:left;"> sandwich </td>
-   <td style="text-align:right;"> 396 </td>
-  </tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>This summary supports the sensible advice to choose salads or smaller portions (type “petite”) to avoid calories. One might go further, for example, concluding that a sandwich is a poor choice (in terms of calorie content), so lean toward parfaits or hot breakfasts. We can even imagine someone concluding from this summary that a bistro box is a better calorie-conscious choice than a sandwich.</p>
-<p><a href="#fig-starbucks-food">Figure&nbsp;<span>19.4</span></a> shows the point summary, using the raw data to put things in context.</p>
-<div class="cell page-columns page-full">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>openintro<span class="sc">::</span>starbucks <span class="sc">%&gt;%</span> </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>type, <span class="at">y=</span>calories)) <span class="sc">+</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width=</span><span class="fl">0.2</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">data=</span>point_summary, <span class="fu">aes</span>(<span class="at">ymin=</span>mean, <span class="at">ymax=</span>mean), </span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">y=</span><span class="cn">NA</span>, <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>point_summary, <span class="fu">aes</span>(<span class="at">y=</span>mean), <span class="at">color=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display page-columns page-full">
-<div id="fig-starbucks-food" class="quarto-figure quarto-figure-center anchored page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="Reading-notes-lesson-19_files/figure-html/fig-starbucks-food-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;19.4: Calories of the various food items sold by Starbucks, annotated with point and interval summaries.</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Plotting the point summary in the context of the raw data shows at a glance that the point summary is not of any genuine use. For instance, using the point summary without the data, we might conclude that hot breakfasts are better than sandwiches. However, the data display suggests otherwise; there is just one low-calorie breakfast. The others are much like sandwiches.</p>
-<p>A point summary is compact but cannot represent the <em>variation</em> within each food type. An interval summary, as in <a href="#fig-starbucks-food2">Figure&nbsp;<span>19.5</span></a>, does show this variation.</p>
-<div class="cell page-columns page-full">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>openintro<span class="sc">::</span>starbucks <span class="sc">%&gt;%</span> </span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>type, <span class="at">y=</span>calories)) <span class="sc">+</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width=</span><span class="fl">0.2</span>, <span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">data=</span>point_summary, <span class="fu">aes</span>(<span class="at">ymin=</span>mean, <span class="at">ymax=</span>mean), </span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">y=</span><span class="cn">NA</span>, <span class="at">color=</span><span class="st">"blue"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display page-columns page-full">
-<div id="fig-starbucks-food2" class="quarto-figure quarto-figure-center anchored page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="Reading-notes-lesson-19_files/figure-html/fig-starbucks-food2-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;19.5: Calories of the various food items sold by Starbucks, annotated with point and interval summaries.</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Unlike point summaries, interval summaries can overlap. Such overlap indicates that the groups are not all that different. Here, the interval summary indicates an appropriate conclusion; “Don’t make your diet choices based on food type. Look at the calorie content of individual items before choosing.”</p>
-<p>Admittedly, in this simple setting the data themselves would lead to the conclusion. However, as we move into more complicated settings, it will become infeasible to see patterns quickly straight from the data.</p>
-</div>
-</div>
 
 
-</section>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn1"><p>Actually, the previous sentence should say, “<strong>zero</strong> or more explanatory variables.” The model with no explanatory variables (and <code>y</code> as the response variable) is denoted by <code>y ~ 1</code>. This simple model represents the hypothesis that nothing can explain the variability in <code>y</code>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
 </section>
 
 </main> <!-- /main -->

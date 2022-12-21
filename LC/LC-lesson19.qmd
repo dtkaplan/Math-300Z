@@ -377,3 +377,66 @@ It's a matter of judgement which format to use. The bottom-to-top notation highl
 
 Suppose there are other explanatory variables to be displayed. In that case, we will use color and faceting. If there are *no* explanatory variables, as in `y ~ 1`, we will jitter the data horizontally to avoid overplotting.]
 :::
+
+
+--------
+
+## Demonstration: Predicting calorie content
+
+Starbucks is a famous coffee-shop franchise with more than 30,000 branches (as of 2021). People go to Starbucks for coffee, but they often buy something to eat as well. In this demonstration, we will look at the calorie content of Starbucks' food offerings. As always, when conducting a statistical analysis, it is helpful to have in mind the motivation for the task. So we will imagine, tongue in cheek, that we want to make food recommendations for the calorie-conscious consumer.
+
+First, a **point summary** of the calories in the different types of food products available at Starbucks:
+
+```{r echo=FALSE}
+point_summary <- 
+  df_stats(calories ~ type, 
+           data = openintro::starbucks, mean)
+```
+
+```{r}
+df_stats(calories ~ type, 
+         data = openintro::starbucks, mean)
+```
+
+This summary supports the sensible advice to choose salads or smaller portions (type "petite") to avoid calories. One might go further, for example, concluding that a sandwich is a poor choice (in terms of calorie content), so lean toward parfaits or hot breakfasts. We can even imagine someone concluding from this summary that a bistro box is a better calorie-conscious choice than a sandwich.
+
+@fig-starbucks-food shows the point summary, using the raw data to put things in context.
+
+```{r}
+#| label: fig-starbucks-food
+#| fig-cap: "Calories of the various food items sold by Starbucks, annotated with point and interval summaries."
+#| fig-cap-location: margin
+#| code-fold: true
+openintro::starbucks %>% 
+  ggplot(aes(x=type, y=calories)) +
+  geom_jitter(width=0.2, alpha=0.5) +
+  geom_errorbar(data=point_summary, aes(ymin=mean, ymax=mean), 
+                y=NA, color="blue") +
+  geom_point(data=point_summary, aes(y=mean), color="red")
+```
+
+Plotting the point summary in the context of the raw data shows at a glance that the point summary is not of any genuine use. For instance, using the point summary without the data, we might conclude that hot breakfasts are better than sandwiches. However, the data display suggests otherwise; there is just one low-calorie breakfast. The others are much like sandwiches.
+
+A point summary is compact but cannot represent the *variation* within each food type. An interval summary, as in @fig-starbucks-food2, does show this variation. 
+
+```{r}
+#| label: fig-starbucks-food2
+#| fig-cap: "Calories of the various food items sold by Starbucks, annotated with point and interval summaries."
+#| fig-cap-location: margin
+#| code-fold: true
+openintro::starbucks %>% 
+  ggplot(aes(x=type, y=calories)) +
+  geom_jitter(width=0.2, alpha=0.5) +
+  geom_errorbar(data=point_summary, aes(ymin=mean, ymax=mean), 
+                y=NA, color="blue") 
+```
+
+Unlike point summaries, interval summaries can overlap. Such overlap indicates that the groups are not all that different. Here, the interval summary indicates an appropriate conclusion; "Don't make your diet choices based on food type. Look at the calorie content of individual items before choosing."
+
+Admittedly, in this simple setting the data themselves would lead to the conclusion. However, as we move into more complicated settings, it will become infeasible to see patterns quickly straight from the data. 
+
+
+
+
+
+
