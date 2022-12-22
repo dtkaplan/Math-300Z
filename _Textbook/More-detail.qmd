@@ -21,6 +21,85 @@ Here, the age trend for women is an increase in `net` running time of 16 seconds
 
 There are good reasons why `lm()` organizes summaries the way it does. The `lm()` paradigm can make much more efficient use of data than `group_by()`. It also offers much more flexibility. `lm()` can handle multiple "grouping" variables together and even lets you "group" by quantitative variables.
 
+
+---------
+
+
+## Preliminaries
+
+Statistical thinking builds on the data wrangling, visualization, and modeling skills that you have already started to develop. This Lesson introduces a handful of additional tools. In particular, we will look at how to place graphics like those in @fig-lena-two-graphs in the context of the data behind them, a first step to avoiding mis-interpretation. We will introduce the idea of **inverval summaries** of data, which provide essential information about what data can tell us. The Lesson also introduces a simple technique for encoding *categorical* data that allows us to apply the powerful tools of regression in a wider set of circumstances. 
+
+I don't have access to the data behind @fig-lena-two-graphs, so I'll use another data set to illustrate some principles.
+
+As all expecting parents know, a baby's "due date" is hardly exact. Pregnancies vary in length. 
+
+Such data could be made to serve more than one use. The statistical thinker always has in mind the purpose of the data presentation and uses statistical techniques appropriate for that purpose. Here are three distinct purposes:
+
+a. Predict how long a first-time expectant mother's preganancy will last.
+
+b. Display whether the prediction of the length of pregnancy depends on how many previous pregnancies (`parity`) the mother has had.
+
+c. Detect whether `parity` has anything at all to do with the length of pregancy. 
+
+Note that all three questions are fundamentally about the length of pregnancy, that is, the `gestation` variable. Since we are trying to say something about `gestation`, it is appropriate to use `gestation` as the *response variable*. Therefore, it is graphed along the vertical axis.
+
+A simple and reasonable way to make a prediction is to look at the outcomes for the the relevant rows of the data. For question (a), we can focus on those data for mothers with `parity` zero. The dots themselves tell the story: pregnancy lasts approximately 280 days but it can vary. The large majority of pregancies are between 260 and 300 days long. 
+
+A simpler say to describe the prediction summarizes the distribution of dots with a density plot. A good principle for presenting summaries is to do so within the context of the data themselves. So rather than make a histogram, which leaves out the raw data, we will use **violin** plot to smooth the data, as in @fig-violin-intro.
+
+
+
+One reason to use a violin plot rather than the raw data on their own is to avoid reading too much into the raw data. Not all the gaps between data points are telling; the smooth violin plot emphasizes the overall pattern.
+
+An even simpler summary of the prediction is called a **prediction interval**. @fig-gestation-prediction-interval shows prediction intervals separately for each level of `parity`. 
+
+```{r warning=FALSE}
+#| label: fig-gestation-prediction-interval
+#| fig-cap: "Prediction intervals for each level of parity."
+#| fig-cap-location: margin
+#| code-fold: true
+model <- lm(gestation ~ parity, data = Gestation)
+Predictions <- model_eval(model, skeleton=TRUE, interval="prediction")
+Plot1 +
+  geom_errorbar(aes(ymin=.lwr, ymax=.upr, x=parity), y=NA, color="blue", width=0.3, data=Predictions)
+```
+
+@fig-gestation-prediction-interval shows that the prediction intervals includes most, but not all, of the raw data. In fact, it includes about 95% of the raw data and the full name for the prediction intervals is "95% prediction intervals." 
+
+@fig-gestation-prediction-interval provides a pretty clear display for purpose (b): "Does the predicted duration of my pregnancy depend on whether I am a first-time mother?" The answer: "Yes, but `parity` has only a very small effect."
+
+Purpose (c) has to do with a different question: Do the data enable us to detect an effect of `parity` on `gestation`? With this question we are not seeking to make a prediction for an individual mother but to answer a question about the average across the population of all mothers. Such an average is an abstraction: it is not informative about a single mother. 
+
+
+@fig-gestation-confidence-interval shows the so-called "95% confidence intervals" on the duration of pregnancy. The left panel puts the confidence intervals in the context of the data, the right in isolation. Because of the zoomed in scale on the right, the difference between the intervals looks much more "significant." (Indeed, it has a similar "significance" to the intervals in @fig-lena-two-graphs.)
+
+```{r warning=FALSE}
+#| label: fig-gestation-confidence-interval
+#| fig-cap: "Confidence intervals for the mean gestation duration for each level of parity."
+#| fig-subcap:
+#|   - "Plotted with the data"
+#|   - "Plotted in isolation"
+#| fig-cap-location: margin
+#| code-fold: true
+CIs <- model_eval(model, interval="confidence", skeleton=TRUE) %>% 
+  mutate(parity = relevel(parity, "first-time"))
+Plot2 <- Gestation %>%
+  ggplot(aes(x=parity, y=gestation)) + 
+  geom_jitter(alpha=0.05, width=0.2, height=0) +
+  ylim(c(200,340)) + 
+  geom_errorbar(aes(ymin=.lwr, ymax=.upr, x=parity), y=NA, color="blue", width=0.3, data=CIs)
+Plot3 <- ggplot(CIs[c(2,1),], aes(x=parity)) + 
+  geom_errorbar(aes(ymin=.lwr, ymax=.upr), y=NA, color="blue", width=0.3) +
+  geom_point(aes(y=.output), ymin=NA, ymax=NA, color="red", data = CIs) 
+gridExtra::grid.arrange(Plot2, Plot3, ncol=2)
+```
+
+@fig-gestation-confidence-interval address a different question than @fig-gestation-prediction-interval. From the perspective of an individual mother seeking to plan for her pregnancy, @fig-gestation-prediction-interval is relevant and gives a clear message: "Don't plan differently for your second pregancy than your first." In contrast, @fig-gestation-confidence-interval is about comparing two *groups* of mothers, not comparing a mother from each group.
+
+Understanding the difference between questions (b) and (c) is not easy going for a person new to statistical thinking. Typically, research journals look for answers to (c), but this is not always relevant to (b). It will take some time before we can start to think clearly about whether the data presented in @fig-lena-two-graphs points to effects that "could last a lifetime." 
+
+---------
+
 ## More stuff
 
 

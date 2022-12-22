@@ -148,7 +148,7 @@ mod_plot(mod, interval = "confidence") %>%
   gf_labs(y = "Average SAT score", x = "Public school expenditures per pupil ($1000s)")
 ```
 
-Note that the effect size of spending on SAT scores is positive when the expenditure level is less than $10,000 per pupil. Notice as well that when the fraction taking the SAT is tiny, the average scores do not depend on expenditure. This flat relationship suggests that, among elite students, state expenditure does not make a discernable difference. Perhaps the college-bound students in such states have other educational resources to draw on.
+Note that the effect size of spending on SAT scores is positive when the expenditure level is less than $10,000 per pupil. Notice as well that when the fraction taking the SAT is tiny, the average scores do not depend on expenditure. This flat relationship suggests that, among elite students, state expenditure does not make a discernible difference. Perhaps the college-bound students in such states have other educational resources to draw on.
 
 The relationship shown in @fig-sat-1 is genuine. However, so is the very different relationship seen in @fig-sat-3. How can the same data be consistent with two utterly different displays? The answer, perhaps unexpectedly, has to do with the connections among the explanatory variables. Whatever the relationship between an individual explanatory variable and the response variable, the *appearance* of that relationship will depend on which covariates the modeler chooses to include.
 :::

@@ -49,13 +49,30 @@ To the statistical thinker, phrases like "red flag," "growing body of evidence,"
 
 The tools of statistical thinking are the tools for making sense of data. Evaluating data is essential to determine whether to rely on claims supposedly based on those data. In the words of eminent engineer and statistician [W. Edwards Demming](https://en.wikipedia.org/wiki/W._Edwards_Deming): "In God we trust. All others must bring data." And former President Ronald Reagan famously quoted a Russian proverb: "Trust, but verify." Unfortunately, until you have the statistical thinking tools needed to interpret data reliably, all you can do is trust, not verify.
 
-## Preliminaries
 
-Statistical thinking builds on the data wrangling, visualization, and modeling skills that you have already started to develop. This Lesson introduces a handful of additional tools. In particular, we will look at how to place graphics like those in @fig-lena-two-graphs in the context of the data behind them, a first step to avoiding mis-interpretation. We will introduce the idea of **inverval summaries** of data, which provide essential information about what data can tell us. The Lesson also introduces a simple technique for encoding *categorical* data that allows us to apply the powerful tools of regression in a wider set of circumstances. 
+## Defining statistical thinking
 
-I don't have access to the data behind @fig-lena-two-graphs, so I'll use another data set to illustrate some principles.
+Learning a new way of thinking is genuinely hard. As you learn statistical thinking, it may help to have a concise definition. The following definition captures much of the essence of statistical thinking: 
 
-As all expecting parents know, a baby's "due date" is hardly exact. Pregnancies vary in length. @fig-gestation-jitter shows data from the `Gestation` data frame which records more than 1200 births. The `gestation` variable records the length of the pregnancy (in days). 
+> *Statistic thinking is the accounting for variation* in the context of *what remains unaccounted for.*
+
+Implicit in this definition is a pathway for learning to think statistically: 
+
+1. Learn how to measure variation;
+2. Learn how to account for variation;
+3. Learn how to measure what remains unaccounted for.
+
+The next three sections briefly touch on each of these three topics.
+
+## Variation
+
+::: {.column-page-right}
+> *Variation itself is nature’s only irreducible essence. Variation is the hard reality, not a set of imperfect measures for a central tendency. Means and medians are the abstractions.* —-- Stephen Jay Gould (1941- 2002), paleontologist and historian of science.
+:::
+
+To illustrate variation, let's consider a process fundamental to human life: gestation. We all know that human pregnancy "typically" lasts around nine-months, but that the duration isn't known in advance. 
+
+@fig-gestation-jitter shows data from the `Gestation` data frame. In this data frame, each of the 1200 rows is one pregnancy and birth about which several measurements were made. The `gestation` variable records the length of the pregnancy (in days). 
 
 ```{r warning=FALSE}
 #| label: fig-gestation-jitter
@@ -66,26 +83,18 @@ Gestation <- Gestation %>%
   mutate(parity = ifelse(parity==0, "first-time", "previous-preg")) 
 Plot1 <- Gestation %>%
   ggplot(aes(x=parity, y=gestation)) + 
-  geom_jitter(alpha=0.2, width=0.2, height=0) +
-  ylim(c(200,340))
+  geom_jitter(alpha=0.2, width=0.2, height=0) 
 Plot1
 ```
 
+@fig-gestation-jitter divides the 1200 births in the `Gestation` data frame according to the variable `parity`, which describes whether or not the pregnancy is the mother's first. 
 
+The variation in `gestation` is evident directly from the dots in the graph. One strategy for describing variation is to specify an **interval**: the span between a lower and an upper value. For instance,
 
-Such data could be made to serve more than one use. The statistical thinker always has in mind the purpose of the data presentation and uses statistical techniques appropriate for that purpose. Here are three distinct purposes:
+- The large majority of pregancies last between 250 and 300 days. Or,
+- The majority of pregnancies are between 275 and 290 days.
 
-a. Predict how long a first-time expectant mother's preganancy will last.
-
-b. Display whether the prediction of the length of pregnancy depends on how many previous pregnancies (`parity`) the mother has had.
-
-c. Detect whether `parity` has anything at all to do with the length of pregancy. 
-
-Note that all three questions are fundamentally about the length of pregnancy, that is, the `gestation` variable. Since we are trying to say something about `gestation`, it is appropriate to use `gestation` as the *response variable*. Therefore, it is graphed along the vertical axis.
-
-A simple and reasonable way to make a prediction is to look at the outcomes for the the relevant rows of the data. For question (a), we can focus on those data for mothers with `parity` zero. The dots themselves tell the story: pregnancy lasts approximately 280 days but it can vary. The large majority of pregancies are between 260 and 300 days long. 
-
-A simpler say to describe the prediction summarizes the distribution of dots with a density plot. A good principle for presenting summaries is to do so within the context of the data themselves. So rather than make a histogram, which leaves out the raw data, we will use **violin** plot to smooth the data, as in @fig-violin-intro.
+A more subtle description avoids setting hard bounds in favor of saying which durations are common and which not. This common-or-not description is called a "**distribution**." The "**histogram**" is a famous style of presentation of a distribution. Even elementary-school students are introduced to histograms; they are easy to draw. But we have more important concerns; we want to be able to show relationships between variables and we want, whenever possible, to put the graphical summaries of data as a layer on top of the data themselves. And we have the computer as a tool for making graphics. Consequently, our preferred format for displaying distributions is a smooth shape, oriented along the vertical axis. The width of the shape expresses how common is the corresponding region of the vertical axis. @fig-violin-intro shows the density display layered on top of the pregnancy data. For reasons that may be evident, this sort of display is called a "**violin plot**." 
 
 ```{r warning=FALSE}
 #| label: fig-violin-intro
@@ -96,68 +105,62 @@ Plot1 +
   geom_violin(aes(group=parity), fill="blue", alpha=0.65, color=NA)
 ```
 
-One reason to use a violin plot rather than the raw data on their own is to avoid reading too much into the raw data. Not all the gaps between data points are telling; the smooth violin plot emphasizes the overall pattern.
+The shapes of the two violins in @fig-violin-intro are similar, suggesting that the variation in the duration of pregnancy is about the same for first-time mothers as for mothers in a second or later pregnancy.
 
-An even simpler summary of the prediction is called a **prediction interval**. @fig-gestation-prediction-interval shows prediction intervals separately for each level of `parity`. 
+There is a strong link between the *interval* descriptions of variation and the density display. Suppose you specify the fraction of cases that you want to include in an interval description, say 50% or 80%. In terms of the violin, that fraction is a proportion of the overall **area** of the violin. For instance, the 50% interval would include the central 50% of the area of the violin, leaving 25% out at the bottom and another 25% out at the top. The 80% interval would leave out only 10% of the area at the top and bottom of the violin. This suggests that the interval style of describing variation really involves *three* numbers; the top and bottom of the interval *as well as* the selected percentage (say, 50% or 80%) used to find the location of the top and bottom.
 
-```{r warning=FALSE}
-#| label: fig-gestation-prediction-interval
-#| fig-cap: "Prediction intervals for each level of parity."
-#| fig-cap-location: margin
-#| code-fold: true
-model <- lm(gestation ~ parity, data = Gestation)
-Predictions <- model_eval(model, skeleton=TRUE, interval="prediction")
-Plot1 +
-  geom_errorbar(aes(ymin=.lwr, ymax=.upr, x=parity), y=NA, color="blue", width=0.3, data=Predictions)
+Yet another style for describing variation---one that will take primary place in these Lessons---uses only a **single-number**. Perhaps the simplest way to imagine how a *single* number can capture variation is to think about the *spread* or *distance* between the top and bottom of an interval description. In taking such a distance as the measure of variation, we are throwing out some information. Taken together, the top and bottom of the interval describe two things: the *location* of the values and the *spread* among the values. These are both important, but it is the *spread* that gives a pure description of variation.
+
+Early pioneers of statistics took some time to agree on a standard way of measuring the spread. For instance, should it be the spread between the top and bottom of a 50% interval or an 80% interval, or something else. In the end, the selected standard focussed on something more basic: the differences between pairs of individual values. 
+
+It works like this. For a data frame with $n=2$ rows, the spread in a variable can be measured simply as the *difference* between the two values. For instance, suppose the `gestation` variable had only two entries, say, 267 and 293 days. The spread or distance between these is $293-267 = 26$ days. Of course, we don't intend to measure spread with a negative number. One solution is to use the absolute value of the difference. However, for subtle mathematical reasons relating to---of all things!---the Pythagorean theorem, we avoid the possibility of a negative spread by using the *square of the difference*, that is, $(293 - 267)^2 = 676$ days-squared. 
+
+To extend this very simple measure of variation to data with $n > 2$ is simple: look at the square difference between every possible pair of values, then average. For instance, for $n=3$ with values 267, 293, 284, look at the differences $(267-293)^2, (267-284)^2$ and $(293-284)^2$ and average them! This simple way of measuring variation is called the "modulus" and dates from 1885. Since then, statisticians have standardized on a closely related measure, the "**variance**," which is the modulus divided by $\sqrt{2}$. Either one would work, but there are advantages to standardizing on one: the variance.
+
+Calculating the variance is straightforward, Here's the variance of `gestation`: `r options(na.rm=TRUE)`
+
+```{r}
+Gestation %>%
+  summarize(variance = var(gestation))
 ```
 
-@fig-gestation-prediction-interval shows that the prediction intervals includes most, but not all, of the raw data. In fact, it includes about 95% of the raw data and the full name for the prediction intervals is "95% prediction intervals." 
+A consequence of the use of squaring in defining the variance is the units of the result. `gestation` is measured in days, so `var(gestation)` is measured in days^2^. The advantage to this will only become clear later in these Lessons. For now, you might prefer to think about the square-root of the variance, which has been given the name "**standard deviation**."
 
-@fig-gestation-prediction-interval provides a pretty clear display for purpose (b): "Does the predicted duration of my pregnancy depend on whether I am a first-time mother?" The answer: "Yes, but `parity` has only a very small effect."
-
-Purpose (c) has to do with a different question: Do the data enable us to detect an effect of `parity` on `gestation`? With this question we are not seeking to make a prediction for an individual mother but to answer a question about the average across the population of all mothers. Such an average is an abstraction: it is not informative about a single mother. 
-
-
-@fig-gestation-confidence-interval shows the so-called "95% confidence intervals" on the duration of pregnancy. The left panel puts the confidence intervals in the context of the data, the right in isolation. Because of the zoomed in scale on the right, the difference between the intervals looks much more "significant." (Indeed, it has a similar "significance" to the intervals in @fig-lena-two-graphs.)
-
-```{r warning=FALSE}
-#| label: fig-gestation-confidence-interval
-#| fig-cap: "Confidence intervals for the mean gestation duration for each level of parity."
-#| fig-subcap:
-#|   - "Plotted with the data"
-#|   - "Plotted in isolation"
-#| fig-cap-location: margin
-#| code-fold: true
-CIs <- model_eval(model, interval="confidence", skeleton=TRUE) %>% 
-  mutate(parity = relevel(parity, "first-time"))
-Plot2 <- Gestation %>%
-  ggplot(aes(x=parity, y=gestation)) + 
-  geom_jitter(alpha=0.05, width=0.2, height=0) +
-  ylim(c(200,340)) + 
-  geom_errorbar(aes(ymin=.lwr, ymax=.upr, x=parity), y=NA, color="blue", width=0.3, data=CIs)
-Plot3 <- ggplot(CIs[c(2,1),], aes(x=parity)) + 
-  geom_errorbar(aes(ymin=.lwr, ymax=.upr), y=NA, color="blue", width=0.3) +
-  geom_point(aes(y=.output), ymin=NA, ymax=NA, color="red", data = CIs) 
-gridExtra::grid.arrange(Plot2, Plot3, ncol=2)
+```{r}
+Gestation %>%
+  summarize(standard_deviation = sd(gestation))
 ```
 
-@fig-gestation-confidence-interval address a different question than @fig-gestation-prediction-interval. From the perspective of an individual mother seeking to plan for her pregnancy, @fig-gestation-prediction-interval is relevant and gives a clear message: "Don't plan differently for your second pregancy than your first." In contrast, @fig-gestation-confidence-interval is about comparing two *groups* of mothers, not comparing a mother from each group.
 
-Understanding the difference between questions (b) and (c) is not easy going for a person new to statistical thinking. Typically, research journals look for answers to (c), but this is not always relevant to (b). It will take some time before we can start to think clearly about whether the data presented in @fig-lena-two-graphs points to effects that "could last a lifetime." 
+## Accounting for variation
 
+The word "account" has several related meanings.^[These are drawn from the Oxford Languages dictionaries.] 
 
+- To "account for something" means "to be the explanation or cause of something." [Oxford Languages]
+- An "account of something" is a story, a description, or an explanation, as in the Biblical account of the creation of the world.
+- To "take account of something" means "to consider particular facts, circumstances, etc. when making a decision about something." 
 
+Synonyms for "account" include "description, "report," "version," "story,"   "statement," "explanation," "interpretation," "sketch," and "portrayal." "Accountants" and their "account books" keep track of where money comes from and goes to. 
 
-## Categorical response variables 
+These various nuances of meaning, from a simple arithmetical tallying up to an interpretation or version serve the purposes of statistical thinking well. When we "account for variation," we are telling a story that tries to explain where the variation might have come from. An accounting of variation is not necessarily definitive, true, or helpful. Just as witnesses of an event can have different accounts, so there can be many accounts of the variation even of the same variable in the same data frame.
 
-Regression modeling will be a fundamental tool in these Lessons for summarizing data. Regression models always have a quantitative response variable, although explanatory variables can be either quantitative or categorical. 
+There are many formats for stories, many ways of organizing facts and data, and many ways of accounting for variance. In these Lessons, we will use **regression modeling** almost exclusively as our method of accounting. Here, for example, are two different accounts of `gestation`:
 
-Often, the modeling situation calls for a response variable that is *categorical*. Expert modelers can use specialized modeling methods to handle such situations. However, categorical response variables often have just two levels, e.g., Alive/Dead, Promoted/Not, or Win/Loss. We will name the general class of such variables as "**yes/no**" or, equivalently, "**zero-one**" variables.[More formally, they are called "**binomial**" variables.]{.aside}
+```{r}
+lm(gestation ~ 1, data=Gestation) %>% coefficients()
+lm(gestation ~ parity, data = Gestation) %>% coefficients()
+```
 
-Yes/no response variables can be represented using 0 for one level and 1 for the other. This numerical "**0/1 encoding**" is directly suited for regression modeling and enables us to extend the scope of regression models. The *output* of the regression model is always numerical. Nothing in the regression technique restricts those outputs to exactly zero or one, even when the response variable is of the yes/no type. Usually, the modeler interprets such numerical output as probabilities or, more generally, as measures to be converted to probabilities.
+The coefficients from a regression model are part of an accounting for variation. Learning how to read them is an important skill in statistical thinking. For instance, the coefficient from a model in the form `y ~ 1` is always the average value of variable `y`. In contrast, in a model like `y ~ x`, the "intercept" is a baseline value and the `x`-coefficient describes what part of the variation in `y` can be credited to `x`.
+
+Regression models always have a quantitative response variable, although explanatory variables can be either quantitative or categorical. But, often, the modeling situation calls for a response variable that is *categorical*. Expert modelers can use specialized modeling methods to handle such situations. However, some of the power of these specialized methods is available to the beginning modeler by a little trick. When categorical response variables have just two levels, e.g., Alive/Dead, Promoted/Not, or Win/Loss, they can be transformed to a numerical representation using 0 for one level and 1 for the other. 
+
+We will identify the such variables as being of type "**yes/no**" or, equivalently, "**zero-one**" variables. With the zero-one encoding 
+
+This numerical "**0/1 encoding**" is directly suited for regression modeling and enables us to extend the scope of regression models. The *output* of the regression model is always numerical. Nothing in the regression technique restricts those outputs to exactly zero or one, even when the response variable is of the yes/no type. Usually, the modeler interprets such numerical output as probabilities or, more generally, as measures to be converted to probabilities.
 
 ::: {.callout-note}
-## R technique: Using `zero_one()`.
+## R technique: `zero_one()`.
 The `zero_one()` function converts a yes/no variable to the numerical zero-one format. `zero_one()` allows you to specify which of the two levels is represented by 1.
 
 To illustrate, consider the `mosaicData::Whickham` data frame, which records a 1972-1974 survey, part of a study of the relationship between smoking and mortality. Twenty years after the initial survey, a follow-up established whether or not each person was still alive. Here are a few rows from the data frame:
@@ -183,4 +186,51 @@ Note the correspondence between the `outcome` and the newly created `alive` vari
 
 :::
 
+## Variation unaccounted for
 
+A model typically accounts for only some of the variation in a response variable. The remaining variation is called "**residual variation**." 
+
+To illustrate, consider the model `gestation ~ parity`. In the next lines of code we build this model, training it with the `Gestation` data. Then we **evaluate** the model on the trained data. This amounts to using the model coefficients to generate a model output for each row in the training data, and can be accomplished with the `model_eval()` R function.
+
+```{r results="hide"}
+Model <- lm(gestation ~ parity, data = Gestation)
+Evaluated <- model_eval(Model)
+```
+
+```{r echo=FALSE}
+model_eval(Model) %>% tail()
+```
+
+To see where the `.output` comes from, let's look again at the model coefficients:
+
+```{r}
+Model %>% coefficients()
+```
+
+The baseline value is 281.3 days. This applies to first-time mothers. For the other mothers, those with a previous pregnancy, the coefficient indicates that the model value is 2.6 days *less* than the baseline, or 279.7 days.
+
+The output from `model_eval()` includes other columns of importance. For us, here, those are. the response variable itself (`gestation`) and the residuals from the model (`.resid`). There is a simple relationship between `gestation`, `.output` and `.resid`:
+
+$$\mathtt{gestation} = \mathtt{.output} + \mathtt{.resid}\ .$$
+
+::: {.callout-warning}
+## Demonstration: Why the variance?
+
+The subtle mathematical reasoning behind the choice of *variance* to measure variation is illuminated when we compute the variances of the three quantities in the previous equation.
+
+
+```{r}
+Evaluated %>%
+  summarize(var_response = var(gestation),
+            var_output = var(.output),
+            var_resid  = var(.resid))
+```
+The variances of the output and residuals add up to equal, exactly, the variance of the response variable! This isn't true for the standard deviations:
+
+```{r}
+Evaluated %>%
+  summarize(sd_response = sd(gestation),
+            sd_output = sd(.output),
+            sd_resid  = sd(.resid))
+```
+:::
