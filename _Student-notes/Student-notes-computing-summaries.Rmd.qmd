@@ -1,0 +1,150 @@
+---
+title: "Computing summaries of data"
+author: "Daniel Kaplan"
+editor: visual
+---
+
+```{r include=FALSE}
+source("../_startup.R")
+```
+
+The first half of this course emphasized data wrangling and visualization. When using data wrangling commands, summaries of data frames were computed using, naturally enough, the `summarize()` function. Typical summaries for quantitative variables include means, medians, standard deviations, etc., each of which applies to one variable at a time. For instance, this command calculates four summary statistics on the `net` running time recorded in the `TenMileRace` data frame:
+
+```{r}
+TenMileRace %>%
+  summarize(ave = mean(net), middle = median(net), sd = sd(net), n = n())
+
+```
+
+Constructing such summaries groupwise is a matter of using the `group_by()` modifier. Here, we calculate summaries broken down by the state of residence of the participant and arranged from fastest (average) running time downward.
+
+```{r}
+TenMileRace %>%
+  group_by(state) %>%
+  summarize(ave = mean(net), middle = median(net), sd = sd(net), n = n()) %>%
+  arrange(ave) %>%
+  head(10)
+```
+
+Wrangling is essential for many statistical purposes, including making graphical displays, cleaning data, and assembling data that comes from multiple sources.
+
+In Lessons 11-17, you were introduced to regression modeling. The computing tasks for regression, such as fitting a model with `lm()`, don't fit into the wrangling framework. To illustrate:
+
+```{r}
+lm(net ~ age, TenMileRace) 
+```
+
+Regression produces a summary of a data set, somewhat like `summarize()`. The output of `summarize()` is always a data frame. The output of `lm()` is a different kind of thing, as you can see above. In computing lingo, the "kind of thing" is often called the "object class" or "object type."
+
+Perhaps the first thing that's confusing about the object produced by `lm()` is that they contain much more than what's printed out when you display them directly on the screen. The printed output is just a glimpse at the object and, almost always, you use another function to present the content of the object in a way that suits your current need. Let's informally call such functions "extractors." Here are examples of a few of the extractors that you will be using in the coming lessons; you are not expected at this point to know what each is doing.
+
+```{r}
+lm(net ~ age, TenMileRace) %>% coef()
+lm(net ~ age, TenMileRace) %>% rsquared()
+lm(net ~ age, TenMileRace) %>% regression_summary()
+lm(net ~ age, TenMileRace) %>% model_eval(skeleton=TRUE)
+```
+
+Much of what you will be learning in the following Lessons concerns such regression extractors: why what they calculate is useful and how to use it. But let's return to the command patterns you will be seeing.
+
+Regression and wrangling are allies. You will use wrangling, especially `mutate()` and `filter()` to pre-process data before carrying out the regression. For instance, in studying the relationship between `age` and `net` running time, you might want to focus on older people.
+
+```{r}
+TenMileRace %>%
+  filter(age > 40) %>%
+  lm(net ~ age, data=.) %>% confint()
+```
+
+In this example, we've used `confint()` as the extractor, but, depending on our purpose, we might have used any of the others.
+
+Looking closely at the above command you will notice something new: the `data=.` argument being used inside `lm()` . The simple `.` is doing something important, carrying the output of the earlier stages of the pipeline into the `data=` argument of `lm()`.
+
+The dot (`.`) has always been available for use when wrangling, but we haven't needed to use it. For instance, here is an earlier example of a wrangling command translated to use the `.` notation:
+
+```{r}
+TenMileRace %>%
+  group_by(., state) %>%
+  summarize(., ave = mean(net), middle = median(net), sd = sd(net), n = n()) %>%
+  arrange(., ave) %>%
+  head(., 10)
+```
+
+The `.` always means, use the output of the preceding stages of the pipeline as *this argument* to the function. All of the data wrangling commands were designed so that the first argument is always a data frame. The phrase `%>% group_by(., state) %>%` is an explicit direction to place the data coming from the pipeline as the first argument. The pipeline connector, `%>%`, is arranged by default to put the content it is transmitting as the first argument to the following function. For this reason, `.` is not needed if the pipeline pumps results into the first argument.
+
+But not all functions are designed with this convention in mind. In particular, in `lm()` the first argument should be the model formula, e.g. `net ~ age`. The data frame that will be used in fitting the model is the second argument. So, in `lm(net ~ age, data=.)` the dot is directing the pipeline to empty its data frame into the second argument. Otherwise, by default, the pipeline would be plumbed to force the first argument to be the data frame and demote the `net ~ age` to the second position.
+
+## Grouping
+
+The `group_by()` wrangling function is used whenever you want to treat a data frame in a group-by-group manner. It's natural to assume that `group_by()` is slicing up a data frame according to groups. The `mutate()` and `summarize()` functions were specifically designed to make it appear that `group_by()` is doing the slicing. But in reality, `group_by()` is just adding a kind of tag to the data frame. `mutate()` and `summarize()` know to interpret that tag as an instruction to slice up the data when calculating on it.
+
+Most R functions simply ignore the tag added by `group_by()`. Consider, for instance, the pipeline
+
+```{r}
+TenMileRace %>%
+  group_by(sex) %>%
+  lm(net ~ age, data=.) %>%
+  coef()
+```
+
+The output is not what you might expect from your earlier experiences using `group_by()`. Particularly, there is *not* a separate row for each of the groups defined by `sex`. Nor is there a column listing the sex. The `group_by()` has had no effect.
+
+What do you do if you really want to compare groups using regression models? For instance, it might be that you believe that the `F` group ages differently than the `M` group. How do you reveal this with regression?
+
+Regression models have their own, internal system for comparing groups. You express your wish to compare groups by using the model formula. The simple formula `net ~ age` does not instruct `lm()` to compare the sexes. Instead, you would use the formula `net ~ age*sex`. For instance,
+
+```{r}
+TenMileRace %>%
+  lm(net ~ age * sex, data = .) %>%
+  coef()
+```
+
+The output of `lm()` already contains the comparison information. You don't yet know how to read and interpret that comparison information, but you will learn.
+
+There are extremely good reasons why `lm()` does things the way it does. It is not at all a matter of software incompatabiility between the wrangling family of commands and the regression family. The `lm()` paradigm can make much more efficient use of data than `group_by()`. It also offers much more flexibility. `lm()` can handle multiple "grouping" variables together and even lets you "group" by quantitative variables. These capabilities are extremely important for extracting relevant information from data, as you will see in the following lessons.
+
+## Learning challenges
+
+1.  One of these pipeline commands will work and the other won't. Which one will work? Explain why the other one doesn't work.
+
+    ```{r eval=FALSE}
+    lm(net ~ age, data = TenMileRace)
+    TenMileRace %>% lm(net ~ age)
+    ```
+
+2.  An example from the *OpenIntro* book uses data on promotions. Some data wrangling commands that might be relevant are these:
+
+    ```{r}
+    promotions %>% tally()
+    promotions %>% group_by(decision) %>% tally()
+    promotions %>% group_by(gender) %>% tally()
+    promotions %>% group_by(gender, decision) %>% tally()
+    ```
+
+You could use such wrangling to compare groups. For instance, you can use the results of the last command to calculate separately the proportion of males who were promoted and, similarly, the proportion of females.
+
+a\. **What are those proportions?**
+
+The following wrangling command will calculate the proportions for you, but it is a bit complicated:
+
+```{r eval=FALSE}
+promotions %>%
+  group_by(gender) %>%
+  summarize(prop_promoted = sum(decision=="promoted") / n())
+```
+
+b\. **Use this command to check your calculations in (a).**
+
+c\. In the regression paradigm, the comparison of proportions between the two groups is done directly in `lm()`, like this:
+
+```{r}
+promotions %>%
+  mutate(promoted = zero_one(decision, one="promoted")) %>%
+  lm(promoted ~ gender, data = .) %>%
+  coef()
+```
+
+We'll explain the purpose of `zero_one()` in Lesson 19, but putting that matter aside for a moment, compare the two coefficients in the regression model to the proportion results you got from wrangling.
+
+i. **What does the value of the intercept coefficient correspond to in the wrangling results?**
+
+ii. **What does the `genderfemale` coefficient correspond to in the wrangling results?** (Hint: you will have to do a bit of arithmetic on the wrangling results.)

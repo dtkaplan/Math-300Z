@@ -1,0 +1,133 @@
+---
+title: "Math 300 Lesson 20 Notes"
+subtitle: "Simulation and sampling variation "
+author: "YOUR NAME HERE"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+---
+
+
+```{r setup20, include=FALSE}
+library(math300)
+library(mosaic)
+library(knitr)
+library(kableExtra)
+library(math300)
+# math300::setup_student_notes()
+```
+
+## Overview
+
+The word "data" comes from the Latin *datum*, meaning "something given." Statistical thinkers remember that there is something behind the gift: the units of observation, the mechanism that creates the real relationships among the variables, and the process of sampling from the available units of observation those recorded in the data frame. The sampling process leaves traces---called **sampling variation***---in the models we construct from data. This Lesson gives you simulation tools to observe and quantify sampling variation. We will use these throughout the Lessons that follow.
+
+
+### Reading 
+
+[Lesson **20** from *LST*](https://dtkaplan.github.io/Math-300R/Textbook/Reading-notes-lesson-20.html)
+
+
+
+### Objectives
+
+
+20.1 Construct sampling trials from a data frame or a simulation. 
+
+20.2 Replicate sampling trials and calculate the amount of sampling variability.
+
+20.3 Recognize properties of directed, acyclic graphs (DAGs).
+
+
+[Updated list of objectives](../Objectives/Obj-lesson-20.html)
+
+### Libraries 
+
+```{r warning=FALSE,message=FALSE}
+library(mosaic)
+library(math300)
+data("Whickham", package="mosaicData")
+```
+
+--------
+
+
+## Lesson 
+--------
+
+In the real world, creating a sample can be a laborious process, perhaps requiring field, experimental work, or building instrumentation. We're going to skip the hard stuff, and simply use the R function `sample()` which can create a sample from a data frame or a DAG (or other things such as the `1:10` in the example).
+
+```{r}
+sample(1:10, size = 4)
+```
+
+Note: The `size=` argument specifies the size of the sample to be collected. In the text, we follow statistical convention and always refer to the sample size with the letter $n$, as in "collect a sample of size $n=6$. But `sample()` does *not* use $n$ as the name of the size-setting argument.
+
+### Exercise 1
+
+#### Task 1.1
+
+Write the R command to take a sample of size $n = 5$ from the `Whickham` data frame.
+
+```{r}
+# for Task 1.1
+```
+
+Answer these questions:
+
+- Does `sample()` select from the rows or the columns of a data frame?
+- Will the same `sample()` command, when repeated, return the same sample?
+
+
+#### Task 1.2
+
+### Exercise 2
+
+#### Task 2.1
+
+#### Task 2.2
+
+### Exercise 3
+
+#### Task 3.1
+
+#### Task 3.2
+
+**Going further**: 
+
+You can create your own DAGs. Use `dag_make()`, which takes tilde expressions as arguments. The left-hand side of each tilde expression is the name of a node. The right-hand side is an arithmetical formula to create a value from that node from the values of previous nodes or exogenous random number generators like `exo()`. (See the help page `?dag_make` for more information.) For example:
+
+```{r}
+my_own_dag <- dag_make(
+  node_1 ~ exo(0.01) + 3,
+  second ~ 2*node_1 + exo(0.1) - 5,
+  node_C ~ 10*(node_1 + second) + exo() 
+)
+dag_draw(my_own_dag)
+print(my_own_dag)
+sample(my_own_dag, size=10)
+```
+
+Notice that by using a node on the right-hand side of a tilde expression only when it has already been created by a previous tilde expression, you guarantee that the graph will be acyclic.
+
+#### Optional task
+
+Create a DAG that has the same arrangement of causal connections as "[Professor Butts and the Self-Operating Napkin](https://en.wikipedia.org/wiki/Rube_Goldberg_machine)," illustrated below:
+
+![](Professor-Butts.png)
+
+Professor Butts and the Self-Operating Napkin (1931). `Soup_spoon` (A) is raised to mouth, pulling `string` (B) and thereby jerking `ladle` (C), which throws `cracker` (D) past `toucan` (E). Toucan jumps after cracker and `perch` (F) tilts, upsetting `seeds` (G) into `pail` (H). Extra weight in pail pulls `cord` (I), which opens and ignites `lighter` (J), setting off `skyrocket` (K), which causes `sickle` (L) to cut `string_m` (M), allowing pendulum with attached napkin to swing back and forth, thereby `wiping_chin`.
+
+
+***
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+
+
