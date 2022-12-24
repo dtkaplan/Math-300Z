@@ -1,15 +1,14 @@
 ---
 title: "Math 300 Lesson 19 Notes"
-subtitle: "Statistical thinking"
+subtitle: "Topic: Statistical thinking"
 author: "YOUR NAME HERE"
 date: "`r format(Sys.time(), '%B, %Y')`"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     theme: lumen
-    toc: yes
-    toc_float: yes
+    toc: true
+  pdf_document:
+    toc: true
 ---
 
 
@@ -22,12 +21,19 @@ library(math300)
 # math300::setup_student_notes()
 ```
 
+## Overview
+
+Thus far in Math 300Z, we have learned about data frames and wrangling, several modes of visualization, regression models, and the basic interpretation of their coefficients. 
+
+The definition of "statistical modeling" given in the readings emphasizes "accounting for variation." Regression models will be our primary tool for doing the accounting. In this Lesson we will connect more firmly visualization and modeling and practice with measuring the amount of variation in variables and the amount of variation in the response variable accounted for by a model.
+
+### Reading 
+
+[Lesson **19** from *LST*](https://dtkaplan.github.io/Math-300R/Textbook/Reading-notes-lesson-19.html)
 
 
-## Objectives
 
-::: {.callout-warning}
-## Make sure to update before deploying
+### Objectives
 
 19.1 Use the *response vs. explanatory* (**RESPEX**) format for data graphics, employing jittering as appropriate. Display density distributions using a violin graphic.
 
@@ -39,7 +45,6 @@ library(math300)
 
 19.4 Generate graphics and models using zero-one encoding of a categorical response variable. Interpret the output of such models.
 
-:::
 
 [Updated list of objectives](../Objectives/Obj-lesson-19.html)
 
@@ -48,36 +53,38 @@ library(math300)
 
 
 
-## Reading 
-
-[Lesson **19** from *LST*](https://dtkaplan.github.io/Math-300R/Textbook/Reading-notes-lesson-19.html)
-
-
-## Lesson 
-
- 
-
-
-
-## Libraries 
+### Libraries 
 
 ```{r warning=FALSE,message=FALSE}
-library(moderndive)
+library(mosaic)
+library(math300)
+data("amazon_books", package="moderndive")
 ```
 
-## Review
+---------
 
-Thus far in Math 300Z, we have used regression modeling and examined the coefficients created by training a model on data. 
+Suggestion: *As you complete each task, add a `*` after the number in the task's section header. The editor's outline view can then help you navigate to asks that are not yet complete.
 
-## RESPEX graphs
+### Task 0
+
+Activate the "Outline" view in the RStudio editor. Then, add a * after the number in the "### Task 0" header.
+
+---------
+
+
+Lesson
+--------
+
+
 
 The `moderndive::amazon_books` data frame records prices and other aspects of 325 books. We are going to explore some physical attributes of the books, weight, number of pages, thickness, and so on.
 
-## Exercise 1
+### Exercise 1
 
 The *thickness* varies from book to book. We are going to try to account for the thickness in terms of other physical quantities. (FYI: The variable `thick` is measured in inches.)
 
-**TASK**: Make a RESPEX graph suited to the model `thick ~ hard_paper`.
+#### Task 1.1
+Make a RESPEX graph suited to the model `thick ~ hard_paper`.
 
 ```{r warning=FALSE}
 # ggplot(amazon_books, aes(y=_______, x=______)) + 
@@ -85,7 +92,7 @@ The *thickness* varies from book to book. We are going to try to account for the
 ```
 
 
-## Exercise 2
+### Exercise 2
 
 Copy your RESPEX commands into the following chunk and add a `geom_violin()` layer to display the distribution of thickness values for the two categories of book cover. The resulting display won't be very nice. We will improve it later.
 
@@ -100,19 +107,25 @@ Three of the parameters you can give to `geom_violin()` are `color=`, `fill=`, a
 
 The `color=` and `fill=` can be set to values like "blue", "orange", etc. Another possible value is `NA`, which signals to suppress that part of the geom. 
 
-**TASK 1**: Using the next code chunk, set the `alpha=`, `color=`, and `fill=` to values of your preference, subject only to the constraint that the violin doesn't hide the data.
+#### Task 2.1
+
+Using the next code chunk, set the `alpha=`, `color=`, and `fill=` to values of your preference, subject only to the constraint that the violin doesn't hide the data.
 
 ```{r warning=FALSE}
 # for task 1
 ```
 
-**TASK 2**: Compare your choices in Task 1 to those made in the readings in (Figure 19.3](https://dtkaplan.github.io/Math-300R/Textbook/Reading-notes-lesson-19.html#fig-violin-intro). What do you prefer about your choices and what do you prefer in Figure 19.3?
+#### Task 2.2
 
-## Exercise 3
+Compare your choices in Task 1 to those made in the readings in (Figure 19.3](https://dtkaplan.github.io/Math-300R/Textbook/Reading-notes-lesson-19.html#fig-violin-intro). What do you prefer about your choices and what do you prefer in Figure 19.3?
+
+### Exercise 3
 
 Common sense suggests that the thickness of a book depends on the number of pages. Let's investigate this numerically.
 
-**TASK 1**: Make a RESPEX graph of `amazon_books` suitable for the model `thick ~ num_pages`.
+#### Task 3.1 
+
+Make a RESPEX graph of `amazon_books` suitable for the model `thick ~ num_pages`.
 
 ```{r}
 # For Task 1
@@ -124,17 +137,21 @@ The next chunk trains a model with `thick ~ num_pages`, naming the result `mod1`
 mod1 <- lm(thick ~ num_pages, data=amazon_books)
 ```
 
-**TASK 2**: Extract the `coefficients()` from `mod1`. 
+#### Task 3.2
+
+Extract the `coefficients()` from `mod1`. 
 
 ```{r}
 # for TASK 2
 ```
 
-**TASK 3**: Based on the coefficients, say how thick a typical page is. (Remember the units!)
+#### Task 3.4
+
+Based on the coefficients, say how thick a typical page is. (Remember the units!)
 
 *Your answer:*
 
-## Exercise 4
+### Exercise 4
 
 For your convenience, `model_plot()` function will graph the model as an annotation on top of a RESPEX display of the data.
 
@@ -147,7 +164,9 @@ The `model_eval()` function will turn input values for explanatory variables int
 ```{r}
 model_eval(mod1, num_pages=250)
 ```
-**TASK 1**: Explain in words how the above output for `num_pages=250 corresponds to the RESPEX graph of the model made just previously.
+
+#### Task 4.1
+Explain in words how the above output for `num_pages=250 corresponds to the RESPEX graph of the model made just previously.
 
 *Your answer:*
 
@@ -155,29 +174,35 @@ model_eval(mod1, num_pages=250)
 
 If you use `model_eval()` *without* specifying values for the explanatory variables, `model_eval()` will use the *training data*, producing an output for each row in the training data. It will also calculate the residuals (and some other quantities that we will use in another Lesson).
 
-```{r}
+```{r message = FALSE}
 Output_for_training_data <- model_eval(mod1)
 ```
 
-**TASK 2**: Add to the above chunk the wrangling commands to compute the *variance* of each of these three columns: the `.response` variable, the model `.output`, and the residuals `.resid`. (Hint: `summarize()` and `var()`.)
+#### Task 4.2
+Add to the above chunk the wrangling commands to compute the *variance* of each of these three columns: the `.response` variable, the model `.output`, and the residuals `.resid`. (Hint: `summarize()` and `var()`.)
 
-## Exercise 5
+### Exercise 5
 
 Let's explore the idea that a book's cover type---hard-cover or paperback---reflects the number of pages in the book. 
 
-**TASK 1**: Use wrangling commands such as `group_by(hard_paper)` and `tally()` to figure out what fraction of the `amazon_books` are hard-cover? 
+#### Task 5.1 
+
+Use wrangling commands such as `group_by(hard_paper)` and `tally()` to figure out what fraction of the `amazon_books` are hard-cover? 
 
 ```{r}
 # for Task 1
 ```
 
-**TASK 2**: Use wrangling commands and `zero_one()`  to add a new variable `hardcover` to `amazon_books`. The value of the `hardcover` should be 1 when the book is hardcover. (Hints: You don't need `group_by()` for this task.)
+#### Task 5.2
+Use wrangling commands and `zero_one()`  to add a new variable `hardcover` to `amazon_books`. The value of the `hardcover` should be 1 when the book is hardcover. (Hints: You don't need `group_by()` for this task.)
 
 ```{r}
 # for Task 2
 ```
 
-**TASK 3**: Use wrangling commands to find the mean of the `hardcover` variable that you made in Task 2. 
+#### Task 5.3
+
+Use wrangling commands to find the mean of the `hardcover` variable that you made in Task 5.2. 
 
 ```{r}
 # For task 3
@@ -190,7 +215,7 @@ How does the result compare to the quantity you calculated in Task 1?
 
 *Your answer*:
 
-**Going farther**: 
+### Going further
 
 Explain what this plot shows, particularly the blue line.
 ```{r}
@@ -210,7 +235,5 @@ ggplot(Tmp, aes(x = num_pages, y = .response)) +
 
   * File creation date: `r Sys.Date()`
   * `r R.version.string`
-  * `tidyverse` package version: `r packageVersion("tidyverse")`
-  * `moderndive` package version: `r packageVersion("moderndive")`
-
+  
 
