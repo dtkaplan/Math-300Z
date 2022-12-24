@@ -298,7 +298,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -392,11 +392,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Constructing a prediction interval</span></h1>
+<h1 class="title"><span id="sec-lesson-26" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Constructing a prediction interval</span></span></h1>
 </div>
 
 
@@ -411,7 +411,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>Lesson 25 introduced predictions in two forms:</p>
+<p><a href="Reading-notes-lesson-25.html">Lesson&nbsp;<span>25</span></a> introduced predictions in two forms:</p>
 <ol type="1">
 <li>a <strong>point quantity</strong>, the direct output of the model function.</li>
 <li>the <strong>prediction interval</strong>, which indicates a range of likely values for the quantity being predicted.</li>
@@ -467,7 +467,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Notice that the result from the above command includes a column <code>.output</code> which will always be an exact match to the output the model function will have generated. However, there is more to the output of <code>model_eval()</code>. The interval form of the prediction is of particular importance, contained in the columns <code>.lwr</code> and <code>.upr</code>.</p>
 <p>Many people prefer a point prediction, possibly because the single number suggests a single, correct answer, which is somehow emotionally comforting. <em>But the comfort is unjustified.</em></p>
 <p>The proper form for a prediction is a <strong>prediction interval</strong>: two numbers bounding the lower and upper limits for the likely outcome. For the hill-racing model, the point prediction is 3372.985 seconds, which is a running time of just under one hour. Nothing about this single number even tells us how many digits are appropriate. The prediction interval tells a different story. The interval, 1700 to 5100 seconds, conveys the appropriate uncertainty in the prediction.</p>
-<section id="where-does-the-prediction-interval-come-from" class="level2 page-columns page-full">
+<section id="where-does-the-prediction-interval-come-from" class="level2">
 <h2 class="anchored" data-anchor-id="where-does-the-prediction-interval-come-from">Where does the prediction interval come from</h2>
 <p>The prediction interval has two distinct components:</p>
 <ol type="1">
@@ -573,7 +573,7 @@ t_{lwr}(d,c) \equiv -533 + 246 d + 2.49 c\]</span></p>
 </div>
 <p>Keeping in mind that the overall spread of the residuals is plus-or-minus “twice” the standard deviation of the residuals, we can say that the residuals indicate an additional uncertainty in the prediction for a runner of about <span class="math inline">\(\pm 1700\)</span> seconds. This <span class="math inline">\(\pm 1700\)</span> second is our estimate of the <strong>noise</strong> in the measurements. In contrast, the <strong>confidence interval</strong> is about the sampling variation in the signal.</p>
 <p>In this case, the <strong>prediction interval</strong> is wholly dominated by noise; the sampling variability contributes only a tiny amount of additional uncertainty.</p>
-<div class="callout-note callout callout-style-default callout-captioned page-columns page-full">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -582,7 +582,7 @@ t_{lwr}(d,c) \equiv -533 + 246 d + 2.49 c\]</span></p>
 Example: Graphics for the prediction interval
 </div>
 </div>
-<div class="callout-body-container callout-body page-columns page-full">
+<div class="callout-body-container callout-body">
 <p>We shift the running scene from Scotland to Washington, DC. The race now is a single 10-miler with almost 9000 registered participants. We wish to predict the running time of an individual based on his or her <code>age</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Age_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(net <span class="sc">~</span> age, <span class="at">data =</span> TenMileRace)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -623,10 +623,11 @@ Example: Graphics for the prediction interval
 </div>
 </div>
 <p>For convenience, the <code>model_plot()</code> function will do this work for us, plotting the prediction interval along with the training data. We can also direct <code>model_plot()</code> to show the confidence interval.</p>
-<div class="page-columns page-full">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(Age_mod, <span class="at">x=</span>age, <span class="at">interval=</span><span class="st">"prediction"</span>, <span class="at">data_alpha=</span><span class="fl">0.05</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(Age_mod, <span class="at">x=</span>age, <span class="at">interval=</span><span class="st">"confidence"</span>, <span class="at">data_alpha=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-ten-mile-age-confidence" class="cell column-page-right quarto-layout-panel">
+<div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">### #| column: page-right</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(Age_mod, <span class="at">x=</span>age, <span class="at">interval=</span><span class="st">"prediction"</span>, <span class="at">data_alpha=</span><span class="fl">0.05</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(Age_mod, <span class="at">x=</span>age, <span class="at">interval=</span><span class="st">"confidence"</span>, <span class="at">data_alpha=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-ten-mile-age-confidence" class="cell quarto-layout-panel">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">

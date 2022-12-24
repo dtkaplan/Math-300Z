@@ -297,7 +297,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -397,7 +397,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Spurious correlation</span></h1>
+<h1 class="title"><span id="sec-lesson-31" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Spurious correlation</span></span></h1>
 </div>
 
 
@@ -610,7 +610,7 @@ Time series analysis
 <p>Some spurious correlations, such as those presented on the <a href="http://www.tylervigen.com/spurious-correlations">eponymous website</a>, can also be attributed to methodological error.</p>
 <p>One source of error was identified in 1904 by F.E. Cave-Browne-Cave in her paper “On the influence of the time factor on the correlation between the barometric heights at stations more than 1000 miles apart,” published in the Proceedings of the Royal Society. “Miss Cave,” as she was referred to in 1917 and 1921, respectively by eminent statisticians William Sealy Gosset (who published under the name “Student”) and George Udny Yule, also offered a solution to the problem. Her solution is very much in the tradition of “<strong>time-series analysis</strong>,” a contemporary specialized area of statistics.</p>
 <p>The unlikeliness of the correlations on the website is another clue to their origin as methodological. Nobody woke up one morning with the hypothesis that cheese consumption and bedsheet mortality are related. Instead, the correlation is the product of a search among many miscellaneous records. Imagine that data were available on 10,000 annually tabulated variables for the last decade. These 10,000 variables create the opportunity for 50 million pairs of variables. Even if none of these 50 million pairs have a genuine relationship, sampling variation will lead to some of them having a strong correlation coefficient.</p>
-<p>In statistics, such a blind search is called the “multiple comparisons problem.” Ways to address the problem have been available since the 1950s. (We will return to this topic under the label “false discovery” in Lesson 38.) Multiple comparisons can be used as a trick, as with the website. However, multiple comparisons also arise naturally in some fields. For example, in molecular genetics, “micro-arrays” make a hundred thousand simultaneous measurements of gene expression. Correlations in the expression of two genes give a clue to cellular function and disease. With so many pairs available, multiple comparisons will be an issue.</p>
+<p>In statistics, such a blind search is called the “multiple comparisons problem.” Ways to address the problem have been available since the 1950s. (We will return to this topic under the label “false discovery” in <a href="Reading-notes-lesson-38.html">Lesson&nbsp;<span>38</span></a>.) Multiple comparisons can be used as a trick, as with the website. However, multiple comparisons also arise naturally in some fields. For example, in molecular genetics, “micro-arrays” make a hundred thousand simultaneous measurements of gene expression. Correlations in the expression of two genes give a clue to cellular function and disease. With so many pairs available, multiple comparisons will be an issue.</p>
 </div>
 </div>
 </section>
@@ -638,7 +638,7 @@ Time series analysis
 <p>This circularity produces a muddle. Centuries of philosophical debate have yet to clarify things much.</p>
 <p>Still, we can do something. The point of view of these Lessons is to support decision-making. Causation is a valuable concept for decision-making, particularly in cases where the decision-maker is considering an <em>intervention</em>. With this as an anchor, a pragmatic definition of “causation” is available:</p>
 <blockquote class="blockquote">
-<p>Causation describes a class of hypotheses that DAGs can represent. In that representation, a causal relationship between two nodes X and Y is marked by a causal path connecting X to Y. In Lesson 30, we defined “causal path” in terms of the directions of arrows in a DAG.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> A definitive demonstration of a causal relationship between X and Y is that intervening to change X results reliably in a change in Y, <em>all other nodes not on the causal path being held constant.</em> (Lesson 32 treats the methodology behind this definitive sign.)</p>
+<p>Causation describes a class of hypotheses that DAGs can represent. In that representation, a causal relationship between two nodes X and Y is marked by a causal path connecting X to Y. In <a href="Reading-notes-lesson-30.html">Lesson&nbsp;<span>30</span></a>, we defined “causal path” in terms of the directions of arrows in a DAG.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> A definitive demonstration of a causal relationship between X and Y is that intervening to change X results reliably in a change in Y, <em>all other nodes not on the causal path being held constant.</em> (<a href="Reading-notes-lesson-32.html">Lesson&nbsp;<span>32</span></a> treats the methodology behind this definitive sign.)</p>
 </blockquote>
 <p>Whether or not a definitive demonstration is feasible is not directly relevant to the decision-maker. A decision-maker acts under the guidance of one or more hypotheses. A good rule of thumb for decision-makers is to be guided only by plausible hypotheses. Whether a hypothesis is plausible is a matter of informed belief. A definitive demonstration should sharpen that belief. If no such definitive demonstration is available, the decision-maker must rely on alternative sources for belief. Austin Bradford Hill (1898-1991), an epidemiologist and eminent statistician, famously published a <a href="https://en.wikipedia.org/wiki/Bradford_Hill_criteria">list of nine criteria</a> that support belief in a causal hypothesis.</p>
 <p>Using my definition of causation, and in marked disagreement with many statisticians, I submit that</p>

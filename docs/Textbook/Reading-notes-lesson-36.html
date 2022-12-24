@@ -298,7 +298,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -399,7 +399,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></h1>
+<h1 class="title"><span id="sec-lesson-36" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></span></h1>
 </div>
 
 
@@ -419,7 +419,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 \newcommand{\Ntest}{\mathbb{N}}
 \newcommand{\given}{\ |\!\!|\  }\]</span></p>
 </div>
-<p>In Lesson 35, we looked at the accounting process that is used for building a classifier and interpreting the results. That accounting process is also applicable, in whole or part, to a more general procedure in statistics called, variously, “<strong>hypothesis testing</strong>” or “<strong>Null hypothesis testing</strong>” (NHT), or “<strong>Null hypothesis significance testing</strong>” (NHST). Textbooks tend to use the shorter name: “hypothesis testing.” But these Lessons will use NHT as the name, because that is a more complete description of the actual process.</p>
+<p>In <a href="Reading-notes-lesson-35.html">Lesson&nbsp;<span>35</span></a>, we looked at the accounting process that is used for building a classifier and interpreting the results. That accounting process is also applicable, in whole or part, to a more general procedure in statistics called, variously, “<strong>hypothesis testing</strong>” or “<strong>Null hypothesis testing</strong>” (NHT), or “<strong>Null hypothesis significance testing</strong>” (NHST). Textbooks tend to use the shorter name: “hypothesis testing.” But these Lessons will use NHT as the name, because that is a more complete description of the actual process.</p>
 <p>The word “test” is familiar to all who have ever been students, but it will still be useful to have a definition. This one seems reasonable:</p>
 <blockquote class="blockquote">
 <p>“<em>A procedure intended to establish the quality, performance, or reliability of something, especially before it is taken into widespread use.</em>” – Oxford Languages</p>
@@ -429,11 +429,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In this Lesson, we will introduce the logic of Null hypothesis testing (NHT) and compare it to other procedures that also have a claim to be the way to test hypotheses. In Lesson 37, we will show how to do the computations involved to create the number—called the <strong>p-value</strong>—that is usually taken as the end-result of NHT. And in Lesson 38, we will return to the controversy, with the goal of helping the reader avoid pitfalls in interpretation of the p-value.</p>
 <section id="tests-generally" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="tests-generally">Tests, generally</h2>
-<div class="page-columns page-full"><p>In Lessons 34 and 35, the classifiers we built had two possible outputs, <span class="math inline">\(\Ptest\)</span> or <span class="math inline">\(\Ntest\)</span>. The classifier is only part of a bigger procedure which we called a “test.” To avoid unnecessary abstraction, our examples featured medical tests.</p><div class="no-row-height column-margin column-container"><span class="">Medical tests often have three or more outcomes such as “high,” “normal,” or “low.” This does not fundamentally change the situation from our <span class="math inline">\(\Ptest\)</span> or <span class="math inline">\(\Ntest\)</span> paradigm.</span></div></div>
+<div class="page-columns page-full"><p>In Lessons 34 and 35, the classifiers we built had two possible outputs, <span class="math inline">\({\mathbb{P}}\)</span> or <span class="math inline">\({\mathbb{N}}\)</span>. The classifier is only part of a bigger procedure which we called a “test.” To avoid unnecessary abstraction, our examples featured medical tests.</p><div class="no-row-height column-margin column-container"><span class="">Medical tests often have three or more outcomes such as “high,” “normal,” or “low.” This does not fundamentally change the situation from our <span class="math inline">\({\mathbb{P}}\)</span> or <span class="math inline">\({\mathbb{N}}\)</span> paradigm.</span></div></div>
 <p>In a medical test, the first step in the procedure usually involves a measurement procedure for an individual, for instance, counting white blood cells or measuring the concentration of prostate-specific antigen (PSA).</p>
-<p>The second step is purely arithmetical, comparing the measurement result to a threshold, thereby determining if the output should be <span class="math inline">\(\Ptest\)</span> or <span class="math inline">\(\Ntest\)</span>. Lessons 34 and 35 were largely about how to set a good value for the threshold and involved stating a <em>loss function</em> and considering the prevalence of the condition involved.</p>
+<p>The second step is purely arithmetical, comparing the measurement result to a threshold, thereby determining if the output should be <span class="math inline">\({\mathbb{P}}\)</span> or <span class="math inline">\({\mathbb{N}}\)</span>. Lessons 34 and 35 were largely about how to set a good value for the threshold and involved stating a <em>loss function</em> and considering the prevalence of the condition involved.</p>
 <p>A more familiar kind of test is the one taken by students in school, for instance, an algebra test. As the reader knows, in an algebra test, the subject is made to answer questions, the number of correct answers counted, and that count applied to a threshold to determine whether the overall result is “pass” or “fail.” There is not an explicit underlying condition, say, “expert” or “dilettante.” Consequently, there is no such thing as a false-negative (an expert who fails the test) or a false-positive (a dilettante who passes the test). All that matters is the test result itself</p>
-<p>Unlike medical tests, academic tests are generally not the product of the sort of careful development phase described in Lesson 35. In an algebra test, there is no training data, that is, no sample of subjects who have been observed definitively to be “experts” or “dilettantes” and who take the test to be classified as “pass” or “fail.” There is no calculation of a sensitivity or specificity to characterize the test and no use of a loss function to bend sensitivity, specificity, and prevalence into a threshold dividing “pass” from “fail.” Academicians never tell their students what the false positive and false negative rates are.</p>
+<p>Unlike medical tests, academic tests are generally not the product of the sort of careful development phase described in <a href="Reading-notes-lesson-35.html">Lesson&nbsp;<span>35</span></a>. In an algebra test, there is no training data, that is, no sample of subjects who have been observed definitively to be “experts” or “dilettantes” and who take the test to be classified as “pass” or “fail.” There is no calculation of a sensitivity or specificity to characterize the test and no use of a loss function to bend sensitivity, specificity, and prevalence into a threshold dividing “pass” from “fail.” Academicians never tell their students what the false positive and false negative rates are.</p>
 <p>Students and teachers think of an academic test as that part of the overall procedure where questions are asked and answered. Of course, there is a follow-up procedure that we call “grading,” where the correct answers are counted and the count converted to a pass/fail result. Sometimes the threshold between pass and fail is not fixed, but is set by the instructor to achieve a desired pass rate. This is called “grading on a curve,” the threshold depends on the observed counts.</p>
 <p>NHT is like “grading on a curve.” The data collection and summary of the data is <strong>not part of the procedure</strong>. Like “grading on a curve”, NHT starts at the point where the data have already been recorded and summarized. (Typically, the summary is the coefficient from a regression model or some other statistical measure like R<sup>2</sup>.)</p>
 <p>NHT is only about grading the summary, which is done on a curve. The grading is accomplished by examining a likelihood calculated from the summary. As notation for this likelihood, we will write <span class="math inline">\({\cal L}_{\mathbb{S}}(\text{Null hypothesis})\)</span>.</p>
@@ -444,7 +444,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The key to understanding Null hypothesis testing is to know what the Null hypothesis is claiming.</p>
 <p>In a technical sense, it would suffice to say that the Null hypothesis is a claim that the effect size is zero (or that R<sup>2</sup> is zero) except for sampling variation. Making sense of this requires that one know what an “effect size” (or “R<sup>2</sup>”) is and what “sampling variation” means. At this point in these Lessons, you ought to know all of these things. But how to talk about hypothesis testing to a general audience?</p>
 <p>One strategy is to describe the Null as the “absence of any effect” or “relationship.” Another common strategy is to avoid mentioning the Null at all and use alternates such as “the result is significant” or “not due to chance.”</p>
-<p>Another way to think about the Null hypothesis is algorithmically. A Null-hypothesis relationship—really, a lack of relationship—can be created between two variables by <strong>shuffling</strong> one of them. Shuffling was introduced briefly in Lesson 29, where it was used to simulate an explanatory variable unrelated to the response.</p>
+<p>Another way to think about the Null hypothesis is algorithmically. A Null-hypothesis relationship—really, a lack of relationship—can be created between two variables by <strong>shuffling</strong> one of them. Shuffling was introduced briefly in <a href="Reading-notes-lesson-29.html">Lesson&nbsp;<span>29</span></a>, where it was used to simulate an explanatory variable unrelated to the response.</p>
 <p>To illustrate, consider the <code>Galton</code> data about the heights of adult children and their parents. We will make a simple model of <code>height</code> as a function of <code>sex</code>—everyday experience suggests a relationship between the two variables.</p>
 <div class="cell" data-digits="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> sex, <span class="at">data=</span>Galton) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -563,20 +563,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="fig-planet-null" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="www/planet-null.png" class="img-fluid figure-img" width="140"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;36.1: Planet Null, known symbolically as <span class="math inline">\(\given H_0)\)</span>. Any pattern on Planet Null is attributed to chance, in the form of sampling variation.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;36.1: Planet Null, known symbolically as <span class="math inline">\(\ |\!\!| H_0)\)</span>. Any pattern on Planet Null is attributed to chance, in the form of sampling variation.</figcaption><p></p>
 </figure>
 </div>
 </div></div></div>
-<p>In terms of the planet metaphor for hypotheses, the Null hypothesis <span class="math inline">\(\given H_0)\)</span> is a planet. Variables on this planet are always unrelated to one another. The possible indication of a pattern is due to sampling variation, not a genuine relationship.</p>
+<p>In terms of the planet metaphor for hypotheses, the Null hypothesis <span class="math inline">\({\ |\!\!|\  } H_0)\)</span> is a planet. Variables on this planet are always unrelated to one another. The possible indication of a pattern is due to sampling variation, not a genuine relationship.</p>
 <blockquote class="blockquote">
 <p><strong>Riddle</strong>: How do we get to Planet Null?</p>
 </blockquote>
 <pre><code>Take the space shuffle.</code></pre>
-<p>Before the advent of ubiquitous computing, the Null hypothesis was implemented using algebra and probability theory. An example of such theory appeared in Lesson 29. The blue diagonal line in <a href="Reading-notes-lesson-29.html#fig-amazon-book-shuffle">Figure&nbsp;<span>29.3</span></a> reflects what the average value of R<sup>2</sup> would be if a large number of trials were run on the model <code>y ~ x1 + x2 + ... + xk</code> where the <code>x</code>’s are unrelated to the <code>y</code>. Another part of the theory has to do with the “distribution” of the F statistic from Lesson 29, which we will discuss in Lesson 37.</p>
+<p>Before the advent of ubiquitous computing, the Null hypothesis was implemented using algebra and probability theory. An example of such theory appeared in <a href="Reading-notes-lesson-29.html">Lesson&nbsp;<span>29</span></a>. The blue diagonal line in <a href="Reading-notes-lesson-29.html#fig-amazon-book-shuffle">Figure&nbsp;<span>29.3</span></a> reflects what the average value of R<sup>2</sup> would be if a large number of trials were run on the model <code>y ~ x1 + x2 + ... + xk</code> where the <code>x</code>’s are unrelated to the <code>y</code>. Another part of the theory has to do with the “distribution” of the F statistic from Lesson 29, which we will discuss in Lesson 37.</p>
 </section>
 <section id="the-alternative-hypothesis" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="the-alternative-hypothesis">The Alternative hypothesis</h2>
-<p>In Null hypothesis testing, there is only the one hypothesis—the Null—under consideration. Since the world <span class="math inline">\(\given H_0)\)</span> can be created by shuffling, the computations for NHT can be done pretty easily even without the probability theory just mentioned.</p>
+<p>In Null hypothesis testing, there is only the one hypothesis—the Null—under consideration. Since the world <span class="math inline">\({\ |\!\!|\  } H_0)\)</span> can be created by shuffling, the computations for NHT can be done pretty easily even without the probability theory just mentioned.</p>
 <p>There has been a controversy since the 1930s about whether hypothesis testing—in the broad sense—should involve two (or more) competing hypotheses. One of these could be the Null hypothesis, the other, which we call the “Alternative hypothesis” (<span class="math inline">\(H_a\)</span>) a statement of a specific non-null relationship.</p>
 <div class="cell page-columns page-full">
 
@@ -584,7 +584,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="fig-planet-alt" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="www/planet-alt.png" class="img-fluid figure-img" width="82"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;36.2: Planet Alt, that is, <span class="math inline">\(\given H_a)\)</span> might look like this. We draw it as a cartoon planet, since any particular hypothesis is a product of the imagination.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;36.2: Planet Alt, that is, <span class="math inline">\(\ |\!\!|\  H_a)\)</span> might look like this. We draw it as a cartoon planet, since any particular hypothesis is a product of the imagination.</figcaption><p></p>
 </figure>
 </div>
 </div></div></div>
@@ -610,7 +610,7 @@ Not an alternative!
 </section>
 <section id="sec-under-the-null" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="sec-under-the-null">“Under the Null”</h2>
-<p>Using the shuffling algorithm, the computation underlying NHT is very much like the technique introduced in Lesson 23: create a set of trials to represent the sampling distribution. The twist in NHT is that the sampling distribution is calculated on Planet Null. Or, in conventional statistical language, what’s computed is the “sampling distribution under the Null.”</p>
+<p>Using the shuffling algorithm, the computation underlying NHT is very much like the technique introduced in <a href="Reading-notes-lesson-23.html">Lesson&nbsp;<span>23</span></a>: create a set of trials to represent the sampling distribution. The twist in NHT is that the sampling distribution is calculated on Planet Null. Or, in conventional statistical language, what’s computed is the “sampling distribution under the Null.”</p>
 <p>The phrase “under the Null” is often described as being shorthand for “assuming the Null to be true.” When doing a calculation, “assuming the Null to be true” might be better expressed more emphatically: “arranging things so that the Null is true” or “enforcing the Null.”</p>
 <p>We will use the <code>Galton</code> data, and the model <code>height ~ mother</code>, to illustrate computing the “sampling distribution under the Null.” The relationship being expressed by <code>height ~ mother</code> is that the adult child’s height is related at least in part to the mother’s height. As always, the effect size is a good way to quantify that relationship. Here it is:</p>
 <div class="cell">

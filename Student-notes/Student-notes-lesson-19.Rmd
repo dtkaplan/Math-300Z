@@ -15,212 +15,202 @@ output:
 
 ```{r setup19, include=FALSE}
 library(math300)
-library(mosaicCore)
+library(mosaic)
 library(knitr)
 library(kableExtra)
-knitr::opts_chunk$set(echo = TRUE)
+library(math300)
+# math300::setup_student_notes()
 ```
 
-Here's a graph of the data in our standard response-vs-explanatory graphic frame:
-
-```{r}
-#| column: margin
-Whickham %>%
-  ggplot(aes(x = smoker, y = outcome)) +
-  geom_jitter(width=0.2, height=0.2, alpha=0.5)
-```
-
-The graph suggests that non-smokers were more likely than smokers to be dead at the follow-up interview. But it's hard to calculate proportions from such a graph. It's reasonable to argue that for the purpose of showing the fraction of smokers and of non-smokers who died, a bar chart would be better.
-
-```{r warning=FALSE}
-#| label: fig-smoker-barplot
-#| fig-cap: "Barplots of the `Whickham`smoking and survival data."
-#| fig-subcap:
-#|   - "counts"
-#|   - "proportions"
-Whickham %>%
-  ggplot(aes(x=smoker, fill=outcome)) +
-  geom_bar()
-Whickham %>%
-  ggplot(aes(x=smoker, fill=outcome)) +
-  geom_bar(position = "fill") +
-  ylab("Proportions")
-```
-
-The left barplot, showing counts, suggests that a higher proportion of non-smokers died than of smokers. But its easy to instruct the `geom_bar()` to graph proportions rather than counts, as done in the left plot. This makes it easy to conclude at a glance that a higher proportion of non-smokers have died.
-
-The important question here, "Does smoking affect mortality?" translates well into the response/explanatory paradigm: `outcome` is the response variable while `smoker` is the explanatory variable. In the jitter-plot presentation of the data, these assignments are clearly indicated in the computer commands, which set `x=smoker, y=outcome`. In the barplot, a different notation is used: `x=smoker, fill=outcome`.
-
-Unfortunately, neither of the graphic styles---jitter or boxplot---answers the important question. At best they provide a description of the nurses in the `Whickham` data frame.
-
-To answer the important question, we need to invoke statistical thinking. In particular, we need an *interval summary* of the proportion who died, not the point summary produced by the barplot. 
-
-This doesn't mean that we can't easily calculate the proportions from the categorical response variable: we just have to use the right commands. for instance:
-
-```{r}
-Whickham %>%
-  df_stats(outcome ~ smoker, prop, ci.prop)
-```
-
-The point summary---the `prop_Alive` column---suggests an obvious difference between the smokers and non-smokers. The interval summary---columns `lower` and `upper`---tempers this conclusion a little: the intervals almost touch.
-
-Although regression is our go-to technique for modeling relationships between variables, we can't use it directly on a categorical response variable. 
-
-::: {.callout-warning}
-Here's what happens if we try:
-
-```{r}
-lm(outcome ~ smoker, data = Whickham) %>% confint()
-```
-
-The computer's warning message is a reminder that the response variable is categorical. (The message uses the phrase "factor response," which is just computerese for "categorical response.")
-:::
-
-To use regression with a two-level categorical response variable, transform it into a zero-one encoding. In the following, we'll use 1 to represent `"Alive"` and 0 to represent `"Dead"`, although we can equally well do things the other way around.
-
-```{r}
-lm(zero_one(outcome, one="Alive") ~ smoker, data = Whickham) %>% 
-  confint()
-```
-
-You don't yet know enough to interpret this interval summary. That will have to wait until Lesson 24. The significant^[In lesson 38 you'll learn to be wary whenever a statistician uses the word "significant."] feature of the interval on `smokerYes` is that it does not include zero. In everyday terms, the interval means, "Smokers are 3 to 12 percentage points more likely to survive for 20 years than are non-smokers."
-
-Using interval summaries instead of point summaries is an important aspect of statistical thinking, but there are other aspects that need to be taken into account. A simple, but important, question is whether the nurses recorded in the `Whickham` data frame are good representatives of all smokers. (It turns out that the nurses in `Whickham` are all women interviewed in the 1970s. At that moment of history, women were very different than men when it comes to smoking, and the Whickham smokers were also very different from today's female smokers. We'll say more about this in the demonstration below.)
-
-Statistical thinking also leads one to ask another sort of question: What else might be going on other than smoking? In technical language, the other-goings-on are called "**covariates**," the topic of Lessons 28 & 29.
-
-For instance, you might wonder about the overall result from our brief examination of the `Whickham` data. Is it really the case that the smokers were more likely to survive than the non-smokers? The answer is "yes," as we have demonstrated from the previous analysis. But this answer is completely misleading. Tobacco companies worked hard to mislead people into thinking that smoking was not dangerous. They knew full well the negative health consequence of smoking, but they used statistical-sounding claims to hide this knowledge from the public.
-
-In the following demonstration, we'll look at the `Whickham` data again using the power of regression models to incorporate covariates.
-
-::: {.callout-note}
-## Demonstration: Smoking with covariates
-
-*Remember that you are not expected to master the calculations in these demonstrations. Focus your attention on the output from the calculations.*
-
-It goes without saying that smoking is not the only thing that kills people. There are other risky behaviors such as heavy drinking, there's environmental exposure to pollutants, and there's disease (other than the smoking induced ones of lung cancer, emphysema, and high blood pressure). But there's one risk factor for death that everyone knows about but nobody is doing anything about: getting old.
-
-In virtually every public health or clinical study, the participant's age is taken into account. Not doing so can produce a completely misleading view of the situation. This is also the case with smoking and mortality in the `Whickham` study.
-
-Regression techniques enable us to take multiple explanatory variables into account. In this demonstration, we'll use regression to study `outcome` as a function of `smoker` and, importantly, `age`.
-
-To get started, we need to remember to convert the categorical `outcome` variable into a zero-one encoding. After that, building the model is not so hard.
-
-```{r}
-survival_model <- Whickham %>% 
-  mutate(survived = zero_one(outcome, one="Alive")) %>%
-  model_train(survived ~ age + smoker, data=.)
-```
-
-From this model, we can read off an interval summary of the effect of smoking on survival:
-
-```{r message=FALSE}
-survival_model %>% confint()
-```
-
-A full understanding of this interval summary will need to wait until Lessons 22 through 24. For the present, we'll simply point out that the summary interval on `smokerYes` includes zero, so `Whickham` provides no support for the mistaken conclusion that smoking improves survival. But seeing this requires taking into account `age`. A graphic may help explain why:
-
-```{r}
-Model_output <- model_eval(survival_model, interval="confidence")
-Model_output %>%
-  ggplot(aes(y = survived, ymin=.lwr, ymax=.upr, x=age, color=smoker, fill=smoker)) +
-  geom_jitter(height=.1, width=0, alpha=0.2) +
-  geom_ribbon(alpha=0.2) 
-```
-
-The interval summary in the graph shows how the probability of survival changes for different ages. The intervals for non-smokers and smokers entirely overlap. For both groups, 20-year survival goes down with greater initial age. So why did the model `outcome ~ smoker` suggest that smokers have a higher survival? The reason relates to the proportion of smokers with initial age 70+. In the 1970s, life expectancy was such that people 70+ were unlikely to survive 20 years. This pulls down the survival rate at that age. Notice that the 70+ nurses were unlikely to have been smokers compared to younger nurses. The 70+ nurses grew up in an era when social conventions caused smoking to be uncommon for women (even though it was very common for men).
-
-:::
 
 
-## Key ideas
-
-1. Starting with this lesson, the course will be about ways to extract **actionable information** from data. "Actionable information" is in a form to guide decision making. Core techniques for extracting information from data are graphics and models.
-
-2. In this lesson ...
-    a. You will start to construct data graphics in a standard format suited for modeling: a response variable on the vertical axis and an explanatory variable on the horizontal axis. (Other explanatory variables can be mapped to color or facets. We'll get to that in later lessons.)
-    b. You will be introduced to statistical annotations that display an **interval** over the response variable. (In later lessons, we'll introduce specific types of intervals.)
-    c. You will extend regression models to be able to handle a two-level **categorical** response variable.
-    
-::: {.callout-warning}
-## In draft
-
-Make a jitter plot of gestation period versus smoking status. Then find the mean for each smoking status show this table. Then the ci.mean() as a table and graphed as an interval.
-
-```{r}
-values <- lm(gestation ~ smoke, data = Gestation) %>% 
-  model_eval(interval="confidence", skeleton=TRUE)
-Gestation %>% ggplot(aes(x = smoke, y = gestation)) +
-  geom_jitter(width=0.2, alpha=0.1) +
-  geom_errorbar(data = values, aes(x=smoke, ymin=.lwr, ymax=.upr), y=NA)
-```
-:::
-    
 ## Objectives
 
-While in draft, see `Objectives/Obj-lesson-19.qmd`. Those will be copied over here.
+::: {.callout-warning}
+## Make sure to update before deploying
 
-## A standard format for data graphics
+19.1 Use the *response vs. explanatory* (**RESPEX**) format for data graphics, employing jittering as appropriate. Display density distributions using a violin graphic.
 
-A "data graphic" is one that displays each of the rows of a data frame. Graphics are fundamentally two-dimensional, so the data graphic has a frame that maps one variable to the vertical axis ("the y aesthetic") and another to the horizontal axis ("the x aesthetic"). 
+19.2 Use the *variance* to measure the amount of variation in a quantitative variable. 
+    a. Convert a *variance* into the corresponding *standard deviation*. 
+    b. Properly display a standard deviation on a RESPEX-format graph.
 
-Models are important to extracting information from data. Models always have a **response variable** and one or more **explanatory variables**. So our standard format for data graphics will put the response variable on the vertical axis and the one of the explanatory variables on the horizontal axis.
+19.3 Compute and the *residuals*. Display the model output on top of a RESPEX graph of the training data.
 
-### Example: Scottish hill racing
+19.4 Generate graphics and models using zero-one encoding of a categorical response variable. Interpret the output of such models.
 
-A popular competitive sport in Scotland is hill racing. This is a running race that involves ascending a hill rather than running on the flat. The `math300::Hill_racing` data frames records about 2000 winning performances in hill races. (See `?Hill_racing` for the documentation.)
-
-1. A simple model of a hill race performance is `time ~ distance`. 
-
-    a. Which is the response variable and which is the explanatory variable in the model `time ~ distance`?
-    
-    **ANSWER**:
-    
-
-    b. Make a data graphic from `Hill_racing` that is consistent with this choice of explanatory and response variables.
-    
-```{r}
-# complete the code
-# Hill_racing %>%
-#  ggplot(aes(x=_____, y=______)) +
-#  geom_point()
-```
-
-
-::: {.callout-note}
-## Solution
-```{r}
-# complete the code
-Hill_racing %>%
- ggplot(aes(x=distance, y=time)) +
- geom_point() 
-```
 :::
 
-### The "Null" model
+[Updated list of objectives](../Objectives/Obj-lesson-19.html)
 
-The basis of the techniques you'll learn in this second half of the course is building a model that uses explanatory variables to account for the response variable.
 
-We'll extract various quantities from the models we build and, in particular, use those quantities to compare one model to another, the point being to see SAY WHAT.
 
-Surprisingly, an important model for starting the chain of comparisons *has no explanatory variable*. OR RATHER, WE MAKE UP AN EXPLANATORY variable. SHOW MEAN is a coefficient from such a model. Model formula: `y ~ 1`
 
-Let's use the standard data-graphic format to display to display `y ~ 1`,
 
-```{r}
-Whickham %>% mutate(group = "all") %>% ggplot(aes(y=age, x=group)) + geom_jitter()
+
+## Reading 
+
+[Lesson **19** from *LST*](https://dtkaplan.github.io/Math-300R/Textbook/Reading-notes-lesson-19.html)
+
+
+## Lesson 
+
+ 
+
+
+
+## Libraries 
+
+```{r warning=FALSE,message=FALSE}
+library(moderndive)
+```
+
+## Review
+
+Thus far in Math 300Z, we have used regression modeling and examined the coefficients created by training a model on data. 
+
+## RESPEX graphs
+
+The `moderndive::amazon_books` data frame records prices and other aspects of 325 books. We are going to explore some physical attributes of the books, weight, number of pages, thickness, and so on.
+
+## Exercise 1
+
+The *thickness* varies from book to book. We are going to try to account for the thickness in terms of other physical quantities. (FYI: The variable `thick` is measured in inches.)
+
+**TASK**: Make a RESPEX graph suited to the model `thick ~ hard_paper`.
+
+```{r warning=FALSE}
+# ggplot(amazon_books, aes(y=_______, x=______)) + 
+#   geom_jitter(height=0, alpha=0.5)
 ```
 
 
-2. A somewhat more complex model is `time ~ distance + climb`. In this model there are two explanatory variables. Only one of them can be mapped to the horizontal axis, the other will need to be mapped to some other aesthetic or to faceting.
+## Exercise 2
 
-```{r}
-# complete the code
-# Hill_racing %>%
-#  ggplot(aes(x=_____, y=______)) +
-#  geom_point()
+Copy your RESPEX commands into the following chunk and add a `geom_violin()` layer to display the distribution of thickness values for the two categories of book cover. The resulting display won't be very nice. We will improve it later.
+
+```{r warning=FALSE}
+# Copy the code from the previous chunk to get started.
+# Then add a geom_violin() layer. 
 ```
 
-------------
+The point of the RESPEX format is to allow statistical annotations to be laid on top of the data **without hiding the data**. The default aesthetics of `geom_violin()` are not well selected to accomplish this task.
+
+Three of the parameters you can give to `geom_violin()` are `color=`, `fill=`, and `alpha=`.  The `alpha=` parameter controls the transparency: `alpha=0.5` means 50% transparency.
+
+The `color=` and `fill=` can be set to values like "blue", "orange", etc. Another possible value is `NA`, which signals to suppress that part of the geom. 
+
+**TASK 1**: Using the next code chunk, set the `alpha=`, `color=`, and `fill=` to values of your preference, subject only to the constraint that the violin doesn't hide the data.
+
+```{r warning=FALSE}
+# for task 1
+```
+
+**TASK 2**: Compare your choices in Task 1 to those made in the readings in (Figure 19.3](https://dtkaplan.github.io/Math-300R/Textbook/Reading-notes-lesson-19.html#fig-violin-intro). What do you prefer about your choices and what do you prefer in Figure 19.3?
+
+## Exercise 3
+
+Common sense suggests that the thickness of a book depends on the number of pages. Let's investigate this numerically.
+
+**TASK 1**: Make a RESPEX graph of `amazon_books` suitable for the model `thick ~ num_pages`.
+
+```{r}
+# For Task 1
+```
+
+The next chunk trains a model with `thick ~ num_pages`, naming the result `mod1`. 
+
+```{r}
+mod1 <- lm(thick ~ num_pages, data=amazon_books)
+```
+
+**TASK 2**: Extract the `coefficients()` from `mod1`. 
+
+```{r}
+# for TASK 2
+```
+
+**TASK 3**: Based on the coefficients, say how thick a typical page is. (Remember the units!)
+
+*Your answer:*
+
+## Exercise 4
+
+For your convenience, `model_plot()` function will graph the model as an annotation on top of a RESPEX display of the data.
+
+```{r}
+model_plot(mod1, x=num_pages)
+```
+
+The `model_eval()` function will turn input values for explanatory variables into the corresponding outputs. For example:
+
+```{r}
+model_eval(mod1, num_pages=250)
+```
+**TASK 1**: Explain in words how the above output for `num_pages=250 corresponds to the RESPEX graph of the model made just previously.
+
+*Your answer:*
+
+--------
+
+If you use `model_eval()` *without* specifying values for the explanatory variables, `model_eval()` will use the *training data*, producing an output for each row in the training data. It will also calculate the residuals (and some other quantities that we will use in another Lesson).
+
+```{r}
+Output_for_training_data <- model_eval(mod1)
+```
+
+**TASK 2**: Add to the above chunk the wrangling commands to compute the *variance* of each of these three columns: the `.response` variable, the model `.output`, and the residuals `.resid`. (Hint: `summarize()` and `var()`.)
+
+## Exercise 5
+
+Let's explore the idea that a book's cover type---hard-cover or paperback---reflects the number of pages in the book. 
+
+**TASK 1**: Use wrangling commands such as `group_by(hard_paper)` and `tally()` to figure out what fraction of the `amazon_books` are hard-cover? 
+
+```{r}
+# for Task 1
+```
+
+**TASK 2**: Use wrangling commands and `zero_one()`  to add a new variable `hardcover` to `amazon_books`. The value of the `hardcover` should be 1 when the book is hardcover. (Hints: You don't need `group_by()` for this task.)
+
+```{r}
+# for Task 2
+```
+
+**TASK 3**: Use wrangling commands to find the mean of the `hardcover` variable that you made in Task 2. 
+
+```{r}
+# For task 3
+amazon_books <- amazon_books %>% mutate(hardcover = zero_one(hard_paper, one="H"))
+amazon_books %>% summarize(mn = mean(hardcover))
+```
+
+
+How does the result compare to the quantity you calculated in Task 1?
+
+*Your answer*:
+
+**Going farther**: 
+
+Explain what this plot shows, particularly the blue line.
+```{r}
+mod2 <- lm(hardcover ~ num_pages, data=amazon_books)
+Tmp <- model_eval(mod2)
+ggplot(Tmp, aes(x = num_pages, y = .response)) +
+  geom_jitter(alpha=.5, height=0.2) +
+  geom_line(aes(y = .output), color="blue")
+```
+
+*Your answer here*:
+
+
+***
+
+## Documenting software 
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+  * `moderndive` package version: `r packageVersion("moderndive")`
 
 

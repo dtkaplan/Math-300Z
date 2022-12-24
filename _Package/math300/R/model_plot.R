@@ -10,9 +10,13 @@ model_plot <- function(mod, x, color=NULL, facet=NULL, facet2=NULL,
                        interval=c("none", "prediction", "confidence"), data_alpha=0.25) {
   # Allow unquoted names as arguments
   x <- as.character(substitute(x))
-  if (!is.null(color)) color <- as.character(substitute(color))
-  if (!is.null(facet)) facet <- as.character(substitute(facet))
-  if (!is.null(facet2)) facet2 <- as.character(substitute(facet2))
+  if (length(x) == 0) stop("Must provide mapping to `x` variable.")
+  color <- as.character(substitute(color))
+  if (length(color) == 0) color <- NULL
+  facet <- as.character(substitute(facet))
+  if (length(facet) == 0) facet <- NULL
+  facet2 <- as.character(substitute(facet2))
+  if (length(facet2) == 0) facet2 <- NULL
 
   interval=match.arg(interval)
 

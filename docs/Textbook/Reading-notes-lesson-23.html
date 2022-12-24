@@ -298,7 +298,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -397,7 +397,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Estimating sampling variation from a single sample</span></h1>
+<h1 class="title"><span id="sec-lesson-23" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Estimating sampling variation from a single sample</span></span></h1>
 </div>
 
 
@@ -412,12 +412,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>Lesson 21 introduced separating data into components: signal and noise. The <em>signal</em> is a summary of the data that tells us something we want to know. Often, the signal will be one or more coefficients from a regression report, but it might be something as simple as the mean, median, or standard deviation of a variable in a data frame.</p>
-<p>The <em>noise</em> comes into the data from various sources: e.g., error in measurement or a data-entry blunder. Another source of noise is omnipresent (except in a perfect census): sampling variation discussed in Lesson 22. Sampling variation arises because the particular sample we happen to be working with is, so far as sampling is concerned, the play of luck. If we had happened to select another sample, the results would be different.</p>
+<p><a href="Reading-notes-lesson-21.html">Lesson&nbsp;<span>21</span></a> introduced separating data into components: signal and noise. The <em>signal</em> is a summary of the data that tells us something we want to know. Often, the signal will be one or more coefficients from a regression report, but it might be something as simple as the mean, median, or standard deviation of a variable in a data frame.</p>
+<p>The <em>noise</em> comes into the data from various sources: e.g., error in measurement or a data-entry blunder. Another source of noise is omnipresent (except in a perfect census): sampling variation as discussed in <a href="Reading-notes-lesson-22.html">Lesson&nbsp;<span>22</span></a>. Sampling variation arises because the particular sample we happen to be working with is, so far as sampling is concerned, the play of luck. If we had happened to select another sample, the results would be different.</p>
 <p>The Greek philosopher Heraclitus (c.&nbsp;500 BC) said, “You can’t step into the same river twice.” A step into a river might be at the same place on the bank, but the water flowing by will be different. A data sample is like collecting water from a river or lake using a dipper. Imagine ten people standing side by side on the shore of a lake, each person dipping into the water to acquire a specimen and making one or more measurements from the specimen, for instance, the temperature, pH, and bacteria count. Each person collects a sample—that is, a series of specimens. These might be taken right after one another or by some protocol, say a weekly tracking of lake conditions over time.</p>
 <p>The ten people are each doing the same thing in approximately the same place and time, but each person’s sample will be different, even if only by a little bit. That sample-to-sample variation will be noise.</p>
 <p>If the ten people were fishing, each specimen would be the catch from one cast of the rod. Typically this is just an empty hook, lake weeds, or a stick, but sometimes it will be a fish. Each fisherman will have a sample at the end of the fishing day. These samples will not be identical; the fishermen’s varying skills (or luck) will produce different results. That is sampling variation. To fishermen, the question of interest, the signal they want to measure, might be, “How good is the fishing today?” The fishermen’s varying catches are the sampling variation.</p>
-<p>In Lesson 21, we repeated trials over and over again to gain some feeling for sampling variation. Each trial consisted of collecting a sample and summarizing it. The individual trial is a summary of a sample. Then, to quantify the sampling variation, we summarized the set of individual trial results using the standard measure of variation: the standard deviation.</p>
+<p>In <a href="Reading-notes-lesson-21.html">Lesson&nbsp;<span>21</span></a>, we repeated trials over and over again to gain some feeling for sampling variation. Each trial consisted of collecting a sample and summarizing it. The individual trial is a summary of a sample. Then, to quantify the sampling variation, we summarized the set of individual trial results using the standard measure of variation: the standard deviation.</p>
 <p>It is time to take off the DAG simulation training wheels and measure sampling variation from a <em>single</em> data frame. Our first approach will be to turn the single sample into several smaller samples: subsampling. Later, we will turn to another technique, resampling, which draws a sample of full size from the data frame.</p>
 <section id="sec-subsampling" class="level2">
 <h2 class="anchored" data-anchor-id="sec-subsampling">Subsampling</h2>
@@ -439,12 +439,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(time <span class="sc">~</span> age, <span class="at">data =</span> Over40 <span class="sc">%&gt;%</span> <span class="fu">sample</span>(<span class="at">size=</span><span class="dv">290</span>)) <span class="sc">%&gt;%</span> <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)         age 
- 4562.78081    26.81024 </code></pre>
+ 3890.91470    40.75855 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(time <span class="sc">~</span> age, <span class="at">data =</span> Over40 <span class="sc">%&gt;%</span> <span class="fu">sample</span>(<span class="at">size=</span><span class="dv">290</span>)) <span class="sc">%&gt;%</span> <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)         age 
- 4464.26384    28.52125 </code></pre>
+ 4440.82744    29.73389 </code></pre>
 </div>
 </div>
 <p>The age coefficients from these two subsampling trials differ one from the other by about 0.5 seconds. To get a more systematic view, run more trials:</p>
@@ -466,14 +466,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:right;"> 8.963421 </td>
+   <td style="text-align:right;"> 9.107899 </td>
   </tr>
 </tbody>
 </table>
 </div>
 </div>
 <p>We used the name <code>se</code> for the summary of samples of summaries because what we have calculated is the standard error of the age coefficient from samples of size <span class="math inline">\(n=290\)</span>.</p>
-<p>In Lesson 22 we saw that the standard error is proportional to <span class="math inline">\(1/\sqrt{\strut n}\)</span>, where <span class="math inline">\(n\)</span> is the sample size. From the subsamples, know that the SE for <span class="math inline">\(n=290\)</span> is about 9.0 seconds. This tells us that the SE for the full <span class="math inline">\(n=2898\)</span> samples would be about <span class="math inline">\(9.0 \frac{\sqrt{290}}{\sqrt{2898}} = 2.85\)</span>.</p>
+<p>In <a href="Reading-notes-lesson-22.html">Lesson&nbsp;<span>22</span></a> we saw that the standard error is proportional to <span class="math inline">\(1/\sqrt{\strut n}\)</span>, where <span class="math inline">\(n\)</span> is the sample size. From the subsamples, know that the SE for <span class="math inline">\(n=290\)</span> is about 9.0 seconds. This tells us that the SE for the full <span class="math inline">\(n=2898\)</span> samples would be about <span class="math inline">\(9.0 \frac{\sqrt{290}}{\sqrt{2898}} = 2.85\)</span>.</p>
 <p>So the interval summary of the <code>age</code> coefficient—the <em>confidence interval</em>— is <span class="math display">\[\underbrace{28.1}_\text{age coef.} \pm 2\times\!\!\!\!\!\!\! \underbrace{2.85}_\text{standard error} =\ \ \ \  28.1 \pm\!\!\!\!\!\!\!\! \underbrace{5.6}_\text{margin of error}\ \  \text{or, equivalently, 22.6 to 33.6}\]</span></p>
 </section>
 <section id="bootstrapping" class="level2">
@@ -694,7 +694,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="./Reading-notes-lesson-24.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

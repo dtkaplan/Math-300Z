@@ -298,7 +298,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -388,7 +388,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#replication" id="toc-replication" class="nav-link active" data-scroll-target="#replication">Replication</a></li>
+  <li><a href="#example-replicated-bed-net-trials" id="toc-example-replicated-bed-net-trials" class="nav-link" data-scroll-target="#example-replicated-bed-net-trials">Example: Replicated bed net trials</a></li>
   <li><a href="#control" id="toc-control" class="nav-link" data-scroll-target="#control">Control</a></li>
+  <li><a href="#example-testing-the-salk-polio-vaccine" id="toc-example-testing-the-salk-polio-vaccine" class="nav-link" data-scroll-target="#example-testing-the-salk-polio-vaccine">Example: Testing the Salk polio vaccine</a></li>
   <li><a href="#random-assignment" id="toc-random-assignment" class="nav-link" data-scroll-target="#random-assignment">Random assignment</a></li>
   <li><a href="#blocking" id="toc-blocking" class="nav-link" data-scroll-target="#blocking">Blocking</a></li>
   </ul>
@@ -399,7 +401,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Experiment and random assignment</span></h1>
+<h1 class="title"><span id="sec-lesson-32" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Experiment and random assignment</span></span></h1>
 </div>
 
 
@@ -433,31 +435,20 @@ Example: Malaria and bed nets
 <p>Such a trial is certainly an experiment. But it may not be the best way to get meaningful information.</p>
 </div>
 </div>
-<section id="replication" class="level2 page-columns page-full">
+<section id="replication" class="level2">
 <h2 class="anchored" data-anchor-id="replication">Replication</h2>
 <p>To understand some of the contribution that statistical thinking can make to experiment, recall our earlier definition:</p>
 <blockquote class="blockquote">
 <p><em>Statistic thinking is the explanation/description of variation</em> in the context of <em>what remains unexplained/undescribed.</em></p>
 </blockquote>
 <p>A key concept that statistical thinking brings to experiment is the idea of <strong>variation</strong>. Simply put, a good experiment should involve some variation. The simplest way to create variation is to repeat each experimental trial multiple times. This is called “<strong>replication</strong>.”</p>
-<p>::: {.callout-note} ## Example: Replicated bed net trials</p>
+</section>
+<section id="example-replicated-bed-net-trials" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="example-replicated-bed-net-trials">Example: Replicated bed net trials</h2>
 <p>One way to improve the simple experiment bed net described above is to carry out many trials. One reason is that the results from any single trial might be shaped by accidental or particular circumstances: the weather in the trial area was less favorable to mosquito reproduction; another government agency decided to help out by spraying pesticides broadly, and so on. Setting up trials in different areas can help to balance out these influences.</p>
 <p>Replicated trials also allow us to estimate the size of the variability caused by the accidental or particular factors. To illustrate, suppose a single trial is done and the rate of malarial illness goes down by 5 percentage points. What can we conclude? The result is promising but we can’t rule out that it is due to accidental factors other than bed nets. Why not? Because we have no idea how much unexplained variation is in play.</p>
 <div class="cell">
 
-</div>
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The table that should be here was commented out for PDF</p>
-</div>
 </div>
 <p>:::: {.column-margin}</p>
 
@@ -465,8 +456,6 @@ Warning
 
 </div></div><p><span class="quarto-unresolved-ref">?tbl-bed-net</span> shows data from four imagined trials of the effect of bed nets. (Reduction by a negative number, like -1, is an <em>increase</em>.) The mean reduction is 3 percentage points, but this number is not much use unless we can put it in the context of sampling variation. Conducting multiple trials gives us a handle on the amount of sampling variation. By We can easilyNow we know something about the amount of variation due to site-to-site factors. The replication introduces <em>observed</em> variation in results, the observed variation can be quantified and used to place the overall trend in context.</p>
 <p>Using the regression framework makes it easy to estimate the amount of sampling variation. The mean reduction corresponds to the coefficient from the model <code>reduction ~ 1</code>.</p>
-
-<div class="no-row-height column-margin column-container"><div class="">
 <div class="cell" data-digits="3">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(reduction <span class="sc">~</span> <span class="dv">1</span>, </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">data=</span>Bed_net_data) <span class="sc">%&gt;%</span> </span>
@@ -501,17 +490,16 @@ Warning
 </div>
 </div>
 <p>The observed 3 percentage point mean reduction in the incidence of malaria does stand out from the noise: the confidence interval does not include zero. In these (imagined) data, we have confidence that we have seen a signal.</p>
-</div></div></section>
-<section id="control" class="level2 page-columns page-full">
+</section>
+<section id="control" class="level2">
 <h2 class="anchored" data-anchor-id="control">Control</h2>
 <p>However, there is still a problem with the design of the imagined bed-net experiment. What if the year the experiment was done was unusually dry, reducing the mosquito population and, with it, the rate of malaria infection? Then we don’t know whether the observed 3 point reduction is due to the weather or the bed nets, or even something else, e.g.&nbsp;better nutrition due to a drop in international prices for rice.</p>
 <p>We need to measure what the change in malarial infection would have been without the bed-net intervention. Care needs to be taken here. If the trial sites were rural, it would not be appropriate to look at malarial rates in urban areas where there was no bed-net program. We want to compare the trial sites with non-trial sites where the intervention was not carried out, so-called “<strong>control</strong>” sites. The <code>With_controls</code> data frame imagines what data might look like if in half the sites no bed-net program was involved.</p>
 <div class="cell">
 
 </div>
-<div class="cell page-columns page-full">
-
-<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div class="cell">
+<div class="cell-output-display">
 <div id="tbl-bed-net-controls" class="anchored">
 
 <table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; "><caption>Table&nbsp;32.1:  With_controls </caption>
@@ -576,9 +564,10 @@ Warning
 </tbody>
 </table>
 </div>
-</div></div></div>
+</div>
+</div>
 <p>The proper regression model for the <code>With_controls</code> data is <code>reduction ~ treatment</code>:</p>
-<p>:::: {.column-margin}</p>
+<!-- :::: {.column-margin} -->
 <div class="cell" data-digits="2">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(reduction <span class="sc">~</span> nets, </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">data=</span>With_controls) <span class="sc">%&gt;%</span> </span>
@@ -618,16 +607,10 @@ Warning
 <p>The effect of the bed nets is summarized by the <code>netstreatment</code> coefficient, which compares the <code>reduction</code> between the <code>treatment</code> and <code>control</code> groups. In this new (imagined) data frame, the confidence interval on <code>netstreatment</code> touches very close to zero; the signal is just barely discernible from the noise.</p>
 <p>The reader might wonder why, in moving to the controlled design, the ten sites were not all treated with nets and another ten or so sites found to use as the control. Perhaps, even, the control sites could be selected as villages nearby to the bed net villages.</p>
 <p>One reason is pragmatic: the larger study would require more effort and money. The larger study might be worthwhile; larger <span class="math inline">\(n\)</span> would presumably narrow the confidence interval. Another reason, to be expanded on in the next section, is that the treatment and control sites should be as similar as possible. This can be surprising hard to achieve. Other factors such as the enthusiasm or skepticism of the town leaders toward public-health interventions might be behind the choice of the original sites for the bed-net program. The control sites might be towns that turned down the original offer of the bed-net program and, accordingly, have different attitudes toward public health.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Example: Testing the Salk polio vaccine
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<!-- ::: {.callout-note} -->
+</section>
+<section id="example-testing-the-salk-polio-vaccine" class="level2">
+<h2 class="anchored" data-anchor-id="example-testing-the-salk-polio-vaccine">Example: Testing the Salk polio vaccine</h2>
 <p>Today, most children are vaccinated against polio, though a smaller fraction than in previous years. This might be because symptomatic polio is very rare, lessening the perceived urgency of protecting against it. Partly, the reduction reflects the growth in the “anti-vax” movement, which became especially notable with the advent of COVID-19.</p>
 <p>The first US polio epidemic occurred in 1916, just two years before the COVID-like “Spanish flu” pandemic.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Up through the early 1950s, polio injured or killed hundreds of thousands of people, particularly children. Anxiety about the disease was similar to that seen in the first year of the COVID-19 pandemic.</p>
 <p>There were many attempts to develop a vaccine against polio. Jonas Salk created the first really promising vaccine, the promise being based on laboratory tests. To establish the safety and effectiveness of the Salk vaccine, it needed to be tried in the field, with people. Two organizations, the US Public Health Service and the National Foundation for Infantile Paralysis got together to organize a clinical field trial which, all told, involved two-million students in grades 1 through 3.</p>
@@ -648,14 +631,7 @@ Example: Testing the Salk polio vaccine
 -->
 <p>In the other branch of the study, Study 1, where no-consent 2nd-graders were used as control and vaccine was given to all whose parents did consent, the results (<a href="#tbl-polio2">Table&nbsp;<span>32.3</span></a>) were different because of confounding between treatment and consent.</p>
 <div class="cell">
-
-</div>
-<div class="cell">
-
-</div>
-<p>The effect of the vaccine from Study 1 under-estimated the biological link between vaccination and reduction of polio risk.</p>
-</div>
-</div><div class="no-row-height column-margin column-container"><div class="cell-output-display callout-margin-content">
+<div class="cell-output-display">
 <div id="tbl-polio1" class="anchored">
 
 <table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; "><caption>Table&nbsp;32.2:  Results from Study 2. </caption>
@@ -685,7 +661,10 @@ Example: Testing the Salk polio vaccine
 </tbody>
 </table>
 </div>
-</div><div class="cell-output-display callout-margin-content">
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
 <div id="tbl-polio2" class="anchored">
 
 <table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; "><caption>Table&nbsp;32.3:  Results from Study 1 </caption>
@@ -710,7 +689,10 @@ Example: Testing the Salk polio vaccine
 </tbody>
 </table>
 </div>
-</div></div>
+</div>
+</div>
+<p>The effect of the vaccine from Study 1 under-estimated the biological link between vaccination and reduction of polio risk.</p>
+<!-- ::: -->
 </section>
 <section id="random-assignment" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="random-assignment">Random assignment</h2>
@@ -741,7 +723,7 @@ Example: Testing the Salk polio vaccine
 </figure>
 </div>
 </div></div></div>
-<p>The approach emphasized in Lesson 30 to avoid such confounding is to block the relevant pathways. Both can be blocked by including <code>consent</code> as a covariate. However, ni Study 1, assignment to vaccine was purely a matter of consent; <code>consent</code> and <code>treatment</code> are essentially the same variable. <a href="#fig-dag-polio-consent">Figure&nbsp;<span>32.2</span></a> shows the corresponding DAG, where <code>consent</code> and <code>treatment</code> are merged into a single variable. Holding <code>consent</code> constant deprives the system of the explanatory variable and still introduces confounding through <code>socio_economic</code>.</p>
+<p>The approach emphasized in <a href="Reading-notes-lesson-30.html">Lesson&nbsp;<span>30</span></a> to avoid such confounding is to block the relevant pathways. Both can be blocked by including <code>consent</code> as a covariate. However, in Study 1, assignment to vaccine was purely a matter of consent; <code>consent</code> and <code>treatment</code> are essentially the same variable. <a href="#fig-dag-polio-consent">Figure&nbsp;<span>32.2</span></a> shows the corresponding DAG, where <code>consent</code> and <code>treatment</code> are merged into a single variable. Holding <code>consent</code> constant deprives the system of the explanatory variable and still introduces confounding through <code>socio_economic</code>.</p>
 <p>In Study 2, all the children participating had parents give consent. This means that <code>consent</code> is not actually a variable; it doesn’t vary! The corresponding DAG, without <code>consent</code> as a factor, is drawn in <a href="#fig-dag-polio3">Figure&nbsp;<span>32.3</span></a>. This Study 2 DAG is unfolded; there are no confounding pathways! Thus the model <code>polio ~ treatment</code> is appropriate.</p>
 <div class="cell page-columns page-full">
 

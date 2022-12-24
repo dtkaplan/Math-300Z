@@ -278,7 +278,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-20.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Measuring and simulating variation</span></a>
+  <a href="./Reading-notes-lesson-20.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Simulation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -298,7 +298,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -388,6 +388,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#risk" id="toc-risk" class="nav-link active" data-scroll-target="#risk">Risk</a></li>
+  <li><a href="#accumulating-risk" id="toc-accumulating-risk" class="nav-link" data-scroll-target="#accumulating-risk">Accumulating risk</a></li>
   <li><a href="#probability-odds-and-log-odds" id="toc-probability-odds-and-log-odds" class="nav-link" data-scroll-target="#probability-odds-and-log-odds">Probability, odds, and log odds</a></li>
   </ul>
 </nav>
@@ -397,7 +398,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Measuring and accumulating risk</span></h1>
+<h1 class="title"><span id="sec-lesson-33" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Measuring and accumulating risk</span></span></h1>
 </div>
 
 
@@ -653,6 +654,86 @@ Other ways to measure change in risk
 </div>
 </div>
 </section>
+<section id="accumulating-risk" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="accumulating-risk">Accumulating risk</h2>
+<p>There can be multiple factors that contribute to risk. As a simple example of how different factors can contribute simultaneously, consider the following DAG:</p>
+<div class="cell page-columns page-full">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag09)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<p><img src="Reading-notes-lesson-33_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dag09)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>a ~ exo()
+b ~ exo()
+c ~ binom(2 * a + 3 * b)</code></pre>
+</div>
+</div>
+<p>The formulas for <code>dag09</code> show that the nodes <code>a</code> and <code>b</code> are exogenous, their values set randomly and independently of one another by the <code>exo()</code> function. Both <code>a</code> and <code>b</code> contribute to the value of <code>c</code>. Ordinary stuff. But there is something new in this simulation, the <code>binom()</code> function. The output of <code>binom()</code> will always be either 0 or 1. If the input to <code>binom()</code> is zero, it’s completely random whether a 0 or 1 will result. The more positive the input to <code>binom()</code>, the larger the chance of a 1. Similarly, the more negative the input, the larger the chance of a 0. Like this:</p>
+<div class="cell page-columns page-full">
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'mosaicCalc'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:mosaicModel':
+
+    Runners</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:stats':
+
+    D</code></pre>
+</div>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-binom-fun-1" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="Reading-notes-lesson-33_files/figure-html/fig-binom-fun-1-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;33.2: The <code>binom()</code> function looks to its input to determine the probability that the output will be 1 or 0.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In <code>dag09</code>, the input to <code>binom()</code> is <code>2*a + 3*b</code>; both <code>a</code> and <code>b</code> are risk factors for <code>c</code> being 1. The larger that <code>a</code> is, the larger the risk. Similarly, the larger <code>b</code>, the larger the risk. The formula <code>2*a + 3*b</code> accumulates the risk steming from <code>a</code> and <code>b</code>.</p>
+<p>Let’s generate a big sample—<span class="math inline">\(n=10,000\)</span>—from <code>dag09</code> and see if a simple model is able to capture the way <code>a</code> and <code>b</code> contribute to <code>c</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(c <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> lwr </th>
+   <th style="text-align:right;"> upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 0.4949868 </td>
+   <td style="text-align:right;"> 0.5086429 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> a </td>
+   <td style="text-align:right;"> 0.1945809 </td>
+   <td style="text-align:right;"> 0.2083722 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> b </td>
+   <td style="text-align:right;"> 0.2881075 </td>
+   <td style="text-align:right;"> 0.3016740 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The coefficients on <code>a</code> and <code>b</code> are inconsistent with the <code>dag09</code> formulas. What’s wrong? The problem can be seen in <a href="#fig-binom-fun-1">Figure&nbsp;<span>33.2</span></a>. The output of <code>binom()</code> is a probability. Probabilities have to stay within the bounds 0 to 1. But there is nothing in the formula <code>c ~ a + b</code> that enforces such bounds. If we are to model zero-one response variables like <code>c</code>, we will need a means to enforce the bounds.</p>
+</section>
 <section id="probability-odds-and-log-odds" class="level2">
 <h2 class="anchored" data-anchor-id="probability-odds-and-log-odds">Probability, odds, and log odds</h2>
 <div class="callout-warning callout callout-style-default callout-captioned">
@@ -673,6 +754,42 @@ Under construction
 <p>Odds are usually expressed in terms of two numbers, as in “3 to 2” or “100 to 1”, written more compactly as 3:2 and 100:1 or even 1.5 and 100, respectively. The setting for odds is an even that might happen or not: the horse Fortune’s Chance might win the race, otherwise not; it might rain today, otherwise not; the Red Sox might win the World Series, otherwise not.</p>
 <p>The format of a <em>probability</em> assigns a number between 0 and 1 to the chances that Fortune’s Chance will win, or that it will rain, or that the Red Sox will come out on top. If that number is called <span class="math inline">\(p\)</span>, then the chances of the “otherwise outcome” must be <span class="math inline">\(1-p\)</span>. The event with probability <span class="math inline">\(p\)</span> would be reformatted into odds as <span class="math inline">\(p:(1-p)\)</span>. No information is lost if we treat the odds as a single number, the result of the division <span class="math inline">\(p/(1-p)\)</span>. Thus, when <span class="math inline">\(p=0.25\)</span> the corresponding odds will be <span class="math inline">\(0.25/0.75\)</span>, in other words, 1/3.</p>
 <p>A big mathematical advantage to using odds is that the odds number can be anything from zero to infinity; it’s not bounded within 0 to 1. Even more advantageous for the purposes of accumulating risk is the logarithm of the odds, called “<strong>log odds</strong>.” We will come back to this later.</p>
+<p>The printed version of <code>dag09</code> shows that the value of node <code>c</code> is a linear combination of <code>a</code> and <code>b</code> converted into a zero-one, binomial value. Unfortunately, the linear modeling trainer, <code>lm()</code>, is not well-tuned to work with binomial data. Another modeling technique, “logistic regression,” does a better job. The <code>glm()</code> function trains logistic regression models on data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(c <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> ., <span class="at">family=</span><span class="st">"binomial"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> lwr </th>
+   <th style="text-align:right;"> upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> -0.1137606 </td>
+   <td style="text-align:right;"> 0.0115901 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> a </td>
+   <td style="text-align:right;"> 1.9263575 </td>
+   <td style="text-align:right;"> 2.1188252 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> b </td>
+   <td style="text-align:right;"> 2.9114586 </td>
+   <td style="text-align:right;"> 3.1642559 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>When we use the appropriate modeling technique, we can, in this case, recover the coefficients in the DAG formula: 2 for <code>a</code> and 3 for <code>b</code>. :::</p>
 
 
 </section>

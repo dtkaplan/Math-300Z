@@ -298,7 +298,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -397,7 +397,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Covariates</span></h1>
+<h1 class="title"><span id="sec-lesson-28" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Covariates</span></span></h1>
 </div>
 
 
@@ -603,7 +603,7 @@ Bayer said in a statement that the findings are unreliable because Trasylol tend
 </blockquote>
 <p>The report involves several variables. Of primary interest is the relationship between (1) the risk of dying after surgery and (2) the drug used to prevent excessive bleeding during surgery. Also potentially important are (3) the complexity of the surgical operation and (4) how sick the patients were before surgery. Bayer disputes the published results of the relationship between (1) and (2) holding (4) constant, saying that it is also essential to hold variable (3) constant.</p>
 <p>The total relationship involves a death rate of 20.8 percent of patients who got aprotinin versus 12.7 percent for the patients taking the generic drugs: an increase in the death rate by a factor of 1.64. However, when the researchers looked at a partial relationship (holding constant patient sickness before the operation), the effect size of aprotinin on mortality was less: a factor of 1.48. In other words, the model <code>death ~ aprotinin</code> shows a 64% increase in the death rate, but the model <code>death ~ aprotinin + sickness</code> shows a slightly smaller increase in death rate: 48%. The difference between the two estimates reflects doctors being more likely to give aprotinin to sicker patients.</p>
-<p>The story’s last paragraph states that the choice of patients receiving aprotinin versus the generic drugs was not made at random. Some readers may find this reassuring. Why in the world would anyone prescribe a drug at random? The point, however, is to select randomly who gets which drug <em>among the patients for whom the drugs would be appropriate</em>. The phrase “randomized trial” used in the paragraph means specifically an <em>experiment</em> in which one treatment or the other—aprotinin versus the generic drugs—is assigned at random. The virtues of experiment and the vital role of random assignment are detailed in Lesson 32.</p>
+<p>The story’s last paragraph states that the choice of patients receiving aprotinin versus the generic drugs was not made at random. Some readers may find this reassuring. Why in the world would anyone prescribe a drug at random? The point, however, is to select randomly who gets which drug <em>among the patients for whom the drugs would be appropriate</em>. The phrase “randomized trial” used in the paragraph means specifically an <em>experiment</em> in which one treatment or the other—aprotinin versus the generic drugs—is assigned at random. The virtues of experiment and the vital role of random assignment are detailed in <a href="Reading-notes-lesson-32.html">Lesson&nbsp;<span>32</span></a>.</p>
 </div>
 </div>
 <div class="no-row-height column-margin column-container"><span class="callout-margin-content">“Significant” has a specialized meaning in statistical language. It is <em>not</em> a synonym for “important.” See Lessons 36 through 38</span></div></section>
@@ -662,7 +662,7 @@ Example: Spending and student performance
 </div>
 </div>
 </div>
-<p>Note that the effect size of spending on SAT scores is positive when the expenditure level is less than $10,000 per pupil. Notice as well that when the fraction taking the SAT is tiny, the average scores do not depend on expenditure. This flat relationship suggests that, among elite students, state expenditure does not make a discernable difference. Perhaps the college-bound students in such states have other educational resources to draw on.</p>
+<p>Note that the effect size of spending on SAT scores is positive when the expenditure level is less than $10,000 per pupil. Notice as well that when the fraction taking the SAT is tiny, the average scores do not depend on expenditure. This flat relationship suggests that, among elite students, state expenditure does not make a discernible difference. Perhaps the college-bound students in such states have other educational resources to draw on.</p>
 <p>The relationship shown in <a href="#fig-sat-1">Figure&nbsp;<span>28.1</span></a> is genuine. However, so is the very different relationship seen in <a href="#fig-sat-3">Figure&nbsp;<span>28.2</span></a>. How can the same data be consistent with two utterly different displays? The answer, perhaps unexpectedly, has to do with the connections among the explanatory variables. Whatever the relationship between an individual explanatory variable and the response variable, the <em>appearance</em> of that relationship will depend on which covariates the modeler chooses to include.</p>
 </div>
 </div>

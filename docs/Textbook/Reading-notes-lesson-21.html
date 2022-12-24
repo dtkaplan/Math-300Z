@@ -298,7 +298,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -398,7 +398,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Signal and noise</span></h1>
+<h1 class="title"><span id="sec-lesson-21" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Signal and noise</span></span></h1>
 </div>
 
 
@@ -417,7 +417,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="">You may have to scroll down to see the play button and the recordings.</span></div></div>
 <iframe src="https://archive.org/details/1940RadioNews/1940-06-21-CAN-WIlliam-C-Kirker-On-French-Armistace-At-Compiegne.mp3" width="100%" height="400" style="border:1px solid black;">
 </iframe>
-<p>The spoken words from the recording are discernable despite the hiss and clicks of the background noise. The situation is similar to a conversation in a sports stadium. The crowd is loud, so the speaker has to shout. The listener ignores the noise (unless it is too loud) and recovers the shouted words.</p>
+<p>The spoken words from the recording are discernible despite the hiss and clicks of the background noise. The situation is similar to a conversation in a sports stadium. The crowd is loud, so the speaker has to shout. The listener ignores the noise (unless it is too loud) and recovers the shouted words.</p>
 <p>Engineers and others make a distinction between <strong>signal</strong> and noise. The engineer aims to separate the signal from the noise. That aim applies to statistics as well.</p>
 <p>There are many sources of noise in data; every variable has its own story, part of which is noise from measurement errors and recording blunders. For instance, economists use national statistics, like GDP, even though the definition is arbitrary (a Hurricane can raise GDP!), and early reports are invariably corrected a few months later. Historians go back to original documents, but inevitably many of the documents have been lost or destroyed: a source of noise. Even in elections where, in principle, counting is straightforward, the voters’ intentions are measured imperfectly due to “hanging chads,” “butterfly ballots,” broken voting machines, spoiled ballots, and so on.</p>
 <p>The statistical thinker is well advised to know about the sources of noise in the system she is studying. Analysis of data will be better the more the modeler knows about how measurements are made and data collected.</p>
@@ -584,7 +584,7 @@ y ~ 1.5 * x + 4 + exo()</code></pre>
 </section>
 <section id="measuring-variation" class="level2">
 <h2 class="anchored" data-anchor-id="measuring-variation">Measuring variation</h2>
-<p>Lesson 20 introduced the standard way to measure variation in a single variable: the <strong>variance</strong> or its square root, the <strong>standard deviation</strong>. For instance, we can measure the variation in the variables from the <code>Large</code> sample using <code>sd()</code> and <code>var()</code>:</p>
+<p><a href="Reading-notes-lesson-20.html">Lesson&nbsp;<span>20</span></a> introduced the standard way to measure variation in a single variable: the <strong>variance</strong> or its square root, the <strong>standard deviation</strong>. For instance, we can measure the variation in the variables from the <code>Large</code> sample using <code>sd()</code> and <code>var()</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Large <span class="sc">%&gt;%</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sx =</span> <span class="fu">sd</span>(x), <span class="at">sy =</span> <span class="fu">sd</span>(y), <span class="at">vx =</span> <span class="fu">var</span>(x), <span class="at">vy =</span> <span class="fu">var</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -674,7 +674,7 @@ X \rightarrow C \leftarrow Y\]</span></p>
 </div>
 </div>
 </div>
-<p>With the conceptual tool of DAGs, the statistical thinker can consider multiple possibilities for what might cause what. Sometimes she can discard some of the possibilities based on common sense. (Think: roosters and the sun.) However, in other settings, there may be possibilities that she does not favor but might be plausible to other people. In Lesson 28, we will explore how each configuration of DAG has implications for which model formulas can or cannot reveal the hypothesized causal mechanism.</p>
+<p>With the conceptual tool of DAGs, the statistical thinker can consider multiple possibilities for what might cause what. Sometimes she can discard some of the possibilities based on common sense. (Think: roosters and the sun.) However, in other settings, there may be possibilities that she does not favor but might be plausible to other people. In <a href="Reading-notes-lesson-28.html">Lesson&nbsp;<span>28</span></a>, we will explore how each configuration of DAG has implications for which model formulas can or cannot reveal the hypothesized causal mechanism.</p>
 
 
 </section>

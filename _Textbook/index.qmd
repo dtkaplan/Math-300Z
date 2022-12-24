@@ -31,17 +31,10 @@ knitr::include_graphics("www/Significance-cartoon.png")
 
 The work of today's data scientists is often to discover novel connections among multiple variables and to guide decision-making. It is common for data to be available in large masses from *observations* rather than *experiments*. One common purpose is "prediction," which might be as simple as the uses of medical screening tests or as breathtaking as machine-learning techniques of "artificial intelligence." Another pressing need from data analysis is to understand possible causal connections between variables. 
 
-The twenty lessons that follow describe a way of thinking that is historically novel, unfamiliar to most otherwise well-educated people, and incredibly useful for making sense of the world and what data can tell us about the world. Learning a new way of thinking is genuinely hard. To start, it will help to describe "statistical thinking" concisely. A definition I find useful is this:
+The twenty lessons that follow describe a way of thinking that is historically novel, unfamiliar to most otherwise well-educated people, and incredibly useful for making sense of the world and what data can tell us about the world. 
 
-> *Statistic thinking is the explanation or description of variation* in the context of *what remains unexplained or undescribed.*
+## For reference: Important word pairs
 
-Implicit in this definition is a pathway for learning to think statistically: 
-
-1. Learn how to use data to describe variation; 
-2. See how to measure "what remains undescribed" and use that measurement as a context for interpretation; and 
-3. Understand how to link ideas of the process underlying data with appropriate description and modeling techniques.
-
-## Important word pairs
 Many of the vocabulary terms used in statistical thinking come in pairs. We list several such pairs below, in roughly the order they first appear in the Lessons. The pairs can be a reference while reading, but it is also helpful to return to this list to sharpen your understanding of the distinctions.
 
 **Explanatory** vs **response** variables. Models (in these Lessons) always involve a *single* response variable*. In contrast, models can have zero or more explanatory variables.

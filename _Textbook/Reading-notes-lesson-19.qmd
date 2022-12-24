@@ -87,7 +87,11 @@ Plot1 <- Gestation %>%
 Plot1
 ```
 
+
+
+
 @fig-gestation-jitter divides the 1200 births in the `Gestation` data frame according to the variable `parity`, which describes whether or not the pregnancy is the mother's first. 
+
 
 The variation in `gestation` is evident directly from the dots in the graph. One strategy for describing variation is to specify an **interval**: the span between a lower and an upper value. For instance,
 
@@ -132,7 +136,7 @@ Gestation %>%
 ```
 
 
-## Accounting for variation
+## Accounting for variation {#sec-accounting-for-variation}
 
 The word "account" has several related meanings.^[These are drawn from the Oxford Languages dictionaries.] 
 
@@ -152,6 +156,14 @@ lm(gestation ~ parity, data = Gestation) %>% coefficients()
 ```
 
 The coefficients from a regression model are part of an accounting for variation. Learning how to read them is an important skill in statistical thinking. For instance, the coefficient from a model in the form `y ~ 1` is always the average value of variable `y`. In contrast, in a model like `y ~ x`, the "intercept" is a baseline value and the `x`-coefficient describes what part of the variation in `y` can be credited to `x`.
+
+::: {.callout-note}
+## The RESPEX graphics format
+@fig-gestation-jitter is an example of what we call the **RESPEX** graphics style. Each RESPEX graphic is made to coordinate with aregression model of the data. Every regression model has a response variable. Likewise, every RESPEX graphic shows the response variable on the vertical axis. Similarly, RESPEX graphics place an explanatory variable on the horizontal axis. If there is more than one explanatory variable, they are encoded graphically using color then faceting.  
+
+RESPEX stands for "RESPonse versus EXplanatory," but you might like to think of it as data graphics drawn with "respect" to a model.
+:::
+
 
 Regression models always have a quantitative response variable, although explanatory variables can be either quantitative or categorical. But, often, the modeling situation calls for a response variable that is *categorical*. Expert modelers can use specialized modeling methods to handle such situations. However, some of the power of these specialized methods is available to the beginning modeler by a little trick. When categorical response variables have just two levels, e.g., Alive/Dead, Promoted/Not, or Win/Loss, they can be transformed to a numerical representation using 0 for one level and 1 for the other. 
 
@@ -190,7 +202,7 @@ Note the correspondence between the `outcome` and the newly created `alive` vari
 
 A model typically accounts for only some of the variation in a response variable. The remaining variation is called "**residual variation**." 
 
-To illustrate, consider the model `gestation ~ parity`. In the next lines of code we build this model, training it with the `Gestation` data. Then we **evaluate** the model on the trained data. This amounts to using the model coefficients to generate a model output for each row in the training data, and can be accomplished with the `model_eval()` R function.
+Consider the model `gestation ~ parity`. In the next lines of code we build this model, training it with the `Gestation` data. Then we **evaluate** the model on the trained data. This amounts to using the model coefficients to generate a model output for each row in the training data, and can be accomplished with the `model_eval()` R function.
 
 ```{r results="hide"}
 Model <- lm(gestation ~ parity, data = Gestation)
@@ -201,6 +213,12 @@ Evaluated <- model_eval(Model)
 model_eval(Model) %>% tail()
 ```
 
+::: {.callout-note}
+## The `.response` variable
+
+The output from `model_eval()` repeats some columns from the data used for evaluation. For example, the explanatory variables are listed by name. (Here, the only explanatory variable is `parity`.) The response variable is also included, but given a generic name, `.response` to make it easy to distinguish it from the explanatory variables. 
+:::
+
 To see where the `.output` comes from, let's look again at the model coefficients:
 
 ```{r}
@@ -209,9 +227,17 @@ Model %>% coefficients()
 
 The baseline value is 281.3 days. This applies to first-time mothers. For the other mothers, those with a previous pregnancy, the coefficient indicates that the model value is 2.6 days *less* than the baseline, or 279.7 days.
 
-The output from `model_eval()` includes other columns of importance. For us, here, those are. the response variable itself (`gestation`) and the residuals from the model (`.resid`). There is a simple relationship between `gestation`, `.output` and `.resid`:
 
-$$\mathtt{gestation} = \mathtt{.output} + \mathtt{.resid}\ .$$
+The output from `model_eval()` includes other columns of importance. For us, here, those are. the response variable itself (`gestation`, which has been given a generic name, `.response`) and the residuals from the model (`.resid`). There is a simple relationship between `.response`, `.output` and `.resid`:
+
+$$\mathtt{.response} = \mathtt{.output} + \mathtt{.resid}$$
+
+
+
+
+
+
+
 
 ::: {.callout-warning}
 ## Demonstration: Why the variance?
@@ -221,7 +247,7 @@ The subtle mathematical reasoning behind the choice of *variance* to measure var
 
 ```{r}
 Evaluated %>%
-  summarize(var_response = var(gestation),
+  summarize(var_response = var(.response),
             var_output = var(.output),
             var_resid  = var(.resid))
 ```
@@ -229,8 +255,10 @@ The variances of the output and residuals add up to equal, exactly, the variance
 
 ```{r}
 Evaluated %>%
-  summarize(sd_response = sd(gestation),
+  summarize(sd_response = sd(.response),
             sd_output = sd(.output),
             sd_resid  = sd(.resid))
 ```
 :::
+
+

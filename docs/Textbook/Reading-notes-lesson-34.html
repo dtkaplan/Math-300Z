@@ -298,7 +298,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -400,7 +400,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Constructing a classifier</span></h1>
+<h1 class="title"><span id="sec-lesson-34" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Constructing a classifier</span></span></h1>
 </div>
 
 
@@ -464,15 +464,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="applying-a-threshold" class="level2">
 <h2 class="anchored" data-anchor-id="applying-a-threshold">Applying a threshold</h2>
-<p>To finish the classifier, we need to identify a “<strong>threshold score</strong>.” Raw scores above this threshold will generate a <span class="math inline">\(\Ptest\)</span> test; scores below the threshold generate a <span class="math inline">\(\Ntest\)</span> test.</p>
+<p>To finish the classifier, we need to identify a “<strong>threshold score</strong>.” Raw scores above this threshold will generate a <span class="math inline">\({\mathbb{P}}\)</span> test; scores below the threshold generate a <span class="math inline">\({\mathbb{N}}\)</span> test.</p>
 <p>We can make a good guess at an appropriate threshold score from the presentation in the right panel of <a href="#fig-compare-scores">Figure&nbsp;<span>34.2</span></a>. The objective in setting the threshold is to distinguish the C group from the H group. Setting the threshold at a score around 3 does a pretty good job.</p>
-<p>It helps to give names to the two test results: <span class="math inline">\(\Ptest\)</span> and <span class="math inline">\(\Ntest\)</span>. Anyone with a score above 3 has result <span class="math inline">\(\Ptest\)</span>, anyone with a score below 3 has an <span class="math inline">\(\Ntest\)</span> result.</p>
+<p>It helps to give names to the two test results: <span class="math inline">\({\mathbb{P}}\)</span> and <span class="math inline">\({\mathbb{N}}\)</span>. Anyone with a score above 3 has result <span class="math inline">\({\mathbb{P}}\)</span>, anyone with a score below 3 has an <span class="math inline">\({\mathbb{N}}\)</span> result.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-divided-by-condition" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="Reading-notes-lesson-34_files/figure-html/fig-divided-by-condition-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;34.3: Blue is a <span class="math inline">\(\Ptest\)</span> result, gray a <span class="math inline">\(\Ntest\)</span> result.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;34.3: Blue is a <span class="math inline">\(\mathbb{P}\)</span> result, gray a <span class="math inline">\(\mathbb{N}\)</span> result.</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -482,8 +482,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="false-positives-and-false-negatives">False positives and false negatives</h2>
 <p>NARRATE <a href="#fig-divided-by-condition">Figure&nbsp;<span>34.3</span></a> to point out the gray dots in the C group and the blue dots in the H group. These are errors. But there are two kinds of errors.</p>
 <ul>
-<li><p>False-positive: blue dots in the H group. The “positive” refers to the <span class="math inline">\(\Ptest\)</span> test result, the “false” simply means the test result was wrong.</p></li>
-<li><p>False-negative: gray dots in the C group. The “negative” refers to the <span class="math inline">\(\Ntest\)</span> result. Again, the “false” means simply that the test result is out of line with the actual condition of the person.</p></li>
+<li><p>False-positive: blue dots in the H group. The “positive” refers to the <span class="math inline">\({\mathbb{P}}\)</span> test result, the “false” simply means the test result was wrong.</p></li>
+<li><p>False-negative: gray dots in the C group. The “negative” refers to the <span class="math inline">\({\mathbb{N}}\)</span> result. Again, the “false” means simply that the test result is out of line with the actual condition of the person.</p></li>
 </ul>
 <p>In the training sample shown in <a href="#fig-divided-by-condition">Figure&nbsp;<span>34.3</span></a>, there are 300 people altogether and 17 false-negatives. This gives a false-negative rate of about 6%. Similarly there are 30 false-negatives, a false-positive rate of 10%.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
@@ -507,8 +507,8 @@ Feature engineering: selling dog food
 </section>
 <section id="threshold-sensitivity-and-specificity" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="threshold-sensitivity-and-specificity">Threshold, sensitivity and specificity</h2>
-<p>In <a href="#fig-divided-by-condition">Figure&nbsp;<span>34.3</span></a> the threshold between <span class="math inline">\(\Ptest\)</span> and <span class="math inline">\(\Ntest\)</span> is set at a score of 3. That might have been a good choice, but it pays to take a more careful look.</p>
-<p>That graph is hard to read because the scores have a very long-tailed distribution; the large majority of scores are below 2 but the scores go up to 40. To make it easier to compare scores between the C and H groups, <a href="#fig-compare-scores2">Figure&nbsp;<span>34.4</span></a> shows the scores on a nonlinear axis. Each score is marked as a letter: “P” means <span class="math inline">\(\Ptest\)</span>, “N” means <span class="math inline">\(\Ntest\)</span>. False results are colored red.</p>
+<p>In <a href="#fig-divided-by-condition">Figure&nbsp;<span>34.3</span></a> the threshold between <span class="math inline">\({\mathbb{P}}\)</span> and <span class="math inline">\({\mathbb{N}}\)</span> is set at a score of 3. That might have been a good choice, but it pays to take a more careful look.</p>
+<p>That graph is hard to read because the scores have a very long-tailed distribution; the large majority of scores are below 2 but the scores go up to 40. To make it easier to compare scores between the C and H groups, <a href="#fig-compare-scores2">Figure&nbsp;<span>34.4</span></a> shows the scores on a nonlinear axis. Each score is marked as a letter: “P” means <span class="math inline">\({\mathbb{P}}\)</span>, “N” means <span class="math inline">\({\mathbb{N}}\)</span>. False results are colored red.</p>
 <div class="cell">
 
 </div>
@@ -550,8 +550,8 @@ Feature engineering: selling dog food
 </div></div></div>
 <p>By setting the threshold larger, the number of false-negatives (red Ns in <span class="quarto-unresolved-ref">?fig-two-thresholds</span>) increases, but the number of false-positives (red Ps) goes down. Setting the threshold lower reduces the number of false-negatives but increases the number of false-positives.</p>
 <p>This trade-off between the number of false-positives and the number of false-negatives is characteristic of classifiers.</p>
-<p><a href="#fig-fraction-correct">Figure&nbsp;<span>34.7</span></a> shows the overall pattern for false results versus threshold. At a threshold of 0, all test results are <span class="math inline">\(\Ptest\)</span>. Hence, none of the C group results are false; if there are no <span class="math inline">\(\Ntest\)</span> results, there cannot be any false-negatives. On the other hand, all of the H group are false-positives.</p>
-<p>Increasing the threshold changes the results. At a threshold of 1, many of the H group—about 50%—are being correctly classified as <span class="math inline">\(\Ntest\)</span>. Unfortunately, the higher threshold introduces some negative results for the C group. So the fraction of correct results in the C group goes down to about 90%. This pattern continues: raising the threshold improves the fraction correct in the H group and lowers the fraction correct in the C group.</p>
+<p><a href="#fig-fraction-correct">Figure&nbsp;<span>34.7</span></a> shows the overall pattern for false results versus threshold. At a threshold of 0, all test results are <span class="math inline">\({\mathbb{P}}\)</span>. Hence, none of the C group results are false; if there are no <span class="math inline">\({\mathbb{N}}\)</span> results, there cannot be any false-negatives. On the other hand, all of the H group are false-positives.</p>
+<p>Increasing the threshold changes the results. At a threshold of 1, many of the H group—about 50%—are being correctly classified as <span class="math inline">\({\mathbb{N}}\)</span>. Unfortunately, the higher threshold introduces some negative results for the C group. So the fraction of correct results in the C group goes down to about 90%. This pattern continues: raising the threshold improves the fraction correct in the H group and lowers the fraction correct in the C group.</p>
 <p>There are two names given to the fraction of correct classifications, depending on whether one is looking at the C group or the H group. The fraction correct in the C group is called the “<strong>sensitivity</strong>” of the test. The fraction correct in the H group is the “<strong>specificity</strong>” of the test.</p>
 <p>The sensitivity and the specificity, taken together, summarize the error rates of the classifier. Note that there are two error rates: one for the C group and another for the H group. <a href="#fig-fraction-correct">Figure&nbsp;<span>34.7</span></a> shows that, depending on the threshold used, the sensitivity and specificity can be very different from one another.</p>
 <div class="cell page-columns page-full">
@@ -565,14 +565,14 @@ Feature engineering: selling dog food
 </div>
 </div>
 <p>Ideally, both the sensitivity and specificity would be 100%. In practice, high sensitivity means lower specificity and <em>vice versa</em>.</p>
-<p>Sensitivity and specificity will be particularly important in Lesson 35 when we take into consideration the <strong>prevalence</strong>, that is, the fraction of the population with condition C</p>
+<p>Sensitivity and specificity will be particularly important in <a href="Reading-notes-lesson-35.html">Lesson&nbsp;<span>35</span></a> when we take into consideration the <strong>prevalence</strong>, that is, the fraction of the population with condition C</p>
 
 
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>That is, applying the methods of Lesson 28.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>That is, applying the methods of <a href="Reading-notes-lesson-28.html">Lesson&nbsp;<span>28</span></a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

@@ -298,7 +298,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -400,7 +400,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Sampling and sampling variation</span></h1>
+<h1 class="title"><span id="sec-lesson-22" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Sampling and sampling variation</span></span></h1>
 </div>
 
 
@@ -453,11 +453,11 @@ Examples: Returned to base
 <section id="measuring-sampling-variation" class="level2">
 <h2 class="anchored" data-anchor-id="measuring-sampling-variation">Measuring sampling variation</h2>
 <p>Sampling variation is a form of noise. Unlike some other forms of noise, modeling cannot filter out sampling variation or reduce its magnitude. Sampling variation is easiest to see by collecting multiple samples from the same source and summarizing each one. The summaries likely will vary from sample to sample: sampling variation.</p>
-<p>Typically, the data frame at hand is our only sample. With no other samples to compare it to, it may seem impossible to measure sampling variation. In this Lesson, we will use simulations from DAGs to study sampling variation. DAG simulations are suited to this because we can effortlessly collect as many samples as we wish from a DAG. In Lesson 23, we will use the knowledge gained from the simulations to see how to measure sampling variation even when there is only one sample.</p>
+<p>Typically, the data frame at hand is our only sample. With no other samples to compare it to, it may seem impossible to measure sampling variation. In this Lesson, we will use simulations from DAGs to study sampling variation. DAG simulations are suited to this because we can effortlessly collect as many samples as we wish from a DAG. In <a href="Reading-notes-lesson-23.html">Lesson&nbsp;<span>23</span></a>, we will use the knowledge gained from the simulations to see how to measure sampling variation even when there is only one sample.</p>
 <p>In the spirit of starting simply, we return to <code>dag01</code>. This DAG is <span class="math inline">\(\mathtt{x}\longrightarrow\mathtt{y}\)</span>. The causal formula setting the value of <code>y</code> is <code>y ~ 4 + 1.5 * x + exo()</code>.</p>
 <p>It is crucial to remember that sampling variation is not about the row-to-row variation in a single sample. Rather, it is about the variation in the summary from one sample to another. So our initial process for exploring sampling variation will be to carry out many trials, each trial being a summary of a sample.</p>
 </section>
-<section id="demonstration-samples-and-specimens" class="level2 page-columns page-full">
+<section id="demonstration-samples-and-specimens" class="level2">
 <h2 class="anchored" data-anchor-id="demonstration-samples-and-specimens">Demonstration: Samples and specimens</h2>
 <p>To illustrate, here is one trial using a sample of <span class="math inline">\(n=25\)</span> and a simple model, <code>y ~ 1</code>.</p>
 <div class="cell">
@@ -467,7 +467,7 @@ Examples: Returned to base
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept) 
-   4.033278 </code></pre>
+   4.440364 </code></pre>
 </div>
 </div>
 <p>We cannot see sampling variation directly in the above result because there is only one trial. The sampling variation becomes evident when we run <em>many</em> trials. In each trial, a new sample (of size <span class="math inline">\(n=25\)</span> is taken and summarized.)</p>
@@ -479,12 +479,11 @@ Examples: Returned to base
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coef</span>()</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell page-columns page-full">
-
-<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div class="cell">
+<div class="cell-output-display">
 <div id="tbl-sampling-trials" class="anchored">
 
-<table><caption>Table&nbsp;22.1:  Trials for seeing sampling variation. </caption>
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; "><caption>Table&nbsp;22.1:  Trials for seeing sampling variation. </caption>
  <thead>
   <tr>
    <th style="text-align:right;"> Intercept </th>
@@ -568,10 +567,10 @@ Examples: Returned to base
   </tr>
 </tbody>
 </table>
-
 </div>
-</div></div></div>
-<p><code>Trials</code> is a <em>sample of summaries</em>. (See Lesson 20). The row-to-row variation in<code>Trials</code> comes from sampling variation. We can <em>summarize</em> the variation in the <em>sample of summaries</em>. As always, our standard measure of variation is the standard deviation (or, equivalently, variance):</p>
+</div>
+</div>
+<p><code>Trials</code> is a <em>sample of summaries</em>. (See <a href="Reading-notes-lesson-20.html">Lesson&nbsp;<span>20</span></a>). The row-to-row variation in<code>Trials</code> comes from sampling variation. We can <em>summarize</em> the variation in the <em>sample of summaries</em>. As always, our standard measure of variation is the standard deviation (or, equivalently, variance):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="sc">%&gt;%</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">se =</span> <span class="fu">sd</span>(Intercept))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -594,7 +593,7 @@ Examples: Returned to base
 <p>This summary quantity, which we have named <code>se</code>, has a technical name in statistics: the <strong>standard error</strong>. The standard error is an ordinary standard deviation in a particular context: the standard deviation of a sample of summaries. The words <strong>standard error</strong> should be followed by a description of the summary and the size of the individual samples involved. Here it would be, “The standard error of the Intercept coefficient from a sample of size <span class="math inline">\(n=25\)</span> is around 0.36.”</p>
 <p>It is easy to confuse “standard error” with “standard deviation.” Adding to the potential confusion is another related term, the “margin of error.” To avoid this confusion, we will tend to use an <em>interval</em> description of the sampling variation called the “<strong>confidence interval</strong>.” However, for the present, we will continue with the standard error, sometimes written SE for short.</p>
 </section>
-<section id="se-depends-on-the-sample-size" class="level2 page-columns page-full">
+<section id="se-depends-on-the-sample-size" class="level2">
 <h2 class="anchored" data-anchor-id="se-depends-on-the-sample-size">SE depends on the sample size</h2>
 <p>We found an SE of 0.36 on the Intercept in a sample of size <span class="math inline">\(n=25\)</span>. We can see how the SE depends on sample size by repeating the trials for several different sizes, say, <span class="math inline">\(n=25\)</span>, 100, 400, 1600, 6400, 25,000, and 100,000.</p>
 <p>The following command estimates the SE a sample of size 400:</p>
@@ -626,25 +625,11 @@ Examples: Returned to base
 <div class="cell">
 
 </div>
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The caption was commented out on this table.</p>
-</div>
-</div>
-<div class="cell page-columns page-full">
-
-<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div class="cell">
+<div class="cell-output-display">
 <div id="tbl-se-sizes" class="anchored">
 
-<table><caption>Table&nbsp;22.2:  Results of repeating the sampling variability trials for samples of varying sizes. </caption>
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; "><caption>Table&nbsp;22.2:  Results of repeating the sampling variability trials for samples of varying sizes. </caption>
  <thead>
   <tr>
    <th style="text-align:right;"> n </th>
@@ -682,9 +667,9 @@ Warning
   </tr>
 </tbody>
 </table>
-
 </div>
-</div></div></div>
+</div>
+</div>
 <p>There is a pattern in <a href="#tbl-se-sizes">Table&nbsp;<span>22.2</span></a>. Every time we double <span class="math inline">\(n\)</span>, the standard error goes down by a factor of 2, that is, <span class="math inline">\(\sqrt{4}\)</span>. (The pattern is not exact because there is also sampling variation in the trials.)</p>
 <p><strong>Conclusion</strong>: The larger the sample size, the smaller the SE. For a sample size of <span class="math inline">\(n\)</span>, the SE will be proportional to <span class="math inline">\(1/\sqrt{\strut n}\)</span>.</p>
 </section>

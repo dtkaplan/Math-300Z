@@ -298,7 +298,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -396,7 +396,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Confounding</span></h1>
+<h1 class="title"><span id="sec-lesson-30" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Confounding</span></span></h1>
 </div>
 
 
@@ -671,19 +671,19 @@ Example: The flu vaccine
 <p><em>A series of observational studies undertaken between 1980 and 2001 attempted to estimate the effect of seasonal influenza vaccine on rates of hospital admission and mortality in [adults 65 and older]. Reduction in all-cause mortality after vaccination in these studies ranged from 27% to 75%. In 2005, these results were questioned after reports that increasing vaccination in people aged 65 years or older did not result in a significant decline in mortality. Five different research groups in three countries have shown that these early observational studies had substantially overestimated the mortality benefits in this age group because of unrecognized confounding. This error has been attributed to a healthy vaccine recipient effect: reasonably healthy older adults are more likely to be vaccinated, and a small group of frail, undervaccinated elderly people contribute disproportionately to deaths, including during periods when influenza activity is low or absent.</em></p>
 </blockquote>
 <div class="cell">
-
-</div>
-<p><a href="#fig-healthy-vaccine">Figure&nbsp;<span>30.1</span></a> presents a network of causal influences that could shape the “healthy vaccine recipient.” People are more likely to become frail as they get older. Frail people are <em>less</em> likely to get vaccinated, but more likely to die in the next few months. The result is that vaccination is associated with reduced mortality, even if there is no direct link between vaccination and mortality.</p>
-</div>
-</div><div class="no-row-height column-margin column-container"><span class="callout-margin-content">Such a study of earlier studies is called a <em>meta-analysis</em>.</span><div class="cell-output-display callout-margin-content">
+<div class="cell-output-display">
 <div id="fig-healthy-vaccine" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="www/healthy-vaccine-dag.png" class="img-fluid figure-img" width="318"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;30.1: A DAG diagramming the “healthy vaccine recipient” effect</figcaption><p></p>
 </figure>
 </div>
-</div></div>
-<section id="block-that-path" class="level2 page-columns page-full">
+</div>
+</div>
+<p><a href="#fig-healthy-vaccine">Figure&nbsp;<span>30.1</span></a> presents a network of causal influences that could shape the “healthy vaccine recipient.” People are more likely to become frail as they get older. Frail people are <em>less</em> likely to get vaccinated, but more likely to die in the next few months. The result is that vaccination is associated with reduced mortality, even if there is no direct link between vaccination and mortality.</p>
+</div>
+</div>
+<div class="no-row-height column-margin column-container"><span class="callout-margin-content">Such a study of earlier studies is called a <em>meta-analysis</em>.</span></div><section id="block-that-path" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="block-that-path">Block that path!</h2>
 <p>Let us look more generally at the possible causal connections among three variables, which we will call X, Y, and C. We will stipulate that X points causally toward Y and that C is a possible covariate. Like all DAGs, there cannot be a cycle of causation. These conditions leave three distinct DAGs that do not have a cycle, shown in <a href="#fig-three-dags-cancer">Figure&nbsp;<span>30.2</span></a>.</p>
 <div id="fig-three-dags-cancer" class="cell column-page-inset-right quarto-layout-panel">

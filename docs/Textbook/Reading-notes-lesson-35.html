@@ -235,7 +235,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -340,7 +340,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Accounting for prevalence</span></h1>
+<h1 class="title"><span id="sec-lesson-35" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Accounting for prevalence</span></span></h1>
 </div>
 
 
@@ -374,7 +374,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="no-row-height column-margin column-container"><div class="cell-output-display">
 <p><img src="Reading-notes-lesson-35_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" style="width:150.0%"></p>
 </div></div></div>
-<p>Lesson 34 used a <strong>training sample</strong>, first shown in <a href="Reading-notes-lesson-34.html#fig-divided-by-condition">Figure&nbsp;<span>34.3</span></a> and duplicated here in the margin. The training sample allowed us look at the consequences of the choice of threshold used in the test. That training sample had roughly equal numbers of people from the C and H groups. It’s sensible to use such a training sample in order to make sure both the C and H groups are well represented.</p>
+<p><a href="Reading-notes-lesson-34.html">Lesson&nbsp;<span>34</span></a> used a <strong>training sample</strong>, first shown in <a href="Reading-notes-lesson-34.html#fig-divided-by-condition">Figure&nbsp;<span>34.3</span></a> and duplicated here in the margin. The training sample allowed us look at the consequences of the choice of threshold used in the test. That training sample had roughly equal numbers of people from the C and H groups. It’s sensible to use such a training sample in order to make sure both the C and H groups are well represented.</p>
 <p>The prevalence among the actual population is usually very different than in the training sample. <a href="#fig-divided-by-condition3">Figure&nbsp;<span>35.1</span></a> illustrates the typical situation: many people in the H group and few people in the C group.</p>
 <div class="cell fig-cap-location-bottom">
 <div class="cell-output-display">
@@ -443,22 +443,22 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td>January</td>
 <td>2.3%</td>
-<td><span class="math inline">\(p(\text{snow}\given \text{January})\)</span></td>
+<td><span class="math inline">\(p(\text{snow}{\ |\!\!|\  } \text{January})\)</span></td>
 </tr>
 <tr class="even">
 <td>February</td>
 <td>3.5%</td>
-<td><span class="math inline">\(p(\text{snow}\given \text{February})\)</span></td>
+<td><span class="math inline">\(p(\text{snow}{\ |\!\!|\  } \text{February})\)</span></td>
 </tr>
 <tr class="odd">
 <td>March</td>
 <td>2.1%</td>
-<td><span class="math inline">\(p(\text{snow}\given \text{March})\)</span></td>
+<td><span class="math inline">\(p(\text{snow}{\ |\!\!|\  } \text{March})\)</span></td>
 </tr>
 <tr class="even">
 <td>April</td>
 <td>1.2%</td>
-<td><span class="math inline">\(p(\text{snow}\given \text{April})\)</span></td>
+<td><span class="math inline">\(p(\text{snow}{\ |\!\!|\  } \text{April})\)</span></td>
 </tr>
 <tr class="odd">
 <td>May</td>
@@ -503,42 +503,42 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 <p>The table lists 12 probabilities, one for each month. For the coma patient, these probabilities let her look up which months it is likely to be. For this reason, the probabilities are called “<strong>likelihoods</strong>.”</p>
-<p>The coma patient has 12 hypotheses for which month it is. The table as a whole is a “<strong>likelihood function</strong>” describing how the likelihood varies from one hypothesis to another. Think of the entries in the table as having been radioed back to Earth from the 12 hypothetical planets <span class="math inline">\(\given \text{January})\)</span> through <span class="math inline">\(\given \text{December})\)</span>.</p>
+<p>The coma patient has 12 hypotheses for which month it is. The table as a whole is a “<strong>likelihood function</strong>” describing how the likelihood varies from one hypothesis to another. Think of the entries in the table as having been radioed back to Earth from the 12 hypothetical planets <span class="math inline">\({\ |\!\!|\  } \text{January})\)</span> through <span class="math inline">\({\ |\!\!|\  } \text{December})\)</span>.</p>
 <p>It is helpful, I think, to have a notation that reminds us when we are dealing with a likelihood and a likelihood function. We will use the fancy <span class="math inline">\({\cal L}\)</span> to identify a quantity as a likelihood. The coma patient is interested in the likelihood of snow, which we will write <span class="math inline">\({\cal L}_\text{snow}\)</span>. From the table we can see that the likelihood of snow is a function of the month, that is <span class="math inline">\({\cal L}_\text{snow}(\text{month})\)</span>, where month can be any of January through December.</p>
-<p>This likelihood function has a valuable purpose: It will allow the coma patient to calculate the probability of it being any of the twelve months given her observation of snow, that is <span class="math inline">\(p(\text{month} \given \text{snow})\)</span>.</p>
-<p>In general, likelihoods are useful for converting knowledge like <span class="math inline">\({\cal L}_a(b)\)</span> into the form <span class="math inline">\(p(b \given a)\)</span>. The formula for doing the conversion is called “<strong>Bayes’ Rule</strong>.”</p>
+<p>This likelihood function has a valuable purpose: It will allow the coma patient to calculate the probability of it being any of the twelve months given her observation of snow, that is <span class="math inline">\(p(\text{month} {\ |\!\!|\  } \text{snow})\)</span>.</p>
+<p>In general, likelihoods are useful for converting knowledge like <span class="math inline">\({\cal L}_a(b)\)</span> into the form <span class="math inline">\(p(b {\ |\!\!|\  } a)\)</span>. The formula for doing the conversion is called “<strong>Bayes’ Rule</strong>.”</p>
 <p>The form of Bayes’ rule appropriate to the coma patient allows her to calculate the probability of it being any given month from the likelihoods. We also need to account for February, with only 28 days, being shorter than the other months. So we will define a probability function, <span class="math inline">\(p(\text{month}) = \frac{\text{number of days in month}}{365}\)</span></p>
 <div class="column-page-right">
-<p><strong>Bayes’ Rule</strong> <span class="math display">\[p(\text{month} \given \text{snow}) = \frac{{\cal L}_\text{snow}(\text{month}) \cdot p(\text{month})}{{\cal L}_\text{snow}(\text{Jan}) \cdot p(\text{Jan}) +
+<p><strong>Bayes’ Rule</strong> <span class="math display">\[p(\text{month} {\ |\!\!|\  } \text{snow}) = \frac{{\cal L}_\text{snow}(\text{month}) \cdot p(\text{month})}{{\cal L}_\text{snow}(\text{Jan}) \cdot p(\text{Jan}) +
   {\cal L}_\text{snow}(\text{Feb}) \cdot p(\text{Feb}) + \cdots +
   {\cal L}_\text{snow}(\text{Dec}) \cdot p(\text{Dec})}\]</span></p>
 </div>
 </section>
 <section id="sec-bayes-rule" class="level2">
 <h2 class="anchored" data-anchor-id="sec-bayes-rule">How serious is it, Doc?</h2>
-<p>Imagine a patient getting a <span class="math inline">\(\mathbb{P}\)</span> test result and wondering what the probability is of his having condition C. That is, he wants to know <span class="math inline">\(p(C \given \mathbb{P})\)</span>. This is equivalent to asking, “How serious is it, Doc?”</p>
+<p>Imagine a patient getting a <span class="math inline">\(\mathbb{P}\)</span> test result and wondering what the probability is of his having condition C. That is, he wants to know <span class="math inline">\(p(C {\ |\!\!|\  } \mathbb{P})\)</span>. This is equivalent to asking, “How serious is it, Doc?”</p>
 <p>The doctor could point to <a href="#fig-divided-by-condition4">Figure&nbsp;<span>35.2</span></a> as her answer. That figure was generated by creating a population with the relevant prevalence, using the sensitivity and specificity to determine the fraction of the C and H groups with <span class="math inline">\(\mathbb{P}\)</span> or <span class="math inline">\(\mathbb{H}\)</span> respectively, the <em>re-organizing</em> into new groups: the <span class="math inline">\(\mathbb{P}\)</span> group and the <span class="math inline">\(\mathbb{H}\)</span> group.</p>
 <p>Alternatively, we can do the calculation in the same way we did for the coma patient seeing snow. There, the observation of snow was the clue. Now, the test result <span class="math inline">\(\mathbb{P}\)</span> is the clue. One of the relevant likelihoods to interpret <span class="math inline">\(\mathbb{P}\)</span> is <span class="math inline">\({\cal L}_{\mathbb{P}}(C)\)</span>: the likelihood for a person who genuinely has condition C of getting a <span class="math inline">\(\mathbb{P}\)</span> result. Of course, this is just another way of writing the sensitivity.</p>
 <p>Similarly, the specificity is <span class="math inline">\({\cal L}_{\mathbb{H}}(H)\)</span>. But since our person got a <span class="math inline">\(\mathbb{P}\)</span> result, the likelihood <span class="math inline">\({\cal L}_{\mathbb{H}}(H)\)</span> is not directly relevant. (It would be relevant only to a person with a <span class="math inline">\(\mathbb{H}\)</span> result.) Fortunately, there is a simple relationship between <span class="math inline">\({\cal L}_{\mathbb{P}}(H)\)</span> and <span class="math inline">\({\cal L}_{\mathbb{H}}(H)\)</span>. If we know the probability of an H person getting a <span class="math inline">\(\mathbb{H}\)</span> result we can figure out the probability of an H person getting a <span class="math inline">\(\mathbb{P}\)</span> result. <span class="math display">\[{\cal L}_{\mathbb{P}}(H) = 1 - {\cal L}_{\mathbb{H}}(H)\]</span></p>
 <p>Bayes’ Rule for the person with a <span class="math inline">\(\mathbb{P}\)</span> result is</p>
-<p><span class="math display">\[p(C\given \mathbb{P}) = \frac{{\cal L}_{\mathbb{P}}(C) \cdot p(C)}{{\cal L}_{\mathbb{P}}(C) \cdot p(C) + {\cal L}_{\mathbb{P}}(H) \cdot p(H)}\]</span></p>
+<p><span class="math display">\[p(C{\ |\!\!|\  } \mathbb{P}) = \frac{{\cal L}_{\mathbb{P}}(C) \cdot p(C)}{{\cal L}_{\mathbb{P}}(C) \cdot p(C) + {\cal L}_{\mathbb{P}}(H) \cdot p(H)}\]</span></p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Calculating <span class="math inline">\(p(C\given \mathbb{P})\)</span>
+Calculating <span class="math inline">\(p(C{\ |\!\!|\  } \mathbb{P})\)</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Suppose that <span class="math inline">\(p(C) = 1\%\)</span> for this age of patient. (Consequently, <span class="math inline">\(p(H) = 99\%\)</span>.) And imagine that the test taken by the patient has a threshold score of 1. From <a href="Reading-notes-lesson-34.html#fig-fraction-correct">Figure&nbsp;<span>34.7</span></a> we can look up the sensitivity (<span class="math inline">\({\cal L}_{\mathbb{P}}(C) = 0.95\)</span>) and specificity (<span class="math inline">\({\cal L}_{\mathbb{P}}(H) = 0.50)\)</span> for the test. Substituting these numerical values into Bayes’ Rule gives</p>
-<p><span class="math display">\[p(C \given \mathbb{P}) = \frac{0.95\times 0.01}{0.95\times 0.01 + 0.50*0.99} = 1.9\%\]</span> The <span class="math inline">\(\mathbb{P}\)</span> result has changed the probability that the patient has C from 1% to 1.9%. That’s big proportionally, but not so big in absolute terms.</p>
+<p><span class="math display">\[p(C {\ |\!\!|\  } \mathbb{P}) = \frac{0.95\times 0.01}{0.95\times 0.01 + 0.50*0.99} = 1.9\%\]</span> The <span class="math inline">\(\mathbb{P}\)</span> result has changed the probability that the patient has C from 1% to 1.9%. That’s big proportionally, but not so big in absolute terms.</p>
 </div>
 </div>
 <p>The advantage of the Bayes’ Rule form of the calculation over the <span class="math inline">\(\mathbb{P}\)</span> group in <a href="#fig-divided-by-condition4">Figure&nbsp;<span>35.2</span></a> is that it is very easy to do the Bayes’ Rule calculation for any value of prevalence <span class="math inline">\(p(C)\)</span>. Why would we be interested in doing this?</p>
 <p>Typically the prevalence of a condition is different for different groups in the population. For example, for an 80-year-old with a family history of C the prevalence might be 20% rather than the 1% that applied to the patient in the previous example. For the 80-year-old, the probability of having C given a <span class="math inline">\(\mathbb{P}\)</span> result is substantially different from the 1.9% found in the example:</p>
-<p><span class="math display">\[p(C \given \mathbb{P}) = \frac{0.95\times 0.2}{0.95\times 0.2 + 0.50*0.8} = 32\%\]</span></p>
+<p><span class="math display">\[p(C {\ |\!\!|\  } \mathbb{P}) = \frac{0.95\times 0.2}{0.95\times 0.2 + 0.50*0.8} = 32\%\]</span></p>
 </section>
 <section id="screening-tests" class="level2">
 <h2 class="anchored" data-anchor-id="screening-tests">Screening tests</h2>
@@ -582,7 +582,7 @@ Demonstration: Setting the optimal threshold
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In Lesson 34, we saw that the threshold for transforming a raw test score into a <span class="math inline">\(\mathbb{P}\)</span> or <span class="math inline">\(\mathbb{H}\)</span> result determined the sensitivity and specificity of the test. (See <a href="Reading-notes-lesson-34.html#fig-fraction-correct">Figure&nbsp;<span>34.7</span></a>.) Of course, its best if both sensitivity and specificity are as high as possible, but there is a trade-off between the two: increasing sensitivity by lowering the threshold will decrease specificity. Likewise, raising the threshold will improve specificity but lower sensitivity.</p>
+<p>In <a href="Reading-notes-lesson-34.html">Lesson&nbsp;<span>34</span></a>, we saw that the threshold for transforming a raw test score into a <span class="math inline">\(\mathbb{P}\)</span> or <span class="math inline">\(\mathbb{H}\)</span> result determined the sensitivity and specificity of the test. (See <a href="Reading-notes-lesson-34.html#fig-fraction-correct">Figure&nbsp;<span>34.7</span></a>.) Of course, its best if both sensitivity and specificity are as high as possible, but there is a trade-off between the two: increasing sensitivity by lowering the threshold will decrease specificity. Likewise, raising the threshold will improve specificity but lower sensitivity.</p>
 <p>The “<strong>loss function</strong>” provides a way to set an optimal value for the threshold. It is a function, because the loss depends on whether the test result is a false-positive or a false-negative.</p>
 <p>Suppose that the</p>
 <div class="cell">

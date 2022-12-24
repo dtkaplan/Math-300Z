@@ -298,7 +298,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -400,7 +400,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Covariates eat variance</span></h1>
+<h1 class="title"><span id="sec-lesson-29" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Covariates eat variance</span></span></h1>
 </div>
 
 
@@ -415,7 +415,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>In Lesson 28, we introduced covariates to set the relationship between an explanatory variable and the response variable in the correct context. In Lesson 30, we will return to this context-setting role to show that the appropriate choice of covariates to include in a model depends on the modeler’s opinion about the relevant structure of a DAG. Here, we will treat covariates as commodity items to show a surprising property of models. This property is a boon to the modeler, helping to enable sound decisions about whether to include any given covariate. However, it is also a pitfall lieing in wait for the wishful thinker.</p>
+<p>In <a href="Reading-notes-lesson-28.html">Lesson&nbsp;<span>28</span></a>, we introduced covariates to set the relationship between an explanatory variable and the response variable in the correct context. In Lesson 30, we will return to this context-setting role to show that the appropriate choice of covariates to include in a model depends on the modeler’s opinion about the relevant structure of a DAG. Here, we will treat covariates as commodity items to show a surprising property of models. This property is a boon to the modeler, helping to enable sound decisions about whether to include any given covariate. However, it is also a pitfall lieing in wait for the wishful thinker.</p>
 <section id="how-much-variation-is-explained" class="level2">
 <h2 class="anchored" data-anchor-id="how-much-variation-is-explained">How much variation is explained</h2>
 <p>We start by returning to the definition of statistical thinking introduced at the start of these Lessons:</p>
@@ -532,7 +532,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 </div>
-<p>As always, the standard deviation is easier to read because it has sensible units, in this case, dollars. On the other hand, the variance has strange units (square dollars) because it is the square of the standard deviation. We will use the variance for measuring the typical size of a residual for the reasons described in Lesson 20; variances add nicely in a manner analogous to the Pythagorean Theorem.</p>
+<p>As always, the standard deviation is easier to read because it has sensible units, in this case, dollars. On the other hand, the variance has strange units (square dollars) because it is the square of the standard deviation. We will use the variance for measuring the typical size of a residual for the reasons described in <a href="Reading-notes-lesson-20.html">Lesson&nbsp;<span>20</span></a>; variances add nicely in a manner analogous to the Pythagorean Theorem.</p>
 <p>Similarly, the total amount of variation in the list price is simply the variance of the list price:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Results <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">v_response =</span> <span class="fu">var</span>(list_price))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -552,7 +552,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 </div>
-<p>A simple measure of how much of the variation in list price remains unexplained is the ratio of these variances <span class="math inline">\(190.96/206.51 = 92.5\%\)</span>. More than 90% of the variation remains unexplained by the <code>Price_model</code>. This high fraction of unexplained variance suggests the model has little to tell us. In the spirit of putting a positive spin on things, statisticians typically work with the complement of the unexplained fraction. Since the unexplained fraction is 92.5%, the complement is 7.5%. This number is written R<sup>2</sup> and pronounced “R-squared.” (It also has a formal name: the “coefficient of determination.” In Lesson 30, we will meet the inventor of the coefficient of determination, Sewall Wright, who is an early hero of causal reasoning.)</p>
+<p>A simple measure of how much of the variation in list price remains unexplained is the ratio of these variances <span class="math inline">\(190.96/206.51 = 92.5\%\)</span>. More than 90% of the variation remains unexplained by the <code>Price_model</code>. This high fraction of unexplained variance suggests the model has little to tell us. In the spirit of putting a positive spin on things, statisticians typically work with the complement of the unexplained fraction. Since the unexplained fraction is 92.5%, the complement is 7.5%. This number is written R<sup>2</sup> and pronounced “R-squared.” (It also has a formal name: the “coefficient of determination.” In <a href="Reading-notes-lesson-30.html">Lesson&nbsp;<span>30</span></a>, we will meet the inventor of the coefficient of determination, Sewall Wright, who is an early hero of causal reasoning.)</p>
 <p>R<sup>2</sup> is such a widely used summary of how the explanatory variables account for the response variable that a software extractor calculates it and some related values.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Price_model <span class="sc">%&gt;%</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1019,7 +1019,7 @@ Demonstration: The mean R<sup>2</sup> across many trials
 <section id="the-f-statistic" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="the-f-statistic">The F statistic</h2>
 <p><span class="math inline">\(k\)</span> and <span class="math inline">\(n\)</span> provide the necessary context for proper interpretation of R<sup>2</sup>; all three numbers are needed to establish whether R<sup>2</sup> <span class="math inline">\(\gg \frac{k}{n-1}\)</span> to rule out the ISBN effect. The calculation is not difficult; the modeler always knows the size <span class="math inline">\(n\)</span> of the training data and can find <span class="math inline">\(k\)</span> as the number of coefficients in the model (not counting the Intercept term).</p>
-<p>Perhaps a little easier than interpreting R<sup>2</sup> is the interpretation of another statistic, named F, which folds in the <span class="math inline">\(k\)</span>, <span class="math inline">\(n\)</span>, and R<sup>2</sup> into a single number: <span class="math display">\[F \equiv \frac{n-k-1}{k} \frac{\text{R}^2}{1 - \text{R}^2}\]</span> <a href="#fig-amazon-book-shuffle-F">Figure&nbsp;<span>29.4</span></a> is a remake of <a href="#fig-amazon-book-shuffle">Figure&nbsp;<span>29.3</span></a> but using F instead of R<sup>2</sup>. The blue line, which had the formula R<sup>2</sup><span class="math inline">\(= k/(n-1)\)</span> in <a href="#fig-amazon-book-shuffle">Figure&nbsp;<span>29.3</span></a>, gets translated to the constant value 1.0 in <a href="#fig-amazon-book-shuffle-F">Figure&nbsp;<span>29.4</span></a>, regardless of <span class="math inline">\(k\)</span>. To decide when a model points to a connection stronger than the ISBN effect, the threshold F <span class="math inline">\(&gt; 3\)</span> is a good rule of thumb. (Lesson 37 introduces a more precise calculation for the F threshold, which is built into statistical software and presented as a “<strong>p-value</strong>.”)</p>
+<p>Perhaps a little easier than interpreting R<sup>2</sup> is the interpretation of another statistic, named F, which folds in the <span class="math inline">\(k\)</span>, <span class="math inline">\(n\)</span>, and R<sup>2</sup> into a single number: <span class="math display">\[F \equiv \frac{n-k-1}{k} \frac{\text{R}^2}{1 - \text{R}^2}\]</span> <a href="#fig-amazon-book-shuffle-F">Figure&nbsp;<span>29.4</span></a> is a remake of <a href="#fig-amazon-book-shuffle">Figure&nbsp;<span>29.3</span></a> but using F instead of R<sup>2</sup>. The blue line, which had the formula R<sup>2</sup><span class="math inline">\(= k/(n-1)\)</span> in <a href="#fig-amazon-book-shuffle">Figure&nbsp;<span>29.3</span></a>, gets translated to the constant value 1.0 in <a href="#fig-amazon-book-shuffle-F">Figure&nbsp;<span>29.4</span></a>, regardless of <span class="math inline">\(k\)</span>. To decide when a model points to a connection stronger than the ISBN effect, the threshold F <span class="math inline">\(&gt; 3\)</span> is a good rule of thumb. (<a href="Reading-notes-lesson-37.html">Lesson&nbsp;<span>37</span></a> introduces a more precise calculation for the F threshold, which is built into statistical software and presented as a “<strong>p-value</strong>.”)</p>
 <div class="cell page-columns page-full">
 <div class="cell-output-display page-columns page-full">
 <div id="fig-amazon-book-shuffle-F" class="quarto-figure quarto-figure-center anchored page-columns page-full">

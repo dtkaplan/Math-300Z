@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lessons in Statistical Thinking - 24&nbsp; Effect size: Input to output</title>
+<title>Lessons in Statistical Thinking - 24&nbsp; Effect size</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -135,7 +135,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -298,7 +298,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></a>
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -387,7 +387,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#categorical-outputs" id="toc-categorical-outputs" class="nav-link active" data-scroll-target="#categorical-outputs">Categorical outputs</a></li>
+  <li><a href="#effect-size-input-to-output" id="toc-effect-size-input-to-output" class="nav-link active" data-scroll-target="#effect-size-input-to-output">Effect size: Input to output</a></li>
+  <li><a href="#categorical-outputs" id="toc-categorical-outputs" class="nav-link" data-scroll-target="#categorical-outputs">Categorical outputs</a></li>
   <li><a href="#multiple-explanatory-variables" id="toc-multiple-explanatory-variables" class="nav-link" data-scroll-target="#multiple-explanatory-variables">Multiple explanatory variables</a></li>
   <li><a href="#interval-estimates" id="toc-interval-estimates" class="nav-link" data-scroll-target="#interval-estimates">Interval estimates</a></li>
   </ul>
@@ -398,7 +399,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size: Input to output</span></h1>
+<h1 class="title"><span id="sec-lesson-24" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size</span></span></h1>
 </div>
 
 
@@ -420,6 +421,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><strong>Intervening</strong> in a system. Such interventions occur on both grand scales and small: changes in government policies such as funding for preschool education or subsidies for renewable energy, closing a road to redirect traffic or opening a new highway or bus line, changing the minimum wage, etc. Before making such interventions, it is wise to know what the consequences are likely to be. Figuring this out is often a matter of understanding how the system works: what causes what. As interventions often affect multiple individuals, influencing the overall trend of the effect across individuals might be the goal instead of predicting how each individual will be affected.</p></li>
 </ol>
 <p>This Lesson focuses on “<strong>effect size</strong>,” a measure of how changing an explanatory variable will play out in the response variable. Built into the previous sentence is an assumption that the explanatory variable <em>causes</em> the response variable. In Lessons 28 through 31, we will look into ways to make responsible claims about whether a connection between variables is causal. Here, we will focus on the calculation and interpretation of effect size.</p>
+<section id="effect-size-input-to-output" class="level2">
+<h2 class="anchored" data-anchor-id="effect-size-input-to-output">Effect size: Input to output</h2>
 <p>An intervention changes something in the world. Some examples are the budget for a program, the dose of a medicine, or the fuel flow into an engine. The thing being changed is the <em>input</em>. In response, something else in the world changes, for instance, the reading ability of students, the patient’s serotonin levels (a neurotransmitter), or the power output from the engine. The thing that changes in response to the change in input is called the “output.”</p>
 <p>“<strong>Effect size</strong>” describes the change in the output with respect to the change in the input. The simplest case is when the output is a quantitative variable. In this case, the change in the output is a difference between two numbers. The form of the effect size depends on the input type. For example, for a quantitative input, the effect size will be a <em>ratio</em>, that is, a rate. (For calculus students: the effect size is a derivative of the output with respect to the input.)</p>
 <p>To measure an effect size from data, construct a model with the output as the response variable and the input as an explanatory variable.</p>
@@ -555,13 +558,14 @@ Confounding?
 <p>The effect size of annual fuel cost with respect to engine displacement, $300 per year per liter, did not surprise us. Perhaps it should have. After all, larger vehicles tend to have larger engines. This relationship might lead to confounding between vehicle size and engine displacement. We think we are looking at engine displacement, but instead, the effect might be due to vehicle size. Again, just a hypothesis at this point. The statistical thinker knows to consider possible confounding from the start.</p>
 </div>
 </div>
+</section>
 <section id="categorical-outputs" class="level2">
 <h2 class="anchored" data-anchor-id="categorical-outputs">Categorical outputs</h2>
 <p>Sometimes the relevant effect size involves a categorical output variable. A case in point is the possible confounding of the Start/Stop feature with vehicle size. To investigate this, we should build a model with Start/Stop as the output and vehicle size as the input.</p>
 <p>In this case, the issue of whether vehicle size causes Start/Stop is not essential. We are not concerned with the decisions made by automobile designers so much as with the possible confounding.</p>
 <p>When the output variable is categorical, it is not reasonable to calculate the change in output as the difference in categories. As before, “Yes” - “No” is not a number. Still, there is a meaningful and helpful way to quantify a change in a categorical output.</p>
 <p>The essential insight is quantifying the change in output in terms of probabilities. For instance, a small effect size would reflect a slight chance of the output changing from one level to another.</p>
-<p>The appropriate model type for a categorical output is to transform the output to a zero-one variable, as introduced in Lesson 19. We will present this in a demonstration here and return to the topic more fully in Lesson 34.</p>
+<p>The appropriate model type for a categorical output is to transform the output to a zero-one variable, as introduced in <a href="Reading-notes-lesson-19.html">Lesson&nbsp;<span>19</span></a>. We will present this in a demonstration here and return to the topic more fully in Lesson 34.</p>
 <div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -736,7 +740,7 @@ Demonstration: Start/Stop and vehicle size
 </section>
 <section id="interval-estimates" class="level2">
 <h2 class="anchored" data-anchor-id="interval-estimates">Interval estimates</h2>
-<p>Statistical thinkers know that any estimate they make, including estimates of effect sizes, involves sampling variation. Consequently, give an <em>interval</em> estimate. The interval communicates to the decision-maker the uncertainty in the estimated quantity. Sophisticated decision-makers keep this uncertainty in mind, considering the range of outcomes likely from whatever use they make of effect size. On the other hand, statistically naive decision makers—even highly educated decision-makers can be statistically naive—look at the interval and sometimes ask the modeler, “Just give me a number. I don’t know what to do with two numbers.” Such a request might elicit a frank response: “If you don’t know what to do with two numbers, you also won’t know what to do with one number.” Unfortunately, that kind of frankness is not often well received; a reasonable alternative is: “The interval indicates the amount of uncertainty in the result. We’ll need to collect more data if you want to reduce the uncertainty.” (Lesson 29 introduces a not-always-available alternative to collecting more data: building a better model!)</p>
+<p>Statistical thinkers know that any estimate they make, including estimates of effect sizes, involves sampling variation. Consequently, give an <em>interval</em> estimate. The interval communicates to the decision-maker the uncertainty in the estimated quantity. Sophisticated decision-makers keep this uncertainty in mind, considering the range of outcomes likely from whatever use they make of effect size. On the other hand, statistically naive decision makers—even highly educated decision-makers can be statistically naive—look at the interval and sometimes ask the modeler, “Just give me a number. I don’t know what to do with two numbers.” Such a request might elicit a frank response: “If you don’t know what to do with two numbers, you also won’t know what to do with one number.” Unfortunately, that kind of frankness is not often well received; a reasonable alternative is: “The interval indicates the amount of uncertainty in the result. We’ll need to collect more data if you want to reduce the uncertainty.” (<a href="Reading-notes-lesson-29.html">Lesson&nbsp;<span>29</span></a> introduces a not-always-available alternative to collecting more data: building a better model!)</p>
 <p>For the additive models that we are mainly using in these Lessons, the effect size is identical to a model coefficient. For these models, the confidence interval on the coefficient is the confidence interval on the effect size. For instance,</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Mod3 <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

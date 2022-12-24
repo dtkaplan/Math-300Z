@@ -3,12 +3,19 @@ title: "Objectives (Day 19)"
 format: html
 ---
 
-19.1 Convert to the response vs explanatory format for data graphs.
+19.1 Use the *response vs. explanatory* (**RESPEX**) format for data graphics, employing jittering as appropriate. Display density distributions using a violin graphic.
 
-19.2 Understand the covering of a variable by an interval specified by a coverage level (e.g. 0.95) and make a data graphic annotated by such intervals.
+19.2 Use the *variance* to measure the amount of variation in a quantitative variable. 
+    a. Convert a *variance* into the corresponding *standard deviation*. 
+    b. Properly display a standard deviation on a RESPEX-format graph.
 
-19.3 Be able to produce point plots overlaid with "violin" plots to display the density of a variable. (This should really go in the first half of the course, but ModernDive doesn't do it.)
+19.3 Compute, interpret, and display the *fitted model values* and the *residuals*. 
 
-19.4 Convert categorical variables to a 0-1 encoding. 
-    a. Generate graphics appropriate to a categorical encoding. (jitter plots)
-    b. Apply modeling techniques to 0-1 encodings of binomial response variables. 
+::: {.callout-warning}
+## In DRAFT: "Fitted model values"
+Make sure this appears in the text. Also, RESPEX. 
+:::
+
+19.4 Generate graphics and models using zero-one encoding of a categorical response variable. Interpret the output of such models.
+
+

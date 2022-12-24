@@ -124,6 +124,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -277,7 +278,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-20.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Measuring and simulating variation</span></a>
+  <a href="./Reading-notes-lesson-20.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Simulation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -387,8 +388,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#statistical-thinking" id="toc-statistical-thinking" class="nav-link active" data-scroll-target="#statistical-thinking">Statistical thinking</a></li>
-  <li><a href="#preliminaries" id="toc-preliminaries" class="nav-link" data-scroll-target="#preliminaries">Preliminaries</a></li>
-  <li><a href="#categorical-response-variables" id="toc-categorical-response-variables" class="nav-link" data-scroll-target="#categorical-response-variables">Categorical response variables</a></li>
+  <li><a href="#defining-statistical-thinking" id="toc-defining-statistical-thinking" class="nav-link" data-scroll-target="#defining-statistical-thinking">Defining statistical thinking</a></li>
+  <li><a href="#variation" id="toc-variation" class="nav-link" data-scroll-target="#variation">Variation</a></li>
+  <li><a href="#sec-accounting-for-variation" id="toc-sec-accounting-for-variation" class="nav-link" data-scroll-target="#sec-accounting-for-variation">Accounting for variation</a></li>
+  <li><a href="#variation-unaccounted-for" id="toc-variation-unaccounted-for" class="nav-link" data-scroll-target="#variation-unaccounted-for">Variation unaccounted for</a></li>
   </ul>
 </nav>
     </div>
@@ -457,11 +460,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>To the statistical thinker, phrases like “red flag,” “growing body of evidence,” and “significantly lower” are <strong>weasel words</strong>, that is, terms “used in order to evade or retreat from a direct or forthright statement or position.” [<a href="https://www.merriam-webster.com/dictionary/weasel%20word">Source</a>] In ordinary thinking, such evasiveness or lack of forthrightness would naturally prompt concern about the reliability of the claim. It makes sense to look deeper, for instance, by checking out the JAMA article. Many people would be hesitant to do this, anticipating that the article would be incomprehensible and filled with jargon. An important reason to study statistical thinking is to tear down barriers to substantiating or debunking claims. In fact, the JAMA article contains very little that requires knowledge of pediatrics or the meaning of “gross motor, fine motor, and personal-social scores,” but a lot that depends on understanding statistical notation and convention and—more critical —the reasoning behind the conventions.</p>
 <p>The tools of statistical thinking are the tools for making sense of data. Evaluating data is essential to determine whether to rely on claims supposedly based on those data. In the words of eminent engineer and statistician <a href="https://en.wikipedia.org/wiki/W._Edwards_Deming">W. Edwards Demming</a>: “In God we trust. All others must bring data.” And former President Ronald Reagan famously quoted a Russian proverb: “Trust, but verify.” Unfortunately, until you have the statistical thinking tools needed to interpret data reliably, all you can do is trust, not verify.</p>
 </section>
-<section id="preliminaries" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="preliminaries">Preliminaries</h2>
-<p>Statistical thinking builds on the data wrangling, visualization, and modeling skills that you have already started to develop. This Lesson introduces a handful of additional tools. In particular, we will look at how to place graphics like those in <span class="quarto-unresolved-ref">?fig-lena-two-graphs</span> in the context of the data behind them, a first step to avoiding mis-interpretation. We will introduce the idea of <strong>inverval summaries</strong> of data, which provide essential information about what data can tell us. The Lesson also introduces a simple technique for encoding <em>categorical</em> data that allows us to apply the powerful tools of regression in a wider set of circumstances.</p>
-<p>I don’t have access to the data behind <span class="quarto-unresolved-ref">?fig-lena-two-graphs</span>, so I’ll use another data set to illustrate some principles.</p>
-<p>As all expecting parents know, a baby’s “due date” is hardly exact. Pregnancies vary in length. <a href="#fig-gestation-jitter">Figure&nbsp;<span>19.3</span></a> shows data from the <code>Gestation</code> data frame which records more than 1200 births. The <code>gestation</code> variable records the length of the pregnancy (in days).</p>
+<section id="defining-statistical-thinking" class="level2">
+<h2 class="anchored" data-anchor-id="defining-statistical-thinking">Defining statistical thinking</h2>
+<p>Learning a new way of thinking is genuinely hard. As you learn statistical thinking, it may help to have a concise definition. The following definition captures much of the essence of statistical thinking:</p>
+<blockquote class="blockquote">
+<p><em>Statistic thinking is the accounting for variation</em> in the context of <em>what remains unaccounted for.</em></p>
+</blockquote>
+<p>Implicit in this definition is a pathway for learning to think statistically:</p>
+<ol type="1">
+<li>Learn how to measure variation;</li>
+<li>Learn how to account for variation;</li>
+<li>Learn how to measure what remains unaccounted for.</li>
+</ol>
+<p>The next three sections briefly touch on each of these three topics.</p>
+</section>
+<section id="variation" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="variation">Variation</h2>
+<div class="column-page-right">
+<blockquote class="blockquote">
+<p><em>Variation itself is nature’s only irreducible essence. Variation is the hard reality, not a set of imperfect measures for a central tendency. Means and medians are the abstractions.</em> —– Stephen Jay Gould (1941- 2002), paleontologist and historian of science.</p>
+</blockquote>
+</div>
+<p>To illustrate variation, let’s consider a process fundamental to human life: gestation. We all know that human pregnancy “typically” lasts around nine-months, but that the duration isn’t known in advance.</p>
+<p><a href="#fig-gestation-jitter">Figure&nbsp;<span>19.3</span></a> shows data from the <code>Gestation</code> data frame. In this data frame, each of the 1200 rows is one pregnancy and birth about which several measurements were made. The <code>gestation</code> variable records the length of the pregnancy (in days).</p>
 <div class="cell page-columns page-full">
 <details>
 <summary>Code</summary>
@@ -469,9 +490,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">parity =</span> <span class="fu">ifelse</span>(parity<span class="sc">==</span><span class="dv">0</span>, <span class="st">"first-time"</span>, <span class="st">"previous-preg"</span>)) </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Plot1 <span class="ot">&lt;-</span> Gestation <span class="sc">%&gt;%</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>parity, <span class="at">y=</span>gestation)) <span class="sc">+</span> </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">width=</span><span class="fl">0.2</span>, <span class="at">height=</span><span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">200</span>,<span class="dv">340</span>))</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>Plot1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">width=</span><span class="fl">0.2</span>, <span class="at">height=</span><span class="dv">0</span>) </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>Plot1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display page-columns page-full">
 <div id="fig-gestation-jitter" class="quarto-figure quarto-figure-center anchored page-columns page-full">
@@ -482,15 +502,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>Such data could be made to serve more than one use. The statistical thinker always has in mind the purpose of the data presentation and uses statistical techniques appropriate for that purpose. Here are three distinct purposes:</p>
-<ol type="a">
-<li><p>Predict how long a first-time expectant mother’s preganancy will last.</p></li>
-<li><p>Display whether the prediction of the length of pregnancy depends on how many previous pregnancies (<code>parity</code>) the mother has had.</p></li>
-<li><p>Detect whether <code>parity</code> has anything at all to do with the length of pregancy.</p></li>
-</ol>
-<p>Note that all three questions are fundamentally about the length of pregnancy, that is, the <code>gestation</code> variable. Since we are trying to say something about <code>gestation</code>, it is appropriate to use <code>gestation</code> as the <em>response variable</em>. Therefore, it is graphed along the vertical axis.</p>
-<p>A simple and reasonable way to make a prediction is to look at the outcomes for the the relevant rows of the data. For question (a), we can focus on those data for mothers with <code>parity</code> zero. The dots themselves tell the story: pregnancy lasts approximately 280 days but it can vary. The large majority of pregancies are between 260 and 300 days long.</p>
-<p>A simpler say to describe the prediction summarizes the distribution of dots with a density plot. A good principle for presenting summaries is to do so within the context of the data themselves. So rather than make a histogram, which leaves out the raw data, we will use <strong>violin</strong> plot to smooth the data, as in <a href="#fig-violin-intro">Figure&nbsp;<span>19.4</span></a>.</p>
+<p><a href="#fig-gestation-jitter">Figure&nbsp;<span>19.3</span></a> divides the 1200 births in the <code>Gestation</code> data frame according to the variable <code>parity</code>, which describes whether or not the pregnancy is the mother’s first.</p>
+<p>The variation in <code>gestation</code> is evident directly from the dots in the graph. One strategy for describing variation is to specify an <strong>interval</strong>: the span between a lower and an upper value. For instance,</p>
+<ul>
+<li>The large majority of pregancies last between 250 and 300 days. Or,</li>
+<li>The majority of pregnancies are between 275 and 290 days.</li>
+</ul>
+<p>A more subtle description avoids setting hard bounds in favor of saying which durations are common and which not. This common-or-not description is called a “<strong>distribution</strong>.” The “<strong>histogram</strong>” is a famous style of presentation of a distribution. Even elementary-school students are introduced to histograms; they are easy to draw. But we have more important concerns; we want to be able to show relationships between variables and we want, whenever possible, to put the graphical summaries of data as a layer on top of the data themselves. And we have the computer as a tool for making graphics. Consequently, our preferred format for displaying distributions is a smooth shape, oriented along the vertical axis. The width of the shape expresses how common is the corresponding region of the vertical axis. <a href="#fig-violin-intro">Figure&nbsp;<span>19.4</span></a> shows the density display layered on top of the pregnancy data. For reasons that may be evident, this sort of display is called a “<strong>violin plot</strong>.”</p>
 <div class="cell page-columns page-full">
 <details>
 <summary>Code</summary>
@@ -506,71 +524,131 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>One reason to use a violin plot rather than the raw data on their own is to avoid reading too much into the raw data. Not all the gaps between data points are telling; the smooth violin plot emphasizes the overall pattern.</p>
-<p>An even simpler summary of the prediction is called a <strong>prediction interval</strong>. <a href="#fig-gestation-prediction-interval">Figure&nbsp;<span>19.5</span></a> shows prediction intervals separately for each level of <code>parity</code>.</p>
-<div class="cell page-columns page-full">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(gestation <span class="sc">~</span> parity, <span class="at">data =</span> Gestation)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Predictions <span class="ot">&lt;-</span> <span class="fu">model_eval</span>(model, <span class="at">skeleton=</span><span class="cn">TRUE</span>, <span class="at">interval=</span><span class="st">"prediction"</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Plot1 <span class="sc">+</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>.lwr, <span class="at">ymax=</span>.upr, <span class="at">x=</span>parity), <span class="at">y=</span><span class="cn">NA</span>, <span class="at">color=</span><span class="st">"blue"</span>, <span class="at">width=</span><span class="fl">0.3</span>, <span class="at">data=</span>Predictions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display page-columns page-full">
-<div id="fig-gestation-prediction-interval" class="quarto-figure quarto-figure-center anchored page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="Reading-notes-lesson-19_files/figure-html/fig-gestation-prediction-interval-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;19.5: Prediction intervals for each level of parity.</figcaption><p></p>
-</figure>
+<p>The shapes of the two violins in <a href="#fig-violin-intro">Figure&nbsp;<span>19.4</span></a> are similar, suggesting that the variation in the duration of pregnancy is about the same for first-time mothers as for mothers in a second or later pregnancy.</p>
+<p>There is a strong link between the <em>interval</em> descriptions of variation and the density display. Suppose you specify the fraction of cases that you want to include in an interval description, say 50% or 80%. In terms of the violin, that fraction is a proportion of the overall <strong>area</strong> of the violin. For instance, the 50% interval would include the central 50% of the area of the violin, leaving 25% out at the bottom and another 25% out at the top. The 80% interval would leave out only 10% of the area at the top and bottom of the violin. This suggests that the interval style of describing variation really involves <em>three</em> numbers; the top and bottom of the interval <em>as well as</em> the selected percentage (say, 50% or 80%) used to find the location of the top and bottom.</p>
+<p>Yet another style for describing variation—one that will take primary place in these Lessons—uses only a <strong>single-number</strong>. Perhaps the simplest way to imagine how a <em>single</em> number can capture variation is to think about the <em>spread</em> or <em>distance</em> between the top and bottom of an interval description. In taking such a distance as the measure of variation, we are throwing out some information. Taken together, the top and bottom of the interval describe two things: the <em>location</em> of the values and the <em>spread</em> among the values. These are both important, but it is the <em>spread</em> that gives a pure description of variation.</p>
+<p>Early pioneers of statistics took some time to agree on a standard way of measuring the spread. For instance, should it be the spread between the top and bottom of a 50% interval or an 80% interval, or something else. In the end, the selected standard focussed on something more basic: the differences between pairs of individual values.</p>
+<p>It works like this. For a data frame with <span class="math inline">\(n=2\)</span> rows, the spread in a variable can be measured simply as the <em>difference</em> between the two values. For instance, suppose the <code>gestation</code> variable had only two entries, say, 267 and 293 days. The spread or distance between these is <span class="math inline">\(293-267 = 26\)</span> days. Of course, we don’t intend to measure spread with a negative number. One solution is to use the absolute value of the difference. However, for subtle mathematical reasons relating to—of all things!—the Pythagorean theorem, we avoid the possibility of a negative spread by using the <em>square of the difference</em>, that is, <span class="math inline">\((293 - 267)^2 = 676\)</span> days-squared.</p>
+<p>To extend this very simple measure of variation to data with <span class="math inline">\(n &gt; 2\)</span> is simple: look at the square difference between every possible pair of values, then average. For instance, for <span class="math inline">\(n=3\)</span> with values 267, 293, 284, look at the differences <span class="math inline">\((267-293)^2, (267-284)^2\)</span> and <span class="math inline">\((293-284)^2\)</span> and average them! This simple way of measuring variation is called the “modulus” and dates from 1885. Since then, statisticians have standardized on a closely related measure, the “<strong>variance</strong>,” which is the modulus divided by <span class="math inline">\(\sqrt{2}\)</span>. Either one would work, but there are advantages to standardizing on one: the variance.</p>
+<p>Calculating the variance is straightforward, Here’s the variance of <code>gestation</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Gestation <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">variance =</span> <span class="fu">var</span>(gestation))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> variance </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 256.887 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
-</div>
-<p><a href="#fig-gestation-prediction-interval">Figure&nbsp;<span>19.5</span></a> shows that the prediction intervals includes most, but not all, of the raw data. In fact, it includes about 95% of the raw data and the full name for the prediction intervals is “95% prediction intervals.”</p>
-<p><a href="#fig-gestation-prediction-interval">Figure&nbsp;<span>19.5</span></a> provides a pretty clear display for purpose (b): “Does the predicted duration of my pregnancy depend on whether I am a first-time mother?” The answer: “Yes, but <code>parity</code> has only a very small effect.”</p>
-<p>Purpose (c) has to do with a different question: Do the data enable us to detect an effect of <code>parity</code> on <code>gestation</code>? With this question we are not seeking to make a prediction for an individual mother but to answer a question about the average across the population of all mothers. Such an average is an abstraction: it is not informative about a single mother.</p>
-<p><a href="#fig-gestation-confidence-interval">Figure&nbsp;<span>19.6</span></a> shows the so-called “95% confidence intervals” on the duration of pregnancy. The left panel puts the confidence intervals in the context of the data, the right in isolation. Because of the zoomed in scale on the right, the difference between the intervals looks much more “significant.” (Indeed, it has a similar “significance” to the intervals in <span class="quarto-unresolved-ref">?fig-lena-two-graphs</span>.)</p>
-<div id="fig-gestation-confidence-interval" class="quarto-figure quarto-figure-center anchored page-columns page-full">
-<figure class="figure page-columns page-full">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>CIs <span class="ot">&lt;-</span> <span class="fu">model_eval</span>(model, <span class="at">interval=</span><span class="st">"confidence"</span>, <span class="at">skeleton=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">parity =</span> <span class="fu">relevel</span>(parity, <span class="st">"first-time"</span>))</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>Plot2 <span class="ot">&lt;-</span> Gestation <span class="sc">%&gt;%</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>parity, <span class="at">y=</span>gestation)) <span class="sc">+</span> </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha=</span><span class="fl">0.05</span>, <span class="at">width=</span><span class="fl">0.2</span>, <span class="at">height=</span><span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="fu">c</span>(<span class="dv">200</span>,<span class="dv">340</span>)) <span class="sc">+</span> </span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>.lwr, <span class="at">ymax=</span>.upr, <span class="at">x=</span>parity), <span class="at">y=</span><span class="cn">NA</span>, <span class="at">color=</span><span class="st">"blue"</span>, <span class="at">width=</span><span class="fl">0.3</span>, <span class="at">data=</span>CIs)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>Plot3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(CIs[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>),], <span class="fu">aes</span>(<span class="at">x=</span>parity)) <span class="sc">+</span> </span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>.lwr, <span class="at">ymax=</span>.upr), <span class="at">y=</span><span class="cn">NA</span>, <span class="at">color=</span><span class="st">"blue"</span>, <span class="at">width=</span><span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>.output), <span class="at">ymin=</span><span class="cn">NA</span>, <span class="at">ymax=</span><span class="cn">NA</span>, <span class="at">color=</span><span class="st">"red"</span>, <span class="at">data =</span> CIs) </span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(Plot2, Plot3, <span class="at">ncol=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display page-columns page-full">
-<div id="fig-gestation-confidence-interval" class="quarto-figure quarto-figure-center anchored page-columns page-full">
-<figure class="figure page-columns page-full">
-<p><img src="Reading-notes-lesson-19_files/figure-html/fig-gestation-confidence-interval-1.png" class="img-fluid figure-img" data-ref-parent="fig-gestation-confidence-interval" width="672"></p>
-<p></p><figcaption class="figure-caption margin-caption">(a) Plotted with the data</figcaption><p></p>
-</figure>
+<p>A consequence of the use of squaring in defining the variance is the units of the result. <code>gestation</code> is measured in days, so <code>var(gestation)</code> is measured in days<sup>2</sup>. The advantage to this will only become clear later in these Lessons. For now, you might prefer to think about the square-root of the variance, which has been given the name “<strong>standard deviation</strong>.”</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Gestation <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">standard_deviation =</span> <span class="fu">sd</span>(gestation))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> standard_deviation </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 16.02769 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;19.6: Confidence intervals for the mean gestation duration for each level of parity.</figcaption><p></p>
-</figure>
-</div>
-<p><a href="#fig-gestation-confidence-interval">Figure&nbsp;<span>19.6</span></a> address a different question than <a href="#fig-gestation-prediction-interval">Figure&nbsp;<span>19.5</span></a>. From the perspective of an individual mother seeking to plan for her pregnancy, <a href="#fig-gestation-prediction-interval">Figure&nbsp;<span>19.5</span></a> is relevant and gives a clear message: “Don’t plan differently for your second pregancy than your first.” In contrast, <a href="#fig-gestation-confidence-interval">Figure&nbsp;<span>19.6</span></a> is about comparing two <em>groups</em> of mothers, not comparing a mother from each group.</p>
-<p>Understanding the difference between questions (b) and (c) is not easy going for a person new to statistical thinking. Typically, research journals look for answers to (c), but this is not always relevant to (b). It will take some time before we can start to think clearly about whether the data presented in <span class="quarto-unresolved-ref">?fig-lena-two-graphs</span> points to effects that “could last a lifetime.”</p>
 </section>
-<section id="categorical-response-variables" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="categorical-response-variables">Categorical response variables</h2>
-<p>Regression modeling will be a fundamental tool in these Lessons for summarizing data. Regression models always have a quantitative response variable, although explanatory variables can be either quantitative or categorical.</p>
-<div class="page-columns page-full"><p>Often, the modeling situation calls for a response variable that is <em>categorical</em>. Expert modelers can use specialized modeling methods to handle such situations. However, categorical response variables often have just two levels, e.g., Alive/Dead, Promoted/Not, or Win/Loss. We will name the general class of such variables as “<strong>yes/no</strong>” or, equivalently, “<strong>zero-one</strong>” variables.</p><div class="no-row-height column-margin column-container"><span class="">More formally, they are called “<strong>binomial</strong>” variables.</span></div></div>
-<p>Yes/no response variables can be represented using 0 for one level and 1 for the other. This numerical “<strong>0/1 encoding</strong>” is directly suited for regression modeling and enables us to extend the scope of regression models. The <em>output</em> of the regression model is always numerical. Nothing in the regression technique restricts those outputs to exactly zero or one, even when the response variable is of the yes/no type. Usually, the modeler interprets such numerical output as probabilities or, more generally, as measures to be converted to probabilities.</p>
+<section id="sec-accounting-for-variation" class="level2">
+<h2 class="anchored" data-anchor-id="sec-accounting-for-variation">Accounting for variation</h2>
+<p>The word “account” has several related meanings.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<ul>
+<li>To “account for something” means “to be the explanation or cause of something.” [Oxford Languages]</li>
+<li>An “account of something” is a story, a description, or an explanation, as in the Biblical account of the creation of the world.</li>
+<li>To “take account of something” means “to consider particular facts, circumstances, etc. when making a decision about something.”</li>
+</ul>
+<p>Synonyms for “account” include “description,”report,” “version,” “story,” “statement,” “explanation,” “interpretation,” “sketch,” and “portrayal.” “Accountants” and their “account books” keep track of where money comes from and goes to.</p>
+<p>These various nuances of meaning, from a simple arithmetical tallying up to an interpretation or version serve the purposes of statistical thinking well. When we “account for variation,” we are telling a story that tries to explain where the variation might have come from. An accounting of variation is not necessarily definitive, true, or helpful. Just as witnesses of an event can have different accounts, so there can be many accounts of the variation even of the same variable in the same data frame.</p>
+<p>There are many formats for stories, many ways of organizing facts and data, and many ways of accounting for variance. In these Lessons, we will use <strong>regression modeling</strong> almost exclusively as our method of accounting. Here, for example, are two different accounts of <code>gestation</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(gestation <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data=</span>Gestation) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> coefficient </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 279.3385 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(gestation <span class="sc">~</span> parity, <span class="at">data =</span> Gestation) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> coefficient </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 281.261981 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> parityprevious-preg </td>
+   <td style="text-align:right;"> -2.585058 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The coefficients from a regression model are part of an accounting for variation. Learning how to read them is an important skill in statistical thinking. For instance, the coefficient from a model in the form <code>y ~ 1</code> is always the average value of variable <code>y</code>. In contrast, in a model like <code>y ~ x</code>, the “intercept” is a baseline value and the <code>x</code>-coefficient describes what part of the variation in <code>y</code> can be credited to <code>x</code>.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-R technique: Using <code>zero_one()</code>.
+The RESPEX graphics format
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="#fig-gestation-jitter">Figure&nbsp;<span>19.3</span></a> is an example of what we call the <strong>RESPEX</strong> graphics style. Each RESPEX graphic is made to coordinate with aregression model of the data. Every regression model has a response variable. Likewise, every RESPEX graphic shows the response variable on the vertical axis. Similarly, RESPEX graphics place an explanatory variable on the horizontal axis. If there is more than one explanatory variable, they are encoded graphically using color then faceting.</p>
+<p>RESPEX stands for “RESPonse versus EXplanatory,” but you might like to think of it as data graphics drawn with “respect” to a model.</p>
+</div>
+</div>
+<p>Regression models always have a quantitative response variable, although explanatory variables can be either quantitative or categorical. But, often, the modeling situation calls for a response variable that is <em>categorical</em>. Expert modelers can use specialized modeling methods to handle such situations. However, some of the power of these specialized methods is available to the beginning modeler by a little trick. When categorical response variables have just two levels, e.g., Alive/Dead, Promoted/Not, or Win/Loss, they can be transformed to a numerical representation using 0 for one level and 1 for the other.</p>
+<p>We will identify the such variables as being of type “<strong>yes/no</strong>” or, equivalently, “<strong>zero-one</strong>” variables. With the zero-one encoding</p>
+<p>This numerical “<strong>0/1 encoding</strong>” is directly suited for regression modeling and enables us to extend the scope of regression models. The <em>output</em> of the regression model is always numerical. Nothing in the regression technique restricts those outputs to exactly zero or one, even when the response variable is of the yes/no type. Usually, the modeler interprets such numerical output as probabilities or, more generally, as measures to be converted to probabilities.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+R technique: <code>zero_one()</code>.
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -624,8 +702,8 @@ R technique: Using <code>zero_one()</code>.
 </div>
 <p>The <code>outcome</code> variable in <code>Whickham</code> records the result of the follow-up survey. It is a categorical variable with levels “Alive” and “Dead.” To examine what the data have to say about the relationship between smoking and mortality, we construct a model with <code>outcome</code> as the response variable and <code>smoking</code> as an explanatory variable. Before doing so, we translate <code>outcome</code> into a zero-one format. Like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">alive =</span> <span class="fu">zero_one</span>(outcome, <span class="at">one=</span><span class="st">"Alive"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">alive =</span> <span class="fu">zero_one</span>(outcome, <span class="at">one=</span><span class="st">"Alive"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -683,8 +761,208 @@ R technique: Using <code>zero_one()</code>.
 <p>Note the correspondence between the <code>outcome</code> and the newly created <code>alive</code> variable.</p>
 </div>
 </div>
+</section>
+<section id="variation-unaccounted-for" class="level2">
+<h2 class="anchored" data-anchor-id="variation-unaccounted-for">Variation unaccounted for</h2>
+<p>A model typically accounts for only some of the variation in a response variable. The remaining variation is called “<strong>residual variation</strong>.”</p>
+<p>Consider the model <code>gestation ~ parity</code>. In the next lines of code we build this model, training it with the <code>Gestation</code> data. Then we <strong>evaluate</strong> the model on the trained data. This amounts to using the model coefficients to generate a model output for each row in the training data, and can be accomplished with the <code>model_eval()</code> R function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Model <span class="ot">&lt;-</span> <span class="fu">lm</span>(gestation <span class="sc">~</span> parity, <span class="at">data =</span> Gestation)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>Evaluated <span class="ot">&lt;-</span> <span class="fu">model_eval</span>(Model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Using training data as input.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Using training data as input.</code></pre>
+</div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> .response </th>
+   <th style="text-align:left;"> parity </th>
+   <th style="text-align:right;"> .output </th>
+   <th style="text-align:right;"> .resid </th>
+   <th style="text-align:right;"> .lwr </th>
+   <th style="text-align:right;"> .upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 1218 </td>
+   <td style="text-align:right;"> 270 </td>
+   <td style="text-align:left;"> previous-preg </td>
+   <td style="text-align:right;"> 278.6769 </td>
+   <td style="text-align:right;"> -8.6769231 </td>
+   <td style="text-align:right;"> 247.2800 </td>
+   <td style="text-align:right;"> 310.0738 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 1219 </td>
+   <td style="text-align:right;"> 275 </td>
+   <td style="text-align:left;"> first-time </td>
+   <td style="text-align:right;"> 281.2620 </td>
+   <td style="text-align:right;"> -6.2619808 </td>
+   <td style="text-align:right;"> 249.8322 </td>
+   <td style="text-align:right;"> 312.6917 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 1220 </td>
+   <td style="text-align:right;"> 265 </td>
+   <td style="text-align:left;"> previous-preg </td>
+   <td style="text-align:right;"> 278.6769 </td>
+   <td style="text-align:right;"> -13.6769231 </td>
+   <td style="text-align:right;"> 247.2800 </td>
+   <td style="text-align:right;"> 310.0738 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 1221 </td>
+   <td style="text-align:right;"> 291 </td>
+   <td style="text-align:left;"> previous-preg </td>
+   <td style="text-align:right;"> 278.6769 </td>
+   <td style="text-align:right;"> 12.3230769 </td>
+   <td style="text-align:right;"> 247.2800 </td>
+   <td style="text-align:right;"> 310.0738 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 1222 </td>
+   <td style="text-align:right;"> 281 </td>
+   <td style="text-align:left;"> first-time </td>
+   <td style="text-align:right;"> 281.2620 </td>
+   <td style="text-align:right;"> -0.2619808 </td>
+   <td style="text-align:right;"> 249.8322 </td>
+   <td style="text-align:right;"> 312.6917 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 1223 </td>
+   <td style="text-align:right;"> 297 </td>
+   <td style="text-align:left;"> previous-preg </td>
+   <td style="text-align:right;"> 278.6769 </td>
+   <td style="text-align:right;"> 18.3230769 </td>
+   <td style="text-align:right;"> 247.2800 </td>
+   <td style="text-align:right;"> 310.0738 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+The <code>.response</code> variable
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The output from <code>model_eval()</code> repeats some columns from the data used for evaluation. For example, the explanatory variables are listed by name. (Here, the only explanatory variable is <code>parity</code>.) The response variable is also included, but given a generic name, <code>.response</code> to make it easy to distinguish it from the explanatory variables.</p>
+</div>
+</div>
+<p>To see where the <code>.output</code> comes from, let’s look again at the model coefficients:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Model <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> coefficient </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 281.261981 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> parityprevious-preg </td>
+   <td style="text-align:right;"> -2.585058 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The baseline value is 281.3 days. This applies to first-time mothers. For the other mothers, those with a previous pregnancy, the coefficient indicates that the model value is 2.6 days <em>less</em> than the baseline, or 279.7 days.</p>
+<p>The output from <code>model_eval()</code> includes other columns of importance. For us, here, those are. the response variable itself (<code>gestation</code>, which has been given a generic name, <code>.response</code>) and the residuals from the model (<code>.resid</code>). There is a simple relationship between <code>.response</code>, <code>.output</code> and <code>.resid</code>:</p>
+<p><span class="math display">\[\mathtt{.response} = \mathtt{.output} + \mathtt{.resid}\]</span></p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Demonstration: Why the variance?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The subtle mathematical reasoning behind the choice of <em>variance</em> to measure variation is illuminated when we compute the variances of the three quantities in the previous equation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Evaluated <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">var_response =</span> <span class="fu">var</span>(.response),</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">var_output =</span> <span class="fu">var</span>(.output),</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">var_resid  =</span> <span class="fu">var</span>(.resid))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> var_response </th>
+   <th style="text-align:right;"> var_output </th>
+   <th style="text-align:right;"> var_resid </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 256.887 </td>
+   <td style="text-align:right;"> 1.273587 </td>
+   <td style="text-align:right;"> 255.6134 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The variances of the output and residuals add up to equal, exactly, the variance of the response variable! This isn’t true for the standard deviations:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Evaluated <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sd_response =</span> <span class="fu">sd</span>(.response),</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd_output =</span> <span class="fu">sd</span>(.output),</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd_resid  =</span> <span class="fu">sd</span>(.resid))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> sd_response </th>
+   <th style="text-align:right;"> sd_output </th>
+   <th style="text-align:right;"> sd_resid </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 16.02769 </td>
+   <td style="text-align:right;"> 1.128533 </td>
+   <td style="text-align:right;"> 15.98791 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>These are drawn from the Oxford Languages dictionaries.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
@@ -829,7 +1107,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="./Reading-notes-lesson-20.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Measuring and simulating variation</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Simulation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

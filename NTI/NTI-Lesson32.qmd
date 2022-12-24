@@ -43,7 +43,7 @@ dag_draw(bednet_dag, seed=110, vertex.label.cex=1, vertex.size=30)
 ```
 
 ```{r}
-#| label: bednet_dag1
+#| label: bednet_dag2
 #| fig-cap: "The bed net experiment with random assignment."
 #| column: margin
 bednet_dag2 <- dag_make( 
