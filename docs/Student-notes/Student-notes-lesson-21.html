@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="YOUR NAME HERE">
-<meta name="dcterms.date" content="2022-11-01">
+<meta name="dcterms.date" content="2022-12-01">
 
-<title>Spring 2023 Math 300 Revisions - Math 300 Lesson 21 Notes</title>
+<title>Spring 2023 Math 300Z - Math 300 Lesson 21 Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,6 +22,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -60,12 +123,18 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
+</head><body class="nav-fixed fullcontent"><span class="math inline" style="display: none;">
+\(\newcommand{\Ptest}{\mathbb{P}}
+\newcommand{\Ntest}{\mathbb{N}}
+\newcommand{\given}{\ |\!\!|\  }
+\)
+</span>
 
 
 <link rel="stylesheet" href="../styles.css">
-</head>
 
-<body class="nav-fixed fullcontent">
+
+
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -73,7 +142,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
+    <span class="navbar-title">Spring 2023 Math 300Z</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -81,6 +150,10 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../Textbook/index.html">
+ <span class="menu-text">Textbook</span></a>
+  </li>  
   <li class="nav-item">
     <a class="nav-link" href="../index.html">
  <span class="menu-text">Proposal</span></a>
@@ -135,7 +208,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 1, 2022</p>
+      <p class="date">December 1, 2022</p>
     </div>
   </div>
   
@@ -145,36 +218,200 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>In accounting for the variation in a response variable <code>y</code>, we conceive of <code>y</code> as being a combination of signal and noise. The signal is defined by a model specification, for instance <code>y ~ x + c</code>. Different model specifications correspond to different definitions of what is signal. The noise is defined as all the variation in <code>y</code> that is not signal.</p>
+<section id="reading" class="level3">
+<h3 class="anchored" data-anchor-id="reading">Reading</h3>
+<p><a href="https://dtkaplan.github.io/Math-300R/Textbook/Reading-notes-lesson-21.html">Lesson <strong>21</strong> from <em>LST</em></a></p>
+</section>
+<section id="objectives" class="level3">
+<h3 class="anchored" data-anchor-id="objectives">Objectives</h3>
+<p>20.1 Use model training to separate signal from noise in a response variable.</p>
+<p>20.2 Recognize that the same training data will show a different signal depending on what model specification is used.</p>
+<p><a href="../Objectives/Obj-lesson-20.html">Updated list of objectives</a></p>
+</section>
+<section id="libraries" class="level3">
+<h3 class="anchored" data-anchor-id="libraries">Libraries</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(math300)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout-caption-container flex-fill">
-Note in draft
+<hr>
+</section>
+</section>
+<section id="lesson" class="level2">
+<h2 class="anchored" data-anchor-id="lesson">Lesson</h2>
+<p>A regression model separates the response variable into two components: the signal and the noise. Exactly what constitutes the signal is determined by the model specification. In this Lesson, we’ll track variation as it is pushed down the causal links in a DAG and observe how fitting a model to data from the DAG separates signal from noise.</p>
+<section id="exercise-1" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-1">Exercise 1</h3>
+<p>We start with a simple DAG consisting of two elements, each of which is formed entirely of noise:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ex1_dag <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">~</span> <span class="fu">exo</span>(<span class="fl">1.0</span>) <span class="sc">-</span> <span class="dv">2</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">~</span> <span class="fu">exo</span>(<span class="fl">2.5</span>) <span class="sc">+</span> <span class="dv">4</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>exo()</code> function generates exogenous noise. The argument to <code>exo()</code> sets the magnitude of the noise</p>
+<section id="task-1.1" class="level4">
+<h4 class="anchored" data-anchor-id="task-1.1">Task 1.1</h4>
+<p>Draw a picture of <code>ex1_dag</code> to confirm that node <code>x</code> is not causally connected to node <code>y</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw a picture of `ex1_dag`.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Generate a sample data from <code>ex1_dag</code> with a few hundred rows and wrangle it to display the variance of <code>x</code> and the variance of <code>y</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sample(ex1_dag = 500) %&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  summarize(vx = _______, vy = _______)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Based on the calculated variances, say whether the argument to <code>exo()</code> sets the standard deviation or the variance of the exogenous noise.</p>
+<p><em>Your answer</em>:</p>
+<p>Even though <code>x</code> and <code>y</code> are not causally connected in <code>ex1_dag</code>, train a model with the specification <code>y ~ x</code> to a sample from <code>ex1_dag</code> and examine the coefficients.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mod1.1 &lt;- lm(y ~ x, data=sample(ex1_dag, size=500))</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># coefficients(mod1.1)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Examine the coefficients you just calculated and describe what about them suggests that <code>x</code> and <code>y</code> are not causally connected. (If you’re not sure, increase the sample size by a factor of 10.)</p>
+<p><em>Your answer</em>:</p>
+</section>
+<section id="task-1.2" class="level4">
+<h4 class="anchored" data-anchor-id="task-1.2">Task 1.2</h4>
+<p>The code in the next chunk evaluates the model <code>mod1.1</code> for each row in the training data, producing a data frame. There are three columns we want to look at: <code>.response</code>, <code>.output</code>, <code>.resid</code>. Using wrangling, calculate the variance of each of these columns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># model_eval(mod1.1) %&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarize(var(.response), var(.output), var(.resid))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code>.response</code> column is simply the response variable of the training data. It is a combination of signal plus noise. The <code>.output</code> column is an estimate of the signal. The <code>.resid</code> column is an estimate of the noise.</p>
+<p>According to the model <code>mod1.1</code>, how much signal is in the response variable?</p>
+<p><em>Your answer</em>:</p>
+<p>NOTE: You might wonder why any signal shows up at all, since <code>ex1_dag</code> doesn’t have any connection between <code>x</code> and <code>y</code>. The reason is sampling variation, which produces accidental alignments between <code>x</code> and <code>y</code> even if they are not connected. We will explore sampling variation more thoroughly in Lessons 22 and 23.</p>
+</section>
+<section id="task-1.3" class="level4">
+<h4 class="anchored" data-anchor-id="task-1.3">Task 1.3</h4>
+<p>There’s an even simpler model specification that we can try on the data from <code>ex1_dag</code>, the specification <code>y ~ 1</code>. This specification will separate signal from noise assuming that there are no influences on <code>y</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mod1.3 &lt;- lm(y ~ 1, data=sample(ex1_dag, size=500))</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># coefficients(mod1.3)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Again, we can evaluate <code>mod1.3</code> on the training data and observe the magnitudes of the signal and the noise components of <code>y</code> (according to the model specification).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># model_eval(mod1.3) %&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarize(var(.response), var(.output), var(.resid))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Explain from the calculated variance how <code>y ~ 1</code> specifies the division of <code>y</code> into signal plus noise.</p>
+<p><em>Your answer</em>:</p>
+</section>
+</section>
+<section id="exercise-2" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-2">Exercise 2</h3>
+<p>We will turn now to a slightly more complicated DAG: <code>dag01</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Student-notes-lesson-21_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dag01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>x ~ exo()
+y ~ 1.5 * x + 4 + exo()</code></pre>
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<p>One activity can be to determine whether the parameter to <code>exo()</code> is in terms of standard deviation or of variance.</p>
+<p>Pay close attention to the formula for <code>y</code>. It says that <code>y</code> is composed from <code>x</code> plus some exogenous noise, plus 5. (<code>exo()</code> sets its argument to 1.0 by default.)</p>
+<section id="task-2.1" class="level4">
+<h4 class="anchored" data-anchor-id="task-2.1">Task 2.1</h4>
+<p>Generate a sample of a few hundred rows from <code>dag01</code> and wrangle it to calculate the variance of <code>y</code> and of <code>x</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For task 2.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>How can you tell from the results that <code>exo()</code> generates exogenous noise with a standard deviation of 1. (OK, so it’s not exactly 1. That’s due to sampling variation, once again!)</p>
+<p><em>Your answer</em>:</p>
+<p>Look now at the variance of <code>y</code> and at the formula that generated <code>y</code>, that is, <code>1.5*x + 4 + exo()</code>. This means that the variance of <code>y</code> is the sum of the variance of <code>1.5*x</code> (the signal) and the variance of <code>exo()</code> (the noise). The constant <code>4</code> does not generate any variability.</p>
+<p>The question of the moment is, “What is the variance of <code>1.5 * x</code>?” You can answer the question by going back to the previous code chunk, and where you had <code>var(x)</code> in the <code>summarize()</code> function, change it to <code>var(1.5 * x)</code>?</p>
+<p>There is a pretty simple relationship between <code>var(x)</code> and <code>var(1.5 * x)</code>. What is it? (If you can’t see the relationship clearly, go back and change the sample size to be ten or one-hundred times larger.)</p>
+<p><em>Your answer</em>:</p>
+</section>
+<section id="task-2.2" class="level4">
+<h4 class="anchored" data-anchor-id="task-2.2">Task 2.2</h4>
+<p>The model specification <code>y ~ x</code> will separate <code>y</code> into signal and noise, putting into the signal only that part of the variation in <code>y</code> that comes from <code>x</code>. NOTE CAREFULLY that in a model specification, you do not put in numbers such as 1.5. Training the model to the specification will find such numbers for you; those are the coefficients. The right-hand side of the specification simply contains the <em>names</em> of the explanatory variables you want to include in the signal.</p>
+<p>Use a sample of a few hundred rows from <code>dag01</code> to train a model, call it <code>mod2.2</code> to the specification <code>y ~ x</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mod2<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data=</span><span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">500</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Look at the coefficients and say whether they are appropriate, given the <code>dag01</code> formula for <code>y</code>.</p>
+<p><em>Your answer</em>:</p>
+<p>Evaluate <code>mod2.2</code> on the training data and calculate the variances of the <code>.response</code>, <code>.output</code> and <code>.resid</code> columns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(mod2<span class="fl">.2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">var</span>(.response), <span class="fu">var</span>(.output), <span class="fu">var</span>(.resid))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Using training data as input.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  var(.response) var(.output) var(.resid)
+1       3.156326     2.080678    1.075648</code></pre>
 </div>
 </div>
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<p>How much variance did the specification <code>y ~ x</code> assign to the signal and how much to the noise?</p>
+</section>
+<section id="task-2.3" class="level4">
+<h4 class="anchored" data-anchor-id="task-2.3">Task 2.3</h4>
+<p>Repeat Task 2.2 but for the model specification <code>y ~ 1</code>. This specification insists that <code>y</code> does not have any influence from <code>x</code>. Determine how big the signal is and how big the noise is.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mod2.3 &lt;- lm(y ~ 1, data=sample(dag01, size=500))</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># model_eval(mod2.3) %&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   summarize(var(.response), var(.output), var(.resid))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout-caption-container flex-fill">
-Note in draft
+<p>What happens when the specification conflicts with the actual mechanism? Who wins?</p>
+<p><em>Your answer</em>:</p>
+</section>
+</section>
+<section id="exercise-3" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-3">Exercise 3</h3>
+<p>Now we will work with a different DAG, <code>dag02</code>, where <code>y</code> is influence by two variables, <code>x</code> and <code>a</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag02)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Student-notes-lesson-21_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dag02)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>x ~ exo()
+a ~ exo()
+y ~ 3 * x - 1.5 * a + 5 + exo()</code></pre>
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<p>Calculate the standard deviation and variance of various linear transformation of a variable.</p>
-</div>
-</div>
-<section id="key-ideas" class="level2">
-<h2 class="anchored" data-anchor-id="key-ideas">Key ideas</h2>
+<section id="task-3.1" class="level4">
+<h4 class="anchored" data-anchor-id="task-3.1">Task 3.1</h4>
+<ol type="a">
+<li>How much variance is contributed to <code>y</code> by the <code>3 * x</code> term in the DAG formula?</li>
+</ol>
+<p><em>Your answer:</em></p>
+<ol start="2" type="a">
+<li>How much variance is contributed to <code>y</code> by the <code>-1.5*a</code> term in the DAG formula?</li>
+</ol>
+<p><em>Your answer:</em></p>
+</section>
+<section id="task-3.2" class="level4">
+<h4 class="anchored" data-anchor-id="task-3.2">Task 3.2</h4>
+<p>Consider these four model specifications, each of which divides <code>y</code> into signal and noise in its own way:</p>
+<ol type="i">
+<li><code>y ~ 1</code></li>
+<li><code>y ~ x</code></li>
+<li><code>y ~ a</code></li>
+<li><code>y ~ x + a</code></li>
+</ol>
+<ol type="a">
+<li>Which model specification, (ii) or (iii), extracts a signal with a bigger variance?</li>
+</ol>
+<p><em>Your answer</em>:</p>
+<ol start="2" type="a">
+<li>Which model specification extracts a signal with the biggest variance of all?</li>
+</ol>
+<p><em>Your answer</em>:</p>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
