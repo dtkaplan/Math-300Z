@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="YOUR NAME HERE">
-<meta name="dcterms.date" content="2022-11-01">
+<meta name="dcterms.date" content="2022-12-01">
 
-<title>Spring 2023 Math 300 Revisions - Math 300 Lesson 19 Notes</title>
+<title>Spring 2023 Math 300Z - Math 300 Lesson 19 Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -123,12 +123,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+</head><body class="nav-fixed fullcontent"><span class="math inline" style="display: none;">
+\(\newcommand{\Ptest}{\mathbb{P}}
+\newcommand{\Ntest}{\mathbb{N}}
+\newcommand{\given}{\ |\!\!|\  }
+\)
+</span>
 
 
 <link rel="stylesheet" href="../styles.css">
-</head>
 
-<body class="nav-fixed">
+
+
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -136,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
+    <span class="navbar-title">Spring 2023 Math 300Z</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -144,6 +150,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../Textbook/index.html">
+ <span class="menu-text">Textbook</span></a>
+  </li>  
   <li class="nav-item">
     <a class="nav-link" href="../index.html">
  <span class="menu-text">Proposal</span></a>
@@ -174,16 +184,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    </div>
+    
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Math 300 Lesson 19 Notes</h1>
-<p class="subtitle lead">Statistical thinking</p>
+<p class="subtitle lead">Topic: Statistical thinking</p>
 </div>
 
 
@@ -200,7 +208,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 1, 2022</p>
+      <p class="date">December 1, 2022</p>
     </div>
   </div>
   
@@ -210,275 +218,203 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>Here’s a graph of the data in our standard response-vs-explanatory graphic frame:</p>
-<div class="cell page-columns page-full">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> smoker, <span class="at">y =</span> outcome)) <span class="sc">+</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width=</span><span class="fl">0.2</span>, <span class="at">height=</span><span class="fl">0.2</span>, <span class="at">alpha=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-<div class="no-row-height column-margin column-container"><div class="cell-output-display">
-<p><img src="Student-notes-lesson-19_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
-</div></div></div>
-<p>The graph suggests that non-smokers were more likely than smokers to be dead at the follow-up interview. But it’s hard to calculate proportions from such a graph. It’s reasonable to argue that for the purpose of showing the fraction of smokers and of non-smokers who died, a bar chart would be better.</p>
-<div id="fig-smoker-barplot" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>smoker, <span class="at">fill=</span>outcome)) <span class="sc">+</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>()</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>smoker, <span class="at">fill=</span>outcome)) <span class="sc">+</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position =</span> <span class="st">"fill"</span>) <span class="sc">+</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Proportions"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="fig-smoker-barplot-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Student-notes-lesson-19_files/figure-html/fig-smoker-barplot-1.png" class="img-fluid figure-img" data-ref-parent="fig-smoker-barplot" width="672"></p>
-<p></p><figcaption class="figure-caption">(a) counts</figcaption><p></p>
-</figure>
-</div>
-</div>
-<div class="cell-output-display">
-<div id="fig-smoker-barplot-2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Student-notes-lesson-19_files/figure-html/fig-smoker-barplot-2.png" class="img-fluid figure-img" data-ref-parent="fig-smoker-barplot" width="672"></p>
-<p></p><figcaption class="figure-caption">(b) proportions</figcaption><p></p>
-</figure>
-</div>
-</div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;1: Barplots of the <code>Whickham</code>smoking and survival data.</figcaption><p></p>
-</figure>
-</div>
-<p>The left barplot, showing counts, suggests that a higher proportion of non-smokers died than of smokers. But its easy to instruct the <code>geom_bar()</code> to graph proportions rather than counts, as done in the left plot. This makes it easy to conclude at a glance that a higher proportion of non-smokers have died.</p>
-<p>The important question here, “Does smoking affect mortality?” translates well into the response/explanatory paradigm: <code>outcome</code> is the response variable while <code>smoker</code> is the explanatory variable. In the jitter-plot presentation of the data, these assignments are clearly indicated in the computer commands, which set <code>x=smoker, y=outcome</code>. In the barplot, a different notation is used: <code>x=smoker, fill=outcome</code>.</p>
-<p>Unfortunately, neither of the graphic styles—jitter or boxplot—answers the important question. At best they provide a description of the nurses in the <code>Whickham</code> data frame.</p>
-<p>To answer the important question, we need to invoke statistical thinking. In particular, we need an <em>interval summary</em> of the proportion who died, not the point summary produced by the barplot.</p>
-<p>This doesn’t mean that we can’t easily calculate the proportions from the categorical response variable: we just have to use the right commands. for instance:</p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>Thus far in Math 300Z, we have learned about data frames and wrangling, several modes of visualization, regression models, and the basic interpretation of their coefficients.</p>
+<p>The definition of “statistical modeling” given in the readings emphasizes “accounting for variation.” Regression models will be our primary tool for doing the accounting. In this Lesson we will connect more firmly visualization and modeling and practice with measuring the amount of variation in variables and the amount of variation in the response variable accounted for by a model.</p>
+<section id="reading" class="level3">
+<h3 class="anchored" data-anchor-id="reading">Reading</h3>
+<p><a href="https://dtkaplan.github.io/Math-300R/Textbook/Reading-notes-lesson-19.html">Lesson <strong>19</strong> from <em>LST</em></a></p>
+</section>
+<section id="objectives" class="level3">
+<h3 class="anchored" data-anchor-id="objectives">Objectives</h3>
+<p>19.1 Use the <em>response vs.&nbsp;explanatory</em> (<strong>RESPEX</strong>) format for data graphics, employing jittering as appropriate. Display density distributions using a violin graphic.</p>
+<p>19.2 Use the <em>variance</em> to measure the amount of variation in a quantitative variable. a. Convert a <em>variance</em> into the corresponding <em>standard deviation</em>. b. Properly display a standard deviation on a RESPEX-format graph.</p>
+<p>19.3 Compute and the <em>residuals</em>. Display the model output on top of a RESPEX graph of the training data.</p>
+<p>19.4 Generate graphics and models using zero-one encoding of a categorical response variable. Interpret the output of such models.</p>
+<p><a href="../Objectives/Obj-lesson-19.html">Updated list of objectives</a></p>
+</section>
+<section id="libraries" class="level3">
+<h3 class="anchored" data-anchor-id="libraries">Libraries</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">df_stats</span>(outcome <span class="sc">~</span> smoker, prop, ci.prop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  response smoker prop_Alive     lower    center     upper
-1  outcome     No  0.6857923 0.6507824 0.6857923 0.7192969
-2  outcome    Yes  0.7611684 0.7243939 0.7611684 0.7952677</code></pre>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(math300)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"amazon_books"</span>, <span class="at">package=</span><span class="st">"moderndive"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<p>The point summary—the <code>prop_Alive</code> column—suggests an obvious difference between the smokers and non-smokers. The interval summary—columns <code>lower</code> and <code>upper</code>—tempers this conclusion a little: the intervals almost touch.</p>
-<p>Although regression is our go-to technique for modeling relationships between variables, we can’t use it directly on a categorical response variable.</p>
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Here’s what happens if we try:</p>
+<hr>
+<p>Suggestion: *As you complete each task, add a <code>*</code> after the number in the task’s section header. The editor’s outline view can then help you navigate to asks that are not yet complete.</p>
+</section>
+<section id="task-0" class="level3">
+<h3 class="anchored" data-anchor-id="task-0">Task 0</h3>
+<p>Activate the “Outline” view in the RStudio editor. Then, add a * after the number in the “### Task 0” header.</p>
+<hr>
+</section>
+</section>
+<section id="lesson" class="level2">
+<h2 class="anchored" data-anchor-id="lesson">Lesson</h2>
+<p>The <code>moderndive::amazon_books</code> data frame records prices and other aspects of 325 books. We are going to explore some physical attributes of the books, weight, number of pages, thickness, and so on.</p>
+<section id="exercise-1" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-1">Exercise 1</h3>
+<p>The <em>thickness</em> varies from book to book. We are going to try to account for the thickness in terms of other physical quantities. (FYI: The variable <code>thick</code> is measured in inches.)</p>
+<section id="task-1.1" class="level4">
+<h4 class="anchored" data-anchor-id="task-1.1">Task 1.1</h4>
+<p>Make a RESPEX graph suited to the model <code>thick ~ hard_paper</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(outcome <span class="sc">~</span> smoker, <span class="at">data =</span> Whickham) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ggplot(amazon_books, aes(y=_______, x=______)) + </span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#   geom_jitter(height=0, alpha=0.5)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="exercise-2" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-2">Exercise 2</h3>
+<p>Copy your RESPEX commands into the following chunk and add a <code>geom_violin()</code> layer to display the distribution of thickness values for the two categories of book cover. The resulting display won’t be very nice. We will improve it later.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy the code from the previous chunk to get started.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Then add a geom_violin() layer. </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The point of the RESPEX format is to allow statistical annotations to be laid on top of the data <strong>without hiding the data</strong>. The default aesthetics of <code>geom_violin()</code> are not well selected to accomplish this task.</p>
+<p>Three of the parameters you can give to <code>geom_violin()</code> are <code>color=</code>, <code>fill=</code>, and <code>alpha=</code>. The <code>alpha=</code> parameter controls the transparency: <code>alpha=0.5</code> means 50% transparency.</p>
+<p>The <code>color=</code> and <code>fill=</code> can be set to values like “blue”, “orange”, etc. Another possible value is <code>NA</code>, which signals to suppress that part of the geom.</p>
+<section id="task-2.1" class="level4">
+<h4 class="anchored" data-anchor-id="task-2.1">Task 2.1</h4>
+<p>Using the next code chunk, set the <code>alpha=</code>, <code>color=</code>, and <code>fill=</code> to values of your preference, subject only to the constraint that the violin doesn’t hide the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for task 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="task-2.2" class="level4">
+<h4 class="anchored" data-anchor-id="task-2.2">Task 2.2</h4>
+<p>Compare your choices in Task 1 to those made in the readings in (Figure 19.3](https://dtkaplan.github.io/Math-300R/Textbook/Reading-notes-lesson-19.html#fig-violin-intro). What do you prefer about your choices and what do you prefer in Figure 19.3?</p>
+</section>
+</section>
+<section id="exercise-3" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-3">Exercise 3</h3>
+<p>Common sense suggests that the thickness of a book depends on the number of pages. Let’s investigate this numerically.</p>
+<section id="task-3.1" class="level4">
+<h4 class="anchored" data-anchor-id="task-3.1">Task 3.1</h4>
+<p>Make a RESPEX graph of <code>amazon_books</code> suitable for the model <code>thick ~ num_pages</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For Task 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The next chunk trains a model with <code>thick ~ num_pages</code>, naming the result <code>mod1</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(thick <span class="sc">~</span> num_pages, <span class="at">data=</span>amazon_books)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="task-3.2" class="level4">
+<h4 class="anchored" data-anchor-id="task-3.2">Task 3.2</h4>
+<p>Extract the <code>coefficients()</code> from <code>mod1</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for </span><span class="al">TASK</span><span class="co"> 2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="task-3.4" class="level4">
+<h4 class="anchored" data-anchor-id="task-3.4">Task 3.4</h4>
+<p>Based on the coefficients, say how thick a typical page is. (Remember the units!)</p>
+<p><em>Your answer:</em></p>
+</section>
+</section>
+<section id="exercise-4" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4">Exercise 4</h3>
+<p>For your convenience, <code>model_plot()</code> function will graph the model as an annotation on top of a RESPEX display of the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod1, <span class="at">x=</span>num_pages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning in model.response(mf, "numeric"): using type = "numeric" with a factor
-response will be ignored</code></pre>
+<pre><code>Warning: Removed 3 rows containing missing values (geom_point).</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in Ops.factor(y, z$residuals): '-' not meaningful for factors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in Ops.factor(r, 2): '^' not meaningful for factors</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>            2.5 % 97.5 %
-(Intercept)    NA     NA
-smokerYes      NA     NA</code></pre>
-</div>
-</div>
-<p>The computer’s warning message is a reminder that the response variable is categorical. (The message uses the phrase “factor response,” which is just computerese for “categorical response.”)</p>
-</div>
-</div>
-<p>To use regression with a two-level categorical response variable, transform it into a zero-one encoding. In the following, we’ll use 1 to represent <code>"Alive"</code> and 0 to represent <code>"Dead"</code>, although we can equally well do things the other way around.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="fu">zero_one</span>(outcome, <span class="at">one=</span><span class="st">"Alive"</span>) <span class="sc">~</span> smoker, <span class="at">data =</span> Whickham) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                 2.5 %    97.5 %
-(Intercept) 0.65329520 0.7182895
-smokerYes   0.02654662 0.1242054</code></pre>
-</div>
-</div>
-<p>You don’t yet know enough to interpret this interval summary. That will have to wait until Lesson 24. The significant<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> feature of the interval on <code>smokerYes</code> is that it does not include zero. In everyday terms, the interval means, “Smokers are 3 to 12 percentage points more likely to survive for 20 years than are non-smokers.”</p>
-<p>Using interval summaries instead of point summaries is an important aspect of statistical thinking, but there are other aspects that need to be taken into account. A simple, but important, question is whether the nurses recorded in the <code>Whickham</code> data frame are good representatives of all smokers. (It turns out that the nurses in <code>Whickham</code> are all women interviewed in the 1970s. At that moment of history, women were very different than men when it comes to smoking, and the Whickham smokers were also very different from today’s female smokers. We’ll say more about this in the demonstration below.)</p>
-<p>Statistical thinking also leads one to ask another sort of question: What else might be going on other than smoking? In technical language, the other-goings-on are called “<strong>covariates</strong>,” the topic of Lessons 28 &amp; 29.</p>
-<p>For instance, you might wonder about the overall result from our brief examination of the <code>Whickham</code> data. Is it really the case that the smokers were more likely to survive than the non-smokers? The answer is “yes,” as we have demonstrated from the previous analysis. But this answer is completely misleading. Tobacco companies worked hard to mislead people into thinking that smoking was not dangerous. They knew full well the negative health consequence of smoking, but they used statistical-sounding claims to hide this knowledge from the public.</p>
-<p>In the following demonstration, we’ll look at the <code>Whickham</code> data again using the power of regression models to incorporate covariates.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Demonstration: Smoking with covariates
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><em>Remember that you are not expected to master the calculations in these demonstrations. Focus your attention on the output from the calculations.</em></p>
-<p>It goes without saying that smoking is not the only thing that kills people. There are other risky behaviors such as heavy drinking, there’s environmental exposure to pollutants, and there’s disease (other than the smoking induced ones of lung cancer, emphysema, and high blood pressure). But there’s one risk factor for death that everyone knows about but nobody is doing anything about: getting old.</p>
-<p>In virtually every public health or clinical study, the participant’s age is taken into account. Not doing so can produce a completely misleading view of the situation. This is also the case with smoking and mortality in the <code>Whickham</code> study.</p>
-<p>Regression techniques enable us to take multiple explanatory variables into account. In this demonstration, we’ll use regression to study <code>outcome</code> as a function of <code>smoker</code> and, importantly, <code>age</code>.</p>
-<p>To get started, we need to remember to convert the categorical <code>outcome</code> variable into a zero-one encoding. After that, building the model is not so hard.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>survival_model <span class="ot">&lt;-</span> Whickham <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">survived =</span> <span class="fu">zero_one</span>(outcome, <span class="at">one=</span><span class="st">"Alive"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_train</span>(survived <span class="sc">~</span> age <span class="sc">+</span> smoker, <span class="at">data=</span>.)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>From this model, we can read off an interval summary of the effect of smoking on survival:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>survival_model <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                 2.5 %     97.5 %
-(Intercept)  6.7686824  8.5002535
-age         -0.1382922 -0.1101260
-smokerYes   -0.5369777  0.1238805</code></pre>
-</div>
-</div>
-<p>A full understanding of this interval summary will need to wait until Lessons 22 through 24. For the present, we’ll simply point out that the summary interval on <code>smokerYes</code> includes zero, so <code>Whickham</code> provides no support for the mistaken conclusion that smoking improves survival. But seeing this requires taking into account <code>age</code>. A graphic may help explain why:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Model_output <span class="ot">&lt;-</span> <span class="fu">model_eval</span>(survival_model, <span class="at">interval=</span><span class="st">"confidence"</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>Model_output <span class="sc">%&gt;%</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> survived, <span class="at">ymin=</span>.lwr, <span class="at">ymax=</span>.upr, <span class="at">x=</span>age, <span class="at">color=</span>smoker, <span class="at">fill=</span>smoker)) <span class="sc">+</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">height=</span>.<span class="dv">1</span>, <span class="at">width=</span><span class="dv">0</span>, <span class="at">alpha=</span><span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span><span class="fl">0.2</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Student-notes-lesson-19_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The interval summary in the graph shows how the probability of survival changes for different ages. The intervals for non-smokers and smokers entirely overlap. For both groups, 20-year survival goes down with greater initial age. So why did the model <code>outcome ~ smoker</code> suggest that smokers have a higher survival? The reason relates to the proportion of smokers with initial age 70+. In the 1970s, life expectancy was such that people 70+ were unlikely to survive 20 years. This pulls down the survival rate at that age. Notice that the 70+ nurses were unlikely to have been smokers compared to younger nurses. The 70+ nurses grew up in an era when social conventions caused smoking to be uncommon for women (even though it was very common for men).</p>
-</div>
-</div>
-<section id="key-ideas" class="level2">
-<h2 class="anchored" data-anchor-id="key-ideas">Key ideas</h2>
-<ol type="1">
-<li><p>Starting with this lesson, the course will be about ways to extract <strong>actionable information</strong> from data. “Actionable information” is in a form to guide decision making. Core techniques for extracting information from data are graphics and models.</p></li>
-<li><p>In this lesson …</p>
-<ol type="a">
-<li>You will start to construct data graphics in a standard format suited for modeling: a response variable on the vertical axis and an explanatory variable on the horizontal axis. (Other explanatory variables can be mapped to color or facets. We’ll get to that in later lessons.)</li>
-<li>You will be introduced to statistical annotations that display an <strong>interval</strong> over the response variable. (In later lessons, we’ll introduce specific types of intervals.)</li>
-<li>You will extend regression models to be able to handle a two-level <strong>categorical</strong> response variable.</li>
-</ol></li>
-</ol>
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-In draft
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Make a jitter plot of gestation period versus smoking status. Then find the mean for each smoking status show this table. Then the ci.mean() as a table and graphed as an interval.</p>
+<p>The <code>model_eval()</code> function will turn input values for explanatory variables into the corresponding outputs. For example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>values <span class="ot">&lt;-</span> <span class="fu">lm</span>(gestation <span class="sc">~</span> smoke, <span class="at">data =</span> Gestation) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_eval</span>(<span class="at">interval=</span><span class="st">"confidence"</span>, <span class="at">skeleton=</span><span class="cn">TRUE</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>Gestation <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> smoke, <span class="at">y =</span> gestation)) <span class="sc">+</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width=</span><span class="fl">0.2</span>, <span class="at">alpha=</span><span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">data =</span> values, <span class="fu">aes</span>(<span class="at">x=</span>smoke, <span class="at">ymin=</span>.lwr, <span class="at">ymax=</span>.upr), <span class="at">y=</span><span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 13 rows containing missing values (geom_point).</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="Student-notes-lesson-19_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(mod1, <span class="at">num_pages=</span><span class="dv">250</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  num_pages  .output      .lwr     .upr
+1       250 0.748944 0.3264018 1.171486</code></pre>
 </div>
 </div>
-</div>
-</div>
-</section>
-<section id="objectives" class="level2">
-<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
-<p>While in draft, see <code>Objectives/Obj-lesson-19.qmd</code>. Those will be copied over here.</p>
-</section>
-<section id="a-standard-format-for-data-graphics" class="level2">
-<h2 class="anchored" data-anchor-id="a-standard-format-for-data-graphics">A standard format for data graphics</h2>
-<p>A “data graphic” is one that displays each of the rows of a data frame. Graphics are fundamentally two-dimensional, so the data graphic has a frame that maps one variable to the vertical axis (“the y aesthetic”) and another to the horizontal axis (“the x aesthetic”).</p>
-<p>Models are important to extracting information from data. Models always have a <strong>response variable</strong> and one or more <strong>explanatory variables</strong>. So our standard format for data graphics will put the response variable on the vertical axis and the one of the explanatory variables on the horizontal axis.</p>
-<section id="example-scottish-hill-racing" class="level3">
-<h3 class="anchored" data-anchor-id="example-scottish-hill-racing">Example: Scottish hill racing</h3>
-<p>A popular competitive sport in Scotland is hill racing. This is a running race that involves ascending a hill rather than running on the flat. The <code>math300::Hill_racing</code> data frames records about 2000 winning performances in hill races. (See <code>?Hill_racing</code> for the documentation.)</p>
-<ol type="1">
-<li><p>A simple model of a hill race performance is <code>time ~ distance</code>.</p>
-<ol type="a">
-<li>Which is the response variable and which is the explanatory variable in the model <code>time ~ distance</code>?</li>
-</ol>
-<p><strong>ANSWER</strong>:</p>
-<ol start="2" type="a">
-<li>Make a data graphic from <code>Hill_racing</code> that is consistent with this choice of explanatory and response variables.</li>
-</ol></li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># complete the code</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Hill_racing %&gt;%</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  ggplot(aes(x=_____, y=______)) +</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  geom_point()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Solution
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># complete the code</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>Hill_racing <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>distance, <span class="at">y=</span>time)) <span class="sc">+</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">geom_point</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 10 rows containing missing values (geom_point).</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="Student-notes-lesson-19_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="the-null-model" class="level3">
-<h3 class="anchored" data-anchor-id="the-null-model">The “Null” model</h3>
-<p>The basis of the techniques you’ll learn in this second half of the course is building a model that uses explanatory variables to account for the response variable.</p>
-<p>We’ll extract various quantities from the models we build and, in particular, use those quantities to compare one model to another, the point being to see SAY WHAT.</p>
-<p>Surprisingly, an important model for starting the chain of comparisons <em>has no explanatory variable</em>. OR RATHER, WE MAKE UP AN EXPLANATORY variable. SHOW MEAN is a coefficient from such a model. Model formula: <code>y ~ 1</code></p>
-<p>Let’s use the standard data-graphic format to display to display <code>y ~ 1</code>,</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">group =</span> <span class="st">"all"</span>) <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>age, <span class="at">x=</span>group)) <span class="sc">+</span> <span class="fu">geom_jitter</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Student-notes-lesson-19_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<ol start="2" type="1">
-<li>A somewhat more complex model is <code>time ~ distance + climb</code>. In this model there are two explanatory variables. Only one of them can be mapped to the horizontal axis, the other will need to be mapped to some other aesthetic or to faceting.</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># complete the code</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Hill_racing %&gt;%</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  ggplot(aes(x=_____, y=______)) +</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  geom_point()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="task-4.1" class="level4">
+<h4 class="anchored" data-anchor-id="task-4.1">Task 4.1</h4>
+<p>Explain in words how the above output for `num_pages=250 corresponds to the RESPEX graph of the model made just previously.</p>
+<p><em>Your answer:</em></p>
 <hr>
+<p>If you use <code>model_eval()</code> <em>without</em> specifying values for the explanatory variables, <code>model_eval()</code> will use the <em>training data</em>, producing an output for each row in the training data. It will also calculate the residuals (and some other quantities that we will use in another Lesson).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Output_for_training_data <span class="ot">&lt;-</span> <span class="fu">model_eval</span>(mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="task-4.2" class="level4">
+<h4 class="anchored" data-anchor-id="task-4.2">Task 4.2</h4>
+<p>Add to the above chunk the wrangling commands to compute the <em>variance</em> of each of these three columns: the <code>.response</code> variable, the model <code>.output</code>, and the residuals <code>.resid</code>. (Hint: <code>summarize()</code> and <code>var()</code>.)</p>
+</section>
+</section>
+<section id="exercise-5" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-5">Exercise 5</h3>
+<p>Let’s explore the idea that a book’s cover type—hard-cover or paperback—reflects the number of pages in the book.</p>
+<section id="task-5.1" class="level4">
+<h4 class="anchored" data-anchor-id="task-5.1">Task 5.1</h4>
+<p>Use wrangling commands such as <code>group_by(hard_paper)</code> and <code>tally()</code> to figure out what fraction of the <code>amazon_books</code> are hard-cover?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for Task 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="task-5.2" class="level4">
+<h4 class="anchored" data-anchor-id="task-5.2">Task 5.2</h4>
+<p>Use wrangling commands and <code>zero_one()</code> to add a new variable <code>hardcover</code> to <code>amazon_books</code>. The value of the <code>hardcover</code> should be 1 when the book is hardcover. (Hints: You don’t need <code>group_by()</code> for this task.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for Task 2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="task-5.3" class="level4">
+<h4 class="anchored" data-anchor-id="task-5.3">Task 5.3</h4>
+<p>Use wrangling commands to find the mean of the <code>hardcover</code> variable that you made in Task 5.2.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For task 3</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>amazon_books <span class="ot">&lt;-</span> amazon_books <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">hardcover =</span> <span class="fu">zero_one</span>(hard_paper, <span class="at">one=</span><span class="st">"H"</span>))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>amazon_books <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">mn =</span> <span class="fu">mean</span>(hardcover))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+     mn
+  &lt;dbl&gt;
+1 0.274</code></pre>
+</div>
+</div>
+<p>How does the result compare to the quantity you calculated in Task 1?</p>
+<p><em>Your answer</em>:</p>
+</section>
+</section>
+<section id="going-further" class="level3">
+<h3 class="anchored" data-anchor-id="going-further">Going further</h3>
+<p>Explain what this plot shows, particularly the blue line.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(hardcover <span class="sc">~</span> num_pages, <span class="at">data=</span>amazon_books)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>Tmp <span class="ot">&lt;-</span> <span class="fu">model_eval</span>(mod2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Using training data as input.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Tmp, <span class="fu">aes</span>(<span class="at">x =</span> num_pages, <span class="at">y =</span> .response)) <span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">height=</span><span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> .output), <span class="at">color=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Student-notes-lesson-19_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><em>Your answer here</em>:</p>
+<hr>
+</section>
+</section>
+<section id="documenting-software" class="level2">
+<h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>
+<ul>
+<li>File creation date: 2022-12-25</li>
+<li>R version 4.2.1 (2022-06-23)</li>
+</ul>
 
 
 </section>
-</section>
 
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>In lesson 38 you’ll learn to be wary whenever a statistician uses the word “significant.”<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

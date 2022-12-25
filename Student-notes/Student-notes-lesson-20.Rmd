@@ -56,7 +56,7 @@ data("Whickham", package="mosaicData")
 --------
 
 
-## Lesson 
+Lesson 
 --------
 
 In the real world, creating a sample can be a laborious process, perhaps requiring field, experimental work, or building instrumentation. We're going to skip the hard stuff, and simply use the R function `sample()` which can create a sample from a data frame or a DAG (or other things such as the `1:10` in the example).
@@ -85,19 +85,157 @@ Answer these questions:
 
 #### Task 1.2
 
+Compare the ages of the smokers and non-smokers in `Whickham` with this model:
+
+`r options(digits=3)`
+
+```{r}
+# lm(age ~ smoker, data=Whickham) %>% coefficients()
+```
+
+Note the `smokerYes` coefficient is about -4.0. Interpret the `smokerYes` coefficient in everyday language to explain what it says about the ages of smokers and non-smokers. 
+
+*Your answer*: 
+
+#### Task 1.3
+
+Make an appropriate RESPEX-format graph of `Whickham` suited to the model `age ~ smoker`. Add a violin layer to the data layer. (Make sure to set the transparency `alpha` and the `fill` and `color` for an intelligible display.)
+
+```{r}
+# For task 1.3
+
+```
+
+From the graph, explain in everyday language why the violin is so narrow for smokers aged 65 and above.
+
+*Your answer*:
+
+Why is there a waist in the violin for non-smokers at age 50, while the violin for smokers has a corresponding bulge? Explain in everyday language.
+
+*Your answer*:
+
 ### Exercise 2
 
 #### Task 2.1
 
+Write an R statement that will find the sample size $n$ of `Whickham`.
+
+```{r}
+# Find sample size of `Whickham`.
+```
+
+In the chunk below, copy the code from Task 1.1 to display the coefficients from the model `age ~ smoker`. But modify the code so that instead of using all of `Whickham` as training data, a sample size of $n=50$.
+
+```{r}
+# Copy your code from Task 1.1, but set the sample size to n=50.
+```
+
+Run the above chunk several times, each time noting the coefficient `smokerYes`. The coefficient will differ from run to run: that's sampling variation. Which of these statements best describes the pattern? (Mark your answer **in bold**.)
+
+a. The coefficients are always less than -4.0.
+b. The coefficients are always greater than -4.0
+c. The coefficients are scattered on both sides of -4.0.
+
+
+
+
 #### Task 2.2
+
+Copy your graphics code from Task 1.2, but modify it to set the sample size to $n=50$. 
+```{r}
+# Copy the graphics code from Task 1.2, modified for a sample of size n=50.
+ggplot(sample(Whickham, size=50), aes(x=smoker, y=age)) +
+  geom_jitter(alpha=0.5, width=0.2) + 
+  geom_violin(alpha=0.2, fill="blue", color=NA)
+```
+
+Repeat the command many times, each time checking the violin for signs of the non-smoker waist and smoker bulge at around age 50. 
+
+a. Does the waist-bulge pattern appear reliably for a sample of size $n=50$?  
+b. Find a sample size at which the waist-bulge pattern occurs at least 3/4 of the time?
+    
+*Your answer here:*
 
 ### Exercise 3
 
+In this exercise, you will practice with the `do()` function that lets you run multiple replications of a trial. 
+
 #### Task 3.1
+
+In this task, the trial will be very simple: Fit the `age ~ smoker` model to `Whickham` and display the coefficients. The code to run a trial is inside the curly braces `{ }`. The `do()` function goes before the curly braces. There is always a `*` sign between `do()` and the curly braces.
+
+```{r}
+# Trials <- do(5) * { lm(age ~ smoker, data=Whickham) %>% coefficients() }
+# Trials
+```
+
+The collection of `Trials` is a data frame that includes the results from each trial, stacked one above the next.
+
+You may be surprised to see that the columns of `Trials` repeat the same number over and over again. Explain what it is about the command inside the `{ }` that causes the result to be the same every time the trial is run. (See the next task if you can't figure it out.)
+
+*Your answer here*:
 
 #### Task 3.2
 
-**Going further**: 
+The typical use for `do()` is to repeat trials, each of which involves some random component, such as drawing a sample.
+
+Modify the code from Task 3.1 so that the training data is a sample of size $n=50$ from `Whickham`. Also, modify the argument to `do()` so that there will be 10 rows in `Trials`.
+
+```{r}
+# modify this code
+# Trials <- do(5) * { lm(age ~ smoker, data=Whickham) %>% coefficients() }
+# Trials
+```
+
+Confirm that the coefficients vary from trial to trial, that is, from one sample to another.
+
+Try several different sample sizes (that is, $n=100, 200, 300$). Does the amount of trial-to-trial variation in the coefficients get bigger or smaller as the sample size increases?
+
+*Your answer here*:
+
+
+### Exercise 4
+
+You can use `sample()` to take samples from a DAG. For instance, consider
+`dag02`:
+
+```{r}
+dag_draw(dag02)
+print(dag02)
+sample(dag02, size=5)
+```
+
+#### Task 4.1
+
+Here is the code for a single trial in which a sample of size $n=5$ is collected from `dag02` and used to train the model `y ~ a + x`, which corresponds exactly to the formula for `y` in the DAG.
+
+```{r}
+# lm(y ~ a + x, data=sample(dag02, size=5)) %>% coefficients()
+```
+
+Notice that the coefficients roughly match those in the `dag02` formula for `y`.
+
+#### Task 4.2
+
+Copy from Task 4.1 the code to run one trial. (Make sure to take out the comment symbol!)
+
+Then modify the copied code to place the one-trial code in curly braces, and use `do(10)*` to run ten trials.
+
+```{r}
+# For Task 4.2
+
+```
+
+By trial and error, find a sample size $n$ that's large enough so that the coefficients from the trials reliably match those in the `y` formula from `dag02`, varying by at most by $\pm 0.1$. How big a sample is required for this?
+
+*Your answer here*:
+
+Repeat the previous, but find a sample size large enough so that the coefficients differ from those in the `y` formula by at most $\pm 0.01$. How big a sample is required for this?
+
+*Your answer here*:
+
+
+### Going further 
 
 You can create your own DAGs. Use `dag_make()`, which takes tilde expressions as arguments. The left-hand side of each tilde expression is the name of a node. The right-hand side is an arithmetical formula to create a value from that node from the values of previous nodes or exogenous random number generators like `exo()`. (See the help page `?dag_make` for more information.) For example:
 

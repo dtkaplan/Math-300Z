@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="YOUR NAME HERE">
+<meta name="dcterms.date" content="2022-12-01">
+
+<title>Spring 2023 Math 300Z - Math 300 Lesson 20 Notes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+</head><body class="nav-fixed fullcontent"><span class="math inline" style="display: none;">
+\(\newcommand{\Ptest}{\mathbb{P}}
+\newcommand{\Ntest}{\mathbb{N}}
+\newcommand{\given}{\ |\!\!|\  }
+\)
+</span>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../styles.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Spring 2023 Math 300Z</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../Textbook/index.html">
+ <span class="menu-text">Textbook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html">
+ <span class="menu-text">Proposal</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../lessons.html">
+ <span class="menu-text">Lessons</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../layout.html">
+ <span class="menu-text">Site layout</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../objective-list.html">
+ <span class="menu-text">Objectives</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../LC-list.html">
+ <span class="menu-text">LCs</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Math 300 Lesson 20 Notes</h1>
+<p class="subtitle lead">Simulation and sampling variation</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>YOUR NAME HERE </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 1, 2022</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>The word “data” comes from the Latin <em>datum</em>, meaning “something given.” Statistical thinkers remember that there is something behind the gift: the units of observation, the mechanism that creates the real relationships among the variables, and the process of sampling from the available units of observation those recorded in the data frame. The sampling process leaves traces—called <strong>sampling variation</strong>*—in the models we construct from data. This Lesson gives you simulation tools to observe and quantify sampling variation. We will use these throughout the Lessons that follow.</p>
+<section id="reading" class="level3">
+<h3 class="anchored" data-anchor-id="reading">Reading</h3>
+<p><a href="https://dtkaplan.github.io/Math-300R/Textbook/Reading-notes-lesson-20.html">Lesson <strong>20</strong> from <em>LST</em></a></p>
+</section>
+<section id="objectives" class="level3">
+<h3 class="anchored" data-anchor-id="objectives">Objectives</h3>
+<p>20.1 Construct sampling trials from a data frame or a simulation.</p>
+<p>20.2 Replicate sampling trials and calculate the amount of sampling variability.</p>
+<p>20.3 Recognize properties of directed, acyclic graphs (DAGs).</p>
+<p><a href="../Objectives/Obj-lesson-20.html">Updated list of objectives</a></p>
+</section>
+<section id="libraries" class="level3">
+<h3 class="anchored" data-anchor-id="libraries">Libraries</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(math300)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Whickham"</span>, <span class="at">package=</span><span class="st">"mosaicData"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+</section>
+</section>
+<section id="lesson" class="level2">
+<h2 class="anchored" data-anchor-id="lesson">Lesson</h2>
+<p>In the real world, creating a sample can be a laborious process, perhaps requiring field, experimental work, or building instrumentation. We’re going to skip the hard stuff, and simply use the R function <code>sample()</code> which can create a sample from a data frame or a DAG (or other things such as the <code>1:10</code> in the example).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">size =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5 1 2 7</code></pre>
+</div>
+</div>
+<p>Note: The <code>size=</code> argument specifies the size of the sample to be collected. In the text, we follow statistical convention and always refer to the sample size with the letter <span class="math inline">\(n\)</span>, as in “collect a sample of size <span class="math inline">\(n=6\)</span>. But <code>sample()</code> does <em>not</em> use <span class="math inline">\(n\)</span> as the name of the size-setting argument.</p>
+<section id="exercise-1" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-1">Exercise 1</h3>
+<section id="task-1.1" class="level4">
+<h4 class="anchored" data-anchor-id="task-1.1">Task 1.1</h4>
+<p>Write the R command to take a sample of size <span class="math inline">\(n = 5\)</span> from the <code>Whickham</code> data frame.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for Task 1.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Answer these questions:</p>
+<ul>
+<li>Does <code>sample()</code> select from the rows or the columns of a data frame?</li>
+<li>Will the same <code>sample()</code> command, when repeated, return the same sample?</li>
+</ul>
+</section>
+<section id="task-1.2" class="level4">
+<h4 class="anchored" data-anchor-id="task-1.2">Task 1.2</h4>
+<p>Compare the ages of the smokers and non-smokers in <code>Whickham</code> with this model:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lm(age ~ smoker, data=Whickham) %&gt;% coefficients()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note the <code>smokerYes</code> coefficient is about -4.0. Interpret the <code>smokerYes</code> coefficient in everyday language to explain what it says about the ages of smokers and non-smokers.</p>
+<p><em>Your answer</em>:</p>
+</section>
+<section id="task-1.3" class="level4">
+<h4 class="anchored" data-anchor-id="task-1.3">Task 1.3</h4>
+<p>Make an appropriate RESPEX-format graph of <code>Whickham</code> suited to the model <code>age ~ smoker</code>. Add a violin layer to the data layer. (Make sure to set the transparency <code>alpha</code> and the <code>fill</code> and <code>color</code> for an intelligible display.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For task 1.3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>From the graph, explain in everyday language why the violin is so narrow for smokers aged 65 and above.</p>
+<p><em>Your answer</em>:</p>
+<p>Why is there a waist in the violin for non-smokers at age 50, while the violin for smokers has a corresponding bulge? Explain in everyday language.</p>
+<p><em>Your answer</em>:</p>
+</section>
+</section>
+<section id="exercise-2" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-2">Exercise 2</h3>
+<section id="task-2.1" class="level4">
+<h4 class="anchored" data-anchor-id="task-2.1">Task 2.1</h4>
+<p>Write an R statement that will find the sample size <span class="math inline">\(n\)</span> of <code>Whickham</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find sample size of `Whickham`.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In the chunk below, copy the code from Task 1.1 to display the coefficients from the model <code>age ~ smoker</code>. But modify the code so that instead of using all of <code>Whickham</code> as training data, a sample size of <span class="math inline">\(n=50\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy your code from Task 1.1, but set the sample size to n=50.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Run the above chunk several times, each time noting the coefficient <code>smokerYes</code>. The coefficient will differ from run to run: that’s sampling variation. Which of these statements best describes the pattern? (Mark your answer <strong>in bold</strong>.)</p>
+<ol type="a">
+<li>The coefficients are always less than -4.0.</li>
+<li>The coefficients are always greater than -4.0</li>
+<li>The coefficients are scattered on both sides of -4.0.</li>
+</ol>
+</section>
+<section id="task-2.2" class="level4">
+<h4 class="anchored" data-anchor-id="task-2.2">Task 2.2</h4>
+<p>Copy your graphics code from Task 1.2, but modify it to set the sample size to <span class="math inline">\(n=50\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy the graphics code from Task 1.2, modified for a sample of size n=50.</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">sample</span>(Whickham, <span class="at">size=</span><span class="dv">50</span>), <span class="fu">aes</span>(<span class="at">x=</span>smoker, <span class="at">y=</span>age)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha=</span><span class="fl">0.5</span>, <span class="at">width=</span><span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">color=</span><span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Student-notes-lesson-20_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Repeat the command many times, each time checking the violin for signs of the non-smoker waist and smoker bulge at around age 50.</p>
+<ol type="a">
+<li>Does the waist-bulge pattern appear reliably for a sample of size <span class="math inline">\(n=50\)</span>?<br>
+</li>
+<li>Find a sample size at which the waist-bulge pattern occurs at least 3/4 of the time?</li>
+</ol>
+<p><em>Your answer here:</em></p>
+</section>
+</section>
+<section id="exercise-3" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-3">Exercise 3</h3>
+<p>In this exercise, you will practice with the <code>do()</code> function that lets you run multiple replications of a trial.</p>
+<section id="task-3.1" class="level4">
+<h4 class="anchored" data-anchor-id="task-3.1">Task 3.1</h4>
+<p>In this task, the trial will be very simple: Fit the <code>age ~ smoker</code> model to <code>Whickham</code> and display the coefficients. The code to run a trial is inside the curly braces <code>{ }</code>. The <code>do()</code> function goes before the curly braces. There is always a <code>*</code> sign between <code>do()</code> and the curly braces.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Trials &lt;- do(5) * { lm(age ~ smoker, data=Whickham) %&gt;% coefficients() }</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Trials</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The collection of <code>Trials</code> is a data frame that includes the results from each trial, stacked one above the next.</p>
+<p>You may be surprised to see that the columns of <code>Trials</code> repeat the same number over and over again. Explain what it is about the command inside the <code>{ }</code> that causes the result to be the same every time the trial is run. (See the next task if you can’t figure it out.)</p>
+<p><em>Your answer here</em>:</p>
+</section>
+<section id="task-3.2" class="level4">
+<h4 class="anchored" data-anchor-id="task-3.2">Task 3.2</h4>
+<p>The typical use for <code>do()</code> is to repeat trials, each of which involves some random component, such as drawing a sample.</p>
+<p>Modify the code from Task 3.1 so that the training data is a sample of size <span class="math inline">\(n=50\)</span> from <code>Whickham</code>. Also, modify the argument to <code>do()</code> so that there will be 10 rows in <code>Trials</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># modify this code</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Trials &lt;- do(5) * { lm(age ~ smoker, data=Whickham) %&gt;% coefficients() }</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Trials</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Confirm that the coefficients vary from trial to trial, that is, from one sample to another.</p>
+<p>Try several different sample sizes (that is, <span class="math inline">\(n=100, 200, 300\)</span>). Does the amount of trial-to-trial variation in the coefficients get bigger or smaller as the sample size increases?</p>
+<p><em>Your answer here</em>:</p>
+</section>
+</section>
+<section id="exercise-4" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4">Exercise 4</h3>
+<p>You can use <code>sample()</code> to take samples from a DAG. For instance, consider <code>dag02</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag02)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Student-notes-lesson-20_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dag02)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>x ~ exo()
+a ~ exo()
+y ~ 3 * x - 1.5 * a + 5 + exo()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag02, <span class="at">size=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+       x      a     y
+   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 -0.217 -1.33   5.91
+2  0.812 -0.781  7.21
+3  0.320 -1.92   7.80
+4 -0.206 -0.360  3.59
+5  0.318  0.279  4.72</code></pre>
+</div>
+</div>
+<section id="task-4.1" class="level4">
+<h4 class="anchored" data-anchor-id="task-4.1">Task 4.1</h4>
+<p>Here is the code for a single trial in which a sample of size <span class="math inline">\(n=5\)</span> is collected from <code>dag02</code> and used to train the model <code>y ~ a + x</code>, which corresponds exactly to the formula for <code>y</code> in the DAG.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lm(y ~ a + x, data=sample(dag02, size=5)) %&gt;% coefficients()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Notice that the coefficients roughly match those in the <code>dag02</code> formula for <code>y</code>.</p>
+</section>
+<section id="task-4.2" class="level4">
+<h4 class="anchored" data-anchor-id="task-4.2">Task 4.2</h4>
+<p>Copy from Task 4.1 the code to run one trial. (Make sure to take out the comment symbol!)</p>
+<p>Then modify the copied code to place the one-trial code in curly braces, and use <code>do(10)*</code> to run ten trials.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For Task 4.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>By trial and error, find a sample size <span class="math inline">\(n\)</span> that’s large enough so that the coefficients from the trials reliably match those in the <code>y</code> formula from <code>dag02</code>, varying by at most by <span class="math inline">\(\pm 0.1\)</span>. How big a sample is required for this?</p>
+<p><em>Your answer here</em>:</p>
+<p>Repeat the previous, but find a sample size large enough so that the coefficients differ from those in the <code>y</code> formula by at most <span class="math inline">\(\pm 0.01\)</span>. How big a sample is required for this?</p>
+<p><em>Your answer here</em>:</p>
+</section>
+</section>
+<section id="going-further" class="level3">
+<h3 class="anchored" data-anchor-id="going-further">Going further</h3>
+<p>You can create your own DAGs. Use <code>dag_make()</code>, which takes tilde expressions as arguments. The left-hand side of each tilde expression is the name of a node. The right-hand side is an arithmetical formula to create a value from that node from the values of previous nodes or exogenous random number generators like <code>exo()</code>. (See the help page <code>?dag_make</code> for more information.) For example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>my_own_dag <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  node_1 <span class="sc">~</span> <span class="fu">exo</span>(<span class="fl">0.01</span>) <span class="sc">+</span> <span class="dv">3</span>,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  second <span class="sc">~</span> <span class="dv">2</span><span class="sc">*</span>node_1 <span class="sc">+</span> <span class="fu">exo</span>(<span class="fl">0.1</span>) <span class="sc">-</span> <span class="dv">5</span>,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  node_C <span class="sc">~</span> <span class="dv">10</span><span class="sc">*</span>(node_1 <span class="sc">+</span> second) <span class="sc">+</span> <span class="fu">exo</span>() </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(my_own_dag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Student-notes-lesson-20_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(my_own_dag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>node_1 ~ exo(0.01) + 3
+second ~ 2 * node_1 + exo(0.1) - 5
+node_C ~ 10 * (node_1 + second) + exo()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(my_own_dag, <span class="at">size=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 3
+   node_1 second node_C
+    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+ 1   2.99  1.06    39.1
+ 2   3.00  1.03    41.4
+ 3   3.00  1.03    39.5
+ 4   3.00  1.01    39.2
+ 5   3.00  0.891   38.0
+ 6   2.98  1.07    42.2
+ 7   3.00  0.728   36.7
+ 8   3.00  1.06    39.8
+ 9   3.00  0.939   40.0
+10   3.02  0.738   37.6</code></pre>
+</div>
+</div>
+<p>Notice that by using a node on the right-hand side of a tilde expression only when it has already been created by a previous tilde expression, you guarantee that the graph will be acyclic.</p>
+<section id="optional-task" class="level4">
+<h4 class="anchored" data-anchor-id="optional-task">Optional task</h4>
+<p>Create a DAG that has the same arrangement of causal connections as “<a href="https://en.wikipedia.org/wiki/Rube_Goldberg_machine">Professor Butts and the Self-Operating Napkin</a>,” illustrated below:</p>
+<p><img src="Professor-Butts.png" class="img-fluid"></p>
+<p>Professor Butts and the Self-Operating Napkin (1931). <code>Soup_spoon</code> (A) is raised to mouth, pulling <code>string</code> (B) and thereby jerking <code>ladle</code> (C), which throws <code>cracker</code> (D) past <code>toucan</code> (E). Toucan jumps after cracker and <code>perch</code> (F) tilts, upsetting <code>seeds</code> (G) into <code>pail</code> (H). Extra weight in pail pulls <code>cord</code> (I), which opens and ignites <code>lighter</code> (J), setting off <code>skyrocket</code> (K), which causes <code>sickle</code> (L) to cut <code>string_m</code> (M), allowing pendulum with attached napkin to swing back and forth, thereby <code>wiping_chin</code>.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="documenting-software" class="level2">
+<h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>
+<ul>
+<li>File creation date: 2022-12-25</li>
+<li>R version 4.2.1 (2022-06-23)</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
