@@ -25,3 +25,11 @@ coef_summary <- function(mod) {
   data.frame(term = names(Tmp),
              coefficient=as.numeric(Tmp))
 }
+
+#' @rdname regression_summary
+#' @export
+conf_interval <- function(mod, level=0.95) {
+  Raw <- confint(mod, level=level)
+
+  tibble::tibble(term = row.names(Raw), .lwr = Raw[, 1], .upr = Raw[, 2])
+}

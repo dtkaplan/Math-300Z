@@ -4,7 +4,7 @@
 #' RMS residuals or the sum-of-square residuals
 #'
 #' @param source A data frame or a DAG (as made by dag_make())
-#' @param \ldots One or more model formulas, all with the same response variable.
+#' @param \ldots One or more model specifications, all with the same response variable.
 #' @param measure Either of `"RMS"` (the default) or `"SS"` (sum of squares)
 #' @param n Sample size from DAG.
 #' @param testing Character string, either `"in-sample"` or `"out-of-sample"`
@@ -25,7 +25,7 @@ compare_model_residuals <- function(source, ...,  n=500,
   measure <- match.arg(measure) # make sure it's one of the allowed possibilities
   # make sure they all have the same response variable
   responses <- unique(unlist(lapply(models, function(x) all.names(x[[2]]))))
-  if (length(responses) > 1) stop("All model formulas must have the same response variable.")
+  if (length(responses) > 1) stop("All model specifications must have the same response variable.")
   else response <- as.name(responses) # convert to a name so it can be inserted in the formula
   if (inherits(source, "dagsystem")) {
     Training <- sample(source, size=n)

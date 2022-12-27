@@ -130,7 +130,7 @@ Models can be trained on the simulated data using the same techniques as for any
 ```{r}
 sample(dag08, size=50) %>% 
   lm(y ~ c + x, data = .) %>%
-  coefficients()
+  coef()
 ```
 
 The coefficients, including the intercept, are close, but not exactly right. 
@@ -150,7 +150,7 @@ The following command illustrates computing a summary of a sample from `dag08`.
 ```{r message=FALSE}
 sample(dag08, size=10000) %>% 
   lm(y ~ c + x, data = .) %>%
-  coefficients()
+  coef()
 ```
 
 An essential question in statistics is how the summary depends on the incidental specifics of a particular sample. DAGs provide a convenient way to address this question since we can generate multiple samples from the same DAG, summarize each, and compare those summaries.
@@ -168,7 +168,7 @@ Preceding the curly braces, we have placed `do(5) *`. This instruction causes th
 do(5) * {
   sample(dag08, size=50) %>% 
     lm(y ~ c + x, data = .) %>%
-    coefficients()
+    coef()
 }
 ```
 

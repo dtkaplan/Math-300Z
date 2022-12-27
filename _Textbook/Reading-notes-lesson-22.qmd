@@ -188,12 +188,12 @@ There is a pattern in @tbl-se-sizes. Every time we quadruple $n$, the sampling v
 
 The "confidence interval" is a more user-friendly format than SE for describing the amount of sampling variation. Being an interval, write it either as [lower, upper] or center$\pm$half-width. These styles are equivalent; both styles are correct. (The preferred style can depend on the field or the journal publishing the report.)
 
-In practice, confidence intervals are calculated using special-purpose software such as the `confint()` function, for instance:
+In practice, confidence intervals are calculated using special-purpose software such as the `conf_interval()` function, for instance:
 
 ```{r}
 Hill_racing %>% 
   lm(time ~ distance + climb, data=.) %>% 
-  confint()
+  conf_interval()
 ```
 Notice that there is a separate confidence interval for each model coefficient. The sampling variation is essentially the same, but that variation appears different when translated to the various coefficients' units. 
 

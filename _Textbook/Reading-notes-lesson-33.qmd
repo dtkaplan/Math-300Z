@@ -159,7 +159,7 @@ Let's generate a big sample---$n=10,000$---from `dag09` and see if a simple mode
 ```{r}
 sample(dag09, size=10000) %>% 
   lm(c ~ a + b, data = .) %>%
-  confint()
+  conf_interval()
 ```
 
 The coefficients on `a` and `b` are inconsistent with the `dag09` formulas. What's wrong? The problem can be seen in @fig-binom-fun-1. The output of `binom()` is a probability. Probabilities have to stay within the bounds 0 to 1. But there is nothing in the formula `c ~ a + b` that enforces such bounds. If we are to model zero-one response variables like `c`, we will need a means to enforce the bounds. 
@@ -191,7 +191,7 @@ The printed version of `dag09` shows that the value of node `c` is a linear comb
 ```{r message=FALSE}
 sample(dag09, size=10000) %>% 
   glm(c ~ a + b, data = ., family="binomial") %>%
-  confint()
+  conf_interval()
 ```
 When we use the appropriate modeling technique, we can, in this case, recover the coefficients in the DAG formula: 2 for `a` and 3 for `b`.
 :::

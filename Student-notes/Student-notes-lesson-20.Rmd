@@ -90,7 +90,7 @@ Compare the ages of the smokers and non-smokers in `Whickham` with this model:
 `r options(digits=3)`
 
 ```{r}
-# lm(age ~ smoker, data=Whickham) %>% coefficients()
+# lm(age ~ smoker, data=Whickham) %>% coef()
 ```
 
 Note the `smokerYes` coefficient is about -4.0. Interpret the `smokerYes` coefficient in everyday language to explain what it says about the ages of smokers and non-smokers. 
@@ -165,7 +165,7 @@ In this exercise, you will practice with the `do()` function that lets you run m
 In this task, the trial will be very simple: Fit the `age ~ smoker` model to `Whickham` and display the coefficients. The code to run a trial is inside the curly braces `{ }`. The `do()` function goes before the curly braces. There is always a `*` sign between `do()` and the curly braces.
 
 ```{r}
-# Trials <- do(5) * { lm(age ~ smoker, data=Whickham) %>% coefficients() }
+# Trials <- do(5) * { lm(age ~ smoker, data=Whickham) %>% coef() }
 # Trials
 ```
 
@@ -183,7 +183,7 @@ Modify the code from Task 3.1 so that the training data is a sample of size $n=5
 
 ```{r}
 # modify this code
-# Trials <- do(5) * { lm(age ~ smoker, data=Whickham) %>% coefficients() }
+# Trials <- do(5) * { lm(age ~ smoker, data=Whickham) %>% coef() }
 # Trials
 ```
 
@@ -210,7 +210,7 @@ sample(dag02, size=5)
 Here is the code for a single trial in which a sample of size $n=5$ is collected from `dag02` and used to train the model `y ~ a + x`, which corresponds exactly to the formula for `y` in the DAG.
 
 ```{r}
-# lm(y ~ a + x, data=sample(dag02, size=5)) %>% coefficients()
+# lm(y ~ a + x, data=sample(dag02, size=5)) %>% coef()
 ```
 
 Notice that the coefficients roughly match those in the `dag02` formula for `y`.

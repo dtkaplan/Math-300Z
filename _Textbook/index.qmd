@@ -73,9 +73,9 @@ The demonstrations will often contain new computer commands that perform tasks u
     
 * Summarizing models. These invariably take as input a model produced by `lm()` (or `glm()`) and generate a summary report about that model.
     - **`coef()`**: displays model coefficients. Each coefficient is a single number.
-    - **`confint()`**: displays model coefficients as an *interval* with a lower and upper value.
-    - **`rsquared()`** reduces a model to a single number, called R^2^.
-    - **`regression_summary()`**, like `confint()`, but with more detail.
+    - **`conf_interval()`**: displays model coefficients as an *interval* with a lower and upper value.
+    - **`rsquared()`** calculates the R^2^ of a model, and some related measures.
+    - **`regression_summary()`**, like `conf_interval()`, but with more detail.
     
 * Evaluating a model on inputs
     - **`model_eval()`** takes a trained model (as produced by `lm()`) and calculates the model output in both a point form and an interval form. `model_eval()` can also display the residuals from training or evaluation data.

@@ -4,6 +4,7 @@
 \alias{regression_summary}
 \alias{anova_summary}
 \alias{coef_summary}
+\alias{conf_interval}
 \title{Generate a regression or ANOVA report in the form of a data frame.}
 \usage{
 regression_summary(model, ...)
@@ -11,6 +12,8 @@ regression_summary(model, ...)
 anova_summary(...)
 
 coef_summary(mod)
+
+conf_interval(mod, level = 0.95)
 }
 \arguments{
 \item{model}{A model as produced by \code{lm()}, \code{glm()}, and so on}

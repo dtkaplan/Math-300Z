@@ -151,8 +151,8 @@ These various nuances of meaning, from a simple arithmetical tallying up to an i
 There are many formats for stories, many ways of organizing facts and data, and many ways of accounting for variance. In these Lessons, we will use **regression modeling** almost exclusively as our method of accounting. Here, for example, are two different accounts of `gestation`:
 
 ```{r}
-lm(gestation ~ 1, data=Gestation) %>% coefficients()
-lm(gestation ~ parity, data = Gestation) %>% coefficients()
+lm(gestation ~ 1, data=Gestation) %>% coef()
+lm(gestation ~ parity, data = Gestation) %>% coef()
 ```
 
 In the R language, expressions like `gestation ~ 1` and `gestation ~ parity` are called "tilde expressions." They are the means by which the modeler **specifies** the structure of the model that is to be built. Training (or "fitting") translates the **model specification** into an arithmetic formula that involves the explanatory variables and numerical coefficients. 
@@ -224,7 +224,7 @@ The output from `model_eval()` repeats some columns from the data used for evalu
 To see where the `.output` comes from, let's look again at the model coefficients:
 
 ```{r}
-Model %>% coefficients()
+Model %>% coef()
 ```
 
 The baseline value is 281.3 days. This applies to first-time mothers. For the other mothers, those with a previous pregnancy, the coefficient indicates that the model value is 2.6 days *less* than the baseline, or 279.7 days.

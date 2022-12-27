@@ -40,7 +40,7 @@ In statistical modeling, model functions are *not* an object of primary interest
 
 For this reason, there is no need to construct the model function explicitly. Consequently, one generally does not use the function application syntax directly as we did with `Time_mod_fun(distance=10, climb=500)`. Instead, one invokes the model function with other software that can use all the information in a model object. For us, that software will be the `model_eval()` extractor.
 
-Use `model_eval()` as you do the other familiar extractors such as `coef()` or `confint()`. To generate a prediction, give `model_eval()` arguments specifying the desired inputs to use with the model function.
+Use `model_eval()` as you do the other familiar extractors such as `coef()` or `conf_interval()`. To generate a prediction, give `model_eval()` arguments specifying the desired inputs to use with the model function.
 
 ```{r}
 Time_mod %>% model_eval(distance=10, climb=500) 
@@ -71,7 +71,7 @@ $$t(d, c) \equiv -470 + 254 d  + 2.61 c\ .$$
 The statistical thinker knows that such coefficients have uncertainty due to sampling variation. That uncertainty is, of course, quantified by the confidence interval.
 
 ```{r}
-Time_mod %>% confint()
+Time_mod %>% conf_interval()
 ```
 
 Since we cannot legitimately claim to know the values of the coefficients any better than indicated by these confidence intervals, we ought to temper our claims about the model function so that it reflects the uncertainty in the coefficients. For instance, we might provide an interval for the model output, using in an "upper" function the high ends of the confidence intervals on the coefficients and another "lower" function that uses the low ends of the confidence interval. Like this:

@@ -157,5 +157,5 @@ Statistical thinkers know that any estimate they make, including estimates of ef
 For the additive models that we are mainly using in these Lessons, the effect size is identical to a model coefficient. For these models, the confidence interval on the coefficient is the confidence interval on the effect size. For instance, 
 
 ```{r}
-Mod3 %>% confint()
+Mod3 %>% conf_interval()
 ```

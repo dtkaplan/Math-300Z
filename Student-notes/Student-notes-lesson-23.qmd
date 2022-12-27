@@ -77,7 +77,7 @@ The model specification `height ~ father + mother` can describe the extent to wh
 
 ```{r}
 lm(height ~ father + mother, data = Galton) %>%
-  coefficients()
+  coef()
 ```
 
 The coefficients allow us to do a kind of thought experiment. Imagine a full-grown child of height 63 inches. Now imagine that same child but with a different father. The new father is 1 inch taller than the original father. According to the model coefficients, the child of the new father would be 63.38 inches tall, inheriting 0.38 of the new father's extra height. 

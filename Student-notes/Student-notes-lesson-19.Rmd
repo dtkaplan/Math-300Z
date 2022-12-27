@@ -139,7 +139,7 @@ mod1 <- lm(thick ~ num_pages, data=amazon_books)
 
 #### Task 3.2
 
-Extract the `coefficients()` from `mod1`. 
+Extract the `coef()` from `mod1`. 
 
 ```{r}
 # for TASK 2

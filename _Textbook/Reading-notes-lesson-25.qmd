@@ -66,7 +66,7 @@ We have already used some other functions to extract information from a model ob
 
 ```{r}
 Mod1 %>% coef()
-Mod1 %>% confint()
+Mod1 %>% conf_interval()
 Mod1 %>% regression_summary()
 ```
 

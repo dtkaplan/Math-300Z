@@ -58,22 +58,22 @@ Another way to think about the Null hypothesis is algorithmically. A Null-hypoth
 To illustrate, consider the `Galton` data about the heights of adult children and their parents. We will make a simple model of `height` as a function of `sex`---everyday experience suggests a relationship between the two variables. 
 
 ```{r digits=2}
-lm(height ~ sex, data=Galton) %>% confint()
+lm(height ~ sex, data=Galton) %>% conf_interval()
 ```
 If the Null hypothesis were true, that is, if `sex` were unrelated to `height`, the `sexM` coefficient ought to be close to zero and a confidence interval on the coefficient will usually include zero. But for `height ~ sex` the confidence interval does not include zero.
 
 Now consider what happens if we shuffle one or both of the variables. `r set.seed(299)`
 
 ```{r digits=2}
-lm(height ~ shuffle(sex), data=Galton) %>% confint()
+lm(height ~ shuffle(sex), data=Galton) %>% conf_interval()
 ```
 
 ```{r digits=2}
-lm(shuffle(height) ~ sex, data=Galton) %>% confint()
+lm(shuffle(height) ~ sex, data=Galton) %>% conf_interval()
 ```
 
 ```{r digits=2}
-lm(shuffle(height) ~ shuffle(sex), data=Galton) %>% confint()
+lm(shuffle(height) ~ shuffle(sex), data=Galton) %>% conf_interval()
 ```
 
 All these confidence intervals include zero, as expected.
@@ -140,7 +140,7 @@ We will use the `Galton` data, and the model `height ~ mother`, to illustrate co
 ```{r}
 mod <- lm(height ~ mother, data=Galton) 
 mod %>% coef()
-mod %>% confint()
+mod %>% conf_interval()
 
 ```
 

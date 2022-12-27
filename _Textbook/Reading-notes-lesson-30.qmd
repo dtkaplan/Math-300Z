@@ -73,7 +73,7 @@ coefficients(mod)
 For households whose lawn treatment is "organic," the risk of cancer is higher by 2.3 percentage points compared to households that treat their grass with chemicals. We were expecting the reverse, but it is what the data show. On the other hand, there is sampling variability to take into account. Look at the confidence intervals:
 
 ```{r}
-confint(mod)
+conf_interval(mod)
 ```
 
 The confidence interval on `grassorganic` does not include zero, but it comes close. So might the chemical treatment of grass be protective against cancer? Only at this point do the study designers do what they should have from the start: think about covariates.
@@ -102,7 +102,7 @@ Having measured `wealth`, we can use it as a covariate in the model of `illness`
 
 ```{r}
 lm(zero_one(illness, one="cancer") ~ grass + wealth, data = Cancer_data) %>%
-  confint()
+  conf_interval()
 ```
 
 With `wealth` as a covariate, the model shows that (all other things being equal) "organic" lawn treatment reduces cancer risk. However, we do not see this directly from the `grass` and `illness` variables because all other things are not equal: wealthier people are more likely to use chemical lawn treatment. (Keep in mind that this is **simulated data**. Do not conclude from this example anything about the safety of the chemicals used for lawn greening.)

@@ -83,7 +83,7 @@ lm(reduction ~ 1,
 ```{r digits=3}
 lm(reduction ~ 1, 
      data=Bed_net_data) %>% 
-  confint()
+  conf_interval()
 ```
 
 The observed 3 percentage point mean reduction in the incidence of malaria does stand out from the noise: the confidence interval does not include zero. In these (imagined) data, we have confidence that we have seen a signal.
@@ -128,7 +128,7 @@ lm(reduction ~ nets,
   coef() 
 lm(reduction ~ nets, 
        data=With_controls) %>% 
-  confint() 
+  conf_interval() 
 ```
 
 

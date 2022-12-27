@@ -119,7 +119,7 @@ We can confirm Pearson's estimate by sampling from the DAG and modeling `y` by `
 
 ```{r}
 Sample <- sample(shrimp_dag, size=1000)
-lm(y ~ x, data=Sample) %>% confint()
+lm(y ~ x, data=Sample) %>% conf_interval()
 cor(y ~ x, data=Sample)
 ```
 
@@ -128,7 +128,7 @@ Pearson's 1897 work precedes the earliest conception of DAGs by three decades. A
 Within 20 years of Pearson's publication, a mathematical technique called "**partial correlation**" was in use that could deal with this particular problem of spurious correlation. The key is that the model should include `length` as a covariate. The covariate correctly blocks the path from `x` to `y` via `length`.
 
 ```{r}
-lm(y ~ x + length, data=Sample) %>% confint()
+lm(y ~ x + length, data=Sample) %>% conf_interval()
 ```
 
 The confidence interval on the `x` coefficient includes zero once `length` is included in the model. So the data, properly analyzed, show no correlation between telson and tergum.

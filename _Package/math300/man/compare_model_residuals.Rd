@@ -21,7 +21,7 @@ compare_model_residuals(
 
 \item{testing}{Character string, either \code{"in-sample"} or \code{"out-of-sample"}}
 
-\item{\ldots}{One or more model formulas, all with the same response variable.}
+\item{\ldots}{One or more model specifications, all with the same response variable.}
 }
 \description{
 Compare a set of models, all with the same response variable, using either
