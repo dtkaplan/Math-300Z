@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="YOUR NAME HERE">
+<meta name="dcterms.date" content="2022-12-01">
+
+<title>Spring 2023 Math 300Z - Math 300 Lesson 24 Notes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+</head><body class="nav-fixed fullcontent"><span class="math inline" style="display: none;">
+\(\newcommand{\Ptest}{\mathbb{P}}
+\newcommand{\Ntest}{\mathbb{N}}
+\newcommand{\given}{\ |\!\!|\  }
+\)
+</span>
+
+
+<link rel="stylesheet" href="../styles.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Spring 2023 Math 300Z</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../Textbook/index.html">
+ <span class="menu-text">Textbook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html">
+ <span class="menu-text">Proposal</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../lessons.html">
+ <span class="menu-text">Lessons</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../layout.html">
+ <span class="menu-text">Site layout</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../objective-list.html">
+ <span class="menu-text">Objectives</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../LC-list.html">
+ <span class="menu-text">LCs</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Math 300 Lesson 24 Notes</h1>
+<p class="subtitle lead">Effect size</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>YOUR NAME HERE </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">December 1, 2022</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<p>It is often helpful to think of a model as a function that translates inputs into an output. An “<strong>effect size</strong>” is one way of summarizing that model. It is merely the change in output that results from a 1-unit change of input of a specified explanatory variable.</p>
+<section id="reading" class="level3">
+<h3 class="anchored" data-anchor-id="reading">Reading</h3>
+<p><a href="https://dtkaplan.github.io/Math-300R/Textbook/Reading-notes-lesson-24.html">Lesson <strong>24</strong> from <em>LST</em></a></p>
+</section>
+<section id="objectives" class="level3">
+<h3 class="anchored" data-anchor-id="objectives">Objectives</h3>
+<p>24.1 Calculate the effect size <em>with respect to</em> a specified variable from regression models of one and multiple variables.</p>
+<p>24.2 State the units of an effect size given the units of the input and output of the model.</p>
+<p>24.3 Be able to hold a covariate “constant” in the calculation of effect size.</p>
+<p><a href="../Objectives/Obj-lesson-24.html">Updated list of objectives</a></p>
+</section>
+<section id="libraries" class="level3">
+<h3 class="anchored" data-anchor-id="libraries">Libraries</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(math300)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Galton"</span>, <span class="at">package=</span><span class="st">"mosaicData"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Home_utilities"</span>, <span class="at">package=</span><span class="st">"mosaicCalc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+</section>
+</section>
+<section id="lesson" class="level2">
+<h2 class="anchored" data-anchor-id="lesson">Lesson</h2>
+<section id="exercise-24.1" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-24.1">Exercise 24.1</h3>
+<p>So far, our emphasis has been on sampling variation, for instance, using confidence intervals to describe the precision of the coefficients from regression models. Now we turn to thinking about models as describing a relationship between an input and an output.</p>
+<section id="task-1.1" class="level4">
+<h4 class="anchored" data-anchor-id="task-1.1">Task 1.1</h4>
+<p>The <code>lm()</code> function in R is an example of a <em>model-fitting</em> function. As you know, there are two inputs to <code>lm()</code>:</p>
+<ol type="i">
+<li>A model specification in the form of a tilde expression, like <code>height ~ mother + father</code>.</li>
+<li>A data frame containing both the response and explanatory variables in the model specification. The data frame is used to <strong>train</strong> or <strong>fit</strong> the model to the specification.</li>
+</ol>
+<p>The output from <code>lm()</code> is, in computer-science jargon, an “object.” This technical word “object” refers to a packet containing various kinds of information. A data frame is another type of object, a tilde-expression is another kind of object, a function still another, and a plot made by the <code>ggplot()</code> system is yet another kind of object.</p>
+<p>Happily, to use R for modeling does not require that we know the details about objects. It suffices for our purposes in these Lessons just to know a small set of operations that we can apply to an object to extract the information we need in a format that we like. Even so, it is helpful to know about a small set of classes of objects.</p>
+<p>The <code>class()</code> function in R will tell you the name of the object’s class. For example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(Galton)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data.frame"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(mutate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "function"</code></pre>
+</div>
+</div>
+<p>The class names used in the previous command seem pretty obvious, but sometimes class names are obscure. For instance, we have been using the name ’tilde expression” to refer to objects like <code>height ~ mother + father</code>, but the programmers who invented tilde expressions selected another name for the object class.</p>
+<p>What is the class of <code>height ~ mother + father</code>?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># class( put_a_tilde_expression_here)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><em>Your answer</em>:</p>
+<p>What is the class of an object made by using <code>lm()</code> to train a model?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># construct a model and see what its class is called.</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># mod &lt;- lm( ______, data = _______)</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># class(mod)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<p>The <code>makeFun()</code> operator is a way to make functions. For example, you can turn a model object into a function, like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(height <span class="sc">~</span> mother <span class="sc">+</span> father, <span class="at">data =</span> Galton) <span class="co"># a model</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(mod) <span class="co"># turning it into a function</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "function"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(<span class="at">mother=</span><span class="dv">65</span>, <span class="at">father=</span><span class="dv">63</span>) <span class="co"># evaluate the function for an input</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1 
+64.65216 </code></pre>
+</div>
+</div>
+</section>
+<section id="task-1.2" class="level4">
+<h4 class="anchored" data-anchor-id="task-1.2">Task 1.2</h4>
+<p>The <code>Home_utilities</code> data frame records the monthly utility bills and related information for a house located in Saint Paul, Minnesota, USA. One of the variables, <code>thermsPerDay</code>, gives the daily average use of natural gas during the billing period. Another variable, <code>temp</code>, records the average outdoor temperature.</p>
+<p>Anyone who has lived in a cold climate, like the climate in Minnesota, knows that heating a house requires fuel, and the colder the temperature, the more fuel is needed. In other words, use of fuel is a function of the outdoor temperature. Let’s see what the <code>Home_utilities</code> data has to say about this.</p>
+<ol type="a">
+<li>Train the model <code>thermsPerDay ~ temp</code> with the <code>Home_utilities</code> data.</li>
+<li>Use <code>makeFun()</code> to create a function called <code>gas_use()</code> from the model.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For Task 1.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>What is the output of <code>gas_use()</code> when the temperature is 30 degrees F?</p>
+<p><em>Your answer</em>:</p>
+<p>The <code>gas_use()</code> function doesn’t know anything about the thermodynamics of home heating, it merely summarizes a pattern in the data. <code>gas_use()</code> gives a nonsensical result for fuel use during summer temperatures. By trial and error, find a summer temperature for which the output of <code>gas_use()</code> doesn’t match how things work in the real world.</p>
+<p><em>Your answer</em>:</p>
+</section>
+<section id="task-1.3" class="level4">
+<h4 class="anchored" data-anchor-id="task-1.3">Task 1.3</h4>
+<p>The functions produced from <code>lm</code>-models are statistically naive. For instance, they don’t know anything about sampling variation or confidence intervals. We are using the functions in this Lesson purely to make a point about effect size.</p>
+<p>Use <code>gas_use()</code> to find the therms-per-day at a temperature of 30 deg F. Then use it to find the therms-per-day for a temperature of 20 deg F.</p>
+<p>How much did the fuel use change (in units of therms-per-day0 between the 20-degree usage and the 30-degree usage?</p>
+<p><em>Your answer</em>:</p>
+<p>Divide the change in fuel use (according to the <code>gas_use()</code> function) by the change in the temperature input (in units of degrees F) to the function. The result is the <strong>effect size</strong> of temperature on fuel use. What is this effect size? Be sure to give the units correctly. (If you are not sure what this means, ask!)</p>
+<p><em>Your answer</em>:</p>
+</section>
+<section id="task-1.4" class="level4">
+<h4 class="anchored" data-anchor-id="task-1.4">Task 1.4</h4>
+<p>The <code>model_plot()</code> will draw a RESPEX-format graph of the data and, in another graphics layer, show the model function. The inputs to <code>model_plot</code> are the model object and the explanatory variable to show on the horizontal axis.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For Task 1.4</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># my_model &lt;- lm(thermsPerDay ~ temp, data = Home_utilities)</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># model_plot(my_model, x = temp, interval="confidence")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>What graphical feature of the plot corresponds to the effect size?</p>
+<p><em>Your answer</em>:</p>
+<p>We mentioned earlier that the functions produced by <code>makeFun()</code> are statistically naive: they don’t know about sampling variation. In contrast, <code>model_plot()</code> can display sampling variation. To see this, copy your <code>model_plot()</code> command from the previous chunk and add this argument: <code>interval="confidence"</code>. This causes the blue line in the previous plot to be replaced by a “<strong>confidence band</strong>,” which is like a confidence interval but for functions.</p>
+<p>Study the resulting plot and explain in your own words what you think the confidence band is showing.</p>
+<p><em>Your answer</em>:</p>
+</section>
+</section>
+<section id="exercise-24.2" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-24.2">Exercise 24.2</h3>
+<p>Let’s return to the model <code>height ~ mother + father</code> trained on the <code>Galton</code> data.</p>
+<section id="task-2.1" class="level4">
+<h4 class="anchored" data-anchor-id="task-2.1">Task 2.1</h4>
+<p>Fit the model and use <code>makeFun()</code> to produce a function named <code>h()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For Task 2.1</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(height <span class="sc">~</span> father <span class="sc">+</span> mother, <span class="at">data =</span> Galton)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="i">
+<li>What are the arguments to <code>h()</code>?</li>
+</ol>
+<p><em>Your answer</em>:</p>
+<ol start="2" type="i">
+<li>What’s the output of <code>h()</code> for a child whose mother’s height is 65 inches and whose father is 67 inches tall?</li>
+</ol>
+<p><em>Your answer</em>:</p>
+<ol start="3" type="i">
+<li>Repeat (ii), leaving the father’s height at 67 inches but changing the mother’s height to 66 inches. Use the change in output from (ii) and the change in input to calculate the effect size <em>with respect to <code>mother</code></em>. Give the value and the units.</li>
+</ol>
+<p><em>Your answer</em>:</p>
+<ol start="4" type="i">
+<li>Just like (iii), but this time set the mother back to 65 inches but increase the father’s height by 1 inch. Use the output of <code>h()</code> to calculate the effect size *with respect to <code>father</code>.</li>
+</ol>
+<p><em>Your answer</em>:</p>
+<p>Effect sizes are <strong>always</strong> calculated by changing just <strong>one</strong> of the explanatory variables. And every effect size should be described using the phrase “<em>with respect to</em>” the particular explanatory variable being changed.</p>
+<p>To use the terms of Calculus, an effect size is a <strong>partial derivative</strong> of the output of the model function with respect to the selected input.</p>
+</section>
+<section id="task-2.2" class="level4">
+<h4 class="anchored" data-anchor-id="task-2.2">Task 2.2</h4>
+<p>When a model has a categorical explanatory variable, we still use the term “effect size” to describe the change in output that results from a change in input. To illustrate, consider the following model and it’s associated function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mod2 &lt;- lm(height ~ father + mother + sex, data=Galton)</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># h2 &lt;- makeFun(mod2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol type="i">
+<li>What are the inputs to the function <code>h2()</code>?</li>
+</ol>
+<p><em>Your answer</em>:</p>
+<ol start="2" type="i">
+<li>Calculate the output of <code>h2</code> when the inputs are <code>mother=65, father=67, sex="F"</code>.</li>
+</ol>
+<p><em>Your answer:</em></p>
+<ol start="3" type="i">
+<li>Like (ii), keeping <code>mother</code> and <code>father</code> as they were. But change the sex to <code>sex="M"</code>. What is the <em>change</em> in output from (ii) to (iii)?</li>
+</ol>
+<p><em>Your answer</em>:</p>
+<ol start="4" type="i">
+<li>What is the effect size of the model with respect to <code>sex</code>? Make sure to give the appropriate units.</li>
+</ol>
+<p><em>Your answer</em>:</p>
+<p>You can use <code>model_plot()</code> to display the model with respect to <code>sex</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># model_plot(mod2, x=sex)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="22" type="a">
+<li>What feature of the plot corresponds to the effect size with respect to <code>sex</code>?</li>
+</ol>
+<p><em>Your answer</em>:</p>
+<!--
+### Exercise 24.3
+
+UNDER CONSTRUCTION
+
+Effect size and causality. Effect size of DAGs, indirect causality. (that is, the effect of a distant node summarizes the two routes.)
+
+It would be a Harry-Potter-type world if you could change the height of the child by stretching the father. Things don't work this way! But when it comes to effect size, remember that we are talking about the relationships in the model *function*. Changing the input `father` to that function does indeed change the output. It's just that the function is not a proper representation of how causation works in the world. 
+-->
+</section>
+</section>
+<section id="going-further" class="level3">
+<h3 class="anchored" data-anchor-id="going-further">Going further</h3>
+<p>**Under construction*</p>
+<p>Interactions and nonlinear models</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

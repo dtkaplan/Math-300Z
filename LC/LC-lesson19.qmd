@@ -160,7 +160,7 @@ Modeling decision as a function of gender is easy once you convert the response 
 
 ```{r}
 mod <- lm(zero_one(decision, one="promoted") ~ gender, data = promotions)
-coefficients(mod)
+coef(mod)
 mosaicModel::mod_eval(mod)
 ```
 
@@ -226,9 +226,8 @@ About the summarization of models. Pipe the model fit into any of four functions
 i. `%>% coef()`
 ii. `%>% regression_summary()`
 iii. `%>% rsquared()`
-iv. `%>% confint()`
+iv. `%>% conf_interval()`
 
-REDO `confint()` so that the columns are named `lower`, `middle`, `upper`
 
 ### Solution
 
@@ -630,7 +629,7 @@ The basis of the techniques you'll learn in this second half of the course is bu
 
 We'll extract various quantities from the models we build and, in particular, use those quantities to compare one model to another, the point being to see SAY WHAT.
 
-Surprisingly, an important model for starting the chain of comparisons *has no explanatory variable*. OR RATHER, WE MAKE UP AN EXPLANATORY variable. SHOW MEAN is a coefficient from such a model. Model formula: `y ~ 1`
+Surprisingly, an important model for starting the chain of comparisons *has no explanatory variable*. OR RATHER, WE MAKE UP AN EXPLANATORY variable. SHOW MEAN is a coefficient from such a model. Model specification: `y ~ 1`
 
 Let's use the standard data-graphic format to display to display `y ~ 1`,
 

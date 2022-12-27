@@ -10,18 +10,6 @@ library(mosaicModel)
 library(math300)
 library(moderndive)
 
-confint <- function(mod) {
-  Tmp <- stats::confint(mod) |> as.data.frame()
-  names(Tmp) <- c("lwr", "upr")
-  Tmp
-}
-
-coefficients <- function(mod) {
-  Tmp <- stats::coefficients(mod) |> as.data.frame()
-  names(Tmp) <- "coefficient"
-  Tmp
-}
-
 tbl_style_html <- function(tbl, ...) {
   columns <- 1:ncol(tbl)
   kable(tbl) %>%

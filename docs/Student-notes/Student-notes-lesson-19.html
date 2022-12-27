@@ -303,7 +303,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="task-3.2" class="level4">
 <h4 class="anchored" data-anchor-id="task-3.2">Task 3.2</h4>
-<p>Extract the <code>coefficients()</code> from <code>mod1</code>.</p>
+<p>Extract the <code>coef()</code> from <code>mod1</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for </span><span class="al">TASK</span><span class="co"> 2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -391,7 +391,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(hardcover <span class="sc">~</span> num_pages, <span class="at">data=</span>amazon_books)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>Tmp <span class="ot">&lt;-</span> <span class="fu">model_eval</span>(mod2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Using training data as input.</code></pre>
+<pre><code>Using training data as input to model_eval().</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Tmp, <span class="fu">aes</span>(<span class="at">x =</span> num_pages, <span class="at">y =</span> .response)) <span class="sc">+</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">height=</span><span class="fl">0.2</span>) <span class="sc">+</span></span>
@@ -407,7 +407,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="documenting-software" class="level2">
 <h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>
 <ul>
-<li>File creation date: 2022-12-25</li>
+<li>File creation date: 2022-12-27</li>
 <li>R version 4.2.1 (2022-06-23)</li>
 </ul>
 

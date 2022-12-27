@@ -249,7 +249,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">size =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 5 1 2 7</code></pre>
+<pre><code>[1] 8 4 9 3</code></pre>
 </div>
 </div>
 <p>Note: The <code>size=</code> argument specifies the size of the sample to be collected. In the text, we follow statistical convention and always refer to the sample size with the letter <span class="math inline">\(n\)</span>, as in “collect a sample of size <span class="math inline">\(n=6\)</span>. But <code>sample()</code> does <em>not</em> use <span class="math inline">\(n\)</span> as the name of the size-setting argument.</p>
@@ -271,7 +271,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4 class="anchored" data-anchor-id="task-1.2">Task 1.2</h4>
 <p>Compare the ages of the smokers and non-smokers in <code>Whickham</code> with this model:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lm(age ~ smoker, data=Whickham) %&gt;% coefficients()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lm(age ~ smoker, data=Whickham) %&gt;% coef()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Note the <code>smokerYes</code> coefficient is about -4.0. Interpret the <code>smokerYes</code> coefficient in everyday language to explain what it says about the ages of smokers and non-smokers.</p>
 <p><em>Your answer</em>:</p>
@@ -335,7 +335,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4 class="anchored" data-anchor-id="task-3.1">Task 3.1</h4>
 <p>In this task, the trial will be very simple: Fit the <code>age ~ smoker</code> model to <code>Whickham</code> and display the coefficients. The code to run a trial is inside the curly braces <code>{ }</code>. The <code>do()</code> function goes before the curly braces. There is always a <code>*</code> sign between <code>do()</code> and the curly braces.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Trials &lt;- do(5) * { lm(age ~ smoker, data=Whickham) %&gt;% coefficients() }</span></span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Trials &lt;- do(5) * { lm(age ~ smoker, data=Whickham) %&gt;% coef() }</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Trials</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The collection of <code>Trials</code> is a data frame that includes the results from each trial, stacked one above the next.</p>
@@ -348,7 +348,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Modify the code from Task 3.1 so that the training data is a sample of size <span class="math inline">\(n=50\)</span> from <code>Whickham</code>. Also, modify the argument to <code>do()</code> so that there will be 10 rows in <code>Trials</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># modify this code</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Trials &lt;- do(5) * { lm(age ~ smoker, data=Whickham) %&gt;% coefficients() }</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Trials &lt;- do(5) * { lm(age ~ smoker, data=Whickham) %&gt;% coef() }</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Trials</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Confirm that the coefficients vary from trial to trial, that is, from one sample to another.</p>
@@ -375,18 +375,18 @@ y ~ 3 * x - 1.5 * a + 5 + exo()</code></pre>
 <pre><code># A tibble: 5 × 3
        x      a     y
    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-1 -0.217 -1.33   5.91
-2  0.812 -0.781  7.21
-3  0.320 -1.92   7.80
-4 -0.206 -0.360  3.59
-5  0.318  0.279  4.72</code></pre>
+1 -0.484 -2.02   8.46
+2 -0.494  0.537  3.44
+3 -0.227 -1.15   5.68
+4  0.342 -0.888  7.64
+5 -0.487 -0.302  4.35</code></pre>
 </div>
 </div>
 <section id="task-4.1" class="level4">
 <h4 class="anchored" data-anchor-id="task-4.1">Task 4.1</h4>
 <p>Here is the code for a single trial in which a sample of size <span class="math inline">\(n=5\)</span> is collected from <code>dag02</code> and used to train the model <code>y ~ a + x</code>, which corresponds exactly to the formula for <code>y</code> in the DAG.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lm(y ~ a + x, data=sample(dag02, size=5)) %&gt;% coefficients()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lm(y ~ a + x, data=sample(dag02, size=5)) %&gt;% coef()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Notice that the coefficients roughly match those in the <code>dag02</code> formula for <code>y</code>.</p>
 </section>
@@ -427,16 +427,16 @@ node_C ~ 10 * (node_1 + second) + exo()</code></pre>
 <pre><code># A tibble: 10 × 3
    node_1 second node_C
     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
- 1   2.99  1.06    39.1
- 2   3.00  1.03    41.4
- 3   3.00  1.03    39.5
- 4   3.00  1.01    39.2
- 5   3.00  0.891   38.0
- 6   2.98  1.07    42.2
- 7   3.00  0.728   36.7
- 8   3.00  1.06    39.8
- 9   3.00  0.939   40.0
-10   3.02  0.738   37.6</code></pre>
+ 1   3.00  1.01    39.4
+ 2   2.99  0.713   37.9
+ 3   3.00  1.03    38.4
+ 4   3.00  0.940   39.8
+ 5   2.99  0.877   37.8
+ 6   3.00  0.988   40.4
+ 7   2.98  0.896   39.7
+ 8   3.01  1.11    41.2
+ 9   3.01  0.960   40.2
+10   2.99  0.915   40.3</code></pre>
 </div>
 </div>
 <p>Notice that by using a node on the right-hand side of a tilde expression only when it has already been created by a previous tilde expression, you guarantee that the graph will be acyclic.</p>
@@ -452,7 +452,7 @@ node_C ~ 10 * (node_1 + second) + exo()</code></pre>
 <section id="documenting-software" class="level2">
 <h2 class="anchored" data-anchor-id="documenting-software">Documenting software</h2>
 <ul>
-<li>File creation date: 2022-12-25</li>
+<li>File creation date: 2022-12-27</li>
 <li>R version 4.2.1 (2022-06-23)</li>
 </ul>
 

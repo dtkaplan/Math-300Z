@@ -52,10 +52,10 @@ Regression and wrangling are allies. You will use wrangling, especially `mutate(
 ```{r}
 TenMileRace %>%
   filter(age > 40) %>%
-  lm(net ~ age, data=.) %>% confint()
+  lm(net ~ age, data=.) %>% conf_interval()
 ```
 
-In this example, we've used `confint()` as the extractor, but, depending on our purpose, we might have used any of the others.
+In this example, we've used `conf_interval()` as the extractor, but, depending on our purpose, we might have used any of the others.
 
 Looking closely at the above command you will notice something new: the `data=.` argument being used inside `lm()` . The simple `.` is doing something important, carrying the output of the earlier stages of the pipeline into the `data=` argument of `lm()`.
 
@@ -145,6 +145,6 @@ promotions %>%
 
 We'll explain the purpose of `zero_one()` in Lesson 19, but putting that matter aside for a moment, compare the two coefficients in the regression model to the proportion results you got from wrangling.
 
-i. **What does the value of the intercept coefficient correspond to in the wrangling results?**
+i.  **What does the value of the intercept coefficient correspond to in the wrangling results?**
 
 ii. **What does the `genderfemale` coefficient correspond to in the wrangling results?** (Hint: you will have to do a bit of arithmetic on the wrangling results.)

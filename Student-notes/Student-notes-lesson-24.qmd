@@ -1,0 +1,249 @@
+---
+title: "Math 300 Lesson 24 Notes"
+subtitle: "Effect size"
+author: "YOUR NAME HERE"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup24, include=FALSE}
+library(math300)
+library(mosaic)
+library(knitr)
+library(kableExtra)
+library(math300)
+# math300::setup_student_notes()
+```
+
+## Overview
+
+It is often helpful to think of a model as a function that translates inputs into an output. An "**effect size**" is one way of summarizing that model. It is merely the change in output that results from a 1-unit change of input of a specified explanatory variable.
+
+### Reading
+
+[Lesson **24** from *LST*](https://dtkaplan.github.io/Math-300R/Textbook/Reading-notes-lesson-24.html)
+
+### Objectives
+
+24.1 Calculate the effect size *with respect to* a specified variable from regression models of one and multiple variables.
+
+24.2 State the units of an effect size given the units of the input and output of the model.
+
+24.3 Be able to hold a covariate "constant" in the calculation of effect size.
+
+[Updated list of objectives](../Objectives/Obj-lesson-24.html)
+
+### Libraries
+
+```{r warning=FALSE,message=FALSE}
+library(mosaic)
+library(math300)
+data("Galton", package="mosaicData")
+data("Home_utilities", package="mosaicCalc")
+```
+
+----------
+
+## Lesson
+
+### Exercise 24.1
+
+So far, our emphasis has been on sampling variation, for instance, using confidence intervals to describe the precision of the coefficients from regression models. Now we turn to thinking about models as describing a relationship between an input and an output.
+
+#### Task 1.1
+
+The `lm()` function in R is an example of a *model-fitting* function. As you know, there are two inputs to `lm()`:
+
+i. A model specification in the form of a tilde expression, like `height ~ mother + father`.
+ii. A data frame containing both the response and explanatory variables in the model specification. The data frame is used to **train** or **fit** the model to the specification.
+
+The output from `lm()` is, in computer-science jargon, an "object." This technical word "object" refers to a packet containing various kinds of information. A data frame is another type of object, a tilde-expression is another kind of object, a function still another, and a plot made by the `ggplot()` system is yet another kind of object. 
+
+Happily, to use R for modeling does not require that we know the details about objects. It suffices for our purposes in these Lessons just to know a small set of operations that we can apply to an object to extract the information we need in a format that we like. Even so, it is helpful to know about a small set of classes of objects.
+
+The `class()` function in R will tell you the name of the object's class. For example:
+
+```{r}
+class(Galton)
+class(5)
+class(mutate)
+```
+
+The class names used in the previous command seem pretty obvious, but sometimes class names are obscure. For instance, we have been using the name 'tilde expression" to refer to objects like `height ~ mother + father`, but the programmers who invented tilde expressions selected another name for the object class.
+
+What is the class of `height ~ mother + father`?
+
+```{r}
+# class( put_a_tilde_expression_here)
+```
+
+*Your answer*:
+
+What is the class of an object made by using `lm()` to train a model?
+
+```{r}
+# construct a model and see what its class is called.
+# mod <- lm( ______, data = _______)
+# class(mod)
+```
+
+--------
+
+
+The `makeFun()` operator is a way to make functions. For example, you can turn a model object into a function, like this:
+
+```{r}
+mod <- lm(height ~ mother + father, data = Galton) # a model
+f <- makeFun(mod) # turning it into a function
+class(f)
+f(mother=65, father=63) # evaluate the function for an input
+```
+
+#### Task 1.2
+
+The `Home_utilities` data frame records the monthly utility bills and related information for a house located in Saint Paul, Minnesota, USA. One of the variables, `thermsPerDay`, gives the daily average use of natural gas during the billing period. Another variable, `temp`, records the average outdoor temperature.
+
+Anyone who has lived in a cold climate, like the climate in Minnesota, knows that heating a house requires fuel, and the colder the temperature, the more fuel is needed. In other words, use of fuel is a function of the outdoor temperature. Let's see what the `Home_utilities` data has to say about this. 
+
+a. Train the model `thermsPerDay ~ temp` with the `Home_utilities` data.
+b. Use `makeFun()` to create a function called `gas_use()` from the model.
+
+```{r}
+# For Task 1.2
+```
+
+What is the output of `gas_use()` when the temperature is 30 degrees F?
+
+*Your answer*:
+
+The `gas_use()` function doesn't know anything about the thermodynamics of home heating, it merely summarizes a pattern in the data. `gas_use()` gives a nonsensical result for fuel use during summer temperatures. By trial and error, find a summer temperature for which the output of `gas_use()` doesn't match how things work in the real world. 
+
+*Your answer*:
+
+
+#### Task 1.3
+
+The functions produced from `lm`-models are statistically naive. For instance, they don't know anything about sampling variation or confidence intervals. We are using the functions in this Lesson purely to make a point about effect size.
+
+Use `gas_use()` to find the therms-per-day at a temperature of 30 deg F. Then use it to find the therms-per-day for a temperature of 20 deg F.
+
+How much did the fuel use change (in units of therms-per-day0 between the 20-degree usage and the 30-degree usage? 
+
+*Your answer*:
+
+Divide the change in fuel use (according to the `gas_use()` function) by the change in the temperature input (in units of degrees F) to the function. The result is the **effect size** of temperature on fuel use. What is this effect size? Be sure to give the units correctly. (If you are not sure what this means, ask!)
+
+*Your answer*:
+
+#### Task 1.4
+
+The `model_plot()` will draw a RESPEX-format graph of the data and, in another graphics layer, show the model function. The inputs to `model_plot` are the model object and the explanatory variable to show on the horizontal axis.
+
+```{r}
+# For Task 1.4
+# my_model <- lm(thermsPerDay ~ temp, data = Home_utilities)
+# model_plot(my_model, x = temp, interval="confidence")
+```
+
+What graphical feature of the plot corresponds to the effect size?
+
+*Your answer*:
+
+We mentioned earlier that the functions produced by `makeFun()` are statistically naive: they don't know about sampling variation. In contrast, `model_plot()` can display sampling variation. To see this, copy your `model_plot()` command from the previous chunk and add this argument: `interval="confidence"`. This causes the blue line in the previous plot to be replaced by a "**confidence band**," which is like a confidence interval but for functions.
+
+Study the resulting plot and explain in your own words what you think the confidence band is showing.
+
+*Your answer*:
+
+### Exercise 24.2
+
+Let's return to the model `height ~ mother + father` trained on the `Galton` data. 
+
+#### Task 2.1
+
+Fit the model and use `makeFun()` to produce a function named `h()`.
+
+```{r}
+# For Task 2.1
+mod <- lm(height ~ father + mother, data = Galton)
+h <- makeFun(mod)
+```
+
+i. What are the arguments to `h()`?
+
+*Your answer*:
+
+ii. What's the output of `h()` for a child whose mother's height is 65 inches and whose father is 67 inches tall?
+
+*Your answer*:
+
+iii. Repeat (ii), leaving the father's height at 67 inches but changing the mother's height to 66 inches. Use the change in output from (ii) and the change in input to calculate the effect size *with respect to `mother`*. Give the value and the units.
+
+*Your answer*:
+
+iv. Just like (iii), but this time set the mother back to 65 inches but increase the father's height by 1 inch. Use the output of `h()` to calculate the effect size *with respect to `father`.
+
+*Your answer*:
+
+Effect sizes are **always** calculated by changing just **one** of the explanatory variables. And every effect size should be described using the phrase "*with respect to*" the particular explanatory variable being changed. 
+
+To use the terms of Calculus, an effect size is a **partial derivative** of the output of the model function with respect to the selected input.
+
+#### Task 2.2
+
+When a model has a categorical explanatory variable, we still use the term "effect size" to describe the change in output that results from a change in input. To illustrate, consider the following model and it's associated function.
+
+```{r}
+# mod2 <- lm(height ~ father + mother + sex, data=Galton)
+# h2 <- makeFun(mod2)
+```
+
+i. What are the inputs to the function `h2()`?
+
+*Your answer*:
+
+ii. Calculate the output of `h2` when the inputs are `mother=65, father=67, sex="F"`.
+
+*Your answer:*
+
+iii. Like (ii), keeping `mother` and `father` as they were. But change the sex to `sex="M"`. What is the *change* in output from (ii) to (iii)?
+
+*Your answer*:
+
+iv. What is the effect size of the model with respect to `sex`? Make sure to give the appropriate units.
+
+*Your answer*:
+
+You can use `model_plot()` to display the model with respect to `sex`
+
+```{r}
+# model_plot(mod2, x=sex)
+```
+
+v. What feature of the plot corresponds to the effect size with respect to `sex`?
+
+*Your answer*:
+
+
+<!--
+### Exercise 24.3
+
+UNDER CONSTRUCTION
+
+Effect size and causality. Effect size of DAGs, indirect causality. (that is, the effect of a distant node summarizes the two routes.)
+
+It would be a Harry-Potter-type world if you could change the height of the child by stretching the father. Things don't work this way! But when it comes to effect size, remember that we are talking about the relationships in the model *function*. Changing the input `father` to that function does indeed change the output. It's just that the function is not a proper representation of how causation works in the world. 
+-->
+
+
+### Going further
+
+**Under construction*
+
+Interactions and nonlinear models
