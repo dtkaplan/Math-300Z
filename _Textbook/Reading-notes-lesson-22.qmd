@@ -17,7 +17,41 @@ lesson <- 22
 source("../_startup.R")
 ```
 
-We use "sample" as a near synonym for "data frame." However, a data frame may not be a sample but contains a row for every possible unit of observation. Such a complete enumeration---the inventory records of a merchant, the records kept of student grades by the school registrar---has a technical name: a "**census**." Famously, many countries conduct a census of the population in which they try to record every resident of the country. For example, the US, UK, and China carry out a census every ten years.
+**Sampling variation** is a subtle concept. Part of the difficulty in understanding sampling variation is the meaning of the word "sample," which differs in use between everyday speech and statistical language. In everyday speech, a sample is:
+
+> "*A small part or quantity intended to show what the whole is like.*" --- Oxford Languages
+
+A food market will give you a sample of an item on sale: a tiny cup of a drink or a taste of a piece of fruit or other food item. Laundry-detergent companies sometimes send out a sample of their product in the form of a small foil packet suitable for only a single wash cycle. Paint stores keep small samples on hand to help customers choose from among the possibilities. A fabric sample is a little swatch of cloth cut from a a bigger bolt that a customer is considering buying.
+
+In contrast, a **sample** in statistics is always a *collection* of multiple items. Usually, a sample is presented to us in the form of a data frame which records the measured attributes of each of the items in the sample. While it is possible for a data frame to have just a single row, it is perverse to use the word "sample" to describe a single item. Instead, we use other words to point to a single item: for instance "a case," "a row," "an individual," "a datum," or "a specimen." Samples, like the word "data," are always plural. Think of "sample" as akin to words like "herd," "flock", "pack", or "school": a collective. A single fish is not a school and a single wolf is not a pack. Similarly, a single row is not a sample but an item. 
+
+The dictionary definition of "sample" uses the word "whole" to describe where the sample comes from. Similarly, a statistical sample is a collection of items selected from a larger "whole." Traditionally, statisticians have used the word "**population**" as the name for the "whole." This is a nice metaphor; it's easy to imagine the population of a state being the source of a sample in which each individual is a specific person. But the "whole" from which a sample is collected does not need to be a finite, definite set of individuals like the citizens of a state. For example, you have already seen how to collect a sample of any size you want from a DAG.
+
+Our *modus operandi* in these Lessons takes a sample in the form of a data frame and summarizes it in the form of one or more numbers. (Typically, the numbers are the coefficients of a regression model, but it might be something else such as the mean or variance of a variable.) Each such number is called a "**sample statistic**," but we think "**sample summary**" is a less confusing term and what we will use for these Lessons.
+
+Practical statistical work almost always involves working with a single sample of size $n$. As a thought experiment, however, we can imagine having multiple samples, each collected independently and at random from the same source. Now picture a process for computing a sample summary, say, a regression coefficient for a particular model specification. If we apply that same process to each of our imagined samples, we will likely get equivalent sample summaries that differ one from another. Such sample-to-sample differences are called "**sampling variation**."
+
+In this Lesson, we will simulate such a process of computing equivalent sample summaries from a set of samples. That way, we can see sampling variation directly.
+
+In actual work with data, as opposed to simulations designed to illustrate statistical concepts, there is only one sample. We cannot see sampling variation directly in a single sample. But, that does not mean we can ignore the theoretical possibility. 
+
+Usually, we study a sample in order to inform our understanding of the broader process that generated the sample. Or, in the words of the dictionary definition at the start of this Lesson, we use a sample "*to show what the whole is like*." Because of sampling variation, it would not be correct to say the "whole" is exactly like our sample. By quantifying sampling variation, we give a more complete description of the relationship of our particular sample to the "whole." 
+
+::: {.callout-note}
+## Sampling distribution and sampling variance
+
+We have already gotten into the habit of illustrating the row-to-row variation within a variable with a violin plot. The shape is a picture of the **distribution** of that variable. 
+
+In this Lesson, we will use simulation to generate many independent samples and the sample summary that goes along with each of those samples. The resulting varying set of numbers has, like any other variable, a distribution. Since the variation stems from sample-to-sample differences, we call it the "**sampling distribution**." But this sampling distribution is a theoretical thing: what we *would have gotten* if we had collected many samples. Still, it will be a useful theoretical thing.
+
+The obvious way to quantify the spread in the sampling distribution is---as usual---the variance. We will call this the "**sampling variance**." 
+
+It's important to note the "ing" ending in "sampling variance" and "sampling distribution." Whereas the "sample variance" is the row-by-row variance calculated on a variable from a single sample, the "sampl**ing** variance" stems from the theoretical sample-by-sample variation.
+:::
+
+## Why sample?
+
+Sometimes a data frame is not a sample. This happens when the data frame contains a row for every member of an actual, finite "population."  Such a complete enumeration---the inventory records of a merchant, the records kept of student grades by the school registrar---has a technical name: a "**census**." Famously, many countries conduct a census of the population in which they try to record every resident of the country. For example, the US, UK, and China carry out a census every ten years.
 
 In a typical setting, it is unfeasible to record every possible unit of observation.^[Even a population "census" inevitably leaves out some individuals.] Such incomplete records constitute a "**sample**." One of the great successes of statistics is the means to draw useful information from a sample, at least when the sample is collected correctly.
 
@@ -60,9 +94,10 @@ In the spirit of starting simply, we return to `dag01`. This DAG is $\mathtt{x}\
 
 It is crucial to remember that sampling variation is not about the row-to-row variation in a single sample. Rather, it is about the variation in the summary from one sample to another. So our initial process for exploring sampling variation will be to carry out many trials, each trial being a summary of a sample. 
 
-## Demonstration: Samples and specimens 
+## Demonstration: Sampling trials
 
-To illustrate, here is one trial using a sample of $n=25$ and a simple model, `y ~ 1`.
+A single sampling trial consists of taking a random sample and computing a sample statistic. 
+To illustrate, here is one trial using a sample size  $n=25$ and a simple model modification, `y ~ 1`.
 
 ```{r}
 Sample <- sample(dag01, size=25) 
@@ -74,7 +109,7 @@ Sample %>%
 We cannot see sampling variation directly in the above result because there is only one trial. The sampling variation becomes evident when we run *many* trials. In each trial, a new sample (of size $n=25$ is taken and summarized.) `r set.seed(301)`
 
 ```{r}
-Trials <- do(100) * {
+Trials <- do(500) * {
   Sample <- sample(dag01, size=25) 
   Sample %>% 
     lm(y ~ 1, data = .) %>%
@@ -82,24 +117,25 @@ Trials <- do(100) * {
 }
 ```
 
-
-
+Graphics provide a nice way to visualize the sampling variation. @fig-sampling-distribution shows the results from the set of trials.
 
 ```{r echo=FALSE}
-#| label: tbl-sampling-trials
-#| tbl-cap: "`Trials` for seeing sampling variation."
-### #| column: margin
-Trials %>% head(25) 
+#| label: fig-sampling-distribution
+#| fig-cap: "The sampling distribution as shown by 500 trials. Each dot is one trial where the model specification `y~1` is fitted to a sample from `dag01` of size $n=25$." 
+#| fig-cap-location: margin
+ggplot(Trials, aes(y=Intercept, x=" ")) +
+  geom_jitter(alpha=0.3, width=0.2) + 
+  geom_violin(alpha=0.2, fill="blue", color=NA) 
 ```
 
-`Trials` is a *sample of summaries*. (See [Lesson -@sec-lesson-20]). The row-to-row variation in`Trials` comes from sampling variation. We can *summarize* the variation in the *sample of summaries*. As always, our standard measure of variation is the standard deviation (or, equivalently, variance):
+The variance of the sampling distribution, that is, the sampling variance, is:
 
 ```{r}
 Trials %>%
-  summarize(se = sd(Intercept))
+  summarize(sampling_variance = var(Intercept))
 ```
 
-This summary quantity, which we have named `se`, has a technical name in statistics: the **standard error**. The standard error is an ordinary standard deviation in a particular context: the standard deviation of a sample of summaries. The words **standard error** should be followed by a description of the summary and the size of the individual samples involved. Here it would be, "The standard error of the Intercept coefficient from a sample of size $n=25$ is around 0.36."
+Often, statisticians prefer to use the square root of the sampling variance, which has a technical name in statistics: the **standard error**. The standard error is an ordinary standard deviation in a particular context: the standard deviation of a sample of summaries. The words **standard error** should be followed by a description of the summary and the size of the individual samples involved. Here it would be, "The standard error of the Intercept coefficient from a sample of size $n=25$ is around 0.36."
 
 It is easy to confuse "standard error" with "standard deviation." Adding to the potential confusion is another related term, the "margin of error." To avoid this confusion, we will tend to use an *interval* description of the sampling variation called the "**confidence interval**." However, for the present, we will continue with the standard error, sometimes written SE for short.
 
@@ -115,14 +151,15 @@ Trials <- do(1000) * {
     lm(y ~ 1, data = .) %>%
     coef()
 }
-Trials %>% summarize(se400 = sd(Intercept))
+Trials %>% summarize(svar400 = var(Intercept),
+                     se400 = sd(Intercept))
 ```
 
 We repeated this process for each of the other sample sizes. @tbl-se-sizes reports the results.
 
 ```{r echo=FALSE, results="hide"}
 SE <- tibble::tribble(
-  ~n, ~se,
+  ~n, ~standard_error,
   25, 0.36,
   100, 0.19,
   400, 0.091,
@@ -130,7 +167,7 @@ SE <- tibble::tribble(
   6400, 0.023,
   25000, 0.011,
   100000, 0.0056
-)
+) %>% mutate(samping_variance = se^2)
 ```
 
 
@@ -138,14 +175,14 @@ SE <- tibble::tribble(
 #| label: tbl-se-sizes
 #| tbl-cap: "Results of repeating the sampling variability trials for samples of varying sizes."
 ### #| column: margin
-SE 
+SE[ , c(1,3,2)] 
 ```
 
 
 
-There is a pattern in @tbl-se-sizes. Every time we double $n$, the standard error goes down by a factor of 2, that is, $\sqrt{4}$. (The pattern is not exact because there is also sampling variation in the trials.)
+There is a pattern in @tbl-se-sizes. Every time we quadruple $n$, the sampling variance goes down by a factor of four. Consequently, the standard error---which is just the square-root of the sampling variance---goes down by a factor of 2, that is, $\sqrt{4}$. (The pattern is not exact because there is also sampling variation in the trials, which are really just a sample of all possible trials.)
 
-**Conclusion**: The larger the sample size, the smaller the SE. For a sample size of $n$, the SE will be proportional to $1/\sqrt{\strut n}$.
+**Conclusion**: The larger the sample size, the smaller the sampling variance. For a sample of size $n$, the sampling variance will be proportional to $1/n$. Or, in terms of the standard error: For a sample size of $n$, the SE will be proportional to $1/\sqrt{\strut n}$.
 
 ## The confidence interval
 

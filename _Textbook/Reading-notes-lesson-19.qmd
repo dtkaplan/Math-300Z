@@ -155,6 +155,8 @@ lm(gestation ~ 1, data=Gestation) %>% coefficients()
 lm(gestation ~ parity, data = Gestation) %>% coefficients()
 ```
 
+In the R language, expressions like `gestation ~ 1` and `gestation ~ parity` are called "tilde expressions." They are the means by which the modeler **specifies** the structure of the model that is to be built. Training (or "fitting") translates the **model specification** into an arithmetic formula that involves the explanatory variables and numerical coefficients. 
+
 The coefficients from a regression model are part of an accounting for variation. Learning how to read them is an important skill in statistical thinking. For instance, the coefficient from a model in the form `y ~ 1` is always the average value of variable `y`. In contrast, in a model like `y ~ x`, the "intercept" is a baseline value and the `x`-coefficient describes what part of the variation in `y` can be credited to `x`.
 
 ::: {.callout-note}
@@ -231,12 +233,6 @@ The baseline value is 281.3 days. This applies to first-time mothers. For the ot
 The output from `model_eval()` includes other columns of importance. For us, here, those are. the response variable itself (`gestation`, which has been given a generic name, `.response`) and the residuals from the model (`.resid`). There is a simple relationship between `.response`, `.output` and `.resid`:
 
 $$\mathtt{.response} = \mathtt{.output} + \mathtt{.resid}$$
-
-
-
-
-
-
 
 
 ::: {.callout-warning}

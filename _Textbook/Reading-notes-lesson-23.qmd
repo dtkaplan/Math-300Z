@@ -1,4 +1,4 @@
-# Estimating sampling variation from a single sample {#sec-lesson-23}
+# Confidence intervals from a single sample {#sec-lesson-23}
 
 ---
 output:
@@ -18,17 +18,15 @@ source("../_startup.R")
 
 [Lesson -@sec-lesson-21] introduced separating data into components: signal and noise. The *signal* is a summary of the data that tells us something we want to know. Often, the signal will be one or more coefficients from a regression report, but it might be something as simple as the mean, median, or standard deviation of a variable in a data frame.
 
-The *noise* comes into the data from various sources: e.g., error in measurement or a data-entry blunder. Another source of noise is omnipresent (except in a perfect census): sampling variation as discussed in [Lesson -@sec-lesson-22]. Sampling variation arises because the particular sample we happen to be working with is, so far as sampling is concerned, the play of luck. If we had happened to select another sample, the results would be different.
+The *noise* comes into the data from various sources: e.g., error in measurement or a data-entry blunder. Another source of noise is omnipresent (except in a perfect census): sampling variation as discussed in [Lesson -@sec-lesson-22]. Sampling variation arises because the particular sample we happen to be working with reflects, to some extent, the play of luck. If we had happened to select another sample, the results would be different.
 
-The Greek philosopher Heraclitus (c. 500 BC) said, "You can't step into the same river twice." A step into a river might be at the same place on the bank, but the water flowing by will be different. A data sample is like collecting water from a river or lake using a dipper. Imagine ten people standing side by side on the shore of a lake, each person dipping into the water to acquire a specimen and making one or more measurements from the specimen, for instance, the temperature, pH, and bacteria count. Each person collects a sample---that is, a series of specimens. These might be taken right after one another or by some protocol, say a weekly tracking of lake conditions over time.
+In general, whenever we measure something, say the altitude of a plane or the fuel economy of a car, it is helpful to know the "**precision**" of that estimate. It would be disastrous if the measured difference in altitude of two planes flying toward a common point were imprecise to the extent that the difference might actually be zero! Knowing the precision of the altitude measurement enables us to space the place in a safe way. 
 
-The ten people are each doing the same thing in approximately the same place and time, but each person's sample will be different, even if only by a little bit. That sample-to-sample variation will be noise. 
+One way to think about precision is in terms of repeatability. If we make multiple measurements of the same object in the same manner, the precision is the degree to which those measurements vary from one another. With the instrumentation used for physical measurements, the precision of individual measurements is estimated by repeated measuring the same thing. Likewise, in statistical summaries, the precision is related to sampling variation.
 
-If the ten people were fishing, each specimen would be the catch from one cast of the rod. Typically this is just an empty hook, lake weeds, or a stick, but sometimes it will be a fish. Each fisherman will have a sample at the end of the fishing day. These samples will not be identical; the fishermen's varying skills (or luck) will produce different results. That is sampling variation. To fishermen, the question of interest, the signal they want to measure, might be, "How good is the fishing today?" The fishermen's varying catches are the sampling variation. 
+In [Lesson -@sec-lesson-22], we repeated trials over and over again to gain some feeling for sampling variation. We quantified the repeatability in any of several closely related ways: the sampling variance or its square root (the "standard error") or a "margin of error" or a "confidence interval." Our experiments with simulations demonstrated an important property of sampling variation: the amount of sampling variation depends on the sample size $n$. In particular, the sampling variance gets smaller as $n$ increases in proportion to $1/n$. (Consequently, the standard error gets smaller in proportion to $1/\sqrt{n}$.)
 
-In [Lesson -@sec-lesson-21], we repeated trials over and over again to gain some feeling for sampling variation. Each trial consisted of collecting a sample and summarizing it. The individual trial is a summary of a sample. Then, to quantify the sampling variation, we summarized the set of individual trial results using the standard measure of variation: the standard deviation. 
-
-It is time to take off the DAG simulation training wheels and measure sampling variation from a *single* data frame. Our first approach will be to turn the single sample into several smaller samples: subsampling. Later, we will turn to another technique, resampling, which draws a sample of full size from the data frame.
+It is time to take off the DAG simulation training wheels and measure sampling variation from a *single* data frame. Our first approach will be to turn the single sample into several smaller samples: subsampling. Later, we will turn to another technique, resampling, which draws a sample of full size from the data frame. Sometimes, in particular with regression models, it is possible to calculate the sampling variation from a formula, allowing software to carry out and report the calculations automatically.
 
 ## Subsampling {#sec-subsampling}
 
@@ -114,3 +112,29 @@ Trials %>% summarize(se = sd(age))
 ```
 
 :::
+
+## Confidence intervals from software
+
+The same mathematical process that powers regression modeling software such as `lm()` can be used to compute standard errors for model coefficients as part of the fitting process. So, for regression models, finding a confidence interval is just a matter of asking for it. 
+
+[Note: Experienced R users will know that the "standard" function for calculating confidence intervals is `confint()`, which is used in exactly the same manner as `conf_interval()`. Regrettably, `confint()` does not create a data frame. In keeping with these Lessons use of data wrangling, the `conf_interval()` from the `{math300}` package reformats the output of `confint()` into a data frame.]
+
+There are several ways to do the asking. In R, the `conf_interval()` function makes it easy to extract the confidence intervals on each coefficient from a model. For example:
+
+```{r}
+lm(net ~ age + sex, data = TenMileRace) |> conf_interval() 
+```
+
+Each row of the result reports the confidence interval for one coefficient from the model.
+
+
+
+
+
+
+
+
+
+
+
+

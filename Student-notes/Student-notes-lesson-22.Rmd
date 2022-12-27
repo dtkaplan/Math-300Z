@@ -1,0 +1,94 @@
+---
+title: "Math 300 Lesson 22 Notes"
+subtitle: "Signal and noise"
+author: "YOUR NAME HERE"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+---
+
+
+```{r setup22, include=FALSE}
+library(math300)
+library(mosaic)
+library(knitr)
+library(kableExtra)
+library(math300)
+# math300::setup_student_notes()
+```
+
+## Overview
+
+
+It is critical to keep in mind that a **sample** is a collection, just as a data frame is a collection of rows. The variation we account for by regression models is row-by-row variation in the training data frame.
+
+"Sampling variation" is a theoretical concept: how much a model coefficient or other sample statistic would vary from one randomly collected sample to another.  
+
+You can't directly see sampling variation in a single sample, however we can use the theory of sampling variation to estimate from a single sample how much other samples might differ from the sample at hand. In this Lesson, we will simulate sampling variation in order to understand its properties, particularly how it depends on the sample size $n$.
+
+
+### Reading 
+
+[Lesson **22** from *LST*](https://dtkaplan.github.io/Math-300R/Textbook/Reading-notes-lesson-22.html)
+
+
+
+### Objectives
+
+22.1 Describe the logical origin of sampling variation as the variation between multiple samples from the same source.
+
+22.2 Recognize the several formats in which we describe sampling variation---sampling variance, standard error, margin of error, confidence interval---and show how they are related. 
+
+22.3 Identify how sampling variance scales with sample size $n$ and use this to estimate---given a single sample---how large the sampling variation would be in a sample of a different size.
+
+
+
+[Updated list of objectives](../Objectives/Obj-lesson-22.html)
+
+### Libraries 
+
+```{r warning=FALSE,message=FALSE}
+library(mosaic)
+library(math300)
+```
+
+--------
+
+
+Lesson 
+--------
+
+## Exercise 1
+
+Calculate the sampling variance for a set of trials from `dag02`.
+
+Point out that there is a separate sampling variance for each coefficient.
+
+## Exercise 2
+
+Compare the sampling variance as $n$ is increased.
+
+
+## Exercise 3
+
+Suppose the sampling variance for $n=25$ is XXX. What will it be for $n=50$, for $n=100$?
+
+Fill in the table:
+
+
+Sample size.     | Sampling variance | Standard error | Margin of error
+-----------------|-------------------|----------------|------------
+n=25 | 40 |  |
+n=50 |    |  | 
+n=100 |   |  |
+
+## Exercise 4
+
+Calculate the confidence interval, which includes both the center and spread.
+
+

@@ -124,7 +124,7 @@ sample(dag08, size=5)
 Each row in the sample is one trial; in each trial, the node's formula sets the value for that node. For example, the formula might use the values of other nodes as input. Alternatively, the formula might specify that the node is exogenous, without input from any other nodes.
 
 
-Models can be trained on the simulated data using the same techniques as for any other data. To illustrate, here we generate a sample of size $n=50$, then fit the model `c ~ a + b` and summarize by taking the coefficients. `r set.seed(101)`
+Models can be trained on the simulated data using the same techniques as for any other data. To illustrate, here we generate a sample of size $n=50$, then fit the model specification `c ~ a + b` and summarize by taking the coefficients. `r set.seed(101)`
 
 
 ```{r}

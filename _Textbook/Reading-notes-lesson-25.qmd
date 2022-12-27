@@ -48,7 +48,7 @@ The evaluation phase---turning the crank of the machine---is simple. Take the in
 
 ## Building and using the machine
 
-To illustrate building a prediction machine, we turn to a problem first considered quantitatively in the 1880s: the relationship between parents' heights and their children's heights at adulthood. The `Galton` data frame records the heights of about 900 children, along with their parents' heights.  Suppose we want to predict a child's adult height (variable name: `height`) from his or her parents' heights (`mother` and `father`). An appropriate model formula is `height ~ mother + father`. We use the model-training function`lm()` to transform the model formula and the data into a model.
+To illustrate building a prediction machine, we turn to a problem first considered quantitatively in the 1880s: the relationship between parents' heights and their children's heights at adulthood. The `Galton` data frame records the heights of about 900 children, along with their parents' heights.  Suppose we want to predict a child's adult height (variable name: `height`) from his or her parents' heights (`mother` and `father`). An appropriate model specification is `height ~ mother + father`. We use the model-training function`lm()` to transform the model specification and the data into a model.
 
 ```{r}
 Mod1 <- lm(height ~ mother + father, data = Galton)

@@ -136,7 +136,7 @@ In these Lessons, we've focussed on that one method, rather than introducing all
 
 - `yesno`: a categorical variable with exactly two levels (which can always be encoded as a zero-one quantitative variable)
 
-Model formula | traditional name
+Model specification | traditional name
 --------------|-------------------
 `y ~ 1`         | **t-test** on a single mean
 `yesno ~ 1`     | **p-test** on a single proportion.
