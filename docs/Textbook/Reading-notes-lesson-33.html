@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lessons in Statistical Thinking - 33&nbsp; Measuring and accumulating risk</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Reading-notes-lesson-34.html" rel="next">
+<link href="./Reading-notes-lesson-32.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Measuring and accumulating risk</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Lessons in Statistical Thinking</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">1-18 from ModernDive</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Statistical Thinking</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-19.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Preliminaries</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-20.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Simulation and sampling variation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-21.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Signal and noise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-22.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Sampling and sampling variation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-23.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Confidence intervals from a single sample</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-25.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Mechanics of prediction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-26.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Constructing a prediction interval</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 19-26</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-28.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Covariates</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-29.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Covariates eat variance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-30.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Confounding</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-31.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Spurious correlation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-32.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Experiment and random assignment</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-33.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Measuring and accumulating risk</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-34.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Constructing a classifier</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-35.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Accounting for prevalence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-36.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-37.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Calculating a p-value</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-38.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">False discovery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 28-38</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#risk" id="toc-risk" class="nav-link active" data-scroll-target="#risk">Risk</a></li>
+  <li><a href="#accumulating-risk" id="toc-accumulating-risk" class="nav-link" data-scroll-target="#accumulating-risk">Accumulating risk</a></li>
+  <li><a href="#probability-odds-and-log-odds" id="toc-probability-odds-and-log-odds" class="nav-link" data-scroll-target="#probability-odds-and-log-odds">Probability, odds, and log odds</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-lesson-33" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Measuring and accumulating risk</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>The <em>linear models</em> (<code>lm()</code>) we have mostly been using up until now accumulate the model output as a linear combination of model inputs. Consider, for instance, a simple model of fuel economy based on the horsepower and weight of a car:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mpg_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> hp <span class="sc">+</span> wt, <span class="at">data =</span> mtcars) </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mpg_mod <span class="sc">%&gt;%</span> <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)          hp          wt 
+37.22727012 -0.03177295 -3.87783074 </code></pre>
+</div>
+</div>
+<p>These coefficients mean that the model output is a <strong>sum</strong>. For instance, a 100 horsepower car weighting 2500 pounds has a predicted fuel economy of <code>37.2 - 0.032*100 - 3.88*2.5=</code>24.3 miles per gallon.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> If we’re interested in making a prediction, we often hide the arithmetic behind a computer function, but it is the same arithmetic:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(mpg_mod, <span class="at">hp =</span> <span class="dv">100</span>, <span class="at">wt =</span> <span class="fl">2.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> hp </th>
+   <th style="text-align:right;"> wt </th>
+   <th style="text-align:right;"> model_output </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 100 </td>
+   <td style="text-align:right;"> 2.5 </td>
+   <td style="text-align:right;"> 24.3554 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The arithmetic, in principle, lets us evaluate the model for any inputs, even ridiculous ones like a 10,000 hp car weighing 50,000 lbs. There is no such car, but there is a model output.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(mpg_mod, <span class="at">hp=</span><span class="dv">10000</span>, <span class="at">wt =</span> <span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> hp </th>
+   <th style="text-align:right;"> wt </th>
+   <th style="text-align:right;"> model_output </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 10000 </td>
+   <td style="text-align:right;"> 50 </td>
+   <td style="text-align:right;"> -474.3937 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The prediction reported here means that such a car goes <em>negative</em> 474 miles on a gallon of gas. That’s silly. Fuel economy needs to be non-negative; the output <span class="math inline">\(-474\)</span> mpg is <em>out of bounds</em>.</p>
+<p>A good way to avoid out-of-bounds behavior is to model a <em>transformation</em> of the response variable instead of the variable itself. For example, to avoid negative outputs from a model of <code>mpg</code>, change the model so that the output is in terms of the logarithm of <code>mpg</code>, like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>logmpg_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(mpg) <span class="sc">~</span> hp <span class="sc">+</span> wt, <span class="at">data =</span> mtcars) </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(logmpg_mod, <span class="at">hp =</span> <span class="dv">100</span>, <span class="at">wt =</span> <span class="fl">2.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> hp </th>
+   <th style="text-align:right;"> wt </th>
+   <th style="text-align:right;"> model_output </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 100 </td>
+   <td style="text-align:right;"> 2.5 </td>
+   <td style="text-align:right;"> 3.173411 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The reported output, 3.17, should <strong>not</strong> be interpreted as <code>mpg</code>. Instead, interpret it as <code>log(mpg)</code>. If we want output in terms of <code>mpg</code>, then we have to undo the logarithm. That’s the role of the exponential function, which is the <em>inverse</em> of the logarithm.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(logmpg_mod, <span class="at">hp =</span> <span class="dv">100</span>, <span class="at">wt =</span> <span class="fl">2.5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mpg =</span> <span class="fu">exp</span>(model_output))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> hp </th>
+   <th style="text-align:right;"> wt </th>
+   <th style="text-align:right;"> model_output </th>
+   <th style="text-align:right;"> mpg </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 100 </td>
+   <td style="text-align:right;"> 2.5 </td>
+   <td style="text-align:right;"> 3.173411 </td>
+   <td style="text-align:right;"> 23.88884 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The logarithmic transform at the model-training stage does not not prevent the model output from being negative. We can see this by looking at the tank example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mod_logmpg <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(mpg) <span class="sc">~</span> hp <span class="sc">+</span> wt, <span class="at">data =</span> mtcars)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(mod_logmpg, <span class="at">hp=</span><span class="dv">10000</span>, <span class="at">wt=</span><span class="dv">50</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mpg =</span> <span class="fu">exp</span>(model_output))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> hp </th>
+   <th style="text-align:right;"> wt </th>
+   <th style="text-align:right;"> model_output </th>
+   <th style="text-align:right;"> mpg </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 10000 </td>
+   <td style="text-align:right;"> 50 </td>
+   <td style="text-align:right;"> -21.6327 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The model output is negative for the tank, but the model output corresponds to <code>log(mpg)</code>. What will keep the model from producing negative <code>mpg</code> will be the exponential transformation applied to the model output. A graph of the exponential function shows how this works.</p>
+<div class="cell page-columns page-full">
+<div class="cell-output-display page-columns page-full">
+<div id="fig-log-mpg" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="Reading-notes-lesson-33_files/figure-html/fig-log-mpg-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;33.1: The exponential function translates <code>log(mpg)</code>, which can be positive or negative, into <code>mpg</code>, which can only be non-negative.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The log transform does not fix the absurdity of modeling tanks based on the fuel economy of cars. The model’s prediction of <code>mpg</code> for the tank is 0.0000000004 miles/gallon, but real-world tanks do much better than that. For instance, the M1 Abrams tank is reported to get approximately 0.6 miles per gallon.</p>
+<section id="risk" class="level2">
+<h2 class="anchored" data-anchor-id="risk">Risk</h2>
+<p>In everyday language, “risk” refers to a dangerous or unwelcome outcome. We talk about the “risk of heart disease” or the “risk of bankruptcy” or other financial loss. To apply risk to a positive outcome is non-idiomatic. For instance, for a person wanting to have a baby, we don’t talk about the “risk of pregnancy,” but about the “chances of becoming pregnant.”</p>
+<p>In statistics, the word “risk” is similarly used for an unwelcome outcome. However, an additional component of meaning is added. “Risk” refers to the <strong>probability</strong> of the unwelcome outcome. In principle, though, it would be entirely equivalent to speak of the “probability of heart disease,” leaving the phrase “heart disease” to signal that the outcome is unwanted. We talk about the “risk of death” but never the “risk of survival.” Instead, we would say something like the “chances of survival.”</p>
+<p>The outcomes described by “risk” are categorical. Generically, the levels of the categorical variable might be “unwelcome” and “not unwelcome,” but they might be more specifically named, say, “death” and “survival,” or “lung disease” and “not.”</p>
+<p>We have been building models of such categorical output variables from the start of these Lessons. For the zero-one categorical variables we have emphasized, the model output is in the form of a probability: the probability of the outcome of the event being “one” (or whatever actual level “one” corresponds to.) If we assign one for “death” and zero for “survival,” the probability which is the output of a model is a risk, but other than the choice of zero-one assignment, there is no mathematical difference (in statistics) between a risk and a probability.</p>
+<p>It often happens that risk depends on other factors, often called “risk factors.” In our modeling framework, such risk factors are merely explanatory variables. For instance, a study of the impact of smoking on health might use <code>outcome</code> represented by a categorical response variable with levels “death” or “survival.”</p>
+<p>To summarize, for statistical thinkers a model of risk takes the usual form that we have used for models of zero-one categorical models. All the same issues apply: covariates, DAGs, confidence intervals, and so on. There is, however, a slightly different style for presenting effect sizes.</p>
+<p>Up until now, we have presented effect in terms of an arithmetic difference. As an example, we turn to the fuel-economy model introduced at the beginning of this lesson. Effect sizes are about <em>changes</em>. To look at the effect size of, say, weight (<code>wt</code>), we would calculate the model output for two cars that differ in weight (but are the same for the other explanatory variables). For instance, to know the change in fuel economy due to a 1000 pound change in weight, we can do this calculation:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mod_eval</span>(logmpg_mod, <span class="at">hp =</span> <span class="dv">100</span>, <span class="at">wt =</span> <span class="fu">c</span>(<span class="fl">2.5</span>, <span class="fl">3.5</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mpg =</span> <span class="fu">exp</span>(model_output))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> hp </th>
+   <th style="text-align:right;"> wt </th>
+   <th style="text-align:right;"> model_output </th>
+   <th style="text-align:right;"> mpg </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 100 </td>
+   <td style="text-align:right;"> 2.5 </td>
+   <td style="text-align:right;"> 3.173411 </td>
+   <td style="text-align:right;"> 23.88884 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 100 </td>
+   <td style="text-align:right;"> 3.5 </td>
+   <td style="text-align:right;"> 2.972875 </td>
+   <td style="text-align:right;"> 19.54803 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The lighter car is predicted to get 24 mpg, the heavier car to get 19.5 mpg. The arithmetic difference in output <span class="math inline">\(19.5 - 24 = -4.5\)</span> mpg is the effect of the 1000 pound increase in weight.</p>
+<p>There is another way to present the effect, as a <strong>ratio</strong> or proportion. In this style, the effect of an addition 1000 pounds is <span class="math inline">\(19.5 / 24 = 81\%\)</span>, that is, the heavier car can go only 81% of the distance that the lighter car will travel on the same amount of gasoline. (Stating an effect as a ratio is common in some fields. For example, economists use ratios when describing prices or investment returns.)</p>
+<p>In presenting a change in risk—that is, the change in probability resulting from a change in some explanatory variable—both the arithmetic difference and arithmetic ratio forms are used. But there is a special terminology that is used to identify the two forms. A change in the form of an arithmetic difference is called an “<strong>absolute</strong> change in risk.” A change in the ratio form is called a “<strong>relative</strong> risk.”</p>
+<p>The different forms—absolute change in risk versus relative risk—both describe the same change in risk. For most decision-makers, the absolute form is most useful. To illustate, suppose exposure to a toxin increases the risk of a disease by 50%. This would be a risk ratio of 1.5. But that risk ratio might be based on an absolute change in risk from 0.00004 to 0.00006, or it might be based on an absolute change in risk from 40% to 60%. The latter is a much more substantial change in risk and ought to warrant more attention from decision makers interested.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Other ways to measure change in risk
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is important for measures of change in risk to be mathematically valid. But from among the mathematically valid measures, one wants to choose a form that will be the best for communicating with decision-makers. Those decision-makers might be the people in charge of establishing screening for diseases like breast cancer, or a judge and jury deciding the extent to which blame for an illness ought to be assigned to second-hand smoke.</p>
+<p>Two useful ways to present a change in risk are the “<strong>number needed to treat</strong>” (NNT) and the “<strong>attributable fraction</strong>.” The NNT is useful for presenting the possible benefits of a treatment or screening test. Consider these data from the <a href="https://www.uspreventiveservicestaskforce.org/uspstf/document/RecommendationStatementFinal/breast-cancer-screening">US Preventive Services Task Force</a> which take the form of the number of breast-cancer deaths in a 10-year period avoided by mammography. The confidence interval on the estimated number is also given.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Age</th>
+<th>Deaths avoided</th>
+<th>Conf. interval</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>40-49</td>
+<td>3</td>
+<td>0-9</td>
+</tr>
+<tr class="even">
+<td>50-59</td>
+<td>8</td>
+<td>2-17</td>
+</tr>
+<tr class="odd">
+<td>60-69</td>
+<td>21</td>
+<td>11-32</td>
+</tr>
+<tr class="even">
+<td>70-74</td>
+<td>13</td>
+<td>0-32</td>
+</tr>
+</tbody>
+</table>
+<p>The table does not give the risk of death, but rather the absolute risk reduction. For the 70-74 age group this risk reduction is 13/100000 with a confidence interval of 0 to 32/100000.</p>
+<p>The NNT is well named. It gives the number of people who must receive the treatment in order to avoid one death. Arithmetically, the NNT is simply the reciprocal of the absolute risk reduction. So, for the 70-74 age group the NNT is 100000/13 or 7700 or, stated as a confidence interval, [3125 to <span class="math inline">\(\infty\)</span>].</p>
+<p>For a decision-maker, NNT presents the effect size in a readily understood way. For example, the 40-49 year-old group has an NTT of 33,000. The cost of the treatment could be presented in terms of anxiety prevented (mammography produces a lot of false positives) or monetary cost. The US Affordable Care Act requires health plans to fully cover the cost of a screening mammogram every one or two years for women over 40. Those mammograms each cost about $100-200. Consequently, the cost of mammography over the ten-year period (during which 5 mammograms might be performed) is roughly <span class="math inline">\(5\times \$100 \times 33000\)</span> or about $16 million per life saved.</p>
+<p>The attributable fraction is a way of presenting a risk ratio—in other words, a relative risk—in a way that is more concrete than the ratio itself. Consider the effect of smoking on the risk of getting lung cancer. According to the <a href="https://www.cdc.gov/cancer/lung/basic_info/risk_factors.htm#:~:text=People%20who%20smoke%20cigarettes%20are,the%20risk%20of%20lung%20cancer.">US Centers for Disease Control</a>, “People who smoke cigarettes are 15 to 30 times more likely to get lung cancer.” This statement directly gives the confidence interval on the relative risk: [15 to 30].</p>
+<p>The attributable fraction refers to the proportion of disease in the exposed group—that is, smokers—to be attributed to expose. The general formula for attributable fraction is simple. If the risk ratio is denoted <span class="math inline">\(RR\)</span>, the attributable fraction is <span class="math display">\[\text{attributable fraction} \equiv \frac{RR-1}{RR}\]</span> For a smoker who gets lung cancer, the confidence interval on the attributable fraction is [93% to 97%].</p>
+<p>For second-hand smoke, the CDC estimates the risk ratio for cancer at [1.2 to 1.3]. For a person exposed to second-hand smoke who gets cancer, the attributable fraction is [17% to 23%]. Such attributions are useful for those, such as judges and juries, who need to assign a level of blame for a bad outcome.</p>
+</div>
+</div>
+</section>
+<section id="accumulating-risk" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="accumulating-risk">Accumulating risk</h2>
+<p>There can be multiple factors that contribute to risk. As a simple example of how different factors can contribute simultaneously, consider the following DAG:</p>
+<div class="cell page-columns page-full">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag09)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<p><img src="Reading-notes-lesson-33_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dag09)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>a ~ exo()
+b ~ exo()
+c ~ binom(2 * a + 3 * b)</code></pre>
+</div>
+</div>
+<p>The formulas for <code>dag09</code> show that the nodes <code>a</code> and <code>b</code> are exogenous, their values set randomly and independently of one another by the <code>exo()</code> function. Both <code>a</code> and <code>b</code> contribute to the value of <code>c</code>. Ordinary stuff. But there is something new in this simulation, the <code>binom()</code> function. The output of <code>binom()</code> will always be either 0 or 1. If the input to <code>binom()</code> is zero, it’s completely random whether a 0 or 1 will result. The more positive the input to <code>binom()</code>, the larger the chance of a 1. Similarly, the more negative the input, the larger the chance of a 0. Like this:</p>
+<div class="cell page-columns page-full">
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'mosaicCalc'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:mosaicModel':
+
+    Runners</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:stats':
+
+    D</code></pre>
+</div>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-binom-fun-1" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="Reading-notes-lesson-33_files/figure-html/fig-binom-fun-1-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;33.2: The <code>binom()</code> function looks to its input to determine the probability that the output will be 1 or 0.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In <code>dag09</code>, the input to <code>binom()</code> is <code>2*a + 3*b</code>; both <code>a</code> and <code>b</code> are risk factors for <code>c</code> being 1. The larger that <code>a</code> is, the larger the risk. Similarly, the larger <code>b</code>, the larger the risk. The formula <code>2*a + 3*b</code> accumulates the risk steming from <code>a</code> and <code>b</code>.</p>
+<p>Let’s generate a big sample—<span class="math inline">\(n=10,000\)</span>—from <code>dag09</code> and see if a simple model is able to capture the way <code>a</code> and <code>b</code> contribute to <code>c</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(c <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:right;"> .lwr </th>
+   <th style="text-align:right;"> .upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 0.4882392 </td>
+   <td style="text-align:right;"> 0.5019308 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> a </td>
+   <td style="text-align:right;"> 0.1858879 </td>
+   <td style="text-align:right;"> 0.1994226 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> b </td>
+   <td style="text-align:right;"> 0.2910692 </td>
+   <td style="text-align:right;"> 0.3046348 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The coefficients on <code>a</code> and <code>b</code> are inconsistent with the <code>dag09</code> formulas. What’s wrong? The problem can be seen in <a href="#fig-binom-fun-1">Figure&nbsp;<span>33.2</span></a>. The output of <code>binom()</code> is a probability. Probabilities have to stay within the bounds 0 to 1. But there is nothing in the formula <code>c ~ a + b</code> that enforces such bounds. If we are to model zero-one response variables like <code>c</code>, we will need a means to enforce the bounds.</p>
+</section>
+<section id="probability-odds-and-log-odds" class="level2">
+<h2 class="anchored" data-anchor-id="probability-odds-and-log-odds">Probability, odds, and log odds</h2>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Under construction
+</div>
+</div>
+<div class="callout-body-container callout-body">
+
+</div>
+</div>
+<p>A probability—a number between 0 and 1—is the most used measure of the chances that something will happen, but it is not the only way nor the best for all purposes.</p>
+<p>Also part of everyday language is the word “odds,” as in, “What are the odds?” to express surprise at an unexpected event.</p>
+<p>Odds are usually expressed in terms of two numbers, as in “3 to 2” or “100 to 1”, written more compactly as 3:2 and 100:1 or even 1.5 and 100, respectively. The setting for odds is an even that might happen or not: the horse Fortune’s Chance might win the race, otherwise not; it might rain today, otherwise not; the Red Sox might win the World Series, otherwise not.</p>
+<p>The format of a <em>probability</em> assigns a number between 0 and 1 to the chances that Fortune’s Chance will win, or that it will rain, or that the Red Sox will come out on top. If that number is called <span class="math inline">\(p\)</span>, then the chances of the “otherwise outcome” must be <span class="math inline">\(1-p\)</span>. The event with probability <span class="math inline">\(p\)</span> would be reformatted into odds as <span class="math inline">\(p:(1-p)\)</span>. No information is lost if we treat the odds as a single number, the result of the division <span class="math inline">\(p/(1-p)\)</span>. Thus, when <span class="math inline">\(p=0.25\)</span> the corresponding odds will be <span class="math inline">\(0.25/0.75\)</span>, in other words, 1/3.</p>
+<p>A big mathematical advantage to using odds is that the odds number can be anything from zero to infinity; it’s not bounded within 0 to 1. Even more advantageous for the purposes of accumulating risk is the logarithm of the odds, called “<strong>log odds</strong>.” We will come back to this later.</p>
+<p>The printed version of <code>dag09</code> shows that the value of node <code>c</code> is a linear combination of <code>a</code> and <code>b</code> converted into a zero-one, binomial value. Unfortunately, the linear modeling trainer, <code>lm()</code>, is not well-tuned to work with binomial data. Another modeling technique, “logistic regression,” does a better job. The <code>glm()</code> function trains logistic regression models on data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag09, <span class="at">size=</span><span class="dv">10000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(c <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data =</span> ., <span class="at">family=</span><span class="st">"binomial"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:right;"> .lwr </th>
+   <th style="text-align:right;"> .upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> -0.1039978 </td>
+   <td style="text-align:right;"> 0.023108 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> a </td>
+   <td style="text-align:right;"> 2.0353911 </td>
+   <td style="text-align:right;"> 2.237961 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> b </td>
+   <td style="text-align:right;"> 3.0352614 </td>
+   <td style="text-align:right;"> 3.300165 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>When we use the appropriate modeling technique, we can, in this case, recover the coefficients in the DAG formula: 2 for <code>a</code> and 3 for <code>b</code>. :::</p>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>The <code>wt</code> variable is measured in units of 1000 lbs, so a 2500 pound vehicle has a <code>wt</code> value of 2.5.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>A 10,000 hp, 50,000 lbs ground vehicle does have a name: a “tank.” Common sense dictates that one not put too much stake in a calculation of a tank’s fuel economy based on data from cars!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Reading-notes-lesson-32.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Experiment and random assignment</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Reading-notes-lesson-34.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Constructing a classifier</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

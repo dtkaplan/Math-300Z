@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lessons in Statistical Thinking - 35&nbsp; Accounting for prevalence</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Reading-notes-lesson-36.html" rel="next">
+<link href="./Reading-notes-lesson-34.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Accounting for prevalence</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Lessons in Statistical Thinking</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">1-18 from ModernDive</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bogus.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bogus</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Statistical Thinking</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-19.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Preliminaries</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-20.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Simulation and sampling variation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-21.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Signal and noise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-22.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Sampling and sampling variation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-23.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Confidence intervals from a single sample</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-24.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Effect size</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-25.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Mechanics of prediction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-26.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Constructing a prediction interval</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./QR1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Review of Lessons 19-26</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-28.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Covariates</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-29.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Covariates eat variance</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-30.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Confounding</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-31.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Spurious correlation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-32.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Experiment and random assignment</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-33.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Measuring and accumulating risk</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-34.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Constructing a classifier</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-35.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Accounting for prevalence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-36.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-37.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Calculating a p-value</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Reading-notes-lesson-38.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">False discovery</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./QR2.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Review of Lessons 28-38</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#prevalence" id="toc-prevalence" class="nav-link active" data-scroll-target="#prevalence">Prevalence</a></li>
+  <li><a href="#from-the-patients-point-of-view" id="toc-from-the-patients-point-of-view" class="nav-link" data-scroll-target="#from-the-patients-point-of-view">From the patient’s point of view</a></li>
+  <li><a href="#likelihood" id="toc-likelihood" class="nav-link" data-scroll-target="#likelihood">Likelihood</a></li>
+  <li><a href="#sec-bayes-rule" id="toc-sec-bayes-rule" class="nav-link" data-scroll-target="#sec-bayes-rule">How serious is it, Doc?</a></li>
+  <li><a href="#screening-tests" id="toc-screening-tests" class="nav-link" data-scroll-target="#screening-tests">Screening tests</a>
+  <ul class="collapse">
+  <li><a href="#the-loss-function" id="toc-the-loss-function" class="nav-link" data-scroll-target="#the-loss-function">The Loss Function</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-lesson-35" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Accounting for prevalence</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="hidden">
+<p><span class="math display">\[\newcommand{\Ptest}{\mathbb{P}}
+\newcommand{\Ntest}{\mathbb{N}}
+\newcommand{\given}{\ |\!\!|\  }\]</span></p>
+</div>
+<section id="prevalence" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="prevalence">Prevalence</h2>
+<p>The “<strong>prevalence</strong>” of C is the fraction of the population who have condition C. Prevalence is an important factor in the performance of a classifier.</p>
+<div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="">The training sample used to construct the sensitivity and specificity curves in <a href="Reading-notes-lesson-34.html#fig-fraction-correct">Figure&nbsp;<span>34.7</span></a>.</span></div></div>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<p><img src="Reading-notes-lesson-35_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" style="width:150.0%"></p>
+</div></div></div>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<p><img src="Reading-notes-lesson-35_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" style="width:150.0%"></p>
+</div></div></div>
+<p><a href="Reading-notes-lesson-34.html">Lesson&nbsp;<span>34</span></a> used a <strong>training sample</strong>, first shown in <a href="Reading-notes-lesson-34.html#fig-divided-by-condition">Figure&nbsp;<span>34.3</span></a> and duplicated here in the margin. The training sample allowed us look at the consequences of the choice of threshold used in the test. That training sample had roughly equal numbers of people from the C and H groups. It’s sensible to use such a training sample in order to make sure both the C and H groups are well represented.</p>
+<p>The prevalence among the actual population is usually very different than in the training sample. <a href="#fig-divided-by-condition3">Figure&nbsp;<span>35.1</span></a> illustrates the typical situation: many people in the H group and few people in the C group.</p>
+<div class="cell fig-cap-location-bottom">
+<div class="cell-output-display">
+<div id="fig-divided-by-condition3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Reading-notes-lesson-35_files/figure-html/fig-divided-by-condition3-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;35.1: The population on which the classifier will be used.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The prevalence can be seen by how densely the H group is populated compared to the C group. The prevalence depicted in <a href="#fig-divided-by-condition3">Figure&nbsp;<span>35.1</span></a> is about 10%, that is, one in ten people has condition C. In real-world conditions, prevalence is often much lower, perhaps 0.1%. Indeed, epidemiologists often move alway from a percentage scale when quantifying prevalences, often using “cases per 100,000.”</p>
+<p>Even though the prevalence is different in <a href="Reading-notes-lesson-34.html#fig-divided-by-condition">Figure&nbsp;<span>34.3</span></a> than in <a href="Reading-notes-lesson-34.html#fig-divided-by-condition">Figure&nbsp;<span>34.3</span></a>, the sensitivity is exactly the same. Likewise for the specificity.</p>
+<p>We don’t usually have comprehensive testing of a population, so drawing a picture like <a href="#fig-divided-by-condition3">Figure&nbsp;<span>35.1</span></a> has to be done theoretically based on the limited information available: prevalence (from surveys of the population) as well as sensitivity and specificity (from the training sample). This is easy to do.</p>
+<p>The first step is to determine the number in the C group and in the H group using the population size. If the population size is <span class="math inline">\(N\)</span>, then the number in the C group will be <span class="math inline">\(p(C) N\)</span>. We are writing the prevalence here as a probability, the probability <span class="math inline">\(p(C)\)</span> that a randomly selected person from the population has condition C. Similarly, the size of the H group is <span class="math inline">\((1-p(C)) N\)</span>.</p>
+<div class="cell page-columns page-full">
+<div class="cell-output-display page-columns page-full">
+<div id="fig-divided-by-condition4" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="Reading-notes-lesson-35_files/figure-html/fig-divided-by-condition4-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;35.2: Knowing the prevalence allows us to determine the number of people in the C group and the number in the H group.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Consider now the sensitivity. Sensitivity is relevant only to the C group; it tells the fraction in the C group who will be correctly classified. That’s enough information to know how many people in C to color blue (for <span class="math inline">\(\mathbb{P}\)</span>) or gray (for <span class="math inline">\(\mathbb{H}\)</span>).</p>
+<p>Similarly, the specificity tells us what fraction among the H group to color blue and gray.</p>
+<p>This is how <a href="#fig-divided-by-condition3">Figure&nbsp;<span>35.1</span></a> was generated: specifying population size <span class="math inline">\(N\)</span>, prevalence <span class="math inline">\(p(C)\)</span>, and sensitivity and specificity. The false-positives are the blue dots in the H group, the false-negatives are the gray dots in the C group.</p>
+</section>
+<section id="from-the-patients-point-of-view" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="from-the-patients-point-of-view">From the patient’s point of view</h2>
+<p><a href="#fig-divided-by-condition3">Figure&nbsp;<span>35.1</span></a> is drawn from the perspective of the epidemiologist or test developer. But it doesn’t directly provide information of use to the patient, simply because the patient has only a test result (<span class="math inline">\(\mathbb{P}\)</span> or <span class="math inline">\(\mathbb{H}\)</span>) but no definitive knowledge of the actual condition (C or H).</p>
+<p>Re-organizing the epidemiologist’s graph can put it in a form relevant to the patient. Instead of plotting people by C or H, we can plot them by <span class="math inline">\(\mathbb{P}\)</span> or <span class="math inline">\(\mathbb{H}\)</span>. This perspective is shown in <a href="#fig-divided-by-condition5">Figure&nbsp;<span>35.3</span></a>, which is exactly the same people as in <span class="quarto-unresolved-ref">?fig-divided-by-condition2</span> but arranged differently.</p>
+<div class="cell page-columns page-full">
+<div class="cell-output-display page-columns page-full">
+<div id="fig-divided-by-condition5" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="Reading-notes-lesson-35_files/figure-html/fig-divided-by-condition5-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;35.3: The population on which the classifier will be used.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>For the patient who has gotten a <span class="math inline">\(\mathbb{P}\)</span> result, the left panel of <a href="#fig-divided-by-condition5">Figure&nbsp;<span>35.3</span></a> is highly informative. The patient can see that only a small fraction of the people testing <span class="math inline">\(\mathbb{P}\)</span> actually have condition C. (The people with C are shown as filled symbols.)</p>
+<p>The test result <span class="math inline">\(\mathbb{P}\)</span> is not definitive, it is merely a clue.</p>
+</section>
+<section id="likelihood" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="likelihood">Likelihood</h2>
+<p>A “clue” is a piece of information or an observation that tells something about a mystery, but not usally everything. As an example, consider a patient who has just woken up from a coma and doesn’t know what month it is. It is a mystery. With no information at all, it is almost equally likely to be any month. So the hypotheses in contention might be labeled Jan, Feb, March, and so on.</p>
+<p>The person looks out the window and observes snow falling. The observation of snow is a clue. It tells something about what month it might be, but not everything. For instance, the possibility that it is July becomes much less likely if snow has been observed; the possibility that it is February (or January or March) becomes more likely.</p>
+<p>Statistical thinkers often have to make use of clues. Suppose the coma patient is a statistician. She might try to quantify the likelihood of each month given the observation of snow. Here’s a reasonable try:</p>
+<table class="table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 60%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Month</th>
+<th>Probability of seeing snow when looking out the window for the first time each day</th>
+<th>Notation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>January</td>
+<td>2.3%</td>
+<td><span class="math inline">\(p(\text{snow}{\ |\!\!|\  } \text{January})\)</span></td>
+</tr>
+<tr class="even">
+<td>February</td>
+<td>3.5%</td>
+<td><span class="math inline">\(p(\text{snow}{\ |\!\!|\  } \text{February})\)</span></td>
+</tr>
+<tr class="odd">
+<td>March</td>
+<td>2.1%</td>
+<td><span class="math inline">\(p(\text{snow}{\ |\!\!|\  } \text{March})\)</span></td>
+</tr>
+<tr class="even">
+<td>April</td>
+<td>1.2%</td>
+<td><span class="math inline">\(p(\text{snow}{\ |\!\!|\  } \text{April})\)</span></td>
+</tr>
+<tr class="odd">
+<td>May</td>
+<td>0.5%</td>
+<td>… and so on …</td>
+</tr>
+<tr class="even">
+<td>June</td>
+<td>0.1%</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>July</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>August</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>September</td>
+<td>0.2%</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>October</td>
+<td>0.6%</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>November</td>
+<td>0.9%</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>December</td>
+<td>1.4%</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The table lists 12 probabilities, one for each month. For the coma patient, these probabilities let her look up which months it is likely to be. For this reason, the probabilities are called “<strong>likelihoods</strong>.”</p>
+<p>The coma patient has 12 hypotheses for which month it is. The table as a whole is a “<strong>likelihood function</strong>” describing how the likelihood varies from one hypothesis to another. Think of the entries in the table as having been radioed back to Earth from the 12 hypothetical planets <span class="math inline">\({\ |\!\!|\  } \text{January})\)</span> through <span class="math inline">\({\ |\!\!|\  } \text{December})\)</span>.</p>
+<p>It is helpful, I think, to have a notation that reminds us when we are dealing with a likelihood and a likelihood function. We will use the fancy <span class="math inline">\({\cal L}\)</span> to identify a quantity as a likelihood. The coma patient is interested in the likelihood of snow, which we will write <span class="math inline">\({\cal L}_\text{snow}\)</span>. From the table we can see that the likelihood of snow is a function of the month, that is <span class="math inline">\({\cal L}_\text{snow}(\text{month})\)</span>, where month can be any of January through December.</p>
+<p>This likelihood function has a valuable purpose: It will allow the coma patient to calculate the probability of it being any of the twelve months given her observation of snow, that is <span class="math inline">\(p(\text{month} {\ |\!\!|\  } \text{snow})\)</span>.</p>
+<p>In general, likelihoods are useful for converting knowledge like <span class="math inline">\({\cal L}_a(b)\)</span> into the form <span class="math inline">\(p(b {\ |\!\!|\  } a)\)</span>. The formula for doing the conversion is called “<strong>Bayes’ Rule</strong>.”</p>
+<p>The form of Bayes’ rule appropriate to the coma patient allows her to calculate the probability of it being any given month from the likelihoods. We also need to account for February, with only 28 days, being shorter than the other months. So we will define a probability function, <span class="math inline">\(p(\text{month}) = \frac{\text{number of days in month}}{365}\)</span></p>
+<div class="column-page-right">
+<p><strong>Bayes’ Rule</strong> <span class="math display">\[p(\text{month} {\ |\!\!|\  } \text{snow}) = \frac{{\cal L}_\text{snow}(\text{month}) \cdot p(\text{month})}{{\cal L}_\text{snow}(\text{Jan}) \cdot p(\text{Jan}) +
+  {\cal L}_\text{snow}(\text{Feb}) \cdot p(\text{Feb}) + \cdots +
+  {\cal L}_\text{snow}(\text{Dec}) \cdot p(\text{Dec})}\]</span></p>
+</div>
+</section>
+<section id="sec-bayes-rule" class="level2">
+<h2 class="anchored" data-anchor-id="sec-bayes-rule">How serious is it, Doc?</h2>
+<p>Imagine a patient getting a <span class="math inline">\(\mathbb{P}\)</span> test result and wondering what the probability is of his having condition C. That is, he wants to know <span class="math inline">\(p(C {\ |\!\!|\  } \mathbb{P})\)</span>. This is equivalent to asking, “How serious is it, Doc?”</p>
+<p>The doctor could point to <a href="#fig-divided-by-condition4">Figure&nbsp;<span>35.2</span></a> as her answer. That figure was generated by creating a population with the relevant prevalence, using the sensitivity and specificity to determine the fraction of the C and H groups with <span class="math inline">\(\mathbb{P}\)</span> or <span class="math inline">\(\mathbb{H}\)</span> respectively, the <em>re-organizing</em> into new groups: the <span class="math inline">\(\mathbb{P}\)</span> group and the <span class="math inline">\(\mathbb{H}\)</span> group.</p>
+<p>Alternatively, we can do the calculation in the same way we did for the coma patient seeing snow. There, the observation of snow was the clue. Now, the test result <span class="math inline">\(\mathbb{P}\)</span> is the clue. One of the relevant likelihoods to interpret <span class="math inline">\(\mathbb{P}\)</span> is <span class="math inline">\({\cal L}_{\mathbb{P}}(C)\)</span>: the likelihood for a person who genuinely has condition C of getting a <span class="math inline">\(\mathbb{P}\)</span> result. Of course, this is just another way of writing the sensitivity.</p>
+<p>Similarly, the specificity is <span class="math inline">\({\cal L}_{\mathbb{H}}(H)\)</span>. But since our person got a <span class="math inline">\(\mathbb{P}\)</span> result, the likelihood <span class="math inline">\({\cal L}_{\mathbb{H}}(H)\)</span> is not directly relevant. (It would be relevant only to a person with a <span class="math inline">\(\mathbb{H}\)</span> result.) Fortunately, there is a simple relationship between <span class="math inline">\({\cal L}_{\mathbb{P}}(H)\)</span> and <span class="math inline">\({\cal L}_{\mathbb{H}}(H)\)</span>. If we know the probability of an H person getting a <span class="math inline">\(\mathbb{H}\)</span> result we can figure out the probability of an H person getting a <span class="math inline">\(\mathbb{P}\)</span> result. <span class="math display">\[{\cal L}_{\mathbb{P}}(H) = 1 - {\cal L}_{\mathbb{H}}(H)\]</span></p>
+<p>Bayes’ Rule for the person with a <span class="math inline">\(\mathbb{P}\)</span> result is</p>
+<p><span class="math display">\[p(C{\ |\!\!|\  } \mathbb{P}) = \frac{{\cal L}_{\mathbb{P}}(C) \cdot p(C)}{{\cal L}_{\mathbb{P}}(C) \cdot p(C) + {\cal L}_{\mathbb{P}}(H) \cdot p(H)}\]</span></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Calculating <span class="math inline">\(p(C{\ |\!\!|\  } \mathbb{P})\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that <span class="math inline">\(p(C) = 1\%\)</span> for this age of patient. (Consequently, <span class="math inline">\(p(H) = 99\%\)</span>.) And imagine that the test taken by the patient has a threshold score of 1. From <a href="Reading-notes-lesson-34.html#fig-fraction-correct">Figure&nbsp;<span>34.7</span></a> we can look up the sensitivity (<span class="math inline">\({\cal L}_{\mathbb{P}}(C) = 0.95\)</span>) and specificity (<span class="math inline">\({\cal L}_{\mathbb{P}}(H) = 0.50)\)</span> for the test. Substituting these numerical values into Bayes’ Rule gives</p>
+<p><span class="math display">\[p(C {\ |\!\!|\  } \mathbb{P}) = \frac{0.95\times 0.01}{0.95\times 0.01 + 0.50*0.99} = 1.9\%\]</span> The <span class="math inline">\(\mathbb{P}\)</span> result has changed the probability that the patient has C from 1% to 1.9%. That’s big proportionally, but not so big in absolute terms.</p>
+</div>
+</div>
+<p>The advantage of the Bayes’ Rule form of the calculation over the <span class="math inline">\(\mathbb{P}\)</span> group in <a href="#fig-divided-by-condition4">Figure&nbsp;<span>35.2</span></a> is that it is very easy to do the Bayes’ Rule calculation for any value of prevalence <span class="math inline">\(p(C)\)</span>. Why would we be interested in doing this?</p>
+<p>Typically the prevalence of a condition is different for different groups in the population. For example, for an 80-year-old with a family history of C the prevalence might be 20% rather than the 1% that applied to the patient in the previous example. For the 80-year-old, the probability of having C given a <span class="math inline">\(\mathbb{P}\)</span> result is substantially different from the 1.9% found in the example:</p>
+<p><span class="math display">\[p(C {\ |\!\!|\  } \mathbb{P}) = \frac{0.95\times 0.2}{0.95\times 0.2 + 0.50*0.8} = 32\%\]</span></p>
+</section>
+<section id="screening-tests" class="level2">
+<h2 class="anchored" data-anchor-id="screening-tests">Screening tests</h2>
+<p>The reliability of a <span class="math inline">\(\mathbb{P}\)</span> result differs depending on the prevalence of C. A consequence of this is that medical screening tests are recommended for one group of people but not for another.</p>
+<p>For instance, the US Preventative Services Task Force (USPSTF) issues recommendations about a variety of medical screening tests. According to the Centers for Disease Control (CDC) summary:</p>
+<blockquote class="blockquote">
+<p><em>The USPSTF recommends that women who are 50 to 74 years old and are at average risk for breast cancer get a mammogram every two years. Women who are 40 to 49 years old should talk to their doctor or other health care provider about when to start and how often to get a mammogram.</em></p>
+</blockquote>
+<p>Recommendations such as this can be baffling. Why recommend mammograms only for people 50 to 74? Why not for older women as well? And how come women 40-49 are only told to “talk to their doctor?”</p>
+<p>The CDC summary needs decoding. For instance, the “talk to [your] doctor” recommendation really means, “We don’t think a mammogram is useful to you, but we’re not going to say that straight out because you’ll think we are denying you something. We’ll let your doctor take the heat, although typically if you ask for a mammogram, your doctor will order one for you. If you are a woman younger than 40, a mammogram is even less likely to give a useful result, so unlikely that we won’t even hint you should talk to a doctor.”</p>
+<p>The reason mammograms are not recommended for women 40-49 is that the prevalence for breast cancer is much lower in that group of people than in the 50-74 group. The prevalence of breast cancer is even lower in women younger than 40.</p>
+<p>So what about women 75+? The prevalence of breast cancer is high in this group, but at that age, non-treatment is likely to be the most sensible option. Cancers can take a long while to develop from the stage identified on a mammogram, and at age 75+ it’s not likely to be the cause of eventual death.</p>
+<p>The <a href="https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/breast-cancer-screening">USPSTF web site</a> goes into some detail about the reasoning for their recommendations. It’s worthwhile reading to see what considerations went into their decision-making process.</p>
+<section id="the-loss-function" class="level3">
+<h3 class="anchored" data-anchor-id="the-loss-function">The Loss Function</h3>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+In Draft
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>NEED TO FIX THIS. The prevalence wasn’t included in the calculation.</p>
+</div>
+</div>
+<p>In order to set the threshold at an optimal level, it is important to measure the impact of the positive or negative test result. This impact of course will depend on whether the test is right or wrong about the person’s true condition. It is conventional to measure the impact as a “<strong>loss</strong>,” that is, the amount of harm that is done.</p>
+<p>If the test result is right, there’s no loss. Of course, it’s not nice that a person is C, but a <span class="math inline">\(\mathbb{P}\)</span> test result will steer our actions to treat the condition appropriately: no loss in that.</p>
+<p>Typically, the loss stemming from a false negative is reckoned as more than the loss of a false positive. A false negative will lead to failure to treat the person for a condition that he or she actually has.</p>
+<p>In contrast, a false-positive will lead to unnecessary treatment. This also is a loss that includes several components that would have been avoided if the test result had been right. The cost of the treatment itself is one part of the loss. The harm that a treatment might do is another part of the loss. And the anxiety that the person and his or her family go through is still another part of the loss. These losses are not necessarily small. The woman who gets a false positive breast-cancer diagnosis will suffer from the effects of chemotherapy and the loss of breast tissue. The man who gets a false-positive prostate-cancer diagnosis may end up with urinary incontinence and impotence.</p>
+<p>The aim in setting the threshold is to minimize the total loss. This will be the loss incurred due to false negative times the number of false negatives plus the loss incurred from a false positive times the number of false positives.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Demonstration: Setting the optimal threshold
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In <a href="Reading-notes-lesson-34.html">Lesson&nbsp;<span>34</span></a>, we saw that the threshold for transforming a raw test score into a <span class="math inline">\(\mathbb{P}\)</span> or <span class="math inline">\(\mathbb{H}\)</span> result determined the sensitivity and specificity of the test. (See <a href="Reading-notes-lesson-34.html#fig-fraction-correct">Figure&nbsp;<span>34.7</span></a>.) Of course, its best if both sensitivity and specificity are as high as possible, but there is a trade-off between the two: increasing sensitivity by lowering the threshold will decrease specificity. Likewise, raising the threshold will improve specificity but lower sensitivity.</p>
+<p>The “<strong>loss function</strong>” provides a way to set an optimal value for the threshold. It is a function, because the loss depends on whether the test result is a false-positive or a false-negative.</p>
+<p>Suppose that the</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-optimizing-threshold" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Reading-notes-lesson-35_files/figure-html/fig-optimizing-threshold-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;35.4: Total loss as a function of test threshold for the test shown in <a href="Reading-notes-lesson-34.html#fig-fraction-correct">Figure&nbsp;<span>34.7</span></a>. In the blue curve, a false-negative is 3 times more costly than a false-positive. In the orange curve they are equally costly. In the red curve, a false-positive is 10 times more costly than a false-negative.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Reading-notes-lesson-34.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Constructing a classifier</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Reading-notes-lesson-36.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Hypothesis testing</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
