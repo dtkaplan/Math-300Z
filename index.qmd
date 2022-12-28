@@ -7,17 +7,93 @@ format:
     theme: cosmo
 ---
 
-Math 300Z is a proposed revision to Math 300 that will be taught for the first time in Spring 2023. The revisions apply only to Lessons 19 and up; the first 18 lessons will come from Math 300.
+```{r echo=FALSE}
+lesson_links <- function(daynum) {
+  glue::glue("[Reading](Textbook/Reading-notes-lesson-{daynum}.html) :  [Student notes](Student-notes/Student-notes-lesson-{daynum}.html)")
+}
 
-* Course textbook: [*Lessons in Statistical Thinking*](Textbook/index.html)
-
-* R Software package: `math300` can be installed with 
-
-::: {.callout-warning}
-## Need to test this 
-
-```r
-remotes::install_github("dtkaplan/Math-300R/_Package")
 ```
 
-:::
+Math 300Z is a proposed revision to Math 300 that will be taught for the first time in Spring 2023. The revisions apply only to Lessons 19 and up; the first 18 lessons will come from Math 300.
+
+## Course textbooks
+
+Both Math 300 and Math 300Z will start with Chapters 1 through 6 of [*Statistical Inference via Data Science*](https://moderndive.com/1-getting-started.html).
+
+For the second half of the semester, Math 300Z continues with [*Lessons in Statistical Thinking*](Textbook/index.html). Math 300, continues with Chapter 7 through 11 of [*Statistical Inference via Data Science*](https://moderndive.com/7-sampling.html)
+
+<a href="https://moderndive.com/1-getting-started.html"><img src="www/modern-dive-cover.png" width="20%"></a> | |
+<a href="Textbook/index.htm"><img src="www/signac-thumbnail2.png" width="26%"></a>
+
+Both textbooks are available free online.
+
+## Software 
+
+```r
+install.packages(c("mosaic", "ggplot", "dplyr", "openintro", "moderndive", "nycflights13", "knitr"))
+# addition package for Math 300Z
+remotes::install_github("dtkaplan/math300")
+```
+
+## Day-by-day schedule
+
+**Data, graphics, wrangling**
+
+Reading: SIDS Chapters 1 through 4
+
+1. Data with R 
+2. Scatterplots
+3. Linegraphs, histograms, facets
+4. Boxplots and barcharts
+5. filter and summarize
+6. group_by, mutate, arrange
+7. join, select, rename, & top n
+8. Importing data
+9. Case study/review
+10. GR1 (chapters 1-4)
+
+**Regression** 
+
+Readings 
+11. SLR: Continuous x
+12. SLR: Discrete x
+13. SLR: Related topics
+14. Multiple regression: Numerical & discrete
+15. Multiple regression: Two numerical
+16. Multiple regression: Related topics
+17. Multiple regression: Conclusion/review
+18. GR 2 (chapters 5-6)
+
+
+
+## Math 300Z continues with 
+
+- [A note on computing summaries of data](Student-notes/Student-notes-computing-summaries.html)
+
+**Variation**
+
+19. Statistical thinking `r lesson_links(19)`
+20. Simulating variation `r lesson_links(20)`
+21. Signal and noise `r lesson_links(21)`
+22. Sampling variation `r lesson_links(22)`
+23. Confidence intervals from a single sample `r lesson_links(23)`
+24. Effect size `r lesson_links(24)`
+25. Mechanics of prediction `r lesson_links(25)`
+26. Constructing a prediction interval `r lesson_links(26)`
+27. GR 3 (Lessons 19-26) 
+
+**Inference**
+
+28. Covariates `r lesson_links(28)`
+29. Covariates eat variance `r lesson_links(29)`
+30. Confounding `r lesson_links(30)`
+31. Spurious correlation `r lesson_links(31)`
+32. Experiment and random assignment `r lesson_links(32)`
+33. Measuring and accumulating risk `r lesson_links(33)`
+34. Constructing a classifier `r lesson_links(34)`
+35. Accounting for prevalence `r lesson_links(35)`
+36. Hypothesis testing `r lesson_links(36)`
+37. Calculating a p-value `r lesson_links(37)`
+38. False discovery with hypothesis testing `r lesson_links(38)`
+39. GR 4 (lessons 28-38) 
+40. Review 

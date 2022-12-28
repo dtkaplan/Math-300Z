@@ -78,7 +78,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Spring 2023 Math 300Z</span>
+    <span class="navbar-title">Math 300Z</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -92,23 +92,15 @@ ul.task-list li input[type="checkbox"] {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./index.html">
- <span class="menu-text">Proposal</span></a>
+ <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./lessons.html">
- <span class="menu-text">Lessons</span></a>
+    <a class="nav-link" href="./student-notes.html">
+ <span class="menu-text">Student notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./layout.html">
- <span class="menu-text">Site layout</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="./objective-list.html" aria-current="page">
- <span class="menu-text">Objectives</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./LC-list.html">
- <span class="menu-text">LCs</span></a>
+    <a class="nav-link" href="./faculty-notes.html">
+ <span class="menu-text">Faculty notes</span></a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -143,37 +135,50 @@ ul.task-list li input[type="checkbox"] {
 
 <p>This list is assembled from the individual-lesson files in the Objectives/ directory. Make any changes in that directory.</p>
 <hr>
-<p>19.1 Distinguish between the two settings for decision-making:</p>
-<ol type="a">
-<li><strong>Prediction</strong>: predict an outcome for an individual</li>
-<li><strong>Relationship</strong>: characterize a relationship with an eye toward intervention or a better understanding of how a mechanism works.</li>
-</ol>
-<p>19.2 Given a research question, identify whether it corresponds to a prediction setting or a relationship setting.</p>
+<p>19.1 Use the <em>response vs.&nbsp;explanatory</em> (<strong>RESPEX</strong>) format for data graphics, employing jittering as appropriate. Display density distributions using a violin graphic.</p>
+<p>19.2 Use the <em>variance</em> to measure the amount of variation in a quantitative variable. a. Convert a <em>variance</em> into the corresponding <em>standard deviation</em>. b. Properly display a standard deviation on a RESPEX-format graph.</p>
+<p>19.3 Compute, interpret, and display the <em>fitted model values</em> and the <em>residuals</em>.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+In DRAFT: “Fitted model values”
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Make sure this appears in the text. Also, RESPEX.</p>
+</div>
+</div>
+<p>19.4 Generate graphics and models using zero-one encoding of a categorical response variable. Interpret the output of such models.</p>
 <hr>
-<p>20.1. Understand that gaming is a way of improving our skills and identifying potential opportunities and problems.</p>
-<p>20.2 Characterize the “size” of a variable or of random noise using variance (or, equivalently, “standard deviation”).</p>
-<p>20.3 Distinguish between a sample, a summary of a sample, and a sample of summaries of samples.</p>
+<p>20.1 Construct sampling trials from a data frame or a simulation.</p>
+<p>20.2 Replicate sampling trials and calculate the amount of sampling variability.</p>
+<p>20.3 Recognize properties of directed, acyclic graphs (DAGs).</p>
 <hr>
-<p>21.1 Determine whether a proposed graph is directed and acyclic.</p>
-<p>21.2 Having selected a response and one or more explanatory variables, identify other DAG nodes as covariates.</p>
-<p>21.3 Generate data from simulations and use the data to model the relationships.</p>
+<p>21.1 Use model training to separate signal from noise in a response variable.</p>
+<p>21.2 Recognize that the same training data will show a different signal depending on what model specification is used.</p>
 <hr>
-<p>22.1 Implement on the computer a procedure to generate a sample, calculate a regression model, and produce a summary.</p>
-<p>22.2 Iterate the procedure and collect the summaries across iterations. This collection is called the “sampling distribution.”</p>
-<p>22.3 Graphically display the distribution of summaries and generate a compact numerical description of the sampling distribution.</p>
+<p>22.1 Describe the logical origin of sampling variation as the variation between multiple samples from the same source.</p>
+<p>22.2 Recognize the several formats in which we describe sampling variation—sampling variance, standard error, margin of error, confidence interval—and show how they are related.</p>
+<p>22.3 Identify how sampling variance scales with sample size <span class="math inline">\(n\)</span> and use this to estimate—given a single sample—how large the sampling variation would be in a sample of a different size.</p>
 <hr>
-<p>23.1 Use bootstrapping to estimate sampling variation.</p>
-<p>23.2 Infer sampling variation from a regression table: “standard error” of a model coefficient.</p>
-<p>23.3 Construct and interpret confidence intervals on a model coefficient and relate the interval to the sampling distribution.</p>
-<p>23.4. Understand and use scaling of confidence interval length as a function of <span class="math inline">\(n\)</span>.</p>
+<p>23.1 Construct and interpret confidence intervals on model coefficients and relate the intervals to the sampling distribution.</p>
+<p>23.2 Recognize that confidence intervals are only about sampling variation. They do not measure or summarize bias.</p>
 <hr>
-<p>24.1 Estimate an effect size from a regression model of one and two variables.</p>
-<p>24.2 Construct a confidence interval on the effect size.</p>
-<p>24.3. Gaming: Evaluate whether confidence interval indicates that estimated effect size is consistent with simulation.</p>
+<p>24.1 Calculate the effect size <em>with respect to</em> a specified variable from regression models of one and multiple variables.</p>
+<p>24.2 State the units of an effect size given the units of the input and output of the model.</p>
+<p>24.3 Be able to hold a covariate “constant” in the calculation of effect size.</p>
 <hr>
-<p>25.1 Given a sample from a DAG simulation, construct a predictor function for a specified response variable.</p>
-<p>25.2 Use the predictor function to estimate prediction error on a given DAG sample and summarize with root mean square (RMS) error.</p>
+<p>25.1 Given a data frame, construct a predictor function for a specified response variable.</p>
+<p>25.2 Use the predictor function to estimate prediction error and summarize with root mean square (RMS) error. Relate this to a prediction interval.</p>
 <p>25.3 Distinguish between in-sample and out-of-sample prediction estimates of prediction error.</p>
+<p>25.4 Distinguish between the two settings for decision-making:</p>
+<pre><code>a. **Prediction**: predict an outcome for an individual
+b. **Relationship**: characterize a relationship with an eye toward intervention or a better understanding of how a mechanism works.
+
+Given a research question, identify whether it corresponds to a prediction setting or a relationship setting.</code></pre>
 <hr>
 <p>26.1 In evaluating a model function, generate a prediction interval.</p>
 <p>26.2 Interpret prediction bands as a series of intervals, one for each value of the model input.</p>
@@ -182,11 +187,11 @@ ul.task-list li input[type="checkbox"] {
 <p>This is a QR day.</p>
 <hr>
 <p>28.1 Read a DAG to determine which covariates to include in a model to reduce (out-of-sample) prediction error.</p>
-<p>28.2 Calculate amount of in-sample mean square error reduction to be expected with a useless (random) covariate. (Residual sum of squares divided by residual degrees of freedom.)</p>
 <hr>
 <p>29.1 Correctly define “covariate”.</p>
 <p>29.2 Understand why including covariates—even spurious ones—always improves the appearance of model performance in in-sample testing.</p>
 <p>29.3 Read a DAG to anticipate when using spurious covariates will improve or will worsen model performance on out-of-sample prediction.</p>
+<p>29.4 Calculate amount of in-sample mean square error reduction to be expected with a useless (random) covariate. (Residual sum of squares divided by residual degrees of freedom.)</p>
 <hr>
 <p>30.1 Identify confounding in a DAG</p>
 <p>30.2 Choose whether to include covariate depending on form of DAG</p>

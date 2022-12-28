@@ -1,0 +1,81 @@
+---
+title: "Math 300R NTI Lesson `r (lesson <- 24)`"
+subtitle: "Effect size"
+author: "Prof. Danny Kaplan"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+    css: NTI.css
+  pdf_document:
+    toc: yes
+---
+
+
+```{r setup24, include=FALSE}
+source("../_startup.R")
+```
+
+::: {.callout-warning}
+## In draft: a good illustration of interactions
+
+This can be an example, perhaps in the reading notes.
+
+```{r}
+library(splines)
+mod <- lm(time ~ ns(distance,4)*climb*sex, data = Hill_racing)
+# model_plot(mod,  x=distance, color=sex, facet=climb)
+```
+
+At higher climbs, the effect size of distance depends on sex, but not at lower climbs.
+
+Ask them to calculate the effect size of sex at specific distances and climbs.
+
+:::
+
+
+## Objectives
+
+```{r child=Obj_file(lesson)}
+```
+
+## Reading
+
+TBD
+
+
+## Lesson
+
+:::: {.callout-note icon=false}
+## In-class example
+
+```{r}
+3 + 2
+```
+::::
+
+
+:::: {.callout-important icon=false}
+## In-class activity
+
+```{r}
+date()
+```
+::::
+
+This is just a template.
+
+## Learning Checks
+
+```{r child=LC_file(lesson)}
+```
+
+
+## Documenting software
+
+  * File creation date: `r Sys.Date()`
+  * `r R.version.string`
+  * `tidyverse` package version: `r packageVersion("tidyverse")`
+

@@ -22,6 +22,28 @@ Here, the age trend for women is an increase in `net` running time of 16 seconds
 There are good reasons why `lm()` organizes summaries the way it does. The `lm()` paradigm can make much more efficient use of data than `group_by()`. It also offers much more flexibility. `lm()` can handle multiple "grouping" variables together and even lets you "group" by quantitative variables.
 
 
+
+## For the statistically experienced reader
+
+**Warning!** This box contains mathematical formulas that are **not needed for the course**. The formulas might interest mathematically inclined statistics instructors, but others can skip this material.
+
+The algorithm for the variance described previously is not used by any statistical software package; there are much faster ways to arrive at the result. One way to see this is to compare the traditional formula for the variance to the formula version of the above algorithm:
+
+$$\underbrace{\frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2}_\text{traditional} \ \ \text{versus} \ \ \underbrace{\frac{1}{2n} \sum_{i=1}^n \left[\frac{1}{n-1}\sum_{j\neq i} (x_i - x_j)^2\right]}_\text{our algorithm}$$
+The inefficiency of the algorithm stems from the double sum. The advantage of the algorithm is conceptual and two-fold:
+
+i. The $n-1$ in the formula for the variance comes from the $j \neq i$ in the inner sum. Why not $\sum_j=1^n$? Because that would put $n$ zeros on the roll and bias the result downward. We want to average the square distance between each value and *every other value*.
+
+ii. There is no need to introduce the mean $\bar{x}$ of the values. Of course, $\bar{x}$ is easy and fast to calculate, so there is no numerical reason to avoid using it in the calculation. There is, however, a philosophical reason based on Stephen J. Gould's observation, quoted at the start of this Lesson: "Variation is the hard reality. Means are the abstractions." 
+
+The usual definition given for the variance uses the mean as the reference point for calculating deviations. This use imbues the mean with an unjustified veneer of reality. The pairwise square difference algorithm demonstrates that the mean is not needed to calculate the variance; it is just, as Gould says, a mathematical abstraction.
+
+There is a factor $\frac{1}{2}$ in the formula for the variance based on the pairwise square-differences. The $\frac{1}{2}$  may seem inelegant to some readers. Stripping out the $\frac{1}{2}$, the quantity has a name dating from at least 1885: the **modulus**. Writing the modulus as $c = 2 s^2$ makes the formula for the gaussian function cleaner than the formula usually given:
+
+$$\underbrace{\frac{1}{\sqrt{2 \pi s^2}} \exp\left[-\frac{(x-m)^2}{2s^2}\right]}_\text{using standard deviation}\ \ \text{vs}\ \ \ \underbrace{\frac{1}{\sqrt{\pi c^2}} \exp\left[-\frac{(x-m)^2}{c^2}\right]}_\text{using modulus}$$
+In mathematical and scientific nomenclature, "modulus" is roughly synonymous with "size." For example, in algebra, $\left|x\right|$ is the modulus of $x$. "Modulus" is less off-putting than "standard deviation" and less redolent of the unfortunate early ties between statistics and eugenics. Looking back, perhaps "modulus" would have been the better choice for parameterizing the gaussian.
+
+
 ---------
 
 
@@ -97,6 +119,93 @@ gridExtra::grid.arrange(Plot2, Plot3, ncol=2)
 @fig-gestation-confidence-interval address a different question than @fig-gestation-prediction-interval. From the perspective of an individual mother seeking to plan for her pregnancy, @fig-gestation-prediction-interval is relevant and gives a clear message: "Don't plan differently for your second pregancy than your first." In contrast, @fig-gestation-confidence-interval is about comparing two *groups* of mothers, not comparing a mother from each group.
 
 Understanding the difference between questions (b) and (c) is not easy going for a person new to statistical thinking. Typically, research journals look for answers to (c), but this is not always relevant to (b). It will take some time before we can start to think clearly about whether the data presented in @fig-lena-two-graphs points to effects that "could last a lifetime." 
+
+## Lesson 20
+
+## Measuring variation {#sec-size-of-variable}
+
+A data frame records observations. In a properly constructed data frame, each row holds the observations from one "unit of observation." Each column stores the values of one "variable," one type of observation. The "unit of observation" might be a winner in a Scottish Hill race (`Hill_racing`), it might be a pregnancy and the resulting birth (`Gestation`), it might be a nurse participating in a survey (`Whickham`), or any of an infinite range of things. All the rows of a data frame record the same kind of unit of analysis.
+
+Similarly, within a variable, all the recorded observations have the same type denominated in the same units: an age in years, a distance in kilometers, a price in dollars, or whatever.
+
+Although the unit of observation is the same *type* in every row, the units themselves can differ from one another. Consequently, the values recorded in a variable can differ; they are not all the same: they vary. The words "variable" and "variation" go hand in hand: a variable displays variation.^[A potential source of confusion is the unfortunate use of the word "variable" in algebra to mean a symbol, like $x$, that represents a quantity symbolically.]
+
+Statistical models decompose the response variable into components. Each component is associated with one or more explanatory variables, with one exception. The remaining component, called the "residual," represents the part of the variation that is still unexplained. In order to make sure that we are not double-counting or omitting variation, it helps to measure the **size** of variation in each component.
+
+There are many possible ways to measure the "size." ^[The *OpenIntro* text introduced the standard deviation in [Chapter 3](https://moderndive.com/3-wrangling.html), where the authors described it as a measure of "spread." In Chapter 6, *OpenIntro* introduced the variance as the square of the variance. All this is right, so far as it goes, but it dramatically understates the importance of the two measures. These measures are as crucial to statistical thinking as the Pythagorean Theorem is to geometry.] In these Lessons, we will use a standard measure with an awkward name: the "**standard deviation**." In practice, however, we will work mainly with the *square of the standard deviation*, called the "**variance**." 
+
+Both variance and standard deviation are **quantities**, that is, a single number with associated units. The standard deviation of any variable has units that are the same as the variable itself. For instance, height is often denominated in cm. Therefore, the standard deviation of height, as it varies from person to person, will also be in cm.
+
+Since the variance is the square of the standard deviation, variance has units of the square of the units of the variable. So the variance of height, for instance, will be measured in cm^2^. 
+
+Remember that variance and standard deviation are *summaries* of a variable. A variable in a data frame consists of multiple values, one for each row. The variance (or standard deviation) of that variable is a single number (with units), summarizing all of the values in the variable. 
+
+::: {.callout-note}
+## Why the variance?
+The name "variance" is a good reminder of what it measures: the variation.
+
+But why use a squared measure? 
+
+Consider this familiar equation: $A^2 + B^2 = C^2$. The Pythagorean Theorem states that the equation describes the lengths of the sides of a right triangle: $C$ is the hypotenuse, while $A$ and $B$ are the other two sides of the triangle. Surprisingly, the Pythagorean Theorem is highly relevant to statistical models. 
+
+*OpenIntro* chapters 5 & 6 point out that the linear modeling technique produces two columns of numbers: the **fitted values** and the **residuals**. These columns have the same number of rows as the data frame used for training. The residuals are the row-by-row numerical *difference* between the response variable and the fitted values. 
+
+These three columns of numbers---the response variable, the fitted model values, and the residuals---are exactly analogous to the three sides of a right triangle. (This is not an obvious fact, but it is important to remember.) In particular, the following numerical relationship is as true for linear models as it is for triangles:
+$$\text{sd(fitted)}^2 + \text{sd(residuals)}^2 = \text{sd(response)}^2$$ where sd() refers to the standard deviation. Consequently, sd()^2^ is the variance.
+
+The particular mathematical definition of variance and the standard deviation makes the Pythagorean relationship always describe models constructed using the `lm()` technique. (One of the names used for this technique, **least squares**, provides a hint that the Pythagorean relationship applies.)
+:::
+
+
+
+::: {.callout-note}
+## Calculating variance
+
+Almost always, people use software for calculations. The relevant R functions are `sd()` and `var()` and are used in a `summarize()` statement, for instance
+
+```{r class.output="column_margin"}
+mtcars %>% summarize(v = var(hp))
+mtcars %>% summarize(s = sd(hp))
+```
+Regrettably, the software does not indicate the units of the quantity. For that, read the documentation for the data frame.
+:::
+
+To understand *what* is being calculated by `var()`, we will describe an algorithm. This algorithm is not numerically efficient, but it highlights the essential feature of variation.
+
+Starting material: 
+
+- A single column of numbers created by pulling out from the data frame the variable whose variance is to be calculated. 
+
+- A long roll of paper on which to write numbers, one after the other.
+
+Repeat a basic calculation for each and every row in the column of numbers. To illustrate, let us detail the basic calculation for the k^th^ row. 
+
+i. Take the data value from the k^th^ row, and call it the "reference value."  
+
+ii. Subtract the reference value from each and every other value in the column and *square* the results. 
+
+iii. Write those numbers, all of them, on the roll.
+
+Using the same roll of paper for all, carry out the basic calculation starting at each row in the data column. With this done, the paper roll contains many numbers, each of which is the square difference between the values from two rows in the data column. The mathematically inclined might like to know that there will be exactly $n(n-1)$ numbers written on the roll. (The term $n-1$ in that count might perk up the ears of statistics instructors.) 
+
+The final result---the variance---will be half the average of the numbers on the roll. 
+
+::: {.callout-note}
+## Deconstructing "standard deviation"
+
+"Standard deviation" is an antique term and is misleading to people who think about "deviation" in the ordinary sense. Nonetheless, "standard deviation" is so widely used in statistics that we can hardly avoid it. To limit the confusion, we will deconstruct the term. 
+
+Step 1 in the deconstruction makes clear what "standard" means:
+
+> standard deviation $=$ accepted *measure of* deviation.
+
+
+Step 2 in the deconstruction replaces the archaic word "deviation" with something more descriptive:
+
+> standard deviation $=$ accepted *measure of* variation in the variable.
+:::
+
+
 
 ---------
 

@@ -167,7 +167,7 @@ SE <- tibble::tribble(
   6400, 0.023,
   25000, 0.011,
   100000, 0.0056
-) %>% mutate(samping_variance = se^2)
+) %>% mutate(samping_variance = standard_error^2)
 ```
 
 

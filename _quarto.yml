@@ -5,20 +5,17 @@ project:
 website:
   title: "Spring 2023 Math 300Z"
   navbar:
+    title: "Math 300Z"
     background: primary
     left:
       - href: Textbook/index.html
         text: Textbook
       - href: index.qmd
-        text: Proposal
-      - href: lessons.qmd
-        text: Lessons
-      - href: layout.qmd
-        text: Site layout
-      - href: objective-list.qmd
-        text: Objectives
-      - href: LC-list.qmd
-        text: LCs
+        text: Home
+      - href: student-notes.qmd
+        text: "Student notes"
+      - href: faculty-notes.qmd
+        text: "Faculty notes"
 format:
   html:
     theme: cosmo

@@ -142,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Spring 2023 Math 300Z</span>
+    <span class="navbar-title">Math 300Z</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -156,23 +156,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../index.html">
- <span class="menu-text">Proposal</span></a>
+ <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../lessons.html">
- <span class="menu-text">Lessons</span></a>
+    <a class="nav-link" href="../student-notes.html">
+ <span class="menu-text">Student notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../layout.html">
- <span class="menu-text">Site layout</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../objective-list.html">
- <span class="menu-text">Objectives</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../LC-list.html">
- <span class="menu-text">LCs</span></a>
+    <a class="nav-link" href="../faculty-notes.html">
+ <span class="menu-text">Faculty notes</span></a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -344,11 +336,11 @@ y ~ 1.5 * x + 4 + exo()</code></pre>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(mod2<span class="fl">.2</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">var</span>(.response), <span class="fu">var</span>(.output), <span class="fu">var</span>(.resid))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Using training data as input.</code></pre>
+<pre><code>Using training data as input to model_eval().</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  var(.response) var(.output) var(.resid)
-1       3.252855     2.246142    1.006713</code></pre>
+1       3.010932     2.126415   0.8845164</code></pre>
 </div>
 </div>
 <p>How much variance did the specification <code>y ~ x</code> assign to the signal and how much to the noise?</p>

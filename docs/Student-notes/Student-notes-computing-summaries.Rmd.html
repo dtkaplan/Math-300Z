@@ -8,7 +8,7 @@
 
 <meta name="author" content="Daniel Kaplan">
 
-<title>Spring 2023 Math 300 Revisions - Computing summaries of data</title>
+<title>Spring 2023 Math 300Z - Computing summaries of data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -122,12 +122,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+</head><body class="nav-fixed fullcontent"><span class="math inline" style="display: none;">
+\(\newcommand{\Ptest}{\mathbb{P}}
+\newcommand{\Ntest}{\mathbb{N}}
+\newcommand{\given}{\ |\!\!|\  }
+\)
+</span>
 
 
 <link rel="stylesheet" href="../styles.css">
-</head>
 
-<body class="nav-fixed fullcontent">
+
+
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -135,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Spring 2023 Math 300 Revisions</span>
+    <span class="navbar-title">Math 300Z</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -144,24 +150,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
+    <a class="nav-link" href="../Textbook/index.html">
+ <span class="menu-text">Textbook</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../index.html">
- <span class="menu-text">Proposal</span></a>
+ <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../lessons.html">
- <span class="menu-text">Lessons</span></a>
+    <a class="nav-link" href="../student-notes.html">
+ <span class="menu-text">Student notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../layout.html">
- <span class="menu-text">Site layout</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../objective-list.html">
- <span class="menu-text">Objectives</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../LC-list.html">
- <span class="menu-text">LCs</span></a>
+    <a class="nav-link" href="../faculty-notes.html">
+ <span class="menu-text">Faculty notes</span></a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -204,38 +206,126 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">ave =</span> <span class="fu">mean</span>(net), <span class="at">middle =</span> <span class="fu">median</span>(net), <span class="at">sd =</span> <span class="fu">sd</span>(net), <span class="at">n =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>       ave middle       sd    n
-1 5599.065   5555 969.6564 8636</code></pre>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> ave </th>
+   <th style="text-align:right;"> middle </th>
+   <th style="text-align:right;"> sd </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 5599.065 </td>
+   <td style="text-align:right;"> 5555 </td>
+   <td style="text-align:right;"> 969.6564 </td>
+   <td style="text-align:right;"> 8636 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>Constructing such summaries groupwise is a matter of using the <code>group_by()</code> modifier. Here, we calculate summaries broken down by the state of residence of the participant and arranged from fastest (average) running time downward.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(state) <span class="sc">%&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">ave =</span> <span class="fu">mean</span>(net), <span class="at">middle =</span> <span class="fu">median</span>(net), <span class="at">sd =</span> <span class="fu">sd</span>(net), <span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(ave) <span class="sc">%&gt;%</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 5
-   state       ave middle    sd     n
-   &lt;fct&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
- 1 Australia 2872   2872    NA      1
- 2 Kenya     2934.  2874.  141.    14
- 3 Lithuania 2961   2961    NA      1
- 4 Japan     2992   2992   132.     2
- 5 Colombia  2998   2998    NA      1
- 6 Ethiopia  3185   3185   356.     2
- 7 EN        3251   3251    NA      1
- 8 Ukraine   3256   3256    NA      1
- 9 Russia    3267   3197   272.     3
-10 Romania   3287.  3297   162.     3</code></pre>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(state) <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">ave =</span> <span class="fu">mean</span>(net), <span class="at">middle =</span> <span class="fu">median</span>(net), <span class="at">sd =</span> <span class="fu">sd</span>(net), <span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(ave) <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> state </th>
+   <th style="text-align:right;"> ave </th>
+   <th style="text-align:right;"> middle </th>
+   <th style="text-align:right;"> sd </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Australia </td>
+   <td style="text-align:right;"> 2872.000 </td>
+   <td style="text-align:right;"> 2872.0 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Kenya </td>
+   <td style="text-align:right;"> 2933.786 </td>
+   <td style="text-align:right;"> 2874.5 </td>
+   <td style="text-align:right;"> 141.1612 </td>
+   <td style="text-align:right;"> 14 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Lithuania </td>
+   <td style="text-align:right;"> 2961.000 </td>
+   <td style="text-align:right;"> 2961.0 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Japan </td>
+   <td style="text-align:right;"> 2992.000 </td>
+   <td style="text-align:right;"> 2992.0 </td>
+   <td style="text-align:right;"> 131.5219 </td>
+   <td style="text-align:right;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Colombia </td>
+   <td style="text-align:right;"> 2998.000 </td>
+   <td style="text-align:right;"> 2998.0 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Ethiopia </td>
+   <td style="text-align:right;"> 3185.000 </td>
+   <td style="text-align:right;"> 3185.0 </td>
+   <td style="text-align:right;"> 356.3818 </td>
+   <td style="text-align:right;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> EN </td>
+   <td style="text-align:right;"> 3251.000 </td>
+   <td style="text-align:right;"> 3251.0 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Ukraine </td>
+   <td style="text-align:right;"> 3256.000 </td>
+   <td style="text-align:right;"> 3256.0 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Russia </td>
+   <td style="text-align:right;"> 3267.000 </td>
+   <td style="text-align:right;"> 3197.0 </td>
+   <td style="text-align:right;"> 271.8455 </td>
+   <td style="text-align:right;"> 3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Romania </td>
+   <td style="text-align:right;"> 3287.333 </td>
+   <td style="text-align:right;"> 3297.0 </td>
+   <td style="text-align:right;"> 161.7168 </td>
+   <td style="text-align:right;"> 3 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>Wrangling is essential for many statistical purposes, including making graphical displays, cleaning data, and assembling data that comes from multiple sources.</p>
 <p>In Lessons 11-17, you were introduced to regression modeling. The computing tasks for regression, such as fitting a model with <code>lm()</code>, don’t fit into the wrangling framework. To illustrate:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(net <span class="sc">~</span> age, TenMileRace) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(net <span class="sc">~</span> age, TenMileRace) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -249,72 +339,218 @@ Coefficients:
 <p>Regression produces a summary of a data set, somewhat like <code>summarize()</code>. The output of <code>summarize()</code> is always a data frame. The output of <code>lm()</code> is a different kind of thing, as you can see above. In computing lingo, the “kind of thing” is often called the “object class” or “object type.”</p>
 <p>Perhaps the first thing that’s confusing about the object produced by <code>lm()</code> is that they contain much more than what’s printed out when you display them directly on the screen. The printed output is just a glimpse at the object and, almost always, you use another function to present the content of the object in a way that suits your current need. Let’s informally call such functions “extractors.” Here are examples of a few of the extractors that you will be using in the coming lessons; you are not expected at this point to know what each is doing.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(net <span class="sc">~</span> age, TenMileRace) <span class="sc">%&gt;%</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(net <span class="sc">~</span> age, TenMileRace) <span class="sc">%&gt;%</span> <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)         age 
 5297.219248    8.189886 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(net <span class="sc">~</span> age, TenMileRace) <span class="sc">%&gt;%</span> <span class="fu">rsquared</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(net <span class="sc">~</span> age, TenMileRace) <span class="sc">%&gt;%</span> <span class="fu">rsquared</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.008014284</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(net <span class="sc">~</span> age, TenMileRace) <span class="sc">%&gt;%</span> <span class="fu">regression_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 5
-  term        estimate std.error statistic  p.value
-  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-1 (Intercept)  5297.      37.6      141.   0       
-2 age             8.19     0.981      8.35 7.76e-17</code></pre>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(net <span class="sc">~</span> age, TenMileRace) <span class="sc">%&gt;%</span> <span class="fu">regression_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:right;"> estimate </th>
+   <th style="text-align:right;"> std.error </th>
+   <th style="text-align:right;"> statistic </th>
+   <th style="text-align:right;"> p.value </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 5297.219248 </td>
+   <td style="text-align:right;"> 37.6056330 </td>
+   <td style="text-align:right;"> 140.862387 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age </td>
+   <td style="text-align:right;"> 8.189886 </td>
+   <td style="text-align:right;"> 0.9806007 </td>
+   <td style="text-align:right;"> 8.351907 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+</tbody>
+</table>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(net <span class="sc">~</span> age, TenMileRace) <span class="sc">%&gt;%</span> <span class="fu">model_eval</span>(<span class="at">skeleton=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  age  .output     .lwr     .upr
-1  10 5379.118 3485.069 7273.167
-2  20 5461.017 3567.394 7354.640
-3  30 5542.916 3649.525 7436.307
-4  40 5624.815 3731.460 7518.170
-5  50 5706.714 3813.200 7600.227
-6  60 5788.612 3894.744 7682.480
-7  70 5870.511 3976.094 7764.928
-8  80 5952.410 4057.249 7847.571
-9  90 6034.309 4138.210 7930.408</code></pre>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(net <span class="sc">~</span> age, TenMileRace) <span class="sc">%&gt;%</span> <span class="fu">model_eval</span>(<span class="at">skeleton=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> age </th>
+   <th style="text-align:right;"> .output </th>
+   <th style="text-align:right;"> .lwr </th>
+   <th style="text-align:right;"> .upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 20 </td>
+   <td style="text-align:right;"> 5461.017 </td>
+   <td style="text-align:right;"> 3567.394 </td>
+   <td style="text-align:right;"> 7354.640 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 40 </td>
+   <td style="text-align:right;"> 5624.815 </td>
+   <td style="text-align:right;"> 3731.460 </td>
+   <td style="text-align:right;"> 7518.170 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 60 </td>
+   <td style="text-align:right;"> 5788.612 </td>
+   <td style="text-align:right;"> 3894.744 </td>
+   <td style="text-align:right;"> 7682.480 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 80 </td>
+   <td style="text-align:right;"> 5952.410 </td>
+   <td style="text-align:right;"> 4057.249 </td>
+   <td style="text-align:right;"> 7847.571 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 100 </td>
+   <td style="text-align:right;"> 6116.208 </td>
+   <td style="text-align:right;"> 4218.976 </td>
+   <td style="text-align:right;"> 8013.440 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>Much of what you will be learning in the following Lessons concerns such regression extractors: why what they calculate is useful and how to use it. But let’s return to the command patterns you will be seeing.</p>
 <p>Regression and wrangling are allies. You will use wrangling, especially <code>mutate()</code> and <code>filter()</code> to pre-process data before carrying out the regression. For instance, in studying the relationship between <code>age</code> and <code>net</code> running time, you might want to focus on older people.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age <span class="sc">&gt;</span> <span class="dv">40</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(net <span class="sc">~</span> age, <span class="at">data=</span>.) <span class="sc">%&gt;%</span> <span class="fu">confint</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                2.5 %     97.5 %
-(Intercept) 4014.7081 4541.71744
-age           22.8315   33.43884</code></pre>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(age <span class="sc">&gt;</span> <span class="dv">40</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(net <span class="sc">~</span> age, <span class="at">data=</span>.) <span class="sc">%&gt;%</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:right;"> .lwr </th>
+   <th style="text-align:right;"> .upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 4014.7081 </td>
+   <td style="text-align:right;"> 4541.71744 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age </td>
+   <td style="text-align:right;"> 22.8315 </td>
+   <td style="text-align:right;"> 33.43884 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
-<p>In this example, we’ve used <code>confint()</code> as the extractor, but, depending on our purpose, we might have used any of the others.</p>
+<p>In this example, we’ve used <code>conf_interval()</code> as the extractor, but, depending on our purpose, we might have used any of the others.</p>
 <p>Looking closely at the above command you will notice something new: the <code>data=.</code> argument being used inside <code>lm()</code> . The simple <code>.</code> is doing something important, carrying the output of the earlier stages of the pipeline into the <code>data=</code> argument of <code>lm()</code>.</p>
 <p>The dot (<code>.</code>) has always been available for use when wrangling, but we haven’t needed to use it. For instance, here is an earlier example of a wrangling command translated to use the <code>.</code> notation:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(., state) <span class="sc">%&gt;%</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(., <span class="at">ave =</span> <span class="fu">mean</span>(net), <span class="at">middle =</span> <span class="fu">median</span>(net), <span class="at">sd =</span> <span class="fu">sd</span>(net), <span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(., ave) <span class="sc">%&gt;%</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(., <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 5
-   state       ave middle    sd     n
-   &lt;fct&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;
- 1 Australia 2872   2872    NA      1
- 2 Kenya     2934.  2874.  141.    14
- 3 Lithuania 2961   2961    NA      1
- 4 Japan     2992   2992   132.     2
- 5 Colombia  2998   2998    NA      1
- 6 Ethiopia  3185   3185   356.     2
- 7 EN        3251   3251    NA      1
- 8 Ukraine   3256   3256    NA      1
- 9 Russia    3267   3197   272.     3
-10 Romania   3287.  3297   162.     3</code></pre>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(., state) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(., <span class="at">ave =</span> <span class="fu">mean</span>(net), <span class="at">middle =</span> <span class="fu">median</span>(net), <span class="at">sd =</span> <span class="fu">sd</span>(net), <span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(., ave) <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(., <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> state </th>
+   <th style="text-align:right;"> ave </th>
+   <th style="text-align:right;"> middle </th>
+   <th style="text-align:right;"> sd </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Australia </td>
+   <td style="text-align:right;"> 2872.000 </td>
+   <td style="text-align:right;"> 2872.0 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Kenya </td>
+   <td style="text-align:right;"> 2933.786 </td>
+   <td style="text-align:right;"> 2874.5 </td>
+   <td style="text-align:right;"> 141.1612 </td>
+   <td style="text-align:right;"> 14 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Lithuania </td>
+   <td style="text-align:right;"> 2961.000 </td>
+   <td style="text-align:right;"> 2961.0 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Japan </td>
+   <td style="text-align:right;"> 2992.000 </td>
+   <td style="text-align:right;"> 2992.0 </td>
+   <td style="text-align:right;"> 131.5219 </td>
+   <td style="text-align:right;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Colombia </td>
+   <td style="text-align:right;"> 2998.000 </td>
+   <td style="text-align:right;"> 2998.0 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Ethiopia </td>
+   <td style="text-align:right;"> 3185.000 </td>
+   <td style="text-align:right;"> 3185.0 </td>
+   <td style="text-align:right;"> 356.3818 </td>
+   <td style="text-align:right;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> EN </td>
+   <td style="text-align:right;"> 3251.000 </td>
+   <td style="text-align:right;"> 3251.0 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Ukraine </td>
+   <td style="text-align:right;"> 3256.000 </td>
+   <td style="text-align:right;"> 3256.0 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> 1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Russia </td>
+   <td style="text-align:right;"> 3267.000 </td>
+   <td style="text-align:right;"> 3197.0 </td>
+   <td style="text-align:right;"> 271.8455 </td>
+   <td style="text-align:right;"> 3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Romania </td>
+   <td style="text-align:right;"> 3287.333 </td>
+   <td style="text-align:right;"> 3297.0 </td>
+   <td style="text-align:right;"> 161.7168 </td>
+   <td style="text-align:right;"> 3 </td>
+  </tr>
+</tbody>
+</table>
 </div>
 </div>
 <p>The <code>.</code> always means, use the output of the preceding stages of the pipeline as <em>this argument</em> to the function. All of the data wrangling commands were designed so that the first argument is always a data frame. The phrase <code>%&gt;% group_by(., state) %&gt;%</code> is an explicit direction to place the data coming from the pipeline as the first argument. The pipeline connector, <code>%&gt;%</code>, is arranged by default to put the content it is transmitting as the first argument to the following function. For this reason, <code>.</code> is not needed if the pipeline pumps results into the first argument.</p>
@@ -324,10 +560,10 @@ age           22.8315   33.43884</code></pre>
 <p>The <code>group_by()</code> wrangling function is used whenever you want to treat a data frame in a group-by-group manner. It’s natural to assume that <code>group_by()</code> is slicing up a data frame according to groups. The <code>mutate()</code> and <code>summarize()</code> functions were specifically designed to make it appear that <code>group_by()</code> is doing the slicing. But in reality, <code>group_by()</code> is just adding a kind of tag to the data frame. <code>mutate()</code> and <code>summarize()</code> know to interpret that tag as an instruction to slice up the data when calculating on it.</p>
 <p>Most R functions simply ignore the tag added by <code>group_by()</code>. Consider, for instance, the pipeline</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(net <span class="sc">~</span> age, <span class="at">data=</span>.) <span class="sc">%&gt;%</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(net <span class="sc">~</span> age, <span class="at">data=</span>.) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)         age 
 5297.219248    8.189886 </code></pre>
@@ -337,9 +573,9 @@ age           22.8315   33.43884</code></pre>
 <p>What do you do if you really want to compare groups using regression models? For instance, it might be that you believe that the <code>F</code> group ages differently than the <code>M</code> group. How do you reveal this with regression?</p>
 <p>Regression models have their own, internal system for comparing groups. You express your wish to compare groups by using the model formula. The simple formula <code>net ~ age</code> does not instruct <code>lm()</code> to compare the sexes. Instead, you would use the formula <code>net ~ age*sex</code>. For instance,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(net <span class="sc">~</span> age <span class="sc">*</span> sex, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(net <span class="sc">~</span> age <span class="sc">*</span> sex, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)         age        sexM    age:sexM 
 5370.999953   15.961661 -785.145163    1.606559 </code></pre>
@@ -353,35 +589,72 @@ age           22.8315   33.43884</code></pre>
 <ol type="1">
 <li><p>One of these pipeline commands will work and the other won’t. Which one will work? Explain why the other one doesn’t work.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(net <span class="sc">~</span> age, <span class="at">data =</span> TenMileRace)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span> <span class="fu">lm</span>(net <span class="sc">~</span> age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(net <span class="sc">~</span> age, <span class="at">data =</span> TenMileRace)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>TenMileRace <span class="sc">%&gt;%</span> <span class="fu">lm</span>(net <span class="sc">~</span> age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></li>
 <li><p>An example from the <em>OpenIntro</em> book uses data on promotions. Some data wrangling commands that might be relevant are these:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 1
-      n
-  &lt;int&gt;
-1    48</code></pre>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 48 </td>
+  </tr>
+</tbody>
+</table>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(decision) <span class="sc">%&gt;%</span> <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
-  decision     n
-  &lt;fct&gt;    &lt;int&gt;
-1 not         13
-2 promoted    35</code></pre>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(decision) <span class="sc">%&gt;%</span> <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> decision </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> not </td>
+   <td style="text-align:right;"> 13 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> promoted </td>
+   <td style="text-align:right;"> 35 </td>
+  </tr>
+</tbody>
+</table>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span> <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
-  gender     n
-  &lt;fct&gt;  &lt;int&gt;
-1 male      24
-2 female    24</code></pre>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span> <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> gender </th>
+   <th style="text-align:right;"> n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> male </td>
+   <td style="text-align:right;"> 24 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> female </td>
+   <td style="text-align:right;"> 24 </td>
+  </tr>
+</tbody>
+</table>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(gender, decision) <span class="sc">%&gt;%</span> <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(gender, decision) <span class="sc">%&gt;%</span> <span class="fu">tally</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
 # Groups:   gender [2]
@@ -398,17 +671,17 @@ age           22.8315   33.43884</code></pre>
 <p>a. <strong>What are those proportions?</strong></p>
 <p>The following wrangling command will calculate the proportions for you, but it is a bit complicated:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">prop_promoted =</span> <span class="fu">sum</span>(decision<span class="sc">==</span><span class="st">"promoted"</span>) <span class="sc">/</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(gender) <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">prop_promoted =</span> <span class="fu">sum</span>(decision<span class="sc">==</span><span class="st">"promoted"</span>) <span class="sc">/</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>b. <strong>Use this command to check your calculations in (a).</strong></p>
 <p>c. In the regression paradigm, the comparison of proportions between the two groups is done directly in <code>lm()</code>, like this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">promoted =</span> <span class="fu">zero_one</span>(decision, <span class="at">one=</span><span class="st">"promoted"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(promoted <span class="sc">~</span> gender, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>promotions <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">promoted =</span> <span class="fu">zero_one</span>(decision, <span class="at">one=</span><span class="st">"promoted"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(promoted <span class="sc">~</span> gender, <span class="at">data =</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coef</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> (Intercept) genderfemale 
    0.8750000   -0.2916667 </code></pre>
