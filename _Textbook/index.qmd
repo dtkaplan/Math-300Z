@@ -18,7 +18,7 @@ Up to now, Math 300 has been following the [*OpenIntro*](http://openintro.com) t
 
 *Lessons in Statistical Thinking* is an update and reconsideration of the concepts and methods needed to extract information from data. Such an update is needed because the canon of traditional introductory statistics texts has long been obsolescent and fails to address the needs of the contemporary data scientist and decision-maker. That canon stems from an influential 1925 book, Ronald Fisher's *Statistical Methods for Research Workers*. Research workers of that era typically ran small benchtop or field experiments with a dozen or fewer observations on each of two treatments. A first task with such small data is to rule out the possibility that calculated differences might reflect only the accidental arrangement of numbers into groups.
 
-Perhaps emblematic of the current dissatisfaction with small-data methods is the controversy over "statistical significance." Although situated at the core of many statistics textbooks, significance testing has little to do with the meaning of "significant" as "important" or "relevant." [This article](www/d41586-019-00857-9.pdf) in the prestigious science journal *Nature* details the controversy. @fig-nature-significance reproduces a cartoon from that article that puts the shortcomings of "statistical significance" in a historical context.
+Perhaps emblematic of the current dissatisfaction with small-data methods is the controversy over "statistical significance." Although situated at the core of many statistics textbooks, significance testing has little to do with the everyday meaning of "significant" as "important" or "relevant." [This article](www/d41586-019-00857-9.pdf) in the prestigious science journal *Nature* details the controversy. @fig-nature-significance reproduces a cartoon from that article that puts the shortcomings of "statistical significance" in a historical context.
 
 ```{r echo=FALSE}
 #| label: fig-nature-significance
@@ -26,6 +26,16 @@ Perhaps emblematic of the current dissatisfaction with small-data methods is the
 #| fig-cap-location: margin
 knitr::include_graphics("www/Significance-cartoon.png")
 ```
+
+Obsession with the mantra, "Correlation is not causation," is another sign of the obsolescence of the traditional introduction to statistics. Around 1910, the pioneers of statistics were the first to emphasize an important innovation in scientific method: the randomized controlled trial (RCT). Adoption of the RCT in the twentieth century put several branches of science on a new footing. And many statistics instructors see "correlation is not causation" as a slogan pointing to the genuine importance of RCTs. Unfortunately, the mantra has been over-interpreted to mean the impossibility of causal knowledge without RCTs, as in the following cartoon (@fig-xkcd-correlation):
+
+```{r echo=FALSE}
+#| label: fig-xkcd-correlation
+#| fig.cap: "[XKCD's take](https://xkcd.com/552/) on correlation and causation."
+knitr::include_graphics("www/xkcd-correlation.png")
+```
+
+Nowadays, when data are used to inform policy decisions in many areas, the being statistically literate includes the need to make justifiable conclusions about causality. One approach to this was highlighted by the [2019 Nobel Prize](https://www.nobelprize.org/prizes/economic-sciences/2019/press-release/) in economics; breaking down complex issues of global poverty into smaller, more manageable questions where an RCT is feasible. Another approach, using "natural experiments" was honored by the [2021 Nobel Prize](https://www.nobelprize.org/prizes/economic-sciences/2021/press-release/). There is no Nobel in computer science. The equivalent is the [Turing Award, which in 2011](https://amturing.acm.org/award_winners/pearl_2658896.cfm) was awarded for "fundamental contributions to ... probabilistic and causal reasoning." That such prestigious awards are being given in the last decade demonstrates how recent and how important causal reasoning is and why the fundamentals of causality ought to be part a modern introduction to statistics, and consequently why they are a major theme in these Lessons. 
 
 ## Statistical thinking
 
@@ -52,55 +62,5 @@ Many of the vocabulary terms used in statistical thinking come in pairs. We list
 **Point estimate** vs **interval estimate**. A point estimate is a single number. For instance, a model coefficient is a point estimate, as is the output from a model function. In contrast, interval estimates involve *two* numbers; one specifies the lower end of the interval and the other number specifies the upper end.
 
 **Prediction interval** vs **confidence interval**. A prediction interval describes the anticipated range of the actual result for which we have made a prediction, e.g., "tomorrow's wind will be between 5 and 10 mph." A **confidence interval** is often used to express the uncertainty in a coefficient or effect size.
-
-## Software guide
-
-These Lessons use about a dozen new R functions. Some of these are used frequently in examples and exercises and are worth mastering. Others appear only in **demonstrations**.
-
-::: {.callout-warning}
-## Demonstrations
-
-These lessons contain *demonstrations* illustrating statistical concepts or data analysis strategies. We will place these in a distinctive box, of which this is an example.
-
-The demonstrations will often contain new computer commands that perform tasks used in teaching statistics. However, readers are **not** expected to be able to construct such commands on their own.
-:::
-
-
-* Training models with data
-    - **`lm()`** arguments: i. tilde expression, ii. `data=` data frame.
-    - Occasionally, you will be directed to use `glm()` or `model_train()`, which work similarly to `lm()` but are specialized for models whose output is a *probability*.
-    - **`zero_one()`** converts a two-level categorical variable to a 0/1 encoding.
-    
-* Summarizing models. These invariably take as input a model produced by `lm()` (or `glm()`) and generate a summary report about that model.
-    - **`coef()`**: displays model coefficients. Each coefficient is a single number.
-    - **`conf_interval()`**: displays model coefficients as an *interval* with a lower and upper value.
-    - **`rsquared()`** calculates the R^2^ of a model, and some related measures.
-    - **`regression_summary()`**, like `conf_interval()`, but with more detail.
-    
-* Evaluating a model on inputs
-    - **`model_eval()`** takes a trained model (as produced by `lm()`) and calculates the model output in both a point form and an interval form. `model_eval()` can also display the residuals from training or evaluation data.
-
-* Graphics
-    - `model_plot()` draws a graphic of a model's function optionally with prediction or confidence intervals.
-    - `geom_violin()` is a modern alternative to `geom_boxplot()`.
-    
-* DAGs (directed, acyclic graphs)
-    - **`sample()`** collects simulated data from a DAG
-    - `dag_draw()` draws a picture of a DAG showing how the variables are connected.
-    
-* Used within the `summarize()` data wrangling function: 
-    - **`var()`** computes the variance of a single variable.
-    
-::: {.callout-warning}
-## Demonstration
-
-Here are some of the command structures that appear in demonstrations. These explanations give a general idea of the tasks they perform.
-
-- `do(10) * {` *command* `}` causes the *command* to be executed repeatedly the indicated number of times. Such repetitions are useful when the *command* is a trial of a random process such as sampling, resampling, or shuffling.
-- `function(`*arguments*`) {` *set of commands* `}` packages in a single unit a set of one or more commands. The packaging facilitates using them over and over again with specified arguments.
-- `geom_errorbar()` works much like `geom_point()` but draws vertical bars instead of dots. Bar-shaped glyphs depict *intervals* such as confidence or prediction intervals.
-- `geom_ribbon()` is like `geom_line()` but for *intervals*. 
-- `effect_size()` calculates the strength and direction of the input-output relationship between the response variable of a model and a selected *one* of the explanatory variables.
-:::
 
 

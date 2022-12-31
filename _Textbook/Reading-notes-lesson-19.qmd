@@ -258,3 +258,53 @@ Evaluated %>%
 :::
 
 
+## Appendix: Software guide
+
+These Lessons use about a dozen new R functions. Some of these are used frequently in examples and exercises and are worth mastering. Others appear only in **demonstrations**.
+
+::: {.callout-warning}
+## Demonstrations
+
+These lessons contain *demonstrations* illustrating statistical concepts or data analysis strategies. We will place these in a distinctive box, of which this is an example.
+
+The demonstrations will often contain new computer commands that perform tasks used in teaching statistics. However, readers are **not** expected to be able to construct such commands on their own.
+:::
+
+
+* Training models with data
+    - **`lm()`** arguments: i. tilde expression, ii. `data=` data frame.
+    - Occasionally, you will be directed to use `glm()` or `model_train()`, which work similarly to `lm()` but are specialized for models whose output is a *probability*.
+    - **`zero_one()`** converts a two-level categorical variable to a 0/1 encoding.
+    
+* Summarizing models. These invariably take as input a model produced by `lm()` (or `glm()`) and generate a summary report about that model.
+    - **`coef()`**: displays model coefficients. Each coefficient is a single number.
+    - **`conf_interval()`**: displays model coefficients as an *interval* with a lower and upper value.
+    - **`rsquared()`** calculates the R^2^ of a model, and some related measures.
+    - **`regression_summary()`**, like `conf_interval()`, but with more detail.
+    
+* Evaluating a model on inputs
+    - **`model_eval()`** takes a trained model (as produced by `lm()`) and calculates the model output in both a point form and an interval form. `model_eval()` can also display the residuals from training or evaluation data.
+
+* Graphics
+    - `model_plot()` draws a graphic of a model's function optionally with prediction or confidence intervals.
+    - `geom_violin()` is a modern alternative to `geom_boxplot()`.
+    
+* DAGs (directed, acyclic graphs)
+    - **`sample()`** collects simulated data from a DAG
+    - `dag_draw()` draws a picture of a DAG showing how the variables are connected.
+    
+* Used within the `summarize()` data wrangling function: 
+    - **`var()`** computes the variance of a single variable.
+    
+::: {.callout-warning}
+## Demonstration
+
+Here are some of the command structures that appear in demonstrations. These explanations give a general idea of the tasks they perform.
+
+- `do(10) * {` *command* `}` causes the *command* to be executed repeatedly the indicated number of times. Such repetitions are useful when the *command* is a trial of a random process such as sampling, resampling, or shuffling.
+- `function(`*arguments*`) {` *set of commands* `}` packages in a single unit a set of one or more commands. The packaging facilitates using them over and over again with specified arguments.
+- `geom_errorbar()` works much like `geom_point()` but draws vertical bars instead of dots. Bar-shaped glyphs depict *intervals* such as confidence or prediction intervals.
+- `geom_ribbon()` is like `geom_line()` but for *intervals*. 
+- `effect_size()` calculates the strength and direction of the input-output relationship between the response variable of a model and a selected *one* of the explanatory variables.
+:::
+
