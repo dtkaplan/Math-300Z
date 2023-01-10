@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Kaplan">
+
+<title>Census Project Proposal</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="proposal_files/libs/clipboard/clipboard.min.js"></script>
+<script src="proposal_files/libs/quarto-html/quarto.js"></script>
+<script src="proposal_files/libs/quarto-html/popper.min.js"></script>
+<script src="proposal_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="proposal_files/libs/quarto-html/anchor.min.js"></script>
+<link href="proposal_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="proposal_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="proposal_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="proposal_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="proposal_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Census Project Proposal</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Daniel Kaplan </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<section id="data-transcription" class="level3">
+<h3 class="anchored" data-anchor-id="data-transcription">Data transcription</h3>
+<p>Each student will be given a 1940 Census “Population Schedule.”</p>
+<p><a href="https://dtkaplan.github.io/Math-300R/www/c1940_famousmo_truman.pdf">Example of a Population Schedule</a></p>
+<p>From the Population Schedule, the student will construct two data frames:</p>
+<ol type="1">
+<li><p>Households. We will provide them with a Google Sheets template. They will put in one line for each household. (Include reference to the “Sheets” data frame and a unique ID (within the sheet) for each household.)</p></li>
+<li><p>Individuals. Data on a line-by-line basis from the Population Schedule. Household info should be a reference to the Households table.</p></li>
+</ol>
+<p>The instructors will provide a third table already filled out:</p>
+<ol start="3" type="1">
+<li>Sheets. Basic information for each individual Population Schedule.</li>
+</ol>
+</section>
+<section id="data-wrangling" class="level3">
+<h3 class="anchored" data-anchor-id="data-wrangling">Data wrangling</h3>
+<p>Instructors will provide some <strong>simple</strong> querying questions. Students should try to answer them from their own Individuals table. (Maybe one question will involve joining with the Households table.)</p>
+<p>Example: How many children in each household?</p>
+<p>If the data are not organized in a manner suitable to answer the question, the student will explain what about the student’s organization prevented answering the question and what they would change about the organization in order to make it feasible to answer the question. (This re-organization does not need to be done.)</p>
+</section>
+<section id="documents" class="level3">
+<h3 class="anchored" data-anchor-id="documents">Documents</h3>
+<ul>
+<li>Student access to Population Schedules will be by URL
+<ol type="a">
+<li>We will provide some generic sheets as listed in the Sources section, below.</li>
+<li>We will ask each student to pick a state, county, and town where they live now or where their grandparents lived. Then the instructors will collect those Population Schedules from the &lt;familysearch.org&gt; site, making them available as PDF or image files via URL.</li>
+</ol></li>
+<li>Student Household and Individual tables will be in Google Sheets (or some Microsoft equivalent, if available) and brought into R via a URL.</li>
+<li>Deliverable: An RMD file with the commands to read in the student’s table and the answers to the queries. We will provide a template with the queries and the commands to read from the Household and Individual spreadsheets.</li>
+</ul>
+</section>
+</section>
+<section id="instructor-tasks" class="level2">
+<h2 class="anchored" data-anchor-id="instructor-tasks">Instructor tasks</h2>
+<ol type="1">
+<li><p>For each student, instructors create a Google Spreadsheet with the Households template and an Individuals template (with variable names).</p></li>
+<li><p>Produce an RMD template that</p>
+<ol type="i">
+<li>Lists the URLs for the Population Schedules</li>
+<li>Provides the code to read in from Google sheets.</li>
+</ol></li>
+<li><p>Introduce the project in class, with particular emphasis on the two different <em>units of observation</em>, households and individuals, in the Population Schedules.</p>
+<ol type="i">
+<li>First, distinguish between quantitative and categorical variables</li>
+<li>For categorical variables, make a list of the allowed levels. They can determine their own encoding.</li>
+<li>Point out that when legibility is an issue, the student should do his or her best.</li>
+</ol></li>
+<li><p>Review the submitted spreadsheets and queries in class.</p></li>
+</ol>
+</section>
+<section id="sources" class="level2">
+<h2 class="anchored" data-anchor-id="sources">Sources</h2>
+<ul>
+<li><p>Geographically sorted sheets for all states, <a href="https://www.familysearch.org/ark:/61903/3:1:3QSQ-G9MR-8XN?i=5&amp;wc=QZXG-LF1%3A790103801%2C794825901%2C794868201%2C951699401&amp;cc=2000219">familysearch.org</a>. My account is dtkaplan@gmail.com with password saved on Google.</p>
+<ol type="a">
+<li>Colorado Springs</li>
+</ol></li>
+<li><p>Missouri census sheets from <a href="https://www.sos.mo.gov/records/archives/census/pages/census1940_famousmo" class="uri">https://www.sos.mo.gov/records/archives/census/pages/census1940_famousmo</a> for selected famous people.</p>
+<ol type="a">
+<li>Yogi Berra—baseball</li>
+<li>Chuck Berry—Rock and roll legend</li>
+<li>Joe Garagiola—baseball</li>
+<li>Lizzy Marshall—last surviving child of Dred and Harriet Scott</li>
+<li>Harry Truman—At the time, a US Sendator</li>
+<li>Laura Ingalls Wilder—author of the <em>Litle House</em> series.</li>
+</ol></li>
+<li><p>Images from sundry places</p>
+<ol type="a">
+<li>Androscoggin, ME</li>
+<li>Chicago, IL</li>
+<li>Dearborn, MI</li>
+<li>Lincoln county, AR</li>
+</ol></li>
+</ul>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
