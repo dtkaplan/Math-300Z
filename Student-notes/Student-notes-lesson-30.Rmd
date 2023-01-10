@@ -1,0 +1,69 @@
+---
+title: "Math 300 Lesson 3 Notes"
+subtitle: "Confounding"
+author: "YOUR NAME HERE"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup30, include=FALSE}
+library(math300)
+library(mosaic)
+library(knitr)
+library(kableExtra)
+library(math300)
+# math300::setup_student_notes()
+```
+
+## Overview
+
+
+
+
+### Reading
+
+[Lesson **30** from *LST*](https://dtkaplan.github.io/Math-300R/Textbook/Reading-notes-lesson-30.html)
+
+### Objectives
+
+30.1
+
+[Updated list of objectives](../Objectives/Obj-lesson-30.html)
+
+### Libraries
+
+```{r warning=FALSE,message=FALSE}
+library(mosaic)
+library(math300)
+data("Galton", package="mosaicData")
+data("Home_utilities", package="mosaicCalc")
+```
+
+----------
+
+## Lesson
+
+Use the `FEV` data to look at the relationship between smoking and lung function.
+
+See the paper [here](https://www.tandfonline.com/doi/full/10.1080/10691898.2020.1713936)
+
+```{r}
+smoke_dag <- dag_make(
+  age ~ unif(min=3, max=19),
+  sex ~ binom(exo(), labels=c("F", "M")),
+  smoker ~ binom(-7.6 + 0.5*age - 0.8* (sex=="M"), labels=c("not", "smoker")),
+  height ~ 46 + 1.5*age + (sex=="F")*unif(min=0, max=5),
+  FEV ~ -1.4 + 0.6*age + (sex=="M")*0.16 + 0.10*height - 0.1*(smoker=="smoker") + exo(.2)
+)
+```
+
+
+```{r echo=FALSE}
+dag_draw(smoke_dag, seed=101, vertex.label.cex=1)
+```

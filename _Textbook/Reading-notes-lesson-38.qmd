@@ -1,4 +1,4 @@
-# False discovery {#sec-lesson-38}
+# Avoiding false discovery {#sec-lesson-38}
 
 ```{r setup38, include=FALSE}
 lesson <- 38
@@ -11,6 +11,11 @@ $$\newcommand{\Ptest}{\mathbb{P}}
 \newcommand{\Ntest}{\mathbb{N}}
 \newcommand{\given}{\ |\!\!|\  }$$
 :::
+
+
+## What to look for
+
+Clear and specific statement of what hypothesis is being explored. More reliably, look for replication. Replication with a larger sample size is even better. 
 
 
 ## Avoid bad habits

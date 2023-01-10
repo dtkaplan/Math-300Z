@@ -1,0 +1,49 @@
+---
+title: "Math 300 Lesson 31 Notes"
+subtitle: "Spurious correlation"
+author: "YOUR NAME HERE"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup29, include=FALSE}
+library(math300)
+library(mosaic)
+library(knitr)
+library(kableExtra)
+library(math300)
+# math300::setup_student_notes()
+```
+
+## Overview
+
+
+
+
+### Reading
+
+[Lesson **31** from *LST*](https://dtkaplan.github.io/Math-300R/Textbook/Reading-notes-lesson-31.html)
+
+### Objectives
+
+31.1
+
+[Updated list of objectives](../Objectives/Obj-lesson-31.html)
+
+### Libraries
+
+```{r warning=FALSE,message=FALSE}
+library(mosaic)
+library(math300)
+
+```
+
+----------
+
+## Lesson

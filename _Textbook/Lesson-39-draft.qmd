@@ -1,0 +1,28 @@
+---
+title: "Lesson 39 Draft"
+---
+
+Many students approach quantitative work an attitude developed early in their mathematical studies: that procedures are based on rigorous reason, that there is one right answer and other answers are wrong, that the rightness of methods can be proven by logic, and that mathematical results---once proven---are correct now and for always. A topic from high-school math, quadratic polynomials, provides an example. By certain algebraic balancing operations, every second-order polynomial $a x^2 + bx + c$ can be transformed into the form $(x-r_1)(x - r_2)$ where $r_1$ and $r_2$ can be calculated using the "quadratic formula." 
+
+For the typical high-school student, the quadratic formula is part of a *standard operating procedure* (SOP) used to generate answers to textbook problems. Few students can replicate or even follow the balancing operations used to derive the formula, and few know how to identify real-world situations in which to apply quadratic polynomials or evaluate their effectiveness. 
+
+Statistics textbooks (including these Lessons) also teach standard operating procedures. Understandably, students may assume the the statistics SOPs are correct and originate in mathematical logic. But only some statistics SOPs meet these criteria. It's common for statistical procedures to become standard not for mathematical reasons but because experience shows they usually produce satisfactory results. An example is *linear regression modeling*, the fundamental statistical method in these Lessons. The computations for linear regression modeling are indeed correct and originate in mathematical logic, but the popularity of the method itself is based on experience: it is easy to use, it generally gives reasonable results, and those results are comparatively easy to interpret (as with, for instance, "effect size"). It is not necessarily the *best* method for any given problem, but it is a good-enough method for most problems. 
+
+Null Hypothesis Testing (NHT) is a method that, like the quadratic formula, gives a correct answer to a question that few people would have asked in the first place. The concept of Null hypothesis was invented in order to make calculations feasible, to avoid having to make assumptions that might be controversial, and to address a particular need of the workplace.
+
+The workplace need is this: When working with small samples it is plausible to imagine that the results we get are just the outcome of sampling variation, the play of chance. If the methods for working with the small samples frequently cause us to mistake sampling variation for genuine, meaningful findings of scientific import, science workers would waste a lot of time on wild goose chases and the scientific enterprise would progress only slowly. Consequently, the methods for working with small samples were constructed so that the frequency of mistaking sampling variation for genuine findings is small.
+
+Those small-sample methods were framed as a set of standard operating procedures. A standard operating procedure is "a set of fixed instructions or steps for carrying out usually routine operations." (Source: dictionary.com) As described by Wikipedia, "SOPs aim to achieve efficiency, quality output, and uniformity of performance, while reducing miscommunication and failure to comply." By using a SOP, science workers can demonstrate to their colleagues and others that they have reduced the risk of wild goose chasing to an acceptable level. "Uniformity of performance" is achieved by basing the SOP on the Null hypothesis. The Null is something everyone can understand as being relevant to the wild-goose problem. It does not require speculation, insight, or deep knowledge of a domain. If the result is to "fail to reject the Null," the wild-goose alarm rings for everyone to hear.
+
+SOPs are designed to deal practically with a particular environment. When the environment changes, the SOP becomes obsolete. For example, there is a SOP of long standing for financial transactions. When a purchase is made by check, the paper document is routed through various accounting procedures that take days to accomplish. When the bank branch receives the document, they compare it to the balance in the account identified on the check. If the balance is insufficient, the bank reverses the process, taking more days, and eventually the merchant finds out that the check is no good.
+
+This SOP was never perfect, but it worked acceptably well in the large majority of cases. That SOP would never work today: the volume of transactions is too large, merchants do not accept having to wait days, it is too easy to forge the paper document, and so on. Consequently, the world of financial transactions involves new SOPs that employ things like password protection, biometrics, and real-time evaluation of the buyer's account balance and the risk of fraud.
+
+Similarly, the environment in which NHT is used has changed very substantially since NHT became the SOP. NHT is no longer fit for the wild-goose chase purpose. This Lesson is about what has changed and what to do about it. 
+
+
+## It's not small samples anymore
+
+Summarize NHT and why it is "objective." Then point out that it is really subjective if you take into account the context in which it is used.
+
+"Garden of the forking paths"

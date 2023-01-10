@@ -1,0 +1,49 @@
+---
+title: "Math 300 Lesson 32 Notes"
+subtitle: "Experiment and random assignment"
+author: "YOUR NAME HERE"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup32, include=FALSE}
+library(math300)
+library(mosaic)
+library(knitr)
+library(kableExtra)
+library(math300)
+# math300::setup_student_notes()
+```
+
+## Overview
+
+
+
+
+### Reading
+
+[Lesson **32** from *LST*](https://dtkaplan.github.io/Math-300R/Textbook/Reading-notes-lesson-32.html)
+
+### Objectives
+
+32.1
+
+[Updated list of objectives](../Objectives/Obj-lesson-32.html)
+
+### Libraries
+
+```{r warning=FALSE,message=FALSE}
+library(mosaic)
+library(math300)
+
+```
+
+----------
+
+## Lesson

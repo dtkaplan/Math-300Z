@@ -1,0 +1,126 @@
+---
+title: "Math 300 Lesson 25 Notes"
+subtitle: "Mechanics of prediction"
+author: "YOUR NAME HERE"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup25, include=FALSE}
+library(math300)
+library(mosaic)
+library(knitr)
+library(kableExtra)
+library(math300)
+# math300::setup_student_notes()
+```
+
+## Overview
+
+Up until now, we have focused on model coefficients, confidence intervals, and effect sizes. These quantities are informative about the *relationship* between a response and one or more explanatory variables. 
+
+Now we will focus on **prediction**, figuring out something that we don't yet know from measurements that we already have. Prediction is a task that is well suited to regression models. The major technical difference between modeling for prediction and modeling for describing or summarizing relationships is that, so far as prediction is concerned, the coefficients and their confidence intervals are not of direct interest. Instead, all we care about is how close the output from the regression model is to the quantity that we want to predict.
+
+
+### Reading
+
+[Lesson **25** from *LST*](https://dtkaplan.github.io/Math-300R/Textbook/Reading-notes-lesson-25.html)
+
+### Objectives
+
+25.1 Given a data frame, construct a predictor function for a specified response variable.
+
+25.2 Use the predictor function to estimate prediction error and summarize with root mean square (RMS) error. 
+
+
+[Updated list of objectives](../Objectives/Obj-lesson-25.html)
+
+### Libraries
+
+```{r warning=FALSE,message=FALSE}
+library(mosaic)
+library(math300)
+data("Galton", package="mosaicData")
+data("Home_utilities", package="mosaicCalc")
+```
+
+----------
+
+## Lesson
+
+The word "predict" in its everyday sense almost always refers to the future. To predict means to anticipate what the future will bring or, more realistically, which future outcomes are likely and which are not.
+
+In data science, there is no necessary connection between "prediction" and the future. Instead, the prediction task is to find a way to convert between information that we have in hand and other information that we want but do not have. 
+
+We will not touch on the important problem of forecasting the future simply because the techniques for doing so, often listed under the name "time series analysis," are built on different theoretical concepts that are outside the scope of these Lessons.
+
+### Exercise 25.1
+
+For good reasons and bad, people are interested in the shape and proportions of their bodies. The `Anthro_F` data frame contains such *anthropometric* data for more than 200 college-aged women. It includes the familiar measurements such as `Height`, `Weight`, and `Biceps`,  as well as others (e.g. `Elbow`) that are relatively easy to make with a measuring tape. One of the measurements, however, is very difficult to make directly: fat as a percentage of body weight (`BFat`). 
+
+We're going to use `Anthro_F` to build a prediction model. The output will be `BFat`, the inputs will be any of the easy-to-measure quantities that you think appropriate.
+
+#### Task 1.1
+
+```{r}
+model3 <- lm(BFat ~ Weight * Height * Waist, data = Anthro_F)
+
+
+tiny_model <- lm(BFat ~ BMI, data = Anthro_F)
+stupid_model <- lm(BFat ~ Ankle, data = Anthro_F)
+little_model <- lm(BFat ~ Weight + Height + Waist, data = Anthro_F)
+
+big_model <- lm(BFat ~ ., data=Anthro_F)
+big_model %>% R2()
+Tmp <- model_eval(big_model)
+model_cv(tiny_model, little_model, big_model, stupid_model)
+```
+
+#### Task 1.2
+
+Use `model_pe()` to simplify the task of prediction model.
+
+
+### Exercise 25.2
+
+Contemporary data scientists often build predictive models using methods classed under the name "**machine learning**." The "learning" in "machine learning" refers in part to an automated process of finding good explanatory variables for a model. Typically, this is accomplished by making many models of many different sorts and selecting those that have the lowest prediction error. 
+
+A major problem in machine learning is "**overfitting**," constructing highly complex models that are a good match to the data on which the model was trained, but don't continue to perform well when tested on new data.
+
+To avoid overfitting, machine-learning models are evaluated not on how they perform on the training data, but on how they perform on "out-of-sample" data that were not included in the training data.
+
+#### TASK
+
+Divide into testing and training data
+
+```{r}
+Labeled <- Anthro_F %>% 
+  mutate(testing = 
+           ifelse(runif(nrow(.)) < 0.2, "test", "train"))
+Testing <- Labeled %>% filter(testing=="test")
+Training <- Labeled %>% filter(testing=="train")
+```
+
+Fit the model on the `Training` data. Then evaluate it on the `Training` data.
+
+```{r}
+mod <- lm(BFat ~ BMI*Height*Weight*Waist, data = Training)
+model_pe(mod)
+model_pe(mod, testdata=Testing)
+```
+
+
+
+
+#### TASK
+
+
+
+Cross-validation. Use `model_cv()`.
+

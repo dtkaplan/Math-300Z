@@ -1,0 +1,49 @@
+---
+title: "Math 300 Lesson 34 Notes"
+subtitle: "Constructing a classifier"
+author: "YOUR NAME HERE"
+date: "`r format(Sys.time(), '%B, %Y')`"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    theme: lumen
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup34, include=FALSE}
+library(math300)
+library(mosaic)
+library(knitr)
+library(kableExtra)
+library(math300)
+# math300::setup_student_notes()
+```
+
+## Overview
+
+
+
+
+### Reading
+
+[Lesson **34** from *LST*](https://dtkaplan.github.io/Math-300R/Textbook/Reading-notes-lesson-34.html)
+
+### Objectives
+
+34.1
+
+[Updated list of objectives](../Objectives/Obj-lesson-34.html)
+
+### Libraries
+
+```{r warning=FALSE,message=FALSE}
+library(mosaic)
+library(math300)
+
+```
+
+----------
+
+## Lesson

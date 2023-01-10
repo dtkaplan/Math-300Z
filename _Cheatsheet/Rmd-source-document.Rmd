@@ -1,0 +1,17 @@
+---
+title: "Using .Rmd documents"
+author: Your name goes here
+output: pdf_document
+---
+
+Ordinary text is pure character content.
+Formatting instructions like **bold** 
+are written using Markdown
+
+## A section header
+
+Calculate 3+2 using R ....
+```{r cars}
+3+2
+```
+
