@@ -13,19 +13,79 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Data
 
+### Data frame
+
+### Packages
+
+dplyr, nycflights13, moderndive, math300
+
+datasets from packages
+
+### Variable transformations
+
+zero_one()
+
+log()
+
+New <- Old %>% mutate(resp = zero_one(color, one="blue"))
+
+### Databases
+
 ## Graphics
+
+geom_point(), geom_jitter(): Four different types of plots
+
+geom_violin(), 
 
 ## Wrangling
 
 ## Regression modeling
 
+Response is a numerical variable
+
+### Model specification
+
+response ~ 1  
+response ~ ex1 + ex2 
+
+### Categorical response values
+
+### Training
+
+model_train()
+
+### Summaries
+
+coef_summary(), conf_interval(), regression_summary(), anova_summary()
+
+### Graphics
+
+model_plot()
+
 ## DAGs
 
+Names of some dags
+
+dag_draw()
+dag_sample()
+print()
+
 ## Repeated trials
+
+### One trial
+
+- package as function
+
+    i. must have some "random" component
+
+- apply `do()` to function
 
 ## Sampling variation
 
 ## Prediction
+
+model_eval() and how to plot
+
 
 ## Risk
 
