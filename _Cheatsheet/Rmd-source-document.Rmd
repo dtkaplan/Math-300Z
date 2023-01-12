@@ -1,12 +1,13 @@
 ---
-title: "Using .Rmd documents"
-author: Your name goes here
+title: "Math 300 Docs"
+author: Jane Doe
 output: pdf_document
+geometry: "paperwidth=121mm,left=1cm,right=1cm,top=1cm,bottom=.5cm"
 ---
 
 Ordinary text is pure character content.
 Formatting instructions like **bold** 
-are written using Markdown
+are written using Markdown.
 
 ## A section header
 
