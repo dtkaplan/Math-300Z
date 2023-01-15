@@ -368,7 +368,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-38.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">False discovery</span></a>
+  <a href="./Reading-notes-lesson-38.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Avoiding false discovery</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -392,6 +392,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#variation" id="toc-variation" class="nav-link" data-scroll-target="#variation">Variation</a></li>
   <li><a href="#sec-accounting-for-variation" id="toc-sec-accounting-for-variation" class="nav-link" data-scroll-target="#sec-accounting-for-variation">Accounting for variation</a></li>
   <li><a href="#variation-unaccounted-for" id="toc-variation-unaccounted-for" class="nav-link" data-scroll-target="#variation-unaccounted-for">Variation unaccounted for</a></li>
+  <li><a href="#appendix-software-guide" id="toc-appendix-software-guide" class="nav-link" data-scroll-target="#appendix-software-guide">Appendix: Software guide</a></li>
   </ul>
 </nav>
     </div>
@@ -529,7 +530,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Yet another style for describing variation—one that will take primary place in these Lessons—uses only a <strong>single-number</strong>. Perhaps the simplest way to imagine how a <em>single</em> number can capture variation is to think about the <em>spread</em> or <em>distance</em> between the top and bottom of an interval description. In taking such a distance as the measure of variation, we are throwing out some information. Taken together, the top and bottom of the interval describe two things: the <em>location</em> of the values and the <em>spread</em> among the values. These are both important, but it is the <em>spread</em> that gives a pure description of variation.</p>
 <p>Early pioneers of statistics took some time to agree on a standard way of measuring the spread. For instance, should it be the spread between the top and bottom of a 50% interval or an 80% interval, or something else. In the end, the selected standard focussed on something more basic: the differences between pairs of individual values.</p>
 <p>It works like this. For a data frame with <span class="math inline">\(n=2\)</span> rows, the spread in a variable can be measured simply as the <em>difference</em> between the two values. For instance, suppose the <code>gestation</code> variable had only two entries, say, 267 and 293 days. The spread or distance between these is <span class="math inline">\(293-267 = 26\)</span> days. Of course, we don’t intend to measure spread with a negative number. One solution is to use the absolute value of the difference. However, for subtle mathematical reasons relating to—of all things!—the Pythagorean theorem, we avoid the possibility of a negative spread by using the <em>square of the difference</em>, that is, <span class="math inline">\((293 - 267)^2 = 676\)</span> days-squared.</p>
-<p>To extend this very simple measure of variation to data with <span class="math inline">\(n &gt; 2\)</span> is simple: look at the square difference between every possible pair of values, then average. For instance, for <span class="math inline">\(n=3\)</span> with values 267, 293, 284, look at the differences <span class="math inline">\((267-293)^2, (267-284)^2\)</span> and <span class="math inline">\((293-284)^2\)</span> and average them! This simple way of measuring variation is called the “modulus” and dates from 1885. Since then, statisticians have standardized on a closely related measure, the “<strong>variance</strong>,” which is the modulus divided by <span class="math inline">\(\sqrt{2}\)</span>. Either one would work, but there are advantages to standardizing on one: the variance.</p>
+<p>To extend this very simple measure of variation to data with <span class="math inline">\(n &gt; 2\)</span> is simple: look at the square difference between every possible pair of values, then average. For instance, for <span class="math inline">\(n=3\)</span> with values 267, 293, 284, look at the differences <span class="math inline">\((267-293)^2, (267-284)^2\)</span> and <span class="math inline">\((293-284)^2\)</span> and average them! This simple way of measuring variation is called the “modulus” and dates from at least 1885. Since then, statisticians have standardized on a closely related measure, the “<strong>variance</strong>,” which is the modulus divided by <span class="math inline">\(\sqrt{2}\)</span>. Either one would work, but there are advantages to standardizing on one: the variance.</p>
 <p>Calculating the variance is straightforward, Here’s the variance of <code>gestation</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Gestation <span class="sc">%&gt;%</span></span>
@@ -907,6 +908,77 @@ Demonstration: Why the variance?
 </table>
 </div>
 </div>
+</div>
+</div>
+</section>
+<section id="appendix-software-guide" class="level2">
+<h2 class="anchored" data-anchor-id="appendix-software-guide">Appendix: Software guide</h2>
+<p>These Lessons use about a dozen new R functions. Some of these are used frequently in examples and exercises and are worth mastering. Others appear only in <strong>demonstrations</strong>.</p>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Demonstrations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>These lessons contain <em>demonstrations</em> illustrating statistical concepts or data analysis strategies. We will place these in a distinctive box, of which this is an example.</p>
+<p>The demonstrations will often contain new computer commands that perform tasks used in teaching statistics. However, readers are <strong>not</strong> expected to be able to construct such commands on their own.</p>
+</div>
+</div>
+<ul>
+<li>Training models with data
+<ul>
+<li><strong><code>lm()</code></strong> arguments: i. tilde expression, ii. <code>data=</code> data frame.</li>
+<li>Occasionally, you will be directed to use <code>glm()</code> or <code>model_train()</code>, which work similarly to <code>lm()</code> but are specialized for models whose output is a <em>probability</em>.</li>
+<li><strong><code>zero_one()</code></strong> converts a two-level categorical variable to a 0/1 encoding.</li>
+</ul></li>
+<li>Summarizing models. These invariably take as input a model produced by <code>lm()</code> (or <code>glm()</code>) and generate a summary report about that model.
+<ul>
+<li><strong><code>coef()</code></strong>: displays model coefficients. Each coefficient is a single number.</li>
+<li><strong><code>conf_interval()</code></strong>: displays model coefficients as an <em>interval</em> with a lower and upper value.</li>
+<li><strong><code>rsquared()</code></strong> calculates the R<sup>2</sup> of a model, and some related measures.</li>
+<li><strong><code>regression_summary()</code></strong>, like <code>conf_interval()</code>, but with more detail.</li>
+</ul></li>
+<li>Evaluating a model on inputs
+<ul>
+<li><strong><code>model_eval()</code></strong> takes a trained model (as produced by <code>lm()</code>) and calculates the model output in both a point form and an interval form. <code>model_eval()</code> can also display the residuals from training or evaluation data.</li>
+</ul></li>
+<li>Graphics
+<ul>
+<li><code>model_plot()</code> draws a graphic of a model’s function optionally with prediction or confidence intervals.</li>
+<li><code>geom_violin()</code> is a modern alternative to <code>geom_boxplot()</code>.</li>
+</ul></li>
+<li>DAGs (directed, acyclic graphs)
+<ul>
+<li><strong><code>sample()</code></strong> collects simulated data from a DAG</li>
+<li><code>dag_draw()</code> draws a picture of a DAG showing how the variables are connected.</li>
+</ul></li>
+<li>Used within the <code>summarize()</code> data wrangling function:
+<ul>
+<li><strong><code>var()</code></strong> computes the variance of a single variable.</li>
+</ul></li>
+</ul>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Demonstration
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Here are some of the command structures that appear in demonstrations. These explanations give a general idea of the tasks they perform.</p>
+<ul>
+<li><code>do(10) * {</code> <em>command</em> <code>}</code> causes the <em>command</em> to be executed repeatedly the indicated number of times. Such repetitions are useful when the <em>command</em> is a trial of a random process such as sampling, resampling, or shuffling.</li>
+<li><code>function(</code><em>arguments</em><code>) {</code> <em>set of commands</em> <code>}</code> packages in a single unit a set of one or more commands. The packaging facilitates using them over and over again with specified arguments.</li>
+<li><code>geom_errorbar()</code> works much like <code>geom_point()</code> but draws vertical bars instead of dots. Bar-shaped glyphs depict <em>intervals</em> such as confidence or prediction intervals.</li>
+<li><code>geom_ribbon()</code> is like <code>geom_line()</code> but for <em>intervals</em>.</li>
+<li><code>effect_size()</code> calculates the strength and direction of the input-output relationship between the response variable of a model and a selected <em>one</em> of the explanatory variables.</li>
+</ul>
 </div>
 </div>
 

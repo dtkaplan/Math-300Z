@@ -2,7 +2,98 @@
 title: "Lesson 39 Draft"
 ---
 
-Many students approach quantitative work an attitude developed early in their mathematical studies: that procedures are based on rigorous reason, that there is one right answer and other answers are wrong, that the rightness of methods can be proven by logic, and that mathematical results---once proven---are correct now and for always. A topic from high-school math, quadratic polynomials, provides an example. By certain algebraic balancing operations, every second-order polynomial $a x^2 + bx + c$ can be transformed into the form $(x-r_1)(x - r_2)$ where $r_1$ and $r_2$ can be calculated using the "quadratic formula." 
+Lesson -@sec-lesson-19 used an example about the effect of COVID on childhood development. We quoted from a [news article from *The Economist*](https://www.economist.com/international/2022/12/15/the-pandemics-indirect-effects-on-small-children-could-last-a-lifetime) summarizing one study that looked at infant and toddler vocal interactions with parents:
+
+> *"During the pandemic the number of such \"conversations\" declined. .... "[g]etting lots of interaction in the early years of life is essential for healthy development, so these kinds of data \"are a red flag\"."*
+
+Part of statistical thinking involves replacing vague words like "lots" and "essential" with quantitative measures. The next score of Lessons introduced methods for extracting quantitative information from data and ways to present meaningful information to human decision-makers.   
+
+This Lesson is about one way of formatting information---statistical significance---that is widely used throughout the sciences and appears widely in the press, but which in reality obscures much more than it reveals. The "statistically significant" format appears, for instance, in a statement from the [research report](https://www.lena.org/covid-infant-vocalizations-conversational-turns/) on which the above quote was based.
+
+> "Children from the COVID-era sample produced significantly fewer vocalizations than their pre-COVID peers."
+
+The link between fewer vocalizations and "healthy development" is based on a highly cited research paper^[Betty Hart and Todd Risley (1992) "American parenting of language-learning children: Persisting differences in family-child interactions observed in natural home environments" *Developmental Psychology* **28**(6) 1096-1105 [link](www/1993-09151-001.pdf)] which states that "The amount of parenting per hour and the quality of the verbal content associated with that parenting were strongly related to the social and economic status of the family and the subsequent IQ of the child," and characterizes correlation between the quality of verbal content in IQ as "highly significant." 
+
+[[Criticism of Hart and Risley]] https://www.npr.org/sections/ed/2018/06/01/615188051/lets-stop-talking-about-the-30-million-word-gap
+
+[[Note in draft]] What to conclude from the p-value of 0.001 in the Hart-Risley paper? That a more careful study should be undertaken to deal with the confounding that might have caused the results. 
+
+[[NOTE in draft]] The LENA measurements show a reduction of about 0.5 standard deviation in vocalization. The Hart/Risley paper shows a correlation between "quality of verbal content" and IQ (at age 3!) of $r=0.63$. So the reduction in vocalization would be associated with a decrease in IQ of $0.63*0.5 = 0.32$ standard deviation. But no covariates, such as parent IQ or SES, were included in the Hart/Risley study. The causal connection is uncertain. Maybe the families with low-quality vocalization had other factors that would lead to the correlation with IQ.
+
+
+Later, under repeated measures, show the graph from the JAMA pediatrics article which is quoted by LENA 
+
+> "These findings from LENA support a growing body of evidence that babies born during the COVID pandemic are, on average, experiencing developmental delays.
+
+> "For example, researchers from the COMBO (COVID-19 Mother Baby Outcomes) consortium at Columbia University published findings in the January 2022 issue of JAMA Pediatrics showing that children born during the pandemic achieved significantly lower gross motor, fine motor, and personal-social scores at six months of age. Given these associations, the authors conclude that COVID-era babies should continue to be monitored for long-term negative effects and that COVID-related maternal stresses 'should be considered as a potential underlying mechanism.'"
+
+```{r echo=FALSE}
+#| label: fig-jama-pediatrics
+#| fig-cap: "The blue line is the screening cutoff indicating a delay in develpment. See Table 3 in the JAMA paper for the fraction whose score indicates a delay."
+knitr::include_graphics("www/JAMA-pediatrics-shuffrey.png")
+```
+
+
+
+
+
+
+
+The Null Hypothesis Testing (NHT) procedure presented in Lesson -@sec-lesson-38 takes data and a model specification as input and returns as output a p-value. The calculation is essentially automatic. 
+
+Nonetheless, NHT is controversial and has been since soon after its introduction in 1925. How can an automatic calculation be controversial? Actually, it is not the calculation itself that's controversial, but the use of the result of the calculation to guide decision-making. NHT is in a position similar to that of an algebra test used to sort out students by academic ability. Even if every knowledgeable person agrees that the test is valid for assessing proficiency in algebra, not everyone agrees that lack of proficiency in algebra is by itself a good measure of academic ability. To extend the simile, consider that the standardized college-level measure of academic ability comes as multiple scores, for instance a "math" score and a "verbal" score.
+
+The p-value is a measure of the likelihood of the Null hypothesis, just as the score on an algebra test measures the proficiency in math. {.aside}[Remember that "likelihood" is a technical term, referring to the probability of the actual data *given* that a hypothesis is true. It is not a measure of the probability that they hypothesis is true.] There ought to be at least one other hypothesis that is being evaluated based on the data: math and verbal, Null and something else. The "something else" is called the Alternative hypothesis. Already in the 1928, a widely accepted framework for hypothesis testing was introduced which compared the likelihood of the Null to the likelihood of the Alternative. It is called the Neyman-Pearson approach
+
+
+
+
+Many students approach quantitative work an attitude developed early in their mathematical studies: that procedures are based on rigorous reason, that there is one right answer and other answers are wrong, that the rightness of methods can be proven by logic, and that mathematical results---once proven---are correct now and for always. A topic from high-school math, quadratic polynomials, provides a case in point. All quadratic polynomials, regardless of the area of application or the context in which they arise, have a mathematical property called "roots." The roots can be calculated by means of the "quadratic formula." Finding the roots of a polynomial is a purely mathematical task and doesn't involve judgement in any way.
+
+In contrast, the point of hypothesis testing is not to extract a mathematical property. Instead, hypothesis testing is intended to help data guide the choice of an appropriate follow-up action. For a concrete example, we return to a setting introduced at the start of Lesson -@sec-lesson-19, the concern that COVID-related "stress and distraction" led to a reduction in child-caregiver interactions that are "essential for healthy development." The sort of data that underlie the concern are shown in @fig-lena-two-graphs, part of which we reproduce here for convenience.
+
+```{r}
+#| label: fig-lena-two-graphs-redux
+#| fig-cap: "Some of the data behind the hypothesized link between COVID and childhood development."
+#| cap-location: margin
+#| layout-ncol: 2
+knitr::include_graphics("www/Lena-fig1.png")
+```
+
+The organization behind the research produces a small wearable device---called a "talk pedometer"---that measures conversational exchanges between children and their caregivers. Observing from the data provided by their devices that such "conversational turns" occurred less often during COVID, the organization sought to draw attention to a [potential problem](https://www.lena.org/covid-infant-vocalizations-conversational-turns/): "The bottom line is that infants are vocalizing less and experiencing fewer conversational turns, putting them at risk of missing out on the many positive outcomes linked to high levels of interactive talk early in life."
+
+## Decisions, experience, judgment
+
+*The Economist*, a news magazine, reported the "conversational turns" research findings as a paragraph in an article about the indirect effects of COVID on young children. [The article](https://www.economist.com/international/2022/12/15/the-pandemics-indirect-effects-on-small-children-could-last-a-lifetime) offered only a vague and uninformative summary of the matter: "getting lots of interaction in the early years of life is essential for healthy development, so these kinds of data 'are a red flag'." In doing this, the magazine editors had to decide among several possibilities: ignore the matter entirely as unimportant or not credible, send the reporter back to find more definite evidence or more detail of the potential problem, provide brief coverage (the actual decision), devote a detailed article to the matter, write an editorial demanding corrective action, or even to put the story on the cover of the magazine. 
+
+There is no mathematical algorithm to produce the "correct" decision. Indeed, it may be impossible to know if the decision taken was correct.
+
+Researchers need to make similar decisions. Is a research hypothesis important enough to be worth the effort of investigating it? Are the findings so weak that the matter ought to be dropped? Are the findings promising enough to be worth investing additional resources to gather more data? Are the findings strong enough that they should be made known to the research community so that others can confirm or refine the results? Are the findings so definitive that others can treat the matter as completely understood or resolved? Making the decision is difficult. It takes judgment, experience, knowledge of the field and of previous findings.
+
+Lessons -@sec-lesson-34 and -@sec-lesson-35 examined some of the mathematics of decision-making in a particular context: medical screening tests. One decision-making problem involves taking the perspective of the whole population in order to set the *threshold* for turning the raw numerical result of the test into a ${\mathbb{P}}$ or ${\mathbb{N}}$. Doing this involved a **loss function** which describes the relative *consequences* of two kinds of mistakes: a false-positive or a false-negative. The loss function is, essentially, a value judgment. Setting the threshold also takes into account the *prevalence* of the condition being tested. This is a fact about the world that is based on previous experiences with patients developing the condition. 
+
+Another decision-making problem in medical screening comes from a different perspective: the individual patient. Here, the questions are how to respond to a ${\mathbb{P}}$ test result versus a ${\mathbb{N}}$ test result. This involves the values of the individual. It also involves the *prevalence* of the condition for a person such as the patient. This might include family history, display of symptoms, other test results.
+
+In summary, careful decision-making involves broad knowledge of the world and the benefits/costs of the different possible outcomes. 
+
+It is appropriate to see Null Hypothesis Testing as a sort of screening test. Rather than the test producing a ${\mathbb{P}}$ or ${\mathbb{N}}$ result, the results are named "reject the null" and "fail to reject the null." In a medical screening test, a blood sample (or other kind of sample) is taken; the medical lab puts the sample in a machine or under a microscope and reports the results. In NHT, the sample is a data frame; the result of the test comes from an automatic procedure such as performing permutation trials or using modeling software. Another similarities of NHT to medical screening is the *threshold*, typically $p < 0.05$, is used to translate the numerical output from the calculation into a "reject" or "fail to reject" conclusion. 
+
+The big difference between NHT and medical screening comes in how the threshold is set. In medical screening, facts and values---the loss function and the prevalence---are involved. The corresponding quantities for NHT would be 
+
+1. The *relative costs* of making each of two kinds of mistake: a false-positive in which the Null is falsely rejected; a false-negative in which the Null is not rejected even though it should have been. 
+
+2. The prevalence, that is, how often the Null is incorrect.
+
+
+
+
+
+
+testing is a mathematical procedure that can be useful as **part** of the decision-making process. Properly used, it can be only a part of the process, since it incorporates no judgment, knowledge of the field or the importance of the matter, or consideration of previous findings. Unfortunately, it is mis-interpreted as a replacement for judgment that gives mathematically precise results
+
+## Exercise: Sampling variation in p-value
+
+---------
 
 For the typical high-school student, the quadratic formula is part of a *standard operating procedure* (SOP) used to generate answers to textbook problems. Few students can replicate or even follow the balancing operations used to derive the formula, and few know how to identify real-world situations in which to apply quadratic polynomials or evaluate their effectiveness. 
 
@@ -16,10 +107,9 @@ Those small-sample methods were framed as a set of standard operating procedures
 
 SOPs are designed to deal practically with a particular environment. When the environment changes, the SOP becomes obsolete. For example, there is a SOP of long standing for financial transactions. When a purchase is made by check, the paper document is routed through various accounting procedures that take days to accomplish. When the bank branch receives the document, they compare it to the balance in the account identified on the check. If the balance is insufficient, the bank reverses the process, taking more days, and eventually the merchant finds out that the check is no good.
 
-This SOP was never perfect, but it worked acceptably well in the large majority of cases. That SOP would never work today: the volume of transactions is too large, merchants do not accept having to wait days, it is too easy to forge the paper document, and so on. Consequently, the world of financial transactions involves new SOPs that employ things like password protection, biometrics, and real-time evaluation of the buyer's account balance and the risk of fraud.
+This SOP was never perfect, but it worked acceptably well in the large majority of cases. That SOP would not work today: the volume of transactions is too large, merchants do not accept having to wait days, it is too easy to forge the paper document, and so on. Consequently, the world of financial transactions involves new SOPs that employ things like password protection, biometrics, and real-time evaluation of the buyer's account balance and the risk of fraud.
 
-Similarly, the environment in which NHT is used has changed very substantially since NHT became the SOP. NHT is no longer fit for the wild-goose chase purpose. This Lesson is about what has changed and what to do about it. 
-
+Similarly, the environment in which NHT is used has changed very substantially since NHT became the SOP. NHT is no longer fit for the wild-goose-chase purpose. This Lesson is about what has changed and what to do about it. 
 
 ## It's not small samples anymore
 

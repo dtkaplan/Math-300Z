@@ -305,7 +305,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-38.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">False discovery</span></a>
+  <a href="./Reading-notes-lesson-38.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Avoiding false discovery</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -328,7 +328,6 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#statistical-thinking" id="toc-statistical-thinking" class="nav-link" data-scroll-target="#statistical-thinking">Statistical thinking</a></li>
   <li><a href="#for-reference-important-word-pairs" id="toc-for-reference-important-word-pairs" class="nav-link" data-scroll-target="#for-reference-important-word-pairs">For reference: Important word pairs</a></li>
-  <li><a href="#software-guide" id="toc-software-guide" class="nav-link" data-scroll-target="#software-guide">Software guide</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -378,11 +377,11 @@ Note to students in Math 300
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Up to now, Math 300 has been following the <a href="http://openintro.com"><em>OpenIntro</em></a> textbook. For the remainder of the semester, however, we will continue with the lessons in this little book: <em>Lessons in Statistical Thinking</em>.</p>
+<p>Up to now, Math 300 has been following the <a href="http://moderndive.com"><em>ModernDive</em></a> textbook. For the remainder of the semester, however, we will continue with the lessons in this little book: <em>Lessons in Statistical Thinking</em>.</p>
 </div>
 </div>
 <p><em>Lessons in Statistical Thinking</em> is an update and reconsideration of the concepts and methods needed to extract information from data. Such an update is needed because the canon of traditional introductory statistics texts has long been obsolescent and fails to address the needs of the contemporary data scientist and decision-maker. That canon stems from an influential 1925 book, Ronald Fisher’s <em>Statistical Methods for Research Workers</em>. Research workers of that era typically ran small benchtop or field experiments with a dozen or fewer observations on each of two treatments. A first task with such small data is to rule out the possibility that calculated differences might reflect only the accidental arrangement of numbers into groups.</p>
-<p>Perhaps emblematic of the current dissatisfaction with small-data methods is the controversy over “statistical significance.” Although situated at the core of many statistics textbooks, significance testing has little to do with the meaning of “significant” as “important” or “relevant.” <a href="www/d41586-019-00857-9.pdf">This article</a> in the prestigious science journal <em>Nature</em> details the controversy. <a href="#fig-nature-significance">Figure&nbsp;<span>18.1</span></a> reproduces a cartoon from that article that puts the shortcomings of “statistical significance” in a historical context.</p>
+<p>Perhaps emblematic of the current dissatisfaction with small-data methods is the controversy over “statistical significance.” Although situated at the core of many statistics textbooks, significance testing has little to do with the everyday meaning of “significant” as “important” or “relevant.” <a href="www/d41586-019-00857-9.pdf">This article</a> in the prestigious science journal <em>Nature</em> details the controversy. <a href="#fig-nature-significance">Figure&nbsp;<span>18.1</span></a> reproduces a cartoon from that article that puts the shortcomings of “statistical significance” in a historical context.</p>
 <div class="cell page-columns page-full">
 <div class="cell-output-display page-columns page-full">
 <div id="fig-nature-significance" class="quarto-figure quarto-figure-center anchored page-columns page-full">
@@ -393,6 +392,18 @@ Note to students in Math 300
 </div>
 </div>
 </div>
+<p>Obsession with the mantra, “Correlation is not causation,” is another sign of the obsolescence of the traditional introduction to statistics. Around 1910, the pioneers of statistics were the first to emphasize an important innovation in scientific method: the randomized controlled trial (RCT). Adoption of the RCT in the twentieth century put several branches of science on a new footing. And many statistics instructors see “correlation is not causation” as a slogan pointing to the genuine importance of RCTs. Unfortunately, the mantra has been over-interpreted to mean the impossibility of causal knowledge without RCTs, as in the following cartoon (<a href="#fig-xkcd-correlation">Figure&nbsp;<span>18.2</span></a>):</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-xkcd-correlation" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="www/xkcd-correlation.png" class="img-fluid figure-img" width="459"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;18.2: <a href="https://xkcd.com/552/">XKCD’s take</a> on correlation and causation.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Nowadays, when data are used to inform policy decisions in many areas, the being statistically literate includes the need to make justifiable conclusions about causality. One approach to this was highlighted by the <a href="https://www.nobelprize.org/prizes/economic-sciences/2019/press-release/">2019 Nobel Prize</a> in economics; breaking down complex issues of global poverty into smaller, more manageable questions where an RCT is feasible. Another approach, using “natural experiments” was honored by the <a href="https://www.nobelprize.org/prizes/economic-sciences/2021/press-release/">2021 Nobel Prize</a>. There is no Nobel in computer science. The equivalent is the <a href="https://amturing.acm.org/award_winners/pearl_2658896.cfm">Turing Award, which in 2011</a> was awarded for “fundamental contributions to … probabilistic and causal reasoning.” That such prestigious awards are being given in the last decade demonstrates how recent and how important causal reasoning is and why the fundamentals of causality ought to be part a modern introduction to statistics, and consequently why they are a major theme in these Lessons.</p>
 <section id="statistical-thinking" class="level2">
 <h2 class="anchored" data-anchor-id="statistical-thinking">Statistical thinking</h2>
 <p>The work of today’s data scientists is often to discover novel connections among multiple variables and to guide decision-making. It is common for data to be available in large masses from <em>observations</em> rather than <em>experiments</em>. One common purpose is “prediction,” which might be as simple as the uses of medical screening tests or as breathtaking as machine-learning techniques of “artificial intelligence.” Another pressing need from data analysis is to understand possible causal connections between variables.</p>
@@ -409,77 +420,6 @@ Note to students in Math 300
 <p><strong>Model coefficient</strong> vs <strong>effect size</strong>. Model coefficients are numerical parameters. Training determines the appropriate values for the coefficients. In contrast, an effect size describes the relationship between the response variable and a selected explanatory variable.</p>
 <p><strong>Point estimate</strong> vs <strong>interval estimate</strong>. A point estimate is a single number. For instance, a model coefficient is a point estimate, as is the output from a model function. In contrast, interval estimates involve <em>two</em> numbers; one specifies the lower end of the interval and the other number specifies the upper end.</p>
 <p><strong>Prediction interval</strong> vs <strong>confidence interval</strong>. A prediction interval describes the anticipated range of the actual result for which we have made a prediction, e.g., “tomorrow’s wind will be between 5 and 10 mph.” A <strong>confidence interval</strong> is often used to express the uncertainty in a coefficient or effect size.</p>
-</section>
-<section id="software-guide" class="level2">
-<h2 class="anchored" data-anchor-id="software-guide">Software guide</h2>
-<p>These Lessons use about a dozen new R functions. Some of these are used frequently in examples and exercises and are worth mastering. Others appear only in <strong>demonstrations</strong>.</p>
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Demonstrations
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>These lessons contain <em>demonstrations</em> illustrating statistical concepts or data analysis strategies. We will place these in a distinctive box, of which this is an example.</p>
-<p>The demonstrations will often contain new computer commands that perform tasks used in teaching statistics. However, readers are <strong>not</strong> expected to be able to construct such commands on their own.</p>
-</div>
-</div>
-<ul>
-<li>Training models with data
-<ul>
-<li><strong><code>lm()</code></strong> arguments: i. tilde expression, ii. <code>data=</code> data frame.</li>
-<li>Occasionally, you will be directed to use <code>glm()</code> or <code>model_train()</code>, which work similarly to <code>lm()</code> but are specialized for models whose output is a <em>probability</em>.</li>
-<li><strong><code>zero_one()</code></strong> converts a two-level categorical variable to a 0/1 encoding.</li>
-</ul></li>
-<li>Summarizing models. These invariably take as input a model produced by <code>lm()</code> (or <code>glm()</code>) and generate a summary report about that model.
-<ul>
-<li><strong><code>coef()</code></strong>: displays model coefficients. Each coefficient is a single number.</li>
-<li><strong><code>conf_interval()</code></strong>: displays model coefficients as an <em>interval</em> with a lower and upper value.</li>
-<li><strong><code>rsquared()</code></strong> calculates the R<sup>2</sup> of a model, and some related measures.</li>
-<li><strong><code>regression_summary()</code></strong>, like <code>conf_interval()</code>, but with more detail.</li>
-</ul></li>
-<li>Evaluating a model on inputs
-<ul>
-<li><strong><code>model_eval()</code></strong> takes a trained model (as produced by <code>lm()</code>) and calculates the model output in both a point form and an interval form. <code>model_eval()</code> can also display the residuals from training or evaluation data.</li>
-</ul></li>
-<li>Graphics
-<ul>
-<li><code>model_plot()</code> draws a graphic of a model’s function optionally with prediction or confidence intervals.</li>
-<li><code>geom_violin()</code> is a modern alternative to <code>geom_boxplot()</code>.</li>
-</ul></li>
-<li>DAGs (directed, acyclic graphs)
-<ul>
-<li><strong><code>sample()</code></strong> collects simulated data from a DAG</li>
-<li><code>dag_draw()</code> draws a picture of a DAG showing how the variables are connected.</li>
-</ul></li>
-<li>Used within the <code>summarize()</code> data wrangling function:
-<ul>
-<li><strong><code>var()</code></strong> computes the variance of a single variable.</li>
-</ul></li>
-</ul>
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Demonstration
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Here are some of the command structures that appear in demonstrations. These explanations give a general idea of the tasks they perform.</p>
-<ul>
-<li><code>do(10) * {</code> <em>command</em> <code>}</code> causes the <em>command</em> to be executed repeatedly the indicated number of times. Such repetitions are useful when the <em>command</em> is a trial of a random process such as sampling, resampling, or shuffling.</li>
-<li><code>function(</code><em>arguments</em><code>) {</code> <em>set of commands</em> <code>}</code> packages in a single unit a set of one or more commands. The packaging facilitates using them over and over again with specified arguments.</li>
-<li><code>geom_errorbar()</code> works much like <code>geom_point()</code> but draws vertical bars instead of dots. Bar-shaped glyphs depict <em>intervals</em> such as confidence or prediction intervals.</li>
-<li><code>geom_ribbon()</code> is like <code>geom_line()</code> but for <em>intervals</em>.</li>
-<li><code>effect_size()</code> calculates the strength and direction of the input-output relationship between the response variable of a model and a selected <em>one</em> of the explanatory variables.</li>
-</ul>
-</div>
-</div>
 
 
 </section>

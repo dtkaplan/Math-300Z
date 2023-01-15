@@ -1,0 +1,12 @@
+# Notes for making the HEX sticker
+
+There are two phases:
+
+1. converting the background image into a hex. This is done at the zsh command line. The command comes from pip
+
+```sh
+~/Library/Python/3.8/bin/hexsticker signac.png -o image.png --padding-size 0  --border-color '#882F5E' --border-size 35
+```
+
+2. Copy the hex-shaped image.png into Keynote and add the rest of the labels.
+
