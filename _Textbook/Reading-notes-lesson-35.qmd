@@ -175,7 +175,7 @@ Typically the prevalence of a condition is different for different groups in the
 $$p(C {\ |\!\!|\  } \mathbb{P}) = \frac{0.95\times 0.2}{0.95\times 0.2 + 0.50*0.8} = 32\%$$
 
 
-## Screening tests
+## Screening tests {#sec-screening-tests}
 
 The reliability of a $\mathbb{P}$ result differs depending on the prevalence of C. A consequence of this is that medical screening tests are recommended for one group of people but not for another.
 
@@ -193,6 +193,35 @@ So what about women 75+? The prevalence of breast cancer is high in this group, 
 
 The [USPSTF web site](https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/breast-cancer-screening) goes into some detail about the reasoning for their recommendations. It's worthwhile reading to see what considerations went into their decision-making process.
 
+::: {.callout-note}
+## Example: Breast cancer and mammography {#sec-bcm}
+
+Let's look more closely at the details of breast-cancer screening. The reported sensitivity of digital mammography is 85% and the specificity is 90%.^[Diagnostic accuracy of digital versus film mammography: exploratory analysis of selected population subgroups in DMIST. Pisano ED, Hendrick RE, Yaffe MJ, et al. Radiology. 2008;246:376–383]
+
+The [National Cancer Institute](https://knowyourchances.cancer.gov/special_cancer_tables.php) publishes cancer-risk tables. @fig-cancer-nci-risk shows the NCI table for breast cancer.
+
+```{r echo=FALSE}
+#| label: fig-cancer-nci-risk
+knitr::include_graphics("www/breast-cancer-risk.png")
+```
+
+Women 60 to 70 have a risk of about 2%---we will take this as the prevalence. Out of 1000 such women:
+
+- 20 women have breast cancer, of whom 90% will receive a $\mathbb{P}$ test result. Consequently, 18 women with cancer get a $\mathbb{P}$ result.
+- 980 women do not have breast cancer. Since the test specificity is 85%, the probability of a $\mathbb{P}$ test result is 15%, so 147 women in this group will get a $\mathbb{P}$ result.
+
+Altogether, 165 out of the group of 1000 women will have a $\mathbb{P}$ result, of whom 18 have cancer. Thus, for a woman with a $\mathbb{P}$ result, the prevalence is 18/165, that is, 11%. Using the same logic, for a woman with a $\mathbb{N}$ result, the risk of cancer is reduced from 2% to about 0.2%. 
+
+The point of the screening test is to identify at low cost those women at higher risk of cancer. For mammography, that higher risk is 11%. This is by no means a definitive result.
+
+Now imagine that a different test for breast cancer is available, perhaps one that is more invasive and expensive and therefore not appropriate for women at low risk of cancer. Imagine that the sensitivity and specificity of this expensive test are also 90% and 85% respectively. Applying this second test to the 165 women who received a $\mathbb{P}$ result on the first test, about 16 of the women with cancer will get a second $\mathbb{P}$ result. But there are also about 147 people in the group of 165 who do not have cancer. These have a $1-0.85$ chance of a $\mathbb{P}$ positive test. Thus, there will be 22 women who do not have cancer but who nonetheless get a $\mathbb{P}$ result on the second test. The risk of having cancer for the $16+22$ women who have gotten a $\mathbb{P}$ result on both tests is $16/38 = 42\%$.
+
+EXERCISE: Calculate the cancer risk for those who get a positive result on the first test and a negative result on the second. (About 8%.)
+
+EXERCISE: What happens with a third, even more invasive/expensive test, with the 90/85 sensitivity/specificity. What is the risk for the women who get a positive result on that test. (About 82%.)
+
+
+:::
 
 ### The Loss Function
 
@@ -249,3 +278,13 @@ ggplot(Costs, aes(x=threshold)) +
 
 :::
 
+
+::: {.callout-warning}
+## EXERCISE Bayes theorem in odds form:
+
+Odds of alternative hypothesis after seeing data = Odds of alternative before seeing data TIME p(Data | Alt)/p(Data/Null)
+
+The quantity p(Data | Alt)/p(Data/Null) is called the Bayes factor.
+
+Calculate the Bayes factor for a given sensitivity and specificity. Use this to calculate the posterior odds and translate these back into the posterior probability.
+:::

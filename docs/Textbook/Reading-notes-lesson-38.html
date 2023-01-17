@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lessons in Statistical Thinking - 38&nbsp; False discovery</title>
+<title>Lessons in Statistical Thinking - 38&nbsp; Putting p-values in context</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -72,7 +135,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">False discovery</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Putting p-values in context</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -305,7 +368,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-38.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">False discovery</span></a>
+  <a href="./Reading-notes-lesson-38.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Putting p-values in context</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -324,13 +387,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#avoid-bad-habits" id="toc-avoid-bad-habits" class="nav-link active" data-scroll-target="#avoid-bad-habits">Avoid bad habits</a></li>
-  <li><a href="#false-discovery" id="toc-false-discovery" class="nav-link" data-scroll-target="#false-discovery">False discovery</a></li>
-  <li><a href="#sources-of-false-discovery" id="toc-sources-of-false-discovery" class="nav-link" data-scroll-target="#sources-of-false-discovery">Sources of false discovery</a></li>
-  <li><a href="#identifying-false-discovery" id="toc-identifying-false-discovery" class="nav-link" data-scroll-target="#identifying-false-discovery">Identifying false discovery</a></li>
-  <li><a href="#false-discovery-and-multiple-testing" id="toc-false-discovery-and-multiple-testing" class="nav-link" data-scroll-target="#false-discovery-and-multiple-testing">False discovery and multiple testing</a></li>
-  <li><a href="#example-organic-discovery" id="toc-example-organic-discovery" class="nav-link" data-scroll-target="#example-organic-discovery">Example: Organic discovery?</a></li>
-  <li><a href="#notes-in-draft" id="toc-notes-in-draft" class="nav-link" data-scroll-target="#notes-in-draft">NOTES IN DRAFT</a></li>
+  <li><a href="#sec-signif-not-magnitude" id="toc-sec-signif-not-magnitude" class="nav-link active" data-scroll-target="#sec-signif-not-magnitude">Significance does not measure magnitude</a></li>
+  <li><a href="#nht-as-a-screening-test" id="toc-nht-as-a-screening-test" class="nav-link" data-scroll-target="#nht-as-a-screening-test">NHT as a screening test?</a></li>
+  <li><a href="#sec-pitfalls-of-p" id="toc-sec-pitfalls-of-p" class="nav-link" data-scroll-target="#sec-pitfalls-of-p">Pitfalls of p-values</a></li>
+  <li><a href="#fixes" id="toc-fixes" class="nav-link" data-scroll-target="#fixes">Fixes</a></li>
+  <li><a href="#exercise-sampling-variation-in-p-value" id="toc-exercise-sampling-variation-in-p-value" class="nav-link" data-scroll-target="#exercise-sampling-variation-in-p-value">Exercise: Sampling variation in p-value</a></li>
   </ul>
 </nav>
     </div>
@@ -339,7 +400,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-lesson-38" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">False discovery</span></span></h1>
+<h1 class="title"><span id="sec-lesson-38" class="quarto-section-identifier d-none d-lg-block"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Putting p-values in context</span></span></h1>
 </div>
 
 
@@ -359,234 +420,291 @@ ul.task-list li input[type="checkbox"] {
 \newcommand{\Ntest}{\mathbb{N}}
 \newcommand{\given}{\ |\!\!|\  }\]</span></p>
 </div>
-<section id="avoid-bad-habits" class="level2">
-<h2 class="anchored" data-anchor-id="avoid-bad-habits">Avoid bad habits</h2>
-<p>NEEDS RE-ORGANIZATION</p>
-<p>Sometimes the interest is more general: Do any of these terms contribute to explaining variation in the response variable? In such situations, the appropriate p-value is one that compares one model to another. This style of p-value—not on the individual coefficients but on model terms—comes from a calculation called “analysis of variance.”</p>
-<hr>
-<p>Nobody likes to summarize their work with the word “fail.” And so, when “fail to reject the Null hypothesis” is the correct conclusion, people express this in softer ways.</p>
-<p>It’s very common for the conclusion “fail to reject the Null” simply not to be reported at all. Historically, and even today, some journals will not accept for publication a scientific article with the conclusion “fail to reject the Null.”</p>
-<p>Consider the situation of a researcher whose years-long project has led to a p-value of 0.07. To soften the blow of “fail to reject,” the researcher will report the p-value itself so that the reader can see how close it is to small. In some literatures, you will see language like “tending to significance” instead of “fail to reject.” In some fields, research publications will show the notation <span class="math inline">\(p &lt; 0.1\)</span>. This also indicates failure to reject the null hypothesis.</p>
-<p>Journalists eager to publish reports about scientific work, but facing a p-value that is a little too large, will occasionally qualify their report with this phrase: “… although the work did not reach the rigorous scientific standard for statistical significance.”</p>
-<p>All of these are dodges. There’s nothing “rigorous” about <span class="math inline">\(p &lt; 0.05\)</span> although seems unfair that a researcher who had a plausible idea and did the work to test it honestly does not get to publish that work and receive acknowledgement that they are a hard-working part of the overall scientific enterprise.</p>
-<hr>
-<p>Another problem with p-values stems from misinterpretation of the admittedly difficult logic that underlies them. The misinterpretations are encouraged by the use of the term “<strong>tests of significance</strong>” to the p-value method. Particularly galling is the use of the description “<strong>statistically significant</strong>” to describe a result where p &lt; 0.05. The everyday meaning of “significant” as something of importance is in no way justified by p &lt; 0.05. Instead, the practical importance or not is more clearly signaled by examining an effect size. (It’s extremely disappointing that journalists, who are writing for an audience that for the most part has no understanding of p-value methodology, use “significant” when reporting on the statistics of research findings. It would be more honest to use a neutral term such as “null-validated” or “p-validated” which does not confuse the statistical result with actual practical importance.)</p>
-<hr>
-<p>This example of a regression table shows that p-values can sometimes be very, very small. Such smallness is often mis-interpreted as indicating that a very powerful result has been found. This is simply nonsense, which is why the more dignified notation <span class="math inline">\(p &lt; 0.05\)</span> or <code>*</code> is to be preferred.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-“Significance” and significant digits
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>In the regression summary of the <code>height ~ mother</code> model, the p-value on the <code>mother</code> coefficient was reported as <code>1.079105e-09</code>. This is a symptom of the choice by software designers to report more digits than are genuinely useful.</p>
-<p>Statistician Jeffrey Witmer, in an editorial in the <a href="https://www.tandfonline.com/doi/full/10.1080/10691898.2019.1702415"><em>Journal of Statistics Education</em></a>, distinguishes between the “mathematical” information in a p-value and the “statistical” information. Mathematically, the p-value is the result of a calculation. Statistically, the p-value is used as a symbol to indicate whether the Null hypothesis is a plausible explanation for a statistical result.</p>
-<p>Witmer proposes a simple rule for printing p-values: Round to 1 significant digit. This means that a p-value computed to be 0.382 would be reported as 0.4. A p-value of 0.0079 would be reported as 0.008. The justification for this rule is that there is no information in the second non-zero digit of a p-value that can meaningfully guide a conclusion about whether the Null hypothesis is a plausible explanation for a statistical result. There may be a mathematical difference between 0.0079 and 0.008, but there is no meaningful statistical difference.</p>
-<p>Witmer also offers a simple solution to the problem of people misinterpreting “statistically significant” as related to the everyday meaning of “significant.” Replace the term “statistically significant” with “statistically discernible.” There is no difference between the everyday sense of “discernible”—able to be perceived—and the statistical implications. In conveying statistical information, “discernible” is more descriptive than “significant.” For example, it would be appropriate to describe the implications of a p-value <span class="math inline">\(p &lt; 0.03\)</span> as, “the relationship is barely discernible from the sampling variation.”</p>
-</div>
-</div>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Use the confidence interval instead
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>NHT applied to an effect size is intended to demonstrate whether the effect size is sufficiently far from zero that we can reasonably conclude that it is non-zero. There is a simpler way to do this: look at the confidence interval on the effect size.</p>
-<p>But, for those journals that (unwisely) require p-values, you’ll have to use NHT to generate them.</p>
-</div>
-</div>
-<p>Since “fail” and “reject” are unattractive words, in practice other expressions are used. One of the notations is <span class="math inline">\(p &lt; 0.05\)</span>, another is to put a asterisk (<span class="math inline">\(^\star\)</span>) next to the value of the effect size or R<sup>2</sup>. Both of these correspond to “reject the Null.” The notation used for “fail to reject” is to put nothing next to the effect size or R<sup>2</sup>, but it would be more appropriate simply to list the effect size as “n.s.” to stand for “not significant.”</p>
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-In Draft: Power
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Mention the idea of power and why it’s helpful to look at power when interpreting a “failure to reject.”</p>
-</div>
-</div>
-<hr>
-<p>There is, I think, a helpful analogy to be made between hypothesis testing and the familiar ways that we try to avoid information overload on the Internet.</p>
-<p>“Internet protocols” organize communication into standard format “packets” that are easily and rapidly transmitted, routed, and received. These packets make possible the vast web of connections that is the Internet. Anyone can put any digital content they like <em>inside</em> a packets; the protocols are neutral in this regard. The Internet protocols were <em>not</em> designed to determine what content is worth transmitting and what is worth receiving. We rely on other systems for that, mostly at the receiving end. There are spam filters to avoid email accounts being flooded with worthless or harmful messages. There are recommender systems that compare your history of music or movie streaming to that of others in order to identify what new content you might like. Search engines look inside web pages to identify connections and rank highly those pages that are linked to by other highly ranked pages. These systems leave creators free to follow their interests, ideas, and imaginations, while providing a little guidance to people who want to access some content but avoid being overcrowded by other content that is not worthwhile.</p>
-<p>Historically, there were earlier waves of technology that increased the ability to communicate. Printing and postal systems emerged in the 13th and following systems. Before those innovations, communication was outrageously expensive, requiring hand-copying of manuscripts, couriers, and camel trains. Content was controlled to some extent by authorities: government censorship; church “indices” and spritual authorities; and often the authorities of those famous classical philosophers and poets whose work and thought was promulgated by early universities.</p>
-<p>About four centuries ago, such authorities were being challenged. It slowly became accepted to make judgements based on observations and to disregard antique authorities. Enlightened “scientists” communicated their discoveries in hand-written letters to one another.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> In the late 1600s, another, possibly more efficient means of communication was developed: scientific societies where members met and read aloud their work to an audience, and the journals of such societies which enabled mass communication to those scientists distant from the society’s meetings in time or space.</p>
-<p>Early scientific journals are delightful collations on diverse and miscellaneous subjects. Everything seems to have been of interest to everyone. Publication was regulated by the recommendations of “members” of the society; new members were admitted by the consensus of earlier members.</p>
-<p>Over the centuries, the growth of scientific content and the specialization of methodology called for research findings to be sorted by area. But there was still need to regulate publication, to avoid distracting readers with worthless information.</p>
-<p>Hand-in-hand with the scientific revolution’s reliance on observation and data rather than authority came the need to standardize methods for summarizing data. This might be called a “statistical protocol” by analogy to Internet protocols, but there is no wise governing body, only consensus and “accepted practice.”</p>
-<p>The data from a bench-top experiment might consist of, say, six numbers: three from the treatment and three from controls. The arithmetic means of these two groups is practically certain to be non-zero, even if the the treatment had no effect. This meant that a means was needed to establish when the difference in means was large enough to suggest the two groups might be genuinely different and that the treatment did have an effect. The statistical protocol to decide such things needed to be simple: computers weren’t available and there were no courses to teach statistical method until the 1960s. In the 1930s, prominent statistical pioneer Ronald Fisher published a slim volume, <em>Statistical Methods for Research Workers</em> which laid out methods for managing and standardizing the calculations. Fisher’s authority was substantial but not absolute. Differing philosophical views also came to influence “accepted practice.”</p>
-<p>Early statistics books and courses codified “accepted practice.” What emerged is the system of calculations that we call “hypothesis testing” and the ubiquitous p-value. Still, this was rooted in the need to avoid journals wasting library-shelf-space and reader time with experiments that produced arithmetic differences between groups that were accidental and not genuinely “significant.’</p>
-<p>The now-codified accepted practice was in many ways similar to the protocols used by search engines and social media to direct our eyes and ears to content that might, possibly, be worthwhile. These systems are far from perfect, sometimes hiding good content or promoting worthless content. And, of course, the worth of content is a matter of personal interests and values, something that computer algorithms can mimic only imperfectly.</p>
-<p>“Hypothesis testing” is an ad hoc set of not always consistent concepts cobbled together by a unorganized community of independent researchers, steered perhaps by the perceived authority of one statistical celebrity or another. It is not a mathematically derived, highly optimized calculation of objective worth, just a simple means to deal with the fact that arithmetic differences are influenced by sampling variation and noise, and that a detected difference might not reliably point to a genuine difference between groups.</p>
-<p>It is simply not possible to understand hypothesis testing in the same way you can understand differentiation or data wrangling.</p>
-<p>Hypothesis testing emerged in an era of bench-top and agricultural experiments conducted by a small community of self-identified scientists working without central control. It might have been a practicable solution to the problem of information overload in that era of small data. But the protocol has been frozen in place by textbooks; each generation passing it along to the next as received wisdom, in much the same way as the views of classical philosophers and poets were passed down to later generations as authoritative and unchallengeable.</p>
-<p>So lets step back from this frozen statistical protocol of hypothesis testing and point out inconsistencies and peculiarities that make it hard to make sense of and perhaps unsuited to the needs of handling information overload in todays world of big data and huge scientific enterprise.</p>
-<p>p-value is an inseparable tangle of the amount of data available and the effect size. With enough data, practically everything has a small p-value.</p>
-<p>Hundreds of thousands (perhaps millions) of scientists churning out research results. A filter that eliminates 95% of the nonsense still lets through an unfathomable mass of content.</p>
-<p>So many choices in research and analysis methods—which covariates to include, whether to exclude an inconvenient point as an outlier, multiple choices for the response variable, all combined with a professional priority to “publish or perish.”</p>
-</section>
-<section id="false-discovery" class="level2">
-<h2 class="anchored" data-anchor-id="false-discovery">False discovery</h2>
-<p>SIMPLIFY THIS. Make a DAG with hundreds of explanatory variables, none of which is connected to the response variable.</p>
-</section>
-<section id="sources-of-false-discovery" class="level2">
-<h2 class="anchored" data-anchor-id="sources-of-false-discovery">Sources of false discovery</h2>
-<p>[NEEDS STREAMLINING and take out references to examples like Potomac/Austin]</p>
-<p>How did the coupon classifier system identify so many accidental patterns, patterns that existed in the training data but not in the testing data?</p>
-<p>One source of false discovery stems from having multiple potential response variables. In the Potomac/Austin example, there were ten different classifiers at work, one for each of the ten Austin products. Even if the probability of finding an accidental pattern in one classifier is small, looking in ten different places dramatically increases the odds of finding something.</p>
-<p>Similarly, having a large number of explanatory variables – we had 100 in the coupon classifier – provides many opportunities for false discovery. The probability of an accidental pattern between one outcome and one explanatory variable is small, but with many explanatory variables each being considered it’s much more likely to find something.</p>
-<p>A third source of false discovery at work in the coupon classifier relates to the family of models selected to implement the classifier. We used a tree model classifier capable of searching through the (many) explanatory variables to find ones that are associated with the response outcome. Unbridled, the tree model is capable of very fine stratification. Each coupon classifiers stratified the customers into about 200 levels. On average, then, there were about 50 customers in each strata. But there is variation, so many of the strata are much smaller, with ten or fewer customers. The small groups were constructed by the tree-building algorithm to have similar outcomes among the members, so it’s not surprising to see a very strong pattern in each group. For each classifier, about 15% of all customers fall into a strata with 20 or fewer customers.</p>
-</section>
-<section id="identifying-false-discovery" class="level2">
-<h2 class="anchored" data-anchor-id="identifying-false-discovery">Identifying false discovery</h2>
-<p>We use data to build statistical models and systems such as the coupon-assignment machine. False discovery occurs when a pattern or model performance seen with one set of data does not generalize to other potential data sets.</p>
-<p>The basic technique to avoid false discovery is called <strong>cross validation</strong>. One simple approach to cross validation splits the data frame into two randomly selected non-overlapping sets of rows: one for training and the other for testing. Use the training data to build the system. Use the <em>testing</em> data to evaluate the system’s performance.</p>
-<p>Most often, cross validation is used to test model prediction performance such as the root-mean-square error or the sensitivity and specificity of a classifier. This can be accomplished by taking the trained model and providing as input the explanatory variables from the testing data, then comparing the model output to the actual response variable values in the testing data. Note that using testing data in this way does not involve retraining the model on the testing data.</p>
-<p>How big should the training set be compared to the testing set? For now, we’ll keep things simple and encourage use of a 50:50 split or something very close to that.</p>
-<p>This is a simple and reliable approach that should always be used.</p>
-</section>
-<section id="false-discovery-and-multiple-testing" class="level2">
-<h2 class="anchored" data-anchor-id="false-discovery-and-multiple-testing">False discovery and multiple testing</h2>
-<p>When the main interest is in an effect size, standard procedure calls for calculating a confidence interval on the effect. For example, a 2008 study examined the possible relationship between a woman’s diet before conception and the sex of the conceived child. The popular press was particularly taken by this result from the study:</p>
+<p>Lesson -<a href="Reading-notes-lesson-19.html"><span>Chapter&nbsp;19</span></a> presented an example about the effect of COVID on childhood development. We quoted from a <a href="https://www.economist.com/international/2022/12/15/the-pandemics-indirect-effects-on-small-children-could-last-a-lifetime">news article from <em>The Economist</em></a> summarizing one study that looked at infant and toddler vocal interactions with parents:</p>
 <blockquote class="blockquote">
-<p>Women producing male infants consumed more breakfast cereal than those with female infants. The odds ratio for a male infant was 1.87 (95% CI 1.31, 2.65) for women who consumed at least one bowl of breakfast cereal daily compared with those who ate less than or equal to one bowlful per week. <span class="citation" data-cites="fetal-sex-2008">(<a href="#ref-fetal-sex-2008" role="doc-biblioref"><strong>fetal-sex-2008?</strong></a>)</span></p>
+<p><em>“During the pandemic the number of such "conversations" declined. ….”[g]etting lots of interaction in the early years of life is essential for healthy development, so these kinds of data "are a red flag".”</em></p>
 </blockquote>
-<p>The model here is a classifier of the sex of the baby based on the amount of breakfast cereal eaten. The effect size tells the change in the odds of a male when the explanatory variable changes from one bowlful of cereal per week to one bowl per day (or more). This effect size is sensibly reported as a ratio of the two odds. A ratio bigger than one means that boys are more likely outcomes for the one-bowl-a-day potential mother than the one-bowl-a-week potential mother. The 95% confidence interval is given as 1.31 to 2.65. This confidence interval does not contain 1. In a conventional interpretation, this provides compelling evidence that the relationship between cereal consumption and sex is not a false pattern.</p>
-<p>But the confidence interval is not the complete story. The authors are clear in stating their methodology: “Data of the 133 food items from our food frequency questionnaire were analysed, and we also performed additional analyses using broader food groups.” In other words, the authors had available more than 133 potential explanatory variables. For each of these explanatory variables, the study’s authors constructed a confidence interval on the odds ratio. Most of the confidence intervals included 1, providing no compelling evidence of a relationship between that food item and the sex of the conceived child. As it happens, breakfast cereal produced the confidence interval that was the most distant from an odds ratio of 1.</p>
-<p>Let’s look at the range of confidence intervals that can be found from studying 100 potential random variables that are each unrelated to the response variable. We’ll simulate a response randomly generated “sex” G and B where the odds of G is 1. Similarly, each explanatory variable will be a randomly generated “consumption” high or low where the odds of high is 1. A simple stratification of sex by consumption will generate the odds of G for those cases with consumption Y and also the odds of G for those cases with consumption N. Taking the ratio of these odds gives, naturally enough, the odds ratio. We can also calculate from the stratified data a 95% confidence interval on the odds ratio.</p>
-<p>So that the results will be somewhat comparable to the results in <span class="citation" data-cites="fetal-sex-2008">(<a href="#ref-fetal-sex-2008" role="doc-biblioref"><strong>fetal-sex-2008?</strong></a>)</span>, we’ll use a similar sample size, that is, n = 740. Table @ref(tab:sex-consumption-1) shows one trial of the simulation.</p>
+<p>Part of statistical thinking involves replacing vague words like “lots” and “essential” with quantitative measures. The next score of Lessons introduced methods for extracting quantitative information from data and ways to present meaningful information to human decision-makers.</p>
+<p>This Lesson is about one way of formatting information—statistical significance—that is widely used throughout the sciences and appears widely in the press, but which often obscures much more than it reveals. The “statistically significant” format appears, for instance, in a statement from the <a href="https://www.lena.org/covid-infant-vocalizations-conversational-turns/">research report</a> on which the above quote was based.</p>
+<blockquote class="blockquote">
+<p>“Children from the COVID-era sample produced significantly fewer vocalizations than their pre-COVID peers.”</p>
+</blockquote>
+<p>The link between “fewer vocalizations” and “healthy development” is based on a highly cited research paper<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> which states that “The amount of parenting per hour and the quality of the verbal content associated with that parenting were strongly related to the social and economic status of the family and the subsequent IQ of the child,” and characterizes correlation between IQ and a toddler’s exposure to verbal content as “highly significant.”</p>
+<section id="sec-signif-not-magnitude" class="level2">
+<h2 class="anchored" data-anchor-id="sec-signif-not-magnitude">Significance does not measure magnitude</h2>
+<p>The magnitude of the link between vocalizations and IQ is expressed by an effect size which has units of IQ-points per vocalization-point. Many researchers prefer, however, to “standardize” both variables so that they have mean 0 and a standard deviation of 1 with no units. Hart &amp; Risley reported an effect size of 0.63 for standardized IQ to standardize vocalization score.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>Imagine that the social importance of a finding such as in Hart and Risley is that it introduces the prospect of a child-development intervention where parents are trained and encouraged to improve the level of verbal interaction with their infants and toddlers. The improvement in verbal interaction would—if the effect size reported is truly a causal connection—create an improvement in IQ.</p>
+<p>The impact of educational interventions is often measured in units of “SDs.” For instance, if school reading scores have a mean of 100 and a standard deviation of 15, then an intervention—giving out books for kids to read at home, say—which increases the mean score to 105 would have an effect size of 1/3 SD, since the mean gain (5 points) is one-third the standard deviation of the reading scores. <a href="https://www.cgdev.org/sites/default/files/how-big-are-effect-sizes-international-education-studies.pdf">Examination of interventions in education</a> indicates that the median effect size is 0.1 SD and the 90th-percentile is at 0.4 SDs.</p>
+<p>Suppose we are mildly optimistic about the impact of an intervention to improve parent-toddler verbal interaction and imagine that the effect size might be around 0.2 SD. This improvement would then be filtered through the Hart &amp; Risley effect size (0.63), to produce a standardized change in IQ of <span class="math inline">\(0.2 \times 0.63 = 0.13\)</span> SD. Consider the impact this would have on a child at the 10th-percentile of IQ. After the intervention, the child could be expected to move to the 12.5-percentile of IQ. That is not a big change; certainly not enough to justify characterizing child-parent interactions as “essential” to development, and not one to merit calling the link “highly significant” if significant is interpreted in its everyday meaning.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>For the decision-maker trying to evaluate how to allocate resources, the magnitude of an effect carries important information. The p-value combines together the effect size and the sample size. It can be made as small as you like by making the sample size large enough.</p>
+<p>::: {.callout-note} ## Example: p-value and sample size</p>
+<p>To explore how the p-value depends on sample size, let’s use <code>dag01</code> which implements a simple linear relationship between two variables, <code>x</code> and <code>y</code>.</p>
 <div class="cell">
-
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dag01)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>x ~ exo()
+y ~ 1.5 * x + 4 + exo()</code></pre>
 </div>
+</div>
+<p>The formula for <code>y</code> shows an effect size of <code>x</code> on <code>y</code> of 1.5.</p>
+<p>We can also estimate the effect size from a data sample from <code>dag01</code>. We anticipate getting the same result, but there will be sampling variation. For instance:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">100</span>)) <span class="sc">%&gt;%</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 
-<table>
-<caption>
-(ref:sex-consumption-1-cap)
-</caption>
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:right;"> .lwr </th>
+   <th style="text-align:right;"> .upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 3.855413 </td>
+   <td style="text-align:right;"> 4.252289 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> x </td>
+   <td style="text-align:right;"> 1.466651 </td>
+   <td style="text-align:right;"> 1.851111 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Using a larger sample will reduce sampling variation; the confidence interval will be tighter but the effect size will remain in about the same place.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">400</span>)) <span class="sc">%&gt;%</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:right;"> .lwr </th>
+   <th style="text-align:right;"> .upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 3.835342 </td>
+   <td style="text-align:right;"> 4.037483 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> x </td>
+   <td style="text-align:right;"> 1.440449 </td>
+   <td style="text-align:right;"> 1.644609 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The p-value works differently. It depends systematically on the sample size. For example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">10</span>)) <span class="sc">%&gt;%</span> <span class="fu">regression_summary</span>() <span class="sc">%&gt;%</span> <span class="fu">filter</span>(term<span class="sc">==</span><span class="st">"x"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:right;"> estimate </th>
+   <th style="text-align:right;"> std.error </th>
+   <th style="text-align:right;"> statistic </th>
+   <th style="text-align:right;"> p.value </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> x </td>
+   <td style="text-align:right;"> 0.8699924 </td>
+   <td style="text-align:right;"> 0.5572954 </td>
+   <td style="text-align:right;"> 1.561098 </td>
+   <td style="text-align:right;"> 0.1571238 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">20</span>)) <span class="sc">%&gt;%</span> <span class="fu">regression_summary</span>() <span class="sc">%&gt;%</span> <span class="fu">filter</span>(term<span class="sc">==</span><span class="st">"x"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:right;"> estimate </th>
+   <th style="text-align:right;"> std.error </th>
+   <th style="text-align:right;"> statistic </th>
+   <th style="text-align:right;"> p.value </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> x </td>
+   <td style="text-align:right;"> 1.652977 </td>
+   <td style="text-align:right;"> 0.2331389 </td>
+   <td style="text-align:right;"> 7.090097 </td>
+   <td style="text-align:right;"> 1.3e-06 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">30</span>)) <span class="sc">%&gt;%</span> <span class="fu">regression_summary</span>() <span class="sc">%&gt;%</span> <span class="fu">filter</span>(term<span class="sc">==</span><span class="st">"x"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:right;"> estimate </th>
+   <th style="text-align:right;"> std.error </th>
+   <th style="text-align:right;"> statistic </th>
+   <th style="text-align:right;"> p.value </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> x </td>
+   <td style="text-align:right;"> 1.490128 </td>
+   <td style="text-align:right;"> 0.1839867 </td>
+   <td style="text-align:right;"> 8.099108 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>To show the relationship more systematically, <span class="quarto-unresolved-ref">?fig-dag01-p-value</span> shows many trials involving taking a sample from <code>dag01</code> and calculating a p-value.</p>
+<div class="cell" data-hash="Reading-notes-lesson-38_cache/html/fig-dag0-p-value_20789b80549359e085d30e502167494a">
+<div class="cell-output-display">
+<div id="fig-dag0-p-value" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Reading-notes-lesson-38_files/figure-html/fig-dag0-p-value-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;38.1: Many trials of the p-value from the model <code>y ~ x</code> using data from <code>dag01</code>. As the sample size becomes larger, the p-value becomes very small. There is also a lot of sampling variation.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Each of these trials involves taking a sample from a system whose effect size is 1.5. Yet the p-values become tremendously small even at moderate sample sizes. Notice that at a given sample size, the p-value can differ by a factor of 100 or more between samples.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+The “Power” of a test
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notice in <a href="#fig-dag0-p-value">Figure&nbsp;<span>38.1</span></a> that many of the trials fail to meet the standard of <span class="math inline">\(p &lt; 0.05\)</span> even though all of the trials involve samples from a system where the Null hypothesis is false. For example, with a sample size of <span class="math inline">\(n=5\)</span>, only about half of the trials generated <span class="math inline">\(p&lt;0.05\)</span>. In contrast, when <span class="math inline">\(n=10\)</span>, almost all of the trials produced <span class="math inline">\(p &lt; 0.05\)</span>. The probability that a sample from a system with a given effect size will produce <span class="math inline">\(p&lt;0.05\)</span> is called the “power” of the test.</p>
+</div>
+</div>
+</section>
+<section id="nht-as-a-screening-test" class="level2">
+<h2 class="anchored" data-anchor-id="nht-as-a-screening-test">NHT as a screening test?</h2>
+<p>Null Hypothesis Testing was invented to serve a genuine but very limited need of the research workplace. The workplace need is this: When working with small samples it is plausible to imagine that the results we get are just the outcome of sampling variation, the play of chance. If the methods for working with the small samples frequently cause us to mistake sampling variation for genuine, meaningful findings of scientific import, science workers would waste a lot of time on wild goose chases and the scientific enterprise would progress only slowly.</p>
+<p>Lesson -<a href="Reading-notes-lesson-35.html"><span>Chapter&nbsp;35</span></a> discussed <strong>screening tests</strong>: imperfect but low-cost procedures intended to separate low-risk patients from those at a higher risk. Keep in mind that “higher risk” does not mean “high risk.” In the breast-cancer example in <span class="quarto-unresolved-ref">?sec-bcm</span>, we found that digital mammography separates a population whose risk is 2% into two sub-populations: those with a <span class="math inline">\(\mathbb{P}\)</span> result have a risk of 11% of cancer, those with a <span class="math inline">\(\mathbb{N}\)</span> result have a 0.2% risk.</p>
+<p>It is useful for understanding the potential problems of NHT to reframe it as a screening test. Every screening test involves at least two hypotheses. For mammography, the hypotheses are “the patient has cancer” and “the patient does not have cancer.” In contrast, NHT involves only one hypotheses: the Null. To create a screening-test-like situation for NHT, we need to introduce another hypothesis. This second hypothesis is that, unlike the Null, something interesting or worthwhile is going on. Generically, the second hypothesis is called the “<strong>Alternative hypothesis</strong>.” This name on its own doesn’t describe the hypothesis; more on that later.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<p>In the following, we will treat the Alternative hypothesis as akin to “no cancer” and the Null hypothesis as akin to “cancer.” Similarly, we will label “reject the Null hypothesis” as the <span class="math inline">\(\mathbb{N}\)</span> result and “fail to reject” as <span class="math inline">\(\mathbb{P}\)</span>. Putting these together into a 2x2 table let’s us label the various possibilities in terms of false positives, false negatives, and so on.</p>
+<table class="table">
 <thead>
-<tr>
-<th style="text-align:left;">
-</th>
-<th style="text-align:right;">
-high
-</th>
-<th style="text-align:right;">
-low
-</th>
+<tr class="header">
+<th style="text-align: center;">.</th>
+<th>Reject (<span class="math inline">\(\mathbb{N}\)</span>)</th>
+<th>Fail to reject (<span class="math inline">\(\mathbb{P}\)</span>)</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-B
-</td>
-<td style="text-align:right;">
-165
-</td>
-<td style="text-align:right;">
-182
-</td>
+<tr class="odd">
+<td style="text-align: center;">Null hyp.</td>
+<td>false negative</td>
+<td>true positive</td>
 </tr>
-<tr>
-<td style="text-align:left;">
-G
-</td>
-<td style="text-align:right;">
-211
-</td>
-<td style="text-align:right;">
-182
-</td>
+<tr class="even">
+<td style="text-align: center;">Alternative hyp.</td>
+<td>true negative</td>
+<td>false positive</td>
 </tr>
 </tbody>
-
 </table>
-<p>(ref:sex-consumption-1-cap) A stratification of sex outcome (B or G) on consumption (high or low) for one trial of the simulation described in the text.</p>
-<p>Referring to Table @ref(tab:sex-consumption-1), you can see that the odds of G when consumption is low is 182 / 182 = 1. The odds of G when consumption is high is 211/165 = 1.28. The 95% confidence interval on the odds ratio can be calculated. It is 0.95 to 1.73. Since that includes 1, the data underlying Table @ref(tab:sex-consumption-1) provide little or no evidence for a relationship between sex and consumption. This is exactly what we expect, since the simulation involves entirely random data.</p>
-<p><a href="#fig-sex-consumption-simulation">Figure&nbsp;<span>38.1</span></a> shows the 95% confidence interval on the odds ratio for 133 trials like that in Table @ref(tab:sex-consumption-1). The confidence interval from each trial is shown as a horizontal line. The large majority of them include 1. That’s to be expected because the data have been generated so that sex and consumption have no relationship except those arising by chance.</p>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: `geom_vline()`: Ignoring `mapping` because `xintercept` was provided.</code></pre>
-</div>
-<div class="cell-output-display">
-<div id="fig-sex-consumption-simulation" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Reading-notes-lesson-38_files/figure-html/fig-sex-consumption-simulation-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;38.1: Confidence intervals on the odds ratio comparing female and male birth rates for many trials of simulated data with no genuine relationship between the explanatory and response variables.</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Nonetheless, out of 133 simulations there are six where the confidence interval does not include 1. These are shown in red. By necessity, one of the intervals will be the most extreme. If instead of numbering the simulations, we had labelled them with food items – e.g.&nbsp;grapefruit, breakfast cereal, toast – we would have a situation very similar to what seems to have happened in the sex-vs-food study. (For a more detailed analysis of the impact of multiple testing in <span class="citation" data-cites="fetal-sex-2008">(<a href="#ref-fetal-sex-2008" role="doc-biblioref"><strong>fetal-sex-2008?</strong></a>)</span>, see <span class="citation" data-cites="young-2009">(<a href="#ref-young-2009" role="doc-biblioref"><strong>young-2009?</strong></a>)</span>.)</p>
-<p>Suppose now that half of the data used in <span class="citation" data-cites="fetal-sex-2008">(<a href="#ref-fetal-sex-2008" role="doc-biblioref"><strong>fetal-sex-2008?</strong></a>)</span> had been held back as testing data. Using the training data, it would be an entirely legitimate practice to generate hypotheses about which specific food items might be related to the sex of the baby. The validity of any one selected hypothesis could then be established using the testing data without the ambiguity introduced by multiple testing. The testing data confidence interval can be taken at face value; the training data confidence interval cannot.</p>
+<p>The false-negative result corresponds to the scientific wild-goose chase. This occurs when the Null is true but the test result is to <em>fail</em> to reject the Null. The point of NHT is to reduce the frequency of false negatives by making it hard to get a <span class="math inline">\(\mathbb{N}\)</span> result unless the Alternative hypothesis is true.</p>
+<p>Recall that screening tests are intended to be cheap: easy to apply without imposing pain or cost or effort. Certainly, the NHT is cheap and easy. It doesn’t require any creativity or knowledge of the setting. The Null hypothesis is easy to state (“nothing is going on”) and the raw test result—the p-value—is easy to compute, for example by using a computer to shuffle the order of an explanatory variable or reading the result from a regression summary. The threshold for turning the raw test result into a <span class="math inline">\(\mathbb{P}\)</span> test output is also stated very simply in NHT: <span class="math inline">\(p &lt; 0.05\)</span>.</p>
+<p>In order to calculate the false-negative rate, we need two pieces of information:</p>
+<ol type="1">
+<li><p>The sensitivity of the test. We will frame this as the probability of a <span class="math inline">\(\mathpp{P}\)</span> result given that the Null is actually true. We know this exactly, since the threshold for rejection is <span class="math inline">\(p &lt; 0.05\)</span>. This puts the sensitivity at 95%.</p></li>
+<li><p>The prevalence of the condition. This is a tough one. We are interested in, out of all the research projects that a research worker might consider worth undertaking, in how many of them there really is no effect. It is tempting to believe that a skilled researcher knows where to focus her effort: a high prevalence. But anyone who has worked in a laboratory knows different. For example, Thomas Edison said, “Ninety-eight per cent. of genius is hard work. As for genius being inspired, inspiration is in most cases another word for perspiration.” In the following, we will use what seems to us a highly optimistic rate, and set the prevalence at 60%.</p></li>
+</ol>
+<p>Notice that we don’t need to know the <em>specificity</em> of the test in order to calculate the false-negative rate. The specificity would come into play only if we wanted to know what a <span class="math inline">\(\mathpp{N}\)</span> test has to say about the possibility of the Alternative being true.</p>
+<p>To show the theoretically beneficial effect of NHT, let’s imagine a set of 1000 research projects that a worker might undertake.</p>
+<ol type="1">
+<li><strong>False-negative rate</strong>: Since the prevalence is 60%, 600 of these 1000 research projects wild-goose chases. Of these, 95% will get a correct <span class="math inline">\(\mathpp{N}\)</span> result, leaving only 5% as false negatives. So, of the 1000 research projects, <span class="math inline">\(600 \times 0.05 = 30\)</span> will be false negatives, a rate of 3% of the original 1000 research projects.</li>
+</ol>
+<p>Now, let’s consider the true-negative rate. “Negative” refers to “rejecting the Null,” while “true” means that something interesting is going on in the system under study. To calculate the true-negative rate, we need to know the <em>specificity</em> of the test. Specificity is the probability of a <span class="math inline">\(\mathpp{N}\)</span> result (that is, “reject the Null”) in a world where the Alternative hypothesis is true. This is the “power” of the test. (See <span class="quarto-unresolved-ref">?sec-power-definition</span>.) Naturally, to calculate this probability we need some statement about what the p-value will look like when the Alternative is true. <span class="quarto-unresolved-ref">?sec-bcm</span> shows p-values when the Alternative is the mechanism of <code>dag01</code>. A standard in proper scientific work is that the power should be at least 80%. However, since NHT does not involve an Alternative hypothesis, usually the power is (unfortunately) not presented in research reports. We will stipulate here that the power (that is, the specificity) is 80%. Later, we will consider what happens if the power is lower.</p>
+<ol start="2" type="1">
+<li><strong>True-negative rate</strong>: The calculation here is very similar to that of the false-negative rate. Since the (assumed) prevalence of Null is 60%, 400 of the 1000 research projects have the potential to produce genuinely meaningful results. With the power at 80%, 320 of these 400 tests will (correctly) produce a “reject the Null” result.</li>
+</ol>
+<p>Putting together the results from (1) and (2), we expect to have <span class="math inline">\(320 + 30 = 350\)</span> of the research projects producing “reject the Null.” Imagine that these 350 projects get published because of their <span class="math inline">\(p &lt; 0.05\)</span> result. Of these 350, 320 are genuinely meaningful. Consequently, a researcher to reads the published literature can expect that only <span class="math inline">\(30/350 = 9\%\)</span> would be wild-goose chases. Seen another way, 91% of the published research findings will correctly point to something of genuine interest.</p>
+<p>That is a pretty strong <em>recommendation in favor</em> of NHT. A simple, low-cost screening test will stratify the research so that ninety percent of the published research will be of genuine interest. In this light, it is no wonder that NHT is a standard practice in scientific research.</p>
+<p>EXERCISE: Calculate the fraction of published research papers that are correct if the prevalence of the null hypothesis is 90%. (It will be 64%.)</p>
 </section>
-<section id="example-organic-discovery" class="level2 example">
-<h2 class="example anchored" data-anchor-id="example-organic-discovery">Example: Organic discovery?</h2>
-<p>It’s easy to find organic foods in many large grocery stores. Advocates of an organic diet are attracted by a view that it is sustainable, promotes small farms, and helps avoid contact with pesticides. There are also nay-sayers who make valid points, but that is not our purpose here. Informally, I find that many people and news reports point to the health benefits of an organic diet. Usually they believe that these benefits are an established fact.</p>
-<p>A 2018 New York <em>Times</em> article observed:</p>
+<section id="sec-pitfalls-of-p" class="level2">
+<h2 class="anchored" data-anchor-id="sec-pitfalls-of-p">Pitfalls of p-values</h2>
+<p>The idea that a simple calculation of a p-value can produce a substantially correct research literature is attractive. But there are a number of factors that make this a fantasy. We can start with the idea that roughly the prevalence of “no effect” is only 60%. There is, in principle, an easy way to estimate the prevalence. Suppose it were required to register every hypothesis test undertaken in a research environment. The registered studies would include both those that reject the Null and those that fail to reject the Null. The prevalence will be the fraction that fail to reject the Null.</p>
+<p>Any such system can be gamed. Researchers have strong professional incentives not to report investigations where the fail to reject the Null. Among other things, it is unusual to publish such failures; journal editors don’t want to fill their pages with reports of “nothing here.”</p>
+<p>The workers making use of Fisher’s 1925 <em>Research Methods</em> were often conducting laborious bench-top or field experiments. Presumably, they tried to invest their labor on matters where they believed they had a reasonable chance of success.</p>
+<p>Today, however, the situation is different. Data with multiple variables are readily available and testing is so easy that there is no real barrier to looking for a “significant” link by trying all of the possibilities of explanatory and response variables. This might mean that the prevalence of “no effect” is very high. In the spirit of Edison’s 98% of genius being “hard work,” consider the consequence if the prevalence of “no effect” is 98%. The calculation works this way: of 1000 hypothetical studies, 20 will be of genuine importance, 980 not. The <span class="math inline">\(p &lt; 0.05\)</span> criterion means that 49 of the 980 will lead to (falsely) rejecting the Null. A power of 80% implies that of the 20 important studies, 16 will lead to (correctly) rejecting the Null. Thus, the fraction of correct results among the reject-the-Null studies will be <span class="math inline">\(16/65 = 25\%\)</span>. That is, three-quarters of publishable research will be wrong. Imagine working with a research literature which consists mostly of incorrect results!</p>
+<p>The above calculation is based on an assumption of 98% prevalence. That assumption may well be wrong. But <em>we do not know</em> what the prevalence of “no effect” might be. Consequently, we have no way to evaluate the effectiveness of NHT in screening out incorrect results. Put this together with the finding that p-values, no matter how small, are not a measure of the magnitude of an effect (see <a href="#sec-signif-not-magnitude"><span>Section&nbsp;38.1</span></a>) and it is difficult to treat p-values as an indication of scientific import. This is not to say that NHT has no use—it is still a screening test that performs a valuable service in avoiding wild-goose chases. That is, however reliable the research literature may be, it would be still less reliable if NHT were not used. Still, attaching phrases like “highly significant” to a mere rejection of the Null is unjustified.</p>
+<p>Statistician Jeffrey Witmer, in an editorial in the <a href="https://www.tandfonline.com/doi/full/10.1080/10691898.2019.1702415"><em>Journal of Statistics Education</em></a> offers a simple solution to the problem of people misinterpreting “statistically significant” as related to the everyday meaning of “significant.” Replace the term “statistically significant” with “statistically discernible.” There is no difference between the everyday sense of “discernible”—able to be perceived—and the statistical implications. In conveying statistical information, “discernible” is more descriptive than “significant.” For example, it would be appropriate to describe the implications of a p-value <span class="math inline">\(p &lt; 0.03\)</span> as, “the relationship is barely discernible from the sampling variation.”</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Try, try, try until you succeed
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As an indication of the prevalence of “no effect,” let’s look at a 2008 study which examined the possible relationship between a woman’s diet before conception and the sex of the conceived child.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
 <blockquote class="blockquote">
-<p><em>People who buy organic food are usually convinced it’s better for their health, and they’re willing to pay dearly for it. But until now, evidence of the benefits of eating organic has been lacking.</em> <span class="citation" data-cites="NYT-2018-10-23-Rabin">(<a href="#ref-NYT-2018-10-23-Rabin" role="doc-biblioref"><strong>NYT-2018-10-23-Rabin?</strong></a>)</span></p>
+<p>Women producing male infants consumed more breakfast cereal than those with female infants. The odds ratio for a male infant was 1.87 (95% CI 1.31, 2.65) for women who consumed at least one bowl of breakfast cereal daily compared with those who ate less than or equal to one bowlful per week.</p>
 </blockquote>
-<p>The new evidence of health benefits is reported in an article in the <em>Journal of the American Medical Association: Internal Medicine</em> <span class="citation" data-cites="baudry-2018">(<a href="#ref-baudry-2018" role="doc-biblioref"><strong>baudry-2018?</strong></a>)</span></p>
-<p>Describing the findings of the research, the <em>Times</em> article continued:</p>
-<blockquote class="blockquote">
-<p><em>Even after these adjustments [for covariates], the most frequent consumers of organic food had 76 percent fewer lymphomas, with 86 percent fewer non-Hodgkin’s lymphomas, and a 34 percent reduction in breast cancers that develop after menopause.</em></p>
-</blockquote>
-<p>The study warrants being taken seriously: it involved about 70,000 French adults among whom 1340 cancers were noted. The summary of organic foot consumption was a scale from 0 to 32 and included 16 labeled products including dairy, meat and fish, eggs, coffee and tea, wine, vegetable oils, and sweets such as chocolate. Adjustment was made for a substantial number of covariates: age, sex, educational level, marital status, income, physical activity, smoking, alcohol intake, family history of cancer, body mass index, hormonal treatment for menopause, and others.</p>
-<p>Yet … the research displays many of the features that can lead to false discovery. For instance, results were reported for four different types of cancer: breast, prostate, skin, lymphomas. The study reports p-values and hazard ratios<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> comparing cancer rates among the four quartiles of the organic consumption index.</p>
-<p>Comparing the most organic (average organic index 19.36/32) and the least organic (average index 0.72/32) groups, the 95% confidence interval on the relative risk and p-values given in the study’s Table 4 are:</p>
-<ul>
-<li>Breast cancer: 0.66 - 1.16 (p = 0.38)</li>
-<li>Prostate cancer: 0.61- 1.73 (p = 0.39)</li>
-<li>Skin cancer: 0.49 - 1.28 (p = 0.11)</li>
-<li>Lymphomas: 0.07 - 0.69 (p = 0.05)</li>
-</ul>
-<p>You might be surprised to see that the confidence interval on the relative risk for breast cancer includes 1.0, which suggests no evidence for an effect. As clearly stated in the report, the risk reduction for breast cancer is seen only in a subgroup of study participants: those who are postmenopausal. And even then, the confidence intervals continue to include 1.0:</p>
-<ul>
-<li>Breast cancer pre-menopausal: 0.67 - 1.52 (p = 0.85)</li>
-<li>Breast cancer post-menopausal: 0.53 - 1.18 (p = 0.18)</li>
-</ul>
-<p>So where is the claimed 34% reduction in breast cancer cited in the New York Times article. It turns out the the study used two different indices of organic food consumption. The 0 to 32 scale which includes many items for which the amount consumed is very small (e.g., coffee, chocolate) and a “simplified, plant derived organic food score.” It’s only when you look at the full 0 to 32 scale that you see the reduction in post-menopausal breast cancer: the confidence interval is 0.45 to 0.96 (p = 0.03).</p>
-<p>What about cancer rates overall? For the 0 to 32 scale the risk ratio was 0.58 - 1.01 (p = 0.10). To see the claimed reduction clearly you need to look at the simplified food score which gives 0.63 - 0.89 (p &lt; 0.005). And it’s only in comparing the highest-index quarter of participants with the low</p>
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: `geom_hline()`: Ignoring `mapping` because `yintercept` was provided.</code></pre>
-</div>
-<div class="cell-output-display">
-<div id="fig-trivial-R" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Reading-notes-lesson-38_files/figure-html/fig-trivial-R-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;38.2: The p-value as a function of sample size n when the test statistic R-squared has the trivial value 0.001. The horizontal line shows the usual threshold for “significance” of p &lt; 0.05.</figcaption><p></p>
-</figure>
+<p>The model here is a classifier of the sex of the baby based on the amount of breakfast cereal eaten. The effect size tells the change in the odds of a male when the explanatory variable changes from one bowlful of cereal per week to one bowl per day (or more). This effect size is sensibly reported as a ratio of the two odds. A ratio bigger than one means that boys are more likely outcomes for the one-bowl-a-day potential mother than the one-bowl-a-week potential mother. The 95% confidence interval is given as 1.31 to 2.65. Under the Null hypothesis, the odds ratio should be 1; the confidence interval doesn’t include the Null.</p>
+<p>The confidence interval is the preferred way of conveying both the magnitude of the effect and the precision of the measurement. Since this is a Lesson about p-values, however, let’s translate the confidence interval to a less informative p-value. That the confidence interval does not include the Null hypothesis value of 1 means that <span class="math inline">\(p &lt; 0.05\)</span>. A more detailed calculation indicates that <span class="math inline">\(p &lt; 0.01\)</span>. In a conventional NHT interpretation, this provides compelling evidence that the relationship between cereal consumption and sex is not a false pattern.</p>
+<p>But the confidence interval is not the complete story. The authors are admirably clear in stating their methodology: “Data of the 133 food items from our food frequency questionnaire were analysed, and we also performed additional analyses using broader food groups.” In other words, the authors had available more than 133 potential explanatory variables. For each of these explanatory variables, the study’s authors constructed a confidence interval on the odds ratio. Most of the confidence intervals included 1, providing no compelling evidence of a relationship between that food item and the sex of the conceived child. As it happens, breakfast cereal produced the confidence interval that was the most distant from an odds ratio of 1.</p>
+<p>Carrying out more than 100 tests in order to get one significant result suggests that the prevalence of “no effect” is about 99%. This suggests that the probability that the reported result is wrong is about 85%, not a good basis for deciding what foods to eat.</p>
 </div>
 </div>
-</div>
+<p>NO ALTERNATIVE therefore no power and no statement about what constitutes an interesting result. Framing a relevant Alternative is, regrettably, hard. It requires knowledge of how strong an effect size would be interesting or important. Simulating the p-value under the Alternative can also be hard.</p>
 </section>
-<section id="notes-in-draft" class="level2">
-<h2 class="anchored" data-anchor-id="notes-in-draft">NOTES IN DRAFT</h2>
-<p>“Statistical crisis” in science</p>
-<p>https://www.americanscientist.org/article/the-statistical-crisis-in-science</p>
-<p>Garden of the Forking Paths</p>
-<p>Ionedes</p>
+<section id="fixes" class="level2">
+<h2 class="anchored" data-anchor-id="fixes">Fixes</h2>
+<ol type="1">
+<li>Replication.</li>
+</ol>
+<p>[[Criticism of Hart and Risley]] https://www.npr.org/sections/ed/2018/06/01/615188051/lets-stop-talking-about-the-30-million-word-gap USE THIS IN AN EXAMPLE OF SAMPLING BIAS</p>
+<ol start="2" type="1">
+<li><p>Pre-specification of endpoint</p></li>
+<li><p>Bayes factors Commonly, Bayes factors over 20 are interpreted as strong evidence for a hypothesis, those of 3-5 as week evidence, and intermediate value as “moderate” evidence.</p></li>
+</ol>
+</section>
+<section id="exercise-sampling-variation-in-p-value" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-sampling-variation-in-p-value">Exercise: Sampling variation in p-value</h2>
 
 
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>The word “science” comes from the Latin for “to know.” But a dictionary definition of “science” makes clear the “scientific” style for gaining knowledge: “The systematic study of the structure and behavior of the physical and natural world through observation, experimentation, and the testing of theories against the evidence obtained.” (Source: <a href="https://languages.oup.com/google-dictionary-en/">Oxford Languages</a>)<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Hazard ratios are analogous to risk ratios.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Betty Hart and Todd Risley (1992) “American parenting of language-learning children: Persisting differences in family-child interactions observed in natural home environments” <em>Developmental Psychology</em> <strong>28</strong>(6) 1096-1105 <a href="www/1993-09151-001.pdf">link</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Such an effect size, on standardized variables, is called the “<strong>correlation</strong>” or, in the context of multiple regression, the “<strong>partial correlation</strong>.”<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>More recent work<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> suggests the effect size of childhood language exposure on “language outcomes in late childhood” is about 0.40-0.50 and about 0.25 when looking at language outcomes at age 50.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>As a historical note, NHT was introduced by Ronald Fisher in 1925 in his famous book, <a href="http://psychclassics.yorku.ca/Fisher/Methods/chap5.htm">*Statistical Methods for Research Workers</a>. He called it “significance testing” and it involves only the Null hypothesis (which is why we call it “Null hypothesis testing”). Already in 1928, Jerzy Neyman and Egon Pearson put forward <a href="www/neyman-pearson-1928-part-1.pdf">an improvement</a> involving both a Null and an Alternative hypothesis.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p> Fiona Mathews et al.&nbsp;(2008) “You are what your mother eats: evidence for maternal preconception diet influencing foetal sex in humans” <em>Proceedings of the Royal Society B</em> <strong>275</strong>: 1661-1668<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

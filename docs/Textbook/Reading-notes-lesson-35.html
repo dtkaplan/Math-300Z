@@ -305,7 +305,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Reading-notes-lesson-38.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">False discovery</span></a>
+  <a href="./Reading-notes-lesson-38.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Putting p-values in context</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -328,7 +328,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#from-the-patients-point-of-view" id="toc-from-the-patients-point-of-view" class="nav-link" data-scroll-target="#from-the-patients-point-of-view">From the patient’s point of view</a></li>
   <li><a href="#likelihood" id="toc-likelihood" class="nav-link" data-scroll-target="#likelihood">Likelihood</a></li>
   <li><a href="#sec-bayes-rule" id="toc-sec-bayes-rule" class="nav-link" data-scroll-target="#sec-bayes-rule">How serious is it, Doc?</a></li>
-  <li><a href="#screening-tests" id="toc-screening-tests" class="nav-link" data-scroll-target="#screening-tests">Screening tests</a>
+  <li><a href="#sec-screening-tests" id="toc-sec-screening-tests" class="nav-link" data-scroll-target="#sec-screening-tests">Screening tests</a>
   <ul class="collapse">
   <li><a href="#the-loss-function" id="toc-the-loss-function" class="nav-link" data-scroll-target="#the-loss-function">The Loss Function</a></li>
   </ul></li>
@@ -540,8 +540,8 @@ Calculating <span class="math inline">\(p(C{\ |\!\!|\  } \mathbb{P})\)</span>
 <p>Typically the prevalence of a condition is different for different groups in the population. For example, for an 80-year-old with a family history of C the prevalence might be 20% rather than the 1% that applied to the patient in the previous example. For the 80-year-old, the probability of having C given a <span class="math inline">\(\mathbb{P}\)</span> result is substantially different from the 1.9% found in the example:</p>
 <p><span class="math display">\[p(C {\ |\!\!|\  } \mathbb{P}) = \frac{0.95\times 0.2}{0.95\times 0.2 + 0.50*0.8} = 32\%\]</span></p>
 </section>
-<section id="screening-tests" class="level2">
-<h2 class="anchored" data-anchor-id="screening-tests">Screening tests</h2>
+<section id="sec-screening-tests" class="level2">
+<h2 class="anchored" data-anchor-id="sec-screening-tests">Screening tests</h2>
 <p>The reliability of a <span class="math inline">\(\mathbb{P}\)</span> result differs depending on the prevalence of C. A consequence of this is that medical screening tests are recommended for one group of people but not for another.</p>
 <p>For instance, the US Preventative Services Task Force (USPSTF) issues recommendations about a variety of medical screening tests. According to the Centers for Disease Control (CDC) summary:</p>
 <blockquote class="blockquote">
@@ -552,6 +552,40 @@ Calculating <span class="math inline">\(p(C{\ |\!\!|\  } \mathbb{P})\)</span>
 <p>The reason mammograms are not recommended for women 40-49 is that the prevalence for breast cancer is much lower in that group of people than in the 50-74 group. The prevalence of breast cancer is even lower in women younger than 40.</p>
 <p>So what about women 75+? The prevalence of breast cancer is high in this group, but at that age, non-treatment is likely to be the most sensible option. Cancers can take a long while to develop from the stage identified on a mammogram, and at age 75+ it’s not likely to be the cause of eventual death.</p>
 <p>The <a href="https://www.uspreventiveservicestaskforce.org/uspstf/recommendation/breast-cancer-screening">USPSTF web site</a> goes into some detail about the reasoning for their recommendations. It’s worthwhile reading to see what considerations went into their decision-making process.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Example: Breast cancer and mammography
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s look more closely at the details of breast-cancer screening. The reported sensitivity of digital mammography is 85% and the specificity is 90%.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>The <a href="https://knowyourchances.cancer.gov/special_cancer_tables.php">National Cancer Institute</a> publishes cancer-risk tables. <a href="#fig-cancer-nci-risk">Figure&nbsp;<span>35.4</span></a> shows the NCI table for breast cancer.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-cancer-nci-risk" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="www/breast-cancer-risk.png" class="img-fluid figure-img" width="1123"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;35.4: <strong>?(caption)</strong></figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Women 60 to 70 have a risk of about 2%—we will take this as the prevalence. Out of 1000 such women:</p>
+<ul>
+<li>20 women have breast cancer, of whom 90% will receive a <span class="math inline">\(\mathbb{P}\)</span> test result. Consequently, 18 women with cancer get a <span class="math inline">\(\mathbb{P}\)</span> result.</li>
+<li>980 women do not have breast cancer. Since the test specificity is 85%, the probability of a <span class="math inline">\(\mathbb{P}\)</span> test result is 15%, so 147 women in this group will get a <span class="math inline">\(\mathbb{P}\)</span> result.</li>
+</ul>
+<p>Altogether, 165 out of the group of 1000 women will have a <span class="math inline">\(\mathbb{P}\)</span> result, of whom 18 have cancer. Thus, for a woman with a <span class="math inline">\(\mathbb{P}\)</span> result, the prevalence is 18/165, that is, 11%. Using the same logic, for a woman with a <span class="math inline">\(\mathbb{N}\)</span> result, the risk of cancer is reduced from 2% to about 0.2%.</p>
+<p>The point of the screening test is to identify at low cost those women at higher risk of cancer. For mammography, that higher risk is 11%. This is by no means a definitive result.</p>
+<p>Now imagine that a different test for breast cancer is available, perhaps one that is more invasive and expensive and therefore not appropriate for women at low risk of cancer. Imagine that the sensitivity and specificity of this expensive test are also 90% and 85% respectively. Applying this second test to the 165 women who received a <span class="math inline">\(\mathbb{P}\)</span> result on the first test, about 16 of the women with cancer will get a second <span class="math inline">\(\mathbb{P}\)</span> result. But there are also about 147 people in the group of 165 who do not have cancer. These have a <span class="math inline">\(1-0.85\)</span> chance of a <span class="math inline">\(\mathbb{P}\)</span> positive test. Thus, there will be 22 women who do not have cancer but who nonetheless get a <span class="math inline">\(\mathbb{P}\)</span> result on the second test. The risk of having cancer for the <span class="math inline">\(16+22\)</span> women who have gotten a <span class="math inline">\(\mathbb{P}\)</span> result on both tests is <span class="math inline">\(16/38 = 42\%\)</span>.</p>
+<p>EXERCISE: Calculate the cancer risk for those who get a positive result on the first test and a negative result on the second. (About 8%.)</p>
+<p>EXERCISE: What happens with a third, even more invasive/expensive test, with the 90/85 sensitivity/specificity. What is the risk for the women who get a positive result on that test. (About 82%.)</p>
+</div>
+</div>
 <section id="the-loss-function" class="level3">
 <h3 class="anchored" data-anchor-id="the-loss-function">The Loss Function</h3>
 <div class="callout-warning callout callout-style-default callout-captioned">
@@ -593,16 +627,37 @@ Demonstration: Setting the optimal threshold
 <div id="fig-optimizing-threshold" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="Reading-notes-lesson-35_files/figure-html/fig-optimizing-threshold-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;35.4: Total loss as a function of test threshold for the test shown in <a href="Reading-notes-lesson-34.html#fig-fraction-correct">Figure&nbsp;<span>34.7</span></a>. In the blue curve, a false-negative is 3 times more costly than a false-positive. In the orange curve they are equally costly. In the red curve, a false-positive is 10 times more costly than a false-negative.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;35.5: Total loss as a function of test threshold for the test shown in <a href="Reading-notes-lesson-34.html#fig-fraction-correct">Figure&nbsp;<span>34.7</span></a>. In the blue curve, a false-negative is 3 times more costly than a false-positive. In the orange curve they are equally costly. In the red curve, a false-positive is 10 times more costly than a false-negative.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 </div>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+EXERCISE Bayes theorem in odds form:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Odds of alternative hypothesis after seeing data = Odds of alternative before seeing data TIME p(Data | Alt)/p(Data/Null)</p>
+<p>The quantity p(Data | Alt)/p(Data/Null) is called the Bayes factor.</p>
+<p>Calculate the Bayes factor for a given sensitivity and specificity. Use this to calculate the posterior odds and translate these back into the posterior probability.</p>
+</div>
+</div>
 
 
 </section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Diagnostic accuracy of digital versus film mammography: exploratory analysis of selected population subgroups in DMIST. Pisano ED, Hendrick RE, Yaffe MJ, et al.&nbsp;Radiology. 2008;246:376–383<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->

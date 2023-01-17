@@ -33,6 +33,43 @@ One or more of these articles:
 - [Diet and sex determination](www/cereal_and_sex_determination.pdf)
 - [Most research findings false](www/most-publication-findings-false.pdf)
 
+## Example: Organic discovery? {.example}
+
+An example not from the Lessons.
+
+It's easy to find organic foods in many large grocery stores. Advocates of an organic diet are attracted by a view that it is sustainable, promotes small farms, and helps avoid contact with pesticides. There are also nay-sayers who make valid points, but that is not our purpose here. Informally, I find that many people and news reports point to the health benefits of an organic diet. Usually they believe that these benefits are an established fact. 
+
+A 2018 New York *Times* article observed: 
+
+> *People who buy organic food are usually convinced it’s better for their health, and they’re willing to pay dearly for it. But until now, evidence of the benefits of eating organic has been lacking.* [@NYT-2018-10-23-Rabin]
+
+The new evidence of health benefits is reported in an article in the *Journal of the American Medical Association: Internal Medicine* [@baudry-2018]
+
+Describing the findings of the research, the *Times* article continued:
+
+> *Even after these adjustments [for covariates], the most frequent consumers of organic food had 76 percent fewer lymphomas, with 86 percent fewer non-Hodgkin’s lymphomas, and a 34 percent reduction in breast cancers that develop after menopause.*
+
+The study warrants being taken seriously: it involved about 70,000 French adults among whom 1340 cancers were noted. The summary of organic foot consumption was a scale from 0 to 32 and included 16 labeled products including dairy, meat and fish, eggs, coffee and tea, wine, vegetable oils, and sweets such as chocolate. Adjustment was made for a substantial number of covariates: age, sex, educational level, marital status, income, physical activity, smoking, alcohol intake, family history of cancer, body mass index, hormonal treatment for menopause, and others.
+
+Yet ... the research displays many of the features that can lead to false discovery. For instance, results were reported for four different types of cancer: breast, prostate, skin, lymphomas. The study reports p-values and hazard ratios^[Hazard ratios are analogous to risk ratios.] comparing cancer rates among the four quartiles of the organic consumption index.
+
+Comparing the most organic (average organic index 19.36/32) and the least organic (average index 0.72/32) groups, the 95% confidence interval on the relative risk and p-values given in the study's Table 4 are:
+
+- Breast cancer: 0.66 - 1.16 (p = 0.38)
+- Prostate cancer: 0.61- 1.73 (p = 0.39)
+- Skin cancer: 0.49 - 1.28 (p = 0.11)
+- Lymphomas: 0.07 - 0.69 (p = 0.05)
+
+You might be surprised to see that the confidence interval on the relative risk for breast cancer includes 1.0, which suggests no evidence for an effect. As clearly stated in the report, the risk reduction for breast cancer is seen only in a subgroup of study participants: those who are postmenopausal. And even then, the confidence intervals continue to include 1.0:
+
+- Breast cancer pre-menopausal: 0.67 - 1.52 (p = 0.85)
+- Breast cancer post-menopausal: 0.53 - 1.18 (p = 0.18)
+
+So where is the claimed 34% reduction in breast cancer cited in the New York Times article. It turns out the the study used two different indices of organic food consumption. The 0 to 32 scale which includes many items for which the amount consumed is very small (e.g., coffee, chocolate) and a "simplified, plant derived organic food score." It's only when you look at the full 0 to 32 scale that you see the reduction in post-menopausal breast cancer: the confidence interval is 0.45 to 0.96  (p = 0.03). 
+
+What about cancer rates overall? For the 0 to 32 scale the risk ratio was 0.58 - 1.01 (p = 0.10). To see the claimed reduction clearly you need to look at the simplified food score which gives 0.63 - 0.89 (p < 0.005). And it's only in comparing the highest-index quarter of participants with the low
+
+
 
 ## Lesson
 
