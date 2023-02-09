@@ -1,0 +1,27 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Spring 2023 Math 300Z"
+  navbar:
+    title: "Math 300Z"
+    background: primary
+    left:
+      - href: Textbook/index.html
+        text: Textbook
+      - href: index.qmd
+        text: Home
+      - href: student-notes.qmd
+        text: "Student notes"
+      - href: faculty-notes.qmd
+        text: "Faculty notes"
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    include-in-header:
+      - mathjax-definitions.html
+
+
+

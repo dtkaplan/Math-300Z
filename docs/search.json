@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Math 300Z",
+    "section": "",
+    "text": "Math 300Z is the prototype for scheduled revisions to Math 300. The revisions apply only to Lessons 19 and up; the first 18 lessons will come from Math 300.\nLesson 19. Topic: Variation :: Reading, Activity: measuring by eye\nLesson 20: Topic: DAGs and simulation :: Reading, Activity: Smoking and birthweight\nInference"
+  },
+  {
+    "objectID": "index.html#course-textbooks",
+    "href": "index.html#course-textbooks",
+    "title": "Math 300Z",
+    "section": "Course textbooks",
+    "text": "Course textbooks\nBoth Math 300 and Math 300Z will start with Chapters 1 through 6 of Statistical Inference via Data Science.\nFor the second half of the semester, Math 300Z continues with Lessons in Statistical Thinking. Math 300, continues with Chapter 7 through 11 of Statistical Inference via Data Science\n | | \nBoth textbooks are available free online."
+  },
+  {
+    "objectID": "index.html#software",
+    "href": "index.html#software",
+    "title": "Math 300Z",
+    "section": "Software",
+    "text": "Software\nThe POSIT.cloud workspaces will already have the packages installed. If you are running RStudio on your laptop (that is, not in a browser), the following command will install the packages.\ninstall.packages(c(\"mosaic\", \"ggplot\", \"dplyr\", \"openintro\", \"moderndive\", \"nycflights13\", \"knitr\"))\n# addition package for Math 300Z\nremotes::install_github(\"dtkaplan/math300\")"
+  },
+  {
+    "objectID": "index.html#day-by-day-schedule",
+    "href": "index.html#day-by-day-schedule",
+    "title": "Math 300Z",
+    "section": "Day-by-day schedule",
+    "text": "Day-by-day schedule\n[Link to first 18 classes from January & February, 2023]{index.html#secfirst-half}\nMath 300Z continues with\n\nA note on computing summaries of data"
+  },
+  {
+    "objectID": "index.html#first-half",
+    "href": "index.html#first-half",
+    "title": "Math 300Z",
+    "section": "First half of Math 300, Jan. and Feb. 2023",
+    "text": "First half of Math 300, Jan. and Feb. 2023\nData, graphics, wrangling\nReading: SIDS Chapters 1 through 4\n\nData with R\nScatterplots\nLinegraphs, histograms, facets\nBoxplots and barcharts\nfilter and summarize\ngroup_by, mutate, arrange\njoin, select, rename, & top n\nImporting data\nCase study/review\nGR1 (chapters 1-4)\n\nRegression\nReadings 11. SLR: Continuous x 12. SLR: Discrete x 13. SLR: Related topics 14. Multiple regression: Numerical & discrete 15. Multiple regression: Two numerical 16. Multiple regression: Related topics 17. Multiple regression: Conclusion/review 18. GR 2 (chapters 5-6)"
+  }
+]
