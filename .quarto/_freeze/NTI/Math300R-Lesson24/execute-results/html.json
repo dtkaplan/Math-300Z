@@ -1,0 +1,14 @@
+{
+  "hash": "656df49dbea9c599396a2f0ae0dcc3a2",
+  "result": {
+    "markdown": "---\ntitle: \"Math 300R NTI Lesson 24\"\nsubtitle: \"Effect size\"\nauthor: \"Prof. Danny Kaplan\"\ndate: \"October 14, 2022\"\noutput:\n  html_document:\n    theme: lumen\n    toc: yes\n    toc_float: yes\n    css: NTI.css\n  pdf_document:\n    toc: yes\n---\n\n\n\n\n## Objectives\n\n\n\n\n\n\n\n\n24.1 Estimate an effect size from a regression model of one and two variables.\n\n24.2 Construct a confidence interval on the effect size.\n\n24.3. Gaming: Evaluate whether confidence interval indicates that estimated effect size is consistent with simulation.\n\n\n## Reading\n\nTBD\n\n\n## Lesson\n\n:::: {.callout-note icon=false}\n## In-class example\n\n\n::: {.cell}\n\n```{.r .cell-code}\n3 + 2\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] 5\n```\n:::\n:::\n\n::::\n\n\n:::: {.callout-important icon=false}\n## In-class activity\n\n\n::: {.cell}\n\n```{.r .cell-code}\ndate()\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] \"Fri Oct 14 12:27:58 2022\"\n```\n:::\n:::\n\n::::\n\nThis is just a template.\n\n## Learning Checks\n\n\n\n\n\n\n\n\n\n## 24.1\n\n::: {.callout-note}\n## Solution\n\n:::\n\n--------\n\n\n\n## Documenting software\n\n  * File creation date: 2022-10-14\n  * R version 4.2.1 (2022-06-23)\n  * `tidyverse` package version: 1.3.2\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

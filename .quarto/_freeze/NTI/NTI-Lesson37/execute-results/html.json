@@ -1,0 +1,14 @@
+{
+  "hash": "092694765baaa11c75e18282f2112c29",
+  "result": {
+    "markdown": "---\ntitle: \"Math 300R NTI Lesson 37\"\nsubtitle: \"Calculating a p-value\"\nauthor: \"Prof. Danny Kaplan\"\ndate: \"November 04, 2022\"\noutput:\n  html_document:\n    theme: lumen\n    toc: yes\n    toc_float: yes\n    css: NTI.css\n  pdf_document:\n    toc: yes\n---\n\n\n\n\n\n## Objectives\n\n\n\n\n\n\n\n\n37.1 The permutation test\n\n37.2 Interpret correctly from regression/ANOVA reports\n\n37.3 Traditional names for hypothesis tests in different \"textbook\" settings.\n\n37.4. Distinguish between p-value and effect size, that is, \"significance\" and \"substance.\"\n\n\n## Reading\n\nTBD\n\n\n## Lesson\n\nMany planets picture\n\n\n\n## Learning Checks\n\n\n\n\n\n\n\n\n\n\nIdeas:\n\n- Use the `openintro::mlbbat10` baseball data to look at on-base performace as a function of hitting position. How many p-values are being reported from the regression report? Bonferroni adjustment. Compare to ANOVA format which looks at the term as a whole.  Also look at the large number of indicators of batting performance. How many different tests could we perform?\n\n\n\n\n## 37.1\n\n::: {.callout-note}\n## Solution\n\n:::\n\n--------\n\n\n## Documenting software\n\n  \n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

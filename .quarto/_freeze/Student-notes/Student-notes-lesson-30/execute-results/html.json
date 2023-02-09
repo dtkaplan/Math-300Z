@@ -1,0 +1,16 @@
+{
+  "hash": "8faaa59baf896a669a8afe3f4981c4d6",
+  "result": {
+    "markdown": "---\ntitle: \"Math 300 Lesson 3 Notes\"\nsubtitle: \"Confounding\"\nauthor: \"YOUR NAME HERE\"\ndate: \"January, 2023\"\noutput:\n  pdf_document:\n    toc: yes\n  html_document:\n    theme: lumen\n    toc: yes\n    toc_float: yes\n---\n\n\n\n\n## Overview\n\n\n\n\n### Reading\n\n[Lesson **30** from *LST*](https://dtkaplan.github.io/Math-300R/Textbook/Reading-notes-lesson-30.html)\n\n### Objectives\n\n30.1\n\n[Updated list of objectives](../Objectives/Obj-lesson-30.html)\n\n### Libraries\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(mosaic)\nlibrary(math300)\ndata(\"Galton\", package=\"mosaicData\")\ndata(\"Home_utilities\", package=\"mosaicCalc\")\n```\n:::\n\n\n----------\n\n## Lesson\n\nUse the `FEV` data to look at the relationship between smoking and lung function.\n\nSee the paper [here](https://www.tandfonline.com/doi/full/10.1080/10691898.2020.1713936)\n\n\n::: {.cell}\n\n```{.r .cell-code}\nsmoke_dag <- dag_make(\n  age ~ unif(min=3, max=19),\n  sex ~ binom(exo(), labels=c(\"F\", \"M\")),\n  smoker ~ binom(-7.6 + 0.5*age - 0.8* (sex==\"M\"), labels=c(\"not\", \"smoker\")),\n  height ~ 46 + 1.5*age + (sex==\"F\")*unif(min=0, max=5),\n  FEV ~ -1.4 + 0.6*age + (sex==\"M\")*0.16 + 0.10*height - 0.1*(smoker==\"smoker\") + exo(.2)\n)\n```\n:::\n\n::: {.cell}\n::: {.cell-output-display}\n![](Student-notes-lesson-30_files/figure-html/unnamed-chunk-3-1.png){width=672}\n:::\n:::\n",
+    "supporting": [
+      "Student-notes-lesson-30_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "hash": "1d6c41c00375a9ae49cbea6a0561622f",
+  "result": {
+    "markdown": "---\ntitle: \"Math 300R NTI Lesson 34\"\nsubtitle: \"Constructing a classifier\"\nauthor: \"Prof. Danny Kaplan\"\ndate: \"October 14, 2022\"\noutput:\n  html_document:\n    theme: lumen\n    toc: yes\n    toc_float: yes\n    css: NTI.css\n  pdf_document:\n    toc: yes\n---\n\n\n\n\n\n## Objectives\n\n\n\n\n\n\n\n\n\n\n#. Build a classifier from case-control data.\n\n#. Cross-tabulate classifier results versus true state. Evaluate false-positive rate, false-negative rate, accuracy.\n\n#. Calculate different forms of conditional probability: p(A|B) versus p(B|A) and identify which form of conditional probability is useful for prediction of an individual's outcome.\n\n\n\n## Reading\n\nTBD\n\n\n## Lesson\n\nReview the credit-card fraud example. \n\n::: {.callout-note icon=false}\n## Model performance \n\nSuppose the performance were as presented in the reading\n\n.   | +    |  -\n----|------|------\nyes | 1900 | 100      \nno  |   50 | 3950\n\nCalculate false-positive and false-negative rates from the testing data.\n\nWhat fraction of fraud was detected?  What fraction of legitimate charges were denied? What's your intuition about whether its worthwhile to have 50 false positives in order to avoid 1900 fraudulent uses?\n:::\n\nThe testing data was assembled to have a very large fraction of fraudulent events, more than is realistic. What's the *prevalence* of fraud in the testing data?\n\nSuppose that rather than there being 1 fraud for every 2 legitimate charges, there is 1 fraud for every 200 charges. What would be the false-positive and false-negative rates then. \n\n::: {.callout-important icon=false}\n## Class activity\n\nAsk the class to figure this out in small group discussions.\n:::\n\n\n\n\n\n## Learning Challenges\n\n\n\n\n\n\n\n\n\n## 34.1\n\n::: {.callout-note}\n## Solution\n\n:::\n\n--------\n\n\n## Documenting software\n\n  \n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

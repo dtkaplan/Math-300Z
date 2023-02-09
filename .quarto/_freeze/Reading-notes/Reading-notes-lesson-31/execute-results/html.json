@@ -1,0 +1,16 @@
+{
+  "hash": "29e641177e6de854326fbf042d1769e1",
+  "result": {
+    "markdown": "---\ntitle: \"Math 300R Lesson 31 Reading Notes\"\nsubtitle: \"Non-causal correlation\"\nauthor: \"Prof. Danny Kaplan\"\ndate: \"October 21, 2022\"\noutput:\n  html_document:\n    theme: lumen\n    toc: yes\n    toc_float: yes\n    css: NTI.css\n  pdf_document:\n    toc: yes\n---\n\n\n\n\n\n::: {.callout-note}\n## Example: The flu vaccine\n\nAs you know, people are encouraged to get vaccinated before flu season. This recommendation is particularly emphasized for older adults, say, 60 and over. \n\nThe benefits of the flu vaccine have been extensively studied. It's been found based on medical records that older adults who are vaccinated have a lower mortality rate than unvaccinated older adults. This is certainly a **correlation** between vaccination and (lower) mortality, but is there necessarily a causal connection.\n\nIn 2012, the *Lancet*, a leading medical journal, published a [systematic examination and comparison of many previous studies](https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(11)70295-X/fulltext).  (Such a study of earlier studies is called a *meta-analysis*.) The *Lancet* article describes a hypothesis that existing flu vaccines may not be as effective as was originally found.\n\n>  *A series of observational studies undertaken between 1980 and 2001 attempted to estimate the effect of seasonal influenza vaccine on rates of hospital admission and mortality in [adults 65 and older]. Reduction in all-cause mortality after vaccination in these studies ranged from 27% to 75%. In 2005, these results were questioned after reports that increasing vaccination in people aged 65 years or older did not result in a significant decline in mortality. Five different research groups in three countries have shown that these early observational studies had substantially overestimated the mortality benefits in this age group because of unrecognized confounding. This error has been attributed to a healthy vaccine recipient effect: reasonably healthy older adults are more likely to be vaccinated, and a small group of frail, undervaccinated elderly people contribute disproportionately to deaths, including during periods when influenza activity is low or absent.*\n\n:::\n\n\n",
+    "supporting": [
+      "Reading-notes-lesson-31_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
