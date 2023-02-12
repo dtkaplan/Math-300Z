@@ -1,0 +1,30 @@
+\documentclass[landscape, 12pt]{report}
+\usepackage[margin=.5in]{geometry}
+\pagestyle{empty}
+
+\newcommand{\emptybox}{\noindent\framebox[9.75in]{$\Large \strut$}\newline\vspace*{.2in}}
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\emptybox
+
+\emptybox
+
+\emptybox
+
+\emptybox
+
+\emptybox
+
+\emptybox
+
+\emptybox
+
+\emptybox
+
+\vspace*{.2in}
+\noindent\includegraphics[width=10in]{ruler.png}
+
+\vspace*{.4in}
+\noindent\includegraphics[width=10in]{ruler.png}
+\end{document}

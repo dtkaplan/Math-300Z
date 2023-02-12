@@ -1,0 +1,49 @@
+# Measuring by eye
+
+In this activity, you will be given [two strips of paper](../www/boxes-and-rulers.pdf) printed with:
+
+a. An empty rectangular box
+b. A ruler
+
+## Follow these steps
+
+1. Without using the ruler at all, subdivide by eye the rectangular box into three equal-sized sections, like this:
+
+```{r echo=FALSE}
+knitr::include_graphics("rectangle.png")
+```
+
+2. Now the ruler comes into play. Measure the lengths of your three subdivisions using the ruler.
+
+3. Record your three measurements in this spreadsheet. Also create an ID for yourself, for example your initials or the initials of your favorite aunt, baseball player, or whatever. 
+
+
+<iframe src="https://docs.google.com/spreadsheets/d/1f_l6xDL5PZhw1fUfJ1ZUlOe2PBiwws-ncb6mCCVLAfw/edit#gid=0" width="100%" height=400></iframe>
+
+[Link to a spreadsheet for data entry](https://docs.google.com/spreadsheets/d/1f_l6xDL5PZhw1fUfJ1ZUlOe2PBiwws-ncb6mCCVLAfw/edit?usp=sharing)
+
+
+4. Once everyone has entered their measurements, copy the following statement into the console in Posit.cloud and run it to create a data frame named `Thirds`. 
+
+```{r message=FALSE}
+Thirds <- readr::read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vT_asFV5LD312bYaGgHK3F91kgLVSiaQpNhggDilfPKAiDBNz9iueOiYWKgAtRRwkFlOz6U9znbiMGK/pub?gid=0&single=true&output=csv")
+```
+
+5. Follow the instructions given in class. These will have you 
+    i. Calculate the variance of the three measurements for each student separately. Use `mutate()` to calculate `modulus <- ((left-middle)^2 + (left-right)^2 + (middle-right)^2)/3`, storing the result back in `Thirds` as a variable named `modulus`.
+    
+    ii. Analyze how good you and your colleagues are at sub-dividing evenly by eye.
+
+    iii. Create a new dataframe that is `Thirds` re-arranged into "long" format.
+    
+        Long_form <- tidyr::pivot_longer(Thirds, !Student_initials, names_to = "position")
+       
+    
+    iv. Group `Long_form` by student initials and calculate the variance of `value`. Compare these values to those stored under `modulus` in `Thirds`. 
+    
+## Questions
+
+a. Why is it *not* useful, for the purposes of measuring the quality of the subdivision, to calculate the mean of the left, middle, and right segment lengths?
+
+b. What did you look for in Step (ii)?
+ 

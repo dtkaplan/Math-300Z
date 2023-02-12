@@ -1,0 +1,55 @@
+## Math 300Z: In-class group activity
+
+## Saving Lives
+
+A tourniquet is a belt-like device used to cut off the blook supply to a damaged and severely bleeding limb. A 2014 study of 1413 US casualities in Afghanistan and Iraq concluded that "those who received tourniquets had survival rates similar to those of comparable, transfused casualties who did not receive tourniquets." That study was careful to take into account injury severity when comparing the casualties with tourniquets to those without. (JF Kragh *et al.* (2014) "Transfusion for Shock in US Military War Casualties With and Without Tourniquet Use" *Annals of Emergency Medicine* **65**(3) [link](
+https://www.annemergmed.com/article/S0196-0644(14)01408-5/fulltext))
+
+The study authors pointed out a potential bias in the collection of data. Only those soldiers who survived up to arrival at the hospital were included.
+
+Consider these four factors:
+
+1. Injury SEVERITY
+2. Tourniquet USE (at the battle location)
+3. ADMISSION, that is, arrival at the hospital
+4. Post-Admission SURVIVAL
+
+TASK: Construct a directed acyclic graph with a node for each of these factors. Draw directed causal links between each pair of nodes that you think are likely to be connected. For each link that you draw, make sure to show the direction of causation, giviving a few words of explanation. Similarly, when there is a pair of nodes without a direct connection, explain why not.
+
+ 
+
+ 
+
+ 
+
+Note: The direct paths you draw may create longer, indirect paths. For instance, $\mathbb{A} \longrightarrow \mathbb{B} \longrightarrow \mathbb{C}$ has direct paths between $\mathbb{A}$ and $\mathbb{B}$ as well as between $\mathbb{B}$ and $\mathbb{C}$. However, there is no direct connection between $\mathbb{A}$ and $\mathbb{C}$.
+
+
+::: {.content-hidden}
+
+This DAG does not include a direct link between "use" and "survival", which is the potential link of actual interest.  "Admission" blocks one causal path between "use" and "survival"---only those soldiers reaching the hospital were studied. Along with "admission," the adjustment for "severity" blocks all other causal paths between "use" and "survival."
+
+```{r echo=FALSE, eval=FALSE}
+library(math300)
+Tourniquet <- dag_make(
+  severity ~ exo(),
+  use ~ severity,
+  admission ~ severity + use,
+  survival ~ severity + admission
+  )
+dag_draw(Tourniquet)
+```  
+:::
+
+<!--
+Study objective
+We assess whether emergency tourniquet use for transfused war casualties admitted to military hospitals is associated with survival.
+Methods
+A retrospective review of trauma registry data was made of US casualties in Afghanistan and Iraq. Patients with major limb trauma, transfusion, and tourniquet use were compared with similar patients who did not receive tourniquet use. A propensity-matching analysis was performed by stratifying for injury type and severity by tourniquet-use status. Additionally, direct comparison without propensity matching was made between tourniquet use and no-tourniquet use groups.
+Results
+There were 720 casualties in the tourniquet use and 693 in the no-tourniquet use groups. Of the 1,413 casualties, 66% (928) also had nonextremity injury. Casualties with tourniquet use had worse signs of hemorrhagic shock (admission base deficit, admission hemoglobin, admission pulse, and transfusion units required) than those without. Survival rates were similar between the 2 groups (1% difference; 95% confidence interval −2.5% to 4.2%), but casualties who received tourniquets had worse shock and received more blood products. In propensity-matched casualties, survival rates were not different (2% difference; 95% confidence interval −6.7% to 2.7%) between the 2 groups.
+Conclusion
+Tourniquet use was associated with worse shock and more transfusion requirements among hospital-admitted casualties, yet those who received tourniquets had survival rates similar to those of comparable, transfused casualties who did not receive tourniquets.
+-->
+
+Reference: J Pearl and D Mackenzie (2018) *The Book of Why* pp343-7

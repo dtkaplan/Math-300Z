@@ -1,0 +1,100 @@
+# Instructor Teaching Notes for Lesson 19
+
+```{r include=FALSE}
+library(math300)
+```
+
+
+## Introduction to 2nd half of course
+
+You have been learning some basics of data wrangling and visualization, along with 
+what *ModernDive* calls "basic regression" and "multiple regression." These are *tools* which you will continue to use in the second half of the semester.
+
+The major theme of the second half of the semester is to identify patterns in data and evaluate/assess what you've identified to see if it's useful for your purposes. 
+
+As an example of a pattern, let's look at some Department of Transportation data on models of cars stored in the `MPG` data frame. We will start by looking at the link between fuel economy and CO_2_ production.
+
+```{r}
+ggplot(MPG, aes(x = fuel_year, y = CO2_year)) +
+  geom_jitter(alpha=.3)
+```
+
+This is a very strong pattern. `fuel_year` and `CO2_year` are practically the same thing.
+
+* Why?
+* Why are there some points off of the straight line describing the large majority of points?
+
+Machine learning approach: Start with nothing and take away variables that are meaningless
+
+```{r}
+rpart::rpart(CO2_year ~ fuel_year + ., 
+             data = MPG %>% 
+               select(-CO2combined, -mpg_comb, -EPA_fuel_cost))
+```
+
+```{r}
+ggplot(MPG, aes(x = fuel_year, y = CO2_year)) +
+  geom_jitter(alpha=.3, aes(color=fuel))
+```
+
+The main tool we will use to identify patterns is **regression modeling**. Here's the regression modeling description of the CO_2_ production problem:
+
+```{r}
+mod1 <- lm(CO2_year ~ fuel_year, data = MPG)
+mod2 <- lm(CO2_year ~ fuel_year * fuel, data = MPG)
+```
+
+How do we compare these two models to see if `fuel` is really the explanation? You will be learning a handful of techniques for summarizing models and, more important, when and why you would want to use each of the tools. 
+
+```{r}
+mod1
+mod2
+anova_summary(mod1, mod2)
+```
+
+```{r}
+Vals <- model_eval(mod2)
+ggplot(Vals, aes(y=.resid, x=1)) +
+  geom_jitter()
+
+Big_ones <- abs(Vals$.resid) > 100
+MPG[Big_ones,]
+ggplot(MPG %>% mutate(ratio=CO2_year/fuel_year), aes(y=ratio, color=fuel, x=1)) + geom_jitter()
+```
+
+
+
+## Section 1: Variation, noise, signal
+
+Motivating problem: Designing an enforcement regime for limits on scallop fisheries.
+
+```{r echo=FALSE}
+#| label: fig-scallop-life-cycle
+#| fig-cap: "Life cycle of a scallop"
+knitr::include_graphics("../www/scallop-life-cycle.png")
+```
+
+Fisheries are regulated by states and the Federal government in order to avoid collapse due to over-fishing. Often, the regulations attempt to protect juveniles---animals that have not yet reached reproductive age.  If the juveniles are harvested, their potential progeny are annihilated. There are various ways to do this, for instance restricting fishing to months where adults are most prevalent, closing fisheries to provide an opportunity for the reproductive stock to recover, and so on.
+
+In the 1990s, one of the ways the Federal government regulated scallop fisheries was by setting a minimum acceptable size for harvested scallops. For practical reasons, rather than monitoring individual scallops, the government monitored the average per scallop weight of each boat's catch. For the sake of the example, imagine that the minimum acceptable weight is 1/30 pound.
+
+A fishing boat might have 10,000 or more bags of scallops, which can be handled individually: weigh the bag, then count the number of scallops to get the average weight per scallop.
+
+Discussion questions:
+
+* How many bags should be sampled? Should this depend on the number of bags in the cargo. For instance, should a cargo of 1000 bags be sampled differently than a cargo of 10,000 bags. 
+* What should be the threshold for declaring the whole cargo below minimum size? (The whole catch is confiscated in such a case.)
+
+In this section of the course, you'll learn some statistical concepts and methods that allow the above questions to be answered to produce a regulation that is protective and fair to the fishermen.
+
+One idea is very simple: *sampling variation*. This is about how much the average per-scallop weight will vary from one bag to another.
+
+Another idea is very subtle: What you can say about the whole cargo based on a sample of $n$ bags. 
+
+## In this Lesson ...
+
+i. Why variation is central to thinking about data.
+
+ii. How to measure variation: the **variance**.
+
+iii. Accounting with variance: what's explained and what's still not explained. 
