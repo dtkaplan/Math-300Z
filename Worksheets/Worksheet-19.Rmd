@@ -1,5 +1,5 @@
 ---
-title: 'Lesson 19: Worksheet'
+title: "Lesson 19: Worksheet"
 author: "Jane Doe"
 ---
 
@@ -56,18 +56,45 @@ c. `PACKAGE::DF` The name of a data frame within a package.
 
 1. In the `mosaicData::Galton` data frame, find the variance of `mother` and `father`. Give both the numerical value and the units.
 
-ANSWER:
+::: {.callout-note}
+## ANSWER:
+
+```{r}
+mosaicData::Galton |> 
+  mutate(vmother = var(mother), vfather = var(father))
+```
+
+The units for both are `inches-squared" since the variables themselves have units "inches."
+:::
+
 
 2. In the `moderndive::amazon_books` data frame, find the variance of `list_price` and `num_pages`. Give both the numerical value and the units.
 
+::: {.callout-note}
+## ANSWER:
 
-ANSWER: 
+```{r}
+moderndive::amazon_books |>
+  mutate(vprice = var(list_price), vpages = var(num_pages))
+```
+
+The units of `list_price` are dollars, so the variance has units "square-dollars".
+
+`num_pages` is dimensionless, so the variance is also dimensionless. 
+:::
 
 
 3. Calculate the variance of `sex` from `Galton`. If something goes wrong, explain why.
 
-ANSWER: 
+::: {.callout-note}
+## ANSWER: 
 
+```{r error=TRUE}
+Galton |> mutate(vsex = var(sex))
+```
+
+`sex` is a categorical variable. There's no such thing as the variance of a categorical variable.
+:::
 
 ## Part 2
 
@@ -80,28 +107,60 @@ c. `lm(MODSPEC, data=DF) %>% conf_interval()` means the same as (b).
 
 1. (Easy, no computing needed.) What kind of a thing is `conf_interval()`. (Hint: It's the same kind of thing as `lm()`.)
 
-ANSWER:
+::: {.callout-note}
+## ANSWER:
+
+`conf_interval()` is a *function*.
+:::
+
 
 2. Using the `moderndive::amazonbooks` data frame, fit the model `list_price ~ num_pages`: 
     i. What are the units of the "(Intercept)" coefficient?
-    i. Report the confidence interval on `num_pages`. Give both the numerical bounds and the units.
-    i. Does the confidence interval of either of the terms include zero?
+    i. Report the coefficient on `num_pages`. Give both the numerical bounds and the units.
+    
 
-ANSWER:
+::: {.callout-note}
+## ANSWER:
+
+The intercept always has the same units as the response variable. Here, that's dollars.
+
+```{r}
+lm(list_price ~ num_pages, data = moderndive::amazon_books) |>
+  conf_interval()
+```
+
+Coefficient on `num_pages`: .02 dollars per page. Multiplying the coefficient by the number of pages will give dollars: the units of the response variable.
+:::
+
 
 3. Similar to (2) but with the model `list_price ~ numpages + hard_paper`
     i. What does the term `hard_paperH` refer to? 
     i. According to the coefficients, is a hardcover book any more expensive (on average) than a softcover book? 
-    i. Does the confidence interval of any of the terms include zero?
 
-ANSWER:
+::: {.callout-note}
+## ANSWER:
+
+```{r}
+lm(list_price ~ num_pages + hard_paper, data = moderndive::amazon_books) |>
+  conf_interval()
+```
+
+`hard_paperH` refers to the `H` level of the `hard_paper` variable. According to the model, a hardback costs $4.96 more than a paperback, on average.
+:::
 
 4. Store the model you created in (3) under the name `mod3`. We'll use it in the next part. For your answer, put the R command you used to store the model as `mod3`.
 
-ANSWER:
 
+::: {.callout-note}
+## ANSWER:
 
-    
+Note that we are asked to store the model itself, not the confidence interval.
+
+```{r}
+mod3 <- lm(list_price ~ num_pages + hard_paper, data = moderndive::amazon_books) 
+```
+
+:::
 
     
 ## Graphics review
@@ -116,17 +175,52 @@ d. `model_plot(MODAL, x=VAR, color=VAR)`
 
 1. Make a jitter plot of `list_price ~ hard_paper` from `moderndive::amazon_books`.
 
-ANSWER:
+::: {.callout-note}
+## ANSWER:
+
+```{r}
+moderndive::amazon_books |>
+  ggplot(aes(x=hard_paper, y = list_price)) + 
+  geom_jitter(alpha=0.5)
+```
+:::
 
 2. Using your command from (1), add a new layer: `+ geom_violin(fill="blue", alpha=0.3)`
 
-ANSWER:
+::: {.callout-note}
+## ANSWER:
 
-3. Use `model_plot()` to draw a picture of `mod3`. Set `x=hard_paper`. What do you think the horizontal line segments refer to?
+```{r}
+moderndive::amazon_books |>
+  ggplot(aes(x=hard_paper, y = list_price)) + 
+  geom_jitter(alpha=0.5) +
+  geom_violin(fill="blue", alpha=0.3)
+```
 
-ANSWER:
+:::
 
-4. Repeat (3), but now set `x=num_pages, color=hard_paper`. Explain the meaning of the line segments in everyday terms. 
+3. Use `model_plot()` to draw a picture of `mod3`. Set `x=hard_paper` and `num_pages=200`. What do you think the horizontal line segments refer to?
 
-ANSWER:
+::: {.callout-note}
+## ANSWER:
 
+```{r warning=FALSE}
+model_plot(mod3, x=hard_paper, num_pages=200)
+```
+
+The vertical position of the horizontal lines indicates the model output for books with 200 pages.
+
+:::
+
+4. Repeat (3), but remove `num_pages = 200`. Instead, set `x=num_pages` and `color=hard_paper`. Explain the meaning of the line segments in everyday terms. 
+
+::: {.callout-note}
+## ANSWER:
+
+```{r warning=FALSE}
+model_plot(mod3, x=hard_paper, color=num_pages)
+```
+
+The parallel line segments in each column show the model output for books with 200, 400, and 600 pages respectively.
+
+:::
