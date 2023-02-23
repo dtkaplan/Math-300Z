@@ -1,0 +1,28 @@
+## Math 300Z: In-class group activity
+
+## Counts and waiting times
+
+GENERATE SEQUENCES FROM POISSON and EXPONENTIAL.
+
+First, generate a sample of size 1: find the largest and smallest across the class.
+
+Then generate a sample of size 20:
+
+- find the largest and smallest. are they pretty consistent across the class?
+    - find the variance. Is that pretty consistent across the class?
+- find the mean:
+    - is that as spread out as the largest and smallest?
+    - how spread out is it? (variance)
+
+Keep a table
+
+sample size | variance  | standard deviation
+------------|-----------|---------------
+20.         |           |
+20          |           |
+20          |           |
+40          |           |
+80          |           |
+
+
+Maybe add a parameter or distribution argument to `sample.dag_system()`

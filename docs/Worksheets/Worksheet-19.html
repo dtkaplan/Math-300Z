@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Jane Doe">
+
+<title>Spring 2023 Math 300Z - Lesson 19: Worksheet</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Math 300Z</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../Textbook/index.html">
+ <span class="menu-text">Textbook</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../student-notes.qmd">
+ <span class="menu-text">Student notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../faculty-notes.qmd">
+ <span class="menu-text">Faculty notes</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lesson 19: Worksheet</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Jane Doe </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="objectives" class="level2">
+<h2 class="anchored" data-anchor-id="objectives">Objectives</h2>
+<p>19.1. [Conceptual] Master the use and units of variance and standard deviation in measuring variability.</p>
+<p>19.2. [Conceptual] Understand the equivalence between mean and proportion on a zero-one variable.</p>
+<p>19.3. [Technical] Use <code>var()</code> and <code>sd()</code> within <code>summarize()</code></p>
+<p>19.4. [Technical] Use <code>model_plot()</code> to graph models with one or two explanatory variables.</p>
+<p>19.5. [Technical] Use <code>zero_one()</code> with <code>mutate()</code> to create a zero-one variable.</p>
+</section>
+<section id="preliminaries-how-we-will-work-with-r." class="level2">
+<h2 class="anchored" data-anchor-id="preliminaries-how-we-will-work-with-r.">Preliminaries: How we will work with R.</h2>
+<p>In the first half of Math 300Z, the daily student notes were largely structured around “scaffolded” R code, which often involved filling in the blanks. In this second half of 300Z, we will start to use a new way of helping you construct appropriate R command. We call this “<em>command patterns.</em> For instance,</p>
+<pre><code>DF %&gt;% summarize(NM=var(VAR)) </code></pre>
+<p>is a command pattern.</p>
+<p>One reason for the shift to the command-pattern style is that there will be only a handful of new patterns in the second half of the course that you’ll be using over and over again. Another reason is to help you develop “finger memory” for the most common patterns. An analogy: scaffolding is like GPS navigation which certainly makes it easier to drive but harder to get to know the town. Command patterns are like a paper map, there to help you when you need it.</p>
+<p>There is a specific notation for command patterns, which you should memorize. Instead of the blanks used in a scaffold, the command pattern uses a CAPITALIZED abbreviation for the **kind of thing* that should be put in the position. Common kinds of thing are</p>
+<ul>
+<li><code>DF</code>: a data frame, almost always referred to by name.</li>
+<li><code>VAR</code>: a variable in a data frame. Many command patterns involve multiple variables, each of which is referred to by <code>VAR</code>. You will replace each <code>VAR</code> with the appropriate variable name.</li>
+<li><code>VARS</code>: one or more variable names. When these are the right-hand side of a tilde expression, separate the names with <code>+</code> punctuation. When we mean to indicate that there is only one variable, we use <code>VAR</code> instead of <code>VARS</code>. If we want to say, “use two variables,” we would write <code>VAR + VAR</code>.</li>
+<li><code>MODEL</code> refers to the name of a model that you have previously constructed with <code>lm()</code>.</li>
+<li><code>NM</code> means a name that you will be calling something by. For instance, <code>NM &lt;- lm(VAR ~ VARS, data=DF)</code>. Another occasion for using <code>NM</code> is as part of an argument to <code>summarize()</code> or <code>mutate()</code>.</li>
+<li><code>[, MORE]</code> means that you can have multiple additional arguments of the same form as the previous argument.</li>
+<li><code>VALUE</code> a number, quoted string (e.g., <code>"red"</code>), or multiple values inside <code>c( )</code>.</li>
+<li><code>MODSPEC</code> is a model specification, which could equally well be written <code>VAR ~ VARS</code></li>
+</ul>
+<p>Anything in a command pattern that is not a CAPITALIZED abbreviation is a specific part of the command to be used as-is. For instance, <code>lm(VAR ~ VARS, data=DF)</code> refers explicitly to the <code>lm()</code> function whose first argument is a tilde expression and whose second argument is named <code>data</code>.</p>
+<p>Occasionally, you will refer to a data frame by naming the <em>package</em> from which it comes. For example, the <code>moderndive</code> package includes (among many others) the <code>amazon_books</code> data frame. Think of <code>amazon_books</code> as a first name, and <code>moderndive</code> as a family name. When you see <code>PACKAGE::DF</code> it is meant to indicate, for instance, <code>moderndive::amazon_books</code>. (Note that the <code>::</code> in the command pattern is to be taken literally; there are two successive colons separating the package name from the name of the data frame.)</p>
+</section>
+<section id="part-1" class="level2">
+<h2 class="anchored" data-anchor-id="part-1">Part 1</h2>
+<p>Command patterns:</p>
+<ol type="a">
+<li><code>DF %&gt;% summarize(NM = var(VAR))</code> Calculate variance of a variable in a data frame.</li>
+<li>`DF %&gt;% summarize(NM1 = var(VAR1), NM2 = var(VAR2) [, MORE])</li>
+<li><code>PACKAGE::DF</code> The name of a data frame within a package.</li>
+</ol>
+<ol type="1">
+<li>In the <code>mosaicData::Galton</code> data frame, find the variance of <code>mother</code> and <code>father</code>. Give both the numerical value and the units.</li>
+</ol>
+<p>ANSWER:</p>
+<ol start="2" type="1">
+<li>In the <code>moderndive::amazon_books</code> data frame, find the variance of <code>list_price</code> and <code>num_pages</code>. Give both the numerical value and the units.</li>
+</ol>
+<p>ANSWER:</p>
+<ol start="3" type="1">
+<li>Calculate the variance of <code>sex</code> from <code>Galton</code>. If something goes wrong, explain why.</li>
+</ol>
+<p>ANSWER:</p>
+</section>
+<section id="part-2" class="level2">
+<h2 class="anchored" data-anchor-id="part-2">Part 2</h2>
+<p>Command patterns:</p>
+<ol type="a">
+<li><code>NM &lt;- lm(VAR ~ VARS, data = DF)</code></li>
+<li><code>lm(VAR ~ VARS, data=DF) %&gt;% conf_interval()</code></li>
+<li><code>lm(MODSPEC, data=DF) %&gt;% conf_interval()</code> means the same as (b).</li>
+</ol>
+<ol type="1">
+<li>(Easy, no computing needed.) What kind of a thing is <code>conf_interval()</code>. (Hint: It’s the same kind of thing as <code>lm()</code>.)</li>
+</ol>
+<p>ANSWER:</p>
+<ol start="2" type="1">
+<li>Using the <code>moderndive::amazonbooks</code> data frame, fit the model <code>list_price ~ num_pages</code>:
+<ol type="i">
+<li>What are the units of the “(Intercept)” coefficient?</li>
+<li>Report the confidence interval on <code>num_pages</code>. Give both the numerical bounds and the units.</li>
+<li>Does the confidence interval of either of the terms include zero?</li>
+</ol></li>
+</ol>
+<p>ANSWER:</p>
+<ol start="3" type="1">
+<li>Similar to (2) but with the model <code>list_price ~ numpages + hard_paper</code>
+<ol type="i">
+<li>What does the term <code>hard_paperH</code> refer to?</li>
+<li>According to the coefficients, is a hardcover book any more expensive (on average) than a softcover book?</li>
+<li>Does the confidence interval of any of the terms include zero?</li>
+</ol></li>
+</ol>
+<p>ANSWER:</p>
+<ol start="4" type="1">
+<li>Store the model you created in (3) under the name <code>mod3</code>. We’ll use it in the next part. For your answer, put the R command you used to store the model as <code>mod3</code>.</li>
+</ol>
+<p>ANSWER:</p>
+</section>
+<section id="graphics-review" class="level2">
+<h2 class="anchored" data-anchor-id="graphics-review">Graphics review</h2>
+<p>Command patterns:</p>
+<ol type="a">
+<li><code>ggplot(DF, aes(x=VAR, y=VAR)) + geom_jitter()</code></li>
+<li><code>ggplot(DF, aes(x=VAR, y=VAR)) + geom_jitter() + geom_violin(fill="blue", alpha=0.3)</code></li>
+<li><code>ggplot(DF, aes(x="all", y=VAR)) + geom_jitter()</code></li>
+<li><code>model_plot(MODEL, x=VAR)</code></li>
+<li><code>model_plot(MODAL, x=VAR, color=VAR)</code></li>
+</ol>
+<ol type="1">
+<li>Make a jitter plot of <code>list_price ~ hard_paper</code> from <code>moderndive::amazon_books</code>.</li>
+</ol>
+<p>ANSWER:</p>
+<ol start="2" type="1">
+<li>Using your command from (1), add a new layer: <code>+ geom_violin(fill="blue", alpha=0.3)</code></li>
+</ol>
+<p>ANSWER:</p>
+<ol start="3" type="1">
+<li>Use <code>model_plot()</code> to draw a picture of <code>mod3</code>. Set <code>x=hard_paper</code>. What do you think the horizontal line segments refer to?</li>
+</ol>
+<p>ANSWER:</p>
+<ol start="4" type="1">
+<li>Repeat (3), but now set <code>x=num_pages, color=hard_paper</code>. Explain the meaning of the line segments in everyday terms.</li>
+</ol>
+<p>ANSWER:</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

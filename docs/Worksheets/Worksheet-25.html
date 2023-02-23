@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Jane Doe">
 
-<title>Spring 2023 Math 300Z – patch-clamping</title>
+<title>Spring 2023 Math 300Z - Lesson 25: Worksheet</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,22 +24,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,7 +71,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="../../index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Math 300Z</span>
     </a>
   </div>
@@ -80,19 +81,19 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../Textbook/index.html">
+    <a class="nav-link" href="../Textbook/index.html">
  <span class="menu-text">Textbook</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html">
+    <a class="nav-link" href="../index.html">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../student-notes.qmd">
+    <a class="nav-link" href="../student-notes.qmd">
  <span class="menu-text">Student notes</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../faculty-notes.qmd">
+    <a class="nav-link" href="../faculty-notes.qmd">
  <span class="menu-text">Faculty notes</span></a>
   </li>  
 </ul>
@@ -109,31 +110,33 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-
-
-<section id="math-300z-in-class-group-activity" class="level2">
-<h2 class="anchored" data-anchor-id="math-300z-in-class-group-activity">Math 300Z: In-class group activity</h2>
-</section>
-<section id="membrane-channels" class="level2">
-<h2 class="anchored" data-anchor-id="membrane-channels">Membrane channels</h2>
-<p>Electrical signaling is one of the means of cell-to-cell communication in organisms. Familiar examples are nerve cells and muscle cells. The electrical activity is mediated by assemblies of a few proteins—called “membrane channels”—that penetrate the cell membrane and switch minute flows of electrical current on and off depending on conditions in the cell and the influence of neighboring cells.</p>
-<p>Amazingly, even though this activity involves only thousands of atoms, it is possible to record the on-again-off-again activity of a single channel. (The 1991 Nobel Prize in Physiology or Medicine was awarded to E. Neher and B. Sakmann for their invention of the measurement technique, which is now widely used in electrophysiology research.)</p>
-<p>The figure shows 16 recordings of the activity of different channels. Each of the recordings is a combination of signal and noise.</p>
-<p>TASK: In three recordings of your choice,</p>
-<ol type="1">
-<li>Identify the signal by drawing it over the recording.</li>
-<li>Measure the typical amplitude of the noise. For this purpose, use the guide at the lower-right corner of the figure: a short vertical line marks the amplitude of 5 pA, that is, 5 pico-Amps.</li>
-</ol>
-<p>To identify the signal, you need to know something about what the signal looks like. In our work in Math 300Z, the “signal” corresponds to a relationship between two variables or more. Here, one of the variables is <em>time</em>, the other is electrical <em>current</em>. Usually in Math 300Z we will be interested in “linear” relationships between the variables and we seek to identify the signal using only that limited piece of information. To define the signal in the single-channel recordings, use this information: the channels open and close to current, occasionally staying open (or closed) for the better part of a second, but also opening (or closing) for a much shorter time, say 0.01 second.</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="clamp-recording.png" class="img-fluid" style="width:100.0%"></p>
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lesson 25: Worksheet</h1>
 </div>
-</div>
-<p>Source of image: Kawano, R., Tsuji, Y., Sato, K. et al.&nbsp;(2013) “Automated Parallel Recordings of Topologically Identified Single Ion Channels”. <em>Scienfic Reports</em> **3(#1995) <a href="https://doi.org/10.1038/srep01995" class="uri">https://doi.org/10.1038/srep01995</a></p>
 
 
-</section>
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Jane Doe </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Count the points above and below the prediction band. What fraction of the points are <em>within</em> the band.</p>
+<p>Pull out the values in one category and use them for prediction directly.</p>
+
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

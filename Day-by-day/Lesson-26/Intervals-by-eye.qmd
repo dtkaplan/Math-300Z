@@ -1,0 +1,80 @@
+## Math 300Z In-class activity
+
+```{r include=FALSE}
+library(math300)
+```
+
+## Intervals by eye
+
+::: {.content-hidden when-format="pdf"}
+
+In this activity, you are given some point plots of data: y vs x. Your job is to
+
+1. sketch in an appropriate model fitted (by eye) to the data.
+2. add a prediction band showing for each value of x what is the **prediction** interval
+3. transform the prediction band into a **confidence** band.
+
+TIPS:
+
+a. The fitted model will be a line or curve, or in the case of Model 3, two lines.
+b. The bounds of the prediction band will be more-or-less parallel to the fitted model, but should include roughly 95% of the $n$ points in the plot.
+c. The confidence band is narrower than the prediction band by a factor of $1/\sqrt{n}$.
+
+:::
+
+
+
+::: columns
+
+::: {.column width="50%"}
+
+### Model 1: A straight-line model `y ~ x`
+
+```{r echo=FALSE, fig.height=3, fig.width=6}
+set.seed(102)
+One <- dag_make(
+  x ~ unif(),
+  y ~ 4 - 2.5*x + exo()
+)
+Sone <- sample(One, size=100)
+gf_point(y ~ x, data=Sone) %>%
+  gf_labs(subtitle="n=100") %>%
+  gf_lims(y=c(-2,7))
+```
+:::
+
+
+::: {.column width="50%:}
+### Model 2: A sine-wave model, `y ~ sin(x)`
+
+```{r echo=FALSE, warning=FALSE, fig.height=3, fig.width=6}
+set.seed(102)
+Two <- dag_make(
+  x ~ unif(0, 10),
+  y ~ 3 + 4* sin(x) + exo()
+)
+Stwo <- sample(Two, size=400)
+gf_point(y ~ x, data=Stwo) %>%
+  gf_labs(subtitle="n=400") %>%
+  gf_lims(y=c(-2,7))
+```
+:::
+
+:::
+
+
+
+### Model 3: A function of two variables, `y ~ x + group`
+
+```{r echo=FALSE, fig.height=3, fig.width=6}
+set.seed(102)
+Three <- dag_make(
+  x ~ unif(0, 10),
+  group ~ binom(0, labels=c("group A", "group B")),
+  y ~ 1 + 5*(group=="group A") + 2 * x + exo(1.5)
+)
+Sthree <- sample(Three, size=200)
+gf_point(y ~ x, data=Sthree, shape=~group) %>%
+  gf_labs(subtitle="n=200") 
+```
+

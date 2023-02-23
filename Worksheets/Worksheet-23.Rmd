@@ -1,0 +1,15 @@
+---
+title: 'Lesson 23: Worksheet'
+author: "Jane Doe"
+---
+
+```{r include=FALSE}
+library(math300)
+```
+
+Use models to calculate a confidence interval. 
+
+Compare the band on a `model_plot()` view to the numbers in the confidence interval for a slope. Do they correspond.
+
+Maybe have them add a `geom_abline()` to the plot to compare to the slope of the top and bottom of the confidence band.
+

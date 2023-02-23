@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Spring 2023 Math 300Z – patch-clamping</title>
+<title>Spring 2023 Math 300Z – counts-and-waiting-times</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -114,23 +114,60 @@ ul.task-list li input[type="checkbox"] {
 <section id="math-300z-in-class-group-activity" class="level2">
 <h2 class="anchored" data-anchor-id="math-300z-in-class-group-activity">Math 300Z: In-class group activity</h2>
 </section>
-<section id="membrane-channels" class="level2">
-<h2 class="anchored" data-anchor-id="membrane-channels">Membrane channels</h2>
-<p>Electrical signaling is one of the means of cell-to-cell communication in organisms. Familiar examples are nerve cells and muscle cells. The electrical activity is mediated by assemblies of a few proteins—called “membrane channels”—that penetrate the cell membrane and switch minute flows of electrical current on and off depending on conditions in the cell and the influence of neighboring cells.</p>
-<p>Amazingly, even though this activity involves only thousands of atoms, it is possible to record the on-again-off-again activity of a single channel. (The 1991 Nobel Prize in Physiology or Medicine was awarded to E. Neher and B. Sakmann for their invention of the measurement technique, which is now widely used in electrophysiology research.)</p>
-<p>The figure shows 16 recordings of the activity of different channels. Each of the recordings is a combination of signal and noise.</p>
-<p>TASK: In three recordings of your choice,</p>
-<ol type="1">
-<li>Identify the signal by drawing it over the recording.</li>
-<li>Measure the typical amplitude of the noise. For this purpose, use the guide at the lower-right corner of the figure: a short vertical line marks the amplitude of 5 pA, that is, 5 pico-Amps.</li>
-</ol>
-<p>To identify the signal, you need to know something about what the signal looks like. In our work in Math 300Z, the “signal” corresponds to a relationship between two variables or more. Here, one of the variables is <em>time</em>, the other is electrical <em>current</em>. Usually in Math 300Z we will be interested in “linear” relationships between the variables and we seek to identify the signal using only that limited piece of information. To define the signal in the single-channel recordings, use this information: the channels open and close to current, occasionally staying open (or closed) for the better part of a second, but also opening (or closing) for a much shorter time, say 0.01 second.</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="clamp-recording.png" class="img-fluid" style="width:100.0%"></p>
-</div>
-</div>
-<p>Source of image: Kawano, R., Tsuji, Y., Sato, K. et al.&nbsp;(2013) “Automated Parallel Recordings of Topologically Identified Single Ion Channels”. <em>Scienfic Reports</em> **3(#1995) <a href="https://doi.org/10.1038/srep01995" class="uri">https://doi.org/10.1038/srep01995</a></p>
+<section id="counts-and-waiting-times" class="level2">
+<h2 class="anchored" data-anchor-id="counts-and-waiting-times">Counts and waiting times</h2>
+<p>GENERATE SEQUENCES FROM POISSON and EXPONENTIAL.</p>
+<p>First, generate a sample of size 1: find the largest and smallest across the class.</p>
+<p>Then generate a sample of size 20:</p>
+<ul>
+<li>find the largest and smallest. are they pretty consistent across the class?
+<ul>
+<li>find the variance. Is that pretty consistent across the class?</li>
+</ul></li>
+<li>find the mean:
+<ul>
+<li>is that as spread out as the largest and smallest?</li>
+<li>how spread out is it? (variance)</li>
+</ul></li>
+</ul>
+<p>Keep a table</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>sample size</th>
+<th>variance</th>
+<th>standard deviation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>20.</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>20</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>20</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>40</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>80</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Maybe add a parameter or distribution argument to <code>sample.dag_system()</code></p>
 
 
 </section>

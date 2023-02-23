@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Spring 2023 Math 300Z – patch-clamping</title>
+<title>Spring 2023 Math 300Z – intervals-by-eye</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -59,6 +59,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -111,28 +112,56 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="math-300z-in-class-group-activity" class="level2">
-<h2 class="anchored" data-anchor-id="math-300z-in-class-group-activity">Math 300Z: In-class group activity</h2>
+<section id="math-300z-in-class-activity" class="level2">
+<h2 class="anchored" data-anchor-id="math-300z-in-class-activity">Math 300Z In-class activity</h2>
 </section>
-<section id="membrane-channels" class="level2">
-<h2 class="anchored" data-anchor-id="membrane-channels">Membrane channels</h2>
-<p>Electrical signaling is one of the means of cell-to-cell communication in organisms. Familiar examples are nerve cells and muscle cells. The electrical activity is mediated by assemblies of a few proteins—called “membrane channels”—that penetrate the cell membrane and switch minute flows of electrical current on and off depending on conditions in the cell and the influence of neighboring cells.</p>
-<p>Amazingly, even though this activity involves only thousands of atoms, it is possible to record the on-again-off-again activity of a single channel. (The 1991 Nobel Prize in Physiology or Medicine was awarded to E. Neher and B. Sakmann for their invention of the measurement technique, which is now widely used in electrophysiology research.)</p>
-<p>The figure shows 16 recordings of the activity of different channels. Each of the recordings is a combination of signal and noise.</p>
-<p>TASK: In three recordings of your choice,</p>
+<section id="intervals-by-eye" class="level2">
+<h2 class="anchored" data-anchor-id="intervals-by-eye">Intervals by eye</h2>
+<div>
+<p>In this activity, you are given some point plots of data: y vs x. Your job is to</p>
 <ol type="1">
-<li>Identify the signal by drawing it over the recording.</li>
-<li>Measure the typical amplitude of the noise. For this purpose, use the guide at the lower-right corner of the figure: a short vertical line marks the amplitude of 5 pA, that is, 5 pico-Amps.</li>
+<li>sketch in an appropriate model fitted (by eye) to the data.</li>
+<li>add a prediction band showing for each value of x what is the <strong>prediction</strong> interval</li>
+<li>transform the prediction band into a <strong>confidence</strong> band.</li>
 </ol>
-<p>To identify the signal, you need to know something about what the signal looks like. In our work in Math 300Z, the “signal” corresponds to a relationship between two variables or more. Here, one of the variables is <em>time</em>, the other is electrical <em>current</em>. Usually in Math 300Z we will be interested in “linear” relationships between the variables and we seek to identify the signal using only that limited piece of information. To define the signal in the single-channel recordings, use this information: the channels open and close to current, occasionally staying open (or closed) for the better part of a second, but also opening (or closing) for a much shorter time, say 0.01 second.</p>
+<p>TIPS:</p>
+<ol type="a">
+<li>The fitted model will be a line or curve, or in the case of Model 3, two lines.</li>
+<li>The bounds of the prediction band will be more-or-less parallel to the fitted model, but should include roughly 95% of the <span class="math inline">\(n\)</span> points in the plot.</li>
+<li>The confidence band is narrower than the prediction band by a factor of <span class="math inline">\(1/\sqrt{n}\)</span>.</li>
+</ol>
+</div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<section id="model-1-a-straight-line-model-y-x" class="level3">
+<h3 class="anchored" data-anchor-id="model-1-a-straight-line-model-y-x">Model 1: A straight-line model <code>y ~ x</code></h3>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="clamp-recording.png" class="img-fluid" style="width:100.0%"></p>
+<p><img src="Intervals-by-eye_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="576"></p>
 </div>
 </div>
-<p>Source of image: Kawano, R., Tsuji, Y., Sato, K. et al.&nbsp;(2013) “Automated Parallel Recordings of Topologically Identified Single Ion Channels”. <em>Scienfic Reports</em> **3(#1995) <a href="https://doi.org/10.1038/srep01995" class="uri">https://doi.org/10.1038/srep01995</a></p>
+</section>
+</div><div class="column" style="width:&quot;50%:;">
+<section id="model-2-a-sine-wave-model-y-sinx" class="level3">
+<h3 class="anchored" data-anchor-id="model-2-a-sine-wave-model-y-sinx">Model 2: A sine-wave model, <code>y ~ sin(x)</code></h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Intervals-by-eye_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="576"></p>
+</div>
+</div>
+</section>
+</div>
+</div>
+<section id="model-3-a-function-of-two-variables-y-x-group" class="level3">
+<h3 class="anchored" data-anchor-id="model-3-a-function-of-two-variables-y-x-group">Model 3: A function of two variables, <code>y ~ x + group</code></h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Intervals-by-eye_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="576"></p>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
