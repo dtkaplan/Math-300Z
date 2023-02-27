@@ -25,23 +25,38 @@ library(math300)
 
 1. Use `dag_draw()` to draw a picture of the `dag08` directed acyclic graph. From this graph, explain why node `c` is exogenous and why `x` and `y` are not.
 
-ANSWER:
+::: {.callout-note} 
+## ANSWER
+
+:::
 
 2. Use `print()` to view the formulas used by `dag08` to simulate data. What about the formula for `y` indicates that it's receives inputs from `x` and `c`.
 
-ANSWER:
+::: {.callout-note}  
+## ANSWER 
+
+:::
 
 3. There are three coefficients in the formula for `y`: an intercept, an `x` coefficient, and a `c` coefficient. (There is also some random input from an exogenous source unrelated to `c` or `x`.) What are the numerical values of the three coefficients?
 
-ANSWER:
+::: {.callout-note} 
+## ANSWER 
+
+:::
 
 4. Collect a sample of size $n=100$ from `dag08` and use it to train the model with specification `y ~ x`. Do the coefficients reported match those you found in part (c)? (If you are not sure, use a bigger sample size, say $n=1000$ or even bigger.)
 
-ANSWER:
+::: {.callout-note} 
+## ANSWER 
+
+:::
 
 5. Similar to (4), but use the specification `y ~ x + c`. How do the coefficients for this model compare to those you found in (3)?
 
-ANSWER
+::: {.callout-note} 
+## ANSWER 
+
+:::
 
 
 ## Part 2: Paths in DAGs
@@ -51,8 +66,10 @@ ANSWER
     a. Along the indirect path, is there a causal flow from `x` to `y`?
     b. Along the indirect path, is there a causal flow from any node on the graph that reaches both endpoints, `x` and `y`?
     
-ANSWER: 
+::: {.callout-note} 
+## ANSWER  
 
+:::
 
 2. `dag_school2` is a highly simplistic model of the relationship between `expenditure`s on schools and student `outcome`s in terms of, say, standardized test scores. 
 
@@ -66,21 +83,33 @@ b. On the indirect pathway, is there a causal from from `expenditure` to `outcom
 c. Is there a causal flow from any node on the indirect pathway to both `expenditure` and `outcome`? Which one?
 d. Explain why any node you identified in part (c) **must** be an exogenous node.
 
-ANSWER: 
+::: {.callout-note} 
+## ANSWER  
+
+:::
 
 ## Part 3: Are expenditures good for school outcomes?
 
 1. Look at the formulas for `dag_school2`. Is a higher `expenditure` connected to a `higher` outcome?
 
-ANSWER:
+::: {.callout-note} 
+## ANSWER 
+
+:::
 
 2. Generate a simple of size 1000 from `dag_school2` and use it to train the model `outcome ~ expenditure`. Is the coefficient on `expenditure` consistent with what you found in (1)? (If you aren't sure, use a larger sample size, say 10,000.) What about the coefficient on `expenditure` leads to your conclusion?
 
-ANSWER: 
+::: {.callout-note} 
+## ANSWER
+
+:::
 
 3. Speculate on what might be the origin of the evident inconsistency between (1) and (2)?
 
-ANSWER:
+::: {.callout-note} 
+## ANSWER 
+
+:::
 
 ## Part 4: Constructing a DAG
 
@@ -103,7 +132,10 @@ The right-hand side of a formula can be any arithmetic expression involving the 
 
 1. What happens if node `one`, instead of being exogenous, takes as input one of the other two nodes in `example_dag`?
 
-ANSWER: The graph would become cyclic, hence not a DAG. Notice that by using a node on the right-hand side of a tilde expression only when it has already been created by a previous tilde expression, you guarantee that the graph will be acyclic.
+::: {.callout-note} 
+## ANSWER  
+The graph would become cyclic, hence not a DAG. Notice that by using a node on the right-hand side of a tilde expression only when it has already been created by a previous tilde expression, you guarantee that the graph will be acyclic.
+:::
 
 2. Create and draw a DAG that has the same arrangement of causal connections as "[Professor Butts and the Self-Operating Napkin](https://en.wikipedia.org/wiki/Rube_Goldberg_machine)," illustrated below:
 
@@ -117,7 +149,8 @@ Watch your spelling of node names! Use this command to draw your `napkin_dag`:
 dag_draw(napkin_dag, vertex.label.cex=.5, vertex.size=10, edge.arrow.size = 0.2)
 ```
 
-ANSWER:
+::: {.callout-note} 
+## ANSWER 
 
 ```{r}
 napkin_dag <- dag_make(
@@ -138,3 +171,4 @@ napkin_dag <- dag_make(
 )
 dag_draw(napkin_dag, vertex.label.cex=.5, vertex.size=10, edge.arrow.size = 0.2)
 ```
+:::

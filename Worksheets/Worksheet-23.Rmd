@@ -13,3 +13,31 @@ Compare the band on a `model_plot()` view to the numbers in the confidence inter
 
 Maybe have them add a `geom_abline()` to the plot to compare to the slope of the top and bottom of the confidence band.
 
+
+```{r}
+make_rose <- function(P, x=NULL, y=NULL, scale=4, quadrant=1, color="red", keepers=c("both", "pos", "neg")) {
+  keepers <- match.arg(keepers)
+  xy <- layer_scales(P)
+  xrange <- xy$x$range$range
+  yrange <- xy$y$range$range
+  if (is.null(x)) x <- mean(xrange)
+  if (is.null(y)) y <- mean(yrange)
+  width <- diff(xrange)/scale
+  height <- diff(yrange)/scale
+  center <- height / width
+  nice_slopes <- pretty(extendrange(c(-center, center),f=.1 ), n=6) %>% setdiff(0)
+  if (keepers == "pos") nice_slopes <- nice_slopes[nice_slopes > 0]
+  if (keepers == "neg") nice_slopes <- nice_slopes[nice_slopes < 0]
+  
+  nice_x <- rep(width, length(nice_slopes))
+  nice_y <- nice_slopes*nice_x
+  
+  Lines <- tibble(xend=nice_x+x, yend=nice_y + y, x=x, y=y, label=as.character(nice_slopes))
+  
+  P + geom_segment(data=Lines, aes(x=x, y=y, xend=xend, yend=yend), color=color) + geom_label(data=Lines, aes(x=xend, y=yend, label=label), hjust=0, color=color)
+  
+  
+}
+```
+
+
