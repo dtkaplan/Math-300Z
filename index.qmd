@@ -14,6 +14,9 @@ lesson_links <- function(daynum) {
 reading_link <- function(daynum) {
   glue::glue("[Reading](https://dtkaplan.github.io/Lessons-in-statistical-thinking/Lesson-{daynum}.html)")
 }
+instructor_notes <- function(daynum) {
+  glue::glue("[Lesson {daynum}:](Day-by-day/Lesson-{daynum}/Teaching-notes-{daynum}.html)")
+}
 
 
 
@@ -21,125 +24,49 @@ reading_link <- function(daynum) {
 
 Math 300Z is the prototype for scheduled revisions to Math 300. The revisions apply only to Lessons 19 and up; the first 18 lessons come from Math 300.
 
-Lesson 19. Topic: Variation (Mar 3) `r reading_link(19)`, Activity: [Measuring by eye](Day-by-day/Lesson-19/Ruler-activity-handout.html)
+Mar 3 `r instructor_notes(19)` Topic: Variation  `r reading_link(19)`, Activity: [Measuring by eye](Day-by-day/Lesson-19/Ruler-activity-handout.html) 
 
-Lesson 20: Topic: DAGs and simulation (Mar 7) `r reading_link(20)`, Activity: [Life savers?](Day-by-day/Lesson-20/Life-savers.html)
+Mar 7 `r instructor_notes(20)` Topic: DAGs and simulation  `r reading_link(20)`, Activity: [Life savers?](Day-by-day/Lesson-20/Life-savers.html)
 
-Lesson 21: Topic: Signal and noise (Mar 9) `r reading_link(21)`, Activity: [Membrane channels](Day-by-day/Lesson-21/Patch-clamping.Rmd) [Handout](Day-by-day/Lesson-21/clamp-recording.pdf)
+Mar 9 `r instructor_notes(21)` Topic: Signal and noise  `r reading_link(21)`, Activity: [Membrane channels](Day-by-day/Lesson-21/Patch-clamping.Rmd) [Handout](Day-by-day/Lesson-21/clamp-recording.pdf)
 
-Lesson 22: Topic: Sampling variation (Mar 13) `r reading_link(22)`, Activity: [Counts and waiting times](Day-by-day/Lesson-22/counts-and-waiting-times.html)
+Mar 13 `r instructor_notes(22)` Topic: Sampling variation  `r reading_link(22)`, Activity: [Counts and waiting times](Day-by-day/Lesson-22/counts-and-waiting-times.html)
 
-Lesson 23: Topic: Confidence intervals (Mar 15) `r reading_link(23)`, Activity: [Got you covered!](Day-by-day/Lesson-23/got-you-covered.html)
+Mar 15 `r instructor_notes(23)` Topic: Confidence intervals  `r reading_link(23)`, Activity: [Got you covered!](Day-by-day/Lesson-23/got-you-covered.html)
 
-Lesson 24: Topic: Effect size (Mar 17) `r reading_link(24)`, Activity: [With respect to ...](Day-by-day/Lesson-24/with-respect-to.html)
+Mar 17 `r instructor_notes(24)` Topic: Effect size  `r reading_link(24)`, Activity: [With respect to ...](Day-by-day/Lesson-24/with-respect-to.html)
 
-Lesson 25: Topic: Prediction mechanics (Mar 19) `r reading_link(25)`, Activity:
+Mar 21 `r instructor_notes(25)` Topic: Prediction mechanics  `r reading_link(25)`, Activity:
 
-Lesson 26: Topic: Prediction intervals (Mar 23) `r reading_link(26)`, Activity: [Intervals by eye](Day-by-day/Lesson-26/Intervals-by-eye.html), [Handout](Day-by-day/Lesson-26/Intervals-by-eye.pdf)
+Mar 23 `r instructor_notes(26)` Topic: Prediction intervals  `r reading_link(26)`, Activity: [Intervals by eye](Day-by-day/Lesson-26/Intervals-by-eye.html), [Handout](Day-by-day/Lesson-26/Intervals-by-eye.pdf)
 
-Lesson 27: REVIEW of lessons 19-26 :: `r reading_link(27)`
+Apr 3 `r instructor_notes(27)` REVIEW of lessons 19-26 :: `r reading_link(27)`
 
-Lesson 28: Topic: Covariates :: `r reading_link(28)`, Activity:
+Apr 5 `r instructor_notes(28)` Topic: Covariates :: `r reading_link(28)`, Activity:
 
-Lesson 29: Topic: Covariates eat variance :: `r reading_link(29)`, Activity:
+Apr 7 `r instructor_notes(29)` Topic: Covariates eat variance :: `r reading_link(29)`, Activity:
 
-Lesson 30: Topic: Confounding :: `r reading_link(30)`, Activity:
+Apr 11 `r instructor_notes(30)` Topic: Confounding :: `r reading_link(30)`, Activity:
 
-Lesson 31: Topic: Spurious correlation :: `r reading_link(31)`, Activity:
+Apr 13 `r instructor_notes(31)` Topic: Spurious correlation :: `r reading_link(31)`, Activity:
 
-Lesson 32: Topic: Experiment & random assignment :: `r reading_link(32)`, Activity:
+Apr 17 `r instructor_notes(32)` Topic: Experiment & random assignment :: `r reading_link(32)`, Activity:
 
-Lesson 33: Topic: Measuring and accumulating risk :: `r reading_link(33)`, Activity:
+Apr 19 `r instructor_notes(33)` Topic: Measuring and accumulating risk :: `r reading_link(33)`, Activity:
 
-Lesson 34: Topic: Constructing a classifier :: `r reading_link(34)`, Activity:
+Apr 24 `r instructor_notes(34)` Topic: Constructing a classifier :: `r reading_link(34)`, Activity:
 
-Lesson 35: Topic: Accounting for prevalence :: `r reading_link(35)`, Activity:
+Apr 27 `r instructor_notes(35)` Topic: Accounting for prevalence :: `r reading_link(35)`, Activity:
 
-Lesson 36: Topic: Hypothesis testing :: `r reading_link(36)`, Activity:
+May 1 `r instructor_notes(36)` Topic: Hypothesis testing :: `r reading_link(36)`, Activity:
 
-Lesson 37: Topic: Calculating a p-value :: `r reading_link(37)`, Activity:
+May 3 `r instructor_notes(37)` Topic: Calculating a p-value :: `r reading_link(37)`, Activity:
 
-Lesson 38: Topic: False discovery with hypothesis testing :: `r reading_link(38)`, Activity:
+May 5 `r instructor_notes(38)` Topic: False discovery with hypothesis testing :: `r reading_link(38)`, Activity:
 
-Lesson 39: REVIEW of lessons 28-38 :: `r reading_link(39)`
+May 9 `r instructor_notes(39)` REVIEW of lessons 28-38 :: `r reading_link(39)`
 
-Lesson 40: Review of entire course
-
-
-
-## Course textbooks
-
-:::: columns
-
-::: {.column width="65%"}
-For Lessons 19-39, the textbook is [*Lessons in Statistical Thinking*](https://dtkaplan.github.io/Lessons-in-statistical-thinking)
-:::
-
-::: {.column width="35%"}
-<a href="Textbook/index.htm"><img src="www/statthink-cover-Feb2023.png" width="85%"></a>
-:::
-::::
-
-## Software 
-
-The POSIT.cloud workspaces will already have the packages installed. If you are running RStudio on your laptop (that is, not in a browser), the following command will install the packages.
-
-```r
-install.packages(c("mosaic", "ggplot", "dplyr", "openintro", "moderndive", "nycflights13", "knitr"))
-# addition package for Math 300Z
-remotes::install_github("dtkaplan/math300")
-```
+May 11 `r instructor_notes(40)` Review of entire course
 
 
-
-
-
-
-
-
-
-
-
-- [A note on computing summaries of data](Student-notes/Student-notes-computing-summaries.html)
-
-## First half of Math 300, Jan. and Feb. 2023 {#first-half}
-
-:::: columns
-
-::: {.column width="65%"}
-For Lessons 1-18, the textbook is [*Statistical Inference via Data Science*](https://moderndive.com)
-:::
-
-::: {.column width="35%"}
-![](www/moderndive-cover.png)
-:::
-::::
-
-
-**Data, graphics, wrangling**
-
-Reading: SIDS Chapters 1 through 4
-
-1. Data with R 
-2. Scatterplots
-3. Linegraphs, histograms, facets
-4. Boxplots and barcharts
-5. filter and summarize
-6. group_by, mutate, arrange
-7. join, select, rename, & top n
-8. Importing data
-9. Case study/review
-10. GR1 (chapters 1-4)
-
-**Regression** 
-
-Readings 
-11. SLR: Continuous x
-12. SLR: Discrete x
-13. SLR: Related topics
-14. Multiple regression: Numerical & discrete
-15. Multiple regression: Two numerical
-16. Multiple regression: Related topics
-17. Multiple regression: Conclusion/review
-18. GR 2 (chapters 5-6)
 

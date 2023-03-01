@@ -1,4 +1,10 @@
-# Instructor Teaching Notes for Lesson 19
+---
+title: "Instructor Teaching Notes for Lesson 19"
+subtitle: "Math300Z"
+author: "Daniel Kaplan"
+date: "Revised 02/28/2023"
+---
+
 
 ```{r include=FALSE}
 library(math300)
@@ -10,9 +16,16 @@ library(math300)
 You have been learning some basics of data wrangling and visualization, along with 
 what *ModernDive* calls "basic regression" and "multiple regression." These are *tools* which you will continue to use in the second half of the semester.
 
-The major theme of the second half of the semester is to identify patterns in data and evaluate/assess what you've identified to see if it's useful for your purposes. 
+Such tools are necessary but usually not sufficient. Data only occasionally speak for themselves. Most often, we need to interpret data in the context of what we already know or believe about the system under study. 
 
-As an example of a pattern, let's look at some Department of Transportation data on models of cars stored in the `MPG` data frame. We will start by looking at the link between fuel economy and CO_2_ production.
+Example: As you've seen, merely fitting a regression model does not demonstrate that there is a **causal relationship** between the explanatory variables and the response variable. We will need some new concepts to encode our ideas (and speculations) about causal relationships and to use regression modeling to inform (or contradict) our ideas.
+
+Example: We'll see how to avoid seeing patterns and relationships for which the evidence in unpersuasive. 
+Example: We will see how detection thresholds can be set to reflect our opinions about the costs and benefits of different ways of getting it right or wrong and our prior knowledge of the frequency of different kinds of events.
+
+## Regression models
+
+The point of regression modeling is to detect and quantify patterns of relationship between variables. Sometimes simple data graphics are enough to display a pattern. For instance, let's look at some Department of Transportation data on models of cars stored in the `MPG` data frame. We will start by looking at the link between fuel economy and CO_2_ production.
 
 ```{r}
 ggplot(MPG, aes(x = fuel_year, y = CO2_year)) +
@@ -24,77 +37,125 @@ This is a very strong pattern. `fuel_year` and `CO2_year` are practically the sa
 * Why?
 * Why are there some points off of the straight line describing the large majority of points?
 
-Machine learning approach: Start with nothing and take away variables that are meaningless
+Other times, patterns are hidden by extreme variability in the data. For instance, here are data on the effect of kindergarden class size on student outcomes.
+
+```{r warning=FALSE}
+#| layout-ncol: 2
+ggplot(STAR, aes(x=classtype, y=g4math)) + geom_jitter() + geom_violin(alpha=.5, fill="blue")
+```
+
+Regression modeling is a technique for looking for simple forms of patterns in the relationships among variables. It is not the only such technique, but it is by far the most widely used in practice across diverse fields. 
+
+We will use only regression modeling (and allied methods) in this course. You may have heard about other methods such as "deep learning" or "neural networks," but regression modeling is the basis for most of the others.
+
+It's critically important that you understand the framework for regression modeling.
+
+1. In any one model, there is one variable that is identified as the **response variable**.
+    - This identification depends on the purpose behind your work. You'll learn it mostly by example.
+2. Other variables in the model are cast in the role of **explanatory variables**. There might be one explanatory variable or there might be other. There's even a use for the case where there are no explanatory variables, but we don't need to worry about that now.
+3. In **fitting a model to data** (sometimes called "**training a model on data**") the computer does the heavy lifting of finding a relationship between the response and explanatory variables that **stays close** to the data. Often, the "shape" of the relationship is very simple, e.g. a straight-line relationship or, more generally, a **linear combination**. That's where the `l` comes in the function `lm()` that you will be using again and again in this course. 
+4. In using `lm()`, you specify which variables you want in the explanatory role and which single variable you have selected to be the response variable. The computer language syntax is very simple:
+    - `response ~ var1 + var2 + ...`
+    - The name of the response variable is always on the left-hand side of the TILDE. 
+    - The explanatory variables are listed by name on the right side of the TILDE. 
+    - The `+` between the names of explanatory variables is mostly just punctuation. You can read it as "and".
+5. The TILDE character is usually just pronounced "tilde," but English-language equivalents are
+    - "as explained by"
+    - "as accounted for by"
+    - "as modeled by"
+    - "versus"
+
+## Data graphics
+
+Since the distinction between the **response** and the **explanatory** variables is so central, we are going to enforce a **graphical style** that reflects the distinction.
+
+- The **response** variable will always be on the **vertical** axis.
+- One of the **explanatory** variables will be on the **horizontal** axis.
+- If there is a second explanatory variable, we will use **color**.
+- When we need a third or fourth explanatory variable, we will use faceting.
+
+In the `ggplot2` graphics system, this policy will appear like this:
+
+`ggplot(Dataframe, aes(y=response, x=var1, color=var2)) + geom_jitter()` or `geom_point()` and so on.
+
+## Models
+
+We have been working a lot with **data frames**. Now we are going to add a new type of R object, which we can call a "**model**". A model is NOT a data frame, it is a different kind of thing with different properties and different operations.
+
+Making a model:
 
 ```{r}
-rpart::rpart(CO2_year ~ fuel_year + ., 
-             data = MPG %>% 
-               select(-CO2combined, -mpg_comb, -EPA_fuel_cost))
+mod1 <- lm(sat~ expend, data=SAT)
 ```
+
+Operations we will perform on models:
+
+1. Graph the model (and usually the data used for training)
+
+    ```{r}
+    model_plot(mod1)
+    ```
+
+Being able to use *multiple* explanatory variables allows us to see patterns that may be subtle.
 
 ```{r}
-ggplot(MPG, aes(x = fuel_year, y = CO2_year)) +
-  geom_jitter(alpha=.3, aes(color=fuel))
+mod2 <- lm(sat ~ expend + frac, data=SAT)
+model_plot(mod2)
 ```
 
-The main tool we will use to identify patterns is **regression modeling**. Here's the regression modeling description of the CO_2_ production problem:
+2. Model summaries, especially `conf_interval()` and `R2()`
 
 ```{r}
-mod1 <- lm(CO2_year ~ fuel_year, data = MPG)
-mod2 <- lm(CO2_year ~ fuel_year * fuel, data = MPG)
+mod2 |> conf_interval()
+mod2 |> R2()
 ```
 
-How do we compare these two models to see if `fuel` is really the explanation? You will be learning a handful of techniques for summarizing models and, more important, when and why you would want to use each of the tools. 
+3. Evaluate the model at each of the rows of the training data.
 
-```{r}
-mod1
-mod2
-anova_summary(mod1, mod2)
-```
+    ```{r}
+    model_eval(mod2) |> head()
+    ```
 
-```{r}
-Vals <- model_eval(mod2)
-ggplot(Vals, aes(y=.resid, x=1)) +
-  geom_jitter()
+## Today's Lesson
 
-Big_ones <- abs(Vals$.resid) > 100
-MPG[Big_ones,]
-ggplot(MPG %>% mutate(ratio=CO2_year/fuel_year), aes(y=ratio, color=fuel, x=1)) + geom_jitter()
-```
+A definition of "statistical thinking" from the book:
 
+> Statistic thinking is the accounting for variation in the context of what remains unaccounted for.
 
+Implicit in this definition is a pathway for learning to think statistically:
 
-## Section 1: Variation, noise, signal
+1. Learn how to measure variation;
+2. Learn how to account for variation;
+3. Learn how to measure what remains unaccounted for.
 
-Motivating problem: Designing an enforcement regime for limits on scallop fisheries.
+Today: How to measure variation.
 
-```{r echo=FALSE}
-#| label: fig-scallop-life-cycle
-#| fig-cap: "Life cycle of a scallop"
-knitr::include_graphics("../www/scallop-life-cycle.png")
-```
+Consider some closely related words: variable, variation, vary, various, variety, variant. The root is *vari*.
 
-Fisheries are regulated by states and the Federal government in order to avoid collapse due to over-fishing. Often, the regulations attempt to protect juveniles---animals that have not yet reached reproductive age.  If the juveniles are harvested, their potential progeny are annihilated. There are various ways to do this, for instance restricting fishing to months where adults are most prevalent, closing fisheries to provide an opportunity for the reproductive stock to recover, and so on.
+Our preferred way to measure the amount of variation numerically: the **variance**, a single number, always positive. 
 
-In the 1990s, one of the ways the Federal government regulated scallop fisheries was by setting a minimum acceptable size for harvested scallops. For practical reasons, rather than monitoring individual scallops, the government monitored the average per scallop weight of each boat's catch. For the sake of the example, imagine that the minimum acceptable weight is 1/30 pound.
+1. Variance always involves a single variable; it is about the variation in that variable.
+2. Calculate the variance is with `var()` within `summarize()`
+    ```r
+DF |> summarize(NM = var(VAR))
+    ```
+3. A good way to conceptualize the variance is as the **average** squared **pairwise difference** between values
+4. The **units** of the variance are the square of the units of the variable.
+5. Why *square* the pairwise differences? It's a convention. Experience has shown this convention simplifies many operations we do with models. Underlying mathematics: Pythagorean theorem and formula for bell-shaped curve. 
+6. Often people talk about the "**standard deviation**." This is merely the square-root of the variance. But the variance is more fundamental mathematically. Using standard deviations introduces square roots in many calculations that don't need to be there if we use variance.
 
-A fishing boat might have 10,000 or more bags of scallops, which can be handled individually: weigh the bag, then count the number of scallops to get the average weight per scallop.
+## Activity
 
-Discussion questions:
+## Administration
 
-* How many bags should be sampled? Should this depend on the number of bags in the cargo. For instance, should a cargo of 1000 bags be sampled differently than a cargo of 10,000 bags. 
-* What should be the threshold for declaring the whole cargo below minimum size? (The whole catch is confiscated in such a case.)
-
-In this section of the course, you'll learn some statistical concepts and methods that allow the above questions to be answered to produce a regulation that is protective and fair to the fishermen.
-
-One idea is very simple: *sampling variation*. This is about how much the average per-scallop weight will vary from one bag to another.
-
-Another idea is very subtle: What you can say about the whole cargo based on a sample of $n$ bags. 
-
-## In this Lesson ...
-
-i. Why variation is central to thinking about data.
-
-ii. How to measure variation: the **variance**.
-
-iii. Accounting with variance: what's explained and what's still not explained. 
+1. Use "300Z Section" under Teams.
+2. Clone the Z-section project on posit.cloud. We'll use this project for the rest of the semester.
+3. There will be a "worksheet" almost every day.
+    - The worksheet is in the form of an Rmd file. To access it, go into the Z-section project and give a command like this:
+    `get_lesson_worksheet(19)` or whatever the lesson number is.
+    - An effective way to prepare for a class is to look at the worksheet **before** class. Just read it and take note of what doesn't make sense to you. That way you can be attentive to those things in class.
+    - Complete the worksheet after class.
+    - Come with unresolved questions about the worksheet for the next class or for EI.
+3. Most days there will also be a *group activity*.
+4. There will be a couple of problem sets that will be graded.
+5. There will be one GR about half-way through the rest of the semester. And a final GR.

@@ -209,23 +209,120 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol type="1">
 <li>Use <code>dag_draw()</code> to draw a picture of the <code>dag08</code> directed acyclic graph. From this graph, explain why node <code>c</code> is exogenous and why <code>x</code> and <code>y</code> are not.</li>
 </ol>
-<p>ANSWER:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag08)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Worksheet-20_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Node C is exogenous because it has no incoming arrows.</p>
+</div>
+</div>
 <ol start="2" type="1">
 <li>Use <code>print()</code> to view the formulas used by <code>dag08</code> to simulate data. What about the formula for <code>y</code> indicates that it’s receives inputs from <code>x</code> and <code>c</code>.</li>
 </ol>
-<p>ANSWER:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dag08)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>c ~ exo()
+x ~ c + exo()
+y ~ x + c + 3 + exo()</code></pre>
+</div>
+</div>
+<p>The right-hand side of the formula for <code>y</code> says that <code>y</code> will be calculated as the sum of <code>x</code> and <code>c</code> (plus 3 plus some random noise). That is, <code>x</code> and <code>c</code> directly shape the value of <code>y</code>.</p>
+</div>
+</div>
 <ol start="3" type="1">
 <li>There are three coefficients in the formula for <code>y</code>: an intercept, an <code>x</code> coefficient, and a <code>c</code> coefficient. (There is also some random input from an exogenous source unrelated to <code>c</code> or <code>x</code>.) What are the numerical values of the three coefficients?</li>
 </ol>
-<p>ANSWER:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>From the formula for <code>y</code> in the dag, the coefficients are 1 for <code>x</code>, 1 for <code>c</code>, and 3 for the intercept.</p>
+</div>
+</div>
 <ol start="4" type="1">
 <li>Collect a sample of size <span class="math inline">\(n=100\)</span> from <code>dag08</code> and use it to train the model with specification <code>y ~ x</code>. Do the coefficients reported match those you found in part (c)? (If you are not sure, use a bigger sample size, say <span class="math inline">\(n=1000\)</span> or even bigger.)</li>
 </ol>
-<p>ANSWER:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag08, <span class="at">size=</span><span class="dv">1000</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  term         .lwr .coef  .upr
+  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 (Intercept)  2.96  3.04  3.11
+2 x            1.46  1.51  1.56</code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>The model says the <code>x</code> coefficient is about 1.5, not the same as in the DAG formula for <code>y</code>.</p>
 <ol start="5" type="1">
 <li>Similar to (4), but use the specification <code>y ~ x + c</code>. How do the coefficients for this model compare to those you found in (3)?</li>
 </ol>
-<p>ANSWER</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag08, <span class="at">size=</span><span class="dv">1000</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x <span class="sc">+</span> c, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  term         .lwr .coef  .upr
+  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 (Intercept) 2.97  3.03   3.09
+2 x           0.889 0.952  1.01
+3 c           0.998 1.09   1.18</code></pre>
+</div>
+</div>
+<p>When we include both <code>x</code> and <code>c</code> in the model specification, the coefficients work out to match those of the DAG formula for <code>y</code>.</p>
+</div>
+</div>
 </section>
 <section id="part-2-paths-in-dags" class="level2">
 <h2 class="anchored" data-anchor-id="part-2-paths-in-dags">Part 2: Paths in DAGs</h2>
@@ -236,39 +333,126 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Along the indirect path, is there a causal flow from any node on the graph that reaches both endpoints, <code>x</code> and <code>y</code>?</li>
 </ol></li>
 </ol>
-<p>ANSWER:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Yes, the flow runs directly from <code>x</code> to <code>y</code>.</li>
+<li>Yes. The flow runs from <code>c</code> to each of <code>x</code> and <code>y</code>.</li>
+</ol>
+</div>
+</div>
 <ol start="2" type="1">
 <li><code>dag_school2</code> is a highly simplistic model of the relationship between <code>expenditure</code>s on schools and student <code>outcome</code>s in terms of, say, standardized test scores.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag_school2, <span class="at">vertex.label.cex=</span><span class="dv">1</span>, <span class="at">vertex.size=</span><span class="dv">40</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag_school2, <span class="at">vertex.label.cex=</span><span class="dv">1</span>, <span class="at">vertex.size=</span><span class="dv">40</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Worksheet-20_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<p><img src="Worksheet-20_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>There is a direct pathway from <code>expenditure</code> to <code>outcome</code> as well as another, indirect pathway.</p>
 <ol type="a">
 <li>Are there any exogenous nodes in the graph?</li>
-<li>On the indirect pathway, is there a causal from from <code>expenditure</code> to <code>outcome</code>?</li>
+<li>On the indirect pathway, is there a causal flow from <code>expenditure</code> to <code>outcome</code>?</li>
 <li>Is there a causal flow from any node on the indirect pathway to both <code>expenditure</code> and <code>outcome</code>? Which one?</li>
-<li>Explain why any node you identified in part (c) <strong>must</strong> be an exogenous node.</li>
 </ol>
-<p>ANSWER:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Culture is an exogenous node; there are no incoming arrows to culture.</li>
+<li>Yes.</li>
+<li>From Culture there is a flow to outcome through expenditure. There is also a flow from Culture to Outcome via Participation.</li>
+</ol>
+</div>
+</div>
 </section>
 <section id="part-3-are-expenditures-good-for-school-outcomes" class="level2">
 <h2 class="anchored" data-anchor-id="part-3-are-expenditures-good-for-school-outcomes">Part 3: Are expenditures good for school outcomes?</h2>
 <ol type="1">
 <li>Look at the formulas for <code>dag_school2</code>. Is a higher <code>expenditure</code> connected to a <code>higher</code> outcome?</li>
 </ol>
-<p>ANSWER:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dag_school2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>culture ~ unif(-1, 1)
+expenditure ~ 12000 + 4000 * culture + exo(1000)
+participation ~ (50 + 30 * culture + exo(15)) %&gt;% pmax(0) %&gt;% 
+    pmin(100)
+outcome ~ 1100 + 0.01 * expenditure - 4 * participation + exo(50)</code></pre>
+</div>
+</div>
+<p>The formula for Outcome has a positive coefficient (0.01) on expenditure. So when expenditure goes up, so will outcome. The magnitude of the coefficient is neither here nor there. Remember that there are always units associated with a coefficient. It’s impossible to say whether a magnitude is large or small unless you know the units.</p>
+</div>
+</div>
 <ol start="2" type="1">
 <li>Generate a simple of size 1000 from <code>dag_school2</code> and use it to train the model <code>outcome ~ expenditure</code>. Is the coefficient on <code>expenditure</code> consistent with what you found in (1)? (If you aren’t sure, use a larger sample size, say 10,000.) What about the coefficient on <code>expenditure</code> leads to your conclusion?</li>
 </ol>
-<p>ANSWER:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag_school2, <span class="at">size=</span><span class="dv">1000</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(outcome <span class="sc">~</span> expenditure, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  term             .lwr     .coef      .upr
+  &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept) 1152.     1176.     1201.    
+2 expenditure   -0.0150   -0.0130   -0.0110</code></pre>
+</div>
+</div>
+<p>The coefficient on Expenditure is negative in contrast to the known positive coefficient in the DAG formula for Outcome.</p>
+</div>
+</div>
 <ol start="3" type="1">
 <li>Speculate on what might be the origin of the evident inconsistency between (1) and (2)?</li>
 </ol>
-<p>ANSWER:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the DAG, Outcome is influenced negatively by Participation. And Expenditure is influenced positively by Participation. The two effects of Participation combine to produce an overall negative link between Expenditure and Outcome. By overall, we mean the combination of the direct Expenditure to Outcome link and the indirect path from Expenditure to Outcome via Participation.</p>
+</div>
+</div>
 </section>
 <section id="part-4-constructing-a-dag" class="level2">
 <h2 class="anchored" data-anchor-id="part-4-constructing-a-dag">Part 4: Constructing a DAG</h2>
@@ -276,49 +460,72 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>A DAG is defined by a series of tilde expressions, one for each node in the graph. The tilde expression for a node has the node’s name on the left-hand side of the tilde. The right-hand side contains the nodes which serve as <strong>inputs</strong> to the node named on the left-hand side. If there are no inputs, write <code>exo()</code>.</p>
 <p>For example, consider a DAG with three nodes: <code>one</code>, <code>two</code>, and <code>three</code>. To define a DAG where node <code>two</code> receives input from node <code>one</code>, and node <code>three</code> receives input from nodes <code>one</code> and <code>two</code>, use <code>make_dag()</code> with three tilde expressions:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>example_dag <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  one <span class="sc">~</span> <span class="fu">exo</span>(),</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  two <span class="sc">~</span> one,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  three <span class="sc">~</span> two <span class="sc">+</span> one</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(example_dag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>example_dag <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  one <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  two <span class="sc">~</span> one,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  three <span class="sc">~</span> two <span class="sc">+</span> one</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(example_dag)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Worksheet-20_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<p><img src="Worksheet-20_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>The right-hand side of a formula can be any arithmetic expression involving the node names, but we will keep it simple: just use <code>+</code> to separated the node names. If a node receives no inputs, the right-hand side should be simply <code>exo()</code> to mark that node as exogenous.</p>
 <ol type="1">
 <li>What happens if node <code>one</code>, instead of being exogenous, takes as input one of the other two nodes in <code>example_dag</code>?</li>
 </ol>
-<p>ANSWER: The graph would become cyclic, hence not a DAG. Notice that by using a node on the right-hand side of a tilde expression only when it has already been created by a previous tilde expression, you guarantee that the graph will be acyclic.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The graph would become cyclic, hence not a DAG. Notice that by using a node on the right-hand side of a tilde expression only when it has already been created by a previous tilde expression, you guarantee that the graph will be acyclic.</p>
+</div>
+</div>
 <ol start="2" type="1">
 <li>Create and draw a DAG that has the same arrangement of causal connections as “<a href="https://en.wikipedia.org/wiki/Rube_Goldberg_machine">Professor Butts and the Self-Operating Napkin</a>,” illustrated below:</li>
 </ol>
 <p><img src="www/Professor-Butts.png" class="img-fluid"></p>
 <p>Professor Butts and the Self-Operating Napkin (1931). <code>Soup_spoon</code> (A) is raised to mouth, pulling <code>string</code> (B) and thereby jerking <code>ladle</code> (C), which throws <code>cracker</code> (D) past <code>toucan</code> (E). Toucan jumps after cracker and <code>perch</code> (F) tilts, upsetting <code>seeds</code> (G) into <code>pail</code> (H). Extra weight in pail pulls <code>cord</code> (I), which opens and ignites <code>lighter</code> (J), setting off <code>skyrocket</code> (K), which causes <code>sickle</code> (L) to cut <code>string_m</code> (M), allowing pendulum with attached napkin to swing back and forth, thereby <code>wiping_chin</code>.</p>
 <p>Watch your spelling of node names! Use this command to draw your <code>napkin_dag</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(napkin_dag, <span class="at">vertex.label.cex=</span>.<span class="dv">5</span>, <span class="at">vertex.size=</span><span class="dv">10</span>, <span class="at">edge.arrow.size =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>ANSWER:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(napkin_dag, <span class="at">vertex.label.cex=</span>.<span class="dv">5</span>, <span class="at">vertex.size=</span><span class="dv">10</span>, <span class="at">edge.arrow.size =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>napkin_dag <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  soup_spoon <span class="sc">~</span> <span class="fu">exo</span>(),</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  string <span class="sc">~</span> soup_spoon,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  ladle <span class="sc">~</span> string,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  cracker <span class="sc">~</span> ladle,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  toucan <span class="sc">~</span> cracker,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  perch <span class="sc">~</span> toucan,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  seeds <span class="sc">~</span> perch,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  pail <span class="sc">~</span> seeds,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  cord <span class="sc">~</span> pail,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  lighter <span class="sc">~</span> cord,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  skyrocket <span class="sc">~</span> lighter,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  sickle <span class="sc">~</span> skyrocket,</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  string_m <span class="sc">~</span> sickle,</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  wiping_chin <span class="sc">~</span> string_m</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(napkin_dag, <span class="at">vertex.label.cex=</span>.<span class="dv">5</span>, <span class="at">vertex.size=</span><span class="dv">10</span>, <span class="at">edge.arrow.size =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>napkin_dag <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  soup_spoon <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  string <span class="sc">~</span> soup_spoon,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  ladle <span class="sc">~</span> string,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  cracker <span class="sc">~</span> ladle,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  toucan <span class="sc">~</span> cracker,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  perch <span class="sc">~</span> toucan,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  seeds <span class="sc">~</span> perch,</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  pail <span class="sc">~</span> seeds,</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  cord <span class="sc">~</span> pail,</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  lighter <span class="sc">~</span> cord,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  skyrocket <span class="sc">~</span> lighter,</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  sickle <span class="sc">~</span> skyrocket,</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  string_m <span class="sc">~</span> sickle,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  wiping_chin <span class="sc">~</span> string_m</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(napkin_dag, <span class="at">vertex.label.cex=</span>.<span class="dv">5</span>, <span class="at">vertex.size=</span><span class="dv">10</span>, <span class="at">edge.arrow.size =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Worksheet-20_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<p><img src="Worksheet-20_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </div>
 </div>
 

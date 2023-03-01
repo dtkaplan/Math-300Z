@@ -5,6 +5,10 @@ author: "Jane Doe"
 date: "`r date()`"
 ---
 
+```{r include=FALSE}
+library(math300)
+```
+
 Command patterns:
 
 a. `DF <- model_eval(MODEL)`

@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Jane Doe">
+<meta name="dcterms.date" content="2023-03-01">
 
 <title>Spring 2023 Math 300Z - Lesson 21: Worksheet</title>
 <style>
@@ -21,6 +22,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -113,6 +177,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Lesson 21: Worksheet</h1>
+<p class="subtitle lead">Signal and noise</p>
 </div>
 
 
@@ -126,6 +191,12 @@ ul.task-list li input[type="checkbox"] {
           </div>
   </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 1, 2023</p>
+    </div>
+  </div>
   
     
   </div>
@@ -133,36 +204,162 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="part-1" class="level2">
-<h2 class="anchored" data-anchor-id="part-1">Part 1</h2>
 <p>Command patterns:</p>
 <ol type="a">
-<li><code>NM &lt;- model_eval(MODEL)</code></li>
-<li><code>NM %&gt;% summarize(NM = var(VAR) [, MORE] )</code></li>
-<li><code>model_eval(MODEL, VAR=VALUE [, MORE] )</code></li>
+<li><code>DF &lt;- model_eval(MODEL)</code></li>
+<li><code>DF %&gt;% summarize(NM = var(VAR) [, MORE] )</code></li>
+<li><code>model_eval(MODEL, VAR = VALUE [, MORE] )</code></li>
+<li><code>MODEL %&gt;% R2()</code></li>
 </ol>
+<section id="basic-regression-patterns" class="level2">
+<h2 class="anchored" data-anchor-id="basic-regression-patterns">Basic regression patterns</h2>
+<p>Every regression model involves a <em>response</em> variable, which <em>Lessons in Statistical Thinking</em> always plots on the vertical axis. Most of the regression models we will consider in these <em>Lessons</em> have one or two explanatory variables, although sometimes there will be more than two and sometimes none at all.</p>
+<p>It is worth memorizing the forms of the tilde-expression specifications of the zero-, one-, and two-explanatory models, as well as their shapes. For this purpose, we’ll write the forms using five generic variable names. In practice, you will replace these generic names with specific names from the data frame of interest.</p>
+<ul>
+<li><p><code>y</code> — a quantitative response variable (which might be the result of a zero-one transformation).</p></li>
+<li><p><code>x</code> and <code>z</code> — quantitative explanatory variables</p></li>
+<li><p><code>g</code> and <code>h</code> — categorical explanatory variables.</p></li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 46%">
+<col style="width: 53%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model specification</th>
+<th>Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>y ~ 1</code></td>
+<td>A line with slope zero.</td>
+</tr>
+<tr class="even">
+<td><code>y ~ x</code></td>
+<td>A line with possibly non-zero slope.</td>
+</tr>
+<tr class="odd">
+<td><code>y ~ g</code></td>
+<td>A value for each level of <code>g</code>.</td>
+</tr>
+<tr class="even">
+<td><code>y ~ x + g</code></td>
+<td>Separate lines for each level of <code>g</code>, all with the same slope.</td>
+</tr>
+<tr class="odd">
+<td><code>y ~ x + z</code></td>
+<td>Parallel, evenly spaced lines.</td>
+</tr>
+<tr class="even">
+<td><code>y ~ g + h</code></td>
+<td>For each level of <code>g</code>, a set of spaced values, one for each level of <code>h</code>. The <code>h</code>-spacing will be the same for every level of <code>g</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Note: It doesn’t matter what order the explanatory variables are given in. The name of the response variable is <em>always</em> on the left-hand side of the tilde expression.</p>
+</section>
+<section id="part-1" class="level2">
+<h2 class="anchored" data-anchor-id="part-1">Part 1</h2>
+<p>Do <a href="https://dtkaplan.github.io/Lessons-in-statistical-thinking/Exercises/QR1.html">Exercise 21.4</a>.</p>
+</section>
+<section id="part-2" class="level2">
+<h2 class="anchored" data-anchor-id="part-2">Part 2</h2>
+<p>By fitting a regression model, we divide the response variable into two components: a signal component and a noise component. The model specification tells what sort of signal to look for. For instance, the <code>Clock_auction</code> data frame records the sales <code>price</code> of antique grandfather clocks sold at auction. Presumably, the price reflects some feature of the clock itself as well as the market conditions. We have only the variables <code>age</code> and <code>bidders</code> to represent the the value of the clock and the market conditions.</p>
+<p>Using <code>lm()</code> with the specification <code>price ~ age</code> directs the computer to look for a <em>signal</em> in the form of a straight-line relationship between <code>age</code> and <code>price</code>. The estimated <em>noise</em> is the difference between the response variable values (<code>price</code>) and the signal.</p>
 <ol type="1">
-<li>Use <code>model_eval()</code> on <code>mod3</code>, using as inputs the values <code>num_pages=250, hard_paper="H"</code>. What is the model output for these inputs?</li>
+<li>How much clock-to-clock variation is there in <code>price</code>? (Use the variance to measure variation.)</li>
 </ol>
 <p>ANSWER:</p>
 <ol start="2" type="1">
-<li>Similar to 2, but set the inputs to <code>num_pages=c(250, 500), hard_paper=c("H", "P")</code>.
-<ol type="i">
-<li>How many rows are in the result from <code>model_eval()</code>? Explain what they stand for.</li>
-<li>What’s the difference in model output for a paperback book of 250 versus 500 pages? Make sure to give the units for the model output.</li>
-</ol></li>
+<li>Fit a model <code>price ~ age</code>, then plot with <code>model_plot()</code>. Describe the pattern between price and age you see in the plot.</li>
 </ol>
 <p>ANSWER:</p>
 <ol start="3" type="1">
-<li>When you use command pattern (a), <code>model_eval()</code> evaluates the model on each row in the training data.
+<li><p>Use <code>model_eval()</code> to find the model output for each clock for the model you constructed in (2).</p>
 <ol type="i">
-<li><p>Run <code>model_eval(mod3)</code>, , without any additional arguments, storing the result under the name <code>Book_pts</code>.</p></li>
-<li><p>Look at the first few lines of <code>Book_pts</code>. What variables are in the result that weren’t in the result from (2).</p></li>
-<li><p>The columns <code>.lwr</code> and <code>.upr</code> define an interval. (It happens to be called the “prediction interval”, but we will get to that in another Lesson.) Does zero fall inside any of the intervals reported in (i).</p></li>
-<li><p>The variable named <code>.response</code> holds the values of the response variable from the model. What was the original name for the response variable in <code>mod3</code>?</p></li>
-<li><p>There is a simple arithmetic relationship among <code>.response</code>, <code>.output</code>, and <code>.resid</code> that holds true for each row individually. Using mental arithmetic, what is the arithmetic relationship?</p></li>
+<li>What’s the variance of the model <code>.output</code>? How does it compare to the variance of the response variable <code>price</code>?</li>
+<li>The amount of noise can be measured with the variance of <code>.resid</code>. How much noise is there for <code>price ~ age</code>?</li>
+<li>Demonstrate arithmetically the relationship between the variance of the response variable, the variance of the model <code>.output</code>, and the variance of the noise.</li>
 </ol></li>
-<li>Using wrangling, summarize <code>Book_pts</code>, calculating the variance of each of <code>.response</code>, <code>.output</code>, and <code>.resid</code>. What is the simple arithmetic relationship among the three variances?</li>
+</ol>
+<p>ANSWER:</p>
+<ol start="4" type="1">
+<li>Use <code>R2()</code> to summarize the model you constructed in (2). Demonstrate arithmetically the relationship between R<sup>2</sup> and variances of the response variable and the model <code>.output</code>.</li>
+</ol>
+<p>ANSWER:</p>
+<ol start="5" type="1">
+<li>The quantity 1 - R<sup>2</sup> describes the amount of noise. Arithmetically, how does 1 - R<sup>2</sup> correspond to the variance of the <code>.resid</code> from part (3)?</li>
+</ol>
+<p>ANSWER:</p>
+</section>
+<section id="part-3-r2" class="level2">
+<h2 class="anchored" data-anchor-id="part-3-r2">Part 3: R<sup>2</sup></h2>
+<p><code>dag_10</code> has a simple structure, with nodes <code>a</code> through <code>f</code> each contributing to the value of <code>y</code>. Use <code>sample()</code> to generate a sample of size 1000. Using your sample, construct several models and calculate the R<sup>2</sup> statistic.</p>
+<ol type="i">
+<li><code>y ~ 1</code>.</li>
+<li><code>y ~ a</code></li>
+<li><code>y ~ b</code></li>
+<li><code>y ~ a + b</code></li>
+<li>and so on.</li>
+</ol>
+<ol type="1">
+<li>Which of the models gives the smallest value of R<sup>2</sup>? Explain why that particular model gives such a small R<sup>2</sup>.</li>
+</ol>
+<p>ANSWER:</p>
+<ol start="2" type="1">
+<li>As you add more terms to the model specification, does R<sup>2</sup> ever go down?</li>
+</ol>
+<p>ANSWER:</p>
+<ol start="3" type="1">
+<li>What effect does the <em>order</em> of terms in the model have on R<sup>2</sup>? (For instance, <code>y ~ a + b + c</code> versus <code>y ~ c + a + b</code>.)</li>
+</ol>
+<p>ANSWER:</p>
+</section>
+<section id="part-4-concept-check" class="level2">
+<h2 class="anchored" data-anchor-id="part-4-concept-check">Part 4: Concept check</h2>
+<p>Write a sentence or two explaining what each of the following terms refers to.</p>
+<ul>
+<li>“Zero-one transformation”</li>
+<li>“Levels of a categorical variable”</li>
+<li>“Model specification”</li>
+<li>“Tilde expression”</li>
+</ul>
+</section>
+<section id="part-5-curvy-models" class="level2">
+<h2 class="anchored" data-anchor-id="part-5-curvy-models">Part 5: Curvy models</h2>
+<p>Here’s a model of human height versus age based on the <code>NHANES::NHANES</code> data frame. (The package <code>NHANES</code> has the data frame which itself is called <code>NHANES</code>, so the full name is <code>NHANES::NHANES</code>.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> Age, <span class="at">data =</span> NHANES<span class="sc">::</span>NHANES)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod1, <span class="at">data_alpha=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 353 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="Worksheet-21_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol type="1">
+<li>Do you think the model gives a good description of the relationship between <code>Age</code> and <code>Height</code>? Explain using simple biological terms what the problem is with the straight-line model.</li>
+</ol>
+<p>ANSWER:</p>
+<p>There are several modeling techniques for constructing models that are more flexible than a straight line. We won’t be using them in Math 300, but we want to point out that they exist. Try this one:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> splines<span class="sc">::</span><span class="fu">ns</span>(Age,<span class="dv">5</span>) <span class="sc">*</span> Gender, <span class="at">data =</span> NHANES<span class="sc">::</span>NHANES)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod2, <span class="at">data_alpha=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Ignoring unknown aesthetics: fill</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 353 rows containing missing values (`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="Worksheet-21_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Calculate R<sup>2</sup> for the straight-line model and for the curvy model.</li>
 </ol>
 <p>ANSWER:</p>
 

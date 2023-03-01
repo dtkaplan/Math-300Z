@@ -1,0 +1,32 @@
+---
+title: "Instructor teaching notes: Lesson 22"
+subtitle: "Math300Z"
+author: "Daniel Kaplan"
+date: "Revised 02/28/2023"
+---
+
+
+Motivating problem: Designing an enforcement regime for limits on scallop fisheries.
+
+```{r echo=FALSE}
+#| label: fig-scallop-life-cycle
+#| fig-cap: "Life cycle of a scallop"
+knitr::include_graphics("../www/scallop-life-cycle.png")
+```
+
+Fisheries are regulated by states and the Federal government in order to avoid collapse due to over-fishing. Often, the regulations attempt to protect juveniles---animals that have not yet reached reproductive age.  If the juveniles are harvested, their potential progeny are annihilated. There are various ways to do this, for instance restricting fishing to months where adults are most prevalent, closing fisheries to provide an opportunity for the reproductive stock to recover, and so on.
+
+In the 1990s, one of the ways the Federal government regulated scallop fisheries was by setting a minimum acceptable size for harvested scallops. For practical reasons, rather than monitoring individual scallops, the government monitored the average per scallop weight of each boat's catch. For the sake of the example, imagine that the minimum acceptable weight is 1/30 pound.
+
+A fishing boat might have 10,000 or more bags of scallops, which can be handled individually: weigh the bag, then count the number of scallops to get the average weight per scallop.
+
+Discussion questions:
+
+* How many bags should be sampled? Should this depend on the number of bags in the cargo. For instance, should a cargo of 1000 bags be sampled differently than a cargo of 10,000 bags.
+* What should be the threshold for declaring the whole cargo below minimum size? (The whole catch is confiscated in such a case.)
+
+In this section of the course, you'll learn some statistical concepts and methods that allow the above questions to be answered to produce a regulation that is protective and fair to the fishermen.
+
+One idea is very simple: *sampling variation*. This is about how much the average per-scallop weight will vary from one bag to another.
+
+Another idea is very subtle: What you can say about the whole cargo based on a sample of $n$ bags.

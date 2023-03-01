@@ -8,14 +8,14 @@ website:
     title: "Math 300Z"
     background: primary
     left:
-      - href: Textbook/index.html
-        text: Textbook
       - href: index.qmd
         text: Home
-      - href: student-notes.qmd
-        text: "Student notes"
+      - href: textbooks.qmd
+        text: "Textbooks"
       - href: faculty-notes.qmd
         text: "Faculty notes"
+      - href: math300-software.qmd
+        text: "Software"
 format:
   html:
     theme: cosmo

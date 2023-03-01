@@ -1,0 +1,56 @@
+---
+title: "R package for Math 300Z"
+---
+
+Most students will want to use POSIT.cloud. Use the "Z-Section" project.
+
+- You will use the same project for all the Lessons adding a new file each class day.
+- The `{math300}` R package will already be installed. If you find otherwise, use the commands given in the laptop section to install/update the needed packages for the Z-section package.
+
+## Accessing the daily worksheet
+
+Almost all class days there will be a worksheet in the form of an Rmd file.
+
+From within your POSIT.cloud project, download the Rmd file using this command, substituting the number of the relevant Lesson:
+
+```r
+math300::get_lesson_worksheet(19)
+```
+
+- Make a habit of reading each day's Rmd file *before* class. This way you can note what doesn't yet make sense so that you can be receptive to the topic in class.
+- Complete the worksheet after class.
+
+## Math 300Z R commands
+
+There will be only a dozen commands that you will be using in the second half of Math 300Z. Almost all of them involve constructing or summarizing models.
+
+As a reminder, here are some of the commands/syntax that should be familiar to you from the first half of the course.
+
+- `lm()` fits (or "trains") a "linear model" on data from a data frame.
+- `ggplot()` sets things up for a new graphic. Use `aes()` as an argument.
+- graphics layers to add onto the output of `ggplot()`:
+    - `geom_point()`, `geom_jitter(alpha=0.5)`
+- `filter()`, `mutate()` and `summarize()` are basic data-wrangling commands we will use often.
+
+New commands in the second half of the course:
+
+- summarize a **model**: `conf_intervals()`, `R2()`
+- evaluate a **model**: `model_eval()`
+- graphic of a **model**: `model_plot()` (This replaces the `geom_smooth()` used in the first half of the course.)
+- variance of a variable in a data frame: `DF %>% summarize(NM = var(VAR))`
+- draw a DAG: `dag_draw()`
+- sample from a DAG: `sample(DAG, size=100)`
+
+A few other commands will be used occasionally in examples and demonstrations. You should know what they do, but typically there will be a reminder of the syntax: `zero_one()`, `shuffle()`, `do() * {}`, `dag_intervene()`, `tibble()`, `regression_summary()`, `anova_summary()`.
+
+
+## Running R/RStudio on your laptop?
+
+Install the `{math300}` and other packages with these two commands:
+
+```r
+install.packages(c("mosaic", "ggplot", "dplyr", "openintro", "moderndive", "nycflights13", "knitr"))
+# additional package for Math 300Z
+remotes::install_github("dtkaplan/math300")
+```
+
