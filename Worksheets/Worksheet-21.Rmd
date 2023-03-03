@@ -52,11 +52,29 @@ Using `lm()` with the specification `price ~ age` directs the computer to look f
 
 1. How much clock-to-clock variation is there in `price`? (Use the variance to measure variation.)
 
-ANSWER:
+::: {.callout-note}
+## ANSWER
+
+```{r}
+Clock_auction |> summarize(vprice = var(price), sd=sqrt(vprice))
+```
+Since the `price` is in dollars, the variance of price has units of "square dollars." This is a unit that's hard to get your head around. That's why many people prefer the "standard deviation", which is the square root of the variance.
+
+:::
 
 2. Fit a model `price ~ age`, then plot with `model_plot()`. Describe the pattern between price and age you see in the plot.
 
-ANSWER: 
+::: {.callout-note}
+## ANSWER
+
+```{r}
+mod1 <- lm(price ~ age, data=Clock_auction)
+model_plot(mod1)
+```
+
+According to the model, price goes up with age. A 25 year increase in age corresponds to about a $200 increase in price.
+
+::: 
 
 3. Use `model_eval()` to find the model output for each clock for the model you constructed in (2).
 
@@ -64,19 +82,64 @@ ANSWER:
     ii. The amount of noise can be measured with the variance of `.resid`. How much noise is there for `price ~ age`?
     iii. Demonstrate arithmetically the relationship between the variance of the response variable, the variance of the model `.output`, and the variance of the noise.
     
-ANSWER: 
+::: {.callout-note}
+## ANSWER
+
+```{r}
+Values <- model_eval(mod1)
+Values |> summarize(voutput = var(.output))
+```
+
+The variance of the model output (note the dot used in the name `.output`) is 66-thousand square dollars. (Why "square dollars?" Because the response variable is `price` which is in dollars. The model output *always* has the same units as the response variable. And the variance of a variable *always* has units that are the square of the variable's units.) The variance of the `price` variable is about 134-thousand square dollars, so the model output has about half the variance of the response.
+
+```{r}
+Values |> summarize(vresid = var(.resid))
+```
+The variance of the residuals is about 68-thousand square dollars. (The residuals *always* have the same units as the response variable.)
+
+To show that the sum of the variances of the model output and residuals equals the variance of the response variable, just add them up and compare:
+
+```{r}
+66352.26 + 67850.62
+```
+
+The result exactly matches the variance of the price variable (calculated above).
+
+::: 
 
 4. Use `R2()` to summarize the model you constructed in (2). Demonstrate arithmetically the relationship between R^2^ and variances of the response variable and the model `.output`.
 
-ANSWER: 
+::: {.callout-note}
+## ANSWER
+
+```{r}
+mod1 |> R2()
+```
+
+R^2^ is 0.49. This exactly matches the quotient of the variance of the model output divided by the variance of the response variable:
+
+```{r}
+Values |> summarize(ratio = var(.output) / var(.response))
+```
+::: 
 
 5. The quantity 1 - R^2^ describes the amount of noise. Arithmetically, how does 1 - R^2^ correspond to the variance of the `.resid` from part (3)? 
 
-ANSWER: 
+::: {.callout-note}
+## ANSWER
+
+First, the value of 1 - R^2^, then the ratio of the variance of the residuals to the variance of the response variable:
+
+```{r}
+1 - 0.4944176
+Values |> summarize(ratio = var(.resid) / var(.response))
+```
+
+::: 
 
 ## Part 3: R^2^
 
-`dag_10` has a simple structure, with nodes `a` through `f` each contributing to the value of `y`. Use `sample()` to generate a sample of size 1000. Using your sample, construct several models and calculate the R^2^ statistic.
+`dag10` has a simple structure, with nodes `a` through `f` each contributing to the value of `y`. Use `sample()` to generate a sample of size 1000. Using your sample, construct several models and calculate the R^2^ statistic.
 
 i. `y ~ 1`. 
 #. `y ~ a`
@@ -86,25 +149,72 @@ i. `y ~ 1`.
 
 1. Which of the models gives the smallest value of R^2^? Explain why that particular model gives such a small R^2^.
 
-ANSWER: 
+::: {.callout-note}
+## ANSWER
+
+```{r}
+Our_sample <- sample(dag10, size=1000) 
+lm(y ~ 1, data=Our_sample) |> R2()
+lm(y ~ a, data=Our_sample) |> R2()
+lm(y ~ b, data=Our_sample) |> R2()
+lm(y ~ a + b, data=Our_sample) |> R2()
+```
+
+The model `y ~ 1` has R^2^=0 because the pseudo-variable `1` has zero variance and cannot "explain" any of the variance in the response variable `y`.
+
+::: 
 
 2. As you add more terms to the model specification, does R^2^ ever go down?
 
-ANSWER:
+::: {.callout-note}
+## ANSWER
+
+Model specifications like `y ~ a` are actually shorthand for `y ~ 1 + a`. So `y ~ a` has an additional explanatory variable in addition to the pseudo-variable `1`. Whenever you add a new explanatory variable to an existing model specification, the R^2^ will increase (or, more precisely, cannot decrease).
+
+:::
 
 3. What effect does the *order* of terms in the model have on R^2^? (For instance, `y ~ a + b + c` versus `y ~ c + a + b`.)
 
-ANSWER:
+::: {.callout-note}
+## ANSWER
+
+Compare, for instance, `y ~ a + b + c` to `y ~ c + a + b`
+
+```{r}
+lm(y ~ a + b + c, data=Our_sample) |> R2()
+lm(y ~ c + a + b, data=Our_sample) |> R2()
+```
+
+The order of explanatory variables does not matter at all. It's the *collection* that matters.
+
+
+:::
 
 
 ## Part 4: Concept check
 
 Write a sentence or two explaining what each of the following terms refers to.
 
-- "Zero-one transformation"
 - "Levels of a categorical variable"
+- "Zero-one transformation"
 - "Model specification"
 - "Tilde expression"
+
+::: {.callout-note}
+## ANSWER
+
+- Levels of a categorical variable. The values of a categorical variable are named. For instance, a `household_pets` variable would take on values like "cat," "dog," "turtle," "parakeet," .... The set of possible values for the categorical variable is called the "levels" of the variable. 
+
+- Zero-one transformation. A means to translate a *categorical* variable with two levels into a *quantitative variable*. One of the levels is translated to the numerical value 1, the other to 0. The advantage of this particular scheme is that means or models where the zero-one variable is used for the response variable will have model outputs that can be interpreted as *probabilities*.
+
+- Model specification. When constructing a regression model, the modeler has to provide two different kinds of inputs: (1) a data frame for training the model, (2) a statement about which variable from the data frame to use as the *response* variable and which other variables to use as *explanatory* variables. This statement (2) is called the "model specification." 
+
+- Tilde expression. Tilde expressions are an element of the syntax (or "grammar") of R. They always involve the tilde character (`~`) which has no other legitimate use in R. Any valid R expression can be used on the right-side of tilde. The left side (if present, as will be the case when used with `lm()`) can also be any valid R expression. The most prominant role for tilde expressions in Math 300Z is to hold the model specification for use by `lm()`. In this use, the response variable's name always goes on the left side of the tilde. Explanatory variable names go on the right side, usually separated by `+` as punctuation.
+
+    For the computer-science oriented .... Tilde expressions are a way to represent *symbolic expressions* such as fragments of code. In ordinary use, R tries to *evaluate* every code fragment, replacing names with their values and invoking any functions used. Symbolic expressions are taken literally as a code fragment, without any evaluation. This is valuable as a means to pass code fragments to a function which can then parse or otherwise evaluate the fragment in a particular context.
+
+:::
+
 
 ## Part 5: Curvy models
 
@@ -117,7 +227,14 @@ model_plot(mod1, data_alpha=0.05)
 ```
 1. Do you think the model gives a good description of the relationship between `Age` and `Height`? Explain using simple biological terms what the problem is with the straight-line model.
 
-ANSWER:
+::: {.callout-note}
+## ANSWER
+
+Humans and other animals grow in a *non-linear* manner: rapid growth during gestation, infancy, and youth and comparative stasis later in life. With a model specification like `Height ~ Age`, `lm()` will look for a purely linear function, as in the straight line in the above graphic. The linear function doesn't capture the age-dependent growth rate (fast during youth, slow or nil in adulthood), since a straight line has the same slope at all values of the explanatory variable.
+
+One of the signs of the ill-fit of a linear model is that the response values tend to be cluster mostly below or mostly above the line for different regions of the explanatory variable. For instance, in the graph above, for ages younger than 10, the height values are systematically *below* the straight-line function.
+
+:::
 
 There are several modeling techniques for constructing models that are more flexible than a straight line. We won't be using them in Math 300, but we want to point out that they exist. Try this one:
 
@@ -128,4 +245,17 @@ model_plot(mod2, data_alpha=0.05)
 
 2. Calculate R^2^ for the straight-line model and for the curvy model. 
 
-ANSWER: 
+::: {.callout-note}
+## ANSWER
+
+```{r}
+mod1 |> R2()
+mod2 |> R2()
+```
+
+The R^2^ for the rigid, straight-line model is substantially *lower* than for the more flexible, curvy model. Another way of saying this is that the curvy model stays closer (on average) to the data than the straight-line model.
+
+An important theoretical question in statistical modeling is when to prefer a curvy model to a straight-line model. We haven't yet encountered the statistical concepts that address this question. 
+::: 
+
+

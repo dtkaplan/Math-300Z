@@ -1,13 +1,14 @@
 ---
 title: "Math 300Z"
 author: "Daniel Kaplan"
-date: "February 17, 2022"
+date: "March 1, 2023"
 format:
   html:
     theme: cosmo
 ---
 
-```{r echo=FALSE}
+```{r include=FALSE}
+library(math300)
 lesson_links <- function(daynum) {
   glue::glue("[Reading](Textbook/Reading-notes-lesson-{daynum}.html) :  [Student notes](Student-notes/Student-notes-lesson-{daynum}.html)")
 }
@@ -23,6 +24,45 @@ instructor_notes <- function(daynum) {
 ```
 
 Math 300Z is the prototype for scheduled revisions to Math 300. The revisions apply only to Lessons 19 and up; the first 18 lessons come from Math 300.
+
+::: {.callout-note}
+## Take-aways from class 19
+
+#### Statistical
+
+1. Measure variation using the "variance." In R, 
+
+```{r results="hide"}
+Galton %>% summarize(vh = var(height))
+```
+
+2. Response variable will always be quantitative/numerical in a regression model.
+
+3. Expect graphics in our section to always have the response variable on the vertical axis.
+
+### Administrative
+
+4. DO THE DAILY WORKSHEET! You'll fall behind if you don't.
+
+5. Bookmark [this class site](https://dtkaplan.github.io/Math-300Z/) in your browser. That way you don't have to detour through Teams.
+
+6. Use the Z-section project on `posit.cloud`. Bring in the worksheet using
+
+```{r eval=FALSE}
+math300::get_lesson_worksheet( LESSON NUMBER )
+```
+:::
+
+
+::: {.callout-tip}
+## Announcing ...
+
+The [**Math 300 Blog**](https://dtkaplan.github.io/Math300blog/) has informal posts about statistics and the course.
+
+:::
+
+## Day-by-day plan
+
 
 Mar 3 `r instructor_notes(19)` Topic: Variation  `r reading_link(19)`, Activity: [Measuring by eye](Day-by-day/Lesson-19/Ruler-activity-handout.html) 
 
@@ -44,7 +84,7 @@ Apr 3 `r instructor_notes(27)` REVIEW of lessons 19-26 :: `r reading_link(27)`
 
 Apr 5 `r instructor_notes(28)` Topic: Covariates :: `r reading_link(28)`, Activity:
 
-Apr 7 `r instructor_notes(29)` Topic: Covariates eat variance :: `r reading_link(29)`, Activity:
+Apr 7 `r instructor_notes(29)` Topic: Covariates eat variance :: `r reading_link(29)`, Activity: TBA. Homework assignment due. (link to come)
 
 Apr 11 `r instructor_notes(30)` Topic: Confounding :: `r reading_link(30)`, Activity:
 

@@ -1,0 +1,130 @@
+---
+title: 'Lesson 22: Worksheet'
+author: "Jane Doe"
+---
+
+```{r include=FALSE}
+library(math300)
+```
+
+
+
+
+## Objectives
+
+22.1 Describe the logical origin of sampling variation as the variation between multiple samples from the same source.
+
+22.2 Recognize the several formats in which we describe sampling variation---sampling variance, standard error, margin of error, confidence interval---and show how they are related. 
+
+22.3 Using repeated sampling trials, observe how sampling variance scales with sample size $n$.
+
+
+
+
+## Overview
+
+It is critical to keep in mind that a **sample** is a collection, just as a data frame is a collection of rows. The variation we account for by regression models is row-by-row variation in the training data frame.
+
+"Sampling variation" is a theoretical concept: how much a model coefficient or other sample statistic would vary from one randomly collected sample to another.  
+
+You can't directly see sampling variation in a single sample; however, we can use the theory of sampling variation to estimate from a single sample how much other samples might differ from the sample at hand. In this Lesson, we will simulate sampling variation in order to understand its properties, particularly how it depends on the sample size $n$.
+
+
+
+## Part 1
+
+Recall from last lesson, we explored the variance of single samples. We explored how specifying different models can change how variation is accounted for. This concept must be distinguished from *sampling* variation, which hopes to measure how much are results would vary if we had different samples to start with. 
+
+### Task 1.1
+
+Using `dag02`, obtain a sample of size 25 and show the values of `y`. 
+
+```{r}
+dag02sample = sample(dag02, size=25)
+
+dag02sample%>%
+  select(y)
+```
+
+Compute the mean those 25 values of `y` in two different, but entirely equivalent ways. (1) Use data wrangling. (2) Construct a model `y ~ 1` report the intercept coefficient. Show that these give the same answer.
+
+::: {.callout-note}
+## ANSWER
+
+```{r, message = FALSE}
+dag02sample%>%
+  summarize(mean(y))
+
+dag02sample %>% 
+  lm(y~1,data=.)%>%
+  conf_interval()
+```
+:::
+
+## Part 2
+
+Create a new chunk that repeats the generation of a sample from `dag02` the the two methods for calculating the mean of the `y` values. Run the new chunk and observe that the calculated value of the mean differs somewhat from that you found in Part 1. Repeat running the chunk over and over again; the mean value will differ each time.
+
+1. Each time you run the chunk, you are performing a new sampling *trial*. Run a dozen or so trials, observing the calculated value of the mean of `y` in order to get a sense for how much it varies from trial to trial. Then summarizing your observations by giving a rough interval for the range of the mean of `y` across the trials.
+
+::: {.callout-note}
+## ANSWER
+
+:::
+
+We are going to automate the process of performing sampling trials so that we can run hundreds of them.
+
+Using the `do` operator, calculate the sampling variance for a set of trials from `dag02`. The following code chunk shows how to run 500 trials, in each of which the mean of `y` is calculated using the `y ~ 1` method and reporting the intercept coefficient. These will be collected into a data frame named `dag02trials25`.
+
+```{r, message = FALSE}
+dag02trials25 <- do(500) * {
+  sample(dag02, size=25) |> 
+  lm(y ~ 1, data=_) |>
+  conf_interval()
+}
+```
+
+2. Run the chunk above to create `dag02trials25` and then data wrangling commands to compute three summaries of the trials: 
+    i. The mean of the coefficient across the trials.
+    ii. The variance of the coefficient across the trials.
+    iii. The standard deviation of the coefficient across the trials.
+
+::: {.callout-note}
+## ANSWER
+
+The coefficient for each of the 500 trials is stored in the `.coef` column of `dag02trials25`. Simple data wrangling provides the summary.
+
+```{r}
+dag02trials25%>%
+  summarize(mean_of_means = mean(.coef),
+            sampling_variance = var(.coef),
+            standard_error = sd(.coef))
+```
+
+Notice that the names---`sampling_variance` and `standard_error`---we used for the different summaries correspond to the standard statistical nomenclature for these quantities.
+
+:::
+
+
+
+3. Repeat (2) with four different sample sizes (try 50, 100, 200, and 400). Fill in the table below. What do you notice about the standard error as sample size increases? 
+
+
+
+
+Sample size     | Sampling variance | Standard error 
+-----------------|-------------------|----------------
+n=25 | 0.439  | 0.663
+n=50 | 0.253  | 0.503 
+n=100 | 0.129  | 0.359
+n=200 | 0.059 | 0.243
+n=400 | 0.032 | 0.178
+
+::: {.callout-note}
+## ANSWER
+
+The sampling variance gets smaller as the sample size increases. Specifically, doubling the sample size tends to *halve* the sampling variance. The standard error---which is just the square-root of the sampling variance---also gets smaller as $n$ increases. As in the nature of square roots, to *halve* the standard error, the sample size must be doubled *twice*.
+:::
+
+
+

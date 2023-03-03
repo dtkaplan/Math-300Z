@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Daniel Kaplan">
-<meta name="dcterms.date" content="2022-02-17">
+<meta name="dcterms.date" content="2023-03-01">
 
 <title>Spring 2023 Math 300Z - Math 300Z</title>
 <style>
@@ -22,6 +22,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -130,7 +193,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 17, 2022</p>
+      <p class="date">March 1, 2023</p>
     </div>
   </div>
   
@@ -140,10 +203,58 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<div class="cell">
-
-</div>
 <p>Math 300Z is the prototype for scheduled revisions to Math 300. The revisions apply only to Lessons 19 and up; the first 18 lessons come from Math 300.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Take-aways from class 19
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<section id="statistical" class="level4">
+<h4 class="anchored" data-anchor-id="statistical">Statistical</h4>
+<ol type="1">
+<li>Measure variation using the “variance.” In R,</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Galton <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">vh =</span> <span class="fu">var</span>(height))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
+<li><p>Response variable will always be quantitative/numerical in a regression model.</p></li>
+<li><p>Expect graphics in our section to always have the response variable on the vertical axis.</p></li>
+</ol>
+</section>
+<section id="administrative" class="level3">
+<h3 class="anchored" data-anchor-id="administrative">Administrative</h3>
+<ol start="4" type="1">
+<li><p>DO THE DAILY WORKSHEET! You’ll fall behind if you don’t.</p></li>
+<li><p>Bookmark <a href="https://dtkaplan.github.io/Math-300Z/">this class site</a> in your browser. That way you don’t have to detour through Teams.</p></li>
+<li><p>Use the Z-section project on <code>posit.cloud</code>. Bring in the worksheet using</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>math300<span class="sc">::</span><span class="fu">get_lesson_worksheet</span>( LESSON NUMBER )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Announcing …
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <a href="https://dtkaplan.github.io/Math300blog/"><strong>Math 300 Blog</strong></a> has informal posts about statistics and the course.</p>
+</div>
+</div>
+<section id="day-by-day-plan" class="level2">
+<h2 class="anchored" data-anchor-id="day-by-day-plan">Day-by-day plan</h2>
 <p>Mar 3 <a href="Day-by-day/Lesson-19/Teaching-notes-19.html">Lesson 19:</a> Topic: Variation <a href="https://dtkaplan.github.io/Lessons-in-statistical-thinking/Lesson-19.html">Reading</a>, Activity: <a href="Day-by-day/Lesson-19/Ruler-activity-handout.html">Measuring by eye</a></p>
 <p>Mar 7 <a href="Day-by-day/Lesson-20/Teaching-notes-20.html">Lesson 20:</a> Topic: DAGs and simulation <a href="https://dtkaplan.github.io/Lessons-in-statistical-thinking/Lesson-20.html">Reading</a>, Activity: <a href="Day-by-day/Lesson-20/Life-savers.html">Life savers?</a></p>
 <p>Mar 9 <a href="Day-by-day/Lesson-21/Teaching-notes-21.html">Lesson 21:</a> Topic: Signal and noise <a href="https://dtkaplan.github.io/Lessons-in-statistical-thinking/Lesson-21.html">Reading</a>, Activity: <a href="./Day-by-day/Lesson-21/Patch-clamping.html">Membrane channels</a> <a href="Day-by-day/Lesson-21/clamp-recording.pdf">Handout</a></p>
@@ -154,7 +265,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Mar 23 <a href="Day-by-day/Lesson-26/Teaching-notes-26.html">Lesson 26:</a> Topic: Prediction intervals <a href="https://dtkaplan.github.io/Lessons-in-statistical-thinking/Lesson-26.html">Reading</a>, Activity: <a href="Day-by-day/Lesson-26/Intervals-by-eye.html">Intervals by eye</a>, <a href="Day-by-day/Lesson-26/Intervals-by-eye.pdf">Handout</a></p>
 <p>Apr 3 <a href="Day-by-day/Lesson-27/Teaching-notes-27.html">Lesson 27:</a> REVIEW of lessons 19-26 :: <a href="https://dtkaplan.github.io/Lessons-in-statistical-thinking/Lesson-27.html">Reading</a></p>
 <p>Apr 5 <a href="Day-by-day/Lesson-28/Teaching-notes-28.html">Lesson 28:</a> Topic: Covariates :: <a href="https://dtkaplan.github.io/Lessons-in-statistical-thinking/Lesson-28.html">Reading</a>, Activity:</p>
-<p>Apr 7 <a href="Day-by-day/Lesson-29/Teaching-notes-29.html">Lesson 29:</a> Topic: Covariates eat variance :: <a href="https://dtkaplan.github.io/Lessons-in-statistical-thinking/Lesson-29.html">Reading</a>, Activity:</p>
+<p>Apr 7 <a href="Day-by-day/Lesson-29/Teaching-notes-29.html">Lesson 29:</a> Topic: Covariates eat variance :: <a href="https://dtkaplan.github.io/Lessons-in-statistical-thinking/Lesson-29.html">Reading</a>, Activity: TBA. Homework assignment due. (link to come)</p>
 <p>Apr 11 <a href="Day-by-day/Lesson-30/Teaching-notes-30.html">Lesson 30:</a> Topic: Confounding :: <a href="https://dtkaplan.github.io/Lessons-in-statistical-thinking/Lesson-30.html">Reading</a>, Activity:</p>
 <p>Apr 13 <a href="Day-by-day/Lesson-31/Teaching-notes-31.html">Lesson 31:</a> Topic: Spurious correlation :: <a href="https://dtkaplan.github.io/Lessons-in-statistical-thinking/Lesson-31.html">Reading</a>, Activity:</p>
 <p>Apr 17 <a href="Day-by-day/Lesson-32/Teaching-notes-32.html">Lesson 32:</a> Topic: Experiment &amp; random assignment :: <a href="https://dtkaplan.github.io/Lessons-in-statistical-thinking/Lesson-32.html">Reading</a>, Activity:</p>
@@ -168,6 +279,7 @@ ul.task-list li input[type="checkbox"] {
 <p>May 11 <a href="Day-by-day/Lesson-40/Teaching-notes-40.html">Lesson 40:</a> Review of entire course</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

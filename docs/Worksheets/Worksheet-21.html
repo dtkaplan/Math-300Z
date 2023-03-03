@@ -145,20 +145,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../Textbook/index.html">
- <span class="menu-text">Textbook</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../index.html">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../student-notes.qmd">
- <span class="menu-text">Student notes</span></a>
+    <a class="nav-link" href="../textbooks.html">
+ <span class="menu-text">Textbooks</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../faculty-notes.qmd">
  <span class="menu-text">Faculty notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../math300-software.html">
+ <span class="menu-text">Software</span></a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -271,11 +271,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol type="1">
 <li>How much clock-to-clock variation is there in <code>price</code>? (Use the variance to measure variation.)</li>
 </ol>
-<p>ANSWER:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Clock_auction <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="at">vprice =</span> <span class="fu">var</span>(price), <span class="at">sd=</span><span class="fu">sqrt</span>(vprice))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+   vprice    sd
+    &lt;dbl&gt; &lt;dbl&gt;
+1 134203.  366.</code></pre>
+</div>
+</div>
+<p>Since the <code>price</code> is in dollars, the variance of price has units of “square dollars.” This is a unit that’s hard to get your head around. That’s why many people prefer the “standard deviation”, which is the square root of the variance.</p>
+</div>
+</div>
 <ol start="2" type="1">
 <li>Fit a model <code>price ~ age</code>, then plot with <code>model_plot()</code>. Describe the pattern between price and age you see in the plot.</li>
 </ol>
-<p>ANSWER:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(price <span class="sc">~</span> age, <span class="at">data=</span>Clock_auction)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Worksheet-21_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>According to the model, price goes up with age. A 25 year increase in age corresponds to about a $200 increase in price.</p>
+</div>
+</div>
 <ol start="3" type="1">
 <li><p>Use <code>model_eval()</code> to find the model output for each clock for the model you constructed in (2).</p>
 <ol type="i">
@@ -284,19 +324,107 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Demonstrate arithmetically the relationship between the variance of the response variable, the variance of the model <code>.output</code>, and the variance of the noise.</li>
 </ol></li>
 </ol>
-<p>ANSWER:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Values <span class="ot">&lt;-</span> <span class="fu">model_eval</span>(mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Using training data as input to model_eval().</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Values <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="at">voutput =</span> <span class="fu">var</span>(.output))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   voutput
+1 66352.26</code></pre>
+</div>
+</div>
+<p>The variance of the model output (note the dot used in the name <code>.output</code>) is 66-thousand square dollars. (Why “square dollars?” Because the response variable is <code>price</code> which is in dollars. The model output <em>always</em> has the same units as the response variable. And the variance of a variable <em>always</em> has units that are the square of the variable’s units.) The variance of the <code>price</code> variable is about 134-thousand square dollars, so the model output has about half the variance of the response.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Values <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="at">vresid =</span> <span class="fu">var</span>(.resid))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    vresid
+1 67850.62</code></pre>
+</div>
+</div>
+<p>The variance of the residuals is about 68-thousand square dollars. (The residuals <em>always</em> have the same units as the response variable.)</p>
+<p>To show that the sum of the variances of the model output and residuals equals the variance of the response variable, just add them up and compare:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fl">66352.26</span> <span class="sc">+</span> <span class="fl">67850.62</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 134202.9</code></pre>
+</div>
+</div>
+<p>The result exactly matches the variance of the price variable (calculated above).</p>
+</div>
+</div>
 <ol start="4" type="1">
 <li>Use <code>R2()</code> to summarize the model you constructed in (2). Demonstrate arithmetically the relationship between R<sup>2</sup> and variances of the response variable and the model <code>.output</code>.</li>
 </ol>
-<p>ANSWER:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   n k  Rsquared       F     adjR2            p df.num df.denom
+1 32 1 0.4944176 29.3375 0.4775648 5.914169e-06      1       30</code></pre>
+</div>
+</div>
+<p>R<sup>2</sup> is 0.49. This exactly matches the quotient of the variance of the model output divided by the variance of the response variable:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Values <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="at">ratio =</span> <span class="fu">var</span>(.output) <span class="sc">/</span> <span class="fu">var</span>(.response))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      ratio
+1 0.4944176</code></pre>
+</div>
+</div>
+</div>
+</div>
 <ol start="5" type="1">
 <li>The quantity 1 - R<sup>2</sup> describes the amount of noise. Arithmetically, how does 1 - R<sup>2</sup> correspond to the variance of the <code>.resid</code> from part (3)?</li>
 </ol>
-<p>ANSWER:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>First, the value of 1 - R<sup>2</sup>, then the ratio of the variance of the residuals to the variance of the response variable:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.4944176</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5055824</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Values <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="at">ratio =</span> <span class="fu">var</span>(.resid) <span class="sc">/</span> <span class="fu">var</span>(.response))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      ratio
+1 0.5055824</code></pre>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="part-3-r2" class="level2">
 <h2 class="anchored" data-anchor-id="part-3-r2">Part 3: R<sup>2</sup></h2>
-<p><code>dag_10</code> has a simple structure, with nodes <code>a</code> through <code>f</code> each contributing to the value of <code>y</code>. Use <code>sample()</code> to generate a sample of size 1000. Using your sample, construct several models and calculate the R<sup>2</sup> statistic.</p>
+<p><code>dag10</code> has a simple structure, with nodes <code>a</code> through <code>f</code> each contributing to the value of <code>y</code>. Use <code>sample()</code> to generate a sample of size 1000. Using your sample, construct several models and calculate the R<sup>2</sup> statistic.</p>
 <ol type="i">
 <li><code>y ~ 1</code>.</li>
 <li><code>y ~ a</code></li>
@@ -307,47 +435,151 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol type="1">
 <li>Which of the models gives the smallest value of R<sup>2</sup>? Explain why that particular model gives such a small R<sup>2</sup>.</li>
 </ol>
-<p>ANSWER:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Our_sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag10, <span class="at">size=</span><span class="dv">1000</span>) </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data=</span>Our_sample) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     n k Rsquared   F adjR2   p df.num df.denom
+1 1000 0        0 NaN     0 NaN      0      999</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> a, <span class="at">data=</span>Our_sample) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     n k  Rsquared        F     adjR2 p df.num df.denom
+1 1000 1 0.1249254 142.4742 0.1240486 0      1      998</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> b, <span class="at">data=</span>Our_sample) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     n k Rsquared        F     adjR2 p df.num df.denom
+1 1000 1 0.268282 365.9134 0.2675488 0      1      998</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data=</span>Our_sample) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     n k  Rsquared        F     adjR2 p df.num df.denom
+1 1000 2 0.3996704 331.8772 0.3984661 0      2      997</code></pre>
+</div>
+</div>
+<p>The model <code>y ~ 1</code> has R<sup>2</sup>=0 because the pseudo-variable <code>1</code> has zero variance and cannot “explain” any of the variance in the response variable <code>y</code>.</p>
+</div>
+</div>
 <ol start="2" type="1">
 <li>As you add more terms to the model specification, does R<sup>2</sup> ever go down?</li>
 </ol>
-<p>ANSWER:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Model specifications like <code>y ~ a</code> are actually shorthand for <code>y ~ 1 + a</code>. So <code>y ~ a</code> has an additional explanatory variable in addition to the pseudo-variable <code>1</code>. Whenever you add a new explanatory variable to an existing model specification, the R<sup>2</sup> will increase (or, more precisely, cannot decrease).</p>
+</div>
+</div>
 <ol start="3" type="1">
 <li>What effect does the <em>order</em> of terms in the model have on R<sup>2</sup>? (For instance, <code>y ~ a + b + c</code> versus <code>y ~ c + a + b</code>.)</li>
 </ol>
-<p>ANSWER:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Compare, for instance, <code>y ~ a + b + c</code> to <code>y ~ c + a + b</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">data=</span>Our_sample) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     n k  Rsquared       F     adjR2 p df.num df.denom
+1 1000 3 0.4312175 251.703 0.4295043 0      3      996</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> c <span class="sc">+</span> a <span class="sc">+</span> b, <span class="at">data=</span>Our_sample) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     n k  Rsquared       F     adjR2 p df.num df.denom
+1 1000 3 0.4312175 251.703 0.4295043 0      3      996</code></pre>
+</div>
+</div>
+<p>The order of explanatory variables does not matter at all. It’s the <em>collection</em> that matters.</p>
+</div>
+</div>
 </section>
 <section id="part-4-concept-check" class="level2">
 <h2 class="anchored" data-anchor-id="part-4-concept-check">Part 4: Concept check</h2>
 <p>Write a sentence or two explaining what each of the following terms refers to.</p>
 <ul>
-<li>“Zero-one transformation”</li>
 <li>“Levels of a categorical variable”</li>
+<li>“Zero-one transformation”</li>
 <li>“Model specification”</li>
 <li>“Tilde expression”</li>
 </ul>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Levels of a categorical variable. The values of a categorical variable are named. For instance, a <code>household_pets</code> variable would take on values like “cat,” “dog,” “turtle,” “parakeet,” …. The set of possible values for the categorical variable is called the “levels” of the variable.</p></li>
+<li><p>Zero-one transformation. A means to translate a <em>categorical</em> variable with two levels into a <em>quantitative variable</em>. One of the levels is translated to the numerical value 1, the other to 0. The advantage of this particular scheme is that means or models where the zero-one variable is used for the response variable will have model outputs that can be interpreted as <em>probabilities</em>.</p></li>
+<li><p>Model specification. When constructing a regression model, the modeler has to provide two different kinds of inputs: (1) a data frame for training the model, (2) a statement about which variable from the data frame to use as the <em>response</em> variable and which other variables to use as <em>explanatory</em> variables. This statement (2) is called the “model specification.”</p></li>
+<li><p>Tilde expression. Tilde expressions are an element of the syntax (or “grammar”) of R. They always involve the tilde character (<code>~</code>) which has no other legitimate use in R. Any valid R expression can be used on the right-side of tilde. The left side (if present, as will be the case when used with <code>lm()</code>) can also be any valid R expression. The most prominant role for tilde expressions in Math 300Z is to hold the model specification for use by <code>lm()</code>. In this use, the response variable’s name always goes on the left side of the tilde. Explanatory variable names go on the right side, usually separated by <code>+</code> as punctuation.</p>
+<p>For the computer-science oriented …. Tilde expressions are a way to represent <em>symbolic expressions</em> such as fragments of code. In ordinary use, R tries to <em>evaluate</em> every code fragment, replacing names with their values and invoking any functions used. Symbolic expressions are taken literally as a code fragment, without any evaluation. This is valuable as a means to pass code fragments to a function which can then parse or otherwise evaluate the fragment in a particular context.</p></li>
+</ul>
+</div>
+</div>
 </section>
 <section id="part-5-curvy-models" class="level2">
 <h2 class="anchored" data-anchor-id="part-5-curvy-models">Part 5: Curvy models</h2>
 <p>Here’s a model of human height versus age based on the <code>NHANES::NHANES</code> data frame. (The package <code>NHANES</code> has the data frame which itself is called <code>NHANES</code>, so the full name is <code>NHANES::NHANES</code>.)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> Age, <span class="at">data =</span> NHANES<span class="sc">::</span>NHANES)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod1, <span class="at">data_alpha=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> Age, <span class="at">data =</span> NHANES<span class="sc">::</span>NHANES)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod1, <span class="at">data_alpha=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 353 rows containing missing values (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="Worksheet-21_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<p><img src="Worksheet-21_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <ol type="1">
 <li>Do you think the model gives a good description of the relationship between <code>Age</code> and <code>Height</code>? Explain using simple biological terms what the problem is with the straight-line model.</li>
 </ol>
-<p>ANSWER:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Humans and other animals grow in a <em>non-linear</em> manner: rapid growth during gestation, infancy, and youth and comparative stasis later in life. With a model specification like <code>Height ~ Age</code>, <code>lm()</code> will look for a purely linear function, as in the straight line in the above graphic. The linear function doesn’t capture the age-dependent growth rate (fast during youth, slow or nil in adulthood), since a straight line has the same slope at all values of the explanatory variable.</p>
+<p>One of the signs of the ill-fit of a linear model is that the response values tend to be cluster mostly below or mostly above the line for different regions of the explanatory variable. For instance, in the graph above, for ages younger than 10, the height values are systematically <em>below</em> the straight-line function.</p>
+</div>
+</div>
 <p>There are several modeling techniques for constructing models that are more flexible than a straight line. We won’t be using them in Math 300, but we want to point out that they exist. Try this one:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> splines<span class="sc">::</span><span class="fu">ns</span>(Age,<span class="dv">5</span>) <span class="sc">*</span> Gender, <span class="at">data =</span> NHANES<span class="sc">::</span>NHANES)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod2, <span class="at">data_alpha=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> splines<span class="sc">::</span><span class="fu">ns</span>(Age,<span class="dv">5</span>) <span class="sc">*</span> Gender, <span class="at">data =</span> NHANES<span class="sc">::</span>NHANES)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod2, <span class="at">data_alpha=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Ignoring unknown aesthetics: fill</code></pre>
 </div>
@@ -355,13 +587,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>Warning: Removed 353 rows containing missing values (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="Worksheet-21_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<p><img src="Worksheet-21_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <ol start="2" type="1">
 <li>Calculate R<sup>2</sup> for the straight-line model and for the curvy model.</li>
 </ol>
-<p>ANSWER:</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     n k  Rsquared        F     adjR2 p df.num df.denom
+1 9647 1 0.2117647 2591.193 0.2116829 0      1     9645</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     n  k  Rsquared        F    adjR2 p df.num df.denom
+1 9647 11 0.8720171 5968.044 0.871871 0     11     9635</code></pre>
+</div>
+</div>
+<p>The R<sup>2</sup> for the rigid, straight-line model is substantially <em>lower</em> than for the more flexible, curvy model. Another way of saying this is that the curvy model stays closer (on average) to the data than the straight-line model.</p>
+<p>An important theoretical question in statistical modeling is when to prefer a curvy model to a straight-line model. We haven’t yet encountered the statistical concepts that address this question.</p>
+</div>
+</div>
 
 
 </section>
