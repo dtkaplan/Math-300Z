@@ -61,7 +61,7 @@ c. `PACKAGE::DF` The name of a data frame within a package.
 
 ```{r}
 mosaicData::Galton |> 
-  mutate(vmother = var(mother), vfather = var(father))
+  summarize(vmother = var(mother), vfather = var(father))
 ```
 
 The units for both are `inches-squared" since the variables themselves have units "inches."
@@ -75,7 +75,7 @@ The units for both are `inches-squared" since the variables themselves have unit
 
 ```{r}
 moderndive::amazon_books |>
-  mutate(vprice = var(list_price), vpages = var(num_pages))
+  summarize(vprice = var(list_price), vpages = var(num_pages))
 ```
 
 The units of `list_price` are dollars, so the variance has units "square-dollars".
@@ -90,7 +90,7 @@ The units of `list_price` are dollars, so the variance has units "square-dollars
 ## ANSWER: 
 
 ```{r error=TRUE}
-Galton |> mutate(vsex = var(sex))
+Galton |> summarize(vsex = var(sex))
 ```
 
 `sex` is a categorical variable. There's no such thing as the variance of a categorical variable.
