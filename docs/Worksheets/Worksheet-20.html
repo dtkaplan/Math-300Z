@@ -145,20 +145,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../Textbook/index.html">
- <span class="menu-text">Textbook</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../index.html">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../student-notes.qmd">
- <span class="menu-text">Student notes</span></a>
+    <a class="nav-link" href="../textbooks.html">
+ <span class="menu-text">Textbooks</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../faculty-notes.qmd">
  <span class="menu-text">Faculty notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../math300-software.html">
+ <span class="menu-text">Software</span></a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -288,8 +288,8 @@ ANSWER
 <pre><code># A tibble: 2 × 4
   term         .lwr .coef  .upr
   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 (Intercept)  2.96  3.04  3.11
-2 x            1.46  1.51  1.56</code></pre>
+1 (Intercept)  2.83  2.90  2.98
+2 x            1.36  1.41  1.47</code></pre>
 </div>
 </div>
 </div>
@@ -315,9 +315,9 @@ ANSWER
 <pre><code># A tibble: 3 × 4
   term         .lwr .coef  .upr
   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 (Intercept) 2.97  3.03   3.09
-2 x           0.889 0.952  1.01
-3 c           0.998 1.09   1.18</code></pre>
+1 (Intercept) 2.90  2.97   3.03
+2 x           0.919 0.983  1.05
+3 c           0.901 0.989  1.08</code></pre>
 </div>
 </div>
 <p>When we include both <code>x</code> and <code>c</code> in the model specification, the coefficients work out to match those of the DAG formula for <code>y</code>.</p>
@@ -430,8 +430,8 @@ ANSWER
 <pre><code># A tibble: 2 × 4
   term             .lwr     .coef      .upr
   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-1 (Intercept) 1152.     1176.     1201.    
-2 expenditure   -0.0150   -0.0130   -0.0110</code></pre>
+1 (Intercept) 1191.     1215.     1239.    
+2 expenditure   -0.0179   -0.0160   -0.0140</code></pre>
 </div>
 </div>
 <p>The coefficient on Expenditure is negative in contrast to the known positive coefficient in the DAG formula for Outcome.</p>

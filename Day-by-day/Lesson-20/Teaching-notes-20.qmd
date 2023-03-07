@@ -2,13 +2,43 @@
 title: "Instructor Teaching Notes for Lesson 20"
 subtitle: "Math300Z"
 author: "Daniel Kaplan"
-date: "Revised 02/28/2023"
+date: "Revised 03/07/2023"
 ---
 
 
 ```{r include=FALSE}
 library(math300)
 ```
+
+## Review of Lesson 19
+
+### Looking at the results of the divide-and-measure activity
+
+The entire box is 14.43 "inches" long. This should be the total of the `left`, `right`, and `middle` measurements, but people tended to round.
+
+```{r}
+Thirds <- readr::read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vT_asFV5LD312bYaGgHK3F91kgLVSiaQpNhggDilfPKAiDBNz9iueOiYWKgAtRRwkFlOz6U9znbiMGK/pub?gid=0&single=true&output=csv")
+Long_form <- tidyr::pivot_longer(Thirds, !Student_initials, names_to = "position")
+Long_form |> group_by(Student_initials) |> summarize(tot = sum(value), v = var(value))
+
+Long_form |> summarize(vmeas = var(value))
+
+lm(value ~ position, data=Long_form) |> conf_interval()
+
+ggplot(Long_form, aes(y=value, x=position)) + geom_jitter(width=0.2, alpha=0.5)
+```
+## Variation
+
+Remember that statistics focus on variation in the characteristics of a set of multiple specimens. The characteristics of each individual specimen are recorded in a *row* of a data frame. The data frame itself, with its multiple rows, represents the set of specimens. Each characteristic is arranged as a *column* in the data frame. We call such columns "*variables*," a name that emphasizes that our particular interest is to understand/explain/account-for the variation of the values stored in the column.
+
+In a regression model, we attempt to understand/explain/account-for the variation in a single variable, called the "**response variable**." We accomplish this explanation by associating the variation in the response with the simultaneous variation in other variables called "**explanatory variables**." 
+
+The `lm()` model-building function does the work of quantifying the associations. Your task in model building is to provide data for training and to specify which are the explanatory variables you want to use to account for the variation in the response variable. The specification takes the form of a **tilde expression** listing the response and explanatory variables. All these variables must be in the data frame used for training. We say such variables are "observed."
+
+There are usually other characteristics that are relevant to the system being studied that are not observed, that is, they are not in the data frame. It's a bad idea to ignore such things.
+
+## Starting Lesson 20
+
 
 Today is a *meta*-day. It is about tools for *learning* about statistical methods and gaining insight into why certain kinds of questions/techniques come up over and over again as you work on genuine statistical problems.
 
@@ -20,15 +50,20 @@ The two kinds of tools for learning are:
 
 2. Ways to automate the process of random trials. This is purely a labor-saving measure. You are not responsible to generate the code for this automation, but you should learn to read the code to be able to say what's going on. 
 
-## Variation
+## Causation examples
 
-Remember that statistics focus on variation in the characteristics of a set of multiple specimens. The characteristics of each individual specimen are recorded in a *row* of a data frame. The data frame itself, with its multiple rows, represents the set of specimens. Each characteristic is arranged as a *column* in the data frame. We call such columns "*variables*," a name that emphasizes that our particular interest is to understand/explain/account-for the variation of the values stored in the column.
-
-In a regression model, we attempt to understand/explain/account-for the variation in a single variable, called the "**response variable**." We accomplish this explanation by associating the variation in the response with the simultaneous variation in other variables called "**explanatory variables**." 
-
-The `lm()` model-building function does the work of quantifying the associations. Your task in model building is to provide data for training and to specify which are the explanatory variables you want to use to account for the variation in the response variable. The specification takes the form of a **tilde expression** listing the response and explanatory variables. All these variables must be in the data frame used for training. We say such variables are "observed."
-
-There are usually other characteristics that are relevant to the system being studied that are not observed, that is, they are not in the data frame. It's a bad idea to ignore such things.
+1. Systolic blood pressure in the elderly:
+    - Experiment shows that lowering SBP reduces mortality.
+    - Observation shows that lower SBP is associated with increased mortality.
+    
+2. Congressional elections
+    - Among incumbents, higher election spending is associated with worse vote outcomes.
+    
+3. Vitamin D and disease
+    - Low vitamin linked to adverse outcomes in many diseases
+    - Ill people go outside less often so are less exposed to sunlight AND Vitamin D is an acute phase reactant and declines with the inflammatory cytokine rise in acute and chronic diseases AND No evidence from randomized trials that vitamin D supplementation lessens mortality risks in such conditions.
+    - [Bring up article](../www/vitamin-D.pdf)
+    
 
 ## Directed acyclic graphs (DAGs)
 
@@ -39,6 +74,24 @@ A good dictionary definition of "system" is:
 > A set of things working together as parts of a mechanism or an interconnecting network. 
 
 
+Graphs, Directed, Acyclic
 
 
+## Sampling from DAGs
+
+In Math 300Z, DAGs have been augmented with a simulation mechanism. This consists of formulas that are invoked to create each variable in the DAG.
+
+## Activity: Life Savers
+
+## Repeating trials
+
+```{r}
+foo <- do(100000)*sum(runif(10))
+ggplot(foo, aes(x=" ", y = sum)) + geom_violin(alpha=0.5)
+```
+
+
+```{r}
+Trials <- do(100) * {lm(x ~ y, data=sample(dag03, size=5)) |> R2()}
+```
 
