@@ -1,5 +1,5 @@
 ---
-title: "Instructor Teaching Notes for Lesson 20"
+title: "Instructor Teaching Notes for Lesson 21"
 subtitle: "Math300Z"
 author: "Daniel Kaplan"
 date: "Revised 03/08/2023"
@@ -8,7 +8,214 @@ date: "Revised 03/08/2023"
 
 ```{r include=FALSE}
 library(math300)
+source("../../_startup.R")
 ```
 
 ## Review of Lesson 20
 
+1. We think about data with multiple variables as depicting a system: an interconnected network of components. Some components appear as variables in the data frame; other components may be unmeasured but given a name for reference.
+
+2. Use "directed acyclic graphs" (DAGs) to draw a picture of the system. Each system component is a node of the DAG. When one component has a causal connection with another, an arrow is drawn between those nodes.
+
+3. By analysis of the DAG---using techniques we haven't covered yet---you can figure out which variables to include in your model. 
+
+4. Many DAGs are provided with the `{math300}` package, with names like `dag01` through `dag12`. Here's an example:
+
+```{r}
+print(dag03)
+dag_draw(dag03)
+```
+
+Notice that there is no direct flow between nodes `x` and `y`. Still, there is an indirect connection: node `g` influences both `x` and `y`.
+
+4. We can collect a sample from a DAG, for instance:
+
+```{r}
+My_data <- sample(dag03, size=10000)
+```
+
+5. Depending on the structure of the DAG, different model specifications will reveal different aspects of the DAG. For instance, 
+
+```{r}
+mod1 <- lm(y ~ x, data=My_data)
+```
+
+will show if there is any kind of connection between `x` and `y`. But another specification will, in this case, show that the connection from `x` to `y` is via the connection provided by node `g`.
+
+```{r}
+mod2 <- lm(y ~ x + g, data=My_data)
+```
+
+We can look at the coefficients to see that in `mod1` there is a non-zero connection between `y` and `x`, but in `mod2` there is no non-zero connection of `x` on `y`.
+
+```{r digits=3}
+mod1 |> conf_interval()
+mod2 |> conf_interval()
+```
+One way we will use DAGs to help us learn statistics is to compare the coefficients of models to the (known) mechanism of the DAG. We can see, for instance, that the `g` coefficient on `y` is 1 and the `x` coefficient is zero. Only `mod2` reveals this.
+
+6. The sampling and analysis in points (4) and (5) are an example of a "**random trial**" or "**simulation**." We will use random trials to look at the properties of models fit to samples, especially with an eye to understanding the role of the sample size $n$.
+
+## Mathematical functions through data
+
+Let's collect a small ($n=10$) sample from `dag01`:
+
+```{r digits=3}
+set.seed(103)
+Small <- sample(dag01, size=10)
+head(Small, 3)
+```
+
+We can easily plot the data points. Less obviously, we can find any number of mathematical functions that are consistent with the data.
+
+```{r echo=FALSE, warning=FALSE}
+#| label: fig-dag01-functions
+#| fig-cap: "Three of the infinite number of functions that can be drawn through the data @tbl-small-dag01."
+#| fig-cap-location: margin
+set.seed(205)
+dat2 <- bind_rows(Small, sample(dag01, size=10))
+dat3 <- bind_rows(Small, sample(dag01, size=7))
+fun3 <- spliner(y ~ x, data = dat3)
+curve3 <- data_frame(x = seq(min(dat3$x),max(dat3$x), length=100), y = fun3(x)) 
+ggplot(Small, aes(x=x, y=y)) +
+  geom_line(color="blue", linewidth=1.5, alpha=0.5) +
+  geom_line(data = dat2, color="orange") +
+  geom_line(data=curve3, color="magenta") +
+  geom_point() +
+  lims(x=c(-2, 1.5))
+```
+
+1. What don't you like about these functions? Why do they insult your intuition?
+    - They show details that are in no way suggested by the data.
+    - If we were to collect more data, the function shapes could be entirely different. (Go back and change the random seed used for sampling from `dag01`.)
+    
+    
+
+## "Close" but not "on" the data
+
+In general, we don't insist that model functions go exactly through the data points. Instead, we imagine that the response variable involves some random noise that we don't need to "capture" with our model. Doing things this way lets us fit model functions that are much simpler in shape, like this one:
+
+```{r echo=FALSE, message=FALSE}
+#| label: fig-dag01-linear
+#| fig-cap: "The straight-line function (blue) that goes through the data points as closely as possible. The noise is estimated as the difference (red for negative noise, black for positive noise) between the actual data points and the function."
+#| fig-cap-location: margin
+mod <- lm(y ~ x, data=Small)
+points <- model_eval(mod) %>%
+  mutate(color = ifelse(.resid < 0, "red", "black"))
+ggplot(Small, aes(x=x, y=y)) +
+  geom_point() +
+  geom_line(data=points, aes(x=x, y=.output), color="blue", linewidth=1.5, alpha=0.5) +
+  geom_segment(data=points, 
+               aes(x=x, y=.output, xend=x, yend=.response, color=color)) +
+  scale_color_identity()
+```
+
+Constructing such a model divides the "explanation" of the response variable values into two parts:
+
+1. **Model values**, that is, the output of the model function (blue) at each of the values of the explanatory variable(s).
+2. What's left over, the **residuals**, the vertical deviation of the actual response value from the model value.
+
+The **signal** is the model values. The **noise** is the residuals. 
+
+When we "fit" (or, "train") a model, we take an aggressive stance. We look for the particular function of the shape implied by the model specification that will produce the smallest residuals. As usual, we measure the size of a residual by its square.
+
+## Activity: Identifying signal
+
+## Measuring signal and noise
+
+We depict the "size" of the signal as the amount of variability in the model values. As always, we measure variability using the variance.
+
+Similarly, the "size" of the noise is the amount of variability in the residuals. 
+
+The `model_eval()` function is convenient for figuring out the model value and the residual for each row in the training data. 
+
+:::: {columns}
+::: {.column width="22%"}
+**The training data**
+
+```{r digits=2}
+Small
+```
+:::
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="72%"}
+**Output of `model_eval()`**
+```{r message=FALSE}
+Pts <- model_eval(mod)
+```
+
+```{r echo=FALSE, digits=2}
+Pts
+```
+:::
+::::
+
+**How big is ...**
+
+i. The response variable.
+ii. The signal.
+iii. The noise.
+
+```{r digits=3}
+Pts |> summarize(i. = var(.response),
+                 ii. = var(.output),
+                 iii. = var(.resid)) 
+```
+
+
+
+
+::: {.callout-note}
+## Something special about the variance
+
+For every `lm()` model you build, the variance of the response variable is exactly equal to the sum of the variance of the model values and the variance of the residuals.
+
+In other words, `lm()` splits the response variable into two parts: the sum of those parts equals the whole.
+
+**R^2^** is the variance of the model values divided by the variance of the response variable.
+
+```{r digits=3}
+mod |> R2()
+Pts |> 
+  summarize(i. = var(.response),
+            ii. = var(.output)) |>
+  mutate(R2 = ii. / i. )
+```
+:::
+
+## ~~Five~~ Six simple models
+
+Models can have any number of explanatory variables. In Math 300, we will be mainly concerned with models with a single explanatory variable or with two explanatory variable. Since an explanatory variable can be either categorical or quantitative, there are six "shapes" of models:
+
+**Single explanatory variable**
+
+i. Categorical explanatory variable.
+ii. Quantitative explanatory variable.
+
+**Two explanatory variables**
+
+iii. Categorical & Categorical
+iv. Categorical & Quantitative
+v. Quantitative & Quantitative
+
+Sometimes, we will use models with **Zero explanatory variables**
+
+vi. No explanatory variables.
+
+Graphs of (i) through (v), with (iv) shown in two different modes.
+
+```{r echo=FALSE, warning=FALSE}
+#| layout-ncol: 2
+source("model_and_plot.R")
+
+P1 <- model_and_plot(height ~ father, data=Galton, label="(a)")
+P2 <- model_and_plot(height ~ sex, data=Galton, label="(b)")
+P3 <- model_and_plot(height ~ sex + mother, data=Galton, label="(c)")
+P4 <- model_and_plot(height ~ mother + sex, data=Galton, label="(d)")
+P5 <- model_and_plot(height ~ tall + sex, data=Galton %>% mutate(tall=ifelse(mother > 64,"alpha", "beta")), label="(e)")
+P6 <- model_and_plot(height ~ mother + father, data=Galton, label="(f)")
+P1; P2; P3; P4; P5; P6
+```  

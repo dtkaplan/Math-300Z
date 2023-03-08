@@ -9,7 +9,7 @@
 <meta name="author" content="Daniel Kaplan">
 <meta name="dcterms.date" content="2023-03-08">
 
-<title>Spring 2023 Math 300Z - Instructor Teaching Notes for Lesson 20</title>
+<title>Spring 2023 Math 300Z - Instructor Teaching Notes for Lesson 21</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,6 +22,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -61,11 +124,12 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -107,13 +171,15 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Instructor Teaching Notes for Lesson 20</h1>
+<h1 class="title">Instructor Teaching Notes for Lesson 21</h1>
 <p class="subtitle lead">Math300Z</p>
 </div>
 
@@ -143,6 +209,507 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="review-of-lesson-20" class="level2">
 <h2 class="anchored" data-anchor-id="review-of-lesson-20">Review of Lesson 20</h2>
+<ol type="1">
+<li><p>We think about data with multiple variables as depicting a system: an interconnected network of components. Some components appear as variables in the data frame; other components may be unmeasured but given a name for reference.</p></li>
+<li><p>Use “directed acyclic graphs” (DAGs) to draw a picture of the system. Each system component is a node of the DAG. When one component has a causal connection with another, an arrow is drawn between those nodes.</p></li>
+<li><p>By analysis of the DAG—using techniques we haven’t covered yet—you can figure out which variables to include in your model.</p></li>
+<li><p>Many DAGs are provided with the <code>{math300}</code> package, with names like <code>dag01</code> through <code>dag12</code>. Here’s an example:</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dag03)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>g ~ exo()
+x ~ 1 * g + exo()
+y ~ 1 * g + exo()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag03)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-21_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Notice that there is no direct flow between nodes <code>x</code> and <code>y</code>. Still, there is an indirect connection: node <code>g</code> influences both <code>x</code> and <code>y</code>.</p>
+<ol start="4" type="1">
+<li>We can collect a sample from a DAG, for instance:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>My_data <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag03, <span class="at">size=</span><span class="dv">10000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="5" type="1">
+<li>Depending on the structure of the DAG, different model specifications will reveal different aspects of the DAG. For instance,</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data=</span>My_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>will show if there is any kind of connection between <code>x</code> and <code>y</code>. But another specification will, in this case, show that the connection from <code>x</code> to <code>y</code> is via the connection provided by node <code>g</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x <span class="sc">+</span> g, <span class="at">data=</span>My_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can look at the coefficients to see that in <code>mod1</code> there is a non-zero connection between <code>y</code> and <code>x</code>, but in <code>mod2</code> there is no non-zero connection of <code>x</code> on <code>y</code>.</p>
+<div class="cell" data-digits="3">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:right;"> .lwr </th>
+   <th style="text-align:right;"> .coef </th>
+   <th style="text-align:right;"> .upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> -0.0298 </td>
+   <td style="text-align:right;"> -0.00563 </td>
+   <td style="text-align:right;"> 0.0186 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> x </td>
+   <td style="text-align:right;"> 0.4800 </td>
+   <td style="text-align:right;"> 0.49700 </td>
+   <td style="text-align:right;"> 0.5140 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:right;"> .lwr </th>
+   <th style="text-align:right;"> .coef </th>
+   <th style="text-align:right;"> .upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> -0.0120 </td>
+   <td style="text-align:right;"> 0.00785 </td>
+   <td style="text-align:right;"> 0.0277 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> x </td>
+   <td style="text-align:right;"> -0.0237 </td>
+   <td style="text-align:right;"> -0.00392 </td>
+   <td style="text-align:right;"> 0.0159 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> g </td>
+   <td style="text-align:right;"> 0.9680 </td>
+   <td style="text-align:right;"> 0.99700 </td>
+   <td style="text-align:right;"> 1.0200 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>One way we will use DAGs to help us learn statistics is to compare the coefficients of models to the (known) mechanism of the DAG. We can see, for instance, that the <code>g</code> coefficient on <code>y</code> is 1 and the <code>x</code> coefficient is zero. Only <code>mod2</code> reveals this.</p>
+<ol start="6" type="1">
+<li>The sampling and analysis in points (4) and (5) are an example of a “<strong>random trial</strong>” or “<strong>simulation</strong>.” We will use random trials to look at the properties of models fit to samples, especially with an eye to understanding the role of the sample size <span class="math inline">\(n\)</span>.</li>
+</ol>
+</section>
+<section id="mathematical-functions-through-data" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="mathematical-functions-through-data">Mathematical functions through data</h2>
+<p>Let’s collect a small (<span class="math inline">\(n=10\)</span>) sample from <code>dag01</code>:</p>
+<div class="cell" data-digits="3">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">103</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>Small <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag01, <span class="at">size=</span><span class="dv">10</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Small, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> x </th>
+   <th style="text-align:right;"> y </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> -0.7860 </td>
+   <td style="text-align:right;"> 1.89 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.0547 </td>
+   <td style="text-align:right;"> 4.12 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -1.1700 </td>
+   <td style="text-align:right;"> 2.36 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We can easily plot the data points. Less obviously, we can find any number of mathematical functions that are consistent with the data.</p>
+<div class="cell page-columns page-full">
+<div class="cell-output-display page-columns page-full">
+<div id="fig-dag01-functions" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="Teaching-notes-21_files/figure-html/fig-dag01-functions-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;1: Three of the infinite number of functions that can be drawn through the data <strong>?@tbl-small-dag01</strong>.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<ol type="1">
+<li>What don’t you like about these functions? Why do they insult your intuition?
+<ul>
+<li>They show details that are in no way suggested by the data.</li>
+<li>If we were to collect more data, the function shapes could be entirely different. (Go back and change the random seed used for sampling from <code>dag01</code>.)</li>
+</ul></li>
+</ol>
+</section>
+<section id="close-but-not-on-the-data" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="close-but-not-on-the-data">“Close” but not “on” the data</h2>
+<p>In general, we don’t insist that model functions go exactly through the data points. Instead, we imagine that the response variable involves some random noise that we don’t need to “capture” with our model. Doing things this way lets us fit model functions that are much simpler in shape, like this one:</p>
+<div class="cell page-columns page-full">
+<div class="cell-output-display page-columns page-full">
+<div id="fig-dag01-linear" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="Teaching-notes-21_files/figure-html/fig-dag01-linear-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;2: The straight-line function (blue) that goes through the data points as closely as possible. The noise is estimated as the difference (red for negative noise, black for positive noise) between the actual data points and the function.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Constructing such a model divides the “explanation” of the response variable values into two parts:</p>
+<ol type="1">
+<li><strong>Model values</strong>, that is, the output of the model function (blue) at each of the values of the explanatory variable(s).</li>
+<li>What’s left over, the <strong>residuals</strong>, the vertical deviation of the actual response value from the model value.</li>
+</ol>
+<p>The <strong>signal</strong> is the model values. The <strong>noise</strong> is the residuals.</p>
+<p>When we “fit” (or, “train”) a model, we take an aggressive stance. We look for the particular function of the shape implied by the model specification that will produce the smallest residuals. As usual, we measure the size of a residual by its square.</p>
+</section>
+<section id="activity-identifying-signal" class="level2">
+<h2 class="anchored" data-anchor-id="activity-identifying-signal">Activity: Identifying signal</h2>
+</section>
+<section id="measuring-signal-and-noise" class="level2">
+<h2 class="anchored" data-anchor-id="measuring-signal-and-noise">Measuring signal and noise</h2>
+<p>We depict the “size” of the signal as the amount of variability in the model values. As always, we measure variability using the variance.</p>
+<p>Similarly, the “size” of the noise is the amount of variability in the residuals.</p>
+<p>The <code>model_eval()</code> function is convenient for figuring out the model value and the residual for each row in the training data.</p>
+<div class="{columns}">
+<div class="column" style="width:22%;">
+<p><strong>The training data</strong></p>
+<div class="cell" data-digits="2">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Small</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> x </th>
+   <th style="text-align:right;"> y </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> -0.790 </td>
+   <td style="text-align:right;"> 1.90 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.055 </td>
+   <td style="text-align:right;"> 4.10 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -1.200 </td>
+   <td style="text-align:right;"> 2.40 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.170 </td>
+   <td style="text-align:right;"> 6.30 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -1.900 </td>
+   <td style="text-align:right;"> 0.93 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.120 </td>
+   <td style="text-align:right;"> 2.90 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.830 </td>
+   <td style="text-align:right;"> 5.70 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 1.200 </td>
+   <td style="text-align:right;"> 5.90 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -1.100 </td>
+   <td style="text-align:right;"> 2.10 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.380 </td>
+   <td style="text-align:right;"> 4.20 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="column" style="width:5%;">
+
+</div>
+<div class="column" style="width:72%;">
+<p><strong>Output of <code>model_eval()</code></strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Pts <span class="ot">&lt;-</span> <span class="fu">model_eval</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-digits="2">
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> .response </th>
+   <th style="text-align:right;"> x </th>
+   <th style="text-align:right;"> .output </th>
+   <th style="text-align:right;"> .resid </th>
+   <th style="text-align:right;"> .lwr </th>
+   <th style="text-align:right;"> .upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1.90 </td>
+   <td style="text-align:right;"> -0.790 </td>
+   <td style="text-align:right;"> 2.9 </td>
+   <td style="text-align:right;"> -1.0000 </td>
+   <td style="text-align:right;"> 0.37 </td>
+   <td style="text-align:right;"> 5.4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 4.10 </td>
+   <td style="text-align:right;"> 0.055 </td>
+   <td style="text-align:right;"> 4.4 </td>
+   <td style="text-align:right;"> -0.2400 </td>
+   <td style="text-align:right;"> 1.80 </td>
+   <td style="text-align:right;"> 6.9 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2.40 </td>
+   <td style="text-align:right;"> -1.200 </td>
+   <td style="text-align:right;"> 2.2 </td>
+   <td style="text-align:right;"> 0.1400 </td>
+   <td style="text-align:right;"> -0.38 </td>
+   <td style="text-align:right;"> 4.8 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 6.30 </td>
+   <td style="text-align:right;"> -0.170 </td>
+   <td style="text-align:right;"> 4.0 </td>
+   <td style="text-align:right;"> 2.4000 </td>
+   <td style="text-align:right;"> 1.50 </td>
+   <td style="text-align:right;"> 6.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 0.93 </td>
+   <td style="text-align:right;"> -1.900 </td>
+   <td style="text-align:right;"> 1.0 </td>
+   <td style="text-align:right;"> -0.0810 </td>
+   <td style="text-align:right;"> -1.80 </td>
+   <td style="text-align:right;"> 3.8 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2.90 </td>
+   <td style="text-align:right;"> -0.120 </td>
+   <td style="text-align:right;"> 4.1 </td>
+   <td style="text-align:right;"> -1.1000 </td>
+   <td style="text-align:right;"> 1.50 </td>
+   <td style="text-align:right;"> 6.6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 5.70 </td>
+   <td style="text-align:right;"> 0.830 </td>
+   <td style="text-align:right;"> 5.7 </td>
+   <td style="text-align:right;"> -0.0033 </td>
+   <td style="text-align:right;"> 3.00 </td>
+   <td style="text-align:right;"> 8.4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 5.90 </td>
+   <td style="text-align:right;"> 1.200 </td>
+   <td style="text-align:right;"> 6.3 </td>
+   <td style="text-align:right;"> -0.4400 </td>
+   <td style="text-align:right;"> 3.50 </td>
+   <td style="text-align:right;"> 9.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2.10 </td>
+   <td style="text-align:right;"> -1.100 </td>
+   <td style="text-align:right;"> 2.4 </td>
+   <td style="text-align:right;"> -0.2300 </td>
+   <td style="text-align:right;"> -0.22 </td>
+   <td style="text-align:right;"> 4.9 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 4.20 </td>
+   <td style="text-align:right;"> -0.380 </td>
+   <td style="text-align:right;"> 3.6 </td>
+   <td style="text-align:right;"> 0.6200 </td>
+   <td style="text-align:right;"> 1.10 </td>
+   <td style="text-align:right;"> 6.1 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<p><strong>How big is …</strong></p>
+<ol type="i">
+<li>The response variable.</li>
+<li>The signal.</li>
+<li>The noise.</li>
+</ol>
+<div class="cell" data-digits="3">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Pts <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="at">i. =</span> <span class="fu">var</span>(.response),</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">ii. =</span> <span class="fu">var</span>(.output),</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">iii. =</span> <span class="fu">var</span>(.resid)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> i. </th>
+   <th style="text-align:right;"> ii. </th>
+   <th style="text-align:right;"> iii. </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 3.55 </td>
+   <td style="text-align:right;"> 2.6 </td>
+   <td style="text-align:right;"> 0.949 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Something special about the variance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For every <code>lm()</code> model you build, the variance of the response variable is exactly equal to the sum of the variance of the model values and the variance of the residuals.</p>
+<p>In other words, <code>lm()</code> splits the response variable into two parts: the sum of those parts equals the whole.</p>
+<p><strong>R<sup>2</sup></strong> is the variance of the model values divided by the variance of the response variable.</p>
+<div class="cell" data-digits="3">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>mod <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> n </th>
+   <th style="text-align:right;"> k </th>
+   <th style="text-align:right;"> Rsquared </th>
+   <th style="text-align:right;"> F </th>
+   <th style="text-align:right;"> adjR2 </th>
+   <th style="text-align:right;"> p </th>
+   <th style="text-align:right;"> df.num </th>
+   <th style="text-align:right;"> df.denom </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.733 </td>
+   <td style="text-align:right;"> 21.9 </td>
+   <td style="text-align:right;"> 0.699 </td>
+   <td style="text-align:right;"> 0.000863 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 8 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Pts <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">i. =</span> <span class="fu">var</span>(.response),</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">ii. =</span> <span class="fu">var</span>(.output)) <span class="sc">|&gt;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">R2 =</span> ii. <span class="sc">/</span> i. )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> i. </th>
+   <th style="text-align:right;"> ii. </th>
+   <th style="text-align:right;"> R2 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 3.55 </td>
+   <td style="text-align:right;"> 2.6 </td>
+   <td style="text-align:right;"> 0.733 </td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="five-six-simple-models" class="level2">
+<h2 class="anchored" data-anchor-id="five-six-simple-models"><del>Five</del> Six simple models</h2>
+<p>Models can have any number of explanatory variables. In Math 300, we will be mainly concerned with models with a single explanatory variable or with two explanatory variable. Since an explanatory variable can be either categorical or quantitative, there are six “shapes” of models:</p>
+<p><strong>Single explanatory variable</strong></p>
+<ol type="i">
+<li>Categorical explanatory variable.</li>
+<li>Quantitative explanatory variable.</li>
+</ol>
+<p><strong>Two explanatory variables</strong></p>
+<ol start="3" type="i">
+<li>Categorical &amp; Categorical</li>
+<li>Categorical &amp; Quantitative</li>
+<li>Quantitative &amp; Quantitative</li>
+</ol>
+<p>Sometimes, we will use models with <strong>Zero explanatory variables</strong></p>
+<ol start="6" type="i">
+<li>No explanatory variables.</li>
+</ol>
+<p>Graphs of (i) through (v), with (iv) shown in two different modes.</p>
+<div class="cell quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="Teaching-notes-21_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="Teaching-notes-21_files/figure-html/unnamed-chunk-15-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="Teaching-notes-21_files/figure-html/unnamed-chunk-15-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="Teaching-notes-21_files/figure-html/unnamed-chunk-15-4.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="Teaching-notes-21_files/figure-html/unnamed-chunk-15-5.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="Teaching-notes-21_files/figure-html/unnamed-chunk-15-6.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
 
 
 </section>
