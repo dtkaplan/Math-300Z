@@ -32,18 +32,21 @@ Notice that there is no direct flow between nodes `x` and `y`. Still, there is a
 
 ```{r}
 My_data <- sample(dag03, size=10000)
+My_data |> head(3)
 ```
 
 5. Depending on the structure of the DAG, different model specifications will reveal different aspects of the DAG. For instance, 
 
 ```{r}
 mod1 <- lm(y ~ x, data=My_data)
+mod1 |> conf_interval()
 ```
 
 will show if there is any kind of connection between `x` and `y`. But another specification will, in this case, show that the connection from `x` to `y` is via the connection provided by node `g`.
 
 ```{r}
 mod2 <- lm(y ~ x + g, data=My_data)
+mod2 |> conf_interval()
 ```
 
 We can look at the coefficients to see that in `mod1` there is a non-zero connection between `y` and `x`, but in `mod2` there is no non-zero connection of `x` on `y`.

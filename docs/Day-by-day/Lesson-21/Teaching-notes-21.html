@@ -232,17 +232,109 @@ y ~ 1 * g + exo()</code></pre>
 <li>We can collect a sample from a DAG, for instance:</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>My_data <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag03, <span class="at">size=</span><span class="dv">10000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>My_data <span class="ot">&lt;-</span> <span class="fu">sample</span>(dag03, <span class="at">size=</span><span class="dv">10000</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>My_data <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:right;"> g </th>
+   <th style="text-align:right;"> x </th>
+   <th style="text-align:right;"> y </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 0.0029971 </td>
+   <td style="text-align:right;"> 1.5327673 </td>
+   <td style="text-align:right;"> 0.0231254 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.1386110 </td>
+   <td style="text-align:right;"> -0.4274596 </td>
+   <td style="text-align:right;"> 3.5090740 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> -0.1543428 </td>
+   <td style="text-align:right;"> 1.0009144 </td>
+   <td style="text-align:right;"> 0.3116392 </td>
+  </tr>
+</tbody>
+</table>
+</div>
 </div>
 <ol start="5" type="1">
 <li>Depending on the structure of the DAG, different model specifications will reveal different aspects of the DAG. For instance,</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data=</span>My_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data=</span>My_data)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>mod1 <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:right;"> .lwr </th>
+   <th style="text-align:right;"> .coef </th>
+   <th style="text-align:right;"> .upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> -0.0431319 </td>
+   <td style="text-align:right;"> -0.0194309 </td>
+   <td style="text-align:right;"> 0.0042701 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> x </td>
+   <td style="text-align:right;"> 0.4715121 </td>
+   <td style="text-align:right;"> 0.4883234 </td>
+   <td style="text-align:right;"> 0.5051348 </td>
+  </tr>
+</tbody>
+</table>
+</div>
 </div>
 <p>will show if there is any kind of connection between <code>x</code> and <code>y</code>. But another specification will, in this case, show that the connection from <code>x</code> to <code>y</code> is via the connection provided by node <code>g</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x <span class="sc">+</span> g, <span class="at">data=</span>My_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x <span class="sc">+</span> g, <span class="at">data=</span>My_data)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>mod2 <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="table table-striped table-condensed" style="font-family: Courier; width: auto !important; ">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> term </th>
+   <th style="text-align:right;"> .lwr </th>
+   <th style="text-align:right;"> .coef </th>
+   <th style="text-align:right;"> .upr </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> -0.0386313 </td>
+   <td style="text-align:right;"> -0.0193601 </td>
+   <td style="text-align:right;"> -0.0000888 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> x </td>
+   <td style="text-align:right;"> -0.0257069 </td>
+   <td style="text-align:right;"> -0.0064618 </td>
+   <td style="text-align:right;"> 0.0127834 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> g </td>
+   <td style="text-align:right;"> 0.9838257 </td>
+   <td style="text-align:right;"> 1.0115210 </td>
+   <td style="text-align:right;"> 1.0392163 </td>
+  </tr>
+</tbody>
+</table>
+</div>
 </div>
 <p>We can look at the coefficients to see that in <code>mod1</code> there is a non-zero connection between <code>y</code> and <code>x</code>, but in <code>mod2</code> there is no non-zero connection of <code>x</code> on <code>y</code>.</p>
 <div class="cell" data-digits="3">
@@ -261,15 +353,15 @@ y ~ 1 * g + exo()</code></pre>
 <tbody>
   <tr>
    <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:right;"> -0.00889 </td>
-   <td style="text-align:right;"> 0.0151 </td>
-   <td style="text-align:right;"> 0.0391 </td>
+   <td style="text-align:right;"> -0.0431 </td>
+   <td style="text-align:right;"> -0.0194 </td>
+   <td style="text-align:right;"> 0.00427 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> x </td>
-   <td style="text-align:right;"> 0.45900 </td>
-   <td style="text-align:right;"> 0.4760 </td>
-   <td style="text-align:right;"> 0.4930 </td>
+   <td style="text-align:right;"> 0.4720 </td>
+   <td style="text-align:right;"> 0.4880 </td>
+   <td style="text-align:right;"> 0.50500 </td>
   </tr>
 </tbody>
 </table>
@@ -289,21 +381,21 @@ y ~ 1 * g + exo()</code></pre>
 <tbody>
   <tr>
    <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:right;"> -0.00894 </td>
-   <td style="text-align:right;"> 0.0107 </td>
-   <td style="text-align:right;"> 0.03040 </td>
+   <td style="text-align:right;"> -0.0386 </td>
+   <td style="text-align:right;"> -0.01940 </td>
+   <td style="text-align:right;"> -8.88e-05 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> x </td>
-   <td style="text-align:right;"> -0.03180 </td>
-   <td style="text-align:right;"> -0.0123 </td>
-   <td style="text-align:right;"> 0.00712 </td>
+   <td style="text-align:right;"> -0.0257 </td>
+   <td style="text-align:right;"> -0.00646 </td>
+   <td style="text-align:right;"> 1.28e-02 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> g </td>
-   <td style="text-align:right;"> 0.96200 </td>
-   <td style="text-align:right;"> 0.9890 </td>
-   <td style="text-align:right;"> 1.02000 </td>
+   <td style="text-align:right;"> 0.9840 </td>
+   <td style="text-align:right;"> 1.01000 </td>
+   <td style="text-align:right;"> 1.04e+00 </td>
   </tr>
 </tbody>
 </table>
