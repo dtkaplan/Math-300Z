@@ -119,7 +119,43 @@ The **signal** is the model values. The **noise** is the residuals.
 
 When we "fit" (or, "train") a model, we take an aggressive stance. We look for the particular function of the shape implied by the model specification that will produce the smallest residuals. As usual, we measure the size of a residual by its square.
 
+
 ## Activity: Identifying signal
+
+## ~~Five~~ Six simple models
+
+Models can have any number of explanatory variables. In Math 300, we will be mainly concerned with models with a single explanatory variable or with two explanatory variable. Since an explanatory variable can be either categorical or quantitative, there are six "shapes" of models:
+
+**Single explanatory variable**
+
+i. Categorical explanatory variable.
+ii. Quantitative explanatory variable.
+
+**Two explanatory variables**
+
+iii. Categorical & Categorical
+iv. Categorical & Quantitative
+v. Quantitative & Quantitative
+
+Sometimes, we will use models with **Zero explanatory variables**
+
+vi. No explanatory variables.
+
+Graphs of (i) through (v), with (iv) shown in two different modes.
+
+```{r echo=FALSE, warning=FALSE}
+#| layout-ncol: 2
+source("model_and_plot.R")
+
+P1 <- model_and_plot(height ~ father, data=Galton, label="(a)")
+P2 <- model_and_plot(height ~ sex, data=Galton, label="(b)")
+P3 <- model_and_plot(height ~ sex + mother, data=Galton, label="(c)")
+P4 <- model_and_plot(height ~ mother + sex, data=Galton, label="(d)")
+P5 <- model_and_plot(height ~ tall + sex, data=Galton %>% mutate(tall=ifelse(mother > 64,"alpha", "beta")), label="(e)")
+P6 <- model_and_plot(height ~ mother + father, data=Galton, label="(f)")
+P1; P2; P3; P4; P5; P6
+```  
+
 
 ## Measuring signal and noise
 
@@ -186,36 +222,3 @@ Pts |>
 ```
 :::
 
-## ~~Five~~ Six simple models
-
-Models can have any number of explanatory variables. In Math 300, we will be mainly concerned with models with a single explanatory variable or with two explanatory variable. Since an explanatory variable can be either categorical or quantitative, there are six "shapes" of models:
-
-**Single explanatory variable**
-
-i. Categorical explanatory variable.
-ii. Quantitative explanatory variable.
-
-**Two explanatory variables**
-
-iii. Categorical & Categorical
-iv. Categorical & Quantitative
-v. Quantitative & Quantitative
-
-Sometimes, we will use models with **Zero explanatory variables**
-
-vi. No explanatory variables.
-
-Graphs of (i) through (v), with (iv) shown in two different modes.
-
-```{r echo=FALSE, warning=FALSE}
-#| layout-ncol: 2
-source("model_and_plot.R")
-
-P1 <- model_and_plot(height ~ father, data=Galton, label="(a)")
-P2 <- model_and_plot(height ~ sex, data=Galton, label="(b)")
-P3 <- model_and_plot(height ~ sex + mother, data=Galton, label="(c)")
-P4 <- model_and_plot(height ~ mother + sex, data=Galton, label="(d)")
-P5 <- model_and_plot(height ~ tall + sex, data=Galton %>% mutate(tall=ifelse(mother > 64,"alpha", "beta")), label="(e)")
-P6 <- model_and_plot(height ~ mother + father, data=Galton, label="(f)")
-P1; P2; P3; P4; P5; P6
-```  
