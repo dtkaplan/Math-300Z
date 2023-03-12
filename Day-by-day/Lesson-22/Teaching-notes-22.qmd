@@ -5,6 +5,17 @@ author: "Daniel Kaplan"
 date: "Revised 02/28/2023"
 ---
 
+Is process of fitting like the process of learning in animals? <https://www.economist.com/science-and-technology/2023/03/10/a-big-advance-in-mapping-the-structure-of-the-brain>
+
+> Never before ... has the whole brain of such a complex organism---spanning some 548,000 connections between 3,016 neurons in the case of the fruit-fly larva---been mapped.
+
+> The latest work, published in Science, marks the culmination of over a decade’s worth of effort ....
+
+> The connectome of the fruit-fly larva has already provided insights. For example, regions of the creature’s brain associated with learning had more loops in their circuitry, with downstream neurons connecting back to those close behind them, than other regions of the brain. This suggested some repeat processing of signals. One proposed explanation is that such loops encode predictions, and that the creatures learn by comparing these with actual experiences.
+
+> Information about the taste of a leaf, for example, might enter a neuron simultaneously with a prediction based on previous meals. If the taste differs from prediction, the neuron may secrete dopamine, a chemical capable of rewiring the circuitry to create a new memory.
+
+
 Common sense suggests that two variables `y` and `x` may not have any causal connection between them.
 
 In such a case, we anticipate that the model `y ~ x + ...` will have a coefficient of zero on `x`. (The `+ ...` stands for other possible explanatory variables, which we call "covariates.")

@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -59,11 +122,12 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -105,71 +169,101 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 
 
-<section id="math-300z-in-class-group-activity" class="level2">
+<section id="math-300z-in-class-group-activity" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="math-300z-in-class-group-activity">Math 300Z: In-class group activity</h2>
-</section>
-<section id="counts-and-waiting-times" class="level2">
-<h2 class="anchored" data-anchor-id="counts-and-waiting-times">Counts and waiting times</h2>
-<p>GENERATE SEQUENCES FROM POISSON and EXPONENTIAL.</p>
-<p>First, generate a sample of size 1: find the largest and smallest across the class.</p>
-<p>Then generate a sample of size 20:</p>
+<p>Measurements are a combination of signal and noise. This activity aims to help understand how much data is needed to reduce the noise to an acceptable level.</p>
+<section id="background" class="level3">
+<h3 class="anchored" data-anchor-id="background">Background</h3>
+<p>Often, measurements are made of <em>how many</em> random events of a particular type happen in a fixed interval of time or a given area of space. Examples:</p>
 <ul>
-<li>find the largest and smallest. are they pretty consistent across the class?
-<ul>
-<li>find the variance. Is that pretty consistent across the class?</li>
-</ul></li>
-<li>find the mean:
-<ul>
-<li>is that as spread out as the largest and smallest?</li>
-<li>how spread out is it? (variance)</li>
-</ul></li>
+<li><em>How many</em> inches of snow fall per year in a given location?</li>
+<li><em>How many</em> traffic accidents happen per year at a particular intersection?</li>
 </ul>
-<p>Keep a table</p>
-<table class="table">
-<thead>
-<tr class="header">
-<th>sample size</th>
-<th>variance</th>
-<th>standard deviation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>20.</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>20</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>20</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td>40</td>
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>80</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>Maybe add a parameter or distribution argument to <code>sample.dag_system()</code></p>
+<p>Making such measurements can be straightforward. The challenge comes in interpreting them. For instance, how different do the measurements of snowfall in two different areas need to be to support a claim that one area is snowier than the other? Similarly, how many years of observation are required to know if one intersection is more dangerous than another?</p>
+<p>Common sense tells us that one region can be snowier than another or that one intersection can be more dangerous than another. Yet the individual events—a snow storm of a given magnitude or a pedestrian hit by an automobile—are random. That is, there is both <em>signal</em> and <em>noise</em> in the measurements.</p>
+<p>This activity is about how much data we should collect in order to reduce the noise sufficiently that signals can be read clearly.</p>
+</section>
+<section id="process" class="level3">
+<h3 class="anchored" data-anchor-id="process">Process</h3>
+<ol type="1">
+<li>Each of the people in your group will create his or her own <em>signal</em>, that is, a single number specifying the rate at which events happen.</li>
+</ol>
+<ul>
+<li>Do not look at your <em>signal</em> until directed to.</li>
+<li>Generate your <em>signal</em> with this command:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>signal <span class="ot">&lt;-</span> <span class="dv">50</span><span class="sc">*</span>(<span class="dv">5</span> <span class="sc">+</span> <span class="fu">runif</span>(<span class="dv">1</span>)) <span class="co"># Don't peek</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Once all of your group members have their own signal, you are going to start to generate noisy data. The idea is to compare the observations you make to those from the other group members to decide the extent to which the signals differ from one another.</p>
+<ol start="2" type="1">
+<li>Generate a single (<span class="math inline">\(n=1\)</span>) measurement this way:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rpois</span>(<span class="at">n=</span><span class="dv">1</span>, <span class="at">lambda=</span>signal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Compare your measurement to those of <em>each</em> of the other members of the group. For each of those members, decide among these choices, making sure not to look at the numerical value of <code>signal</code>.</p>
+<ol type="i">
+<li>My signal is certainly higher.</li>
+<li>My signal is likely to be higher.</li>
+<li>Can’t tell whether my signal is different than the other person’s.</li>
+<li>My signal is likely to be lower.</li>
+<li>My signal is certainly lower.</li>
+</ol>
+<p>Record your conclusion for each of your group partners.</p>
+<ol start="3" type="1">
+<li>Repeat the process in (2), but generate <span class="math inline">\(n=2\)</span> observations. You will have two numbers, which you will compare to the other person’s two numbers. You’ll have to decide how you want to do this.</li>
+</ol>
+<p>Make a note of the method you choose do the comparison and record your conclusion (i)-(v) for each of your group partners.</p>
+<ol start="4" type="1">
+<li>Repeat (3), but this time with <span class="math inline">\(n=4\)</span>.</li>
+</ol>
+<p>Are you still happy with the method you chose in (3)? If not, figure out a new method that can handle the comparison of 4 numbers to another set of 4 numbers.</p>
+<p>Once again, record your conclusion (i)-(v) of your data against each of your group partners.</p>
+<ol start="5" type="1">
+<li>Repeat the following for each of your partners separately. Try higher values of <span class="math inline">\(n\)</span> until the two of you agree that your signals are <em>certainly</em> different.</li>
+</ol>
+</section>
+<section id="deep-background-for-later-reading" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="deep-background-for-later-reading">Deep background (for later reading)</h3>
+<p>Starting in June 1944, the Germans engaged in missile attacks against London. At first, the V-1 cruise missile was used. Later, the V-2 ballistic missile was added to the attack.</p>
+<p>The London City Council kept records of V-1 impact sites within their jurisdiction. <a href="#fig-v1-hits">Figure&nbsp;1</a> shows the locations.</p>
+<div class="cell page-columns page-full" data-layout-align="center">
+<div class="cell-output-display page-columns page-full">
+<div id="fig-v1-hits" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="V1-distribution.png" class="img-fluid figure-img" style="width:40.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;1: Map showing impact sites of V-1 missiles in the area administered by the London City Council. The Thames river is shown in blue. The map does not show impacts outside the LCC region.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>An <a href="https://www.jstor.org/stable/41138751">analysis published in 1946</a> looked at 537 V-1 impacts within the area outlined in red: a region of 144 km<sup>2</sup>. The area was divided into 576 boxes each of area 0.25 km<sup>2</sup>. Five-hundred thirty-seven V-1 impacts fell within the rectangle; suggesting that there might be about 1 impact per box.</p>
+<p>To be more precise, the <em>signal</em> is 537 / 576 = 0.93 impact per box.</p>
+<p>There is a mathematical theory of how the measured number of impacts will vary from one box to another. The theory is called the <strong>Poisson distribution</strong>. In the activity, when you used <code>rpois(n=1, lambda=signal)</code> the computer was using this theory to generate the measurement, that is, signal plus noise.</p>
+<p>These are the results of comparing the theory to the actual observations of how many boxes had no impact, 1 impact, 2 impacts, and so on.</p>
+<div class="cell page-columns page-full" data-layout-align="center">
+<div class="cell-output-display page-columns page-full">
+<div id="fig-v1-counts" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="V1-data.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;2: The number of boxes (out of 576, total) with different numbers of impacts. The Poisson theory result is in the middle column. (Copied from the <a href="https://www.jstor.org/stable/41138751">1946 analysis paper</a>.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="https://rss.onlinelibrary.wiley.com/doi/pdf/10.1111/j.1740-9713.2019.01315.x">This article</a> gives a more detailed account.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
