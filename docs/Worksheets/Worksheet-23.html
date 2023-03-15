@@ -123,6 +123,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -196,36 +197,219 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>Use models to calculate a confidence interval.</p>
-<p>Compare the band on a <code>model_plot()</code> view to the numbers in the confidence interval for a slope. Do they correspond.</p>
-<p>Maybe have them add a <code>geom_abline()</code> to the plot to compare to the slope of the top and bottom of the confidence band.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>make_rose <span class="ot">&lt;-</span> <span class="cf">function</span>(P, <span class="at">x=</span><span class="cn">NULL</span>, <span class="at">y=</span><span class="cn">NULL</span>, <span class="at">scale=</span><span class="dv">4</span>, <span class="at">quadrant=</span><span class="dv">1</span>, <span class="at">color=</span><span class="st">"red"</span>, <span class="at">keepers=</span><span class="fu">c</span>(<span class="st">"both"</span>, <span class="st">"pos"</span>, <span class="st">"neg"</span>)) {</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  keepers <span class="ot">&lt;-</span> <span class="fu">match.arg</span>(keepers)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  xy <span class="ot">&lt;-</span> <span class="fu">layer_scales</span>(P)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  xrange <span class="ot">&lt;-</span> xy<span class="sc">$</span>x<span class="sc">$</span>range<span class="sc">$</span>range</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  yrange <span class="ot">&lt;-</span> xy<span class="sc">$</span>y<span class="sc">$</span>range<span class="sc">$</span>range</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(x)) x <span class="ot">&lt;-</span> <span class="fu">mean</span>(xrange)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(y)) y <span class="ot">&lt;-</span> <span class="fu">mean</span>(yrange)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  width <span class="ot">&lt;-</span> <span class="fu">diff</span>(xrange)<span class="sc">/</span>scale</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  height <span class="ot">&lt;-</span> <span class="fu">diff</span>(yrange)<span class="sc">/</span>scale</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  center <span class="ot">&lt;-</span> height <span class="sc">/</span> width</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  nice_slopes <span class="ot">&lt;-</span> <span class="fu">pretty</span>(<span class="fu">extendrange</span>(<span class="fu">c</span>(<span class="sc">-</span>center, center),<span class="at">f=</span>.<span class="dv">1</span> ), <span class="at">n=</span><span class="dv">6</span>) <span class="sc">%&gt;%</span> <span class="fu">setdiff</span>(<span class="dv">0</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (keepers <span class="sc">==</span> <span class="st">"pos"</span>) nice_slopes <span class="ot">&lt;-</span> nice_slopes[nice_slopes <span class="sc">&gt;</span> <span class="dv">0</span>]</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (keepers <span class="sc">==</span> <span class="st">"neg"</span>) nice_slopes <span class="ot">&lt;-</span> nice_slopes[nice_slopes <span class="sc">&lt;</span> <span class="dv">0</span>]</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  nice_x <span class="ot">&lt;-</span> <span class="fu">rep</span>(width, <span class="fu">length</span>(nice_slopes))</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  nice_y <span class="ot">&lt;-</span> nice_slopes<span class="sc">*</span>nice_x</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  Lines <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">xend=</span>nice_x<span class="sc">+</span>x, <span class="at">yend=</span>nice_y <span class="sc">+</span> y, <span class="at">x=</span>x, <span class="at">y=</span>y, <span class="at">label=</span><span class="fu">as.character</span>(nice_slopes))</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  P <span class="sc">+</span> <span class="fu">geom_segment</span>(<span class="at">data=</span>Lines, <span class="fu">aes</span>(<span class="at">x=</span>x, <span class="at">y=</span>y, <span class="at">xend=</span>xend, <span class="at">yend=</span>yend), <span class="at">color=</span>color) <span class="sc">+</span> <span class="fu">geom_label</span>(<span class="at">data=</span>Lines, <span class="fu">aes</span>(<span class="at">x=</span>xend, <span class="at">y=</span>yend, <span class="at">label=</span>label), <span class="at">hjust=</span><span class="dv">0</span>, <span class="at">color=</span>color)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You are going to work with data collected in the 1970s to examine the effects of smoking and exposure to second-hand smoke on pulmonary functions in youths. The data frame is <code>FEV</code> and is included in the <code>{math300}</code> package.</p>
+<p>The response variable that we will study is also called <code>FEV</code>, standing for the “forced expiratory volume” measured in the participants in the study. In general, higher forced expiratory volume is considered a sign of better respiratory health.</p>
+<section id="task-1" class="level3">
+<h3 class="anchored" data-anchor-id="task-1">Task 1</h3>
+<p>Build a model using the FEV data frame and the model specification <code>FEV ~ smoker</code> and pipe it through <code>conf_interval()</code>. Then answer these questions:</p>
+<ol type="1">
+<li>One of the model coefficients is called <code>smokersmoker</code>. This looks like a typo, but it is not. Explain why the variable is <code>smoker</code> but the name of the coefficient is <code>smokersmoker</code>. (Hint: Look at the documentation for FEV.)</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>smoker</code> is a categorical variable with two levels: “smoker” and “not.” The label <code>smokersmoker</code> refers to the <code>smoker</code> level of the <code>smoker</code> variable.</p>
+</div>
+</div>
+<ol start="2" type="1">
+<li>The numerical value of the <code>smokersmoker</code> coefficient is 0.71. Based on this, is smoking associated with higher or lower <code>FEV</code>.</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>smokersmoker</code> quantifies how much FEV differs for the <code>smoker</code> level compared to the <code>not</code> level. A positive coefficient means that smoking is associated with higher FEV.</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>What are the units of <code>FEV</code>? What are the units of the <code>smokersmoker</code> coefficient.</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The units of the response variable, FEV, are liters. Since <code>smoker</code> is categorical, <code>smokersmoker</code> also has units of liters.</p>
+</div>
+</div>
+</section>
+<section id="task-2" class="level2">
+<h2 class="anchored" data-anchor-id="task-2">Task 2</h2>
+<ol type="1">
+<li>What is the <em>width</em> of the confidence interval on <code>smokersmoker</code>?</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can find the length of the confidence interval simply by subtracting the <code>.lwr</code> limit of the interval from the <code>.upr</code> limit. Here that’s 0.927 - 0.494 = 0.433.</p>
+</div>
+</div>
+<section id="task-3." class="level3">
+<h3 class="anchored" data-anchor-id="task-3.">Task 3.</h3>
+<p>Just for pedagogical purposes, we are going to explore how the width of the confidence interval would change if we had more or less data. You already have heard the theoretical relationship of the width of the confidence interval as a function of sample size <span class="math inline">\(n\)</span>.</p>
+<ol type="1">
+<li>What is the size of the sample contained in <code>FEV</code>?</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(FEV)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 654</code></pre>
+</div>
+</div>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Using the theoretical relationship with <span class="math inline">\(n\)</span>, what do you think the width of the confidence interval would be if only <span class="math inline">\(n=150\)</span> rows of data were available?</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>150 is about one-quarter the sample size of FEV. So a confidence interval calculated on a sample of <span class="math inline">\(n=150\)</span> will be about <span class="math inline">\(\sqrt{4}\)</span> times larger. That is, the sample size 150 will lead to a confidence interval about twice as wide as the confidence interval from the full sample.</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li><p>We can easily simulate working with a sample of <span class="math inline">\(n=150\)</span>. To do this, fit a model (and calculate the confidence interval on <code>smokersmoker</code>), but rather than using the argument <code>data=FEV</code> use this instead: <code>data=sample(FEV, size=150)</code>. Compare the width of confidence interval you get in this way to your theoretical prediction in (2).</p></li>
+<li><p>This will be surprising, but we can actually simulate what would happen if we had a larger sample size. (This is just a simulation, and just for pedagogical purposes. This is <strong>not</strong> a way to collect a genuine sample of a larger size.)</p></li>
+</ol>
+<p>To create a (simulated) sample of size, say, <span class="math inline">\(n=2500\)</span> set the data argument to <code>lm()</code> this way: <code>data=resample(FEV, size=2500)</code>. (NOTE: The function being used here is not <code>sample()</code> but the closely related <code>resample()</code>, with an <code>re</code> in front.)</p>
+<p>Calculate the width of the (simulated) confidence interval on <code>smokersmoker</code> for the sample size of 2500.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(FEV <span class="sc">~</span> smoker, <span class="at">data=</span><span class="fu">resample</span>(FEV, <span class="at">size=</span><span class="dv">2500</span>)) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  term          .lwr .coef  .upr
+  &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 (Intercept)  2.54  2.58  2.61 
+2 smokersmoker 0.629 0.742 0.854</code></pre>
+</div>
+</div>
+<p>The width of the confidence interval on `smokersmoker is about 0.20.</p>
+</div>
+</div>
+</section>
+<section id="task-3" class="level3">
+<h3 class="anchored" data-anchor-id="task-3">Task 3</h3>
+<p>Were you surprised to see in Task 1 that smoking is associated with a <em>higher</em> FEV than non-smoking? Since a higher FEV is considered healthier, does this mean that smoking is healthy? The answer is “no,” but let’s consider it from the perspective of <strong>accuracy</strong> versus <strong>precision</strong>.</p>
+<p>The confidence interval on <code>smokersmoker</code> in the model <code>FEV ~ smoker</code> was 0.50 to 0.93 liters. This precision is good enough to rightfully claim that the <code>smokersmoker</code> coefficient is not zero or negative.</p>
+<p>But <strong>precision</strong> is different from <strong>accuracy</strong>. One of the major potential determinants of FEV is age.</p>
+<ol type="1">
+<li>Build a model <code>FEV ~ age</code> and construct the confidence interval on <code>age</code>. Explain whether your model is consistent or not with the idea that FEV depends on age.</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(FEV <span class="sc">~</span> age, <span class="at">data=</span>FEV) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  term         .lwr .coef  .upr
+  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 (Intercept) 0.279 0.432 0.585
+2 age         0.207 0.222 0.237</code></pre>
+</div>
+</div>
+<p>The <code>age</code> coefficient is about 0.2 liters per year. In other words, FEV increases with age.</p>
+</div>
+</div>
+<ol start="2" type="1">
+<li>It also happens that smoking is associated with age. The younger kids don’t smoke. We can demonstrate this with a model of <code>smoker ~ age</code>. Since <code>smoker</code> is a categorical variable, we need to convert it to a zero-one variable before fitting the model. Here’s a chunk to do so, assigning the smokers to have a value of 1:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>FEV <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">smoke =</span> <span class="fu">zero_one</span>(smoker, <span class="at">one=</span><span class="st">"smoker"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(smoke <span class="sc">~</span> age, <span class="at">data =</span> _) <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  term           .lwr   .coef    .upr
+  &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept) -0.381  -0.308  -0.234 
+2 age          0.0338  0.0410  0.0481</code></pre>
+</div>
+</div>
+<p>Interpret the coefficient as a rate of probability: how the probability that a participant smokes changes per year of age.</p>
+<ol start="3" type="1">
+<li><p>Is the <code>age</code> coefficient consistent with the idea that older kids are more likely to smoke?</p></li>
+<li><p>Now the point about accuracy and precision being different things. FEV increases with age and so does the probability of being a smoker. That means that <code>smoker</code> is also related to age. In fact, to some extent <code>smoker</code> is a proxy for age. As an exercise, draw on paper a DAG where age influences FEV, and age influences smoking status, and also smoking status influences FEV.</p></li>
+</ol>
+<p>For the DAG just described, an <em>accurate</em> model to estimate the direct effect of smoking on FEV is <code>FEV ~ age + smoker</code>. Fit this model and use the confidence interval on <code>smoker</code> to make an accurate statement about smoking and FEV.</p>
+<p>::: {.callout-note} ## ANSWER</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(FEV <span class="sc">~</span> age <span class="sc">+</span> smoker, <span class="at">data =</span> FEV) <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  term           .lwr  .coef    .upr
+  &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept)   0.207  0.367  0.527 
+2 age           0.215  0.231  0.247 
+3 smokersmoker -0.368 -0.209 -0.0504</code></pre>
+</div>
+</div>
+<p>The confidence interval on <code>smokersmoker</code> is entirely negative. Negative means that smoking is associated with <em>smaller</em> FEV. This sort of thing would be summarized as, “After adjusting for age, smoking is associated with smaller FEV.”</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -22,6 +22,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -61,6 +124,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -143,6 +207,211 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="review-of-lesson-22" class="level2">
 <h2 class="anchored" data-anchor-id="review-of-lesson-22">Review of Lesson 22</h2>
+<ol type="1">
+<li>Basic procedure in statistical interpretation of data: collect data then calculate one or more sample statistics from those data. Example: Galton’s data on heights and an analysis of whether a child’s height is related to the parents’.</li>
+</ol>
+<div class="cell" data-digits="3">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> mother <span class="sc">+</span> father <span class="sc">+</span> sex, <span class="at">data=</span>Galton) <span class="sc">|&gt;</span> <span class="fu">coefficients</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)      mother      father        sexM 
+ 15.3447600   0.3214951   0.4059780   5.2259513 </code></pre>
+</div>
+</div>
+<p>Question: Are fathers more influential on the children’s height than mothers?</p>
+<ol start="2" type="1">
+<li><p>But statisticians don’t regard the sample statistics in (1) as completely informative because we know, in our hearts, that the particular sample we worked with is just one of many, many samples that we might have collected. Each of those hypothetical samples has its own sample statistic, which likely differs from the sample statistic we calculated in (1). This is what we mean by <strong>sampling variability</strong>.</p></li>
+<li><p>We can say that sampling variability implies that our sample statistics are noisy, that they are not absolutely <strong>precise</strong>.</p></li>
+<li><p>We describe the precision of a sample statistic via a confidence interval, which can be in either of two forms, e.g.:</p></li>
+</ol>
+<p><span class="math inline">\([56.3, 57.1]\)</span> or <span class="math inline">\(56.7 \pm 0.4\)</span></p>
+</section>
+<section id="lesson-23" class="level2">
+<h2 class="anchored" data-anchor-id="lesson-23">Lesson 23</h2>
+<p>There are mathematical techniques that allow us to get a handle on the precision of a sample statistic using just the sample at hand. Here is the central mathematical fact:</p>
+<blockquote class="blockquote">
+<p>Width of confidence interval is proportional to <span class="math inline">\(1/\sqrt{n}\)</span>.</p>
+</blockquote>
+<p>Let’s demonstrate this using simulations (via DAGs).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag06, <span class="at">size=</span><span class="dv">25</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(d <span class="sc">~</span> c <span class="sc">+</span> a, <span class="at">data=</span>_) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">width =</span> .upr <span class="sc">-</span> .lwr) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  term          .lwr .coef  .upr width
+  &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 (Intercept) -0.363 0.205 0.773 1.14 
+2 c            0.758 1.10  1.45  0.692
+3 a            0.538 1.15  1.76  1.22 </code></pre>
+</div>
+</div>
+<p>Here, the <code>width</code> of each term is subject, like everything else, to sampling variation.</p>
+<p>We can average over many trials to reduce the sampling variation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>{<span class="fu">do</span>(<span class="dv">500</span>) <span class="sc">*</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(dag06, <span class="at">size=</span><span class="dv">25</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(d <span class="sc">~</span> c <span class="sc">+</span> a, <span class="at">data=</span>_) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>() <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">width =</span> .upr <span class="sc">-</span> .lwr)} </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  } <span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(term) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">ave_width =</span> <span class="fu">mean</span>(width))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  term        ave_width
+  &lt;chr&gt;           &lt;dbl&gt;
+1 (Intercept)     0.861
+2 a               1.08 
+3 c               0.631</code></pre>
+</div>
+</div>
+<p>Try this for different sample sizes: 25, 100, 400.</p>
+<blockquote class="blockquote">
+<p>What will be the width of the confidence interval when the sample size is 1600?</p>
+</blockquote>
+</section>
+<section id="how-to-find-the-confidence-interval-when-we-have-only-one-sample" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-find-the-confidence-interval-when-we-have-only-one-sample">How to find the confidence interval when we have only one sample</h2>
+<ol type="1">
+<li>Construct many trials of subsamples, say 1/50th the size of the data.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> mother <span class="sc">+</span> father <span class="sc">+</span> sex, <span class="at">data=</span><span class="fu">sample</span>(Galton, <span class="at">size=</span><span class="dv">18</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(term, .coef)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  term        .coef
+  &lt;chr&gt;       &lt;dbl&gt;
+1 (Intercept) 5.83 
+2 mother      0.214
+3 father      0.649
+4 sexM        5.48 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>{<span class="fu">do</span>(<span class="dv">500</span>) <span class="sc">*</span> {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(height <span class="sc">~</span> mother <span class="sc">+</span> father <span class="sc">+</span> sex, <span class="at">data=</span><span class="fu">sample</span>(Galton, <span class="at">size=</span><span class="dv">18</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>() <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(term, .coef)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>}} <span class="sc">|&gt;</span> </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(term) <span class="sc">|&gt;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">var_coef =</span> <span class="fu">var</span>(.coef))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  term        var_coef
+  &lt;chr&gt;          &lt;dbl&gt;
+1 (Intercept) 549.    
+2 father        0.0637
+3 mother        0.0661
+4 sexM          1.32  </code></pre>
+</div>
+</div>
+<p>We can look at any of the coefficients. Let’s use <code>sexM</code> for the example.</p>
+<p>The <strong>sampling</strong> variance of the <code>sexM</code> coefficient for a sample of size <span class="math inline">\(n=18\)</span> is 1.14 inches<sup>2</sup>.</p>
+<ul>
+<li>The “standard error” corresponding to this is <span class="math inline">\(\sqrt{1.14} = 1.07\)</span> inches.</li>
+<li>The width of the confidence interval for a sample of size 18 will be four times the standard error—that’s part of the definition of the confidence interval, that is 4.28.</li>
+<li>Four the whole sample, <span class="math inline">\(n=898\)</span>, the width of the confidence interval will be <span class="math inline">\(4.28 \times \sqrt{\frac{18}{898}} = 0.606\)</span>.</li>
+</ul>
+<p>Check this against the calculation:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> mother <span class="sc">+</span> father <span class="sc">+</span> sex, <span class="at">data=</span>Galton) <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">width=</span>.upr <span class="sc">-</span> .lwr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  term         .lwr  .coef   .upr  width
+  &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 (Intercept) 9.95  15.3   20.7   10.8  
+2 mother      0.260  0.321  0.383  0.123
+3 father      0.349  0.406  0.463  0.115
+4 sexM        4.94   5.23   5.51   0.565</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>What does this report tell you about whether fathers contribute more to children’s height than mothers? Compare the confidence interval on <code>mother</code> and <code>father</code>.</p>
+</blockquote>
+</section>
+<section id="activity" class="level2">
+<h2 class="anchored" data-anchor-id="activity">Activity</h2>
+<p><a href="Day-by-day/Lesson-23/got-you-covered.html">Got you covered</a></p>
+</section>
+<section id="precision-versus-accuracy" class="level2">
+<h2 class="anchored" data-anchor-id="precision-versus-accuracy">Precision versus accuracy</h2>
+<p>In the case of our model <code>y ~ x + a</code> on data simulated from <code>dag02</code> we can compare the model coefficients to the formula for <code>y</code> in the DAG.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(dag06)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-23_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dag06)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>a ~ exo()
+b ~ a + exo()
+c ~ b + exo()
+d ~ c + a + exo()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag06, <span class="at">size=</span><span class="dv">25</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(d <span class="sc">~</span> c <span class="sc">+</span> a, <span class="at">data=</span>_) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  term          .lwr    .coef  .upr
+  &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;
+1 (Intercept) -0.437 -0.00804 0.421
+2 c            0.460  0.794   1.13 
+3 a            0.864  1.46    2.05 </code></pre>
+</div>
+</div>
+<p>The coefficients are a close match to the DAG formula.</p>
+<p>If I repeat this simulation many times, roughly one time in twenty the actual formula coefficient will be outside the confidence interval. (Do the trials.)</p>
+<p>Make the sample size very large so that we get a very narrow confidence interval to demonstrate the <strong>accuracy</strong>.</p>
+<blockquote class="blockquote">
+<p>From the above, predict what sample size is needed to get a confidence interval that is about 0.01 wide. (The CI on <code>x</code> for example, is has width about 1. To get 0.01 we need 100<sup>2</sup> as much data.)</p>
+</blockquote>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag06, <span class="at">size=</span><span class="dv">250000</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(d <span class="sc">~</span> c <span class="sc">+</span> a, <span class="at">data=</span>_) <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  term            .lwr   .coef    .upr
+  &lt;chr&gt;          &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept) -0.00271 0.00121 0.00513
+2 c            0.999   1.00    1.00   
+3 a            0.992   0.997   1.00   </code></pre>
+</div>
+</div>
+<p>More data buys better <strong>precision</strong>. But <strong>accuracy</strong> is a different matter altogether. The above model is both precise and accurate.</p>
+<p>Here is a model that is very precise, but not at all accurate:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag06, <span class="at">size=</span><span class="dv">250000</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(d <span class="sc">~</span> c, <span class="at">data=</span>_) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  term            .lwr    .coef    .upr
+  &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept) -0.00788 -0.00283 0.00222
+2 c            1.33     1.33    1.34   </code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>What is it that tells you the <strong>precision</strong> of the coefficients?</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>What is it that tells you the coefficient on <code>c</code> is not <strong>accurate</strong>?</p>
+</blockquote>
+</section>
+<section id="going-further" class="level2">
+<h2 class="anchored" data-anchor-id="going-further">Going further</h2>
+<p>Statistics texts tend to feature simple models without covariates.</p>
+<p>Obviously, the choice of covariates or other model terms is not an issue. Sample statistics are designed mathematically so that they are <strong>accurate</strong>. This is called being <strong>unbiased</strong>.</p>
+<p>But in cases of actual interest, where we are interested in causal connections, we generally <strong>cannot</strong> know from our data whether the sample statistic is accurate.</p>
+<p>Collecting more data will not help us determine the accuracy; more data improves precision but not accuracy.</p>
+<p>Later, in Lesson 30, we can return to accuracy. There, we’ll look at accuracy with respect to a DAG, choosing covariates so that the model would be accurate if the data were indeed generated by a mechanism well represented by our DAG.</p>
 
 
 </section>

@@ -12,3 +12,150 @@ library(math300)
 
 ## Review of Lesson 22
 
+1. Basic procedure in statistical interpretation of data: collect data then calculate one or more sample statistics from those data. Example: Galton's data on heights and an analysis of whether a child's height is related to the parents'.
+
+```{r digits=3}
+lm(height ~ mother + father + sex, data=Galton) |> coefficients()
+```
+
+Question: Are fathers more influential on the children's height than mothers?
+
+2. But statisticians don't regard the sample statistics in (1) as completely informative because we know, in our hearts, that the particular sample we worked with is just one of many, many samples that we might have collected. Each of those hypothetical samples has its own sample statistic, which likely differs from the sample statistic we calculated in (1). This is what we mean by **sampling variability**. 
+
+3. We can say that sampling variability implies that our sample statistics are noisy, that they are not absolutely **precise**.
+
+4. We describe the precision of a sample statistic via a confidence interval, which can be in either of two forms, e.g.:
+
+$[56.3, 57.1]$ or $56.7 \pm 0.4$
+
+## Lesson 23
+
+There are mathematical techniques that allow us to get a handle on the precision of a sample statistic using just the sample at hand. Here is the central mathematical fact:
+
+> Width of confidence interval is proportional to $1/\sqrt{n}$. 
+
+Let's demonstrate this using simulations (via DAGs).
+
+```{r}
+sample(dag06, size=25) |> 
+  lm(d ~ c + a, data=_) |>
+  conf_interval() |>
+  mutate(width = .upr - .lwr) 
+```
+
+Here, the `width` of each term is subject, like everything else, to sampling variation. 
+
+We can average over many trials to reduce the sampling variation.
+
+```{r}
+{do(500) * {
+  sample(dag06, size=25) |> 
+  lm(d ~ c + a, data=_) |>
+  conf_interval() |>
+  mutate(width = .upr - .lwr)} 
+  } |>
+  group_by(term) %>% 
+  summarize(ave_width = mean(width))
+```
+
+Try this for different sample sizes: 25, 100, 400.
+
+> What will be the width of the confidence interval when the sample size is 1600?
+
+## How to find the confidence interval when we have only one sample
+
+1. Construct many trials of subsamples, say 1/50th the size of the data.
+
+```{r}
+lm(height ~ mother + father + sex, data=sample(Galton, size=18)) |>
+  conf_interval() |>
+  select(term, .coef)
+```
+
+```{r}
+{do(500) * {
+  lm(height ~ mother + father + sex, data=sample(Galton, size=18)) |>
+  conf_interval() |>
+  select(term, .coef)
+}} |> 
+  group_by(term) |>
+  summarize(var_coef = var(.coef))
+```
+
+We can look at any of the coefficients. Let's use `sexM` for the example.
+
+The **sampling** variance of the `sexM` coefficient for a sample of size $n=18$ is 1.14 inches^2^.
+
+- The "standard error" corresponding to this is $\sqrt{1.14} = 1.07$  inches.
+- The width of the confidence interval for a sample of size 18 will be four times the standard error---that's part of the definition of the confidence interval, that is 4.28.
+- Four the whole sample, $n=898$, the width of the confidence interval will be $4.28 \times \sqrt{\frac{18}{898}} = 0.606$.
+
+Check this against the calculation:
+
+```{r}
+lm(height ~ mother + father + sex, data=Galton) |>
+  conf_interval() %>%
+  mutate(width=.upr - .lwr)
+```
+
+> What does this report tell you about whether fathers contribute more to children's height than mothers? Compare the confidence interval on `mother` and `father`.
+
+## Activity 
+
+[Got you covered](Day-by-day/Lesson-23/got-you-covered.html)
+
+## Precision versus accuracy
+
+In the case of our model `y ~ x + a` on data simulated from `dag02` we can compare the model coefficients to the formula for `y` in the DAG. 
+
+```{r}
+dag_draw(dag06)
+print(dag06)
+sample(dag06, size=25) |> 
+  lm(d ~ c + a, data=_) |>
+  conf_interval()
+```
+
+The coefficients are a close match to the DAG formula.
+
+If I repeat this simulation many times, roughly one time in twenty the actual formula coefficient will be outside the confidence interval. (Do the trials.)
+
+Make the sample size very large so that we get a very narrow confidence interval to demonstrate the **accuracy**.
+
+> From the above, predict what sample size is needed to get a confidence interval that is about 0.01 wide. (The CI on `x` for example, is has width about 1. To get 0.01 we need 100^2^ as much data.)
+
+```{r}
+sample(dag06, size=250000) |> 
+  lm(d ~ c + a, data=_) |>
+  conf_interval()
+```
+
+More data buys better **precision**. But **accuracy** is a different matter altogether. The above model is both precise and accurate. 
+
+Here is a model that is very precise, but not at all accurate:
+
+```{r}
+sample(dag06, size=250000) |> 
+  lm(d ~ c, data=_) |>
+  conf_interval()
+```
+
+> What is it that tells you the **precision** of the coefficients?
+
+> What is it that tells you the coefficient on `c` is not **accurate**?
+
+## Going further
+
+Statistics texts tend to feature simple models without covariates.
+
+Obviously, the choice of covariates or other model terms is not an issue. 
+Sample statistics are designed mathematically so that they are **accurate**. This is called being **unbiased**.
+
+But in cases of actual interest, where we are interested in causal connections, we generally **cannot** know from our data whether the sample statistic is accurate.
+
+Collecting more data will not help us determine the accuracy; more data improves precision but not accuracy.
+
+Later, in Lesson 30, we can return to accuracy. There, we'll look at accuracy with respect to a DAG, choosing covariates so that the model would be accurate if the data were indeed generated by a mechanism well represented by our DAG.
+
+
+

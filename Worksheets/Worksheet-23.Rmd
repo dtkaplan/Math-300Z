@@ -7,37 +7,137 @@ author: "Jane Doe"
 library(math300)
 ```
 
-Use models to calculate a confidence interval. 
+You are going to work with data collected in the 1970s to examine the effects of smoking and exposure to second-hand smoke on pulmonary functions in youths. The data frame is `FEV` and is included in the `{math300}` package. 
 
-Compare the band on a `model_plot()` view to the numbers in the confidence interval for a slope. Do they correspond.
+The response variable that we will study is also called `FEV`, standing for the "forced expiratory volume" measured in the participants in the study. In general, higher forced expiratory volume is considered a sign of better respiratory health.
 
-Maybe have them add a `geom_abline()` to the plot to compare to the slope of the top and bottom of the confidence band.
+### Task 1
 
+Build a model using the FEV data frame and the model specification `FEV ~ smoker` and pipe it through `conf_interval()`. Then answer these questions:
+
+1. One of the model coefficients is called `smokersmoker`. This looks like a typo, but it is not. Explain why the variable is `smoker` but the name of the coefficient is `smokersmoker`. (Hint: Look at the documentation for FEV.)
+
+::: {.callout-note}
+## ANSWER
+
+`smoker` is a categorical variable with two levels: "smoker" and "not." The label `smokersmoker` refers to the `smoker` level of the `smoker` variable.
+:::
+
+2. The numerical value of the `smokersmoker` coefficient is 0.71. Based on this, is smoking associated with higher or lower `FEV`.
+
+
+::: {.callout-note}
+## ANSWER
+
+`smokersmoker` quantifies how much FEV differs for the `smoker` level compared to the `not` level. A positive coefficient means that smoking is associated with higher FEV.
+:::
+
+
+3. What are the units of `FEV`? What are the units of the `smokersmoker` coefficient.
+
+::: {.callout-note}
+## ANSWER
+
+The units of the response variable, FEV, are liters. Since `smoker` is categorical, `smokersmoker` also has units of liters.
+
+:::
+
+## Task 2
+
+1. What is the *width* of the confidence interval on `smokersmoker`?
+
+
+::: {.callout-note}
+## ANSWER
+
+You can find the length of the confidence interval simply by subtracting the `.lwr` limit of the interval from the `.upr` limit. Here that's
+0.927 - 0.494 = 0.433.
+:::
+
+### Task 3.
+
+Just for pedagogical purposes, we are going to explore how the width of the confidence interval would change if we had more or less data. You already have heard the theoretical relationship of the width of the confidence interval as a function of sample size $n$. 
+
+1. What is the size of the sample contained in `FEV`? 
+
+::: {.callout-note}
+## ANSWER
 
 ```{r}
-make_rose <- function(P, x=NULL, y=NULL, scale=4, quadrant=1, color="red", keepers=c("both", "pos", "neg")) {
-  keepers <- match.arg(keepers)
-  xy <- layer_scales(P)
-  xrange <- xy$x$range$range
-  yrange <- xy$y$range$range
-  if (is.null(x)) x <- mean(xrange)
-  if (is.null(y)) y <- mean(yrange)
-  width <- diff(xrange)/scale
-  height <- diff(yrange)/scale
-  center <- height / width
-  nice_slopes <- pretty(extendrange(c(-center, center),f=.1 ), n=6) %>% setdiff(0)
-  if (keepers == "pos") nice_slopes <- nice_slopes[nice_slopes > 0]
-  if (keepers == "neg") nice_slopes <- nice_slopes[nice_slopes < 0]
-  
-  nice_x <- rep(width, length(nice_slopes))
-  nice_y <- nice_slopes*nice_x
-  
-  Lines <- tibble(xend=nice_x+x, yend=nice_y + y, x=x, y=y, label=as.character(nice_slopes))
-  
-  P + geom_segment(data=Lines, aes(x=x, y=y, xend=xend, yend=yend), color=color) + geom_label(data=Lines, aes(x=xend, y=yend, label=label), hjust=0, color=color)
-  
-  
-}
+nrow(FEV)
+```
+:::
+
+2. Using the theoretical relationship with $n$, what do you think the width of the confidence interval would be if only $n=150$ rows of data were available?
+
+::: {.callout-note}
+## ANSWER
+
+150 is about one-quarter the sample size of FEV. So a confidence interval calculated on a sample of $n=150$ will be about $\sqrt{4}$ times larger. That is, the sample size 150 will lead to a confidence interval about twice as wide as the confidence interval from the full sample.
+:::
+
+3. We can easily simulate working with a sample of $n=150$. To do this, fit a model (and calculate the confidence interval on `smokersmoker`), but rather than using the argument `data=FEV` use this instead: `data=sample(FEV, size=150)`. Compare the width of confidence interval you get in this way to your theoretical prediction in (2).
+
+4. This will be surprising, but we can actually simulate what would happen if we had a larger sample size. (This is just a simulation, and just for pedagogical purposes. This is **not** a way to collect a genuine sample of a larger size.)
+
+To create a (simulated) sample of size, say, $n=2500$ set the data argument to `lm()` this way: `data=resample(FEV, size=2500)`. (NOTE: The function being used here is not `sample()` but the closely related `resample()`, with an `re` in front.)
+
+Calculate the width of the (simulated) confidence interval on `smokersmoker`  for the sample size of 2500. 
+
+::: {.callout-note}
+## ANSWER
+
+```{r}
+lm(FEV ~ smoker, data=resample(FEV, size=2500)) |> conf_interval()
 ```
 
+The width of the confidence interval on `smokersmoker is about 0.20.
+
+:::
+
+### Task 3
+
+Were you surprised to see in Task 1 that smoking is associated with a *higher* FEV than non-smoking? Since a higher FEV is considered healthier, does this mean that smoking is healthy? The answer is "no," but let's consider it from the perspective of **accuracy** versus **precision**.
+
+The confidence interval on `smokersmoker` in the model `FEV ~ smoker` was 0.50 to 0.93 liters. This precision is good enough to rightfully claim that the `smokersmoker` coefficient is not zero or negative. 
+
+But **precision** is different from **accuracy**. One of the major potential determinants of FEV is age. 
+
+1. Build a model `FEV ~ age` and construct the confidence interval on `age`. Explain whether your model is consistent or not with the idea that FEV depends on age.
+
+::: {.callout-note}
+## ANSWER
+
+```{r}
+lm(FEV ~ age, data=FEV) |> conf_interval()
+```
+The `age` coefficient is about 0.2 liters per year. In other words, FEV increases with age.
+:::
+
+2. It also happens that smoking is associated with age. The younger kids don't smoke. We can demonstrate this with a model of `smoker ~ age`. Since `smoker` is a categorical variable, we need to convert it to a zero-one variable before fitting the model. Here's a chunk to do so, assigning the smokers to have a value of 1:
+
+```{r}
+FEV |> 
+  mutate(smoke = zero_one(smoker, one="smoker")) |>
+  lm(smoke ~ age, data = _) |>
+  conf_interval()
+```
+
+Interpret the coefficient as a rate of probability: how the probability that a participant smokes changes per year of age.
+
+3. Is the `age` coefficient consistent with the idea that older kids are more likely to smoke? 
+
+4. Now the point about accuracy and precision being different things. FEV increases with age and so does the probability of being a smoker. That means that `smoker` is also related to age. In fact, to some extent `smoker` is a proxy for age. As an exercise, draw on paper a DAG where age influences FEV, and age influences smoking status, and also smoking status influences FEV.
+
+For the DAG just described, an *accurate* model to estimate the direct effect of smoking on FEV is `FEV ~ age + smoker`. Fit this model and use the confidence interval on `smoker` to make an accurate statement about smoking and FEV.
+
+::: {.callout-note}
+## ANSWER
+
+```{r}
+lm(FEV ~ age + smoker, data = FEV) |>
+  conf_interval()
+```
+
+The confidence interval on `smokersmoker` is entirely negative. Negative means that smoking is associated with *smaller* FEV. This sort of thing would be summarized as, "After adjusting for age, smoking is associated with smaller FEV."
 

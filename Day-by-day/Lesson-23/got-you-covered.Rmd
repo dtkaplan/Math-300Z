@@ -2,7 +2,7 @@
 
 ## Got you covered
 
-Simulate from a DAG and calculate the confidence interval @ 95% 
+Simulate from a DAG, use the data to train a model that has all the same explanatory variables as in the formula for `y` in the DAG, and calculate the confidence interval @ 95% 
 
 Did everybody's interval include the parameter from the DAG?
 
