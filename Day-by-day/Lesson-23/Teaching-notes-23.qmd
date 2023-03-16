@@ -37,7 +37,7 @@ There are mathematical techniques that allow us to get a handle on the precision
 Let's demonstrate this using simulations (via DAGs).
 
 ```{r}
-sample(dag06, size=25) |> 
+sample(dag06, size=400) |> 
   lm(d ~ c + a, data=_) |>
   conf_interval() |>
   mutate(width = .upr - .lwr) 
@@ -49,7 +49,7 @@ We can average over many trials to reduce the sampling variation.
 
 ```{r}
 {do(500) * {
-  sample(dag06, size=25) |> 
+  sample(dag06, size=100) |> 
   lm(d ~ c + a, data=_) |>
   conf_interval() |>
   mutate(width = .upr - .lwr)} 

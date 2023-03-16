@@ -233,24 +233,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p>Let’s demonstrate this using simulations (via DAGs).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag06, <span class="at">size=</span><span class="dv">25</span>) <span class="sc">|&gt;</span> </span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(dag06, <span class="at">size=</span><span class="dv">400</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(d <span class="sc">~</span> c <span class="sc">+</span> a, <span class="at">data=</span>_) <span class="sc">|&gt;</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>() <span class="sc">|&gt;</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">width =</span> .upr <span class="sc">-</span> .lwr) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
-  term          .lwr .coef  .upr width
-  &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 (Intercept) -0.363 0.205 0.773 1.14 
-2 c            0.758 1.10  1.45  0.692
-3 a            0.538 1.15  1.76  1.22 </code></pre>
+  term          .lwr   .coef   .upr width
+  &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 (Intercept) -0.119 -0.0144 0.0902 0.209
+2 c            0.916  0.987  1.06   0.142
+3 a            0.836  0.969  1.10   0.267</code></pre>
 </div>
 </div>
 <p>Here, the <code>width</code> of each term is subject, like everything else, to sampling variation.</p>
 <p>We can average over many trials to reduce the sampling variation.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>{<span class="fu">do</span>(<span class="dv">500</span>) <span class="sc">*</span> {</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(dag06, <span class="at">size=</span><span class="dv">25</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(dag06, <span class="at">size=</span><span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(d <span class="sc">~</span> c <span class="sc">+</span> a, <span class="at">data=</span>_) <span class="sc">|&gt;</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>() <span class="sc">|&gt;</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">width =</span> .upr <span class="sc">-</span> .lwr)} </span>
@@ -261,9 +261,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 3 × 2
   term        ave_width
   &lt;chr&gt;           &lt;dbl&gt;
-1 (Intercept)     0.861
-2 a               1.08 
-3 c               0.631</code></pre>
+1 (Intercept)     0.401
+2 a               0.495
+3 c               0.285</code></pre>
 </div>
 </div>
 <p>Try this for different sample sizes: 25, 100, 400.</p>
@@ -282,12 +282,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(term, .coef)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 2
-  term        .coef
-  &lt;chr&gt;       &lt;dbl&gt;
-1 (Intercept) 5.83 
-2 mother      0.214
-3 father      0.649
-4 sexM        5.48 </code></pre>
+  term         .coef
+  &lt;chr&gt;        &lt;dbl&gt;
+1 (Intercept) 36.3  
+2 mother       0.216
+3 father       0.193
+4 sexM         6.21 </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -302,10 +302,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 4 × 2
   term        var_coef
   &lt;chr&gt;          &lt;dbl&gt;
-1 (Intercept) 549.    
-2 father        0.0637
-3 mother        0.0661
-4 sexM          1.32  </code></pre>
+1 (Intercept) 560.    
+2 father        0.0644
+3 mother        0.0684
+4 sexM          1.19  </code></pre>
 </div>
 </div>
 <p>We can look at any of the coefficients. Let’s use <code>sexM</code> for the example.</p>
@@ -358,11 +358,11 @@ d ~ c + a + exo()</code></pre>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
-  term          .lwr    .coef  .upr
-  &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;
-1 (Intercept) -0.437 -0.00804 0.421
-2 c            0.460  0.794   1.13 
-3 a            0.864  1.46    2.05 </code></pre>
+  term          .lwr  .coef   .upr
+  &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 (Intercept) -0.748 -0.327 0.0930
+2 c            0.677  0.981 1.28  
+3 a            0.673  1.28  1.88  </code></pre>
 </div>
 </div>
 <p>The coefficients are a close match to the DAG formula.</p>
@@ -377,11 +377,11 @@ d ~ c + a + exo()</code></pre>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
-  term            .lwr   .coef    .upr
-  &lt;chr&gt;          &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1 (Intercept) -0.00271 0.00121 0.00513
-2 c            0.999   1.00    1.00   
-3 a            0.992   0.997   1.00   </code></pre>
+  term            .lwr     .coef    .upr
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept) -0.00493 -0.000993 0.00295
+2 c            0.996    0.999    1.00   
+3 a            0.995    1.00     1.00   </code></pre>
 </div>
 </div>
 <p>More data buys better <strong>precision</strong>. But <strong>accuracy</strong> is a different matter altogether. The above model is both precise and accurate.</p>
@@ -394,8 +394,8 @@ d ~ c + a + exo()</code></pre>
 <pre><code># A tibble: 2 × 4
   term            .lwr    .coef    .upr
   &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
-1 (Intercept) -0.00788 -0.00283 0.00222
-2 c            1.33     1.33    1.34   </code></pre>
+1 (Intercept) -0.00454 0.000515 0.00557
+2 c            1.33    1.33     1.33   </code></pre>
 </div>
 </div>
 <blockquote class="blockquote">
