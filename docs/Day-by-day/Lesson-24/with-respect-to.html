@@ -116,17 +116,24 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="with-respect-to" class="level2">
 <h2 class="anchored" data-anchor-id="with-respect-to">With respect to …</h2>
-<p>Build a model with a single quantitative explanatory variable. Maybe <code>palmerpenguins::penguins</code></p>
-<pre><code>- What is the effect size?
-- What are the units? Is it a rate or a difference?</code></pre>
-<p>Build a model with a single categorical explanatory variable.</p>
-<pre><code>- What is the effect size?
-- What are the units? Is it a rate or a difference?</code></pre>
-<p>Combine the two and calculate effect sizes again.</p>
-<pre><code>- Do the effect sizes change?
-- Do the units change? 
-- Is it still a rate?</code></pre>
-<p>Include many explanatory variables: Find the effect sizes with respect to each.</p>
+<p>The <code>palmerpenguins::penguins</code> data frame records body size and shape of penguins of three different species.</p>
+<ol type="1">
+<li><p>Build a model <code>bill_length_mm ~ bill_depth_mm</code> with a single quantitative explanatory variable.</p>
+<ul>
+<li>What is the effect size?</li>
+<li>What are the units? Is it a rate or a difference?</li>
+</ul></li>
+<li><p>Build a model <code>bill_length_mm ~ species</code> with a single categorical explanatory variable.</p>
+<ul>
+<li>What is the effect size?</li>
+<li>What are the units? Is it a rate or a difference?</li>
+</ul></li>
+<li><p>Now a model <code>bill_length_mm ~ flipper_length + body_mass_g</code>. There are two variables, so there will be two effect sizes.</p>
+<ul>
+<li>What are the effect sizes? What are their units.</li>
+<li>Which of the two are rates?</li>
+</ul></li>
+</ol>
 
 
 </section>

@@ -21,6 +21,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -60,6 +123,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -133,13 +197,184 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>USE model_eval() to evaluate the function. Calculate the effect size by hand. Is it a slope or a difference?</p>
-<p>Compare the effect size to a model coefficient.</p>
-<p>INTRODUCE INTERACTION TERMS HERE.</p>
-<p>ASK whether the magnitude of the effect size with respect to <code>one</code> is larger or smaller for large values of <code>two</code>. (See exercise 24-7 for layout for the problem.)</p>
 <section id="part-1" class="level2">
 <h2 class="anchored" data-anchor-id="part-1">Part 1</h2>
-<p>Do <a href="https://dtkaplan.github.io/Lessons-in-statistical-thinking/Exercises/QR1.html">Exercise 24.7</a>.</p>
+<p>The data frame <code>Clock_auction</code> gives the sales price at auction of antique grandfathers’ clocks. Both the <code>age</code> of the clock and the number of <code>bidders</code> for the clock are presumed to affect the price.</p>
+<p>Build a linear model <code>price ~ age + bidders</code>.</p>
+<p>Find the effect sizes (i) with respect to <code>price</code> and (ii) with respect to <code>bidders</code>.</p>
+<ol type="1">
+<li>Does <code>age</code> increase or decrease the <code>price</code>? Give units for the effect size.</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note: These answers are more detailed than what’s expected from you.</p>
+<p>First, the model and the coefficients:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>price_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(price <span class="sc">~</span> age <span class="sc">+</span> bidders, <span class="at">data=</span>Clock_auction)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">conf_interval</span>(price_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  term            .lwr  .coef   .upr
+  &lt;chr&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 (Intercept) -1451.   -922.  -392. 
+2 age             8.33   11.1   13.8
+3 bidders        37.5    64.0   90.6</code></pre>
+</div>
+</div>
+<p>This is, as usual for Math 300Z, a model with only linear terms, so the effect size with respect to an explanatory variable is exactly the same as the coefficient.</p>
+<p>The coefficient on <code>age</code> is 11.1. This is positive, so we know that price increases with age.</p>
+<p>The units tell us “11.1 what?” For a quantitative explanatory variable like <code>age</code>, the coefficient is always a <em>rate</em>: one quantity divided by another and so the units always read like “____ per ____.” The first blank gets filled in with the units of the response variable. Here, that’s dollars. The second blank is filled in with the units of the explanatory variable. Here, that’s years.</p>
+<p>Putting everything together, the units of the <code>age</code> coefficient are dollars-per-year. 11.1 dollars-per-year means that, according to the model, increasing age by 1 year increases price by about 11.1 dollars.</p>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Does <code>bidders</code> increase or decrease the <code>price</code>? Give units for the effect size.</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>bidders</code> coefficient is about 64 (with units). It is positive, so, according to the model, the more bidders the higher the price.</p>
+<p>As before the units of the coefficient is the units of the response variable divided by the units of the explanatory variable: dollars per bidder.</p>
+<p>Interpretation: According to the model, for every additional bidder on a clock (that is, increased competition), the auction price will go up by about $64.</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>What can you say about whether the <code>age</code> effect size or the <code>bidders</code> effect size is larger.</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The two effect sizes have different units—dollars-per-year and dollars-per-bidder. There is no direct comparison to be made between quantities of with different units. (For example: Which is bigger? Two feet or a liter of water?)</p>
+</div>
+</div>
+<ol start="4" type="1">
+<li>Build a model with an interaction term: <code>price ~ age + bidders</code> and graph the model using <code>model_plot()</code>. Is the age/bidders interaction readily visible in the graph? Explain what you see that informs your answer.</li>
+</ol>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To include an interaction term, use <code>*</code> instead of <code>+</code> to link the two explanatory variables involved.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>price_model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(price <span class="sc">~</span> age <span class="sc">*</span> bidders, <span class="at">data=</span>Clock_auction)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(price_model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Worksheet-24_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The interaction shows up in the non-parallel slopes of the individual lines of <code>price</code> vs <code>age</code>. Each line corresponds to a different number of bidders. The interaction means that the effect size with respect to <code>age</code> depends on the number of bidders.</p>
+<p>Another manifestation of the interaction is that the spacing in price between the model values for the different levels <code>bidders</code> (the vertical spacing between the lines) depends on age. The spacing is relatively small for ages near 100 yrs, and somewhat larger for ages near 200 yrs.</p>
+<p>A separate question concerns sampling variation. Because of sampling variation, even if the “social-economic” process behind the auction had no interaction, one might appear in the model because of sampling variation. We haven’t yet talked about how to judge this, but here is a demonstration of how it works, using the confidence intervals on the coefficients.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">conf_interval</span>(price_model2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  term             .lwr    .coef   .upr
+  &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
+1 (Intercept) -1877.    -513.    851.  
+2 age            -1.23     8.17   17.6 
+3 bidders      -118.      19.9   158.  
+4 age:bidders    -0.662    0.320   1.30</code></pre>
+</div>
+</div>
+<p>I’m looking at the confidence interval on the coefficient of the interaction term (labeled as <code>age:bidders</code>). That interval includes zero, so there is no basis in these data to claim that the interaction is not zero.</p>
+<p>Note also that adding the <code>age:bidders</code> term has caused all the confidence intervals to change, and all of them now include zero. This is an illustration of a general phenomenon: If you try to extract details from data, you sometimes end up with nothing.</p>
+<p>For those who are concerned that this can happen, I’ll explain what’s going on in this particular case but warn you that this sort of reasoning is not part of what’s expected from you in Math 300Z. The new term, <code>age:bidders</code>, is strongly correlated with the ordinary <code>bidders</code> term.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="fu">I</span>(age<span class="sc">*</span>bidders) <span class="sc">~</span> bidders, <span class="at">data =</span> Clock_auction) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   n k  Rsquared        F     adjR2            p df.num df.denom
+1 32 1 0.6266754 50.35902 0.6142312 4.742657e-08      1       30</code></pre>
+</div>
+</div>
+<p>Thus, the new term and <code>bidders</code> serve as proxies for one another. It becomes highly susceptible to sampling variation how to allocate “credit” to the individual terms: it can be done in any manner of ways giving almost equivalent results. This is a phenomenon called “multi-collinearity.”</p>
+<p>Looking at the model and the confidence bands graphically shows the amount of sampling variability graphically.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(price_model2, <span class="at">interval=</span><span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Worksheet-24_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>It’s possible to place three parallel lines within each of the confidence bands, meaning that the data does not rule out the possibility that the lines are parallel.</p>
+</div>
+</div>
+</section>
+<section id="part-2" class="level2">
+<h2 class="anchored" data-anchor-id="part-2">Part 2</h2>
+<p>The Professional Golfers Association has an “index” used to rank golfers on the basis of the accuracy and distance of their drives. For a statistician, data on this provides an opportunity to “reverse engineer” the index. We can do this by modeling the relationship.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>golf_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(index <span class="sc">~</span> accuracy <span class="sc">+</span> dist, PGA_index)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The following table refers to a model with explanatory variables <code>dist</code> and <code>accuracy</code>. The table shows the <code>.output</code> of the model for each of four combinations of the explanatory variables.</p>
+<div class="cell" data-digits="3">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(golf_mod, </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">dist=</span><span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">200</span>), <span class="at">accuracy =</span> <span class="fu">c</span>(<span class="dv">50</span>,<span class="dv">60</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>.lwr, <span class="sc">-</span>.upr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  dist accuracy   .output
+1  100       50 -42.14096
+2  200       50 -21.52042
+3  100       60 -39.59864
+4  200       60 -18.97810</code></pre>
+</div>
+</div>
+<p>A. At an accuracy of 50, what is the effect size of the <code>.output</code> with respect to <code>dist</code>? (Be sure to take into account both the difference in <code>.output</code> and the difference in <code>dist</code>.)</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Looking at the two rows with accuracy equal to 50 pts, going from distance 100 to distance 200 increases the output by about 20 index pts. Thus, the effect size with respect to accuracy is 20/200 = 0.1 index pts per yard.</p>
+</div>
+</div>
+<p>B. At a distance of 100, what is the effect size of the <code>.output</code> with respect to accuracy?</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Looking at the two rows with distance 100, an increase in accuracy from 50 to 60 corresponds to a change in output of -42.1 to -39.6, a difference of +2.5. The effect size is</p>
+<p><span class="math display">\[\frac{-42.1 - 39.6}{50 - 60} = \frac{-81.7}{10} = -8.2\]</span> with units index-point per accuracy-point.</p>
+</div>
+</div>
 
 
 </section>

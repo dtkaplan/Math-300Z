@@ -22,6 +22,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -141,17 +204,201 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Our emphasis will be on the data-analysis techniques that are useful for <strong>decision-making</strong>. What this means will become evident as we move through the semester, but I’ll give two settings for decision-making:</p>
+<p>Here are some fundamentals:</p>
 <ol type="1">
-<li>Intervention in a system. (Lesson 24) There’s a system that you are working with, perhaps aircraft design. You want to intervene in the system, to change something. You need to know how the change you impose will change the outcome.
+<li>Every one of our modeling tasks starts with two things:
+<ol type="a">
+<li>A <strong>data frame</strong> (which might be from the real world or from our hypothetical world of DAGs)</li>
+<li>A <strong>model specification</strong> which names what variable is to be the <strong>response</strong> (or “output”) of our model and which variables are in the <strong>explanatory</strong> role.
 <ul>
-<li>Usually, we are interested in predictions that cover most of the likely outcomes.</li>
-<li>Sometimes, we want to predict the probabilities of extreme events, for instance thousand-year floods.</li>
+<li>We denote with a <em>tilde expression</em>: <code>response ~ explan1 + explain2 + ...</code></li>
+<li>There might be multiple explanatory variable, or just a single one, or even none, which we denote with <code>1</code>.</li>
 </ul></li>
-<li>Prediction. (Lessons 25 and 26)</li>
+</ol></li>
+<li>We turn the (a) data frame and (b) model specification into a set of coefficients.
+<ol type="i">
+<li>We are using <code>lm()</code> as the engine for turning (a) and (b) into coefficients.</li>
+<li>This is a completely automatic process. It will give the same results in any software package, but setting up the calculation may be tedious and error-prone in some packages.</li>
+</ol></li>
 </ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Galton <span class="sc">|&gt;</span> <span class="fu">model_train</span>(height <span class="sc">~</span> mother <span class="sc">+</span> father <span class="sc">+</span> sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = tilde, data = data)
+
+Coefficients:
+(Intercept)       mother       father         sexM  
+    15.3448       0.3215       0.4060       5.2260  </code></pre>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Regression modeling in Excel
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Install the Analysis Toolpack</li>
+<li>If any of the explanatory variables are categorical, convert them to dummy variables. (Move insert column before <code>sex</code>, call it <code>sexM</code>, and give formula <code>=(E2="M") + 0</code>.)</li>
+<li>Press “Data Analysis” in menu bar.</li>
+</ol>
+<p>Output is placed in new sheet. In the Galton example, the coefficients are only slightly wrong, pretty good for Excel. (The linear algebra routines in the “Analysis Toolpack” are not state of the art. <a href="https://people.revoledu.com/kardi/tutorial/Regression/GeneralizedInverse.html">Probably they use “pseudo-inverses.”</a>)</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>There are a variety of summaries of models available. Almost always, we will use <code>conf_interval()</code> or <code>R2()</code>.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Galton <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_train</span>(height <span class="sc">~</span> mother <span class="sc">+</span> father <span class="sc">+</span> sex) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  term         .lwr  .coef   .upr
+  &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 (Intercept) 9.95  15.3   20.7  
+2 mother      0.260  0.321  0.383
+3 father      0.349  0.406  0.463
+4 sexM        4.94   5.23   5.51 </code></pre>
+</div>
+</div>
+<ol start="5" type="1">
+<li>The confidence tells you the precision of the numerical measurement of the coefficient. If two coefficients have confidence intervals that overlap (like <code>mother</code> and <code>father</code> here) you don’t have a good basis to claim that they are different.</li>
+</ol>
+<section id="why-so-much-interest-in-coefficients" class="level2">
+<h2 class="anchored" data-anchor-id="why-so-much-interest-in-coefficients">Why so much interest in coefficients?</h2>
+<ol type="1">
+<li><p>An important statistical task (in some situations) is to <strong>detect whether there is some connection</strong> between an explanatory variable and the response variable. This often amounts to asking whether a coefficient is zero. More precisely, asking whether the confidence interval includes zero.</p></li>
+<li><p>Mathematical tradition. There are other ways to present the same information. But people with a good head for mathematics find the coefficients easy to interpret … until the models become complicated.</p></li>
+<li><p>Here’s a way to plot out the Galton model:</p></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gmodel <span class="ot">&lt;-</span> Galton <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_train</span>(height <span class="sc">~</span> mother <span class="sc">+</span> father <span class="sc">+</span> sex)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(gmodel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-24_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol start="4" type="1">
+<li>We can also show sampling variability graphically, although the plots can be hard to interpret.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(gmodel, <span class="at">interval=</span><span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-24_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol start="5" type="1">
+<li>Another important type of statistical questions involves <strong>intervention</strong>: If we change the value of an input to the model, how much will the output change?</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(gmodel, <span class="at">mother=</span><span class="fu">c</span>(<span class="dv">60</span>,<span class="dv">65</span>), <span class="at">father=</span><span class="dv">65</span>, <span class="at">sex=</span><span class="st">"F"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  mother father sex  .output     .lwr     .upr
+1     60     65   F 61.02304 56.77622 65.26986
+2     65     65   F 62.63052 58.38981 66.87122</code></pre>
+</div>
+</div>
+<p>This is called an “effect size.” From the above table, we can calculate the effect size <strong>with respect to</strong> <code>mother.</code></p>
+</section>
+<section id="effect-size" class="level2">
+<h2 class="anchored" data-anchor-id="effect-size">Effect size</h2>
+<ol type="1">
+<li><p>An effect size (for numerical variables) is a partial <strong>derivative</strong> of the model function.</p></li>
+<li><p>An effect size (for categorical variables) is a partial <strong>difference</strong>.</p></li>
+<li><p>Whether a model’s effect size says what would happen in the real world if we changed a model input depends on whether we have <strong>captured causal connections</strong> properly with our model.</p></li>
+</ol>
+<p>We can’t change the explanatory variables in a meaningful way in human height, but suppose the experiment were to make kindergarten class sizes smaller and look for the effect on later student achievement.</p>
+<ol start="4" type="1">
+<li><p>Calculate an effect size: use <code>model_eval()</code> changing one variable at a time.</p></li>
+<li><p>Calculating confidence interval on effect size: Involves a lot of accounting, except in the simplest cases.</p></li>
+<li><p>Units of effect size.</p>
+<ul>
+<li>Quantitative variable: [response]/[explanatory] a rate (a.k.a slope)</li>
+<li>Categorical variable: [response]</li>
+</ul></li>
+</ol>
+</section>
+<section id="why-always-in-model-specifications" class="level2">
+<h2 class="anchored" data-anchor-id="why-always-in-model-specifications">Why always <code>+</code> in model specifications</h2>
+<p>This is just for us, to make model interpretation easier.</p>
+<p><strong>With <code>+</code> models, the coefficient is always the same as the effect size.</strong></p>
+<p>But not generally. Examples with Galton data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(height <span class="sc">~</span> mother<span class="sc">*</span>father<span class="sc">*</span>sex, <span class="at">data=</span>Galton)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Ignoring unknown aesthetics: fill</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-24_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Notice that the lines aren’t parallel. We can also do curvy functions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(splines)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(height <span class="sc">~</span> <span class="fu">ns</span>(mother,<span class="dv">2</span>)<span class="sc">*</span><span class="fu">ns</span>(father,<span class="dv">2</span>)<span class="sc">*</span>sex, <span class="at">data=</span>Galton)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Ignoring unknown aesthetics: fill</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-24_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Might the curviness or non-parallel nature of the lines just be a matter of sampling variation?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod1, <span class="at">interval=</span><span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-24_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod2, <span class="at">interval=</span><span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-24_files/figure-html/unnamed-chunk-9-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>All the information for the confidence bands is contained in the coefficients (and residuals), but good luck figuring it out!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 18 × 4
+   term                                  .lwr   .coef  .upr
+   &lt;chr&gt;                                &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+ 1 (Intercept)                         50.1    55.4   60.7 
+ 2 ns(mother, 2)1                       1.01   10.7   20.5 
+ 3 ns(mother, 2)2                     -13.0    -4.36   4.31
+ 4 ns(father, 2)1                       4.97   15.4   25.9 
+ 5 ns(father, 2)2                      -0.486   4.98  10.5 
+ 6 sexM                                -1.19    6.00  13.2 
+ 7 ns(mother, 2)1:ns(father, 2)1      -32.1   -12.8    6.55
+ 8 ns(mother, 2)2:ns(father, 2)1       -1.03   15.1   31.3 
+ 9 ns(mother, 2)1:ns(father, 2)2       -8.41    2.27  12.9 
+10 ns(mother, 2)2:ns(father, 2)2       -3.90    4.43  12.8 
+11 ns(mother, 2)1:sexM                -17.3    -3.92   9.43
+12 ns(mother, 2)2:sexM                -19.7    -6.97   5.72
+13 ns(father, 2)1:sexM                -15.0    -0.854 13.3 
+14 ns(father, 2)2:sexM                 -4.29    3.48  11.3 
+15 ns(mother, 2)1:ns(father, 2)1:sexM -20.2     6.10  32.4 
+16 ns(mother, 2)2:ns(father, 2)1:sexM -10.1    13.2   36.5 
+17 ns(mother, 2)1:ns(father, 2)2:sexM -23.4    -8.08   7.25
+18 ns(mother, 2)2:ns(father, 2)2:sexM -15.8    -2.90   9.97</code></pre>
+</div>
+</div>
+<p>Statisticians keep in mind this folk wisdom:</p>
+<blockquote class="blockquote">
+<p><em>If you try to capture too much detail in the relationship, you won’t capture anything.</em></p>
+</blockquote>
+<p>Notice that all but three of the terms have confidence intervals that include zero.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

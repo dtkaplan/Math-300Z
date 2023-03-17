@@ -5,11 +5,131 @@ author: "Daniel Kaplan"
 date: "Revised 02/28/2023"
 ---
 
+```{r include=FALSE}
+library(math300)
+```
 
-Our emphasis will be on the data-analysis techniques that are useful for **decision-making**. What this means will become evident as we move through the semester, but I'll give two settings for decision-making:
+Here are some fundamentals:
 
-1. Intervention in a system. (Lesson 24) There's a system that you are working with, perhaps aircraft design. You want to intervene in the system, to change something. You need to know how the change you impose will change the outcome.
-    - Usually, we are interested in predictions that cover most of the likely outcomes.
-    - Sometimes, we want to predict the probabilities of extreme events, for instance thousand-year floods.
+1. Every one of our modeling tasks starts with two things:
+    a. A **data frame** (which might be from the real world or from our hypothetical world of DAGs)
+    b. A **model specification** which names what variable is to be the **response** (or "output") of our model and which variables are in the **explanatory** role.
+        - We denote with a *tilde expression*: `response ~ explan1 + explain2 + ...`
+        - There might be multiple explanatory variable, or just a single one, or even none, which we denote with `1`.
+        
+2. We turn the (a) data frame and (b) model specification into a set of coefficients.
+    i. We are using `lm()` as the engine for turning (a) and (b) into coefficients.
+    ii. This is a completely automatic process. It will give the same results in any software package, but setting up the calculation may be tedious and error-prone in some packages. 
 
-2. Prediction. (Lessons 25 and 26)
+```{r}
+Galton |> model_train(height ~ mother + father + sex)
+```
+
+::: {.callout-note}
+## Regression modeling in Excel
+
+1. Install the Analysis Toolpack
+2. If any of the explanatory variables are categorical, convert them to dummy variables. (Move insert column before `sex`, call it `sexM`, and give formula `=(E2="M") + 0`.)
+3. Press "Data Analysis" in menu bar.
+
+Output is placed in new sheet. In the Galton example, the coefficients are only slightly wrong, pretty good for Excel. (The linear algebra routines in the "Analysis Toolpack" are not state of the art. [Probably they use "pseudo-inverses."](https://people.revoledu.com/kardi/tutorial/Regression/GeneralizedInverse.html))
+:::
+
+3. There are a variety of summaries of models available. Almost always, we will use `conf_interval()` or `R2()`.
+
+```{r}
+Galton |> 
+  model_train(height ~ mother + father + sex) |>
+  conf_interval()
+```
+
+5. The confidence tells you the precision of the numerical measurement of the coefficient. If two coefficients have confidence intervals that overlap (like `mother` and `father` here) you don't have a good basis to claim that they are different.
+
+## Why so much interest in coefficients?
+
+1. An important statistical task (in some situations) is to **detect whether there is some connection** between an explanatory variable and the response variable. This often amounts to asking whether a coefficient is zero. More precisely, asking whether the confidence interval includes zero.
+
+2. Mathematical tradition. There are other ways to present the same information. But people with a good head for mathematics find the coefficients easy to interpret ... until the models become complicated.
+
+3. Here's a way to plot out the Galton model:
+
+```{r warning=FALSE}
+gmodel <- Galton |> 
+  model_train(height ~ mother + father + sex)
+model_plot(gmodel)
+```
+
+4. We can also show sampling variability graphically, although the plots can be hard to interpret.
+
+```{r}
+model_plot(gmodel, interval="confidence")
+```
+
+5. Another important type of statistical questions involves **intervention**: If we change the value of an input to the model, how much will the output change?
+
+```{r}
+model_eval(gmodel, mother=c(60,65), father=65, sex="F")
+```
+
+This is called an "effect size." From the above table, we can calculate the effect size **with respect to** `mother.`
+
+## Effect size
+
+1. An effect size (for numerical variables) is a partial **derivative** of the model function.
+
+2. An effect size (for categorical variables) is a partial **difference**.
+
+3. Whether a model's effect size says what would happen in the real world if we changed a model input depends on whether we have **captured causal connections** properly with our model.
+
+We can't change the explanatory variables in a meaningful way in human height, but suppose the experiment were to make kindergarten class sizes smaller and look for the effect on later student achievement.
+
+4. Calculate an effect size: use `model_eval()` changing one variable at a time.
+
+5. Calculating confidence interval on effect size: Involves a lot of accounting, except in the simplest cases.
+
+6. Units of effect size. 
+    - Quantitative variable: [response]/[explanatory] a rate (a.k.a slope)
+    - Categorical variable: [response]
+    
+## Why always `+` in model specifications
+
+This is just for us, to make model interpretation easier. 
+
+**With `+` models, the coefficient is always the same as the effect size.**
+
+But not generally. Examples with Galton data
+
+```{r}
+mod1 <- lm(height ~ mother*father*sex, data=Galton)
+model_plot(mod1)
+```
+
+Notice that the lines aren't parallel. We can also do curvy functions.
+
+```{r}
+library(splines)
+mod2 <- lm(height ~ ns(mother,2)*ns(father,2)*sex, data=Galton)
+model_plot(mod2)
+```
+
+Might the curviness or non-parallel nature of the lines just be a matter of sampling variation?
+
+```{r}
+model_plot(mod1, interval="confidence")
+model_plot(mod2, interval="confidence")
+```
+
+All the information for the confidence bands is contained in the coefficients (and residuals), but good luck figuring it out!
+
+```{r}
+mod2 |> conf_interval()
+```
+
+Statisticians keep in mind this folk wisdom: 
+
+> *If you try to capture too much detail in the relationship, you won't capture anything.*
+
+Notice that all but three of the terms have confidence intervals that include zero.
+
+
+
