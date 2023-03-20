@@ -22,6 +22,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -143,6 +206,92 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="review-of-lesson-24" class="level2">
 <h2 class="anchored" data-anchor-id="review-of-lesson-24">Review of Lesson 24</h2>
+<p>In the last lesson, we considered <strong>effect size</strong>, a way to summarize a model to indicate the strength and direction of the influence of an explanatory variable with respect to a response variable. (As always, sample statistics such as the effect size are <strong>according to the model</strong>. A different model may give you different results, so the choice of model specification is important and should be carefully considered.)</p>
+<p>Here’s a possible DAG for the height of a child.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>height_dag <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  mother_genetics <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  father_genetics <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  exo_dad <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  exo_mom <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  mother_height <span class="sc">~</span> mother_genetics <span class="sc">+</span> exo_mom <span class="sc">+</span> <span class="fu">exo</span>(),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  father_height <span class="sc">~</span> father_genetics <span class="sc">+</span> exo_dad <span class="sc">+</span> <span class="fu">exo</span>(),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  health <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  nutrition <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  child_sex <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  child_height <span class="sc">~</span> mother_genetics <span class="sc">+</span> father_genetics <span class="sc">+</span> child_sex <span class="sc">+</span> nutrition <span class="sc">+</span> health <span class="sc">+</span> <span class="fu">exo</span>()</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">106</span>); <span class="fu">dag_draw</span>(height_dag, <span class="at">vertex.size =</span> <span class="dv">13</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                        <span class="at">vertex.label.cex=</span><span class="fl">0.75</span>, </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                        <span class="at">edge.arrow.size=</span>.<span class="dv">25</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-25_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We talk casually about the <em>effect size of child’s height with respect to mother’s height</em>, but there is no causal flow between mother’s height and child’s height. What we mean is the effect of a change in the mother’s genetics that leads to a 1 inch change in mother’s height and a corresponding change in child’s height.</p>
+<p>The concept of an <em>effect size</em> is that all the other nodes are held constant when we change the mother’s genetics, including <code>health</code>, <code>nutrition</code>, <code>sex</code>, and father’s genetics.</p>
+<p>There’s no way to do this; there aren’t two identical mothers to compare who differ only in their height-related genetics and can produce children who have exactly the same father’s genetics.</p>
+<p>Instead, what we think about is comparing two children from two similar mothers (differing only in height genetics) with similar father genetic contribution, nutrition, health, ….</p>
+<p>The model specification <code>height ~ mother + father + sex</code> does this comparison of similars in a mathematical way. But the model output is not the only thing that changes when we generate this mathematical child’s height from two different height mothers.</p>
+<p>The <strong>residuals</strong> from the model indicate the magnitude of all the other influences that we haven’t been able to hold constant.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>height_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(height <span class="sc">~</span> mother <span class="sc">+</span> father <span class="sc">+</span> sex, <span class="at">data=</span>Galton)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Values <span class="ot">&lt;-</span> <span class="fu">model_eval</span>(height_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Using training data as input to model_eval().</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Values, <span class="fu">aes</span>(<span class="at">x=</span>mother, <span class="at">y=</span>.resid)) <span class="sc">+</span> <span class="fu">geom_jitter</span>(<span class="at">alpha=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-25_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ol type="1">
+<li><p>Is there any clear pattern to the residuals?</p></li>
+<li><p>If we were making a prediction of a daughter’s height, should we just look at the model value based on the parents’ heights, or should we take into account the residuals.</p></li>
+</ol>
+</section>
+<section id="proper-form-for-a-prediction" class="level2">
+<h2 class="anchored" data-anchor-id="proper-form-for-a-prediction">Proper form for a prediction</h2>
+<p>Assign a probability to every possible outcome.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Values, <span class="fu">aes</span>(<span class="at">x=</span><span class="st">" "</span>, <span class="at">y=</span>.resid)) <span class="sc">+</span> <span class="fu">geom_violin</span>(<span class="at">alpha=</span><span class="fl">0.4</span>, <span class="at">fill=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">width=</span>.<span class="dv">15</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Residual"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">4.13</span>, <span class="fl">4.04</span>), <span class="at">color=</span><span class="st">"red"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-25_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Values <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(.resid), <span class="at">sd=</span><span class="fu">sd</span>(.resid), </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">q2.5=</span><span class="fu">quantile</span>(.resid, <span class="fl">0.025</span>),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">q97.5 =</span> <span class="fu">quantile</span>(.resid, <span class="fl">0.975</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              m       sd      q2.5    q97.5
+1 -2.882542e-14 2.150721 -4.129319 4.043707</code></pre>
+</div>
+</div>
+</section>
+<section id="realistic-predictioç" class="level2">
+<h2 class="anchored" data-anchor-id="realistic-predictioç">Realistic predictioç</h2>
+<p>Precipitation runoff: It rains. Some of the water is absorbed, some runs off and ends up in a nearby river. The runoff is measured as the depth of water over the entire catchment basin that ends up in the river. Give a forecast of a storm, we might want to know if a flood is likely.</p>
+<p>Data for the Monocacy River in Maryland, close to where I grew up.</p>
+<p>RESULT FOR THE BIGGEST RAINFALL DEPENDS ON how logarithms are used.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Monocacy_river <span class="sc">|&gt;</span> <span class="fu">filter</span>(precip <span class="sc">&gt;</span> <span class="dv">2</span>), <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(precip), <span class="at">y=</span><span class="fu">log</span>(runoff))) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_lm</span>(<span class="at">interval=</span><span class="st">"prediction"</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_lm</span>(<span class="at">interval=</span><span class="st">"confidence"</span>, <span class="at">fill=</span><span class="st">"blue"</span>) <span class="co"># +</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using the `size` aesthietic with geom_ribbon was deprecated in ggplot2 3.4.0.
+ℹ Please use the `linewidth` aesthetic instead.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using the `size` aesthietic with geom_line was deprecated in ggplot2 3.4.0.
+ℹ Please use the `linewidth` aesthetic instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-25_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a> <span class="co"># geom_abline(slope=1.08, intercept=-1.07)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>

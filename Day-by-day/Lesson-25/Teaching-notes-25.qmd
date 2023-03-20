@@ -12,3 +12,75 @@ library(math300)
 
 ## Review of Lesson 24
 
+In the last lesson, we considered **effect size**, a way to summarize a model to indicate the strength and direction of the influence of an explanatory variable with respect to a response variable. (As always, sample statistics such as the effect size are **according to the model**. A different model may give you different results, so the choice of model specification is important and should be carefully considered.)
+
+Here's a possible DAG for the height of a child.
+
+```{r}
+height_dag <- dag_make(
+  mother_genetics ~ exo(),
+  father_genetics ~ exo(),
+  exo_dad ~ exo(),
+  exo_mom ~ exo(),
+  mother_height ~ mother_genetics + exo_mom + exo(),
+  father_height ~ father_genetics + exo_dad + exo(),
+  health ~ exo(),
+  nutrition ~ exo(),
+  child_sex ~ exo(),
+  child_height ~ mother_genetics + father_genetics + child_sex + nutrition + health + exo()
+)
+set.seed(106); dag_draw(height_dag, vertex.size = 13,
+                        vertex.label.cex=0.75, 
+                        edge.arrow.size=.25 )
+```
+
+We talk casually about the *effect size of child's height with respect to mother's height*, but there is no causal flow between mother's height and child's height. What we mean is the effect of a change in the mother's genetics that leads to a 1 inch change in mother's height and a corresponding change in child's height.
+
+The concept of an *effect size* is that all the other nodes are held constant when we change the mother's genetics, including `health`, `nutrition`, `sex`, and father's genetics. 
+
+There's no way to do this; there aren't two identical mothers to compare who differ only in their height-related genetics and can produce children who have exactly the same father's genetics. 
+
+Instead, what we think about is comparing two children from two similar mothers (differing only in height genetics) with similar father genetic contribution, nutrition, health, ....
+
+The model specification `height ~ mother + father + sex` does this comparison of similars in a mathematical way. But the model output is not the only thing that changes when we generate this mathematical child's height from two different height mothers.
+
+The **residuals** from the model indicate the magnitude of all the other influences that we haven't been able to hold constant. 
+
+```{r}
+height_mod <- lm(height ~ mother + father + sex, data=Galton)
+Values <- model_eval(height_mod)
+ggplot(Values, aes(x=mother, y=.resid)) + geom_jitter(alpha=0.5)
+```
+
+1. Is there any clear pattern to the residuals? 
+
+2. If we were making a prediction of a daughter's height, should we just look at the model value based on the parents' heights, or should we take into account the residuals.
+
+## Proper form for a prediction
+
+Assign a probability to every possible outcome. 
+
+```{r}
+ggplot(Values, aes(x=" ", y=.resid)) + geom_violin(alpha=0.4, fill="blue") +
+  geom_jitter(alpha=0.2, width=.15) + xlab("Residual") + ylab("") +
+  geom_hline(yintercept=c(-4.13, 4.04), color="red", alpha=0.5)
+Values |> summarize(m = mean(.resid), sd=sd(.resid), 
+                    q2.5=quantile(.resid, 0.025),
+                    q97.5 = quantile(.resid, 0.975))
+```
+
+## Realistic predictioç
+
+Precipitation runoff: It rains. Some of the water is absorbed, some runs off and ends up in a nearby river. The runoff is measured as the depth of water over the entire catchment basin that ends up in the river. Give a forecast of a storm, we might want to know if a flood is likely.
+
+Data for the Monocacy River in Maryland, close to where I grew up.
+
+RESULT FOR THE BIGGEST RAINFALL DEPENDS ON how logarithms are used.
+
+```{r}
+ggplot(Monocacy_river |> filter(precip > 2), aes(x=log(precip), y=log(runoff))) +
+  geom_point() +
+  geom_lm(interval="prediction") +
+  geom_lm(interval="confidence", fill="blue") # +
+ # geom_abline(slope=1.08, intercept=-1.07)
+```
