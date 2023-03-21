@@ -331,8 +331,8 @@ ANSWER
 <pre><code># A tibble: 2 × 4
   term          .lwr .coef  .upr
   &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 (Intercept)  2.54  2.58  2.61 
-2 smokersmoker 0.629 0.742 0.854</code></pre>
+1 (Intercept)  2.52  2.56  2.59 
+2 smokersmoker 0.586 0.692 0.798</code></pre>
 </div>
 </div>
 <p>The width of the confidence interval on `smokersmoker is about 0.20.</p>
@@ -392,7 +392,16 @@ ANSWER
 <li><p>Now the point about accuracy and precision being different things. FEV increases with age and so does the probability of being a smoker. That means that <code>smoker</code> is also related to age. In fact, to some extent <code>smoker</code> is a proxy for age. As an exercise, draw on paper a DAG where age influences FEV, and age influences smoking status, and also smoking status influences FEV.</p></li>
 </ol>
 <p>For the DAG just described, an <em>accurate</em> model to estimate the direct effect of smoking on FEV is <code>FEV ~ age + smoker</code>. Fit this model and use the confidence interval on <code>smoker</code> to make an accurate statement about smoking and FEV.</p>
-<p>::: {.callout-note} ## ANSWER</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(FEV <span class="sc">~</span> age <span class="sc">+</span> smoker, <span class="at">data =</span> FEV) <span class="sc">|&gt;</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -406,6 +415,8 @@ ANSWER
 </div>
 </div>
 <p>The confidence interval on <code>smokersmoker</code> is entirely negative. Negative means that smoking is associated with <em>smaller</em> FEV. This sort of thing would be summarized as, “After adjusting for age, smoking is associated with smaller FEV.”</p>
+</div>
+</div>
 
 
 </section>

@@ -6,11 +6,178 @@ date: "Revised 03/08/2023"
 ---
 
 
+## Preliminaries
+
+1. Update your version of the `{math300}` package.
+
+```{r eval=FALSE}
+remotes::install_github("dtkaplan/math300")
+```
+
+Now you can `get_teaching_notes(24)` to get the sources for the teaching notes. Here you can see all the code in an executable format. BUT ... often the code goes well beyond the programming expected for Math 300 students. An example is below, where I use information published by the College Board to reconstruct/simulate SAT scores for individuals.
+
+2. I made a mistake in calculating the regression using Excel. It's easy to make such mistakes. But if I had done things correctly, Excel would have given the right answer.
+
 ```{r include=FALSE}
 library(math300)
 ```
 
+```{r}
+# Reconstructing the math scores from College Board percentile data
+# Math 300Z students are NOT expected to understand this code
+Math_scores <- tibble::tribble(
+  ~ female, ~ male, ~score,
+  99.5, 99, 800,
+  98, 95, 750,
+  94, 90, 700,
+  88, 81, 650,
+  79, 71, 600,
+  65, 56, 550,
+  43, 37, 500,
+  27, 23, 450,
+  13, 12, 400,
+  4, 4, 350,
+  1, 1, 300, 
+  0, 0, 250,
+) %>%
+  mutate(fweights = -diff(c(100, female))) %>%
+  mutate(mweights = -diff(c(100, male)))
+
+N = 10000
+Females <- Math_scores[-nrow(Math_scores),] %>% 
+  dplyr::select(-male) %>% 
+  sample_n(size = N, weight = fweights, replace = TRUE) %>% dplyr::select(score) %>% mutate(sex = "female")
+Males <- Math_scores[-nrow(Math_scores), ] %>% 
+  dplyr::select(-female) %>% 
+  sample_n(size = N, weight = mweights, replace = TRUE) %>% dplyr::select(score) %>% mutate(sex = "male")
+Math_scores <- rbind(Females, Males) %>% 
+  mutate(score = ifelse(score == 800, 800, 
+                        score - #runif(nrow(.), min = 0, max = 49) +
+                          rnorm(nrow(.), sd = 20)))
+```
+
+## Case study: Test scores
+
+
+There are certain tasks where a confidence interval is appropriate and others where it is utterly misleading. It's important to distinguish between the two.
+
+Here's an example: a headline about SAT scores:
+
+> **"2016 SAT test results confirm pattern that’s persisted for 50 years — high school boys are better at math than girls"**--- [source](http://www.aei.org/publication/2016-sat-test-results-confirm-pattern-thats-persisted-for-45-years-high-school-boys-are-better-at-math-than-girls/)
+
+This is the graph supporting the claim:
+
+![](www/satnew.png)
+
+Using the simulated data, we can get a confidence interval on the difference between scores for females and males.
+
+What does the above graph show?
+
+- Why do the lines follow the same up-and-down path? Is this random variation?
+- What covariates might be at work here?
+    i. [Who takes math in high-school](https://nces.ed.gov/programs/digest/d16/tables/dt16_225.40.asp)
+        - fewer boys took low-level math at any time, more boys take physics
+    i. [Number taking the exam?](https://nces.ed.gov/programs/digest/d21/tables/dt21_226.10.asp) about 91M/100F
+    i. "Natural sex ratio" is about 105 M / 100 F. [in US](https://www.statista.com/statistics/241488/population-of-the-us-by-sex-and-age/#:~:text=The%20estimated%20population%20of%20the,and%20around%2011.43%20million%20females.) Ratio of fraction of population taking the SAT 87 M/100 F.
+    
+## Estimating the confidence interval on the means
+
+```{r SAT-distribution, echo = FALSE, fig.cap  = "(ref:SAT-distribution-cap)"}
+#| label: fig-SAT-distribution
+#| fig-cap: "The distribution of scores on the SAT mathematics test, reconstructed from summary [data published](https://collegereadiness.collegeboard.org/pdf/sat-percentile-ranks-gender-race-ethnicity.pdf) by the College Board."
+
+# df_stats(score ~ sex, data = All, coverage)
+gf_jitter(score ~ sex, data = Math_scores, size=0.2, width = 0.15, height = 0, alpha = 0.3) %>% 
+  gf_violin(color = NA, fill = "blue", alpha = 0.5) %>%
+  gf_labs(y = "SAT math score", x = "")
+```
+
+1. Find the center of the distribution.    
+2. Find an interval that includes "almost all" of the data: about 95%.
+3. Find an interval that includes about 2/3 of the data: 66%.
+4. The data's standard deviation, $s$, will be somewhere in the range from 
+   i. one-half of (3)
+   ii. one-quarter of (2)
+5. The margin of error will be $2 s/\sqrt{n}$. Here, $n$ is roughly 1M.
+6. As always, the confidence interval will be "center $\pm$ margin-of-error."
+
+As a computation, here it is for sample size $n=20,000$. 
+
+```{r}
+lm(score ~ 1, data=Math_scores) |> conf_interval()
+```
+The actual size of the data is about $n=1,000,000$, 50 times greater. So the confidence interval on the mean of the actual data will be about 1/7 of the one in the calculation: 1.5/7 = 0.2.
+
+We can also look at the confidence interval on the difference in scores between the sexes:
+
+```{r}
+lm(score ~ sex, data=Math_scores) |> conf_interval()
+```
+
+With the full data set, the margin of error is 3/7 = 0.4.
+
+  
+## Explaining the difference?
+
+Looking at average SAT from state to state as a function of expenditures and fraction.
+
+```{r warning=FALSE}
+sat_model <- lm(math ~ frac + expend, data = SAT)
+model_plot(sat_model)
+conf_interval(sat_model)
+```
+
+The standard deviation of SAT math scores across individuals is about 110 points. The numbers taking the test are so large (about 800,000 F, 700,000 M) that the standard error for each group is 
+$$\frac{110}{\sqrt{750,000}} = 0.13\ \text{points}$$
+
+The issue I want to focus on, ignoring the covariates, is the extent to which you can figure out a student's math aptitude by knowing the student's sex.
+
+
+
+
+Given a female, what's the predicted test score? For a male?
+
+How do you describe a **prediction**.
+
+- Ideally: as a probability for each possible outcome: a probability **distribution**.
+- Horribly: as the mean.
+- Conventionally: as an interval.
+
+## Prediction interval
+
+Formally ...
+
+```{r}
+lm(score ~ sex, data=Math_scores) |>
+  model_eval(skeleton = TRUE, interval="prediction")
+```
+
+Informally ... Cover almost all (say, 95%) of the data.
+
+## Assigning a probability
+
+An interval is a convenient summary of a prediction. In the next class, we'll see how to approximately translate an interval into a probability distribution.
+
+
+```{r}
+Orings <- Sleuth3::ex2011
+Orings <- Orings %>% mutate(fail = zero_one(Failure, one="Yes"))
+mod_oring <- glm(fail ~ Temperature, data=Orings, family="binomial")
+model_plot(mod_oring)
+model_eval(mod_oring, Temperature=28, interval="confidence", level=.95)
+```
+
+## Converting to an interval
+
+
+## Watch out for the extremes
+
+In designing infrastructure, it doesn't matter so much what is the 97.5% max wind velocity per day. What matters is the 99.995% velocity: the biggest in, say, 50 years.
+
+
 ## Review of Lesson 24
+
+THIS IS VERY DRAFTY.
 
 In the last lesson, we considered **effect size**, a way to summarize a model to indicate the strength and direction of the influence of an explanatory variable with respect to a response variable. (As always, sample statistics such as the effect size are **according to the model**. A different model may give you different results, so the choice of model specification is important and should be carefully considered.)
 
@@ -69,7 +236,7 @@ Values |> summarize(m = mean(.resid), sd=sd(.resid),
                     q97.5 = quantile(.resid, 0.975))
 ```
 
-## Realistic predictioç
+## Realistic predictions
 
 Precipitation runoff: It rains. Some of the water is absorbed, some runs off and ends up in a nearby river. The runoff is measured as the depth of water over the entire catchment basin that ends up in the river. Give a forecast of a storm, we might want to know if a flood is likely.
 

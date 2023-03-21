@@ -124,6 +124,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -204,28 +205,216 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<section id="preliminaries" class="level2">
+<h2 class="anchored" data-anchor-id="preliminaries">Preliminaries</h2>
+<ol type="1">
+<li>Update your version of the <code>{math300}</code> package.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"dtkaplan/math300"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now you can <code>get_teaching_notes(24)</code> to get the sources for the teaching notes. Here you can see all the code in an executable format. BUT … often the code goes well beyond the programming expected for Math 300 students. An example is below, where I use information published by the College Board to reconstruct/simulate SAT scores for individuals.</p>
+<ol start="2" type="1">
+<li>I made a mistake in calculating the regression using Excel. It’s easy to make such mistakes. But if I had done things correctly, Excel would have given the right answer.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reconstructing the math scores from College Board percentile data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Math 300Z students are NOT expected to understand this code</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Math_scores <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span> female, <span class="sc">~</span> male, <span class="sc">~</span>score,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fl">99.5</span>, <span class="dv">99</span>, <span class="dv">800</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">98</span>, <span class="dv">95</span>, <span class="dv">750</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="dv">94</span>, <span class="dv">90</span>, <span class="dv">700</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">88</span>, <span class="dv">81</span>, <span class="dv">650</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="dv">79</span>, <span class="dv">71</span>, <span class="dv">600</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="dv">65</span>, <span class="dv">56</span>, <span class="dv">550</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="dv">43</span>, <span class="dv">37</span>, <span class="dv">500</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="dv">27</span>, <span class="dv">23</span>, <span class="dv">450</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="dv">13</span>, <span class="dv">12</span>, <span class="dv">400</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">350</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">300</span>, </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">250</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fweights =</span> <span class="sc">-</span><span class="fu">diff</span>(<span class="fu">c</span>(<span class="dv">100</span>, female))) <span class="sc">%&gt;%</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mweights =</span> <span class="sc">-</span><span class="fu">diff</span>(<span class="fu">c</span>(<span class="dv">100</span>, male)))</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>N <span class="ot">=</span> <span class="dv">10000</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>Females <span class="ot">&lt;-</span> Math_scores[<span class="sc">-</span><span class="fu">nrow</span>(Math_scores),] <span class="sc">%&gt;%</span> </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>male) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> N, <span class="at">weight =</span> fweights, <span class="at">replace =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(score) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="st">"female"</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>Males <span class="ot">&lt;-</span> Math_scores[<span class="sc">-</span><span class="fu">nrow</span>(Math_scores), ] <span class="sc">%&gt;%</span> </span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>female) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> N, <span class="at">weight =</span> mweights, <span class="at">replace =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(score) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="st">"male"</span>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>Math_scores <span class="ot">&lt;-</span> <span class="fu">rbind</span>(Females, Males) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">score =</span> <span class="fu">ifelse</span>(score <span class="sc">==</span> <span class="dv">800</span>, <span class="dv">800</span>, </span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>                        score <span class="sc">-</span> <span class="co">#runif(nrow(.), min = 0, max = 49) +</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">rnorm</span>(<span class="fu">nrow</span>(.), <span class="at">sd =</span> <span class="dv">20</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="case-study-test-scores" class="level2">
+<h2 class="anchored" data-anchor-id="case-study-test-scores">Case study: Test scores</h2>
+<p>There are certain tasks where a confidence interval is appropriate and others where it is utterly misleading. It’s important to distinguish between the two.</p>
+<p>Here’s an example: a headline about SAT scores:</p>
+<blockquote class="blockquote">
+<p><strong>“2016 SAT test results confirm pattern that’s persisted for 50 years — high school boys are better at math than girls”</strong>— <a href="http://www.aei.org/publication/2016-sat-test-results-confirm-pattern-thats-persisted-for-45-years-high-school-boys-are-better-at-math-than-girls/">source</a></p>
+</blockquote>
+<p>This is the graph supporting the claim:</p>
+<p><img src="www/satnew.png" class="img-fluid"></p>
+<p>Using the simulated data, we can get a confidence interval on the difference between scores for females and males.</p>
+<p>What does the above graph show?</p>
+<ul>
+<li>Why do the lines follow the same up-and-down path? Is this random variation?</li>
+<li>What covariates might be at work here?
+<ol type="i">
+<li><a href="https://nces.ed.gov/programs/digest/d16/tables/dt16_225.40.asp">Who takes math in high-school</a>
+<ul>
+<li>fewer boys took low-level math at any time, more boys take physics</li>
+</ul></li>
+<li><a href="https://nces.ed.gov/programs/digest/d21/tables/dt21_226.10.asp">Number taking the exam?</a> about 91M/100F</li>
+<li>“Natural sex ratio” is about 105 M / 100 F. <a href="https://www.statista.com/statistics/241488/population-of-the-us-by-sex-and-age/#:~:text=The%20estimated%20population%20of%20the,and%20around%2011.43%20million%20females.">in US</a> Ratio of fraction of population taking the SAT 87 M/100 F.</li>
+</ol></li>
+</ul>
+</section>
+<section id="estimating-the-confidence-interval-on-the-means" class="level2">
+<h2 class="anchored" data-anchor-id="estimating-the-confidence-interval-on-the-means">Estimating the confidence interval on the means</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-SAT-distribution" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Teaching-notes-25_files/figure-html/fig-SAT-distribution-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: The distribution of scores on the SAT mathematics test, reconstructed from summary <a href="https://collegereadiness.collegeboard.org/pdf/sat-percentile-ranks-gender-race-ethnicity.pdf">data published</a> by the College Board.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<ol type="1">
+<li>Find the center of the distribution.<br>
+</li>
+<li>Find an interval that includes “almost all” of the data: about 95%.</li>
+<li>Find an interval that includes about 2/3 of the data: 66%.</li>
+<li>The data’s standard deviation, <span class="math inline">\(s\)</span>, will be somewhere in the range from
+<ol type="i">
+<li>one-half of (3)</li>
+<li>one-quarter of (2)</li>
+</ol></li>
+<li>The margin of error will be <span class="math inline">\(2 s/\sqrt{n}\)</span>. Here, <span class="math inline">\(n\)</span> is roughly 1M.</li>
+<li>As always, the confidence interval will be “center <span class="math inline">\(\pm\)</span> margin-of-error.”</li>
+</ol>
+<p>As a computation, here it is for sample size <span class="math inline">\(n=20,000\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(score <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data=</span>Math_scores) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  term         .lwr .coef  .upr
+  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 (Intercept)  507.  508.  510.</code></pre>
+</div>
+</div>
+<p>The actual size of the data is about <span class="math inline">\(n=1,000,000\)</span>, 50 times greater. So the confidence interval on the mean of the actual data will be about 1/7 of the one in the calculation: 1.5/7 = 0.2.</p>
+<p>We can also look at the confidence interval on the difference in scores between the sexes:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(score <span class="sc">~</span> sex, <span class="at">data=</span>Math_scores) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  term         .lwr .coef  .upr
+  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 (Intercept) 496.  498.  501. 
+2 sexmale      16.3  19.4  22.5</code></pre>
+</div>
+</div>
+<p>With the full data set, the margin of error is 3/7 = 0.4.</p>
+</section>
+<section id="explaining-the-difference" class="level2">
+<h2 class="anchored" data-anchor-id="explaining-the-difference">Explaining the difference?</h2>
+<p>Looking at average SAT from state to state as a function of expenditures and fraction.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sat_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(math <span class="sc">~</span> frac <span class="sc">+</span> expend, <span class="at">data =</span> SAT)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(sat_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-25_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">conf_interval</span>(sat_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  term          .lwr  .coef   .upr
+  &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 (Intercept) 493.   518.   543.  
+2 frac         -1.78  -1.53  -1.29
+3 expend        2.71   7.54  12.4 </code></pre>
+</div>
+</div>
+<p>The standard deviation of SAT math scores across individuals is about 110 points. The numbers taking the test are so large (about 800,000 F, 700,000 M) that the standard error for each group is <span class="math display">\[\frac{110}{\sqrt{750,000}} = 0.13\ \text{points}\]</span></p>
+<p>The issue I want to focus on, ignoring the covariates, is the extent to which you can figure out a student’s math aptitude by knowing the student’s sex.</p>
+<p>Given a female, what’s the predicted test score? For a male?</p>
+<p>How do you describe a <strong>prediction</strong>.</p>
+<ul>
+<li>Ideally: as a probability for each possible outcome: a probability <strong>distribution</strong>.</li>
+<li>Horribly: as the mean.</li>
+<li>Conventionally: as an interval.</li>
+</ul>
+</section>
+<section id="prediction-interval" class="level2">
+<h2 class="anchored" data-anchor-id="prediction-interval">Prediction interval</h2>
+<p>Formally …</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(score <span class="sc">~</span> sex, <span class="at">data=</span>Math_scores) <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_eval</span>(<span class="at">skeleton =</span> <span class="cn">TRUE</span>, <span class="at">interval=</span><span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     sex  .output     .lwr     .upr
+1 female 498.3998 280.5727 716.2268
+2   male 517.8185 299.9914 735.6456</code></pre>
+</div>
+</div>
+<p>Informally … Cover almost all (say, 95%) of the data.</p>
+</section>
+<section id="assigning-a-probability" class="level2">
+<h2 class="anchored" data-anchor-id="assigning-a-probability">Assigning a probability</h2>
+<p>An interval is a convenient summary of a prediction. In the next class, we’ll see how to approximately translate an interval into a probability distribution.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Orings <span class="ot">&lt;-</span> Sleuth3<span class="sc">::</span>ex2011</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Orings <span class="ot">&lt;-</span> Orings <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">fail =</span> <span class="fu">zero_one</span>(Failure, <span class="at">one=</span><span class="st">"Yes"</span>))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>mod_oring <span class="ot">&lt;-</span> <span class="fu">glm</span>(fail <span class="sc">~</span> Temperature, <span class="at">data=</span>Orings, <span class="at">family=</span><span class="st">"binomial"</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod_oring)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-25_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(mod_oring, <span class="at">Temperature=</span><span class="dv">28</span>, <span class="at">interval=</span><span class="st">"confidence"</span>, <span class="at">level=</span>.<span class="dv">95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Temperature   .output      .lwr     .upr
+1          28 0.9977133 0.3653965 0.999997</code></pre>
+</div>
+</div>
+</section>
+<section id="converting-to-an-interval" class="level2">
+<h2 class="anchored" data-anchor-id="converting-to-an-interval">Converting to an interval</h2>
+</section>
+<section id="watch-out-for-the-extremes" class="level2">
+<h2 class="anchored" data-anchor-id="watch-out-for-the-extremes">Watch out for the extremes</h2>
+<p>In designing infrastructure, it doesn’t matter so much what is the 97.5% max wind velocity per day. What matters is the 99.995% velocity: the biggest in, say, 50 years.</p>
+</section>
 <section id="review-of-lesson-24" class="level2">
 <h2 class="anchored" data-anchor-id="review-of-lesson-24">Review of Lesson 24</h2>
+<p>THIS IS VERY DRAFTY.</p>
 <p>In the last lesson, we considered <strong>effect size</strong>, a way to summarize a model to indicate the strength and direction of the influence of an explanatory variable with respect to a response variable. (As always, sample statistics such as the effect size are <strong>according to the model</strong>. A different model may give you different results, so the choice of model specification is important and should be carefully considered.)</p>
 <p>Here’s a possible DAG for the height of a child.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>height_dag <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  mother_genetics <span class="sc">~</span> <span class="fu">exo</span>(),</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  father_genetics <span class="sc">~</span> <span class="fu">exo</span>(),</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  exo_dad <span class="sc">~</span> <span class="fu">exo</span>(),</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  exo_mom <span class="sc">~</span> <span class="fu">exo</span>(),</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  mother_height <span class="sc">~</span> mother_genetics <span class="sc">+</span> exo_mom <span class="sc">+</span> <span class="fu">exo</span>(),</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  father_height <span class="sc">~</span> father_genetics <span class="sc">+</span> exo_dad <span class="sc">+</span> <span class="fu">exo</span>(),</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  health <span class="sc">~</span> <span class="fu">exo</span>(),</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  nutrition <span class="sc">~</span> <span class="fu">exo</span>(),</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  child_sex <span class="sc">~</span> <span class="fu">exo</span>(),</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  child_height <span class="sc">~</span> mother_genetics <span class="sc">+</span> father_genetics <span class="sc">+</span> child_sex <span class="sc">+</span> nutrition <span class="sc">+</span> health <span class="sc">+</span> <span class="fu">exo</span>()</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">106</span>); <span class="fu">dag_draw</span>(height_dag, <span class="at">vertex.size =</span> <span class="dv">13</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                        <span class="at">vertex.label.cex=</span><span class="fl">0.75</span>, </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                        <span class="at">edge.arrow.size=</span>.<span class="dv">25</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>height_dag <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  mother_genetics <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  father_genetics <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  exo_dad <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  exo_mom <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  mother_height <span class="sc">~</span> mother_genetics <span class="sc">+</span> exo_mom <span class="sc">+</span> <span class="fu">exo</span>(),</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  father_height <span class="sc">~</span> father_genetics <span class="sc">+</span> exo_dad <span class="sc">+</span> <span class="fu">exo</span>(),</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  health <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  nutrition <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  child_sex <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  child_height <span class="sc">~</span> mother_genetics <span class="sc">+</span> father_genetics <span class="sc">+</span> child_sex <span class="sc">+</span> nutrition <span class="sc">+</span> health <span class="sc">+</span> <span class="fu">exo</span>()</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">106</span>); <span class="fu">dag_draw</span>(height_dag, <span class="at">vertex.size =</span> <span class="dv">13</span>,</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>                        <span class="at">vertex.label.cex=</span><span class="fl">0.75</span>, </span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>                        <span class="at">edge.arrow.size=</span>.<span class="dv">25</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Teaching-notes-25_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+<p><img src="Teaching-notes-25_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We talk casually about the <em>effect size of child’s height with respect to mother’s height</em>, but there is no causal flow between mother’s height and child’s height. What we mean is the effect of a change in the mother’s genetics that leads to a 1 inch change in mother’s height and a corresponding change in child’s height.</p>
@@ -235,14 +424,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The model specification <code>height ~ mother + father + sex</code> does this comparison of similars in a mathematical way. But the model output is not the only thing that changes when we generate this mathematical child’s height from two different height mothers.</p>
 <p>The <strong>residuals</strong> from the model indicate the magnitude of all the other influences that we haven’t been able to hold constant.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>height_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(height <span class="sc">~</span> mother <span class="sc">+</span> father <span class="sc">+</span> sex, <span class="at">data=</span>Galton)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>Values <span class="ot">&lt;-</span> <span class="fu">model_eval</span>(height_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>height_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(height <span class="sc">~</span> mother <span class="sc">+</span> father <span class="sc">+</span> sex, <span class="at">data=</span>Galton)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Values <span class="ot">&lt;-</span> <span class="fu">model_eval</span>(height_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Using training data as input to model_eval().</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Values, <span class="fu">aes</span>(<span class="at">x=</span>mother, <span class="at">y=</span>.resid)) <span class="sc">+</span> <span class="fu">geom_jitter</span>(<span class="at">alpha=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Values, <span class="fu">aes</span>(<span class="at">x=</span>mother, <span class="at">y=</span>.resid)) <span class="sc">+</span> <span class="fu">geom_jitter</span>(<span class="at">alpha=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Teaching-notes-25_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<p><img src="Teaching-notes-25_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <ol type="1">
@@ -254,31 +443,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="proper-form-for-a-prediction">Proper form for a prediction</h2>
 <p>Assign a probability to every possible outcome.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Values, <span class="fu">aes</span>(<span class="at">x=</span><span class="st">" "</span>, <span class="at">y=</span>.resid)) <span class="sc">+</span> <span class="fu">geom_violin</span>(<span class="at">alpha=</span><span class="fl">0.4</span>, <span class="at">fill=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">width=</span>.<span class="dv">15</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Residual"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">4.13</span>, <span class="fl">4.04</span>), <span class="at">color=</span><span class="st">"red"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Values, <span class="fu">aes</span>(<span class="at">x=</span><span class="st">" "</span>, <span class="at">y=</span>.resid)) <span class="sc">+</span> <span class="fu">geom_violin</span>(<span class="at">alpha=</span><span class="fl">0.4</span>, <span class="at">fill=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">width=</span>.<span class="dv">15</span>) <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Residual"</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">4.13</span>, <span class="fl">4.04</span>), <span class="at">color=</span><span class="st">"red"</span>, <span class="at">alpha=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Teaching-notes-25_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<p><img src="Teaching-notes-25_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Values <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(.resid), <span class="at">sd=</span><span class="fu">sd</span>(.resid), </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">q2.5=</span><span class="fu">quantile</span>(.resid, <span class="fl">0.025</span>),</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">q97.5 =</span> <span class="fu">quantile</span>(.resid, <span class="fl">0.975</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Values <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">mean</span>(.resid), <span class="at">sd=</span><span class="fu">sd</span>(.resid), </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">q2.5=</span><span class="fu">quantile</span>(.resid, <span class="fl">0.025</span>),</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">q97.5 =</span> <span class="fu">quantile</span>(.resid, <span class="fl">0.975</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              m       sd      q2.5    q97.5
 1 -2.882542e-14 2.150721 -4.129319 4.043707</code></pre>
 </div>
 </div>
 </section>
-<section id="realistic-predictioç" class="level2">
-<h2 class="anchored" data-anchor-id="realistic-predictioç">Realistic predictioç</h2>
+<section id="realistic-predictions" class="level2">
+<h2 class="anchored" data-anchor-id="realistic-predictions">Realistic predictions</h2>
 <p>Precipitation runoff: It rains. Some of the water is absorbed, some runs off and ends up in a nearby river. The runoff is measured as the depth of water over the entire catchment basin that ends up in the river. Give a forecast of a storm, we might want to know if a flood is likely.</p>
 <p>Data for the Monocacy River in Maryland, close to where I grew up.</p>
 <p>RESULT FOR THE BIGGEST RAINFALL DEPENDS ON how logarithms are used.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Monocacy_river <span class="sc">|&gt;</span> <span class="fu">filter</span>(precip <span class="sc">&gt;</span> <span class="dv">2</span>), <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(precip), <span class="at">y=</span><span class="fu">log</span>(runoff))) <span class="sc">+</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_lm</span>(<span class="at">interval=</span><span class="st">"prediction"</span>) <span class="sc">+</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_lm</span>(<span class="at">interval=</span><span class="st">"confidence"</span>, <span class="at">fill=</span><span class="st">"blue"</span>) <span class="co"># +</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Monocacy_river <span class="sc">|&gt;</span> <span class="fu">filter</span>(precip <span class="sc">&gt;</span> <span class="dv">2</span>), <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(precip), <span class="at">y=</span><span class="fu">log</span>(runoff))) <span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_lm</span>(<span class="at">interval=</span><span class="st">"prediction"</span>) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_lm</span>(<span class="at">interval=</span><span class="st">"confidence"</span>, <span class="at">fill=</span><span class="st">"blue"</span>) <span class="co"># +</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Using the `size` aesthietic with geom_ribbon was deprecated in ggplot2 3.4.0.
 ℹ Please use the `linewidth` aesthetic instead.</code></pre>
@@ -288,9 +477,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ℹ Please use the `linewidth` aesthetic instead.</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="Teaching-notes-25_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="Teaching-notes-25_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a> <span class="co"># geom_abline(slope=1.08, intercept=-1.07)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a> <span class="co"># geom_abline(slope=1.08, intercept=-1.07)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

@@ -140,4 +140,4 @@ lm(FEV ~ age + smoker, data = FEV) |>
 ```
 
 The confidence interval on `smokersmoker` is entirely negative. Negative means that smoking is associated with *smaller* FEV. This sort of thing would be summarized as, "After adjusting for age, smoking is associated with smaller FEV."
-
+:::
