@@ -56,6 +56,32 @@ Math_scores <- rbind(Females, Males) %>%
                           rnorm(nrow(.), sd = 20)))
 ```
 
+## Prediction
+
+Confidence intervals are impressive because we have poor intuition about the effects of averaging. (For instance, the $1/\sqrt{n}$ width of confidence intervals is not obvious.)
+
+```{r}
+mod <- lm(height ~ mother*sex, data=Galton)
+model_plot(mod, interval="confidence") +
+  facet_wrap(~ sex)
+```
+
+Prediction intervals are unimpressive because it's easy for us to draw the boundaries of the raw data.
+
+```{r}
+model_plot(mod, interval="prediction") +
+  facet_wrap(~ sex)
+```
+
+The reasons it's worthwhile to study prediction are:
+
+1. To know when to use prediction and when to use estimation of effect size.
+2. To know the proper form of a prediction, which is not the same thing as the proper form of a confidence interval.
+    - Prediction: List the possible outcomes, assign a probability (or prob. density, i.e. a relative probability) to each possible outcome.
+3. To understand when it's important to predict **extremes** rather than "central" values.
+4. As a case study in updating probabilities as new information comes in.
+    - March Madness brackets.
+
 ## Case study: Test scores
 
 
