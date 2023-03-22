@@ -8,7 +8,109 @@ date: "Revised 03/08/2023"
 
 ```{r include=FALSE}
 library(math300)
+library(mosaicCalc)
 ```
+
+## Review from Lesson 25
+
+1. The proper form for a prediction is a list of possible outcomes, each assigned a probability. Over the whole list, the probabilities must add up to 1. We call this list a **probability distribution**.
+
+2. The modeling software produces a **prediction interval**, which is much wider than a confidence interval. Confidence interval length goes to zero as $n\rightarrow\infty$, but prediction interval stays pretty much the same.
+
+3. For confidence intervals, use 95% (the convention).
+
+## Reverse engineering the prediction interval
+
+A prediction interval has a form like [15, 23] or, equivalently, 19 $\pm$ 4. This is not a probability distribution.
+
+HOWEVER, it is a shorthand for a distribution: called variously the **normal** or **gaussian** or **bell-shaped** distribution. 
+- This distribution has two parameters: the mean and the standard deviation. 
+- For the 19 $\pm$ 4 prediction interval, the mean is 19 and the standard deviation is 4/2.
+
+```{r echo=FALSE}
+Pts <- tibble(y = rnorm(1000, mean = 19, sd = 2))
+shape <- tibble(yy = seq(10, 29, by=0.1),
+                xx = dnorm(yy, 19, sd=2),
+                mx = -xx)
+ggplot(Pts, aes(y=y, x=0)) +
+  geom_jitter( alpha=0.2, width=0.15, size=.1) +
+  geom_ribbon(aes(xmax=xx, xmin=mx, y=yy), data=shape, fill="blue", alpha=0.3) + 
+  lims(x=c(-.5,.5)) + xlab("") + 
+  geom_errorbar(aes(ymin=15, ymax=23, x=-.25), color="darkgreen", width=0.25) +
+  geom_errorbar(aes(ymin=17, ymax=21, x=-.25), color="darkgreen", width=0.15) +
+  geom_hline(yintercept=19, color="green")
+```
+
+The prediction interval covers the central 95% of the probability.
+
+Events at the center are about 7 times more likely than at the ends of the prediction interval. About 2/3 of the probability is within $\pm 1$ standard deviation.
+
+## Why a probability distribution for prediction?
+
+To help in making decisions. Example: Silicon Valley Bank is trying to decide what fraction of its assets to put in long-term government bonds.
+
+If the interest rate is 2.5%, then a bond paying $1000 in 10-years time, if it is to be worthwhile should cost less: $780. 
+
+- If the interest rate falls to 1.5%, then the bond is worth more: $860.
+- If the interest rate increases to 4.5%, then the bond is worth less: $644
+
+SVB made a bet on interest rates. This is closely related to prediction.
+
+Banks hire economists and other specialists to make predictions about things like interest rates. They use these predictions to estimate risk. For instance, if the bank's assets fall in value by 15%, the bank will not have enough money on hand to pay depositors, leading to a run on the bank, ....
+
+Imagine this prediction about interest rates one year after buying the government bonds at $780. (We aren't going to worry about where such predictions come from. The point for us is to illustrate how the probability form of prediction helps in making decisions.)
+
+```{r echo=FALSE}
+slice_plot(dlnorm(x, 1.05, .25) ~ x, bounds(x=0:10)) +
+  ylab("Relative probability") + xlab("Interest rate") +
+  geom_errorbarh(aes(y=.5, xmin=1.93, xmax=4.66), color="red", height=0.05)
+  
+```
+
+```{r echo=FALSE}
+current_value <- function(r, base=2.5) {
+  ((1+base/100)^10)/((1 + r/100)^10)
+}
+slice_plot(100*current_value(r, base=2.5) ~ r, bounds(r=0:10)) +
+  ylab("Percent decline in value") + xlab("Interest rate") + 
+  geom_hline(yintercept=80, color="blue") +
+  geom_errorbarh(aes(y=80, xmin=1.93, xmax=4.66), color="red", height=5)
+```
+
+According to prediction model, the probability of the interest rate leading to a 80% decline (or more) is 1.9%.
+
+## The contest
+
+```{r echo=FALSE}
+step <- 0.1
+y <- seq(-10, 10, by=step)
+prob <- dnorm(y, 0, 1)
+overall <- c(0,0)
+for (j in 1:length(prob)) {
+  M <- cbind(cbind(dnorm(y, y[j], 2)),
+             cbind(dnorm(y, y[j], 1)))
+  winners <- max.col(M, ties.method="random")
+  results <- numeric(2L)
+  for (k in 1:ncol(M)) {
+    results[k] <- sum(prob[winners == k] )*step
+  }
+  overall <- overall + step*prob[j]*results
+}
+overall
+```
+
+## Updating a probability distribution
+
+As interest rates climbed from 2.5%, SVB ought to have revised its prediction of future interest rate and reduced the risk of catastrophic failure by selling off the troubled assets. 
+
+But how to update?
+
+The correct procedure is called **Bayesian updating**. Here's an example:
+
+![](tesla-recall.png)
+[See this Math 300Z blog entry](https://dtkaplan.github.io/Math300blog/posts/Self-driving-safety/)
+
+
 
 ## Review of Lesson 25
 

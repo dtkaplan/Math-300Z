@@ -677,5 +677,54 @@
     "title": "Instructor Teaching Notes for Lesson 25",
     "section": "Prediction",
     "text": "Prediction\nConfidence intervals are impressive because we have poor intuition about the effects of averaging. (For instance, the \\(1/\\sqrt{n}\\) width of confidence intervals is not obvious.)\n\nmod <- lm(height ~ mother*sex, data=Galton)\nmodel_plot(mod, interval=\"confidence\") +\n  facet_wrap(~ sex)\n\n\n\n\nPrediction intervals are unimpressive because it’s easy for us to draw the boundaries of the raw data.\n\nmodel_plot(mod, interval=\"prediction\") +\n  facet_wrap(~ sex)\n\n\n\n\nThe reasons it’s worthwhile to study prediction are:\n\nTo know when to use prediction and when to use estimation of effect size.\nTo know the proper form of a prediction, which is not the same thing as the proper form of a confidence interval.\n\nPrediction: List the possible outcomes, assign a probability (or prob. density, i.e. a relative probability) to each possible outcome.\n\nTo understand when it’s important to predict extremes rather than “central” values.\nAs a case study in updating probabilities as new information comes in.\n\nMarch Madness brackets."
+  },
+  {
+    "objectID": "Day-by-day/Lesson-26/Teaching-notes-26.html",
+    "href": "Day-by-day/Lesson-26/Teaching-notes-26.html",
+    "title": "Instructor Teaching Notes for Lesson 26",
+    "section": "",
+    "text": "The proper form for a prediction is a list of possible outcomes, each assigned a probability. Over the whole list, the probabilities must add up to 1. We call this list a probability distribution.\nThe modeling software produces a prediction interval, which is much wider than a confidence interval. Confidence interval length goes to zero as \\(n\\rightarrow\\infty\\), but prediction interval stays pretty much the same.\nFor confidence intervals, use 95% (the convention)."
+  },
+  {
+    "objectID": "Day-by-day/Lesson-26/Teaching-notes-26.html#reverse-engineering-the-prediction-interval",
+    "href": "Day-by-day/Lesson-26/Teaching-notes-26.html#reverse-engineering-the-prediction-interval",
+    "title": "Instructor Teaching Notes for Lesson 26",
+    "section": "Reverse engineering the prediction interval",
+    "text": "Reverse engineering the prediction interval\nA prediction interval has a form like [15, 23] or, equivalently, 19 \\(\\pm\\) 4. This is not a probability distribution.\nHOWEVER, it is a shorthand for a distribution: called variously the normal or gaussian or bell-shaped distribution. - This distribution has two parameters: the mean and the standard deviation. - For the 19 \\(\\pm\\) 4 prediction interval, the mean is 19 and the standard deviation is 4/2.\n\n\n\n\n\nThe prediction interval covers the central 95% of the probability.\nEvents at the center are about 7 times more likely than at the ends of the prediction interval. About 2/3 of the probability is within \\(\\pm 1\\) standard deviation."
+  },
+  {
+    "objectID": "Day-by-day/Lesson-26/Teaching-notes-26.html#the-contest",
+    "href": "Day-by-day/Lesson-26/Teaching-notes-26.html#the-contest",
+    "title": "Instructor Teaching Notes for Lesson 26",
+    "section": "The contest",
+    "text": "The contest\n\n\n[1] 0.3396823 0.6603177"
+  },
+  {
+    "objectID": "Day-by-day/Lesson-26/Teaching-notes-26.html#updating-a-probability-distribution",
+    "href": "Day-by-day/Lesson-26/Teaching-notes-26.html#updating-a-probability-distribution",
+    "title": "Instructor Teaching Notes for Lesson 26",
+    "section": "Updating a probability distribution",
+    "text": "Updating a probability distribution\nAs interest rates climbed from 2.5%, SVB ought to have revised its prediction of future interest rate and reduced the risk of catastrophic failure by selling off the troubled assets.\nBut how to update?\nThe correct procedure is called Bayesian updating. Here’s an example:\n See this Math 300Z blog entry"
+  },
+  {
+    "objectID": "Day-by-day/Lesson-26/Teaching-notes-26.html#review-of-lesson-25",
+    "href": "Day-by-day/Lesson-26/Teaching-notes-26.html#review-of-lesson-25",
+    "title": "Instructor Teaching Notes for Lesson 26",
+    "section": "Review of Lesson 25",
+    "text": "Review of Lesson 25"
+  },
+  {
+    "objectID": "Day-by-day/Lesson-26/Intervals-by-eye.html#intervals-by-eye",
+    "href": "Day-by-day/Lesson-26/Intervals-by-eye.html#intervals-by-eye",
+    "title": "Spring 2023 Math 300Z",
+    "section": "Intervals by eye",
+    "text": "Intervals by eye\n\nIn this activity, you are given some point plots of data: y vs x. Your job is to\n\nsketch in an appropriate model fitted (by eye) to the data.\nadd a prediction band showing for each value of x what is the prediction interval\ntransform the prediction band into a confidence band.\n\nTIPS:\n\nThe fitted model will be a line or curve, or in the case of Model 3, two lines.\nThe bounds of the prediction band will be more-or-less parallel to the fitted model, but should include roughly 95% of the \\(n\\) points in the plot.\nThe confidence band is narrower than the prediction band by a factor of \\(1/\\sqrt{n}\\).\n\n\n\n\n\nModel 1: A straight-line model y ~ x\n\n\n\n\n\n\n\n\nModel 2: A sine-wave model, y ~ sin(x)\n\n\n\n\n\n\n\n\n\nModel 3: A function of two variables, y ~ x + group"
+  },
+  {
+    "objectID": "Day-by-day/Lesson-26/Teaching-notes-26.html#why-a-probability-distribution-for-prediction",
+    "href": "Day-by-day/Lesson-26/Teaching-notes-26.html#why-a-probability-distribution-for-prediction",
+    "title": "Instructor Teaching Notes for Lesson 26",
+    "section": "Why a probability distribution for prediction?",
+    "text": "Why a probability distribution for prediction?\nTo help in making decisions. Example: Silicon Valley Bank is trying to decide what fraction of its assets to put in long-term government bonds.\nIf the interest rate is 2.5%, then a bond paying $1000 in 10-years time, if it is to be worthwhile should cost less: $780.\n\nIf the interest rate falls to 1.5%, then the bond is worth more: $860.\nIf the interest rate increases to 4.5%, then the bond is worth less: $644\n\nSVB made a bet on interest rates. This is closely related to prediction.\nBanks hire economists and other specialists to make predictions about things like interest rates. They use these predictions to estimate risk. For instance, if the bank’s assets fall in value by 15%, the bank will not have enough money on hand to pay depositors, leading to a run on the bank, ….\nImagine this prediction about interest rates one year after buying the government bonds at $780. (We aren’t going to worry about where such predictions come from. The point for us is to illustrate how the probability form of prediction helps in making decisions.)\n\n\n\n\n\n\n\n\n\n\nAccording to prediction model, the probability of the interest rate leading to a 80% decline (or more) is 1.9%."
   }
 ]

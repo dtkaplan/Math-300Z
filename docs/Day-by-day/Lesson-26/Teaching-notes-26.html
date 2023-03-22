@@ -61,6 +61,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -141,6 +142,64 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="review-from-lesson-25" class="level2">
+<h2 class="anchored" data-anchor-id="review-from-lesson-25">Review from Lesson 25</h2>
+<ol type="1">
+<li><p>The proper form for a prediction is a list of possible outcomes, each assigned a probability. Over the whole list, the probabilities must add up to 1. We call this list a <strong>probability distribution</strong>.</p></li>
+<li><p>The modeling software produces a <strong>prediction interval</strong>, which is much wider than a confidence interval. Confidence interval length goes to zero as <span class="math inline">\(n\rightarrow\infty\)</span>, but prediction interval stays pretty much the same.</p></li>
+<li><p>For confidence intervals, use 95% (the convention).</p></li>
+</ol>
+</section>
+<section id="reverse-engineering-the-prediction-interval" class="level2">
+<h2 class="anchored" data-anchor-id="reverse-engineering-the-prediction-interval">Reverse engineering the prediction interval</h2>
+<p>A prediction interval has a form like [15, 23] or, equivalently, 19 <span class="math inline">\(\pm\)</span> 4. This is not a probability distribution.</p>
+<p>HOWEVER, it is a shorthand for a distribution: called variously the <strong>normal</strong> or <strong>gaussian</strong> or <strong>bell-shaped</strong> distribution. - This distribution has two parameters: the mean and the standard deviation. - For the 19 <span class="math inline">\(\pm\)</span> 4 prediction interval, the mean is 19 and the standard deviation is 4/2.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Teaching-notes-26_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The prediction interval covers the central 95% of the probability.</p>
+<p>Events at the center are about 7 times more likely than at the ends of the prediction interval. About 2/3 of the probability is within <span class="math inline">\(\pm 1\)</span> standard deviation.</p>
+</section>
+<section id="why-a-probability-distribution-for-prediction" class="level2">
+<h2 class="anchored" data-anchor-id="why-a-probability-distribution-for-prediction">Why a probability distribution for prediction?</h2>
+<p>To help in making decisions. Example: Silicon Valley Bank is trying to decide what fraction of its assets to put in long-term government bonds.</p>
+<p>If the interest rate is 2.5%, then a bond paying $1000 in 10-years time, if it is to be worthwhile should cost less: $780.</p>
+<ul>
+<li>If the interest rate falls to 1.5%, then the bond is worth more: $860.</li>
+<li>If the interest rate increases to 4.5%, then the bond is worth less: $644</li>
+</ul>
+<p>SVB made a bet on interest rates. This is closely related to prediction.</p>
+<p>Banks hire economists and other specialists to make predictions about things like interest rates. They use these predictions to estimate risk. For instance, if the bank’s assets fall in value by 15%, the bank will not have enough money on hand to pay depositors, leading to a run on the bank, ….</p>
+<p>Imagine this prediction about interest rates one year after buying the government bonds at $780. (We aren’t going to worry about where such predictions come from. The point for us is to illustrate how the probability form of prediction helps in making decisions.)</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Teaching-notes-26_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Teaching-notes-26_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>According to prediction model, the probability of the interest rate leading to a 80% decline (or more) is 1.9%.</p>
+</section>
+<section id="the-contest" class="level2">
+<h2 class="anchored" data-anchor-id="the-contest">The contest</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3396823 0.6603177</code></pre>
+</div>
+</div>
+</section>
+<section id="updating-a-probability-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="updating-a-probability-distribution">Updating a probability distribution</h2>
+<p>As interest rates climbed from 2.5%, SVB ought to have revised its prediction of future interest rate and reduced the risk of catastrophic failure by selling off the troubled assets.</p>
+<p>But how to update?</p>
+<p>The correct procedure is called <strong>Bayesian updating</strong>. Here’s an example:</p>
+<p><img src="tesla-recall.png" class="img-fluid"> <a href="https://dtkaplan.github.io/Math300blog/posts/Self-driving-safety/">See this Math 300Z blog entry</a></p>
+</section>
 <section id="review-of-lesson-25" class="level2">
 <h2 class="anchored" data-anchor-id="review-of-lesson-25">Review of Lesson 25</h2>
 
