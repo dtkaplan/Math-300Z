@@ -22,6 +22,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -141,6 +204,210 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>Two crucial words will be introduced an elaborated upon this week (Lessons 28-30).</p>
+<ol type="1">
+<li><strong>Covariate</strong>: An explanatory variable which we can measure and think is important to the working of the system (that is, we would include it in a DAG for the system), but in which <strong>we have little or no direct interest</strong>.<br>
+</li>
+<li><strong>Confound</strong>: One of the nicest words in statistics because the origin word branched into two different meanings both of which are highly relevant to our purpose.
+<ol type="i">
+<li>To “confuse” or, in the Middle English, to “rout” or “bring to ruin.”</li>
+<li>To mix together (from Latin and French)</li>
+</ol>
+In the statistical sense, to confound is to mix together in a way that causes confusion. A <strong>confounder</strong> is a variable that leads to confounding, that is, confusion. We can draw a simple picture that will be relevant in Lesson 30.</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Teaching-notes-28_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<section id="background-review" class="level2">
+<h2 class="anchored" data-anchor-id="background-review">Background review</h2>
+<p>The <strong>fundamental framework</strong> that we use over and over again in this course involves:</p>
+<ol type="1">
+<li>A <strong>data frame</strong> holding variables of interest.</li>
+<li>A <strong>model specification</strong> which
+<ol type="i">
+<li>a response variable (always quantitative) which we’ll write generically as <code>y</code></li>
+<li>zero or more explanatory variables
+<ul>
+<li><code>y ~ 1</code></li>
+<li><code>y ~ 1 + x</code> (usually written as the shorthand <code>y ~ x</code>)</li>
+<li><code>y ~ 1 + x + z</code> (with potentially more explanatory variables)</li>
+</ul></li>
+</ol></li>
+<li><strong>Training</strong> the model (also called <strong>fitting</strong>) to produce coefficients.
+<ul>
+<li>For the “intercept” (that is, the <code>1</code> term) there is one coefficient.</li>
+<li>For each <em>quantitative</em> explanatory variable there is one coefficient.</li>
+<li>For any <em>categorical</em> explanatory variable with k levels, there are k-1 coefficients.</li>
+<li>When a model includes “interactions” (as signified by using <code>*</code> rather than <code>+</code> in the model specification), there are additional coefficients. But we are not emphasizing such models in Math 300.</li>
+</ul></li>
+</ol>
+</section>
+<section id="example-life-expectancy" class="level2">
+<h2 class="anchored" data-anchor-id="example-life-expectancy">Example: Life expectancy</h2>
+<p>Using the <code>gapminder::gapminder</code> data.</p>
+<div class="cell">
+
+</div>
+<p>Are life-expectancy (at birth) and wealth (measured by GDP) related?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x=</span>gdp, <span class="at">y=</span>lifeExp)) <span class="sc">+</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-28_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>What do you like or dislike about the above graph?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x=</span>gdp, <span class="at">y=</span>lifeExp)) <span class="sc">+</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-28_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Compare these two models:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(lifeExp <span class="sc">~</span> gdp, <span class="at">data=</span>gapminder) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     n k  Rsquared        F      adjR2 p df.num df.denom
+1 1704 1 0.0667536 121.7413 0.06620528 0      1     1702</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(lifeExp <span class="sc">~</span> gdp <span class="sc">+</span> year, <span class="at">data=</span>gapminder) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     n k  Rsquared        F     adjR2 p df.num df.denom
+1 1704 2 0.2279324 251.0875 0.2270246 0      2     1701</code></pre>
+</div>
+</div>
+<p><code>year</code> is a covariate. We want to do the comparison holding <code>year</code> constant.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(lifeExp <span class="sc">~</span> gdp, <span class="at">data=</span>gapminder <span class="sc">|&gt;</span> <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span>)) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    n k   Rsquared        F      adjR2           p df.num df.denom
+1 142 1 0.05262836 7.777275 0.04586142 0.006016776      1      140</code></pre>
+</div>
+</div>
+<p>Discuss whether <code>gdp</code> is the right variable to look at to measure wealth.</p>
+<ul>
+<li><code>log(gdp)</code> ?</li>
+<li>Adjusting for population size</li>
+</ul>
+<section id="intensive-vs-extensive-variables" class="level3">
+<h3 class="anchored" data-anchor-id="intensive-vs-extensive-variables">“Intensive” vs “extensive” variables</h3>
+<ul>
+<li><p>temperature (intensive)</p></li>
+<li><p>pressure (intensive)</p></li>
+<li><p>mass (extensive)</p></li>
+<li><p>heat capacity (extensive)</p></li>
+<li><p>life expectancy (intensive)</p></li>
+<li><p>GDP (extensive)</p></li>
+<li><p>Population (extensive)</p></li>
+</ul>
+<p>Take care when mixing together intensive and extensive variables in a model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(<span class="at">x=</span>gdpPercap, <span class="at">y=</span>lifeExp, <span class="at">color=</span>country)) <span class="sc">+</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-28_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="covariates-can-change-coefficients" class="level2">
+<h2 class="anchored" data-anchor-id="covariates-can-change-coefficients">Covariates can change coefficients</h2>
+<p>Predict when this will happen.</p>
+<p>Correlation coefficient as angle.</p>
+</section>
+<section id="in-class-activity" class="level2">
+<h2 class="anchored" data-anchor-id="in-class-activity">In-class activity</h2>
+<p>See when adding a covariate changes the coefficients. 1. Look for maximally and minimally correlated variable pairs in <code>Anthro_F</code> 2. Fit two nested models for <code>BFat</code>, one with a single explanatory variable from the pair and the other with both variables from the pair. 3. Repeat using <code>Height</code> just to show that it’s the explanatory variables that are determining the shift.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(PThigh <span class="sc">~</span> MThigh, <span class="at">data=</span>Anthro_F) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  term         .lwr .coef  .upr
+  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 (Intercept) 3.71  7.49  11.3 
+2 MThigh      0.897 0.970  1.04</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(PThigh <span class="sc">~</span> MThigh <span class="sc">+</span> DThigh <span class="sc">+</span> Biceps <span class="sc">+</span> Calf, <span class="at">data=</span>Anthro_F) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 4
+  term           .lwr  .coef  .upr
+  &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 (Intercept)  1.21   4.99   8.78 
+2 MThigh       0.596  0.717  0.837
+3 DThigh       0.0603 0.178  0.295
+4 Biceps       0.126  0.294  0.463
+5 Calf        -0.0740 0.0194 0.113</code></pre>
+</div>
+</div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Anthro_F <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="fu">cor</span>(Wrist, Waist))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 1 × 1</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">cor(Wrist, Waist)</span><span class="st">`</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                <span class="sc">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>               <span class="fl">0.660</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> Anthro_F <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="fu">cor</span>(Wrist, Biceps))</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 1 × 1</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">cor(Wrist, Biceps)</span><span class="st">`</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>                 <span class="sc">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>                <span class="fl">0.705</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> Anthro_F <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="fu">cor</span>(Wrist, Age))</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 1 × 1</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">cor(Wrist, Age)</span><span class="st">`</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>              <span class="sc">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>           <span class="sc">-</span><span class="fl">0.0748</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">lm</span>(BFat <span class="sc">~</span> Wrist, <span class="at">data=</span>Anthro_F) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 2 × 4</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  term          .lwr  .coef   .upr</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>        <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> (Intercept) <span class="sc">-</span><span class="fl">38.8</span>  <span class="sc">-</span><span class="fl">26.4</span>  <span class="sc">-</span><span class="fl">14.1</span> </span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> Wrist         <span class="fl">2.29</span>   <span class="fl">3.08</span>   <span class="fl">3.87</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">lm</span>(BFat <span class="sc">~</span> Wrist <span class="sc">+</span> Age, <span class="at">data=</span>Anthro_F) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 3 × 4</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>  term           .lwr    .coef    .upr</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>         <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>    <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>   <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> (Intercept) <span class="sc">-</span><span class="fl">39.9</span>   <span class="sc">-</span><span class="fl">25.1</span>    <span class="sc">-</span><span class="fl">10.4</span>  </span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> Wrist         <span class="fl">2.28</span>    <span class="fl">3.07</span>     <span class="fl">3.86</span> </span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> Age          <span class="sc">-</span><span class="fl">0.408</span>  <span class="sc">-</span><span class="fl">0.0575</span>   <span class="fl">0.293</span></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">lm</span>(BFat <span class="sc">~</span> Wrist <span class="sc">+</span> Knee, <span class="at">data=</span>Anthro_F) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 3 × 4</span></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>  term           .lwr  .coef   .upr</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>         <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span>  <span class="er">&lt;</span>dbl<span class="sc">&gt;</span></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> (Intercept) <span class="sc">-</span><span class="fl">54.8</span>   <span class="sc">-</span><span class="fl">43.1</span>  <span class="sc">-</span><span class="fl">31.3</span> </span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> Wrist         <span class="fl">0.339</span>   <span class="fl">1.20</span>   <span class="fl">2.06</span></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> Knee          <span class="fl">0.943</span>   <span class="fl">1.29</span>   <span class="fl">1.64</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="simpsons-paradox" class="level2">
+<h2 class="anchored" data-anchor-id="simpsons-paradox">Simpson’s paradox</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="fu">zero_one</span>(admit, <span class="at">one=</span><span class="st">"admitted"</span>) <span class="sc">~</span> gender, <span class="at">data =</span> UCB_applicants) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  term         .lwr .coef  .upr
+  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 (Intercept) 0.281 0.304 0.326
+2 gendermale  0.113 0.142 0.170</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="fu">zero_one</span>(admit, <span class="at">one=</span><span class="st">"admitted"</span>) <span class="sc">~</span> gender <span class="sc">+</span> dept, <span class="at">data =</span> UCB_applicants) <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 4
+  term           .lwr   .coef    .upr
+  &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept)  0.621   0.660   0.699 
+2 gendermale  -0.0485 -0.0184  0.0117
+3 deptB       -0.0563 -0.0103  0.0356
+4 deptC       -0.347  -0.303  -0.260 
+5 deptD       -0.354  -0.311  -0.268 
+6 deptE       -0.452  -0.403  -0.354 
+7 deptF       -0.631  -0.586  -0.542 </code></pre>
+</div>
+</div>
+</section>
 <section id="review-of-lesson-27" class="level2">
 <h2 class="anchored" data-anchor-id="review-of-lesson-27">Review of Lesson 27</h2>
 

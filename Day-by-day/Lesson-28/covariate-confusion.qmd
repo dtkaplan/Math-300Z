@@ -1,0 +1,88 @@
+## Math 300Z: In-class group activity
+
+```{r include=FALSE}
+library(math300)
+```
+
+
+This activity is to investigate how adding a covariate to a model can change the coefficient on another explanatory variable. The basic logic of the activity is to construct a series of pairs of **nested** models and examine the confidence interval on the coefficient of an explanatory variable.
+
+You will use the `Anthro_F` data frame, which records measurements made on 184 women of body shape: knee circumference, ankle circumference, and so on. Since people have similar body shapes, regardless of size, these measurements tend to be correlated with one another.
+
+The models you will build will have as `BFat` as the response variable. `BFat` is the measured proportion of body weight that is fat tissue. As an example of a **nested pair** of models, consider:
+
+i. `BFat ~ Knee`
+ii. `BFat ~ Knee + Ankle`
+
+Model (i) is "nested" in model (ii) because model (ii) includes all the variables in model (i). (Nested models always have the same response variable.)
+
+Your analysis of each pair will compare the confidence interval on the explanatory variable in the smaller model to that same variable in the larger model, e.g.
+
+```{r}
+lm(Height ~ Knee, data=Anthro_F) |> conf_interval()
+lm(Height ~ Knee + Ankle, data=Anthro_F) |> conf_interval()
+```
+Working with your group partners, try to find pairs of explanatory variables such that the coefficient on one variable changes greatly when the covariate is added to the model. 
+
+To help, here is the correlation between many pairs of variables presented in the form of an **angle** in degrees. (See background section below.) Every variable has a angle 0 with itself. Small angles mean the two variables are closely aligned, large angles mean they are not.
+
+`r options(width = 120)`
+
+::: {.column-page-right}
+```{r}
+#| code-fold: true
+
+corrs <- Anthro_F |>
+  select(Neck, Chest, Calf, Biceps, Hips, Waist, PThigh, MThigh, DThigh, Forearm, Wrist, Knee, Elbow, Ankle, Age) |>
+  cor() 
+round(180*acos(corrs)/pi) 
+
+```
+:::
+
+
+
+
+TASK: Pick several pairs of variables, some related by small angles and some with large angles. For each pair, compare the first variable's coefficient between the nested models. 
+
+As a group, find the biggest change you observed in the coefficient when adding the covariate to the model? (You'll have to agree on a way to measure change in the coefficient.) Do large or small angles tend to produce bigger changes?
+
+
+## Background: r, R^2^, and the "Angle" between variables
+
+Since [Francis Galton's invention/discovery](https://galton.org/essays/1880-1889/galton-1889-nature-correlations.pdf) of the **correlation coefficient** in 1888, it has been the standard introduction to measuring the relationship between two quantitative variables. It has even entered the vocabulary of everyday English as "a mutual relationship or connection between two or more things." (Oxford Dictionaries)
+
+Also in 1888, the phenomenon of electromagnetic waves was discovered by physicist Heinrich Hertz. These had been theoretically predicted in 1865 by James Clerk Maxwell. The mathematics of Maxwell's representation of electromagnetism was very difficult. Consequently, physicists and mathematicians worked to create a simpler formalism. This eventually emerged in the university-level curriculum as two courses: vector calculus (usually called Calc III) and linear algebra. Naturally, in 1888, Galton was unaware of these developments. Nonetheless, vectors and linear algebra provide a great simplification of the concept of correlation.
+
+Any quantitative variable---a series of numbers---is also consequently a "vector," which you can think of as an arrow pointing in a particular direction. The correlation coefficient between two variables amounts to the cosine of the **angle** between the two vectors. When the angle is very small, the variables are strongly aligned. When the angle is near 90$^\circ$, the two variables are not at all aligned.
+
+In R, a standard way of calculating the correlation coefficient uses `cor()` as in this example:
+
+```{r}
+Galton |> summarize(correlation = cor(height, mother))
+```
+The translation of the correlation coefficient into an angle (in degrees) involves some trigonometry (which is not a topic of Math 300):
+
+```{r}
+acos(0.202)*180/pi
+```
+
+78 degrees is pretty close to a right angle, meaning that `height` and `mother` are barely aligned.
+
+::: {.callout-note}
+## Aside: R^2^ and r
+
+We have not emphasized the correlation coefficient r in Math 300 because r is descriptive only of the (linear) relationship between two variables. In Math 300, we are often using *multiple* explanatory variables and r does not apply. Instead, we use R^2^: a much more general description of the relationship between a response variable and explanatory variables. 
+
+In the case where a model has only one explanatory variable, e.g., `height ~ mother`, R^2^ has a simple relationship to r, namely, r^2^ = R^2^. This use of lower-case (r) and upper-case (R) can be confusing, so we are not using r much in Math 300.
+
+To demonstrate the relationship between r and R^2^, consider:
+
+```{r}
+lm(height ~ mother, data=Galton) |> R2()
+```
+
+Since r between `height` and `mother` was 0.2016, you can confirm that R^2^ from the model is exactly r^2^.
+
+:::
+

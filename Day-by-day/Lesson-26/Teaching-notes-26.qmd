@@ -11,9 +11,32 @@ library(math300)
 library(mosaicCalc)
 ```
 
+We're going to be talking about probability today.
+
+- There are just a few skills/concepts that have exam potential.
+- Much of the class will be about concepts that educated people should know about but about which technical skills for calculations can be left to specialists.
+    * What can't be left to specialists: **knowing what questions to ask.**
+    
+Basketball feat, solar system trajectories, terminal guidance
+
+
+[Drone video](https://www.youtube.com/watch?v=DOWDNBu9DkU)
+
+360 hospitals, each with a 1% chance of needing a medicine/blood/etc in the interval before it expires.
+
+- How many units should they keep on hand?
+
+```{r}
+plot(table(rbinom(20000, 360, p=0.01)), ylab="Relative probability",
+     xlab="Number of units needed.")
+```
+
+
 ## Review from Lesson 25
 
 1. The proper form for a prediction is a list of possible outcomes, each assigned a probability. Over the whole list, the probabilities must add up to 1. We call this list a **probability distribution**.
+
+[Federal reserve forecasts](https://www.nytimes.com/live/2023/03/22/business/fed-interest-rates#:~:text=In%20its%20latest%20economic%20projections,by%20the%20end%20of%202024.)
 
 2. The modeling software produces a **prediction interval**, which is much wider than a confidence interval. Confidence interval length goes to zero as $n\rightarrow\infty$, but prediction interval stays pretty much the same.
 

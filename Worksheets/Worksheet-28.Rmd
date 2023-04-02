@@ -1,0 +1,105 @@
+---
+title: 'Lesson 28: Worksheet'
+author: "Jane Doe"
+---
+
+```{r include=FALSE}
+library(math300)
+```
+
+In this Worksheet, you'll explore how adding a covariate to a model can change the coefficient on an explanatory variable.
+
+We will work with two **nested models** trained on the Galton data frame:
+
+i. `height ~ mother`
+ii. `height ~ mother + covar` where you will replace `covar` with a variable we will construct.
+
+**Task A.** Replace `covar` with `father` and observe how the coefficient on `mother` changes between (i) and (ii). Describe the change as large or small, providing also your definition for large and small in this context.
+
+::: {.callout-note}
+## ANSWER
+
+The two models are
+
+```{r}
+lm(height ~ mother, data=Galton) |> conf_interval()
+lm(height ~ mother + father, data=Galton) |> conf_interval()
+```
+
+I describe the change in the `mother` coefficient as small, since the confidence intervals on the two models overlap very substantially. The difference between the `.coef`s is very small compared to the width of the confidence intervals.
+
+:::
+
+**Task B.** An important factor in whether a covariate changes a coefficient is the strength of the relationship between the covariate and the other *explanatory variable*. Measure the strength of the relationship between `mother` and `father` by fitting the model `mother ~ father` and finding R^2^. Describe whether the R^2^ you find in this way is large or small. (You'll have to give a definition for "large" and "small" in this context. It will be different than for the context in part (A). Also, note that in this task, the response variable is `mother`, not `height`.)
+
+::: {.callout-note}
+## ANSWER
+
+To look at the relationship between the covariate `father` and the other *explanatory* variable `mother`, find R^2^
+
+```{r}
+lm(mother ~ father, data=Galton) |> R2()
+```
+The R^2^ statistic can range from zero to one. On that scale, the above R^2^ is very close to zero, so there is little if any relationship between the mother's height and the father's height. Following social convention, usually there is little or no *genetic* relationship between the mother and the father. But if you think that married couples tend to be similar in height, the `Galton` data suggests otherwise.
+:::
+
+**Task C.** Now you are going to create a new covariate that is going to be closely related to `mother`. This is a matter of making the new variable very similar to `mother`, like this:
+
+```{r}
+Galton <- Galton %>% 
+  mutate(new_var = 6*mother + 2*father)
+```
+
+The `new_var` consists of six parts mother and two parts father. 
+
+1. What is the R^2^ between `mother` and `new_var`?
+2. Comparing the `mother` coefficient from the nested pair of models `height ~ mother` and `height ~ mother + new_var`, would you say that `new_var` changes things substantially?
+
+::: {.callout-note}
+## ANSWER
+
+```{r}
+lm(mother ~ new_var, data = Galton) |> R2()
+```
+
+And now the change in the `mother` coefficient
+
+```{r}
+lm(height ~ mother, data=Galton) |> conf_interval()
+lm(height ~ mother + new_var, data=Galton) |> conf_interval()
+```
+
+Notice that the `mother` coefficient changed sign between the two models. This is called "**Simpson's Paradox**." But it's really only a paradox to people who don't understand that using a covariate that is closely related to an explanatory variable can substantially change the coefficient on the explanatory variable.
+:::
+
+**Task D.** Going back to the commands in (C), increase the mixture in `new_var` to fifty parts mother and one part father. What happens to the width of the confidence interval on `mother` when this close copy of `mother` is used as a covariate?
+
+::: {.callout-note}
+## ANSWER
+
+Note that we have already calculated, above, the `mother` coefficient from `height ~ mother`.
+
+```{r}
+Galton <- Galton %>% 
+  mutate(new_var = 50*mother + 1*father)
+lm(height ~ mother + new_var, data=Galton) |> conf_interval()
+```
+
+The confidence interval on `mother` becomes extremely wide!
+:::
+
+**Task E.** Just for interest's sake ... Like Task D, but make `new_var` 50 parts `mother` and **zero** parts `father`. Something perhaps unexpected happens to bother the `mother` and the `new_var` coefficients. Describe what this is.
+
+::: {.callout-note}
+## ANSWER
+
+```{r}
+Galton <- Galton %>% 
+  mutate(new_var = 50*mother + 0*father)
+lm(height ~ mother + new_var, data=Galton) |> conf_interval()
+```
+
+Since `new_var` and `mother` have R^2^=1, `new_var` provides no new information. R is programmed to recognize such cases (which are typically the result of a mistake by the modeler) and disregard the no-new-information variable. (This is indicated with `NA`.) With `new_var` no longer in the model, the `mother` coefficient returns to its value from the smaller of the nested models!
+
+:::
+

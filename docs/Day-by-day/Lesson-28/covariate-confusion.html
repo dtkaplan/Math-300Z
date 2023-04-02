@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Daniel Kaplan">
-<meta name="dcterms.date" content="2023-03-08">
 
-<title>Spring 2023 Math 300Z - Instructor Teaching Notes for Lesson 26</title>
+<title>Spring 2023 Math 300Z – covariate-confusion</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -173,122 +171,118 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Instructor Teaching Notes for Lesson 26</h1>
-<p class="subtitle lead">Math300Z</p>
-</div>
+<main class="content page-columns page-full" id="quarto-document-content">
 
 
 
-<div class="quarto-title-meta">
-
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Daniel Kaplan </p>
-          </div>
-  </div>
-    
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">March 8, 2023</p>
-    </div>
-  </div>
-  
-    
-  </div>
-  
-
-</header>
-
-<p>We’re going to be talking about probability today.</p>
-<ul>
-<li>There are just a few skills/concepts that have exam potential.</li>
-<li>Much of the class will be about concepts that educated people should know about but about which technical skills for calculations can be left to specialists.
-<ul>
-<li>What can’t be left to specialists: <strong>knowing what questions to ask.</strong></li>
-</ul></li>
-</ul>
-<p>Basketball feat, solar system trajectories, terminal guidance</p>
-<p><a href="https://www.youtube.com/watch?v=DOWDNBu9DkU">Drone video</a></p>
-<p>360 hospitals, each with a 1% chance of needing a medicine/blood/etc in the interval before it expires.</p>
-<ul>
-<li>How many units should they keep on hand?</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">table</span>(<span class="fu">rbinom</span>(<span class="dv">20000</span>, <span class="dv">360</span>, <span class="at">p=</span><span class="fl">0.01</span>)), <span class="at">ylab=</span><span class="st">"Relative probability"</span>,</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Number of units needed."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Teaching-notes-26_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<section id="review-from-lesson-25" class="level2">
-<h2 class="anchored" data-anchor-id="review-from-lesson-25">Review from Lesson 25</h2>
-<ol type="1">
-<li>The proper form for a prediction is a list of possible outcomes, each assigned a probability. Over the whole list, the probabilities must add up to 1. We call this list a <strong>probability distribution</strong>.</li>
+<section id="math-300z-in-class-group-activity" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="math-300z-in-class-group-activity">Math 300Z: In-class group activity</h2>
+<p>This activity is to investigate how adding a covariate to a model can change the coefficient on another explanatory variable. The basic logic of the activity is to construct a series of pairs of <strong>nested</strong> models and examine the confidence interval on the coefficient of an explanatory variable.</p>
+<p>You will use the <code>Anthro_F</code> data frame, which records measurements made on 184 women of body shape: knee circumference, ankle circumference, and so on. Since people have similar body shapes, regardless of size, these measurements tend to be correlated with one another.</p>
+<p>The models you will build will have as <code>BFat</code> as the response variable. <code>BFat</code> is the measured proportion of body weight that is fat tissue. As an example of a <strong>nested pair</strong> of models, consider:</p>
+<ol type="i">
+<li><code>BFat ~ Knee</code></li>
+<li><code>BFat ~ Knee + Ankle</code></li>
 </ol>
-<p><a href="https://www.nytimes.com/live/2023/03/22/business/fed-interest-rates#:~:text=In%20its%20latest%20economic%20projections,by%20the%20end%20of%202024.">Federal reserve forecasts</a></p>
-<ol start="2" type="1">
-<li><p>The modeling software produces a <strong>prediction interval</strong>, which is much wider than a confidence interval. Confidence interval length goes to zero as <span class="math inline">\(n\rightarrow\infty\)</span>, but prediction interval stays pretty much the same.</p></li>
-<li><p>For confidence intervals, use 95% (the convention).</p></li>
-</ol>
-</section>
-<section id="reverse-engineering-the-prediction-interval" class="level2">
-<h2 class="anchored" data-anchor-id="reverse-engineering-the-prediction-interval">Reverse engineering the prediction interval</h2>
-<p>A prediction interval has a form like [15, 23] or, equivalently, 19 <span class="math inline">\(\pm\)</span> 4. This is not a probability distribution.</p>
-<p>HOWEVER, it is a shorthand for a distribution: called variously the <strong>normal</strong> or <strong>gaussian</strong> or <strong>bell-shaped</strong> distribution. - This distribution has two parameters: the mean and the standard deviation. - For the 19 <span class="math inline">\(\pm\)</span> 4 prediction interval, the mean is 19 and the standard deviation is 4/2.</p>
+<p>Model (i) is “nested” in model (ii) because model (ii) includes all the variables in model (i). (Nested models always have the same response variable.)</p>
+<p>Your analysis of each pair will compare the confidence interval on the explanatory variable in the smaller model to that same variable in the larger model, e.g.</p>
 <div class="cell">
-<div class="cell-output-display">
-<p><img src="Teaching-notes-26_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>The prediction interval covers the central 95% of the probability.</p>
-<p>Events at the center are about 7 times more likely than at the ends of the prediction interval. About 2/3 of the probability is within <span class="math inline">\(\pm 1\)</span> standard deviation.</p>
-</section>
-<section id="why-a-probability-distribution-for-prediction" class="level2">
-<h2 class="anchored" data-anchor-id="why-a-probability-distribution-for-prediction">Why a probability distribution for prediction?</h2>
-<p>To help in making decisions. Example: Silicon Valley Bank is trying to decide what fraction of its assets to put in long-term government bonds.</p>
-<p>If the interest rate is 2.5%, then a bond paying $1000 in 10-years time, if it is to be worthwhile should cost less: $780.</p>
-<ul>
-<li>If the interest rate falls to 1.5%, then the bond is worth more: $860.</li>
-<li>If the interest rate increases to 4.5%, then the bond is worth less: $644</li>
-</ul>
-<p>SVB made a bet on interest rates. This is closely related to prediction.</p>
-<p>Banks hire economists and other specialists to make predictions about things like interest rates. They use these predictions to estimate risk. For instance, if the bank’s assets fall in value by 15%, the bank will not have enough money on hand to pay depositors, leading to a run on the bank, ….</p>
-<p>Imagine this prediction about interest rates one year after buying the government bonds at $780. (We aren’t going to worry about where such predictions come from. The point for us is to illustrate how the probability form of prediction helps in making decisions.)</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="Teaching-notes-26_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="Teaching-notes-26_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>According to prediction model, the probability of the interest rate leading to a 80% decline (or more) is 1.9%.</p>
-</section>
-<section id="the-contest" class="level2">
-<h2 class="anchored" data-anchor-id="the-contest">The contest</h2>
-<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Height <span class="sc">~</span> Knee, <span class="at">data=</span>Anthro_F) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.3396823 0.6603177</code></pre>
+<pre><code># A tibble: 2 × 4
+  term           .lwr   .coef    .upr
+  &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept) 1.31    1.44    1.57   
+2 Knee        0.00275 0.00636 0.00996</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Height <span class="sc">~</span> Knee <span class="sc">+</span> Ankle, <span class="at">data=</span>Anthro_F) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  term              .lwr   .coef    .upr
+  &lt;chr&gt;            &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept)  1.25      1.40    1.55   
+2 Knee         0.0000406 0.00465 0.00925
+3 Ankle       -0.00325   0.00479 0.0128 </code></pre>
 </div>
 </div>
+<p>Working with your group partners, try to find pairs of explanatory variables such that the coefficient on one variable changes greatly when the covariate is added to the model.</p>
+<p>To help, here is the correlation between many pairs of variables presented in the form of an <strong>angle</strong> in degrees. (See background section below.) Every variable has a angle 0 with itself. Small angles mean the two variables are closely aligned, large angles mean they are not.</p>
+<div class="column-page-right">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>corrs <span class="ot">&lt;-</span> Anthro_F <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Neck, Chest, Calf, Biceps, Hips, Waist, PThigh, MThigh, DThigh, Forearm, Wrist, Knee, Elbow, Ankle, Age) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>() </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="dv">180</span><span class="sc">*</span><span class="fu">acos</span>(corrs)<span class="sc">/</span>pi) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>        Neck Chest Calf Biceps Hips Waist PThigh MThigh DThigh Forearm Wrist Knee Elbow Ankle Age
+Neck       0    53   63     49   52    47     51     53     58      47    51   60    53    58  95
+Chest     53     0   71     55   58    52     55     58     67      55    62   67    56    71  90
+Calf      63    71    0     65   63    64     60     59     60      58    63   62    63    58  89
+Biceps    49    55   65      0   45    41     42     43     52      34    45   54    43    60  93
+Hips      52    58   63     45    0    40     24     38     48      44    51   42    46    50  90
+Waist     47    52   64     41   40     0     40     48     57      44    49   52    46    58  95
+PThigh    51    55   60     42   24    40      0     27     43      42    49   40    45    50  92
+MThigh    53    58   59     43   38    48     27      0     43      43    47   48    47    50  92
+DThigh    58    67   60     52   48    57     43     43      0      50    55   49    55    53  92
+Forearm   47    55   58     34   44    44     42     43     50       0    34   50    39    49  93
+Wrist     51    62   63     45   51    49     49     47     55      34     0   54    45    48  94
+Knee      60    67   62     54   42    52     40     48     49      50    54    0    54    51  97
+Elbow     53    56   63     43   46    46     45     47     55      39    45   54     0    52  95
+Ankle     58    71   58     60   50    58     50     50     53      49    48   51    52     0  96
+Age       95    90   89     93   90    95     92     92     92      93    94   97    95    96   0</code></pre>
+</div>
+</div>
+</div>
+<p>TASK: Pick several pairs of variables, some related by small angles and some with large angles. For each pair, compare the first variable’s coefficient between the nested models.</p>
+<p>As a group, find the biggest change you observed in the coefficient when adding the covariate to the model? (You’ll have to agree on a way to measure change in the coefficient.) Do large or small angles tend to produce bigger changes?</p>
 </section>
-<section id="updating-a-probability-distribution" class="level2">
-<h2 class="anchored" data-anchor-id="updating-a-probability-distribution">Updating a probability distribution</h2>
-<p>As interest rates climbed from 2.5%, SVB ought to have revised its prediction of future interest rate and reduced the risk of catastrophic failure by selling off the troubled assets.</p>
-<p>But how to update?</p>
-<p>The correct procedure is called <strong>Bayesian updating</strong>. Here’s an example:</p>
-<p><img src="tesla-recall.png" class="img-fluid"> <a href="https://dtkaplan.github.io/Math300blog/posts/Self-driving-safety/">See this Math 300Z blog entry</a></p>
-</section>
-<section id="review-of-lesson-25" class="level2">
-<h2 class="anchored" data-anchor-id="review-of-lesson-25">Review of Lesson 25</h2>
+<section id="background-r-r2-and-the-angle-between-variables" class="level2">
+<h2 class="anchored" data-anchor-id="background-r-r2-and-the-angle-between-variables">Background: r, R<sup>2</sup>, and the “Angle” between variables</h2>
+<p>Since <a href="https://galton.org/essays/1880-1889/galton-1889-nature-correlations.pdf">Francis Galton’s invention/discovery</a> of the <strong>correlation coefficient</strong> in 1888, it has been the standard introduction to measuring the relationship between two quantitative variables. It has even entered the vocabulary of everyday English as “a mutual relationship or connection between two or more things.” (Oxford Dictionaries)</p>
+<p>Also in 1888, the phenomenon of electromagnetic waves was discovered by physicist Heinrich Hertz. These had been theoretically predicted in 1865 by James Clerk Maxwell. The mathematics of Maxwell’s representation of electromagnetism was very difficult. Consequently, physicists and mathematicians worked to create a simpler formalism. This eventually emerged in the university-level curriculum as two courses: vector calculus (usually called Calc III) and linear algebra. Naturally, in 1888, Galton was unaware of these developments. Nonetheless, vectors and linear algebra provide a great simplification of the concept of correlation.</p>
+<p>Any quantitative variable—a series of numbers—is also consequently a “vector,” which you can think of as an arrow pointing in a particular direction. The correlation coefficient between two variables amounts to the cosine of the <strong>angle</strong> between the two vectors. When the angle is very small, the variables are strongly aligned. When the angle is near 90<span class="math inline">\(^\circ\)</span>, the two variables are not at all aligned.</p>
+<p>In R, a standard way of calculating the correlation coefficient uses <code>cor()</code> as in this example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Galton <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="at">correlation =</span> <span class="fu">cor</span>(height, mother))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  correlation
+1   0.2016549</code></pre>
+</div>
+</div>
+<p>The translation of the correlation coefficient into an angle (in degrees) involves some trigonometry (which is not a topic of Math 300):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acos</span>(<span class="fl">0.202</span>)<span class="sc">*</span><span class="dv">180</span><span class="sc">/</span>pi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 78.34606</code></pre>
+</div>
+</div>
+<p>78 degrees is pretty close to a right angle, meaning that <code>height</code> and <code>mother</code> are barely aligned.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Aside: R<sup>2</sup> and r
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We have not emphasized the correlation coefficient r in Math 300 because r is descriptive only of the (linear) relationship between two variables. In Math 300, we are often using <em>multiple</em> explanatory variables and r does not apply. Instead, we use R<sup>2</sup>: a much more general description of the relationship between a response variable and explanatory variables.</p>
+<p>In the case where a model has only one explanatory variable, e.g., <code>height ~ mother</code>, R<sup>2</sup> has a simple relationship to r, namely, r<sup>2</sup> = R<sup>2</sup>. This use of lower-case (r) and upper-case (R) can be confusing, so we are not using r much in Math 300.</p>
+<p>To demonstrate the relationship between r and R<sup>2</sup>, consider:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> mother, <span class="at">data=</span>Galton) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    n k  Rsquared        F      adjR2            p df.num df.denom
+1 898 1 0.0406647 37.98001 0.03959401 1.078142e-09      1      896</code></pre>
+</div>
+</div>
+<p>Since r between <code>height</code> and <code>mother</code> was 0.2016, you can confirm that R<sup>2</sup> from the model is exactly r<sup>2</sup>.</p>
+</div>
+</div>
 
 
 </section>

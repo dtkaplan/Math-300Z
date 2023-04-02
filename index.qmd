@@ -1,7 +1,7 @@
 ---
 title: "Math 300Z"
 author: "Daniel Kaplan"
-date: "March 20, 2023"
+date: "April 2, 2023"
 format:
   html:
     theme: cosmo
@@ -70,15 +70,16 @@ schedule_table <- paste(
   syllabus_row("Mar 13", 22, "Sampling variation", "[Counts and rates](Day-by-day/Lesson-22/counts-and-waiting-times.html)", 
                video = "https://youtu.be/VgOvxnYauM8"),
   syllabus_row("Mar 15", 23, "Confidence intervals","[Got you covered!](Day-by-day/Lesson-23/got-you-covered.html)", 
-               video="[class video](https://youtu.be/epm8GUARqmA)"),
+               video="https://youtu.be/epm8GUARqmA"),
   syllabus_row("Mar 17", 24, "Effect size", "[With respect to ...](Day-by-day/Lesson-24/with-respect-to.html)",
-               video="[class video](https://youtu.be/e2ik5TuP-t0)"),
+               video="https://youtu.be/e2ik5TuP-t0"),
   syllabus_row("Mar 21", 25, "Prediction mechanics", "TBA",
-               video="[class video](https://youtu.be/X517awh8FAY)"), 
+               video="https://youtu.be/X517awh8FAY"), 
   syllabus_row("Mar 23", 26, "Prediction intervals", 
-  "[Intervals by eye](Day-by-day/Lesson-26/Intervals-by-eye.html) & [Handout](Day-by-day/Lesson-26/Intervals-by-eye.pdf)"),
+  "[Intervals by eye](Day-by-day/Lesson-26/Intervals-by-eye.html) & [Handout](Day-by-day/Lesson-26/Intervals-by-eye.pdf)",
+               video="https://www.youtube.com/watch?v=NtEbucaFXbE?t=120"),
   "| |**SPRING BREAK**|Keep in mind that Problem Set 5| will be due April 6.||",
-  syllabus_row("Apr 3", 28,  "Covariates", "TBA"),
+  syllabus_row("Apr 3", 28,  "Covariates", "[Covariates change coefficients](Day-by-day/Lesson-28/covariate-confusion.html)"),
   syllabus_row("Apr 5 ", 29, "Covariates eat variance", "TBA"),
   "| |**APRIL 6**: Problem Set 5 due. | See [Z-section Problem Set 5](https://posit.cloud/spaces/317105/content/5590271) on posit.com|",
   syllabus_row('Apr 7', 30, "Confounding", "TBA"),

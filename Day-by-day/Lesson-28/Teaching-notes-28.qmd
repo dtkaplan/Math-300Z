@@ -10,5 +10,175 @@ date: "Revised 03/08/2023"
 library(math300)
 ```
 
+Two crucial words will be introduced an elaborated upon this week (Lessons 28-30). 
+
+1. **Covariate**: An explanatory variable which we can measure and think is important to the working of the system (that is, we would include it in a DAG for the system), but in which **we have little or no direct interest**.  
+2. **Confound**: One of the nicest words in statistics because the origin word branched into two different meanings both of which are highly relevant to our purpose.
+    i. To "confuse" or, in the Middle English, to "rout" or "bring to ruin."
+    ii. To mix together (from Latin and French)
+
+    In the statistical sense, to confound is to mix together in a way that causes confusion. A **confounder** is a variable that leads to confounding, that is, confusion. We can draw a simple picture that will be relevant in Lesson 30.
+    
+```{r echo=FALSE}
+cdag <- dag_make(
+  confounder ~ exo(),
+  explanatory ~ exo() + confounder,
+  response ~ explanatory + confounder
+)    
+set.seed(201); dag_draw(cdag, vertex.label.cex=1, vertex.size=80, edge.arrow.sie=0.2)
+```
+
+## Background review
+
+The **fundamental framework** that we use over and over again in this course involves:
+
+1. A **data frame** holding variables of interest.
+2. A **model specification** which 
+    i. a response variable (always quantitative) which we'll write generically as `y`
+    ii. zero or more explanatory variables 
+        - `y ~ 1`
+        - `y ~ 1 + x` (usually written as the shorthand `y ~ x`)
+        - `y ~ 1 + x + z` (with potentially more explanatory variables)
+3. **Training** the model (also called **fitting**) to produce coefficients. 
+    - For the "intercept" (that is, the `1` term) there is one coefficient.
+    - For each *quantitative* explanatory variable there is one coefficient.
+    - For any *categorical* explanatory variable with k levels, there are k-1 coefficients.
+    - When a model includes "interactions" (as signified by using `*` rather than `+` in the model specification), there are additional coefficients. But we are not emphasizing such models in Math 300.
+    
+## Example: Life expectancy
+
+Using the `gapminder::gapminder` data. 
+
+```{r echo=FALSE}
+# You might have to run: install.packages("gapminder")
+library(gapminder)
+gapminder <- gapminder |> mutate(gdp = gdpPercap * pop)
+```
+
+Are life-expectancy (at birth) and wealth (measured by GDP) related?
+
+```{r}
+ggplot(gapminder, aes(x=gdp, y=lifeExp)) + 
+  geom_point() 
+```
+
+What do you like or dislike about the above graph?
+
+```{r}
+ggplot(gapminder, aes(x=gdp, y=lifeExp)) + 
+  geom_point() +
+  scale_x_log10()
+```
+
+
+Compare these two models:
+
+```{r}
+lm(lifeExp ~ gdp, data=gapminder) |> R2()
+lm(lifeExp ~ gdp + year, data=gapminder) |> R2()
+```
+
+`year` is a covariate. We want to do the comparison holding `year` constant.
+
+```{r}
+lm(lifeExp ~ gdp, data=gapminder |> filter(year == 2007)) |> R2()
+```
+
+Discuss whether `gdp` is the right variable to look at to measure wealth. 
+
+- `log(gdp)` ?
+- Adjusting for population size
+
+### "Intensive" vs "extensive" variables
+
+- temperature (intensive)
+- pressure (intensive)
+- mass (extensive)
+- heat capacity (extensive)
+
+- life expectancy (intensive)
+- GDP (extensive)
+- Population (extensive)
+
+Take care when mixing together intensive and extensive variables in a model.
+
+
+
+```{r}
+ggplot(gapminder, aes(x=gdpPercap, y=lifeExp, color=country)) + 
+  geom_point() + 
+  scale_x_log10() + 
+  theme(legend.position = "none")
+```
+
+## Covariates can change coefficients
+
+Predict when this will happen. 
+
+Correlation coefficient as angle. 
+
+
+## In-class activity
+
+See when adding a covariate changes the coefficients. 
+1. Look for maximally and minimally correlated variable pairs in `Anthro_F` 
+2. Fit two nested models for `BFat`, one with a single explanatory variable from the pair and the other with both variables from the pair.
+3. Repeat using `Height` just to show that it's the explanatory variables that are determining the shift. 
+
+```{r}
+lm(PThigh ~ MThigh, data=Anthro_F) |> conf_interval() 
+lm(PThigh ~ MThigh + DThigh + Biceps + Calf, data=Anthro_F) |> conf_interval() 
+```
+
+
+```r
+Anthro_F |> summarize(cor(Wrist, Waist))
+# A tibble: 1 × 1
+  `cor(Wrist, Waist)`
+                <dbl>
+1               0.660
+> Anthro_F |> summarize(cor(Wrist, Biceps))
+# A tibble: 1 × 1
+  `cor(Wrist, Biceps)`
+                 <dbl>
+1                0.705
+> Anthro_F |> summarize(cor(Wrist, Age))
+# A tibble: 1 × 1
+  `cor(Wrist, Age)`
+              <dbl>
+1           -0.0748
+> lm(BFat ~ Wrist, data=Anthro_F) |> conf_interval()
+# A tibble: 2 × 4
+  term          .lwr  .coef   .upr
+  <chr>        <dbl>  <dbl>  <dbl>
+1 (Intercept) -38.8  -26.4  -14.1 
+2 Wrist         2.29   3.08   3.87
+> lm(BFat ~ Wrist + Age, data=Anthro_F) |> conf_interval()
+# A tibble: 3 × 4
+  term           .lwr    .coef    .upr
+  <chr>         <dbl>    <dbl>   <dbl>
+1 (Intercept) -39.9   -25.1    -10.4  
+2 Wrist         2.28    3.07     3.86 
+3 Age          -0.408  -0.0575   0.293
+> lm(BFat ~ Wrist + Knee, data=Anthro_F) |> conf_interval()
+# A tibble: 3 × 4
+  term           .lwr  .coef   .upr
+  <chr>         <dbl>  <dbl>  <dbl>
+1 (Intercept) -54.8   -43.1  -31.3 
+2 Wrist         0.339   1.20   2.06
+3 Knee          0.943   1.29   1.64
+```
+
+
+## Simpson's paradox
+
+```{r}
+lm(zero_one(admit, one="admitted") ~ gender, data = UCB_applicants) |> conf_interval()
+lm(zero_one(admit, one="admitted") ~ gender + dept, data = UCB_applicants) |>
+  conf_interval()
+```
+
+
+
 ## Review of Lesson 27
 
