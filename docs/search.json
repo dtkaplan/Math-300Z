@@ -831,5 +831,19 @@
     "title": "Instructor Teaching Notes for Lesson 29",
     "section": "Age-adjusted death rates over time",
     "text": "Age-adjusted death rates over time\nFrom the SSA (p. 15)"
+  },
+  {
+    "objectID": "Day-by-day/Lesson-29/Teaching-notes-29.html#back-to-berkeley",
+    "href": "Day-by-day/Lesson-29/Teaching-notes-29.html#back-to-berkeley",
+    "title": "Instructor Teaching Notes for Lesson 29",
+    "section": "Back to Berkeley",
+    "text": "Back to Berkeley\n\nmod1 <- model_train(zero_one(admit, one=\"admitted\") ~ gender,\n                    data=UCB_applicants)\nmodel_plot(mod1, x=dept, color=gender, nlevels=10) +\n  ylab(\"Admitted\")\n\n\n\n\n\nmod2 <- model_train(zero_one(admit, one=\"admitted\") ~ gender*dept,\n                    data=UCB_applicants)\nmodel_plot(mod2, x=dept, color=gender, nlevels=10, data_alpha=0.1) +\n  ylab(\"Admitted\")\n\n\n\n\n\nmodel_train(zero_one(admit, one=\"admitted\") ~ gender, \n            data=UCB_applicants) |> conf_interval()\n\nWaiting for profiling to be done...\n\n\n# A tibble: 2 × 4\n  term          .lwr  .coef   .upr\n  <chr>        <dbl>  <dbl>  <dbl>\n1 (Intercept) -0.931 -0.830 -0.732\n2 gendermale   0.485  0.610  0.736\n\nmodel_train(zero_one(admit, one=\"admitted\") ~ gender + dept, \n            data=UCB_applicants) |> conf_interval()\n\nWaiting for profiling to be done...\n\n\n# A tibble: 7 × 4\n  term          .lwr   .coef    .upr\n  <chr>        <dbl>   <dbl>   <dbl>\n1 (Intercept)  0.488  0.682   0.877 \n2 gendermale  -0.259 -0.0999  0.0582\n3 deptB       -0.258 -0.0434  0.172 \n4 deptC       -1.47  -1.26   -1.05  \n5 deptD       -1.50  -1.29   -1.09  \n6 deptE       -1.99  -1.74   -1.49  \n7 deptF       -3.65  -3.31   -2.98"
+  },
+  {
+    "objectID": "Day-by-day/Lesson-29/Teaching-notes-29.html#for-lesson-30",
+    "href": "Day-by-day/Lesson-29/Teaching-notes-29.html#for-lesson-30",
+    "title": "Instructor Teaching Notes for Lesson 29",
+    "section": "For Lesson 30?",
+    "text": "For Lesson 30?\nShould we adjust for department? Let’s go to a DAG.\n\nUCB_dag1 <- dag_make(sex ~ exo(),\n                     dept ~ sex,\n                     admit ~ sex + dept)\ndag_draw(UCB_dag1, vertex.label.cex=1)\n\n\n\n\nIf we think that the connection sex \\(\\longrightarrow\\) department is just a matter of personal choice (as in the 1975 Science article), then we should block the back-door pathway.\nBut if we think that sex \\(\\longrightarrow\\) department reflects systemic issues such as which departments are considered important and get funding, or which careers women think they can succeed in, then we do not want to block the backdoor pathway.\n\nUCB_dag2 <- dag_make(sex ~ exo(),\n                     success ~ sex,\n                     funding ~ sex,\n                     dept ~ success,\n                     admit ~ sex + dept + funding)\ndag_draw(UCB_dag2, vertex.label.cex=1)"
   }
 ]
