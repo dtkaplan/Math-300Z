@@ -22,6 +22,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -109,7 +172,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -141,8 +204,181 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="review-of-lesson-29" class="level2">
-<h2 class="anchored" data-anchor-id="review-of-lesson-29">Review of Lesson 29</h2>
+<p>See <a href="https://dtkaplan.github.io/Math300blog/posts/Takeaways-28/">Takeaways from Lesson 28</a> for a review of the last class. There, we introduced the term “covariate” to describe an explanatory variable that isn’t of direct interest but which might be important to how the system being modeled works.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>hospital_dag <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  size <span class="sc">~</span> <span class="fu">binom</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exo</span>(), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"small"</span>, <span class="st">"large"</span>)),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  severity <span class="sc">~</span> <span class="dv">1</span><span class="sc">+</span> <span class="fu">exo</span>() <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span><span class="fu">I</span>(size<span class="sc">==</span><span class="st">"small"</span>),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  outcome <span class="sc">~</span> <span class="fu">binom</span>(<span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> severity <span class="sc">+</span> <span class="fu">I</span>(size<span class="sc">==</span><span class="st">"small"</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"good"</span>, <span class="st">"bad"</span>))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>patients <span class="ot">&lt;-</span> <span class="fu">sample</span>(hospital_dag, <span class="at">size=</span><span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-digits="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> patients <span class="sc">|&gt;</span> <span class="fu">group_by</span>(size) <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">msevere=</span><span class="fu">mean</span>(severity), <span class="at">bad =</span> <span class="fu">mean</span>(outcome<span class="sc">==</span><span class="st">"bad"</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>stats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  size  msevere   bad
+  &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
+1 large   0.996 0.521
+2 small  -0.977 0.314</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">model_train</span>(<span class="fu">zero_one</span>(outcome, <span class="at">one=</span><span class="st">"bad"</span>) <span class="sc">~</span> size, </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data=</span>patients)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod1, <span class="at">x=</span>severity, <span class="at">color=</span>size, <span class="at">data_alpha=</span><span class="fl">0.02</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_point</span>(bad <span class="sc">~</span> msevere, <span class="at">color=</span><span class="sc">~</span>size, <span class="at">data=</span>stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Ignoring unknown aesthetics: fill</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-29_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">model_train</span>(<span class="fu">zero_one</span>(outcome, <span class="at">one=</span><span class="st">"bad"</span>) <span class="sc">~</span> size<span class="sc">*</span>severity, </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data=</span>patients)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod2, <span class="at">x=</span>severity, <span class="at">color=</span>size, <span class="at">data_alpha=</span><span class="fl">0.02</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_point</span>(bad <span class="sc">~</span> msevere, <span class="at">color=</span><span class="sc">~</span>size, <span class="at">data=</span>stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Ignoring unknown aesthetics: fill</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-29_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>Adjusting</strong> for severity …</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(mod2, <span class="at">severity=</span><span class="dv">0</span>, <span class="at">size=</span><span class="fu">c</span>(<span class="st">"small"</span>, <span class="st">"large"</span>),</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">interval=</span><span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  severity  size   .output      .lwr      .upr
+1        0 small 0.4925165 0.4085322 0.5769254
+2        0 large 0.3121876 0.2632051 0.3657605</code></pre>
+</div>
+</div>
+<p>The <strong>effect size</strong> w.r.t. an explanatory variable is automatically adjusted for all the covariates.</p>
+<section id="adjusting-for-age" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="adjusting-for-age">Adjusting for age</h2>
+<p>“Life tables” are compiled by governments from death certificates.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>LTraw <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"life-table-raw.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 120 Columns: 7
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+dbl (7): age, male, mnum, mlife_exp, female, fnum, flife_exp
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>LT <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(LTraw <span class="sc">|&gt;</span> <span class="fu">select</span>(age, male, female), <span class="fu">c</span>(<span class="st">"male"</span>, <span class="st">"female"</span>), <span class="at">names_to=</span><span class="st">"sex"</span>, <span class="at">values_to=</span><span class="st">"mortality"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Age pyramids</strong> comparing the US population in 1972 and 2021</p>
+<div class="cell page-columns page-full">
+<div class="cell-output-display column-page-right">
+<p><img src="age-pyramids.png" class="img-fluid" width="1182"></p>
+</div>
+</div>
+<p>Questions:</p>
+<ul>
+<li>When were people aged 35-39 in 1972 born? Why are there so few of them?</li>
+<li>How old would you have to be in 1972 to be part of the “baby boom?” Can you see the echo of the baby boom in 2021?</li>
+<li>How many 85+ year-olds will there be in 2040?</li>
+</ul>
+<p>The raw data:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Pop2020 <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"nc-est2021-agesex-res.csv"</span>,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">show_col_types=</span><span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(SEX <span class="sc">&gt;</span> <span class="dv">0</span>, AGE<span class="sc">&lt;</span><span class="dv">999</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sex =</span> <span class="fu">ifelse</span>(SEX<span class="sc">==</span><span class="dv">1</span>, <span class="st">"female"</span>, <span class="st">"male"</span>), </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">age=</span>AGE, <span class="at">pop=</span>ESTIMATESBASE2020) <span class="sc">|&gt;</span> </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(age, sex, pop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Pop2020</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 202 × 3
+     age sex        pop
+   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1     0 female 1907982
+ 2     1 female 1928926
+ 3     2 female 1980392
+ 4     3 female 2028781
+ 5     4 female 2068682
+ 6     5 female 2081588
+ 7     6 female 2072810
+ 8     7 female 2069511
+ 9     8 female 2086029
+10     9 female 2109096
+# … with 192 more rows</code></pre>
+</div>
+</div>
+<p>US mortality at actual age distribution:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Overall <span class="ot">&lt;-</span> Pop2020 <span class="sc">|&gt;</span> <span class="fu">left_join</span>(LT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = c("age", "sex")</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Overall <span class="sc">|&gt;</span> <span class="fu">group_by</span>(sex) <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mortality =</span> <span class="dv">100000</span><span class="sc">*</span><span class="fu">sum</span>(pop<span class="sc">*</span>mortality)<span class="sc">/</span><span class="fu">sum</span>(pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  sex    mortality
+  &lt;chr&gt;      &lt;dbl&gt;
+1 female      708.
+2 male       1351.</code></pre>
+</div>
+</div>
+<p><a href="https://seer.cancer.gov/stdpopulations/world.who.html">The WHO standard age distribution</a></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Raw <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"who-standard-age-distribution.csv"</span>,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">show_col_types=</span><span class="cn">FALSE</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>Tmp <span class="ot">&lt;-</span> Raw <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">mid =</span> (high<span class="sc">+</span>low)<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>popfun <span class="ot">&lt;-</span> <span class="fu">approxfun</span>(Tmp<span class="sc">$</span>mid, Tmp<span class="sc">$</span>pop, <span class="at">yleft=</span><span class="fl">8.860</span>, <span class="at">yright=</span><span class="fl">0.04</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>Standard <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">99</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">pop =</span> <span class="fu">popfun</span>(age)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Standard, <span class="fu">aes</span>(<span class="at">xmin=</span><span class="sc">-</span>pop, <span class="at">xmax=</span>pop, <span class="at">y=</span>age)) <span class="sc">+</span> <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span>.<span class="dv">3</span>, <span class="fu">aes</span>(<span class="at">xmin=</span><span class="dv">0</span>), <span class="at">fill=</span><span class="st">"green"</span>) <span class="sc">+</span> </span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">alpha=</span>.<span class="dv">3</span>, <span class="fu">aes</span>(<span class="at">xmax=</span><span class="dv">0</span>), <span class="at">fill=</span><span class="st">"blue"</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-29_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>US mortality at WHO standard age distribution:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>Overall <span class="ot">&lt;-</span> Standard <span class="sc">|&gt;</span> <span class="fu">left_join</span>(LT)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = "age"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>Overall <span class="sc">|&gt;</span> <span class="fu">group_by</span>(sex) <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mortality =</span> <span class="dv">100000</span><span class="sc">*</span><span class="fu">sum</span>(pop<span class="sc">*</span>mortality)<span class="sc">/</span><span class="fu">sum</span>(pop))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  sex    mortality
+  &lt;chr&gt;      &lt;dbl&gt;
+1 female      439.
+2 male        681.</code></pre>
+</div>
+</div>
+</section>
+<section id="age-adjusted-death-rates-over-time" class="level2">
+<h2 class="anchored" data-anchor-id="age-adjusted-death-rates-over-time">Age-adjusted death rates over time</h2>
+<p><a href="https://www.ssa.gov/oact/NOTES/pdf_studies/study120.pdf">From the SSA</a> (p.&nbsp;15)</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="age-adjusted-death-rates.png" class="img-fluid" width="376"></p>
+</div>
+</div>
 
 
 </section>

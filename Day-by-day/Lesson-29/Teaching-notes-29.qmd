@@ -10,5 +10,124 @@ date: "Revised 03/08/2023"
 library(math300)
 ```
 
-## Review of Lesson 29
+See [Takeaways from Lesson 28](https://dtkaplan.github.io/Math300blog/posts/Takeaways-28/) for a review of the last class. There, we introduced the term "covariate" to describe an explanatory variable that isn't of direct interest but which might be important to how the system being modeled works. 
 
+```{r}
+hospital_dag <- dag_make(
+  size ~ binom(1+exo(), labels=c("small", "large")),
+  severity ~ 1+ exo() - 2*I(size=="small"),
+  outcome ~ binom(-1 + severity + I(size=="small"), labels=c("good", "bad"))
+)
+patients <- sample(hospital_dag, size=1000)
+```
+
+```{r digits=2}
+stats <- patients |> group_by(size) |>
+  summarize(msevere=mean(severity), bad = mean(outcome=="bad"))
+stats
+```
+
+```{r message=FALSE}
+mod1 <- model_train(zero_one(outcome, one="bad") ~ size, 
+                    data=patients)
+model_plot(mod1, x=severity, color=size, data_alpha=0.02) |>
+  gf_point(bad ~ msevere, color=~size, data=stats)
+```
+
+
+```{r message=FALSE}
+mod2 <- model_train(zero_one(outcome, one="bad") ~ size*severity, 
+                    data=patients)
+model_plot(mod2, x=severity, color=size, data_alpha=0.02) |>
+  gf_point(bad ~ msevere, color=~size, data=stats)
+```
+
+**Adjusting** for severity ...
+
+```{r}
+model_eval(mod2, severity=0, size=c("small", "large"),
+           interval="confidence")
+```
+
+The **effect size** w.r.t. an explanatory variable is automatically adjusted for all the covariates.
+
+
+## Adjusting for age
+
+"Life tables" are compiled by governments from death certificates.
+
+```{r}
+LTraw <- readr::read_csv("life-table-raw.csv")
+LT <- tidyr::pivot_longer(LTraw |> select(age, male, female), c("male", "female"), names_to="sex", values_to="mortality")
+
+```
+
+**Age pyramids** comparing the US population in 1972 and 2021
+
+```{r echo=FALSE}
+#| column: page-right
+knitr::include_graphics("age-pyramids.png")
+```
+
+Questions:
+
+- When were people aged 35-39 in 1972 born? Why are there so few of them?
+- How old would you have to be in 1972 to be part of the "baby boom?" Can you see the echo of the baby boom in 2021?
+- How many 85+ year-olds will there be in 2040?
+
+The raw data:
+
+```{r}
+#| code-fold: true
+Pop2020 <- readr::read_csv("nc-est2021-agesex-res.csv",
+                           show_col_types=FALSE) |>
+  filter(SEX > 0, AGE<999) |>
+  mutate(sex = ifelse(SEX==1, "female", "male"), 
+         age=AGE, pop=ESTIMATESBASE2020) |> 
+  select(age, sex, pop)
+```
+
+```{r}
+Pop2020
+```
+
+US mortality at actual age distribution:
+
+```{r}
+Overall <- Pop2020 |> left_join(LT)
+Overall |> group_by(sex) |>
+  summarize(mortality = 100000*sum(pop*mortality)/sum(pop))
+```
+
+
+[The WHO standard age distribution](https://seer.cancer.gov/stdpopulations/world.who.html)
+
+```{r}
+#| code-fold: true
+Raw <- readr::read_csv("who-standard-age-distribution.csv",
+                            show_col_types=FALSE)
+Tmp <- Raw |> mutate(mid = (high+low)/2)
+popfun <- approxfun(Tmp$mid, Tmp$pop, yleft=8.860, yright=0.04)
+Standard <- tibble(
+  age = 0:99,
+  pop = popfun(age)
+)
+ggplot(Standard, aes(xmin=-pop, xmax=pop, y=age)) + geom_ribbon(alpha=.3, aes(xmin=0), fill="green") + 
+  geom_ribbon(alpha=.3, aes(xmax=0), fill="blue")  
+```
+
+US mortality at WHO standard age distribution:
+
+```{r}
+Overall <- Standard |> left_join(LT)
+Overall |> group_by(sex) |>
+  summarize(mortality = 100000*sum(pop*mortality)/sum(pop))
+```
+
+## Age-adjusted death rates over time
+
+[From the SSA](https://www.ssa.gov/oact/NOTES/pdf_studies/study120.pdf) (p. 15)
+
+```{r echo=FALSE}
+knitr::include_graphics("age-adjusted-death-rates.png")
+```

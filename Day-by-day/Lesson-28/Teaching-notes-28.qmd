@@ -5,10 +5,14 @@ author: "Daniel Kaplan"
 date: "Revised 03/08/2023"
 ---
 
+Critical thinking
 
 ```{r include=FALSE}
 library(math300)
 ```
+
+
+
 
 Two crucial words will be introduced an elaborated upon this week (Lessons 28-30). 
 
@@ -27,6 +31,15 @@ cdag <- dag_make(
 )    
 set.seed(201); dag_draw(cdag, vertex.label.cex=1, vertex.size=80, edge.arrow.sie=0.2)
 ```
+
+You already know what a covariate is, even if not formally.
+
+Political spending
+
+Comparative health in Mexico and US
+
+Comparing hospitals
+
 
 ## Background review
 
@@ -81,7 +94,7 @@ lm(lifeExp ~ gdp + year, data=gapminder) |> R2()
 `year` is a covariate. We want to do the comparison holding `year` constant.
 
 ```{r}
-lm(lifeExp ~ gdp, data=gapminder |> filter(year == 2007)) |> R2()
+lm(lifeExp ~ log(I(gdp/pop)), data=gapminder |> filter(year == 2007)) |> R2()
 ```
 
 Discuss whether `gdp` is the right variable to look at to measure wealth. 
@@ -126,8 +139,8 @@ See when adding a covariate changes the coefficients.
 3. Repeat using `Height` just to show that it's the explanatory variables that are determining the shift. 
 
 ```{r}
-lm(PThigh ~ MThigh, data=Anthro_F) |> conf_interval() 
-lm(PThigh ~ MThigh + DThigh + Biceps + Calf, data=Anthro_F) |> conf_interval() 
+lm(BFat ~ Hips, data=Anthro_F) |> conf_interval()
+lm(BFat ~ Hips + PThigh, data=Anthro_F) |> conf_interval() 
 ```
 
 

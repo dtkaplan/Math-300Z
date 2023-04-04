@@ -204,6 +204,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<p>Critical thinking</p>
 <p>Two crucial words will be introduced an elaborated upon this week (Lessons 28-30).</p>
 <ol type="1">
 <li><strong>Covariate</strong>: An explanatory variable which we can measure and think is important to the working of the system (that is, we would include it in a DAG for the system), but in which <strong>we have little or no direct interest</strong>.<br>
@@ -220,6 +221,10 @@ In the statistical sense, to confound is to mix together in a way that causes co
 <p><img src="Teaching-notes-28_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>You already know what a covariate is, even if not formally.</p>
+<p>Political spending</p>
+<p>Comparative health in Mexico and US</p>
+<p>Comparing hospitals</p>
 <section id="background-review" class="level2">
 <h2 class="anchored" data-anchor-id="background-review">Background review</h2>
 <p>The <strong>fundamental framework</strong> that we use over and over again in this course involves:</p>
@@ -282,10 +287,10 @@ In the statistical sense, to confound is to mix together in a way that causes co
 </div>
 <p><code>year</code> is a covariate. We want to do the comparison holding <code>year</code> constant.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(lifeExp <span class="sc">~</span> gdp, <span class="at">data=</span>gapminder <span class="sc">|&gt;</span> <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span>)) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(lifeExp <span class="sc">~</span> <span class="fu">log</span>(<span class="fu">I</span>(gdp<span class="sc">/</span>pop)), <span class="at">data=</span>gapminder <span class="sc">|&gt;</span> <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span>)) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    n k   Rsquared        F      adjR2           p df.num df.denom
-1 142 1 0.05262836 7.777275 0.04586142 0.006016776      1      140</code></pre>
+<pre><code>    n k Rsquared        F     adjR2 p df.num df.denom
+1 142 1 0.654449 265.1501 0.6519808 0      1      140</code></pre>
 </div>
 </div>
 <p>Discuss whether <code>gdp</code> is the right variable to look at to measure wealth.</p>
@@ -325,24 +330,22 @@ In the statistical sense, to confound is to mix together in a way that causes co
 <h2 class="anchored" data-anchor-id="in-class-activity">In-class activity</h2>
 <p>See when adding a covariate changes the coefficients. 1. Look for maximally and minimally correlated variable pairs in <code>Anthro_F</code> 2. Fit two nested models for <code>BFat</code>, one with a single explanatory variable from the pair and the other with both variables from the pair. 3. Repeat using <code>Height</code> just to show that it’s the explanatory variables that are determining the shift.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(PThigh <span class="sc">~</span> MThigh, <span class="at">data=</span>Anthro_F) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(BFat <span class="sc">~</span> Hips, <span class="at">data=</span>Anthro_F) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
-  term         .lwr .coef  .upr
-  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 (Intercept) 3.71  7.49  11.3 
-2 MThigh      0.897 0.970  1.04</code></pre>
+  term           .lwr   .coef    .upr
+  &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept) -53.4   -44.0   -34.6  
+2 Hips          0.581   0.678   0.776</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(PThigh <span class="sc">~</span> MThigh <span class="sc">+</span> DThigh <span class="sc">+</span> Biceps <span class="sc">+</span> Calf, <span class="at">data=</span>Anthro_F) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(BFat <span class="sc">~</span> Hips <span class="sc">+</span> PThigh, <span class="at">data=</span>Anthro_F) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 4
-  term           .lwr  .coef  .upr
-  &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-1 (Intercept)  1.21   4.99   8.78 
-2 MThigh       0.596  0.717  0.837
-3 DThigh       0.0603 0.178  0.295
-4 Biceps       0.126  0.294  0.463
-5 Calf        -0.0740 0.0194 0.113</code></pre>
+<pre><code># A tibble: 3 × 4
+  term            .lwr   .coef    .upr
+  &lt;chr&gt;          &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept) -49.8    -40.5   -31.1  
+2 Hips          0.0829   0.311   0.539
+3 PThigh        0.243    0.559   0.874</code></pre>
 </div>
 </div>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Anthro_F <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="fu">cor</span>(Wrist, Waist))</span>
