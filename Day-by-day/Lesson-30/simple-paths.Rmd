@@ -1,0 +1,158 @@
+## Math 300Z: In-class group activity
+
+```{r include=FALSE}
+library(math300)
+options(digits=3)
+```
+
+## Simple causal paths
+
+## Mediator 
+
+```{dot}
+digraph {
+      rankdir=LR;
+      node [fontsize="5" shape="plain"];
+      edge [penwidth="0.5" arrowsize="0.25" len="0.25"];
+      A -> B;
+      B -> C;
+}
+```
+
+1. To see the full path from A to C, should you include B as a covariate?
+2. To observe the relationship A $\rightarrow$ B, should you include C as a covariate?
+3. To observe the relationship B $\rightarrow$ C, should you include A as a covariate?
+
+```{r}
+mediator <- dag_make(
+  A ~ exo(),
+  B ~ 2.5*A + exo(),
+  C ~ -1.2*B + exo()
+)
+Samp <- sample(mediator, size=1000)
+```
+
+```{r eval=FALSE}
+# Question 1
+lm(C ~ A, data=Samp) |> conf_interval()
+lm(C ~ A + B, data=Samp) |> conf_interval()
+```
+
+```{r eval=FALSE}
+# Question 2
+lm(B ~ A, data=Samp) |> conf_interval()
+lm(B ~ A + C, data=Samp) |> conf_interval()
+```
+
+```{r eval=FALSE}
+# Question 3
+lm(C ~ B, data=Samp) |> conf_interval()
+lm(C ~ B + A, data=Samp) |> conf_interval()
+```
+
+## Common cause
+
+```{dot}
+digraph {
+      node [fontsize="5" shape="plain"];
+      edge [penwidth="0.5" arrowsize="0.25" len="0.25"];
+      B -> C;
+      A -> C;
+}
+```
+
+```{r}
+common_cause <- dag_make(
+  A ~ exo(),
+  B ~ exo(),
+  C ~ 5*B - 2*A + exo()
+)
+Samp <- sample(common_cause, size=1000)
+```
+
+1. To see the direct relationship between A and C, should you include B as a covariate?
+2. To see the relationship between B and A, should you include C as a covariate?
+
+```{r eval=FALSE}
+# Question 1
+lm(C ~ A, data=Samp) |> conf_interval()
+lm(C ~ A + B, data=Samp) |> conf_interval()
+```
+
+
+```{r eval=FALSE}
+# Question 2
+lm(A ~ B, data=Samp) |> conf_interval()
+lm(A ~ B + C, data=Samp) |> conf_interval()
+```
+
+
+## Contributing causes
+
+```{dot}
+digraph {
+      node [fontsize="5" shape="plain"];
+      edge [penwidth="0.5" arrowsize="0.25" len="0.25"];
+      A -> C;
+      B -> C;
+}
+```
+
+```{r}
+contrib_causes <- dag_make(
+  B ~ exo(),
+  A ~ exo(),
+  C ~ -2*B + 3*A + exo()
+)
+Samp <- sample(contrib_causes, size=1000)
+```
+
+1. To see the effect of B on C, do you need to include A as a covariate?
+
+```{r echo=FALSE}
+lm(C ~ B, data=Samp) |> conf_interval()
+lm(C ~ B + A, data=Samp) |> conf_interval()
+```
+
+2. Which model has the better confidence interval on B?
+
+## Collider
+
+Same network as contributing causes, but focussing on relationship between A & B.
+
+1. To see the correct (lack of) relationship between A and B, should you include C as a covariate?
+
+```{r echo=FALSE}
+lm(A ~ B, data=Samp) |> conf_interval()
+lm(A ~ B + C, data=Samp) |> conf_interval()
+```
+
+## Confounder
+
+```{dot}
+digraph {
+      node [fontsize="5" shape="plain"];
+      edge [penwidth="0.5" arrowsize="0.25" len="0.25"];
+      A -> C [color="blue"];
+      A -> B [color="blue"];
+      B -> C;
+}
+```
+
+```{r}
+confounder <- dag_make(
+  A ~ exo(),
+  B ~ 4*A + exo(),
+  C ~ 2*A  + 0.5*B + exo()
+)
+Samp <- sample(confounder, size=1000)
+```
+
+1. To see the correct direct connection between B and C, should you include A as a confounder?
+
+```{r eval=FALSE}
+lm(C ~ B, data=Samp) |> conf_interval()
+lm(C ~ B + A, data=Samp) |> conf_interval()
+```
+
+

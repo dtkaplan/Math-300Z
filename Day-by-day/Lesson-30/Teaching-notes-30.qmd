@@ -10,5 +10,201 @@ date: "Revised 03/08/2023"
 library(math300)
 ```
 
-## Review of Lesson 29
+Aside: Confidence bands and global warming.
+
+[Cherry blossoms from Kyoto over 1200 years.](http://r.iresmi.net/2023/04/05/cherry-blossom/)
+
+
+## Smoking and cancer: a 1950s controversy
+
+Deniers of a smoking/cancer link claimed there was a common cause for both: a "cancer gene." 
+
+```{dot}
+digraph {
+  rankdir=LR;
+  node [fontsize="5" shape="plain"];
+  edge [penwidth="0.5" arrowsize="0.25" len="0.25"];
+  "Smoking" -> "Lung cancer" [color="red"];
+  "Smoking gene" -> "Lung cancer";
+  "Smoking gene" -> "Smoking";
+}
+```
+
+The gene had not been identified, so no data could be collected on it. 
+
+This is an example of **confounding**: the effects of the (supposed) gene and of smoking are mixed together. 
+
+## Discovering the rules for small DAGs
+
+Class activity
+
+## More complex DAGs
+
+In considering the relationship between two nodes, enumerate each of the paths that connect the two nodes.
+
+Example: Smoking with a non-genetic mediator: Tar
+
+There are two paths from Tar to Lung cancer:
+
+```{dot}
+digraph {
+  rankdir=LR;
+  node [fontsize="5" shape="plain"];
+  edge [penwidth="0.5" arrowsize="0.25" len="0.25"];
+  "Smoking gene" -> "Lung cancer" [color="green"];
+  "Smoking gene" -> "Smoking" [color="green" label="Path 2" fontcolor="green" fontsize="4"];
+  "Smoking" -> "Tar" [color="green"];
+  "Tar" -> "Lung cancer" [color="blue" label="Path 1" fontcolor="blue" fontsize="4"];
+}
+```
+
+Two *types* of path between two endpoint nodes:
+
+1. A **correlating path**: Starting from some node on the path, causal influence can flow (along the arrows) to both endpoints.
+
+BLOCK a correlating path by using some node along it as a covariate. Otherwise, it's open.
+
+2. A **colliding path**: There's no node on the path from which causal influence can flow (along the arrows) to both endpoints.
+
+OPEN a colliding path by using the collider as a covariate. Otherwise, it's closed.
+
+
+```{r}
+one <- dag_make(
+  A ~ exo(),
+  B ~ A + exo(),
+  D ~ A + exo(), 
+  C ~ B + D +exo()
+)
+dag_draw(one)
+Samp <- sample(one, size=1000)
+```
+
+```{r}
+lm(D ~ A, data=Samp) |> conf_interval()
+lm(D ~ A + B, data=Samp) |> conf_interval()
+lm(D ~ A + C, data=Samp) |> conf_interval()
+lm(D ~ A + B + C, data=Samp) |> conf_interval()
+```
+
+```{r}
+one <- dag_make(
+  A ~ exo(),
+  E ~ 10*C + exo(),
+  B ~ A + exo(),
+  D ~ A + exo(), 
+  C ~ B + D +exo()
+)
+dag_draw(one)
+Samp <- sample(one, size=1000)
+lm(D ~ A, data=Samp) |> conf_interval()
+lm(D ~ A + C, data=Samp) |> conf_interval()
+lm(D ~ A + E, data=Samp) |> conf_interval()
+```
+```
+
+Can Tar be used to avoid the confounding due to genetics? How do you block the back-door pathway?
+
+
+
+
+
+
+## The Berkeley graduate admissions data from 1973
+
+```{r}
+mod1 <- model_train(zero_one(admit, one="admitted") ~ gender,
+                    data=UCB_applicants)
+model_plot(mod1, x=dept, color=gender, nlevels=10) +
+  ylab("Admitted")
+```
+
+```{r}
+mod2 <- model_train(zero_one(admit, one="admitted") ~ gender*dept,
+                    data=UCB_applicants)
+model_plot(mod2, x=dept, color=gender, nlevels=10, data_alpha=0.1) +
+  ylab("Admitted")
+```
+
+
+```{r}
+model_train(zero_one(admit, one="admitted") ~ gender, 
+            data=UCB_applicants) |> conf_interval()
+model_train(zero_one(admit, one="admitted") ~ gender + dept, 
+            data=UCB_applicants) |> conf_interval()
+```
+
+
+
+
+
+## Back to Berkeley
+
+Should we adjust for **department**? Let's go to a DAG.
+
+
+
+```{r}
+UCB_dag1 <- dag_make(sex ~ exo(),
+                     dept ~ sex,
+                     admit ~ sex + dept)
+dag_draw(UCB_dag1, vertex.label.cex=1)
+```
+
+If we think that the connection sex $\longrightarrow$ department is just a matter of personal choice (as in the 1975 *Science* article), then we should block the back-door pathway.
+
+But if we think that sex $\longrightarrow$ department reflects systemic issues such as which departments are considered important and get funding, or which careers women think they can succeed in, then we **do not** want to block the backdoor pathway.
+
+```{r}
+UCB_dag2 <- dag_make(sex ~ exo(),
+                     success ~ sex,
+                     dept_funding ~ sex,
+                     dept ~ success,
+                     admit ~ sex + dept + dept_funding)
+dag_draw(UCB_dag2, vertex.label.cex=1)
+```
+
+
+## Birthweight collider
+
+
+Observations from the 1960s:
+
+- Smoking is associated with lower birthweight
+- Lower birthweight is associated with increased mortality
+
+Question: Does smoking have a direct effect on mortality?
+
+
+```{dot}
+digraph H {
+  node [fontsize="5" shape="plain"];
+  edge [penwidth="0.5" arrowsize="0.25" len="0.25"];
+  Smoking -> "Birth weight" [color="blue"];
+  "Birth weight" -> "Mortality of infant" [color="blue"];
+  Smoking -> "Mortality of infant" [color="blue" label=" ?" labelfontcolor="blue" fontsize="5"];
+}
+```
+
+How do you look at the direct effect of smoking on mortality? Block the other pathway by using birth weight as a covariate. 
+
+When this was done, by looking only at low-birthweight babies, it was found that smoking *reduces* mortality.
+
+Might there be something else going on? Is there another cause for low birthweight?
+
+```{dot}
+digraph J {
+      node [fontsize="5" shape="plain"];
+      edge [penwidth="0.5" arrowsize="0.25" len="0.25"];
+      "Birth defect";
+      Smoking;
+      "Birth weight";
+      "Mortality of infant";
+      Smoking -> "Birth weight" [color="blue"];
+      "Birth weight" -> "Mortality of infant" [color="blue"];
+      Smoking -> "Mortality of infant" [color="blue"];
+      "Birth defect" -> "Mortality of infant";
+      "Birth defect" -> "Birth weight";
+}
+```
 

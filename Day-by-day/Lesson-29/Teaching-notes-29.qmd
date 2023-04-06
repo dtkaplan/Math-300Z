@@ -51,6 +51,9 @@ model_eval(mod2, severity=0, size=c("small", "large"),
 
 The **effect size** w.r.t. an explanatory variable is automatically adjusted for all the covariates.
 
+## [Class activity](adjusting-activity.Rmd)
+
+
 
 ## Adjusting for age
 
@@ -132,53 +135,3 @@ Overall |> group_by(sex) |>
 knitr::include_graphics("age-adjusted-death-rates.png")
 ```
 
-## Back to Berkeley
-
-```{r}
-mod1 <- model_train(zero_one(admit, one="admitted") ~ gender,
-                    data=UCB_applicants)
-model_plot(mod1, x=dept, color=gender, nlevels=10) +
-  ylab("Admitted")
-```
-
-```{r}
-mod2 <- model_train(zero_one(admit, one="admitted") ~ gender*dept,
-                    data=UCB_applicants)
-model_plot(mod2, x=dept, color=gender, nlevels=10, data_alpha=0.1) +
-  ylab("Admitted")
-```
-
-
-```{r}
-model_train(zero_one(admit, one="admitted") ~ gender, 
-            data=UCB_applicants) |> conf_interval()
-model_train(zero_one(admit, one="admitted") ~ gender + dept, 
-            data=UCB_applicants) |> conf_interval()
-```
-
-
-## For Lesson 30?
-
-Should we adjust for department? Let's go to a DAG.
-
-
-
-```{r}
-UCB_dag1 <- dag_make(sex ~ exo(),
-                     dept ~ sex,
-                     admit ~ sex + dept)
-dag_draw(UCB_dag1, vertex.label.cex=1)
-```
-
-If we think that the connection sex $\longrightarrow$ department is just a matter of personal choice (as in the 1975 *Science* article), then we should block the back-door pathway.
-
-But if we think that sex $\longrightarrow$ department reflects systemic issues such as which departments are considered important and get funding, or which careers women think they can succeed in, then we **do not** want to block the backdoor pathway.
-
-```{r}
-UCB_dag2 <- dag_make(sex ~ exo(),
-                     success ~ sex,
-                     funding ~ sex,
-                     dept ~ success,
-                     admit ~ sex + dept + funding)
-dag_draw(UCB_dag2, vertex.label.cex=1)
-```

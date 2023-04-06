@@ -880,5 +880,96 @@
     "title": "Spring 2023 Math 300Z",
     "section": "Adjusting, visually",
     "text": "Adjusting, visually\nThese are two graphs of the data from Clock_auction showing the relationship between the winning price and the number of bidders. (I’ve simplified the number of bidders to two categories.) The age of the clock is a covariate. The large dots show the mean age and mean price of the clocks in those auctions with 10 or more bidders versus 9 or fewer bidders.\n\n\nCode\nClock_auction <- Clock_auction |> mutate(nbidders = ifelse(bidders >= 10, \"10 or more\", \"9 or fewer\"))\nStats <- Clock_auction |> group_by(nbidders) |>\n  summarize(mp = mean(price), mage = mean(age))\n\n\n\nmod1 <- lm(price ~ nbidders, data=Clock_auction) \n\nmodel_plot(mod1, x=age, color=nbidders) |>\n  gf_point(mp ~ mage, color=~nbidders, data=Stats, size=3)\n\n\n\n\nPart A. In the model without age as a covariate, what is the difference in mean prices for the 10-or-more-bidders group versus the 9-or-fewer-bidders group?\nPart B. Now the picture when including age as a covariate. Adjusting for age, what is the difference in mean prices for the 10-or-more-bidders group versus the 9-or-fewer-bidders group?\n\nmod2 <- lm(price ~ nbidders + age, data=Clock_auction) \n\nmodel_plot(mod2, x=age, color=nbidders) |>\n  gf_point(mp ~ mage, color=~nbidders, data=Stats, size=3)\n\n\n\n\nPart C. Here are confidence intervals for the two models graphed above. Explain what about these coefficients matches the conclusions you got in Parts (A) and (B)?\n\nmod1 |> conf_interval()\n\n# A tibble: 2 × 4\n  term                .lwr .coef   .upr\n  <chr>              <dbl> <dbl>  <dbl>\n1 (Intercept)        1226. 1420  1614. \n2 nbidders9 or fewer -479. -221.   37.1\n\nmod2 |> conf_interval()\n\n# A tibble: 3 × 4\n  term                  .lwr  .coef   .upr\n  <chr>                <dbl>  <dbl>  <dbl>\n1 (Intercept)        -467.    -56.3  354. \n2 nbidders9 or fewer -490.   -336.  -182. \n3 age                   7.79   10.6   13.5\n\n\n\nThis activity was inspired by schematic diagrams in Milo Schield’s Statistical Literacy: Seeing the story behind the statistics, 2011, pp. 224-5."
+  },
+  {
+    "objectID": "Day-by-day/Lesson-29/Teaching-notes-29.html#class-activity",
+    "href": "Day-by-day/Lesson-29/Teaching-notes-29.html#class-activity",
+    "title": "Instructor Teaching Notes for Lesson 29",
+    "section": "Class activity",
+    "text": "Class activity"
+  },
+  {
+    "objectID": "Day-by-day/Lesson-30/Teaching-notes-30.html",
+    "href": "Day-by-day/Lesson-30/Teaching-notes-30.html",
+    "title": "Instructor Teaching Notes for Lesson 30",
+    "section": "",
+    "text": "Deniers of a smoking/cancer link claimed there was a common cause for both: a “cancer gene.”\n\n\n\n\n\n   \n\nSmoking\n\nSmoking   \n\nLung cancer\n\nLung cancer   \n\nSmoking->Lung cancer\n\n    \n\nSmoking gene\n\nSmoking gene   \n\nSmoking gene->Smoking\n\n    \n\nSmoking gene->Lung cancer\n\n   \n\n\n\n\n\nThe gene had not been identified, so no data could be collected on it.\nThis is an example of confounding: the effects of the (supposed) gene and of smoking are mixed together."
+  },
+  {
+    "objectID": "Day-by-day/Lesson-30/Teaching-notes-30.html#back-to-berkeley",
+    "href": "Day-by-day/Lesson-30/Teaching-notes-30.html#back-to-berkeley",
+    "title": "Instructor Teaching Notes for Lesson 30",
+    "section": "Back to Berkeley",
+    "text": "Back to Berkeley\nShould we adjust for department? Let’s go to a DAG.\n\nUCB_dag1 <- dag_make(sex ~ exo(),\n                     dept ~ sex,\n                     admit ~ sex + dept)\ndag_draw(UCB_dag1, vertex.label.cex=1)\n\n\n\n\nIf we think that the connection sex \\(\\longrightarrow\\) department is just a matter of personal choice (as in the 1975 Science article), then we should block the back-door pathway.\nBut if we think that sex \\(\\longrightarrow\\) department reflects systemic issues such as which departments are considered important and get funding, or which careers women think they can succeed in, then we do not want to block the backdoor pathway.\n\nUCB_dag2 <- dag_make(sex ~ exo(),\n                     success ~ sex,\n                     dept_funding ~ sex,\n                     dept ~ success,\n                     admit ~ sex + dept + dept_funding)\ndag_draw(UCB_dag2, vertex.label.cex=1)"
+  },
+  {
+    "objectID": "Day-by-day/Lesson-30/Teaching-notes-30.html#birthweight-collider",
+    "href": "Day-by-day/Lesson-30/Teaching-notes-30.html#birthweight-collider",
+    "title": "Instructor Teaching Notes for Lesson 30",
+    "section": "Birthweight collider",
+    "text": "Birthweight collider\nObservations from the 1960s:\n\nSmoking is associated with lower birthweight\nLower birthweight is associated with increased mortality\n\nQuestion: Does smoking have a direct effect on mortality?\n\n\n\n\n\n\n\nH\n\n  \n\nSmoking\n\nSmoking   \n\nBirth weight\n\nBirth weight   \n\nSmoking->Birth weight\n\n    \n\nMortality of infant\n\nMortality of infant   \n\nSmoking->Mortality of infant\n\n   ?   \n\nBirth weight->Mortality of infant\n\n   \n\n\n\n\n\nHow do you look at the direct effect of smoking on mortality? Block the other pathway by using birth weight as a covariate.\nWhen this was done, by looking only at low-birthweight babies, it was found that smoking reduces mortality.\nMight there be something else going on? Is there another cause for low birthweight?\n\n\n\n\n\n\n\nJ\n\n  \n\nBirth defect\n\nBirth defect   \n\nBirth weight\n\nBirth weight   \n\nBirth defect->Birth weight\n\n    \n\nMortality of infant\n\nMortality of infant   \n\nBirth defect->Mortality of infant\n\n    \n\nSmoking\n\nSmoking   \n\nSmoking->Birth weight\n\n    \n\nSmoking->Mortality of infant\n\n    \n\nBirth weight->Mortality of infant"
+  },
+  {
+    "objectID": "Day-by-day/Lesson-30/simple-paths.html#simple-causal-paths",
+    "href": "Day-by-day/Lesson-30/simple-paths.html#simple-causal-paths",
+    "title": "Spring 2023 Math 300Z",
+    "section": "Simple causal paths",
+    "text": "Simple causal paths"
+  },
+  {
+    "objectID": "Day-by-day/Lesson-30/simple-paths.html#mediator",
+    "href": "Day-by-day/Lesson-30/simple-paths.html#mediator",
+    "title": "Spring 2023 Math 300Z",
+    "section": "Mediator",
+    "text": "Mediator\n\n\n\n\n\n   \n\nA\n\nA   \n\nB\n\nB   \n\nA->B\n\n    \n\nC\n\nC   \n\nB->C\n\n   \n\n\n\n\n\n\nTo see the full path from A to C, should you include B as a covariate?\nTo observe the relationship A \\(\\rightarrow\\) B, should you include C as a covariate?\nTo observe the relationship B \\(\\rightarrow\\) C, should you include A as a covariate?\n\n\nmediator <- dag_make(\n  A ~ exo(),\n  B ~ 2.5*A + exo(),\n  C ~ -1.2*B + exo()\n)\nSamp <- sample(mediator, size=1000)\n\n\n# Question 1\nlm(C ~ A, data=Samp) |> conf_interval()\nlm(C ~ A + B, data=Samp) |> conf_interval()\n\n\n# Question 2\nlm(B ~ A, data=Samp) |> conf_interval()\nlm(B ~ A + C, data=Samp) |> conf_interval()\n\n\n# Question 3\nlm(C ~ B, data=Samp) |> conf_interval()\nlm(C ~ B + A, data=Samp) |> conf_interval()"
+  },
+  {
+    "objectID": "Day-by-day/Lesson-30/simple-paths.html#common-cause",
+    "href": "Day-by-day/Lesson-30/simple-paths.html#common-cause",
+    "title": "Spring 2023 Math 300Z",
+    "section": "Common cause",
+    "text": "Common cause\n\n\n\n\n\n   \n\nB\n\nB   \n\nC\n\nC   \n\nB->C\n\n    \n\nA\n\nA   \n\nA->C\n\n   \n\n\n\n\n\n\ncommon_cause <- dag_make(\n  A ~ exo(),\n  B ~ exo(),\n  C ~ 5*B - 2*A + exo()\n)\nSamp <- sample(common_cause, size=1000)\n\n\nTo see the direct relationship between A and C, should you include B as a covariate?\nTo see the relationship between B and A, should you include C as a covariate?\n\n\n# Question 1\nlm(C ~ A, data=Samp) |> conf_interval()\nlm(C ~ A + B, data=Samp) |> conf_interval()\n\n\n# Question 2\nlm(A ~ B, data=Samp) |> conf_interval()\nlm(A ~ B + C, data=Samp) |> conf_interval()"
+  },
+  {
+    "objectID": "Day-by-day/Lesson-30/simple-paths.html#contributing-causes",
+    "href": "Day-by-day/Lesson-30/simple-paths.html#contributing-causes",
+    "title": "Spring 2023 Math 300Z",
+    "section": "Contributing causes",
+    "text": "Contributing causes\n\n\n\n\n\n   \n\nA\n\nA   \n\nC\n\nC   \n\nA->C\n\n    \n\nB\n\nB   \n\nB->C\n\n   \n\n\n\n\n\n\ncontrib_causes <- dag_make(\n  B ~ exo(),\n  A ~ exo(),\n  C ~ -2*B + 3*A + exo()\n)\nSamp <- sample(contrib_causes, size=1000)\n\n\nTo see the effect of B on C, do you need to include A as a covariate?\n\n\n\n# A tibble: 2 × 4\n  term           .lwr  .coef   .upr\n  <chr>         <dbl>  <dbl>  <dbl>\n1 (Intercept) -0.0643  0.127  0.317\n2 B           -2.23   -2.04  -1.85 \n\n\n# A tibble: 3 × 4\n  term           .lwr   .coef    .upr\n  <chr>         <dbl>   <dbl>   <dbl>\n1 (Intercept) -0.0424  0.0199  0.0822\n2 B           -2.05   -1.99   -1.93  \n3 A            2.93    2.99    3.06  \n\n\n\nWhich model has the better confidence interval on B?"
+  },
+  {
+    "objectID": "Day-by-day/Lesson-30/simple-paths.html#collider",
+    "href": "Day-by-day/Lesson-30/simple-paths.html#collider",
+    "title": "Spring 2023 Math 300Z",
+    "section": "Collider",
+    "text": "Collider\nSame network as contributing causes, but focussing on relationship between A & B.\n\nTo see the correct (lack of) relationship between A and B, should you include C as a covariate?\n\n\n\n# A tibble: 2 × 4\n  term           .lwr   .coef   .upr\n  <chr>         <dbl>   <dbl>  <dbl>\n1 (Intercept) -0.0246  0.0356 0.0959\n2 B           -0.0768 -0.0158 0.0451\n\n\n# A tibble: 3 × 4\n  term           .lwr    .coef   .upr\n  <chr>         <dbl>    <dbl>  <dbl>\n1 (Intercept) -0.0218 -0.00216 0.0175\n2 B            0.569   0.593   0.617 \n3 C            0.292   0.299   0.305"
+  },
+  {
+    "objectID": "Day-by-day/Lesson-30/simple-paths.html#confounder",
+    "href": "Day-by-day/Lesson-30/simple-paths.html#confounder",
+    "title": "Spring 2023 Math 300Z",
+    "section": "Confounder",
+    "text": "Confounder\n\n\n\n\n\n   \n\nA\n\nA   \n\nC\n\nC   \n\nA->C\n\n    \n\nB\n\nB   \n\nA->B\n\n    \n\nB->C\n\n   \n\n\n\n\n\n\nconfounder <- dag_make(\n  A ~ exo(),\n  B ~ 4*A + exo(),\n  C ~ 2*A  + 0.5*B + exo()\n)\nSamp <- sample(confounder, size=1000)\n\n\nTo see the correct direct connection between B and C, should you include A as a confounder?\n\n\nlm(C ~ B, data=Samp) |> conf_interval()\nlm(C ~ B + A, data=Samp) |> conf_interval()"
+  },
+  {
+    "objectID": "Day-by-day/Lesson-30/Teaching-notes-30.html#discovering-the-rules-for-small-dags",
+    "href": "Day-by-day/Lesson-30/Teaching-notes-30.html#discovering-the-rules-for-small-dags",
+    "title": "Instructor Teaching Notes for Lesson 30",
+    "section": "Discovering the rules for small DAGs",
+    "text": "Discovering the rules for small DAGs\nClass activity"
+  },
+  {
+    "objectID": "Day-by-day/Lesson-30/Teaching-notes-30.html#more-complex-dags",
+    "href": "Day-by-day/Lesson-30/Teaching-notes-30.html#more-complex-dags",
+    "title": "Instructor Teaching Notes for Lesson 30",
+    "section": "More complex DAGs",
+    "text": "More complex DAGs\nIn considering the relationship between two nodes, enumerate each of the paths that connect the two nodes.\nExample: Smoking with a non-genetic mediator: Tar\nThere are two paths from Tar to Lung cancer:\n\n\n\n\n\n   \n\nSmoking gene\n\nSmoking gene   \n\nLung cancer\n\nLung cancer   \n\nSmoking gene->Lung cancer\n\n    \n\nSmoking\n\nSmoking   \n\nSmoking gene->Smoking\n\n  Path 2   \n\nTar\n\nTar   \n\nSmoking->Tar\n\n    \n\nTar->Lung cancer\n\n  Path 1  \n\n\n\n\n\nTwo types of path between two endpoint nodes:\n\nA correlating path: Starting from some node on the path, causal influence can flow (along the arrows) to both endpoints.\n\nBLOCK a correlating path by using some node along it as a covariate. Otherwise, it’s open.\n\nA colliding path: There’s no node on the path from which causal influence can flow (along the arrows) to both endpoints.\n\nOPEN a colliding path by using the collider as a covariate. Otherwise, it’s closed.\n\none <- dag_make(\n  A ~ exo(),\n  B ~ A + exo(),\n  D ~ A + exo(), \n  C ~ B + D +exo()\n)\ndag_draw(one)\n\n\n\nSamp <- sample(one, size=1000)\n\n\nlm(D ~ A, data=Samp) |> conf_interval()\n\n# A tibble: 2 × 4\n  term           .lwr    .coef   .upr\n  <chr>         <dbl>    <dbl>  <dbl>\n1 (Intercept) -0.0665 -0.00368 0.0591\n2 A            0.950   1.01    1.07  \n\nlm(D ~ A + B, data=Samp) |> conf_interval()\n\n# A tibble: 3 × 4\n  term           .lwr    .coef   .upr\n  <chr>         <dbl>    <dbl>  <dbl>\n1 (Intercept) -0.0666 -0.00373 0.0591\n2 A            0.927   1.01    1.10  \n3 B           -0.0654 -0.00292 0.0596\n\nlm(D ~ A + C, data=Samp) |> conf_interval()\n\n# A tibble: 3 × 4\n  term           .lwr  .coef   .upr\n  <chr>         <dbl>  <dbl>  <dbl>\n1 (Intercept) -0.0270 0.0243 0.0757\n2 A            0.299  0.374  0.449 \n3 C            0.297  0.325  0.354 \n\nlm(D ~ A + B + C, data=Samp) |> conf_interval()\n\n# A tibble: 4 × 4\n  term           .lwr   .coef    .upr\n  <chr>         <dbl>   <dbl>   <dbl>\n1 (Intercept) -0.0162  0.0283  0.0728\n2 A            0.484   0.552   0.620 \n3 B           -0.554  -0.500  -0.446 \n4 C            0.456   0.486   0.516 \n\n\n\none <- dag_make(\n  A ~ exo(),\n  E ~ 10*C + exo(),\n  B ~ A + exo(),\n  D ~ A + exo(), \n  C ~ B + D +exo()\n)\ndag_draw(one)\n\n\n\nSamp <- sample(one, size=1000)\nlm(D ~ A, data=Samp) |> conf_interval()\n\n# A tibble: 2 × 4\n  term           .lwr   .coef   .upr\n  <chr>         <dbl>   <dbl>  <dbl>\n1 (Intercept) -0.0804 -0.0196 0.0413\n2 A            0.916   0.976  1.04  \n\nlm(D ~ A + C, data=Samp) |> conf_interval()\n\n# A tibble: 3 × 4\n  term           .lwr   .coef   .upr\n  <chr>         <dbl>   <dbl>  <dbl>\n1 (Intercept) -0.0791 -0.0295 0.0202\n2 A            0.221   0.298  0.375 \n3 C            0.313   0.343  0.373 \n\nlm(D ~ A + E, data=Samp) |> conf_interval()\n\n# A tibble: 3 × 4\n  term           .lwr   .coef   .upr\n  <chr>         <dbl>   <dbl>  <dbl>\n1 (Intercept) -0.0763 -0.0266 0.0231\n2 A            0.224   0.301  0.378 \n3 E            0.0311  0.0341 0.0371\n\n\n\nCan Tar be used to avoid the confounding due to genetics? How do you block the back-door pathway?\n\n\n\n\n\n\n## The Berkeley graduate admissions data from 1973\n\n::: {.cell}\n\n```{.r .cell-code}\nmod1 <- model_train(zero_one(admit, one=\"admitted\") ~ gender,\n                    data=UCB_applicants)\nmodel_plot(mod1, x=dept, color=gender, nlevels=10) +\n  ylab(\"Admitted\")\n\n\n\n:::\n\nmod2 <- model_train(zero_one(admit, one=\"admitted\") ~ gender*dept,\n                    data=UCB_applicants)\nmodel_plot(mod2, x=dept, color=gender, nlevels=10, data_alpha=0.1) +\n  ylab(\"Admitted\")\n\n\n\n\n\nmodel_train(zero_one(admit, one=\"admitted\") ~ gender, \n            data=UCB_applicants) |> conf_interval()\n\nWaiting for profiling to be done...\n\n\n# A tibble: 2 × 4\n  term          .lwr  .coef   .upr\n  <chr>        <dbl>  <dbl>  <dbl>\n1 (Intercept) -0.931 -0.830 -0.732\n2 gendermale   0.485  0.610  0.736\n\nmodel_train(zero_one(admit, one=\"admitted\") ~ gender + dept, \n            data=UCB_applicants) |> conf_interval()\n\nWaiting for profiling to be done...\n\n\n# A tibble: 7 × 4\n  term          .lwr   .coef    .upr\n  <chr>        <dbl>   <dbl>   <dbl>\n1 (Intercept)  0.488  0.682   0.877 \n2 gendermale  -0.259 -0.0999  0.0582\n3 deptB       -0.258 -0.0434  0.172 \n4 deptC       -1.47  -1.26   -1.05  \n5 deptD       -1.50  -1.29   -1.09  \n6 deptE       -1.99  -1.74   -1.49  \n7 deptF       -3.65  -3.31   -2.98"
+  },
+  {
+    "objectID": "Day-by-day/Lesson-30/Teaching-notes-30.html#the-berkeley-graduate-admissions-data-from-1973",
+    "href": "Day-by-day/Lesson-30/Teaching-notes-30.html#the-berkeley-graduate-admissions-data-from-1973",
+    "title": "Instructor Teaching Notes for Lesson 30",
+    "section": "The Berkeley graduate admissions data from 1973",
+    "text": "The Berkeley graduate admissions data from 1973\n\nmod1 <- model_train(zero_one(admit, one=\"admitted\") ~ gender,\n                    data=UCB_applicants)\nmodel_plot(mod1, x=dept, color=gender, nlevels=10) +\n  ylab(\"Admitted\")\n\n\n\n\n\nmod2 <- model_train(zero_one(admit, one=\"admitted\") ~ gender*dept,\n                    data=UCB_applicants)\nmodel_plot(mod2, x=dept, color=gender, nlevels=10, data_alpha=0.1) +\n  ylab(\"Admitted\")\n\n\n\n\n\nmodel_train(zero_one(admit, one=\"admitted\") ~ gender, \n            data=UCB_applicants) |> conf_interval()\n\nWaiting for profiling to be done...\n\n\n# A tibble: 2 × 4\n  term          .lwr  .coef   .upr\n  <chr>        <dbl>  <dbl>  <dbl>\n1 (Intercept) -0.931 -0.830 -0.732\n2 gendermale   0.485  0.610  0.736\n\nmodel_train(zero_one(admit, one=\"admitted\") ~ gender + dept, \n            data=UCB_applicants) |> conf_interval()\n\nWaiting for profiling to be done...\n\n\n# A tibble: 7 × 4\n  term          .lwr   .coef    .upr\n  <chr>        <dbl>   <dbl>   <dbl>\n1 (Intercept)  0.488  0.682   0.877 \n2 gendermale  -0.259 -0.0999  0.0582\n3 deptB       -0.258 -0.0434  0.172 \n4 deptC       -1.47  -1.26   -1.05  \n5 deptD       -1.50  -1.29   -1.09  \n6 deptE       -1.99  -1.74   -1.49  \n7 deptF       -3.65  -3.31   -2.98"
   }
 ]
