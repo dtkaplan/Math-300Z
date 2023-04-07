@@ -61,8 +61,13 @@ The **effect size** w.r.t. an explanatory variable is automatically adjusted for
 
 ```{r}
 LTraw <- readr::read_csv("life-table-raw.csv")
-LT <- tidyr::pivot_longer(LTraw |> select(age, male, female), c("male", "female"), names_to="sex", values_to="mortality")
+head(LTraw)
+```
 
+Wrangling to a more convenient format (for our purposes):
+
+```{r}
+LT <- tidyr::pivot_longer(LTraw |> select(age, male, female), c("male", "female"), names_to="sex", values_to="mortality")
 ```
 
 **Age pyramids** comparing the US population in 1972 and 2021
@@ -94,10 +99,16 @@ Pop2020 <- readr::read_csv("nc-est2021-agesex-res.csv",
 Pop2020
 ```
 
-US mortality at actual age distribution:
+US mortality at actual age distribution involves joining the data from these two data frames.
 
 ```{r}
 Overall <- Pop2020 |> left_join(LT)
+head(Overall)
+```
+
+The calculation is simple wrangling:
+
+```{r}
 Overall |> group_by(sex) |>
   summarize(mortality = 100000*sum(pop*mortality)/sum(pop))
 ```

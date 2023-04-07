@@ -326,38 +326,38 @@ Tar-&gt;Lung cancer
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(D <span class="sc">~</span> A, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
-  term           .lwr  .coef   .upr
-  &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-1 (Intercept) -0.0507 0.0118 0.0744
-2 A            0.949  1.01   1.07  </code></pre>
+  term           .lwr    .coef   .upr
+  &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
+1 (Intercept) -0.0699 -0.00734 0.0552
+2 A            0.921   0.986   1.05  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(D <span class="sc">~</span> A <span class="sc">+</span> B, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
-  term           .lwr  .coef   .upr
-  &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-1 (Intercept) -0.0516 0.0110 0.0736
-2 A            0.899  0.988  1.08  
-3 B           -0.0383 0.0234 0.0852</code></pre>
+  term           .lwr    .coef   .upr
+  &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
+1 (Intercept) -0.0700 -0.00749 0.0550
+2 A            0.940   1.03    1.12  
+3 B           -0.108  -0.0448  0.0182</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(D <span class="sc">~</span> A <span class="sc">+</span> C, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
   term           .lwr   .coef   .upr
   &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
-1 (Intercept) -0.0432 0.00736 0.0579
-2 A            0.259  0.336   0.413 
-3 C            0.313  0.342   0.371 </code></pre>
+1 (Intercept) -0.0676 -0.0160 0.0356
+2 A            0.237   0.318  0.399 
+3 C            0.306   0.337  0.367 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(D <span class="sc">~</span> A <span class="sc">+</span> B <span class="sc">+</span> C, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 4
   term           .lwr   .coef    .upr
   &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1 (Intercept) -0.0205  0.0235  0.0675
-2 A            0.431   0.501   0.570 
-3 B           -0.544  -0.490  -0.437 
-4 C            0.479   0.510   0.542 </code></pre>
+1 (Intercept) -0.0663 -0.0220  0.0223
+2 A            0.422   0.494   0.565 
+3 B           -0.568  -0.514  -0.461 
+4 C            0.471   0.502   0.533 </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -376,28 +376,28 @@ Tar-&gt;Lung cancer
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(D <span class="sc">~</span> A, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
-  term          .lwr   .coef    .upr
-  &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1 (Intercept) -0.115 -0.0566 0.00185
-2 A            0.915  0.972  1.03   </code></pre>
+  term          .lwr   .coef   .upr
+  &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+1 (Intercept) -0.108 -0.0464 0.0155
+2 A            0.913  0.973  1.03  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(D <span class="sc">~</span> A <span class="sc">+</span> C, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
-  term           .lwr    .coef   .upr
-  &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
-1 (Intercept) -0.0547 -0.00594 0.0429
-2 A            0.290   0.364   0.438 
-3 C            0.275   0.303   0.331 </code></pre>
+  term           .lwr   .coef    .upr
+  &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept) -0.0965 -0.0449 0.00662
+2 A            0.268   0.345  0.423  
+3 C            0.291   0.321  0.351  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(D <span class="sc">~</span> A <span class="sc">+</span> E, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
-  term           .lwr    .coef   .upr
-  &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
-1 (Intercept) -0.0535 -0.00474 0.0440
-2 A            0.291   0.365   0.438 
-3 E            0.0275  0.0303  0.0331</code></pre>
+  term           .lwr   .coef    .upr
+  &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept) -0.0966 -0.0450 0.00661
+2 A            0.269   0.347  0.424  
+3 E            0.0289  0.0320 0.0350 </code></pre>
 </div>
 </div>
 <pre><code>
