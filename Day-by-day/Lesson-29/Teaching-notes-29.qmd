@@ -68,6 +68,7 @@ Wrangling to a more convenient format (for our purposes):
 
 ```{r}
 LT <- tidyr::pivot_longer(LTraw |> select(age, male, female), c("male", "female"), names_to="sex", values_to="mortality")
+LT
 ```
 
 **Age pyramids** comparing the US population in 1972 and 2021
@@ -96,7 +97,7 @@ Pop2020 <- readr::read_csv("nc-est2021-agesex-res.csv",
 ```
 
 ```{r}
-Pop2020
+Pop2020 |> tail()
 ```
 
 US mortality at actual age distribution involves joining the data from these two data frames.

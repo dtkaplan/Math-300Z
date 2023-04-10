@@ -29,6 +29,7 @@ mediator <- dag_make(
   B ~ 2.5*A + exo(),
   C ~ -1.2*B + exo()
 )
+dag_draw(mediator)
 Samp <- sample(mediator, size=1000)
 ```
 
@@ -67,6 +68,7 @@ common_cause <- dag_make(
   B ~ exo(),
   C ~ 5*B - 2*A + exo()
 )
+dag_draw(common_cause)
 Samp <- sample(common_cause, size=1000)
 ```
 

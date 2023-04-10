@@ -340,7 +340,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 1 × 4
   term         .lwr .coef  .upr
   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 (Intercept)  506.  507.  509.</code></pre>
+1 (Intercept)  508.  509.  511.</code></pre>
 </div>
 </div>
 <p>The actual size of the data is about <span class="math inline">\(n=1,000,000\)</span>, 50 times greater. So the confidence interval on the mean of the actual data will be about 1/7 of the one in the calculation: 1.5/7 = 0.2.</p>
@@ -351,8 +351,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code># A tibble: 2 × 4
   term         .lwr .coef  .upr
   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 (Intercept) 493.  495.  497. 
-2 sexmale      21.9  24.9  28.0</code></pre>
+1 (Intercept) 495.  497.  500. 
+2 sexmale      20.1  23.2  26.3</code></pre>
 </div>
 </div>
 <p>With the full data set, the margin of error is 3/7 = 0.4.</p>
@@ -394,8 +394,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">model_eval</span>(<span class="at">skeleton =</span> <span class="cn">TRUE</span>, <span class="at">interval=</span><span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     sex  .output     .lwr     .upr
-1 female 494.9550 277.6127 712.2974
-2   male 519.8865 302.5442 737.2288</code></pre>
+1 female 497.4977 277.6429 717.3525
+2   male 520.7302 300.8755 740.5850</code></pre>
 </div>
 </div>
 <p>Informally … Cover almost all (say, 95%) of the data.</p>

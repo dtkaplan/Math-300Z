@@ -225,22 +225,26 @@ B-&gt;C
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  B <span class="sc">~</span> <span class="fl">2.5</span><span class="sc">*</span>A <span class="sc">+</span> <span class="fu">exo</span>(),</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  C <span class="sc">~</span> <span class="sc">-</span><span class="fl">1.2</span><span class="sc">*</span>B <span class="sc">+</span> <span class="fu">exo</span>()</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(mediator, <span class="at">size=</span><span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(mediator)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="simple-paths_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(mediator, <span class="at">size=</span><span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question 1</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(C <span class="sc">~</span> A, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(C <span class="sc">~</span> A <span class="sc">+</span> B, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question 1</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(C <span class="sc">~</span> A, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(C <span class="sc">~</span> A <span class="sc">+</span> B, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question 2</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(B <span class="sc">~</span> A, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(B <span class="sc">~</span> A <span class="sc">+</span> C, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question 2</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(B <span class="sc">~</span> A, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(B <span class="sc">~</span> A <span class="sc">+</span> C, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question 3</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(C <span class="sc">~</span> B, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(C <span class="sc">~</span> B <span class="sc">+</span> A, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question 3</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(C <span class="sc">~</span> B, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(C <span class="sc">~</span> B <span class="sc">+</span> A, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="common-cause" class="level2">
@@ -277,26 +281,30 @@ A-&gt;C
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>common_cause <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  A <span class="sc">~</span> <span class="fu">exo</span>(),</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  B <span class="sc">~</span> <span class="fu">exo</span>(),</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  C <span class="sc">~</span> <span class="dv">5</span><span class="sc">*</span>B <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span>A <span class="sc">+</span> <span class="fu">exo</span>()</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(common_cause, <span class="at">size=</span><span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>common_cause <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  A <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  B <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  C <span class="sc">~</span> <span class="dv">5</span><span class="sc">*</span>B <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span>A <span class="sc">+</span> <span class="fu">exo</span>()</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(common_cause)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="simple-paths_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(common_cause, <span class="at">size=</span><span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="1">
 <li>To see the direct relationship between A and C, should you include B as a covariate?</li>
 <li>To see the relationship between B and A, should you include C as a covariate?</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question 1</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(C <span class="sc">~</span> A, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(C <span class="sc">~</span> A <span class="sc">+</span> B, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question 1</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(C <span class="sc">~</span> A, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(C <span class="sc">~</span> A <span class="sc">+</span> B, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question 2</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(A <span class="sc">~</span> B, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(A <span class="sc">~</span> B <span class="sc">+</span> C, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Question 2</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(A <span class="sc">~</span> B, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(A <span class="sc">~</span> B <span class="sc">+</span> C, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="contributing-causes" class="level2">
@@ -333,12 +341,12 @@ B-&gt;C
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>contrib_causes <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  B <span class="sc">~</span> <span class="fu">exo</span>(),</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  A <span class="sc">~</span> <span class="fu">exo</span>(),</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  C <span class="sc">~</span> <span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>B <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>A <span class="sc">+</span> <span class="fu">exo</span>()</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(contrib_causes, <span class="at">size=</span><span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>contrib_causes <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  B <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  A <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  C <span class="sc">~</span> <span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>B <span class="sc">+</span> <span class="dv">3</span><span class="sc">*</span>A <span class="sc">+</span> <span class="fu">exo</span>()</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(contrib_causes, <span class="at">size=</span><span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="1">
 <li>To see the effect of B on C, do you need to include A as a covariate?</li>
@@ -348,16 +356,16 @@ B-&gt;C
 <pre><code># A tibble: 2 × 4
   term           .lwr  .coef   .upr
   &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-1 (Intercept) -0.0155  0.179  0.374
-2 B           -2.05   -1.86  -1.67 </code></pre>
+1 (Intercept) -0.0387  0.158  0.355
+2 B           -2.02   -1.81  -1.60 </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
   term           .lwr   .coef    .upr
   &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1 (Intercept) -0.0763 -0.0138  0.0488
-2 B           -2.10   -2.04   -1.98  
-3 A            2.93    2.99    3.05  </code></pre>
+1 (Intercept) -0.0449  0.0172  0.0793
+2 B           -2.01   -1.94   -1.88  
+3 A            2.95    3.01    3.07  </code></pre>
 </div>
 </div>
 <ol start="2" type="1">
@@ -373,18 +381,18 @@ B-&gt;C
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
-  term             .lwr  .coef  .upr
-  &lt;chr&gt;           &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-1 (Intercept)  0.00287  0.0645 0.126
-2 B           -0.000342 0.0606 0.121</code></pre>
+  term           .lwr  .coef  .upr
+  &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 (Intercept) -0.0152 0.0468 0.109
+2 B           -0.0216 0.0436 0.109</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
-  term            .lwr  .coef   .upr
-  &lt;chr&gt;          &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-1 (Intercept) -0.00904 0.0108 0.0306
-2 B            0.596   0.618  0.641 
-3 C            0.294   0.300  0.306 </code></pre>
+  term           .lwr     .coef   .upr
+  &lt;chr&gt;         &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;
+1 (Intercept) -0.0201 -0.000492 0.0191
+2 B            0.562   0.586    0.609 
+3 C            0.293   0.299    0.306 </code></pre>
 </div>
 </div>
 </section>
@@ -426,19 +434,19 @@ B-&gt;C
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>confounder <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  A <span class="sc">~</span> <span class="fu">exo</span>(),</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  B <span class="sc">~</span> <span class="dv">4</span><span class="sc">*</span>A <span class="sc">+</span> <span class="fu">exo</span>(),</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  C <span class="sc">~</span> <span class="dv">2</span><span class="sc">*</span>A  <span class="sc">+</span> <span class="fl">0.5</span><span class="sc">*</span>B <span class="sc">+</span> <span class="fu">exo</span>()</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(confounder, <span class="at">size=</span><span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>confounder <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  A <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  B <span class="sc">~</span> <span class="dv">4</span><span class="sc">*</span>A <span class="sc">+</span> <span class="fu">exo</span>(),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  C <span class="sc">~</span> <span class="dv">2</span><span class="sc">*</span>A  <span class="sc">+</span> <span class="fl">0.5</span><span class="sc">*</span>B <span class="sc">+</span> <span class="fu">exo</span>()</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(confounder, <span class="at">size=</span><span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="1">
 <li>To see the correct direct connection between B and C, should you include A as a confounder?</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(C <span class="sc">~</span> B, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(C <span class="sc">~</span> B <span class="sc">+</span> A, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(C <span class="sc">~</span> B, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(C <span class="sc">~</span> B <span class="sc">+</span> A, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

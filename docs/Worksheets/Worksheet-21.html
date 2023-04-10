@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Jane Doe">
-<meta name="dcterms.date" content="2023-03-07">
+<meta name="dcterms.date" content="2023-04-10">
 
 <title>Spring 2023 Math 300Z - Lesson 21: Worksheet</title>
 <style>
@@ -194,7 +194,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 7, 2023</p>
+      <p class="date">April 10, 2023</p>
     </div>
   </div>
   
@@ -455,17 +455,17 @@ ANSWER
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> a, <span class="at">data=</span>Our_sample) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     n k  Rsquared        F     adjR2 p df.num df.denom
-1 1000 1 0.1370083 158.4421 0.1361435 0      1      998</code></pre>
+1 1000 1 0.1163881 131.4552 0.1155028 0      1      998</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> b, <span class="at">data=</span>Our_sample) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     n k  Rsquared        F     adjR2 p df.num df.denom
-1 1000 1 0.3093868 447.0925 0.3086948 0      1      998</code></pre>
+1 1000 1 0.2561369 343.6448 0.2553916 0      1      998</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> a <span class="sc">+</span> b, <span class="at">data=</span>Our_sample) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     n k  Rsquared        F     adjR2 p df.num df.denom
-1 1000 2 0.4159078 354.9612 0.4147361 0      2      997</code></pre>
+<pre><code>     n k Rsquared        F     adjR2 p df.num df.denom
+1 1000 2 0.391591 320.8501 0.3903705 0      2      997</code></pre>
 </div>
 </div>
 <p>The model <code>y ~ 1</code> has R<sup>2</sup>=0 because the pseudo-variable <code>1</code> has zero variance and cannot “explain” any of the variance in the response variable <code>y</code>.</p>
@@ -504,13 +504,13 @@ ANSWER
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> a <span class="sc">+</span> b <span class="sc">+</span> c, <span class="at">data=</span>Our_sample) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     n k Rsquared        F   adjR2 p df.num df.denom
-1 1000 3 0.446557 267.8811 0.44489 0      3      996</code></pre>
+<pre><code>     n k  Rsquared        F     adjR2 p df.num df.denom
+1 1000 3 0.4293227 249.7649 0.4276038 0      3      996</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> c <span class="sc">+</span> a <span class="sc">+</span> b, <span class="at">data=</span>Our_sample) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     n k Rsquared        F   adjR2 p df.num df.denom
-1 1000 3 0.446557 267.8811 0.44489 0      3      996</code></pre>
+<pre><code>     n k  Rsquared        F     adjR2 p df.num df.denom
+1 1000 3 0.4293227 249.7649 0.4276038 0      3      996</code></pre>
 </div>
 </div>
 <p>The order of explanatory variables does not matter at all. It’s the <em>collection</em> that matters.</p>

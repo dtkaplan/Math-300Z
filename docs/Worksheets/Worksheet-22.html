@@ -213,18 +213,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 25 × 1
-         y
-     &lt;dbl&gt;
- 1  6.06  
- 2  3.71  
- 3  3.01  
- 4  1.28  
- 5  0.440 
- 6 11.0   
- 7  7.24  
- 8  6.74  
- 9  7.81  
-10 -0.0512
+        y
+    &lt;dbl&gt;
+ 1  2.29 
+ 2  8.90 
+ 3  6.56 
+ 4  1.29 
+ 5  6.97 
+ 6  8.76 
+ 7  8.23 
+ 8  0.759
+ 9  5.18 
+10 10.2  
 # … with 15 more rows</code></pre>
 </div>
 </div>
@@ -246,7 +246,7 @@ ANSWER
 <pre><code># A tibble: 1 × 1
   `mean(y)`
       &lt;dbl&gt;
-1      4.76</code></pre>
+1      6.37</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dag02sample <span class="sc">%&gt;%</span> </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(y<span class="sc">~</span><span class="dv">1</span>,<span class="at">data=</span>.)<span class="sc">%&gt;%</span></span>
@@ -255,7 +255,7 @@ ANSWER
 <pre><code># A tibble: 1 × 4
   term         .lwr .coef  .upr
   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 (Intercept)  3.32  4.76  6.20</code></pre>
+1 (Intercept)  5.14  6.37  7.60</code></pre>
 </div>
 </div>
 </div>
@@ -308,7 +308,7 @@ ANSWER
 <pre><code># A tibble: 1 × 3
   mean_of_means sampling_variance standard_error
           &lt;dbl&gt;             &lt;dbl&gt;          &lt;dbl&gt;
-1          5.01             0.443          0.665</code></pre>
+1          4.98             0.551          0.742</code></pre>
 </div>
 </div>
 <p>Notice that the names—<code>sampling_variance</code> and <code>standard_error</code>—we used for the different summaries correspond to the standard statistical nomenclature for these quantities.</p>

@@ -288,8 +288,8 @@ ANSWER
 <pre><code># A tibble: 2 × 4
   term         .lwr .coef  .upr
   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 (Intercept)  2.83  2.90  2.98
-2 x            1.36  1.41  1.47</code></pre>
+1 (Intercept)  2.95  3.03  3.10
+2 x            1.46  1.52  1.57</code></pre>
 </div>
 </div>
 </div>
@@ -315,9 +315,9 @@ ANSWER
 <pre><code># A tibble: 3 × 4
   term         .lwr .coef  .upr
   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 (Intercept) 2.90  2.97   3.03
-2 x           0.919 0.983  1.05
-3 c           0.901 0.989  1.08</code></pre>
+1 (Intercept) 2.92  2.98   3.04
+2 x           0.984 1.05   1.11
+3 c           0.902 0.984  1.07</code></pre>
 </div>
 </div>
 <p>When we include both <code>x</code> and <code>c</code> in the model specification, the coefficients work out to match those of the DAG formula for <code>y</code>.</p>
@@ -430,8 +430,8 @@ ANSWER
 <pre><code># A tibble: 2 × 4
   term             .lwr     .coef      .upr
   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
-1 (Intercept) 1191.     1215.     1239.    
-2 expenditure   -0.0179   -0.0160   -0.0140</code></pre>
+1 (Intercept) 1192.     1216.     1241.    
+2 expenditure   -0.0181   -0.0161   -0.0141</code></pre>
 </div>
 </div>
 <p>The coefficient on Expenditure is negative in contrast to the known positive coefficient in the DAG formula for Outcome.</p>

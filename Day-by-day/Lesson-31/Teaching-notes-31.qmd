@@ -10,5 +10,387 @@ date: "Revised 03/08/2023"
 library(math300)
 ```
 
+On Sunday afternoon I was reading the AARP monthly newsletter. This short item drew my attention:
+
+```{r echo=FALSE}
+#| fig-align: center
+#| out-width: 30%
+knitr::include_graphics("chest-pain.png")
+```
+
+This hat startling relevance because---at the time I was reading---I had no chest pain at all. Should I have been concerned? What is the probability I am having a heart attack if not 31%.
+
+Heuristics: 
+- **31% per what interval of time?** If I'm not having chest pain next week, do I still have a 31% probability of having a heart attack at that time? A probability quantifies a specific outcome from a specific event. Is there any guidance about what the specific event is? My whole future life? This month? Today?
+- ... others from students.
+
+<!--
+
+**Formalism**:
+
+- A probability is a number between 0 and 1 assigned to an individual outcome from an event with many possible outcomes. (Remember, the proper form for a prediction is to assign a probability to each possible outcome of the thing being predicted. The probabilities across all possible mutually exclusive outcomes add to 1.)
+
+**Example**:
+
+Simple events: Just one kind of outcome, e.g. a single number (which is mutually exclusive of the other possible numbers) or a categorical outcome. To keep things particular simple, let's consider two non-overlapping simple events:
+
+- Example 1: Outcomes are "sick" or "healthy," for instance, having a heart attack or not having a heart attack.
+
+- Example 2: Outcomes are "pain" or "no pain," as in chest pain.
+
+However we define one of the outcomes, the complement is "anything but that."
+
+Compound events: The outcomes are all the possible combinations of the outcomes of two (or more) simple events:
+
+i. Sick & pain
+#. Healthy & pain
+#. Sick & no pain
+#. Healthy & no pain
+
+There are compound events that can be stated as a composition of these, e.g. 
+- "sick or pain" is a combination of "sick & pain" + "sick & no pain" + "healthy & pain"
+- "sick xor pain" is a combination of "sick & no pain" + "healthy & pain"
+
+A **marginal probability** refers to a compound event. e.g. p(pain), likewise p(healthy). It is the probability of outcome for one event, *regardless* of which way the other event comes out.
+
+A **conditional probability** also refers to a compound event. The probability of one event **given** that the other event has a particular value. Example: p(pain | sick). The "|" reads as "given."
+
+
+ . | sick | healthy
+Pain | 3 | 4
+No pain | 5 | 6
+
+
+The one I'm concerned about here is p(sick | no pain). This is:
+
+p(sick | no pain) = p(no pain | sick) * p(sick) /p(no pain) = [p(no pain | sick) / p(no pain)] p (sick)
+
+The quantity in square brackets is called the Bayes factor. Here, that is [(5/8)/(11/18)] = 1.02
+
+Posterior is likelihood * prior
+
+A "**likelihood**" is probability of some observable *given* the underlying condition.
+
+Two likelihoods involved here: p(pain | sick) as well as p(pain | healthy)
+
+These are likelihoods, not compound events.
+
+ . | sick | healthy
+Pain | 69% | 1%
+No pain | 31% | 99%
+
+Multiply the likelihood by the prior. Example p(sick) = 1% so p(healthy) = 99%
+
+These are compound events
+ . | sick | healthy
+Pain | 0.69% | 0.1%
+No pain | 0.31% | 98%
+
+-->
+
 ## Review of Lesson 30
+
+**Child of response as covariate**
+
+```{r}
+dag_four <- dag_make(
+  A ~ exo(),
+  B ~ A + exo(),
+  C ~ 2.5*B + exo()
+)
+Samp <- sample(dag_four, size=1000)
+lm(B ~ A, data=Samp) |> conf_interval()
+lm(B ~ A + C, data=Samp) |> conf_interval()
+```
+
+
+
+**Parent of explanatory as covariate**
+
+```{r}
+dag_six <- dag_make(
+  C ~ exo(),
+  A ~ C +  exo(),
+  B ~ 2.5* A + exo()
+)
+Samp <- sample(dag_six, size=1000)
+lm(B ~ A, data=Samp) |> conf_interval()
+lm(B ~ A + C, data=Samp) |> conf_interval()
+```
+
+**Child of explanatory as covariate**
+
+```{r}
+dag_five <- dag_make(
+  A ~ exo(),
+  C ~ A +  exo(),
+  B ~ 2.5* A + exo()
+)
+Samp <- sample(dag_five, size=1000)
+lm(B ~ A, data=Samp) |> conf_interval()
+lm(B ~ A + C, data=Samp) |> conf_interval()
+```
+
+**Collider
+
+```{r}
+dag_three <- dag_make(
+  A ~ exo(),
+  B ~ 2.5* A + exo(),
+  C ~ A + 1.25*B +  exo()
+)
+Samp <- sample(dag_three, size=1000)
+lm(B ~ A, data=Samp) |> conf_interval()
+lm(B ~ A + C, data=Samp) |> conf_interval()
+```
+
+
+## The Berkeley graduate admissions data from 1973
+
+```{r}
+mod1 <- model_train(zero_one(admit, one="admitted") ~ gender,
+                    data=UCB_applicants)
+model_plot(mod1, x=dept, color=gender, nlevels=10) +
+  ylab("Admitted")
+```
+
+```{r}
+mod2 <- model_train(zero_one(admit, one="admitted") ~ gender*dept,
+                    data=UCB_applicants)
+model_plot(mod2, x=dept, color=gender, nlevels=10, data_alpha=0.1) +
+  ylab("Admitted")
+```
+
+
+```{r}
+model_train(zero_one(admit, one="admitted") ~ gender, 
+            data=UCB_applicants) |> conf_interval()
+model_train(zero_one(admit, one="admitted") ~ gender + dept, 
+            data=UCB_applicants) |> conf_interval()
+```
+
+
+
+
+
+## Back to Berkeley
+
+Should we adjust for **department**? Let's go to a DAG.
+
+
+
+```{r}
+UCB_dag1 <- dag_make(sex ~ exo(),
+                     dept ~ sex,
+                     admit ~ sex + dept)
+dag_draw(UCB_dag1, vertex.label.cex=1)
+```
+
+If we think that the connection sex $\longrightarrow$ department is just a matter of personal choice (as in the 1975 *Science* article), then we should block the back-door pathway.
+
+But if we think that sex $\longrightarrow$ department reflects systemic issues such as which departments are considered important and get funding, or which careers women think they can succeed in, then we **do not** want to block the backdoor pathway.
+
+```{r}
+UCB_dag2 <- dag_make(sex ~ exo(),
+                     success ~ sex,
+                     dept_funding ~ sex,
+                     dept ~ success,
+                     admit ~ sex + dept + dept_funding)
+dag_draw(UCB_dag2, vertex.label.cex=1)
+```
+
+
+## Birthweight collider
+
+
+Observations from the 1960s:
+
+- Smoking is associated with lower birthweight
+- Lower birthweight is associated with increased mortality
+
+Question: Does smoking have a direct effect on mortality?
+
+
+```{dot}
+digraph H {
+  node [fontsize="5" shape="plain"];
+  edge [penwidth="0.5" arrowsize="0.25" len="0.25"];
+  Smoking -> "Birth weight" [color="blue"];
+  "Birth weight" -> "Mortality of infant" [color="blue"];
+  Smoking -> "Mortality of infant" [color="blue" label=" ?" labelfontcolor="blue" fontsize="5"];
+}
+```
+
+How do you look at the direct effect of smoking on mortality? Block the other pathway by using birth weight as a covariate. 
+
+When this was done, by looking only at low-birthweight babies, it was found that smoking *reduces* mortality.
+
+Might there be something else going on? Is there another cause for low birthweight?
+
+```{dot}
+digraph J {
+      node [fontsize="5" shape="plain"];
+      edge [penwidth="0.5" arrowsize="0.25" len="0.25"];
+      "Birth defect";
+      Smoking;
+      "Birth weight";
+      "Mortality of infant";
+      Smoking -> "Birth weight" [color="blue"];
+      "Birth weight" -> "Mortality of infant" [color="blue"];
+      Smoking -> "Mortality of infant" [color="blue"];
+      "Birth defect" -> "Mortality of infant";
+      "Birth defect" -> "Birth weight";
+}
+```
+
+
+
+
+## Links by chance
+
+Our method for detecting a link between variable `X` and `Y` is to build the model `Y ~ X`, with perhaps some covariate(s), then example the coefficient on `X`. If the *confidence interval** includes zero, there is no link.
+
+We can simulate what happens when there is **no link**, for example
+
+```{r}
+no_link_dag <- dag_make(
+  X ~ exo(),
+  Y ~ exo()
+)
+```
+
+How do we know this DAG represents a system with no link?
+
+A simulation:
+
+```{r}
+Samp <- sample(no_link_dag, size=100)
+lm(Y ~ X, data=Samp) |> 
+  conf_interval() |>
+  filter(term=="X")
+```
+
+Let's see how often we get a confidence interval that **excludes zero** even though there is no link between `X` and `Y` in the mechanism generating the data.
+
+```{r}
+one_trial <- function(n=100) {
+  sample(no_link_dag, size=n) |>
+    lm(Y ~ X, data=_) |>
+    conf_interval() |>
+    filter(term=="X") |> 
+    mutate(excludes = .lwr > 0 | .upr < 0) |>
+    select(excludes)
+}
+one_trial()
+```
+
+Now run 1000 trials ...
+
+```{r}
+{do(1000) * one_trial(n=100)} |> 
+  summarize(frac_mistakes = sum(excludes) / n())
+```
+
+How will the fraction of mistakes change if we increase the sample size?
+
+## Other sources of spurious correlation
+
+
+## The Berkeley graduate admissions data from 1973
+
+```{r}
+mod1 <- model_train(zero_one(admit, one="admitted") ~ gender,
+                    data=UCB_applicants)
+model_plot(mod1, x=dept, color=gender, nlevels=10) +
+  ylab("Admitted")
+```
+
+```{r}
+mod2 <- model_train(zero_one(admit, one="admitted") ~ gender*dept,
+                    data=UCB_applicants)
+model_plot(mod2, x=dept, color=gender, nlevels=10, data_alpha=0.1) +
+  ylab("Admitted")
+```
+
+
+```{r}
+model_train(zero_one(admit, one="admitted") ~ gender, 
+            data=UCB_applicants) |> conf_interval()
+model_train(zero_one(admit, one="admitted") ~ gender + dept, 
+            data=UCB_applicants) |> conf_interval()
+```
+
+
+
+
+
+## Back to Berkeley
+
+Should we adjust for **department**? Let's go to a DAG.
+
+
+
+```{r}
+UCB_dag1 <- dag_make(sex ~ exo(),
+                     dept ~ sex,
+                     admit ~ sex + dept)
+dag_draw(UCB_dag1, vertex.label.cex=1)
+```
+
+If we think that the connection sex $\longrightarrow$ department is just a matter of personal choice (as in the 1975 *Science* article), then we should block the back-door pathway.
+
+But if we think that sex $\longrightarrow$ department reflects systemic issues such as which departments are considered important and get funding, or which careers women think they can succeed in, then we **do not** want to block the backdoor pathway.
+
+```{r}
+UCB_dag2 <- dag_make(sex ~ exo(),
+                     success ~ sex,
+                     dept_funding ~ sex,
+                     dept ~ success,
+                     admit ~ sex + dept + dept_funding)
+dag_draw(UCB_dag2, vertex.label.cex=1)
+```
+
+
+## Birthweight collider
+
+
+Observations from the 1960s:
+
+- Smoking is associated with lower birthweight
+- Lower birthweight is associated with increased mortality
+
+Question: Does smoking have a direct effect on mortality?
+
+
+```{dot}
+digraph H {
+  node [fontsize="5" shape="plain"];
+  edge [penwidth="0.5" arrowsize="0.25" len="0.25"];
+  Smoking -> "Birth weight" [color="blue"];
+  "Birth weight" -> "Mortality of infant" [color="blue"];
+  Smoking -> "Mortality of infant" [color="blue" label=" ?" labelfontcolor="blue" fontsize="5"];
+}
+```
+
+How do you look at the direct effect of smoking on mortality? Block the other pathway by using birth weight as a covariate. 
+
+When this was done, by looking only at low-birthweight babies, it was found that smoking *reduces* mortality.
+
+Might there be something else going on? Is there another cause for low birthweight?
+
+```{dot}
+digraph J {
+      node [fontsize="5" shape="plain"];
+      edge [penwidth="0.5" arrowsize="0.25" len="0.25"];
+      "Birth defect";
+      Smoking;
+      "Birth weight";
+      "Mortality of infant";
+      Smoking -> "Birth weight" [color="blue"];
+      "Birth weight" -> "Mortality of infant" [color="blue"];
+      Smoking -> "Mortality of infant" [color="blue"];
+      "Birth defect" -> "Mortality of infant";
+      "Birth defect" -> "Birth weight";
+}
+```
 
