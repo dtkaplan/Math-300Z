@@ -22,6 +22,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -61,11 +124,12 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -107,9 +171,11 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -141,8 +207,244 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="review-of-lesson-31" class="level2">
-<h2 class="anchored" data-anchor-id="review-of-lesson-31">Review of Lesson 31</h2>
+<section id="review-of-lessons-28-31" class="level2">
+<h2 class="anchored" data-anchor-id="review-of-lessons-28-31">Review of Lessons 28-31</h2>
+<p>The topic of the last four lessons was using the technology of “multiple regression” in order to make <strong>accurate</strong> models of a supposed causal connection between variables, for instance <code>A</code> <span class="math inline">\(\longrightarrow\)</span> <code>B</code>. This involved two phases:</p>
+<ol type="1">
+<li><p>Using <strong>covariates</strong> along with <code>B</code> and <code>A</code> in order to <strong>adjust</strong> for other factors that might make the effect size estimated from <code>B ~ A</code> misleading. For us in Math 300Z, this has been presented as a matter of including the relevant covariates among the explanatory variables. There are more sophisticated techniques (such as “structural equation modeling” and Bayesian estimation of “latent variables”) but the multiple regression technique is powerful and so common in professional work that it might be considered the mother of all other techniques.</p></li>
+<li><p>Expressing our “beliefs” about the network of causal relationships that ties the covariates to <code>A</code> and <code>B</code> in the form of a <strong>DAG</strong>. Analysis of pathways between <code>A</code> and <code>B</code> in the DAG reveals which covariates ought to be <strong>included</strong> and which <strong>excluded</strong> from our model. When our beliefs are uncertain, it can be helpful to construct multiple plausible DAGs and examine whether the proper choice of covariates is robust across the range of plausible DAGs. Often, it will <em>not</em> be robust, a situation calling for re-assessment and consideration of whether there are additional variables that might be included to avoid the ambiguity.</p></li>
+</ol>
+<p>Multiple regression with the use of covariates and DAGs is a powerful technique and often produces results that decision-makers can rely on. Every modeler should have it among her tools. It is not, however, all-powerful and there are situations where it should be supplemented by other techniques, especially in situations where those techniques can be easily applied.</p>
+</section>
+<section id="limits-to-the-multiple-regressioncovariate-approach" class="level2">
+<h2 class="anchored" data-anchor-id="limits-to-the-multiple-regressioncovariate-approach">Limits to the multiple-regression/covariate approach</h2>
+<ol type="1">
+<li><p>There may be influential factors that are not or cannot be measured. Without measuring such factors, it’s impossible to use them as covariates.</p></li>
+<li><p>There can be factors that have not been recognized as such. These are sometimes called “<strong>lurking variables</strong>.”</p></li>
+<li><p>DAGs are always <strong>hypotheses</strong>; they represent our beliefs. Our beliefs may not align well with reality. There are some data-analysis techniques that can help to establish the plausibility of a proposed DAG, but ultimately they should be treated as unconfirmed hypotheses.</p></li>
+<li><p>There can be irreconcilable differences in beliefs about causal connections and data-analysis techniques cannot always resolve these.</p></li>
+<li><p>Regression techniques provide no guarantee that they capture the functional form of relationships. We don’t address this issue in Math 300Z so the vocabulary of unhard-to-capture functional forms will be unfamiliar, but as background information we’ll name some: threshold effects, interactions, nonlinearities, non-normality, multi-collinearity, and heteroscedasticity.</p></li>
+</ol>
+</section>
+<section id="experiment" class="level2">
+<h2 class="anchored" data-anchor-id="experiment">Experiment</h2>
+<p>An experiment is an <strong>intervention</strong> intended to simplify the system under study to reduce <strong>ambiguity in conclusions</strong>.</p>
+<p>We will focus on conclusions of the form <code>B ~ A</code>, but in many practical applications there is a set of explanatory variables of interest, as in <code>B ~ A1 * A2 * A3</code>.</p>
+</section>
+<section id="factors-leading-to-ambiguous-conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="factors-leading-to-ambiguous-conclusions">Factors leading to ambiguous conclusions:</h2>
+<ol type="i">
+<li>noise and unwanted randomness</li>
+<li>confounding and other forms of backdoor causal pathways</li>
+<li>the possibility of “lurking variables”</li>
+<li>sheer complexity of systems</li>
+</ol>
+</section>
+<section id="simplifying-interventions" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="simplifying-interventions">Simplifying interventions</h2>
+<ol type="a">
+<li><p>[Domain specific] Hold as <strong>constant as possible</strong> any influences that are not of direct interest. E.g. use pure reagents, keep temperature at a standard level, collect data at similar times of day, week, or year, keep pristine laboratory conditions (no food or drink, avoid dust, vibration, wear white lab coats!).</p></li>
+<li><p>[General] If you can’t hold constant a factor that’s important to the system (e.g.&nbsp;weather, time), <strong>replicate</strong> the experiment across different levels of the factor. Then average or adjust at the data-analysis phase.</p></li>
+<li><p>[Domain specific] Measure accurately and sensitively, as with calibrated instruments. Example: Michelson and Morley’s work on the effect of “aether” on the propagation of light. They made an ingenious design using interferometry that was sensitive to small differences in the speed of light in different. Millikan’s measurement of the charge of the electron through the movement of tiny oil drops.</p></li>
+<li><p>[Of primary interest to studying causality] Intervene in the system under study to cut the explanatory variable off from any influence other than one the experimenter controls.</p></li>
+</ol>
+<div id="fig-intervention-dag" class="cell quarto-layout-panel page-columns page-full">
+<figure class="figure page-columns page-full">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-intervention-dag-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Teaching-notes-32_files/figure-html/fig-intervention-dag-1.png" class="img-fluid figure-img" data-ref-parent="fig-intervention-dag" width="672"></p>
+<p></p><figcaption class="figure-caption">(a) Natural system</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-intervention-dag-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Teaching-notes-32_files/figure-html/fig-intervention-dag-2.png" class="img-fluid figure-img" data-ref-parent="fig-intervention-dag" width="672"></p>
+<p></p><figcaption class="figure-caption">(b) Experimental intervention</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;1: Intervening to simplify the network of causal connections.</figcaption><p></p>
+</figure>
+</div>
+<ol start="4" type="a">
+<li><p>Impose <strong>variation</strong> via the <code>experimenter</code> <span class="math inline">\(\rightarrow\)</span> <code>explanatory</code> route. Compare and contrast.</p></li>
+<li><p>Avoid any input to <code>explanatory</code> other than from <code>experimenter</code>.</p></li>
+</ol>
+<div class="cell page-columns page-full">
+<div class="cell-output-display page-columns page-full">
+<div id="fig-surgery" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="Teaching-notes-32_files/figure-html/fig-surgery-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;2: Letting the experimenter’s decision about treatment be influenced by the patient’s condition opens the back-door pathway from treatment to outcome.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="6" type="a">
+<li>Avoid any connection between <code>experimenter</code> and nodes other than <code>explanatory</code>.</li>
+</ol>
+<div class="cell page-columns page-full">
+<div class="cell-output-display page-columns page-full">
+<div id="fig-polio" class="quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="Teaching-notes-32_files/figure-html/fig-polio-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure&nbsp;3: A situation calling for double-blinding. There are back-door pathways from vaccination to diagnosis. Blinding eliminates the vaccination <span class="math inline">\(\longrightarrow\)</span> risk-taking link. Double-blinding eliminates the vaccination <span class="math inline">\(\longrightarrow\)</span> diagnosis link.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="7" type="a">
+<li>Set <code>experimenter</code> to be uncorrelated with any measured, unmeasured, or unknown factor.</li>
+</ol>
+</section>
+<section id="ways-that-e-gets-violated" class="level2">
+<h2 class="anchored" data-anchor-id="ways-that-e-gets-violated">Ways that (e) gets violated</h2>
+<ol type="1">
+<li><p>Subjects don’t comply with their assigned treatment, e.g.&nbsp;drug/placebo in a way that’s</p></li>
+<li><p>Subjects react differently based on their treatment. Example: drivers with anti-lock brakes tended to raise the threshold of bad conditions in which they would drive. Partial solution: make the patient blind to the treatment.</p></li>
+<li><p>Assignment of treatment is based (in part or in whole) on some assessment of the subject. Example: doctor assigns surgery to those patients who are in the best condition to survive it.</p></li>
+</ol>
+</section>
+<section id="ways-to-implement-g" class="level2">
+<h2 class="anchored" data-anchor-id="ways-to-implement-g">Ways to implement (g)</h2>
+<ol type="1">
+<li>Measured covariates: Use blocking.</li>
+<li>Unmeasured or unknown: Random assignment.</li>
+</ol>
+<p>Both: Random assignment within blocking.</p>
+</section>
+<section id="demonstration-random-assignment" class="level2">
+<h2 class="anchored" data-anchor-id="demonstration-random-assignment">Demonstration: Random assignment</h2>
+<p>Confounding with some lurking variable. If we could measure it, we could use adjustment to get the correct relationship between <code>group</code> and <code>outcome</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>assignment_dag1 <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  lurking_var <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  group <span class="sc">~</span> <span class="fu">binom</span>(lurking_var, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>)),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  outcome <span class="sc">~</span> lurking_var <span class="sc">+</span> (group<span class="sc">==</span><span class="st">"B"</span>) <span class="sc">+</span> <span class="fu">exo</span>()</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(assignment_dag1, <span class="at">vertex.label.cex=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-32_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(assignment_dag1, <span class="at">size=</span><span class="dv">1000</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(outcome <span class="sc">~</span> group, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  term          .lwr  .coef   .upr
+  &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 (Intercept) -0.573 -0.452 -0.332
+2 groupB       1.57   1.74   1.91 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(outcome <span class="sc">~</span> group <span class="sc">+</span> lurking_var, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  term           .lwr  .coef  .upr
+  &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 (Intercept) -0.0786 0.0133 0.105
+2 groupB       0.728  0.862  0.997
+3 lurking_var  0.968  1.03   1.10 </code></pre>
+</div>
+</div>
+<p>Random assignment makes <code>group</code> unconnected with <code>lurking_var</code>, so we don’t need to adjust for it to get the correct result.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>assignment_dag2 <span class="ot">&lt;-</span> <span class="fu">dag_make</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  lurking_var <span class="sc">~</span> <span class="fu">exo</span>(),</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  group <span class="sc">~</span> <span class="fu">binom</span>(<span class="fu">exo</span>(), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>)),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  outcome <span class="sc">~</span> lurking_var <span class="sc">+</span> (group<span class="sc">==</span><span class="st">"B"</span>) <span class="sc">+</span> <span class="fu">exo</span>()</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dag_draw</span>(assignment_dag2, <span class="at">vertex.label.cex=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-32_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(assignment_dag2, <span class="at">size=</span><span class="dv">1000</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(outcome <span class="sc">~</span> group, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  term          .lwr .coef  .upr
+  &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 (Intercept) 0.0177 0.146 0.274
+2 groupB      0.509  0.690 0.872</code></pre>
+</div>
+</div>
+<p>Still, when we can adjust, it may reduce the confidence intervals.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(outcome <span class="sc">~</span> group <span class="sc">+</span> lurking_var, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  term           .lwr  .coef  .upr
+  &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 (Intercept) -0.0234 0.0660 0.155
+2 groupB       0.711  0.837  0.964
+3 lurking_var  0.990  1.05   1.12 </code></pre>
+</div>
+</div>
+</section>
+<section id="example-agricultural-experiments" class="level2">
+<h2 class="anchored" data-anchor-id="example-agricultural-experiments">Example: Agricultural experiments</h2>
+<p>A major feature of agricultural experiments is that the fertility of soil varies from place to place, and can vary differently according to the year because of the weather, exhaustion of nutrients, and so on.</p>
+<p>The <code>Wheat</code> data frame contains measurements of the yield of several varieties of winter wheat. The data shows how they organized the experiment.</p>
+<ul>
+<li><p>The field was divided into three <code>block</code>s. Each variety was replicated by <strong>planting in each block</strong>, so that the effect of different block fertility would average out.</p></li>
+<li><p>Each block was divided into many smaller areas, <code>plot</code>s, where the fertilities might be different. Each variety was <strong>randomly assigned</strong> to a plot, separately for each block..</p></li>
+<li><p>The comparative yields of the different varieties might vary according to the weather. We can’t hold the weather constant. Consequently, the experiment <strong>replicated</strong> across several years, so that the weather-related effects might average out.</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Teaching-notes-32_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(Wheat, <span class="fu">table</span>(genotype, year, block))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>, , block = 1
+
+          year
+genotype   1996 1997 1998 1999 2000 2001 2002
+  Colosseo    1    1    1    1    1    1    1
+  Creso       1    1    1    1    1    1    1
+  Duilio      1    1    1    1    1    1    1
+  Grazia      1    1    1    1    1    1    1
+  Iride       1    1    1    1    1    1    1
+  Sancarlo    1    1    1    1    1    1    1
+  Simeto      1    1    1    1    1    1    1
+  Solex       1    1    1    1    1    1    1
+
+, , block = 2
+
+          year
+genotype   1996 1997 1998 1999 2000 2001 2002
+  Colosseo    1    1    1    1    1    1    1
+  Creso       1    1    1    1    1    1    1
+  Duilio      1    1    1    1    1    1    1
+  Grazia      1    1    1    1    1    1    1
+  Iride       1    1    1    1    1    1    1
+  Sancarlo    1    1    1    1    1    1    1
+  Simeto      1    1    1    1    1    1    1
+  Solex       1    1    1    1    1    1    1
+
+, , block = 3
+
+          year
+genotype   1996 1997 1998 1999 2000 2001 2002
+  Colosseo    1    1    1    1    1    1    1
+  Creso       1    1    1    1    1    1    1
+  Duilio      1    1    1    1    1    1    1
+  Grazia      1    1    1    1    1    1    1
+  Iride       1    1    1    1    1    1    1
+  Sancarlo    1    1    1    1    1    1    1
+  Simeto      1    1    1    1    1    1    1
+  Solex       1    1    1    1    1    1    1</code></pre>
+</div>
+</div>
+</section>
+<section id="dont-fetishize-experiment" class="level2">
+<h2 class="anchored" data-anchor-id="dont-fetishize-experiment">Don’t fetishize experiment</h2>
+<p>When you need information about a system, work with the available resources and do the best job you can.</p>
 
 
 </section>
