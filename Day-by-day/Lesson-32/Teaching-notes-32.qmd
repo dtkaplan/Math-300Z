@@ -36,7 +36,7 @@ Multiple regression with the use of covariates and DAGs is a powerful technique 
 
 An experiment is an **intervention** intended to simplify the system under study to reduce **ambiguity in  conclusions**.
 
-We will focus on conclusions of the form `B ~ A`, but in many practical applications there is a set of explanatory variables of interest, as in `B ~ A1 * A2 * A3`. 
+We will focus on conclusions of the form `B ~ A`, but in many practical applications there is a set of explanatory variables of interest, as in `B ~ A1 * A2 * A3`. For instance, an agriculture experiment might evaluate the differing yields of varieties of a crop, looking at the same time at the effects of fertilizers, watering, as well as herbicide and pesticide usage.
 
 ## Factors leading to ambiguous conclusions:
 
@@ -115,7 +115,7 @@ g. Set `experimenter` to be uncorrelated with any measured, unmeasured, or unkno
 
 ## Ways that (e) gets violated
 
-1. Subjects don't comply with their assigned treatment, e.g. drug/placebo in a way that's  
+1. Subjects don't comply with their assigned treatment, e.g. drug/placebo.
 
 2. Subjects react differently based on their treatment. Example: drivers with anti-lock brakes tended to raise the threshold of bad conditions in which they would drive. Partial solution: make the patient blind to the treatment.
 

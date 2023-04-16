@@ -1,0 +1,21 @@
+## Math 300Z: In-class group activity
+
+You and your partners are going to put together a hypothetical person and calculate their mortality risk. Decide jointly what levels of risk factors your hypothetical person has. Write these down so you can describe your hypothetical person to the class. Also, note what are the baseline levels for your risk factors. The baseline is identified by a risk ratio of exactly 1.
+
+
+Then, divide into two groups to calculate the mortality risk in two different ways.
+
+1. using the **unadjusted** risk ratios (which is technically incorrect)
+2. using the **adjusted** risk ratios
+
+Use the point estimate of the risk ratio from [Fried *et al.* (1998)](joc7056.pdf) "Risk factors for five-year mortality in older adults".   (Note: More recent studies might have found different risks. I do not have an expert opinion on the reliability of the data in Fried (1998).)
+
+In constructing your hypothetical person, use whatever risk factors you want. But avoid using levels of these that are rare. To get the estimate of overall risk, multiply together the point estimates. For example, only 7 out of 5201 participants have severe aortic stenosis. 
+
+Once you have your estimate of overall risk ratio, you can convert it to an absolute risk increase. To do so, we need the absolute risk of death of your baseline person. The table in Fried (1998) does not give this.  For the purposes of this calculation, we will use as a baseline a 5-year mortality rate of 1.4%. (This corresponds to a 45-year old woman as given by the life-tables for the entire US.)
+
+- Multiply 1.4% times the overall risk ratio for your hypothetical person. That gives the absolute risk for the hypothetical person. 
+- Then calculate the increase in risk for your hypothetical person compared to the baseline
+
+The estimate of overall risk made from the unadjusted risk ratios will be higher than that from the adjusted risk ratios. Explain why use of the unadjusted risk ratios is unjustifiable.
+

@@ -229,7 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="experiment" class="level2">
 <h2 class="anchored" data-anchor-id="experiment">Experiment</h2>
 <p>An experiment is an <strong>intervention</strong> intended to simplify the system under study to reduce <strong>ambiguity in conclusions</strong>.</p>
-<p>We will focus on conclusions of the form <code>B ~ A</code>, but in many practical applications there is a set of explanatory variables of interest, as in <code>B ~ A1 * A2 * A3</code>.</p>
+<p>We will focus on conclusions of the form <code>B ~ A</code>, but in many practical applications there is a set of explanatory variables of interest, as in <code>B ~ A1 * A2 * A3</code>. For instance, an agriculture experiment might evaluate the differing yields of varieties of a crop, looking at the same time at the effects of fertilizers, watering, as well as herbicide and pesticide usage.</p>
 </section>
 <section id="factors-leading-to-ambiguous-conclusions" class="level2">
 <h2 class="anchored" data-anchor-id="factors-leading-to-ambiguous-conclusions">Factors leading to ambiguous conclusions:</h2>
@@ -305,7 +305,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="ways-that-e-gets-violated" class="level2">
 <h2 class="anchored" data-anchor-id="ways-that-e-gets-violated">Ways that (e) gets violated</h2>
 <ol type="1">
-<li><p>Subjects don’t comply with their assigned treatment, e.g.&nbsp;drug/placebo in a way that’s</p></li>
+<li><p>Subjects don’t comply with their assigned treatment, e.g.&nbsp;drug/placebo.</p></li>
 <li><p>Subjects react differently based on their treatment. Example: drivers with anti-lock brakes tended to raise the threshold of bad conditions in which they would drive. Partial solution: make the patient blind to the treatment.</p></li>
 <li><p>Assignment of treatment is based (in part or in whole) on some assessment of the subject. Example: doctor assigns surgery to those patients who are in the best condition to survive it.</p></li>
 </ol>
@@ -335,19 +335,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(outcome <span class="sc">~</span> group, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
-  term          .lwr  .coef   .upr
-  &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-1 (Intercept) -0.573 -0.452 -0.332
-2 groupB       1.57   1.74   1.91 </code></pre>
+  term          .lwr   .coef   .upr
+  &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+1 (Intercept) -0.175 -0.0549 0.0654
+2 groupB       0.914  1.08   1.26  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(outcome <span class="sc">~</span> group <span class="sc">+</span> lurking_var, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
-  term           .lwr  .coef  .upr
-  &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-1 (Intercept) -0.0786 0.0133 0.105
-2 groupB       0.728  0.862  0.997
-3 lurking_var  0.968  1.03   1.10 </code></pre>
+  term           .lwr   .coef   .upr
+  &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+1 (Intercept) -0.0767 0.00891 0.0945
+2 groupB       0.868  0.990   1.11  
+3 lurking_var  0.922  0.983   1.04  </code></pre>
 </div>
 </div>
 <p>Random assignment makes <code>group</code> unconnected with <code>lurking_var</code>, so we don’t need to adjust for it to get the correct result.</p>
@@ -365,10 +365,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(outcome <span class="sc">~</span> group, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
-  term          .lwr .coef  .upr
-  &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 (Intercept) 0.0177 0.146 0.274
-2 groupB      0.509  0.690 0.872</code></pre>
+  term          .lwr  .coef  .upr
+  &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 (Intercept) -0.103 0.0225 0.148
+2 groupB       0.750 0.927  1.10 </code></pre>
 </div>
 </div>
 <p>Still, when we can adjust, it may reduce the confidence intervals.</p>
@@ -376,11 +376,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(outcome <span class="sc">~</span> group <span class="sc">+</span> lurking_var, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
-  term           .lwr  .coef  .upr
-  &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-1 (Intercept) -0.0234 0.0660 0.155
-2 groupB       0.711  0.837  0.964
-3 lurking_var  0.990  1.05   1.12 </code></pre>
+  term          .lwr   .coef   .upr
+  &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+1 (Intercept) -0.126 -0.0353 0.0551
+2 groupB       0.944  1.07   1.20  
+3 lurking_var  0.915  0.978  1.04  </code></pre>
 </div>
 </div>
 </section>
