@@ -1,0 +1,189 @@
+---
+title: 'Lesson 33: Worksheet'
+author: "Jane Doe"
+---
+
+```{r include=FALSE}
+library(math300)
+Dice_dag <- dag_make(outcome ~ categorical(1:6, probs=c(18,17,18,19,17,11), exact=FALSE))
+set.seed(101)
+Dice_rolls <- sample(Dice_dag, size=1000)
+Hypotheses <- tibble::tribble(
+  ~ outcome, ~ underloaded, ~ fair, ~loaded,
+  1, .18, .1667, .15,
+  2, .18, .1667, .15,
+  3, .18, .1667, .15,
+  4, .18, .1667, .15,
+  5, .18, .1667, .15,
+  6, .10, .1667, .25
+)
+```
+    
+.    | 1 | 2 | 3 | 4 | 5 | 6
+--------|---|---|---|---|---|---
+underloaded | 18% | 18% | 18% | 18% | 18% | 10%
+fair | 16.67% | 16.67% | 16.67% | 16.67% | 16.67% | 16.67%
+loaded | 15% | 15% | 15% | 15% | 15% | 25%
+
+We have mentioned---just mentioned, mind you---a statistical quantity called the "**likelihood**." Depending on how you look at things, a likelihood can be seen from four closely related different perspectives:
+
+1. A **conditional probability**, namely, the probability of the observed outcome *given* a hypothesis. For instance, suppose we hypothesize that a playing die is "loaded," for instance more likely to come up six, say, one time in 4 as opposed to one time in 6. In this case, the likelihood is p(6 | loaded) = 25%. Note that "loaded" is our hypothesis. In a likelihood, the *given* part of the conditional probability is always a *hypothesis*. Therefore, the probability p(loaded | 6) is *not* a likelihood, even though it is a conditional probability.
+
+2. A function of the possible observations. This function takes a possible observation as input and returns as output the likelihood of that observation *given* the hypothesis. For instance:
+    
+    obs.    | 1 | 2 | 3 | 4 | 5 | 6
+    --------|---|---|---|---|---|---
+    prob when "loaded" | 15% | 15% | 15% | 15% | 15% | 25%
+    
+    Note that adding up the probabilities over all the possible observations (1-6) gives a total probability of 1.
+    
+3. A function of the hypotheses under consideration. For instance, based on your understanding of how the loaded dice was made, you might entertain three hypotheses: underloaded, fair, loaded.
+    
+    hypothesis | likelihood p(6 | hypothesis)
+    -----------|---------------------------
+    underloaded| 10%
+    fair       | 16.67% (that is, 1/6)
+    loaded.    | 25%
+    
+    Notice that the sum of the three probabilities is not 1. It doesn't need to be. You can think of the three likelihoods as probabilities on three different planets. On Planet Underloaded the probability of observing 6 is 10%. On the other two planets, the probability of observing 6 is something else and need have nothing at all to do with the probability on Planet Underloaded.
+    
+4. A function of **two inputs**, namely, 
+    - input 1: the possibilities for the observations (1-6) 
+    - input 2: the different hypotheses under consideration
+    
+       .    | 1 | 2 | 3 | 4 | 5 | 6
+    --------|---|---|---|---|---|---
+    underloaded | 18% | 18% | 18% | 18% | 18% | 10%
+    fair | 16.67% | 16.67% | 16.67% | 16.67% | 16.67% | 16.67%
+    loaded | 15% | 15% | 15% | 15% | 15% | 25%
+
+    The function in (3) is merely a slice of the table just above, taking only the "6" column.
+    
+    The function in (2) is also a slide of the above table, taking only the "loaded" column.
+
+## Likelihood and model fitting
+
+Recall that fitting (or "training") a model is done by taking the observed data and finding the values of parameters for the model specification that produce a model output that is "as close as possible" to the observed response variable. Almost always in statistics, "as close as possible" is *defined* to mean the parameter values that produce the maximum likelihood of the observed data.
+
+In this section, you will "fit a model" of dice rolls in the sense of picking the hypothesis that maximizes the likelihood of the observed data.
+
+The data are the results from rolling a die 1000 times and are stored under `outcome` in the data frame `Dice_rolls`. (To generate the data, you will need to run the first chunk in this document, the one that says "`include=FALSE`".)
+
+**Task 1**: Use `View` to look at `Dice_rolls` and confirm that it has 1000 rows. Then, use data wrangling to count the number of rows for each of the possible outcomes. From this table of counts, comment on which of the three hypotheses is most likely.
+
+::: {.callout-note}
+```{r}
+Dice_rolls |> 
+  group_by(outcome) |>
+  summarize(count = n())
+```
+The hypotheses differ only in the likelihood of 6. The table of counts shows that 6 comes up only about two-thirds as often as any of the other possibilities. Thus, "underload" seems the most likely.
+:::
+
+**Task 2**: Now we are going to calculate the likelihood of the observed data given each of the hypotheses. For this purpose, you have been provided with a data frame named `Hypotheses` that records the likelihood function.
+
+Steps for calculating the likelihood for one of the hypotheses:
+
+1. Join the observed data to the hypotheses. This can be done with `Temp <- Dice_rolls |> left_join(Hypotheses)`. View `Temp` and make sure you understand how it is structured.
+
+```{r echo=FALSE, message=FALSE}
+Temp <- Dice_rolls |> left_join(Hypotheses)
+```
+
+QUESTION: How many rows are their in `Temp`? What are the names of the columns in `Temp` that were not already in `Dice_rolls`.
+
+::: {.callout-note}
+## ANSWER
+
+There are 1000 rows in `Temp`, one for each of the rows in the observed data. By joining `Hypothesis` to `Dice_rolls`, we are adding new columns, one for each of the hypotheses under consideration: "underload", "fair", "overload".
+:::
+
+2. Using `summarize()`, calculate the product (`prod()`) of all of the entries in each hypothesis column. Why product and not sum? Each of the rows in `Temp` records one event. Now consider the `fair` column. The entries in `fair` are the probabilities of seeing that row's event outcome (given the "fair" hypothesis). When there are multiple events (as the 1000 rows of `Dice_rolls`) then the joint probability of seeing **all** of those particular outcomes is the product of the probability of seeing **each** row's outcome. 
+
+QUESTION: What are the numerical values of the likelihood of all 1000 recorded events for **each** of the three hypotheses under consideration: "underloaded," "fair," "loaded?" (Advance warning: This calculation is fast, but unreliable when done by computer. So the results may surprise you.)
+
+::: {.callout-note}
+## ANSWER
+
+```{r}
+Temp |> summarize(
+  L_underloaded = prod(underloaded),
+  L_fair = prod(fair),
+  L_loaded = prod(loaded)
+)
+```
+All of the likelihoods come out to zero! According to this report of the calculation, there's no reason to prefer one hypotheses to the others.
+
+:::
+
+**Task 3**: The calculation you were tasked with in Task 2 is mathematically correct, but gives unreliable results on the computer. The reason has to do with the nature of arithmetic on the computer. The hardware chips and software that implement arithmetic do arithmetic in a way that is indistinguishable from idealized arithmetic ... *most of the time.* But there are gotchas which computer experts know about and work to avoid by making slight modifications to the calculations.
+
+One of the gotchas has to do with computer arithmetic being done with a finite number of digits: about 22. Usually, we never look past a few digits, but let's look at all 22 digits so that we can see the effects of round-off:
+
+```{r}
+options(digits=22) # sets the detail of printing
+1/3
+4/3
+```
+
+`r options(digits=6)`
+
+In the calculation of likelihood in Task 2, the problem is that multiplying 1000 small numbers together gives a result that is rounded off to zero. Experts fix the problem by doing such calculations with logarithms.
+
+Repeat the likelihood calculation from Task 2, but instead of using, say, `prod(fair)` calculate `sum(log(fair))`. The result will be the "log-likelihood" but it will be easy to read off which likelihood is the highest. 
+
+QUESTION: Which is the highest log likelihood?
+
+::: {.callout-note}
+## ANSWER
+
+```{r}
+Temp |> summarize(
+  L_underloaded = sum(log(underloaded)),
+  L_fair = sum(log(fair)),
+  L_loaded = sum(log(loaded))
+)
+```
+
+All three log likelihoods are negative; that's to be expected for the logarithm of a probability. The largest log likelihood is the one that is *least negative*. That's the "underloaded" hypothesis, just as we suspected from Task 1. 
+:::
+
+## Going further: Comparing hypotheses quantitatively
+
+Based on the observed data, how much better is the "underloaded" hypothesis that the "fair" hypothesis." One way that statisticians present the answer is with the "likelihood ratio" test. A likelihood ratio is larger than 10 is considered "strong" evidence for the favored. 
+
+Let's calculate the likelihood ratio comparing "fair" to "loaded." To do this, you need to remember a little bit of high-school math about logarithms: log(A/B) = log(A) - log(B). A/B is the ratio while log(A/B) is the logarithm of the ratio.
+
+The logarithm of the ratio ("fair"/"loaded") is $-1791 - -1841 = 50$. So log(A/B) = 50, but what is A/B itself. Another bit of high-school math: to undo the logarithm use the exponential function. So the ratio will be 
+
+```{r}
+exp(50)
+```
+
+This is a HUGE number. So big, that it's reasonable to say that the data completely rule out the possibility of the "loaded" hypothesis.
+
+QUESTION: What's the likelihood ratio comparing the "fair" to the "underloaded" hypotheses?
+
+::: {.callout-note}
+## ANSWER
+
+Let's put the likelihood for "underloaded" on the top and "fair" on the bottom.
+
+```{r}
+exp(-1779 - -1791)
+```
+
+This result is obviously much, much bigger than 10, the convention for calling the evidence "strong." 
+
+One reason the likelihood ratio points so strongly to the "underloaded" hypothesis is that we have lots and lots of data: 1000 rows.
+
+Just for demonstration purposes, I drew a sample of size $n=100$ from the DAG generating the data. The log likelihood for "underloaded" is -171.121 and the log likelihood for "fair" is -179.156. (If you repeat the sampling yourself, the result of your calculation will be different. Sampling variation at work!)
+
+```{r}
+exp(-179.121 - -179.156)
+```
+
+With my particular sample of $n=100$ rolls, the data provide absolutely no reason to favor one hypothesis over the other. But if we compared the "underloaded" to the "loaded" hypothesis, the likelihood ratio would be about 50. So even with $n=100$ rolls, we can rule out the "loaded" hypothesis.
+
+:::
+

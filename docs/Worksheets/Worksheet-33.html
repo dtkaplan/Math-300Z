@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Jane Doe">
+
+<title>Spring 2023 Math 300Z - Lesson 33: Worksheet</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Math 300Z</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../textbooks.html">
+ <span class="menu-text">Textbooks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../faculty-notes.qmd">
+ <span class="menu-text">Faculty notes</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../math300-software.html">
+ <span class="menu-text">Software</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lesson 33: Worksheet</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Jane Doe </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<table class="table">
+<thead>
+<tr class="header">
+<th>.</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>underloaded</td>
+<td>18%</td>
+<td>18%</td>
+<td>18%</td>
+<td>18%</td>
+<td>18%</td>
+<td>10%</td>
+</tr>
+<tr class="even">
+<td>fair</td>
+<td>16.67%</td>
+<td>16.67%</td>
+<td>16.67%</td>
+<td>16.67%</td>
+<td>16.67%</td>
+<td>16.67%</td>
+</tr>
+<tr class="odd">
+<td>loaded</td>
+<td>15%</td>
+<td>15%</td>
+<td>15%</td>
+<td>15%</td>
+<td>15%</td>
+<td>25%</td>
+</tr>
+</tbody>
+</table>
+<p>We have mentioned—just mentioned, mind you—a statistical quantity called the “<strong>likelihood</strong>.” Depending on how you look at things, a likelihood can be seen from four closely related different perspectives:</p>
+<ol type="1">
+<li><p>A <strong>conditional probability</strong>, namely, the probability of the observed outcome <em>given</em> a hypothesis. For instance, suppose we hypothesize that a playing die is “loaded,” for instance more likely to come up six, say, one time in 4 as opposed to one time in 6. In this case, the likelihood is p(6 | loaded) = 25%. Note that “loaded” is our hypothesis. In a likelihood, the <em>given</em> part of the conditional probability is always a <em>hypothesis</em>. Therefore, the probability p(loaded | 6) is <em>not</em> a likelihood, even though it is a conditional probability.</p></li>
+<li><p>A function of the possible observations. This function takes a possible observation as input and returns as output the likelihood of that observation <em>given</em> the hypothesis. For instance:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>obs.</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>prob when “loaded”</td>
+<td>15%</td>
+<td>15%</td>
+<td>15%</td>
+<td>15%</td>
+<td>15%</td>
+<td>25%</td>
+</tr>
+</tbody>
+</table>
+<p>Note that adding up the probabilities over all the possible observations (1-6) gives a total probability of 1.</p></li>
+<li><p>A function of the hypotheses under consideration. For instance, based on your understanding of how the loaded dice was made, you might entertain three hypotheses: underloaded, fair, loaded.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>hypothesis</th>
+<th>likelihood p(6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>underloaded</td>
+<td>10%</td>
+</tr>
+<tr class="even">
+<td>fair</td>
+<td>16.67% (that is, 1/6)</td>
+</tr>
+<tr class="odd">
+<td>loaded.</td>
+<td>25%</td>
+</tr>
+</tbody>
+</table>
+<p>Notice that the sum of the three probabilities is not 1. It doesn’t need to be. You can think of the three likelihoods as probabilities on three different planets. On Planet Underloaded the probability of observing 6 is 10%. On the other two planets, the probability of observing 6 is something else and need have nothing at all to do with the probability on Planet Underloaded.</p></li>
+<li><p>A function of <strong>two inputs</strong>, namely,</p>
+<ul>
+<li><p>input 1: the possibilities for the observations (1-6)</p></li>
+<li><p>input 2: the different hypotheses under consideration</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>.</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>underloaded</td>
+<td>18%</td>
+<td>18%</td>
+<td>18%</td>
+<td>18%</td>
+<td>18%</td>
+<td>10%</td>
+</tr>
+<tr class="even">
+<td>fair</td>
+<td>16.67%</td>
+<td>16.67%</td>
+<td>16.67%</td>
+<td>16.67%</td>
+<td>16.67%</td>
+<td>16.67%</td>
+</tr>
+<tr class="odd">
+<td>loaded</td>
+<td>15%</td>
+<td>15%</td>
+<td>15%</td>
+<td>15%</td>
+<td>15%</td>
+<td>25%</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<p>The function in (3) is merely a slice of the table just above, taking only the “6” column.</p>
+<p>The function in (2) is also a slide of the above table, taking only the “loaded” column.</p></li>
+</ol>
+<section id="likelihood-and-model-fitting" class="level2">
+<h2 class="anchored" data-anchor-id="likelihood-and-model-fitting">Likelihood and model fitting</h2>
+<p>Recall that fitting (or “training”) a model is done by taking the observed data and finding the values of parameters for the model specification that produce a model output that is “as close as possible” to the observed response variable. Almost always in statistics, “as close as possible” is <em>defined</em> to mean the parameter values that produce the maximum likelihood of the observed data.</p>
+<p>In this section, you will “fit a model” of dice rolls in the sense of picking the hypothesis that maximizes the likelihood of the observed data.</p>
+<p>The data are the results from rolling a die 1000 times and are stored under <code>outcome</code> in the data frame <code>Dice_rolls</code>. (To generate the data, you will need to run the first chunk in this document, the one that says “<code>include=FALSE</code>”.)</p>
+<p><strong>Task 1</strong>: Use <code>View</code> to look at <code>Dice_rolls</code> and confirm that it has 1000 rows. Then, use data wrangling to count the number of rows for each of the possible outcomes. From this table of counts, comment on which of the three hypotheses is most likely.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Dice_rolls <span class="sc">|&gt;</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(outcome) <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">count =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  outcome count
+    &lt;int&gt; &lt;int&gt;
+1       1   184
+2       2   180
+3       3   179
+4       4   192
+5       5   156
+6       6   109</code></pre>
+</div>
+</div>
+<p>The hypotheses differ only in the likelihood of 6. The table of counts shows that 6 comes up only about two-thirds as often as any of the other possibilities. Thus, “underload” seems the most likely.</p>
+</div>
+</div>
+<p><strong>Task 2</strong>: Now we are going to calculate the likelihood of the observed data given each of the hypotheses. For this purpose, you have been provided with a data frame named <code>Hypotheses</code> that records the likelihood function.</p>
+<p>Steps for calculating the likelihood for one of the hypotheses:</p>
+<ol type="1">
+<li>Join the observed data to the hypotheses. This can be done with <code>Temp &lt;- Dice_rolls |&gt; left_join(Hypotheses)</code>. View <code>Temp</code> and make sure you understand how it is structured.</li>
+</ol>
+<div class="cell">
+
+</div>
+<p>QUESTION: How many rows are their in <code>Temp</code>? What are the names of the columns in <code>Temp</code> that were not already in <code>Dice_rolls</code>.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There are 1000 rows in <code>Temp</code>, one for each of the rows in the observed data. By joining <code>Hypothesis</code> to <code>Dice_rolls</code>, we are adding new columns, one for each of the hypotheses under consideration: “underload”, “fair”, “overload”.</p>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Using <code>summarize()</code>, calculate the product (<code>prod()</code>) of all of the entries in each hypothesis column. Why product and not sum? Each of the rows in <code>Temp</code> records one event. Now consider the <code>fair</code> column. The entries in <code>fair</code> are the probabilities of seeing that row’s event outcome (given the “fair” hypothesis). When there are multiple events (as the 1000 rows of <code>Dice_rolls</code>) then the joint probability of seeing <strong>all</strong> of those particular outcomes is the product of the probability of seeing <strong>each</strong> row’s outcome.</li>
+</ol>
+<p>QUESTION: What are the numerical values of the likelihood of all 1000 recorded events for <strong>each</strong> of the three hypotheses under consideration: “underloaded,” “fair,” “loaded?” (Advance warning: This calculation is fast, but unreliable when done by computer. So the results may surprise you.)</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Temp <span class="sc">|&gt;</span> <span class="fu">summarize</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">L_underloaded =</span> <span class="fu">prod</span>(underloaded),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">L_fair =</span> <span class="fu">prod</span>(fair),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">L_loaded =</span> <span class="fu">prod</span>(loaded)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  L_underloaded L_fair L_loaded
+          &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1             0      0        0</code></pre>
+</div>
+</div>
+<p>All of the likelihoods come out to zero! According to this report of the calculation, there’s no reason to prefer one hypotheses to the others.</p>
+</div>
+</div>
+<p><strong>Task 3</strong>: The calculation you were tasked with in Task 2 is mathematically correct, but gives unreliable results on the computer. The reason has to do with the nature of arithmetic on the computer. The hardware chips and software that implement arithmetic do arithmetic in a way that is indistinguishable from idealized arithmetic … <em>most of the time.</em> But there are gotchas which computer experts know about and work to avoid by making slight modifications to the calculations.</p>
+<p>One of the gotchas has to do with computer arithmetic being done with a finite number of digits: about 22. Usually, we never look past a few digits, but let’s look at all 22 digits so that we can see the effects of round-off:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">digits=</span><span class="dv">22</span>) <span class="co"># sets the detail of printing</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span><span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3333333333333333148296</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span><span class="sc">/</span><span class="dv">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.333333333333333259318</code></pre>
+</div>
+</div>
+<p>In the calculation of likelihood in Task 2, the problem is that multiplying 1000 small numbers together gives a result that is rounded off to zero. Experts fix the problem by doing such calculations with logarithms.</p>
+<p>Repeat the likelihood calculation from Task 2, but instead of using, say, <code>prod(fair)</code> calculate <code>sum(log(fair))</code>. The result will be the “log-likelihood” but it will be easy to read off which likelihood is the highest.</p>
+<p>QUESTION: Which is the highest log likelihood?</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Temp <span class="sc">|&gt;</span> <span class="fu">summarize</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">L_underloaded =</span> <span class="fu">sum</span>(<span class="fu">log</span>(underloaded)),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">L_fair =</span> <span class="fu">sum</span>(<span class="fu">log</span>(fair)),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">L_loaded =</span> <span class="fu">sum</span>(<span class="fu">log</span>(loaded))</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  L_underloaded L_fair L_loaded
+          &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1        -1779. -1792.   -1841.</code></pre>
+</div>
+</div>
+<p>All three log likelihoods are negative; that’s to be expected for the logarithm of a probability. The largest log likelihood is the one that is <em>least negative</em>. That’s the “underloaded” hypothesis, just as we suspected from Task 1.</p>
+</div>
+</div>
+</section>
+<section id="going-further-comparing-hypotheses-quantitatively" class="level2">
+<h2 class="anchored" data-anchor-id="going-further-comparing-hypotheses-quantitatively">Going further: Comparing hypotheses quantitatively</h2>
+<p>Based on the observed data, how much better is the “underloaded” hypothesis that the “fair” hypothesis.” One way that statisticians present the answer is with the “likelihood ratio” test. A likelihood ratio is larger than 10 is considered “strong” evidence for the favored.</p>
+<p>Let’s calculate the likelihood ratio comparing “fair” to “loaded.” To do this, you need to remember a little bit of high-school math about logarithms: log(A/B) = log(A) - log(B). A/B is the ratio while log(A/B) is the logarithm of the ratio.</p>
+<p>The logarithm of the ratio (“fair”/“loaded”) is <span class="math inline">\(-1791 - -1841 = 50\)</span>. So log(A/B) = 50, but what is A/B itself. Another bit of high-school math: to undo the logarithm use the exponential function. So the ratio will be</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5.18471e+21</code></pre>
+</div>
+</div>
+<p>This is a HUGE number. So big, that it’s reasonable to say that the data completely rule out the possibility of the “loaded” hypothesis.</p>
+<p>QUESTION: What’s the likelihood ratio comparing the “fair” to the “underloaded” hypotheses?</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+ANSWER
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s put the likelihood for “underloaded” on the top and “fair” on the bottom.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="dv">1779</span> <span class="sc">-</span> <span class="sc">-</span><span class="dv">1791</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 162755</code></pre>
+</div>
+</div>
+<p>This result is obviously much, much bigger than 10, the convention for calling the evidence “strong.”</p>
+<p>One reason the likelihood ratio points so strongly to the “underloaded” hypothesis is that we have lots and lots of data: 1000 rows.</p>
+<p>Just for demonstration purposes, I drew a sample of size <span class="math inline">\(n=100\)</span> from the DAG generating the data. The log likelihood for “underloaded” is -171.121 and the log likelihood for “fair” is -179.156. (If you repeat the sampling yourself, the result of your calculation will be different. Sampling variation at work!)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">179.121</span> <span class="sc">-</span> <span class="sc">-</span><span class="fl">179.156</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.03562</code></pre>
+</div>
+</div>
+<p>With my particular sample of <span class="math inline">\(n=100\)</span> rolls, the data provide absolutely no reason to favor one hypothesis over the other. But if we compared the “underloaded” to the “loaded” hypothesis, the likelihood ratio would be about 50. So even with <span class="math inline">\(n=100\)</span> rolls, we can rule out the “loaded” hypothesis.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
