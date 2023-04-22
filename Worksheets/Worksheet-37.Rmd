@@ -1,0 +1,87 @@
+---
+title: 'Lesson 37: Worksheet'
+author: "Jane Doe"
+---
+
+```{r include=FALSE}
+library(math300)
+```
+
+This worksheet provides some practice with the "analysis of variance" technique and demonstrates the logic of the test.
+
+## A demonstration of ANOVA
+
+Consider a program to measure the effectiveness of the 26 third-grade teachers in your district. For this purpose, a series of 20 standardized exams will be given to students over the course of a year. The results of the tests will be scaled to that the average score across all students is always approximately 300. The most talented teachers are anticipated to contribute 20 points to their students, the least talented teachers cause their students to lose 20 points. But the majority of teachers are somewhere in between.
+
+The DAG defined below, `school_dag`, simulates such a situation. The average score on each test is about 300, with the teacher contributing or detracting based on the level of talent. 
+
+```{r}
+set.seed(101)
+talent <- runif(length(LETTERS), -20, 20)
+school_dag <- dag_make(
+  teacher ~ categorical(levels=LETTERS),
+  score ~ 300 + value(teacher, LETTERS, talent) + 100*exo()
+)
+```
+
+::: {.callout-note}
+## How talented?
+
+For your later reference, here are the talent levels for each teacher used in the simulation:
+
+```{r echo=FALSE}
+#| column: page-right
+tmp <- talent; names(tmp) <- LETTERS; signif(tmp, 2)
+```
+:::
+
+
+In the next chunk, the data (20 tests for each of the 26 teachers' classrooms) is simulated. The model `score ~ teacher` is fitted to the data then summarized in two familiar ways: `R2()` and `conf_interval()`. 
+
+
+```{r digits=3}
+set.seed(211) 
+Scores <- sample(school_dag, size=26*20)
+model <- lm(score ~ teacher, data=Scores)
+model |> R2()
+model |> conf_interval(show_p=TRUE) |> filter(.lwr*.upr > 0)
+```
+
+The R^2^ report summarizes the whole model in one line, generating a single p-value. In contrast, the `conf_interval()` report has 26 lines---the 26 coefficients from the model---with a p-value for each line.
+In reading a `conf_interval()` report, it's tempting to focus on just those coefficients whose confidence intervals exclude zero. [When both ends of the confidence interval have different signs, the interval necessarily includes zero. The product of two numbers with different signs is always negative.]{.aside} The purpose of the statement `|> filter(.lwr*.upr > 0)` is to disregard any coefficient whose confidence interval spans zero.
+
+The `set.seed()` statement at the start of the chunk is a way to specify a particular sample to use as an example. 
+
+a. Run the chunk with `set.seed(201)`. For that sample, the R^2 report shows a p-value of 0.09, which is correctly interpreted as "failing to reject the Null," that is, that no link between `teacher` and `score` has been detected. Correspondingly, the `conf_interval()` report does not show any `teacher` coefficients: the confidence intervals on all such coefficients includes zero. Another way to say this is that the two reports are consistent with one another.
+b. Now run the chunk again, this time using `set.seed(211)`. The p-value for this sample will be 0.21, above the 0.05 threshold for "rejecting the Null." Yet there are three teachers, I, Y, and Z, who are detected as having a discernable influence on score. According to the estimated coefficients, all of them have large, positive influences on `score`. 
+
+Which of the two reports for sample (b), R^2^ or the confidence intervals should be taken at face value?
+
+Because of sampling variation, all sample statistics are somewhat random. In particularly, R^2^ and every confidence interval has some randomness. When there are many sample statistics, as in the confidence interval report, this randomness has many opportunities to inflate the results. Looking at the individual confidence intervals that exclude zero is to some extent cherry picking. It's difficult to know if we're seeing real effects or just sampling variation. 
+
+In the simulation, of course, we can look at the "true" talent of each teacher. The true talent of teacher I, it happens is 10 points higher than the baseline teacher A, completely outside the confidence interval from the sample (b) report. The talents of teachers Y and Z are 22 and 17 points higher than the baseline, toward the lower end of their respective confidence intervals. On the other hand, Teachers N, T, and V have talents of the same or bigger magnitude, but they are not detected as such in sample (b).
+
+When there are many coefficients, the confidence-interval report is likely to generate results that are over-stated and unreliable. 
+
+c. Comment out the `set.seed()` command in the the data generation chunk. Now, each time the chunk is run a brand new sample is created. Run the data generation and analysis many times in succession, taking note of which teachers, if any, are identified as having "significant" talent, either positive or negative. Are the teachers with the most positive or negative talents routinely identified by the confidence-interval report?
+
+## Under the Null
+
+Another way to compare the reliabilities of the R^2^ report and the confidence-interval report when there are many levels of a categorical variable is to enforce the Null hypotheses---by shuffling---and check how the reports perform. A properly performing report should show a p-value below 0.05 roughly one time in 20.
+
+Run the following command chunk many times. Keep a record of how often a p-value below 0.05 appears in each kind of report. Which report performs more properly.
+
+
+```{r digits=3, eval=FALSE}
+Null_scores <- sample(school_dag, size=26*20) |> mutate(score = shuffle(score))
+lm(score ~ teacher, data=Null_scores) |> R2()
+lm(score ~ teacher, data=Null_scores) |> conf_interval(show_p=TRUE) |> filter(.lwr*.upr > 0)
+```
+
+## Summary
+
+When a categorical explanatory variable (like `teacher`) has many levels, confidence intervals on the coefficients for the individual levels can be misleading, especially if only the "best" intervals are considered. In such cases, use R^2^ and its p-value to evaluate whether the explanatory variable is linked to the response. Such tests, based on R^2^, are called "analysis of variance," or ANOVA for short.
+
+----------
+
+Background: This example is based on a real-world controversy about the use of "Value added models" (VAM) in evaluating individual teachers. Professional statisticians had such strong concerns about the VAM techniques that their professional society, the American Statistical Association, issued a [statement of caution](https://amstat.tandfonline.com/doi/full/10.1080/2330443X.2014.956906#.ZEMLiuzMKrM). 

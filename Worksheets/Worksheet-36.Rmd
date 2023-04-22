@@ -1,0 +1,35 @@
+---
+title: 'Lesson 36: Worksheet'
+author: "Jane Doe"
+---
+
+```{r include=FALSE}
+library(math300)
+```
+
+We have been constructing and using **confidence intervals** since Lesson 23. Recall that each **coefficient** of a model has its own confidence interval.
+
+On many occasions, we have been interested in whether a connection is detectable between the response and a particular explanatory variable (perhaps conditioned on some covariate(s)). In such a situation, the confidence interval on that explanatory variable provides a quick answer: Does the confidence interval include zero? For instance, can we detect in the `Galton` data an effect of the number of children in a household (`nkids`) on the adult `height` of a child? (Speculation on why this might be: Perhaps less food per child is available in large households.) The simplest model is
+
+```{r digits=3}
+lm(height ~ nkids, data=Galton) |> conf_interval()
+```
+
+The confidence interval on `nkids` does not include zero, so we can fairly say to have detected a connection between `nkids` and `height`. (The effect size is about one-sixth of an inch height loss per additional child in the household.)
+
+TASK 1. Might the link between nkids and height be via sex? Is sex related to `nkids`
+
+```{r}
+glm(zero_one(sex, one="F") ~ nkids, data=Galton, family="binomial") |> conf_interval(show_p=TRUE)
+```
+```{r digits=3}
+lm(height ~ nkids + sex + mother + father, data=Galton) |> regression_summary()
+```
+
+Focus on cases where
+CONFIDENCE INTERVAL JUST BARELY TOUCHES ZERO, p-value is about 0.05
+
+
+
+
+
