@@ -1,0 +1,47 @@
+---
+title: 'Lesson 35: Worksheet'
+author: "Jane Doe"
+---
+
+```{r include=FALSE}
+library(math300)
+```
+
+## Simple threshold choice
+
+```{r}
+Scores <- model_eval(mod1, interval="none")
+ggplot(Scores, aes(x=as.factor(.response), y=.output)) + geom_jitter(alpha=0.1, width=0.2) +
+  geom_violin(fill="blue", alpha=0.2)
+```
+
+## Pick a threshold
+
+Let's use 0.2
+
+## Construct the confusion matrix
+
+And the sensitivity and specificity
+
+```{r}
+Scores |> mutate(result=ifelse(.output > 0.2, "P", "N")) |>
+  group_by(.response, result) |>
+  tally() |>
+  group_by(.response) |>
+  mutate(frac = n/sum(n))
+```
+
+By changing the threshold, you can improve sensitivity at the cost of specificity and *vice versa*.
+
+This isn't a very good classifier, but let's go with it.
+
+## Prevalence
+
+In these training data, the prevalence of CHD is 15%.
+
+```{r}
+CHD |> summarize(prev = mean(CHD))
+```
+
+But let's assume that the actual prevalence is 2%. Calculate the population false-positive and false-negative rates.
+

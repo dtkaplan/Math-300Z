@@ -22,6 +22,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -61,6 +124,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -141,12 +205,158 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="start-up-task" class="level2">
+<h2 class="anchored" data-anchor-id="start-up-task">Start-up task</h2>
+<p>Before class begins, open your <code>posit.cloud</code> account and, in the console, give this command to update the <code>{math300}</code> package. (There have been a fixes, extensions, and additional data sets.)</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"dtkaplan/math300"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We will do the class activity in two phases:</p>
+<ul>
+<li>Now: Create the Rmd file per the <a href="CHD-risk.html">instructions</a>, run the model and interpret the graph.</li>
+<li>Later: Switch to logistic regression, search for explanatory variables that stratify the risk nicely.</li>
+</ul>
+</section>
 <section id="review-of-lesson-33" class="level2">
 <h2 class="anchored" data-anchor-id="review-of-lesson-33">Review of Lesson 33</h2>
+<p>In statistical terms, a <strong>risk</strong> is a probability associated with an outcome.</p>
+<ul>
+<li><p>A full description of risk looks much like a prediction: a complete list of possible outcomes, each associated with a probability, which we’ll call a <strong>risk level</strong>.</p></li>
+<li><p>A <em>risk level</em> is properly measured as a pure number, e.g.&nbsp;30 <strong>percent</strong>.</p>
+<ul>
+<li>Being a probability, such numbers must always be between 0 and 1, or, equivalently, between 0 and 100 percent.</li>
+<li>There are two ways of referring to percentages, e.g.&nbsp;30 percent vs 30 percentage points. When talking about a single risk, these two are equivalent. However, “<strong>percentage points</strong>” should be reserved for a particular situation: Describing a change in absolute risk.</li>
+</ul></li>
+<li><p><em>For simplicity</em>, we will focus on situations where there are only two outcomes, e.g.&nbsp;alive/dead, success/failure, cancer/not, diabetes/not.</p>
+<ul>
+<li><p>Since there are only two outcomes, knowing the probability p of one outcome automatically sets the probability of the other outcome.</p></li>
+<li><p>One of the outcomes is worse than the other, so we usually take the risk to be the worse outcome and its probability.</p></li>
+<li><p>A <strong>risk factor</strong> is a condition, behavior, or such that changes the probability of the (worse) outcome. Just to have concise names, we will use this terminology:</p>
+<ol type="i">
+<li>baseline risk (level): the risk (level) <em>without</em> the risk factor applying.</li>
+<li>augmented risk (level) : the risk (level) when the risk factor applies.</li>
+</ol></li>
+</ul></li>
+<li><p>A <em>risk ratio</em> is exactly what the name implies: the ratio of the augmented risk to the baseline risk.</p>
+<ul>
+<li>For instance, suppose the baseline risk is 30 percent and the augmented risk is 45%. Then the risk ratio is 45/30 = 1.5 = 150 percent. Risk ratios are often greater than 1, which should remind us that a risk ratio is a different kind of beast from a risk, which can never be larger than 1.</li>
+</ul></li>
+<li><p>There are two distinct uses for risk factors:</p>
+<ol type="i">
+<li>Draw attention to a factor under our control (e.g.&nbsp;skiing, biking, using a motorcycle, smoking) so that we can decide whether the augmentation in risk is worth avoiding.</li>
+<li>Establish the <em>baseline</em> risk in a relevant way (e.g.&nbsp;our age, sex, and so on).</li>
+</ol></li>
+<li><p>For decision-making regarding a risk factor, it is most meaningful to focus on the <strong>change in absolute risk</strong>, that is, the difference between the augmented risk and the baseline risk.</p>
+<ul>
+<li>Example: The risk ratio for the smoking risk factor is about 2.5/1 for ten-year, all-cause mortality. If the baseline risk is 3 percentage points, the augmented risk is 7.5%. Consequently, the augmentation in risk for smoking is (2.5-1) x 3% = 4.5 percentage points. On the other hand, if the baseline risk were 30 percentage points, the 2.5 risk ratio increases the the risk by 45 percentage points.</li>
+<li>Notice that we are describing the augmentation in risk as “percentage points.” Always use “percentage points” to avoid ambiguity. If we had said, “45 percent,” people might mistake the augmentation in risk as a risk ratio of 1.45.</li>
+</ul></li>
+</ul>
+<p><strong>Question</strong>: Why bother to present risk factors in terms of risk ratios when for decision-making it’s better to use the augmentation in risk in percentage points?</p>
+<p>Answer: Because the same risk factor can lead to different amounts of augmentation depending on the baseline risk. If there are multiple risk factors, then adding up such augmentations can potentially lead to the risk level exceeding 100%.</p>
+<p>One reason there are multiple risk factors is that we often need to adjust for confounders, etc., which means putting more factors into consideration.</p>
 </section>
-<section id="in-draft" class="level2">
-<h2 class="anchored" data-anchor-id="in-draft">IN DRAFT</h2>
-<p>Tell the story of the Chinese spy balloon. After it was detected, the Air Force (according to news reports) increased the sensitivity of radars. This led to an increase in detection and a week-long rash of high-altitude detections, two of which were shot down. Eventually it was realized that there is a surprising amount of stuff floating around at high altitude. <a href="https://www.nytimes.com/live/2023/02/16/us/biden-china-balloon-ufo?smid=nytcore-ios-share&amp;referringSource=articleShare" class="uri">https://www.nytimes.com/live/2023/02/16/us/biden-china-balloon-ufo?smid=nytcore-ios-share&amp;referringSource=articleShare</a></p>
+<section id="accumulating-risk-the-mathematics" class="level2">
+<h2 class="anchored" data-anchor-id="accumulating-risk-the-mathematics">Accumulating risk: the mathematics</h2>
+<p>Using the <code>Whickham</code> data, calculate the 20-year mortality rate for smokers and for non-smokers. (Warning: these data contain a historical artifact which makes the result unreliable.)</p>
+<p>Convert the categorical <code>outcome</code> to a zero-one variable</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="ot">&lt;-</span> Whickham <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dead =</span> <span class="fu">zero_one</span>(outcome, <span class="at">one=</span><span class="st">"Dead"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Model the zero-one response by <code>smoker</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(dead <span class="sc">~</span> smoker, <span class="at">data=</span>Whickham) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  term          .lwr   .coef    .upr
+  &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept)  0.282  0.314   0.347 
+2 smokerYes   -0.124 -0.0754 -0.0265</code></pre>
+</div>
+</div>
+<ul>
+<li>The baseline 20-year mortality risk is 31%.</li>
+<li>The 20-year mortality risk for smokers is 31% - 7% = 24%.</li>
+</ul>
+<p>This analysis leaves out a <strong>huge risk factor</strong>: age.</p>
+<p>The “adjusted risk ratio” for a risk factor is the effect size, with respect to that risk factor, holding the covariates constant.</p>
+<p>As with linear regression, to “hold the covariates constant” they have to be included in the model of risk.</p>
+<p>Our standard modeling framework adds together <strong>contributions</strong> from different variables. For risk, this might look like</p>
+<p>risk = intercept + a_1_ smoker + a_2_ high_cholesterol + a_3_ high_BP + a_4_ age + …</p>
+<p>Let’s try this with <code>Whickham</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(dead <span class="sc">~</span> smoker <span class="sc">+</span> age, <span class="at">data=</span>Whickham) </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>mod1 <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  term           .lwr   .coef    .upr
+  &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept) -0.532  -0.473  -0.414 
+2 smokerYes   -0.0489 -0.0105  0.0279
+3 age          0.0151  0.0162  0.0173</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod1, <span class="at">x=</span>age, <span class="at">color=</span>smoker, <span class="at">data_alpha=</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-34_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Interpretation (naive):</p>
+<ul>
+<li>(intercept) the 20-year mortality rate for a newborn is -47%</li>
+<li>(age) mortality risk increases by 1.6 percentage points per year</li>
+<li>(smoking) reduces mortality risk by 1 percentage point.</li>
+</ul>
+<p><strong>Mathematical problem</strong>: The mortality rate at <strong>any</strong> age has to be between 0 and 100%.</p>
+<p>Solution (used universally): Don’t model probability (which has to stay in [0-1]). Instead, model <strong>log odds</strong>.</p>
+<p>Odds: For probability p the corresponding odds is p/(1-p). It’s exactly the same information, but in a different format. But odds range from 0 to <span class="math inline">\(\infty\)</span>, so we don’t need to worry about them going out of bounds on the high side.</p>
+<p>Logarithm of odds: For probability p the log odds is ln(p) - ln(1-p). This can range from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(\infty\)</span>.</p>
+<p>This model will never go out of bounds.</p>
+<p>log odds = intercept + a_1_ smoker + a_2_ high_cholesterol + a_3_ high_BP + a_4_ age + …</p>
+<p>To find the coefficients, we use a mathematical technique called “<strong>logistic regression</strong>”.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(dead <span class="sc">~</span> smoker <span class="sc">+</span> age, <span class="at">data=</span>Whickham, <span class="at">family=</span><span class="st">"binomial"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>mod2 <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  term          .lwr  .coef   .upr
+  &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 (Intercept) -8.50  -7.60  -6.77 
+2 smokerYes   -0.124  0.205  0.537
+3 age          0.110  0.124  0.138</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod2, <span class="at">x=</span>age, <span class="at">color=</span>smoker, <span class="at">data_alpha=</span><span class="fl">0.03</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-34_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Smoking <strong>increases</strong> the log odds of mortality by 0.20 (although zero is included in the confidence interval). Each additional year of age increases log odds by 0.12.</p>
+<p>For instance, for a 50-year old smoker, 20-year mortality expressed as log odds is:</p>
+<p><span class="math display">\[\ln(\text{odds}) = -7.6 + 0.20 + 0.12\times 50 = -1.4\]</span></p>
+<p>Something interesting happens when we convert to odds:</p>
+<p><span class="math display">\[odds = e^{\ln(odds)} = e^{-7.6 + 0.20 + 0.12\times50} =
+\underbrace{e^{-7.6}}_\text{baseline} \times \underbrace{e^{0.20}}_\text{odds ratio} \times \underbrace{e^{0.12\times 50}}_\text{odds ratio}\]</span> <span class="math display">\[ odds = \underbrace{0.0005}_\text{baseline} \times \underbrace{1.22}_\text{odds ratio for smoking} \times \underbrace{403}_\text{odds ratio for age 50}\]</span></p>
+<p>Each factor in logistic regression contributes a multiplicative <strong>odds ratio</strong>. How is that related to a risk ratio?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contour_plot</span>(p1<span class="sc">/</span>p2 <span class="sc">~</span> p1 <span class="sc">+</span> p2, <span class="fu">bounds</span>(<span class="at">p1=</span><span class="fl">0.01</span><span class="sc">:</span><span class="fl">0.10</span>, <span class="at">p2=</span><span class="fl">0.01</span><span class="sc">:</span><span class="fl">0.10</span>)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Risk Ratios"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-34_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contour_plot</span>(p1<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p2)<span class="sc">/</span>(p2<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p1)) <span class="sc">~</span> p1 <span class="sc">+</span> p2, <span class="fu">bounds</span>(<span class="at">p1=</span><span class="fl">0.01</span><span class="sc">:</span><span class="fl">0.10</span>, <span class="at">p2=</span><span class="fl">0.01</span><span class="sc">:</span><span class="fl">0.1</span>)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Odds Ratios"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Teaching-notes-34_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Risk ratios and odds ratios are practically the same thing, so long as p1 and p2 are small.</p>
+<p>SUMMARY:</p>
+<ol type="1">
+<li>Odds don’t add.</li>
+<li>Instead, odds ratios multiply.</li>
+<li>Need a baseline odds to calculate the overall odds, multiplying baseline by the appropriate odds ratios.</li>
+<li>We often interpret odds ratios as risk ratios. Not too bad when the odds (both numerator and denominator) are small, say &lt; 0.1.</li>
+</ol>
+</section>
+<section id="activity" class="level2">
+<h2 class="anchored" data-anchor-id="activity">Activity</h2>
+<p>Building a model of risk.</p>
 
 
 </section>

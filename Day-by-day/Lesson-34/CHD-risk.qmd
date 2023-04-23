@@ -1,0 +1,51 @@
+# Risk of Congestive Heart Disease
+
+
+More than 6 million people in the US suffer from congestive heart disease (CHD); it is the leading cause of hospitalization in people older than 65.  In this activity,
+you are going to build a screening model for high risk of congestive heart disease. The data come from the [Framingham Heart Study](https://www.nhlbi.nih.gov/science/framingham-heart-study-fhs) and were published as part of a [Kaggle machine learning competition](https://www.kaggle.com/datasets/dileep070/heart-disease-prediction-using-logistic-regression).
+
+Work with the members of your group.
+
+- **One person** should create and edit a new Rmd file names `CHD-risk.Rmd`. The other group members will work with person editing the file, making suggestions and interpreting results.
+- At the end of the activity, the `CHD-risk.Rmd` file should be shared with all members of the group.
+
+To the editor: 
+
+1. Open a new **text** file (not Rmd). Then immediately save it as `CHD-risk.Rmd`. We're doing things this way to avoid having to deal with the "template" that RStudio uses when opening an Rmd file directly.
+2. Copy this into your newly saved `CHD-risk.Rmd` file. There are just two R chunks involved, which you should run from within `CHD-risk.Rmd`.
+
+````{verbatim}
+# Class activity: Risk of congestive heart disease
+
+```{r include=FALSE}
+library(math300)
+```
+
+
+
+```{r}
+model0 <- lm(TenYearCHD ~ diabetes + totChol, 
+             data=Framingham, family=binomial)
+
+model_plot(model0)
+```
+
+````
+
+1. We are working with the `math300::Framingham` data frame. The goal 
+is to predict the `TenYearCHD` variable from the other variables. 
+We'll start with `lm()`, but in anticipation of changing to 
+something more suitable, the following command has a 
+third argument to `lm()`, namely `family=binomial`.  Leave the third 
+argument in place; at this point it doesn't do anything.
+
+2. The second chunk creates a graph. 
+Discuss the format of the graph and what it says about `age` 
+and `totChol` as risk factors for CHD.
+
+3. Try out other explanatory variables. (`model_plot` won't hand more than three.) Your goal is to maximize the range of model values, that is, to identify some people at low risk and others at high risk. For our purposes, you don't need to worry about medical plausibility: just search through the variables.
+
+4. Switch to logistic regression, which is more suitable for modeling probabilities. All you need to do in the above command is change `lm` to `glm`. (Leave in the `family=binomial` argument, which is needed for logistic regression.)
+
+**Deliverable**: The model specification you find that does a nice job creating different model values for different values of the explanatory variables.
+
