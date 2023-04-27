@@ -1,0 +1,110 @@
+# Setting the threshold
+
+```{r include=FALSE}
+library(math300)
+library(ggmosaic)
+```
+
+If you don't have `{ggmosaic}` package: `install_packages("ggmosaic")`
+
+## Our Context: CHD in Framingham
+
+Prevalence of CHD in development group:
+
+```{r}
+Framingham |> 
+  summarize(mean(TenYearCHD))
+```
+
+Prevalence in actual population: Let's say 2%.
+
+## Our score function
+
+In the last class, we looked at different explanatory variables.
+
+```{r message=FALSE, warning=FALSE}
+mod <- glm(TenYearCHD ~ age + diabetes + totChol, 
+           data=Framingham, family=binomial)
+Scores <- model_eval(mod, interval="none") |>
+  mutate(disease=ifelse(.response == 1, "D", "H"))
+```
+
+The score is in the `.output` column.
+
+```{r}
+head(Scores)
+```
+
+<!-- Another formula? TenYearCHD ~ age + sex + BPMeds + diabetes -->
+## Setting a threshold
+
+```{r}
+ggplot(Scores, aes(x=disease, y=.output)) +
+  geom_jitter(alpha=.02, width=.1, height=0) +
+  geom_violin(alpha=.2, color=NA, fill="blue")
+```
+
+Pick a tentative threshold. We will compare among the different groups.
+
+```{r pick-threshold}
+my_threshold <- 0.15
+```
+
+## Raw table for above and below threshold
+
+The next three chunks are named so that we can easily refer to them.
+
+```{r raw_table, message=FALSE, warning=FALSE}
+Scores <- Scores |> 
+  mutate(test = ifelse(.output > my_threshold, "Pos", "Neg"))
+# in "narrow" data frame
+Counts <- Scores |>
+  group_by(disease, test) |>
+  tally() 
+```
+
+```{r display-results, warning=TRUE}
+Counts
+# in "wide" data frame
+Counts |>
+  tidyr::pivot_wider(names_from=test, values_from=n)
+# as the canonical table
+Scores |> 
+  ggplot() +
+  geom_mosaic(aes(x=product(disease), fill=test))
+```
+
+```{r sensitivity-and-specificity}
+## Calculate sensitivity and specificity
+Counts |> group_by(disease) |>
+  mutate(prob = n/sum(n))
+```
+
+Add the results to shared graph of ROC curve.
+
+
+
+## Setting prevalence 
+
+Multiply the counts in the "D" group by 2% / 15.2%.
+
+For the sake of visibility, we won't do that here because the numbers get harder to see. 
+
+## Apply loss function
+
+```{r loss}
+Counts$cost = c(10,0,0,1) 
+Counts |> ungroup() |> summarize(total_cost = sum(n*cost))
+```
+
+## All together now
+
+Set your candidate for a threshold, then run the three named chunks
+
+```{r all-together}
+my_threshold <- 0.15
+<<raw-table>>
+# adjust for true prevalence (not being done here)
+<<sensitivity-and-specificity>>
+<<loss>>
+```

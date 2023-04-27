@@ -27,7 +27,7 @@ library(math300)
 model0 <- lm(TenYearCHD ~ diabetes + totChol, 
              data=Framingham, family=binomial)
 
-model_plot(model0)
+model_plot(model0, show_data=FALSE)
 ```
 
 ````

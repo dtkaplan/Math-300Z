@@ -214,6 +214,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Now: Create the Rmd file per the <a href="CHD-risk.html">instructions</a>, run the model and interpret the graph.</li>
 <li>Later: Switch to logistic regression, search for explanatory variables that stratify the risk nicely.</li>
 </ul>
+<p>Link to Lesson 34 activity:</p>
+<pre><code>dtkaplan.github.io/Math-300Z/Day-by-day/Lesson-34/CHD-risk.html</code></pre>
 </section>
 <section id="review-of-lesson-33" class="level2">
 <h2 class="anchored" data-anchor-id="review-of-lesson-33">Review of Lesson 33</h2>
@@ -259,12 +261,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Using the <code>Whickham</code> data, calculate the 20-year mortality rate for smokers and for non-smokers. (Warning: these data contain a historical artifact which makes the result unreliable.)</p>
 <p>Convert the categorical <code>outcome</code> to a zero-one variable</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="ot">&lt;-</span> Whickham <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dead =</span> <span class="fu">zero_one</span>(outcome, <span class="at">one=</span><span class="st">"Dead"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Whickham <span class="ot">&lt;-</span> Whickham <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dead =</span> <span class="fu">zero_one</span>(outcome, <span class="at">one=</span><span class="st">"Dead"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Model the zero-one response by <code>smoker</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(dead <span class="sc">~</span> smoker, <span class="at">data=</span>Whickham) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(dead <span class="sc">~</span> smoker, <span class="at">data=</span>Whickham) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   term          .lwr   .coef    .upr
@@ -284,8 +286,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>risk = intercept + a_1_ smoker + a_2_ high_cholesterol + a_3_ high_BP + a_4_ age + …</p>
 <p>Let’s try this with <code>Whickham</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(dead <span class="sc">~</span> smoker <span class="sc">+</span> age, <span class="at">data=</span>Whickham) </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>mod1 <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(dead <span class="sc">~</span> smoker <span class="sc">+</span> age, <span class="at">data=</span>Whickham) </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>mod1 <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
   term           .lwr   .coef    .upr
@@ -294,7 +296,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 2 smokerYes   -0.0489 -0.0105  0.0279
 3 age          0.0151  0.0162  0.0173</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod1, <span class="at">x=</span>age, <span class="at">color=</span>smoker, <span class="at">data_alpha=</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod1, <span class="at">x=</span>age, <span class="at">color=</span>smoker, <span class="at">data_alpha=</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Teaching-notes-34_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -313,8 +315,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>log odds = intercept + a_1_ smoker + a_2_ high_cholesterol + a_3_ high_BP + a_4_ age + …</p>
 <p>To find the coefficients, we use a mathematical technique called “<strong>logistic regression</strong>”.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(dead <span class="sc">~</span> smoker <span class="sc">+</span> age, <span class="at">data=</span>Whickham, <span class="at">family=</span><span class="st">"binomial"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>mod2 <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(dead <span class="sc">~</span> smoker <span class="sc">+</span> age, <span class="at">data=</span>Whickham, <span class="at">family=</span><span class="st">"binomial"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>mod2 <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
   term          .lwr  .coef   .upr
@@ -323,7 +325,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 2 smokerYes   -0.124  0.205  0.537
 3 age          0.110  0.124  0.138</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod2, <span class="at">x=</span>age, <span class="at">color=</span>smoker, <span class="at">data_alpha=</span><span class="fl">0.03</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod2, <span class="at">x=</span>age, <span class="at">color=</span>smoker, <span class="at">data_alpha=</span><span class="fl">0.03</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Teaching-notes-34_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -336,11 +338,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 \underbrace{e^{-7.6}}_\text{baseline} \times \underbrace{e^{0.20}}_\text{odds ratio} \times \underbrace{e^{0.12\times 50}}_\text{odds ratio}\]</span> <span class="math display">\[ odds = \underbrace{0.0005}_\text{baseline} \times \underbrace{1.22}_\text{odds ratio for smoking} \times \underbrace{403}_\text{odds ratio for age 50}\]</span></p>
 <p>Each factor in logistic regression contributes a multiplicative <strong>odds ratio</strong>. How is that related to a risk ratio?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contour_plot</span>(p1<span class="sc">/</span>p2 <span class="sc">~</span> p1 <span class="sc">+</span> p2, <span class="fu">bounds</span>(<span class="at">p1=</span><span class="fl">0.01</span><span class="sc">:</span><span class="fl">0.10</span>, <span class="at">p2=</span><span class="fl">0.01</span><span class="sc">:</span><span class="fl">0.10</span>)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Risk Ratios"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contour_plot</span>(p1<span class="sc">/</span>p2 <span class="sc">~</span> p1 <span class="sc">+</span> p2, <span class="fu">bounds</span>(<span class="at">p1=</span><span class="fl">0.01</span><span class="sc">:</span><span class="fl">0.10</span>, <span class="at">p2=</span><span class="fl">0.01</span><span class="sc">:</span><span class="fl">0.10</span>)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Risk Ratios"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Teaching-notes-34_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contour_plot</span>(p1<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p2)<span class="sc">/</span>(p2<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p1)) <span class="sc">~</span> p1 <span class="sc">+</span> p2, <span class="fu">bounds</span>(<span class="at">p1=</span><span class="fl">0.01</span><span class="sc">:</span><span class="fl">0.10</span>, <span class="at">p2=</span><span class="fl">0.01</span><span class="sc">:</span><span class="fl">0.1</span>)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Odds Ratios"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contour_plot</span>(p1<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p2)<span class="sc">/</span>(p2<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p1)) <span class="sc">~</span> p1 <span class="sc">+</span> p2, <span class="fu">bounds</span>(<span class="at">p1=</span><span class="fl">0.01</span><span class="sc">:</span><span class="fl">0.10</span>, <span class="at">p2=</span><span class="fl">0.01</span><span class="sc">:</span><span class="fl">0.1</span>)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Odds Ratios"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Teaching-notes-34_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
 </div>

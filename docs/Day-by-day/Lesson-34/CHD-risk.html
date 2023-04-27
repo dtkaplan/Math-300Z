@@ -197,7 +197,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>model0 &lt;- lm(TenYearCHD ~ diabetes + totChol, </span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>             data=Framingham, family=binomial)</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>model_plot(model0)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>model_plot(model0, show_data=FALSE)</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>```</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol type="1">
 <li><p>We are working with the <code>math300::Framingham</code> data frame. The goal is to predict the <code>TenYearCHD</code> variable from the other variables. We’ll start with <code>lm()</code>, but in anticipation of changing to something more suitable, the following command has a third argument to <code>lm()</code>, namely <code>family=binomial</code>. Leave the third argument in place; at this point it doesn’t do anything.</p></li>

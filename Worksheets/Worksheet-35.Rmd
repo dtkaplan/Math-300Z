@@ -3,13 +3,23 @@ title: 'Lesson 35: Worksheet'
 author: "Jane Doe"
 ---
 
+THIS WORKSHEET STILL IN DRAFT FORM. SKIP IT in favor of the in-class activity.
+
 ```{r include=FALSE}
 library(math300)
 ```
 
-## Simple threshold choice
+## Build a model to stratify risk of CHD
 
 ```{r}
+mod1 <- glm(TenYearCHD ~ age + sex + BPMeds + diabetes, data=Framingham,
+            family=binomial)
+```
+
+
+## Simple threshold choice
+
+```{r message=FALSE}
 Scores <- model_eval(mod1, interval="none")
 ggplot(Scores, aes(x=as.factor(.response), y=.output)) + geom_jitter(alpha=0.1, width=0.2) +
   geom_violin(fill="blue", alpha=0.2)
@@ -40,7 +50,7 @@ This isn't a very good classifier, but let's go with it.
 In these training data, the prevalence of CHD is 15%.
 
 ```{r}
-CHD |> summarize(prev = mean(CHD))
+Framingham |> summarize(prev = mean(TenYearCHD))
 ```
 
 But let's assume that the actual prevalence is 2%. Calculate the population false-positive and false-negative rates.

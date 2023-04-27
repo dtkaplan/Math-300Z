@@ -61,6 +61,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -143,6 +144,31 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="review-of-lesson-35" class="level2">
 <h2 class="anchored" data-anchor-id="review-of-lesson-35">Review of Lesson 35</h2>
+<p>“Statistical inference” has to do with drawing reasonable conclusions about the real world based on data and statistical analysis.</p>
+<p>The method of <strong>confidence intervals</strong> falls under the heading of “statistical inference.”</p>
+<p>In Lesson 35, we compared the probability of two hypotheses given the observed result—<span class="math inline">\(\mathbb P\)</span> and <span class="math inline">\(\mathbb N\)</span>—from the classification test. This is also a form of statistical inference.</p>
+<p>There’s no informed objection to either of these calculations, although people may disagree about what is the appropriate prevalence level.</p>
+<p>Now we will move to a form of statistical inference that is highly controversial: called variously “significance testing,” “null hypothesis testing,” “null hypothesis significance testing,” or even simply “hypothesis testing.” (I’ll call it NHT, short for “null hypothesis testing.”) Part of the controversy stems from basic misunderstandings that lead people often to overestimate the importance of their research findings. Another part of the controversy comes from the fact that the assumptions that shape the mathematical justification for the method are not always met in practice. There are many ways to game the analysis to increase the chances of an impressive-looking result that are standard research practices.</p>
+<p>We will spend the next three classes on NHT, almost a sixth of our class time for the part of Math 300 where we have been using the <em>Lessons</em> book. In many introductory statistics classes and textbooks, about a quarter of the <em>entire</em> course is devoted to what they call “hypothesis testing,” mostly in the form of variety of statistical “tests” applicable to different common situations.</p>
+<p>The language of NHT, especially the terms “null hypothesis” and “p-value,” is so widely used in reporting statistical results that you must know the basics. But, I have to be careful, since I don’t want to imply that NHT deserves to be so widely used. Indeed, in almost all the situations covered by introductory statistics courses confidence intervals provide an alternative to NHT that tells you everything worthwhile about the NHT result but is less subject to mis-use.</p>
+<p>My job is:</p>
+<ol type="1">
+<li>to introduce you to the nomenclature of NHT so that you can know what people are talking about,</li>
+<li>to show you that part of NHT that can better be handled by using confidence intervals.</li>
+<li>to show situations where confidence intervals aren’t applicable and therefore NHT—properly used—is appropriate.</li>
+<li>to show you some of the signs of the mis-use of hypothesis testing, to help you avoid being fooled.</li>
+</ol>
+<p>A little bit of history can help you see how the unhappy situation surrounding NHT and what the textbooks call “hypothesis testing” came about.</p>
+<ul>
+<li>1890-1905 Karl Pearson introduces the chi-squared “goodness of fit” test and the term p-value.</li>
+<li>1908 William Sealy Gosset introduces what we call the “t distribution,” which came to be at the core of most textbook hypothesis tests.</li>
+<li>1910-1930 Ronald A. Fisher introduces the term “null hypothesis” and “significance testing” and a technique still of much use today, “analysis of variance” (ANOVA).</li>
+<li>1935-40 Jerzy Neyman introduces confidence intervals and, with Karl Pearson’s son—the “alternative hypothesis” and “power.” But Fisher, a hugely influential person, wrongly declares that these are garbage.</li>
+<li>1962 Ronald Fisher dies.</li>
+<li>1960s and 70s. It becomes more widely appreciated that Neyman-Pearson hypothesis testing is a reasonable framework and the alternative hypothesis and power become essential concepts in the professional design of studies.</li>
+<li>1970s textbook authors create an almost incoherent amalgam of Fisher’s framework and Neyman-Pearson, where the “alternative hypothesis” is a pale shadow of the richer concept that is actually useful in the design of studies.</li>
+<li>1970s onward: statisticians call more and more loudly for de-emphasizing NHT. This is continuing up to the present.</li>
+</ul>
 
 
 </section>

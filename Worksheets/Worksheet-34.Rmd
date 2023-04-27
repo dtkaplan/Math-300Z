@@ -20,7 +20,7 @@ The commands building and displaying each model follow:
 
 ```{r}
 model <- glm(developed_diabetes ~ bmi + insulin, data=PIDD, family="binomial" )
-model_plot(model)
+model_plot(model, show_data=FALSE)
 ```
 
 Change the explanatory variables (use at most three) to get a model specification that stratifies the risk nicely. Once you have a model that you are satisfied with, let's look at it a bit more technically.
