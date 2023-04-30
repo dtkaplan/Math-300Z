@@ -8,43 +8,186 @@ date: "Revised 03/08/2023"
 
 ```{r include=FALSE}
 library(math300)
+library(mosaicCalc)
+source("../../../_startup.R")
 ```
 
 ## Review of Lesson 35
 
-"Statistical inference" has to do with drawing reasonable conclusions about the real world based on data and statistical analysis.
+We considered the development and application of a screening test. 
 
-The method of **confidence intervals** falls under the heading of "statistical inference." 
+* Development (the "science" part of the work)
+    1. Gather 1000 subjects of whom about 50% have the condition and the rest don't.
+    2. Apply the test to all the subjects getting a positive or negative result for each.
+    3. Calculate **sensitivity** and **specificity**.
+        - The fraction of the diseased subjects who get a positive test is the **sensitivity** of the test.
+        - The fraction of the healthy subjects who get a negative test is the **specificity** of the test.
+        
+* Application
+    1. Apply the test to your patient, getting a positive or negative result.
+    2. Look up the **prevalence** of the disease in the relevant population. This is the **prior probability** for your patient.
+    3. Do the arithmetic to combine the three numbers---prevalence, sensitivity, specificity---to compute the **posterior probability** for your patient.
+    
+```{r echo=FALSE, warning=FALSE}
+library(ggmosaic)
+med_test_graph()
+```
+Calculation: 
+- A = prior probability $\times$ sensitivity
+- B = (1 - prior probability) $\times$ (1-specificity)
+- consequently: **posterior probability** = A / (A + B)
 
-In Lesson 35, we compared the probability of two hypotheses given the observed result---$\mathbb P$ and $\mathbb N$---from the classification test. This is also a form of statistical inference. 
+Example from above graph:
+- A = 10% $\times$ 90% = 9%
+- B = 90% $\times$ 15.5% = 14%
+- consequently: **posterior probability** = 9 / (9 + 14) = 39%
 
-There's no informed objection to either of these calculations, although people may disagree about what is the appropriate prevalence level. 
+## Translating to more general terms
 
-Now we will move to a form of statistical inference that is highly controversial: called variously "significance testing," "null hypothesis testing," "null hypothesis significance testing," or even simply "hypothesis testing." (I'll call it NHT, short for "null hypothesis testing.") Part of the controversy stems from basic misunderstandings that lead people often to overestimate the importance of their research findings. Another part of the controversy comes from the fact that the assumptions that shape the mathematical justification for the method are not always met in practice. There are many ways to game the analysis to increase the chances of an impressive-looking result that are standard research practices.
+- Diseased vs. Healthy $\longrightarrow$ H_a_ vs. H_0_ a.k.a. "Alternative" vs "Null"
+- Sensitivity $\longrightarrow$ Likelihood_a_ = p(obs | H_a_) = ${\cal L}_a(\text{obs})$
+- (1-specificity) $\longrightarrow$ Likelihood_0 = p(obs | H_0_) = ${\cal L}_0(\text{obs})$
 
-We will spend the next three classes on NHT, almost a sixth of our class time for the part of Math 300 where we have been using the *Lessons* book. In many introductory statistics classes and textbooks, about a quarter of the *entire* course is devoted to what they call "hypothesis testing," mostly in the form of variety of statistical "tests" applicable to different common situations.
+In this framework, we can simplify the iconic graphic a lot:
 
-The language of NHT, especially the terms "null hypothesis" and "p-value," is so widely used in reporting statistical results that you must know the basics. But, I have to be careful, since I don't want to imply that NHT deserves to be so widely used. Indeed, in almost all the situations covered by introductory statistics courses confidence intervals provide an alternative to NHT that tells you everything worthwhile about the NHT result but is less subject to mis-use. 
-
-My job is: 
-
-1. to introduce you to the nomenclature of NHT so that you can know what people are talking about,
-2. to show you that part of NHT that can better be handled by using confidence intervals.
-3. to show situations where confidence intervals aren't applicable and therefore NHT---properly used---is appropriate.
-4. to show you some of the signs of the mis-use of hypothesis testing, to help you avoid being fooled.
-
-A little bit of history can help you see how the unhappy situation surrounding NHT and what the textbooks call "hypothesis testing" came about.
-
-- 1890-1905 Karl Pearson introduces the chi-squared "goodness of fit" test and the term p-value.
-- 1908 William Sealy Gosset introduces what we call the "t distribution," which came to be at the core of most textbook hypothesis tests.
-- 1910-1930 Ronald A. Fisher introduces the term "null hypothesis" and "significance testing" and a technique still of much use today, "analysis of variance" (ANOVA).
-- 1935-40 Jerzy Neyman introduces confidence intervals and, with Karl Pearson's son---the "alternative hypothesis" and "power." But Fisher, a hugely influential person, wrongly declares that these are garbage. 
-- 1962 Ronald Fisher dies.
-- 1960s and 70s. It becomes more widely appreciated that Neyman-Pearson hypothesis testing is a reasonable framework and the alternative hypothesis and power become essential concepts in the professional design of studies. 
-- 1970s textbook authors create an almost incoherent amalgam of Fisher's framework and Neyman-Pearson, where the "alternative hypothesis" is a pale shadow of the richer concept that is actually useful in the design of studies.
-- 1970s onward: statisticians call more and more loudly for de-emphasizing NHT. This is continuing up to the present.
+```{r echo=FALSE}
+hypothesis_compete_graph(prior=.15, like1=0.8, like2=0.3)
+```
 
 
+Another formula for the posterior probability:
+
+$$\underbrace{odds(H_a | \text{obs})}_{\Large\text{posterior for } H_a} = \underbrace{\left[\frac{{\cal L}_a(\text{obs})}{{\cal L}_0(\text{obs})} \right]}_{\Large\text{Likelihood ratio}}\ \times\ \underbrace{odds(H_a)}_{\Large\text{prior for } H_a}$$
+
+## [Class activity](Woodpeckers.html)
+
+## Null hypothesis testing
+
+The **Null hypothesis** is usually taken to be a statement like these:
+
+- "There is nothing worthwhile going on."
+- "There is no connection between the response and explanatory variables."
+- Setting: You are working with two groups, each of which has a mean (or proportion) of some response variable. "There is no difference between the group means (or proportions)."
+
+The Bayesian framework is an excellent way to update a prior for either the Alternative hypothesis or a Null hypothesis. (The priors correspond one to the other: p(Alternative) = 1-p(Null).) There are even ways to put the model-fitting process into a Bayesian framework so that we get a posterior probability distribution on the effect size.
+
+But sometimes we don't have everything we need.
+
+1. The classical formulation of statistics holds that a hypothesis should be fixed, there's no such thing as a prior or posterior for a hypothesis. 
+
+2. The early formulations of "null hypothesis testing" did not include any role for an Alternative hypothesis. The mathematics of the Alternative were introduced in the late 1930s, but it was half a century before this started to be a standard part of teaching statistics. (And even then, it plays just a rump role in Stat 101.)
+
+What does this leave us with?
+
+$$\require{cancel}\cancel{\underbrace{odds(H_a | \text{obs})}_{\Large\text{posterior for } H_a}} = \underbrace{\left[\frac{\cancel{{\cal L}_a(\text{obs})}}{{\cal L}_0(\text{obs})} \right]}_{\Large\cancel{\text{Likelihood ratio}}}\ \times\ \cancel{\underbrace{odds(H_a)}_{\Large\text{prior for } H_a}}$$
+The **only** component that's left is ${\cal L}_0(\text{obs})$.
+
+## The p-value
+
+If "obs" is bad news for the Null hypothesis, then ${\cal L}_0(\text{obs})$ will be small.
+
+But there is a situation where it might be small for other reasons: if there are lots of possible values for an observation, the probability of any specific one is going to tend to be small.
+
+Patch for this problem: Include in the likelihood not just the observation itself, but any other observations that would be even more compellingly "bad" for the Null hypothesis. 
+
+---------
+
+Example: Does the number of kids in a family play a role in determining child's adult height?
+
+```{r digits=3}
+lm(height ~ mother + father + sex + nkids, data=Galton) |> conf_interval(show_p = TRUE)
+```
+The Null hypothesis is that the `nkids` coefficient would be zero if we could collect a very large amount of data.
+
+A coefficient "far from zero" is bad news for the Null. Worse news for the Null would be a coefficient even further from zero, e.g. -0.6 or +0.5 and so on.
+
+
+The p-value is ${\cal L}_0(\text{obs or worse})$ [More precisely, $p = \int_A{\cal L}_0(A)dA$ were A is the set of possible observations that are as "bad" as obs, or worse. 
+
+## Interpreting the p-value: "Reject" or "Fail to reject"
+
+1. A small p-value is bad news for the Null hypothesis. Conclusion: "Reject the Null."
+2. A big p-value provides support for the Null. But it equally well provides support for hypotheses that are non-Null but close to the Null. So we cannot say definitely that the Null is right. For example, it might be that our study was so badly done that it really has nothing to say. Conclusion: "Fail to reject the Null"
+
+We need a definition for "small p-value."
+
+3. Conventionally, small means $p<0.05$.
+
+Suppose the Null is that "nothing interesting is going on" (e.g. `nkids` doesn't factor into adult height). Then, "rejecting the Null" is practically synonymous with "something interesting is going on."
+
+Researchers calculate p-values. They usually hope for a small p-value, since this indicates that something interesting is going on, perhaps suitably interesting to be worth publishing.
+
+::: {.callout-note}
+## p-value fallacies
+
+### 1. Very small p-values, e.g. p < 0.0001.
+
+- Null = "nothing interesting is going on."
+
+- Small p-value implies "not the Null," that is "something interesting is going on."
+
+p-values can sometimes be tiny, tiny, tiny. Some people (wrongly) interpret this as "something **really interesting** is going on."
+
+### 2. "Significance" and practical importance
+
+A century ago, the word "significant" was used as a synonym for $p < 0.05$. 
+
+- This was in the sense of what's now the second definition for "significant": "having a particular meaning; indicative of something." 
+
+> *"Life's but a walking shadow; a poor player, that struts and frets his hour upon the stage, and then is heard no more: it is a tale told by an idiot, full of sound and fury, signifying nothing." ---Shakespeare, *Macbeth*
+
+- Many people interpret "statistically significant" using the sense more common today: "Sufficiently great or important to be worthy of attention; noteworthy."
+
+A much more accurate phrase is "statistically discernible." But people like hearing that their results are "significant." 
+
+## Not small p-values, p > 0.05
+
+Technically, the Null hypothesis is that the coefficient is zero. 
+
+Conventional wisdom might be that there is indeed something going on. In such a case, p > 0.05 might indeed be an interesting result and worth publishing. (Still has to be demonstrated that the study was able to reject the null if the conventional wisdom were right.)
+:::
+
+## Confidence intervals and p-values
+
+Confidence intervals are better than p-values.
+
+1. They reveal the extent of uncertainty and are stated in physically understandable units (e.g. effect size).
+2. The p-value adds nothing to nothing to a confidence interval: it is just a statement of how far the interval is from zero.
+
+Example: 
+
+```{r digits=3}
+model <- lm(height ~ mother + father + sex + nkids, data=Galton) 
+conf_interval(model, show_p = TRUE) |> filter(term=="nkids")
+```
+
+Notice that 1) the confidence interval includes zero and 2) p > 0.05. These mean exactly the same thing.
+
+The 95% confidence level corresponds to p = 0.05. 
+
+If we set the confidence level to the 1 minus p-value, the CI will just graze zero:
+
+```{r digits=3}
+conf_interval(model, level=1-0.1073, show_p = TRUE) |> filter(term=="nkids")
+```
+
+::: {.callout-note}
+## If confidence intervals are better than p-values, ...
+why do people use p-values?
+
+i. p-values were invented first, about 35 years before confidence intervals.
+
+ii. The proponents of p-values were better known and strongly disparaged confidence intervals. It took decades for researchers to develop confidence in confidence intervals.
+
+iii. Change is hard. For instance, almost all statistical software produces by default a regression report that gives a p-value but not a confidence interval.
+
+```{r digits=3}
+regression_summary(model) |> filter(term=="nkids")
+```
+
+iv. Some researchers like being able to report very tiny p-values. They subscribe to the fallacy described above.
+
+:::
 
 
 
