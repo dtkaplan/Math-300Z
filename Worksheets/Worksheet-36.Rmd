@@ -30,6 +30,98 @@ Focus on cases where
 CONFIDENCE INTERVAL JUST BARELY TOUCHES ZERO, p-value is about 0.05
 
 
+## Example: System failure
+
+How safe was the Challenger? Make this an exercise in 36 as well.
+
+Two hypotheses for the Challenger lift-off:
+
+1. The temperature is an issue.
+2. The temperature is not an issue.
+
+Analyze the O-ring data under each of the hypotheses:
+
+```{r}
+mod1 <- glm(incidents ~ 1, data=Orings, family=poisson)
+# link function is the logarithm
+Vals1 <- model_eval(mod1, skeleton=TRUE, interval="none")
+# the value for lambda, according to the model, is 0.417
+Orings$lambda_mod1 <- 0.417
+L1 <- exp(sum(with(Orings, dpois(incidents, lambda_mod1, log=TRUE))))
+
+mod2 <- glm(incidents ~ 1 + temp, data=Orings, family=poisson)
+
+Vals <- model_eval(mod2, interval="none", temp=Orings$temp)
+# Sensitivity test
+mod2a <- glm(incidents ~ 1 + temp, data = Orings |> mutate(incidents = ifelse(incidents==3, 2, incidents)), family=poisson)
+
+mod2b <- glm(incidents ~ 1 + temp, data = Orings |> mutate(incidents = ifelse(incidents==3, 4, incidents)), family=poisson)
+
+Orings$lambda_mod2 <- Vals$.output
+
+L2 <- exp(sum(with(Orings, dpois(incidents, lambda_mod2, log=TRUE))))
+
+# At 30 deg F, what's the rate of O-ring failure
+model_eval(mod2, interval="none", temp=30 )
+Failures <- tibble::tibble(
+  x = 1:100,
+  y = dpois(x, lambda=22.6))
+gf_line(y ~ x, data=Failures)
+```
+
+If prior is that there's a 10% chance (odds=1/9) that temperature is a problem, log posterior is likelihood ratio times log prior.
+
+```{r}
+post_odds = L2/L1 * (1/9)
+post_odds / (1 + post_odds)
+```
+
+
+## How safe is a new plane?
+
+Risk of an accident
+
+Prior: Mostly near zero, but let's spread 10% of the prior from zero to one.
+
+Likelihood: (1-risk) if there is no accident. (risk) if there is an accident.
+
+```{r}
+prior <- makeFun(dbeta(risk, 1.2, 6 ) ~ risk)
+# n is number of accident-free flights, p is number of accidents
+posterior <- makeFun((1-risk)^n * risk^p * prior(risk) ~ risk + n + p)
+slice_plot(prior(risk) ~ risk, bounds(risk=0:1)) 
+  slice_plot(posterior(risk, n=300, p=1) ~ risk, bounds(risk=0:.03), color="red") |> gf_vline(xintercept=1/301)
+```
+
+
+
+## Null hypothesis testing
+
+Now we will move to a form of statistical inference that is highly controversial: called variously "significance testing," "null hypothesis testing," "null hypothesis significance testing," or even simply "hypothesis testing." (I'll call it NHT, short for "null hypothesis testing.") Part of the controversy stems from basic misunderstandings that lead people often to overestimate the importance of their research findings. Another part of the controversy comes from the fact that the assumptions that shape the mathematical justification for the method are not always met in practice. There are many ways to game the analysis to increase the chances of an impressive-looking result that are standard research practices.
+
+We will spend the next three classes on NHT, almost a sixth of our class time for the part of Math 300 where we have been using the *Lessons* book. In many introductory statistics classes and textbooks, about a quarter of the *entire* course is devoted to what they call "hypothesis testing," mostly in the form of variety of statistical "tests" applicable to different common situations.
+
+The language of NHT, especially the terms "null hypothesis" and "p-value," is so widely used in reporting statistical results that you must know the basics. But, I have to be careful, since I don't want to imply that NHT deserves to be so widely used. Indeed, in almost all the situations covered by introductory statistics courses confidence intervals provide an alternative to NHT that tells you everything worthwhile about the NHT result but is less subject to mis-use. 
+
+My job is: 
+
+1. to introduce you to the nomenclature of NHT so that you can know what people are talking about,
+2. to show you that part of NHT that can better be handled by using confidence intervals.
+3. to show situations where confidence intervals aren't applicable and therefore NHT---properly used---is appropriate.
+4. to show you some of the signs of the mis-use of hypothesis testing, to help you avoid being fooled.
+
+A little bit of history can help you see how the unhappy situation surrounding NHT and what the textbooks call "hypothesis testing" came about.
+
+- 1890-1905 Karl Pearson introduces the chi-squared "goodness of fit" test and the term p-value.
+- 1908 William Sealy Gosset introduces what we call the "t distribution," which came to be at the core of most textbook hypothesis tests.
+- 1910-1930 Ronald A. Fisher introduces the term "null hypothesis" and "significance testing" and a technique still of much use today, "analysis of variance" (ANOVA).
+- 1935-40 Jerzy Neyman introduces confidence intervals and, with Karl Pearson's son---the "alternative hypothesis" and "power." But Fisher, a hugely influential person, wrongly declares that these are garbage. 
+- 1962 Ronald Fisher dies.
+- 1960s and 70s. It becomes more widely appreciated that Neyman-Pearson hypothesis testing is a reasonable framework and the alternative hypothesis and power become essential concepts in the professional design of studies. 
+- 1970s textbook authors create an almost incoherent amalgam of Fisher's framework and Neyman-Pearson, where the "alternative hypothesis" is a pale shadow of the richer concept that is actually useful in the design of studies.
+- 1970s onward: statisticians call more and more loudly for de-emphasizing NHT. This is continuing up to the present.
+
+
 
 
 

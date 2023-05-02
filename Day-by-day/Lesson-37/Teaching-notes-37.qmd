@@ -12,3 +12,31 @@ library(math300)
 
 ## Review of Lesson 36
 
+We introduced hypothesis testing. This is a simple procedure that results in one of two possible outcomes: "reject the Null" or "fail to reject the Null."
+
+"The Null" refers to the "**Null hypothesis**." Like all hypotheses, the Null might or might not be true. The point of the Null is to play the role of a devil's advocate claiming, "your results are nothing new" or "there is no relationship of interest."
+
+In the regression framework, the operational definition of the Null is that the coefficient of interest would be found to be zero if a sufficient amount of data were collected. Or, in terms of the devil's advocate: Anything non-zero is the result of sampling variation resulting from too small a sample.
+
+The hypothesis testing calculation is simple regarding the relationship between the response variable and the explanatory variable of interest: Find a p-value on the coefficient for the explanatory variable. Model summary software does this automatically; you just have to ask for the p-value to be reported.
+
+With the p-value in hand, you check whether $p < 0.05$. If so, "reject the Null." Otherwise, "fail to reject the Null."
+
+In Lesson 38, we will show some of the ways that p-values are misleading or abused in order for you to avoid being misled.
+
+Our agenda today, Lesson 37, is:
+
+1. Show that the hypothesis testing conclusions---reject or fail to reject---can be deduced simply from the confidence interval on the coefficient of interest.
+2. Notwithstanding (1), show you a general way to implement the calculation of a p-value. This might give you better insight to what hypothesis testing is about.
+3. Generalize hypothesis testing to a broader context where multiple coefficients might be simultaneously of interest.
+
+## Using a confidence interval to implement hypothesis testing
+
+
+## P-values via shuffling
+
+
+## ANOVA deals with sets of coefficients
+
+
+

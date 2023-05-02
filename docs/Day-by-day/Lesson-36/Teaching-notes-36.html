@@ -129,7 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -171,9 +171,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -205,76 +207,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="review-of-lesson-35" class="level2">
-<h2 class="anchored" data-anchor-id="review-of-lesson-35">Review of Lesson 35</h2>
-<p>We considered the development and application of a screening test.</p>
+<p>This week: Picking up on topics usually found in an introductory course, but which we haven’t worked with.</p>
 <ul>
-<li>Development (the “science” part of the work)
-<ol type="1">
-<li>Gather 1000 subjects of whom about 50% have the condition and the rest don’t.</li>
-<li>Apply the test to all the subjects getting a positive or negative result for each.</li>
-<li>Calculate <strong>sensitivity</strong> and <strong>specificity</strong>.
-<ul>
-<li>The fraction of the diseased subjects who get a positive test is the <strong>sensitivity</strong> of the test.</li>
-<li>The fraction of the healthy subjects who get a negative test is the <strong>specificity</strong> of the test.</li>
-</ul></li>
-</ol></li>
-<li>Application
-<ol type="1">
-<li>Apply the test to your patient, getting a positive or negative result.</li>
-<li>Look up the <strong>prevalence</strong> of the disease in the relevant population. This is the <strong>prior probability</strong> for your patient.</li>
-<li>Do the arithmetic to combine the three numbers—prevalence, sensitivity, specificity—to compute the <strong>posterior probability</strong> for your patient.</li>
-</ol></li>
+<li><p>Highly opinionated view: We haven’t included them because they aren’t worth including. (Perhaps true from a strictly logical perspective.)</p></li>
+<li><p>Consensus view: You will hear about these things even if there are better alternatives (which we have covered), so they should be included.</p></li>
 </ul>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="Teaching-notes-36_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Calculation: - A = prior probability <span class="math inline">\(\times\)</span> sensitivity - B = (1 - prior probability) <span class="math inline">\(\times\)</span> (1-specificity) - consequently: <strong>posterior probability</strong> = A / (A + B)</p>
-<p>Example from above graph: - A = 10% <span class="math inline">\(\times\)</span> 90% = 9% - B = 90% <span class="math inline">\(\times\)</span> 15.5% = 14% - consequently: <strong>posterior probability</strong> = 9 / (9 + 14) = 39%</p>
-</section>
-<section id="translating-to-more-general-terms" class="level2">
-<h2 class="anchored" data-anchor-id="translating-to-more-general-terms">Translating to more general terms</h2>
-<ul>
-<li>Diseased vs.&nbsp;Healthy <span class="math inline">\(\longrightarrow\)</span> H_a_ vs.&nbsp;H_0_ a.k.a. “Alternative” vs “Null”</li>
-<li>Sensitivity <span class="math inline">\(\longrightarrow\)</span> Likelihood_a_ = p(obs | H_a_) = <span class="math inline">\({\cal L}_a(\text{obs})\)</span></li>
-<li>(1-specificity) <span class="math inline">\(\longrightarrow\)</span> Likelihood_0 = p(obs | H_0_) = <span class="math inline">\({\cal L}_0(\text{obs})\)</span></li>
-</ul>
-<p>In this framework, we can simplify the iconic graphic a lot:</p>
-<div class="cell">
-<div class="cell-output-display">
-<p><img src="Teaching-notes-36_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>Another formula for the posterior probability:</p>
-<p><span class="math display">\[\underbrace{odds(H_a | \text{obs})}_{\Large\text{posterior for } H_a} = \underbrace{\left[\frac{{\cal L}_a(\text{obs})}{{\cal L}_0(\text{obs})} \right]}_{\Large\text{Likelihood ratio}}\ \times\ \underbrace{odds(H_a)}_{\Large\text{prior for } H_a}\]</span></p>
-</section>
-<section id="class-activity" class="level2">
-<h2 class="anchored" data-anchor-id="class-activity"><a href="Woodpeckers.html">Class activity</a></h2>
-</section>
-<section id="null-hypothesis-testing" class="level2">
-<h2 class="anchored" data-anchor-id="null-hypothesis-testing">Null hypothesis testing</h2>
+<p>Two such topics from “Stat 101” (e.g.&nbsp;“AP Statistics”):</p>
+<ol type="1">
+<li>Hypothesis testing, more properly called “Null Hypothesis Testing.” (NHT)
+<ol type="a">
+<li>general logic and calculation procedures for the <em>p-value</em>.</li>
+<li>named statistical “tests,” e.g., t-test (three varieties!), p-test, z-test, chi-squared test, ANOVA (which is genuinely useful but not often in Stat 101).</li>
+</ol></li>
+<li>Classical framework for statistical theory: <strong>population</strong> and <strong>population parameters</strong> vs samples and sample statistics.
+<ol type="a">
+<li>Classical dogma: Probability does not apply to population parameters. They are what they are, even if we don’t know what they are.</li>
+<li>Classical definition of <strong>statistical inference</strong>: “<em>The process of using a sample to infer the properties of a population.</em>”</li>
+<li>The classical framework is like Aristotle’s Physics: “Everything moves to its rightful place. The rightful place for heavy objects is as close to the Earth as possible.”</li>
+</ol></li>
+</ol>
+<section id="introducing-hypothesis-testing" class="level2">
+<h2 class="anchored" data-anchor-id="introducing-hypothesis-testing">Introducing Hypothesis testing</h2>
+<p>1926: Fisher introduces “significance testing” in <a href="fisher-agriculture.pdf">“The Arrangement of Field Experiments”</a> <em>Journal of the Ministry of Agriculture of Great Britain</em> <strong>33</strong>:503-513</p>
 <p>The <strong>Null hypothesis</strong> is usually taken to be a statement like these:</p>
 <ul>
 <li>“There is nothing worthwhile going on.”</li>
 <li>“There is no connection between the response and explanatory variables.”</li>
 <li>Setting: You are working with two groups, each of which has a mean (or proportion) of some response variable. “There is no difference between the group means (or proportions).”</li>
 </ul>
-<p>The Bayesian framework is an excellent way to update a prior for either the Alternative hypothesis or a Null hypothesis. (The priors correspond one to the other: p(Alternative) = 1-p(Null).) There are even ways to put the model-fitting process into a Bayesian framework so that we get a posterior probability distribution on the effect size.</p>
-<p>But sometimes we don’t have everything we need.</p>
-<ol type="1">
-<li><p>The classical formulation of statistics holds that a hypothesis should be fixed, there’s no such thing as a prior or posterior for a hypothesis.</p></li>
-<li><p>The early formulations of “null hypothesis testing” did not include any role for an Alternative hypothesis. The mathematics of the Alternative were introduced in the late 1930s, but it was half a century before this started to be a standard part of teaching statistics. (And even then, it plays just a rump role in Stat 101.)</p></li>
-</ol>
-<p>What does this leave us with?</p>
-<p><span class="math display">\[\require{cancel}\cancel{\underbrace{odds(H_a | \text{obs})}_{\Large\text{posterior for } H_a}} = \underbrace{\left[\frac{\cancel{{\cal L}_a(\text{obs})}}{{\cal L}_0(\text{obs})} \right]}_{\Large\cancel{\text{Likelihood ratio}}}\ \times\ \cancel{\underbrace{odds(H_a)}_{\Large\text{prior for } H_a}}\]</span> The <strong>only</strong> component that’s left is <span class="math inline">\({\cal L}_0(\text{obs})\)</span>.</p>
-</section>
-<section id="the-p-value" class="level2">
-<h2 class="anchored" data-anchor-id="the-p-value">The p-value</h2>
-<p>If “obs” is bad news for the Null hypothesis, then <span class="math inline">\({\cal L}_0(\text{obs})\)</span> will be small.</p>
-<p>But there is a situation where it might be small for other reasons: if there are lots of possible values for an observation, the probability of any specific one is going to tend to be small.</p>
-<p>Patch for this problem: Include in the likelihood not just the observation itself, but any other observations that would be even more compellingly “bad” for the Null hypothesis.</p>
+<p>Conducting a hypothesis test means to calculate from the data something called a p-value that is a number between 0 and 1.</p>
+<ul>
+<li>In our framework from Lessons 34 and 35, a p-value is a <strong>likelihood</strong>: the probability of what we observed (e.g.&nbsp;a 10% increase in yield) given the Null hypothesis. Fisher suggested in his early paper, looking at previous years’ data “with uniform treatment” (no manure), the p-value is the fraction of years that produced a disparity of 10% or greater.</li>
+</ul>
 <hr>
 <p>Example: Does the number of kids in a family play a role in determining child’s adult height?</p>
 <div class="cell" data-digits="3">
@@ -347,6 +311,84 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <p>Suppose the Null is that “nothing interesting is going on” (e.g.&nbsp;<code>nkids</code> doesn’t factor into adult height). Then, “rejecting the Null” is practically synonymous with “something interesting is going on.”</p>
 <p>Researchers calculate p-values. They usually hope for a small p-value, since this indicates that something interesting is going on, perhaps suitably interesting to be worth publishing.</p>
+</section>
+<section id="review-of-lesson-35" class="level2">
+<h2 class="anchored" data-anchor-id="review-of-lesson-35">Review of Lesson 35</h2>
+<p>We considered the development and application of a screening test.</p>
+<ul>
+<li>Development (the “science” part of the work)
+<ol type="1">
+<li>Gather 1000 subjects of whom about 50% have the condition and the rest don’t.</li>
+<li>Apply the test to all the subjects getting a positive or negative result for each.</li>
+<li>Calculate <strong>sensitivity</strong> and <strong>specificity</strong>.
+<ul>
+<li>The fraction of the diseased subjects who get a positive test is the <strong>sensitivity</strong> of the test.</li>
+<li>The fraction of the healthy subjects who get a negative test is the <strong>specificity</strong> of the test.</li>
+</ul></li>
+</ol></li>
+</ul>
+<p>This results in information reported in the following graph:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Teaching-notes-36_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="translating-to-more-general-terms" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="translating-to-more-general-terms">Translating to more general terms</h2>
+<div class="cell page-columns page-full">
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-upside-down-sensitivity" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="screening-upside-down.png" class="img-fluid figure-img" width="704"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Turning the graph from Lesson 35 upside-down to bring it into a mainstream graphical format.</figcaption><p></p>
+</figure>
+</div>
+</div></div></div>
+<ul>
+<li>Diseased vs.&nbsp;Healthy <span class="math inline">\(\longrightarrow\)</span> H_a_ vs.&nbsp;H_0_ a.k.a. “Alternative” vs “Null”</li>
+<li>Sensitivity <span class="math inline">\(\longrightarrow\)</span> Likelihood_a_ = p(obs | H_a_) = <span class="math inline">\({\cal L}_a(\text{obs})\)</span></li>
+<li>(1-specificity) <span class="math inline">\(\longrightarrow\)</span> Likelihood_0 = p(obs | H_0_) = <span class="math inline">\({\cal L}_0(\text{obs})\)</span></li>
+</ul>
+<p>In this framework, we can simplify the iconic graphic a lot:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Teaching-notes-36_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li>Application
+<ol type="1">
+<li>Apply the test to your patient, getting a positive or negative result.</li>
+<li>Look up the <strong>prevalence</strong> of the disease in the relevant population. This is the <strong>prior probability</strong> for your patient.</li>
+<li>Do the arithmetic to combine the three numbers—prevalence, sensitivity, specificity—to compute the <strong>posterior probability</strong> for your patient.</li>
+</ol></li>
+</ul>
+<p>Calculation: - A = prior probability <span class="math inline">\(\times\)</span> sensitivity - B = (1 - prior probability) <span class="math inline">\(\times\)</span> (1-specificity) - consequently: <strong>posterior probability</strong> = A / (A + B)</p>
+<p>Example from above graph: - A = 10% <span class="math inline">\(\times\)</span> 90% = 9% - B = 90% <span class="math inline">\(\times\)</span> 15.5% = 14% - consequently: <strong>posterior probability</strong> = 9 / (9 + 14) = 39%</p>
+<p>Another formula for the posterior probability:</p>
+<p><span class="math display">\[\underbrace{odds(H_a | \text{obs})}_{\Large\text{posterior for } H_a} = \underbrace{\left[\frac{{\cal L}_a(\text{obs})}{{\cal L}_0(\text{obs})} \right]}_{\Large\text{Likelihood ratio}}\ \times\ \underbrace{odds(H_a)}_{\Large\text{prior for } H_a}\]</span></p>
+</section>
+<section id="class-activity" class="level2">
+<h2 class="anchored" data-anchor-id="class-activity"><a href="Woodpeckers.html">Class activity</a></h2>
+</section>
+<section id="null-hypothesis-testing-and-bayesian-inference" class="level2">
+<h2 class="anchored" data-anchor-id="null-hypothesis-testing-and-bayesian-inference">Null hypothesis testing and Bayesian inference</h2>
+<p>The Bayesian framework is an excellent way to update a prior for either the Alternative hypothesis or a Null hypothesis. (The priors correspond one to the other: p(Alternative) = 1-p(Null).) There are even ways to put the model-fitting process into a Bayesian framework so that we get a posterior probability distribution on the effect size.</p>
+<p>But sometimes we don’t have everything we need.</p>
+<ol type="1">
+<li><p>The classical formulation of statistics holds that a hypothesis should be fixed, there’s no such thing as a prior or posterior for a hypothesis.</p></li>
+<li><p>The early formulations of “null hypothesis testing” did not include any role for an Alternative hypothesis. The mathematics of the Alternative were introduced in the late 1930s, but it was half a century before this started to be a standard part of teaching statistics. (And even then, it plays just a rump role in Stat 101.)</p></li>
+</ol>
+<p>What does this leave us with?</p>
+<p><span class="math display">\[\require{cancel}\cancel{\underbrace{odds(H_a | \text{obs})}_{\Large\text{posterior for } H_a}} = \underbrace{\left[\frac{\cancel{{\cal L}_a(\text{obs})}}{{\cal L}_0(\text{obs})} \right]}_{\Large\cancel{\text{Likelihood ratio}}}\ \times\ \cancel{\underbrace{odds(H_a)}_{\Large\text{prior for } H_a}}\]</span> The <strong>only</strong> component that’s left is <span class="math inline">\({\cal L}_0(\text{obs})\)</span>.</p>
+</section>
+<section id="the-p-value" class="level2">
+<h2 class="anchored" data-anchor-id="the-p-value">The p-value</h2>
+<p>If “obs” is bad news for the Null hypothesis, then <span class="math inline">\({\cal L}_0(\text{obs})\)</span> will be small.</p>
+<p>But there is a situation where it might be small for other reasons: if there are lots of possible values for an observation, the probability of any specific one is going to tend to be small.</p>
+<p>Patch for this problem: Include in the likelihood not just the observation itself, but any other observations that would be even more compellingly “bad” for the Null hypothesis.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

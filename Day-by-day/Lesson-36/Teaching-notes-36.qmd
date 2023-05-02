@@ -12,56 +12,26 @@ library(mosaicCalc)
 source("../../../_startup.R")
 ```
 
-## Review of Lesson 35
+This week: Picking up on topics usually found in an introductory course, but which we haven't worked with. 
 
-We considered the development and application of a screening test. 
+- Highly opinionated view: We haven't included them because they aren't worth including. (Perhaps true from a strictly logical perspective.)
 
-* Development (the "science" part of the work)
-    1. Gather 1000 subjects of whom about 50% have the condition and the rest don't.
-    2. Apply the test to all the subjects getting a positive or negative result for each.
-    3. Calculate **sensitivity** and **specificity**.
-        - The fraction of the diseased subjects who get a positive test is the **sensitivity** of the test.
-        - The fraction of the healthy subjects who get a negative test is the **specificity** of the test.
-        
-* Application
-    1. Apply the test to your patient, getting a positive or negative result.
-    2. Look up the **prevalence** of the disease in the relevant population. This is the **prior probability** for your patient.
-    3. Do the arithmetic to combine the three numbers---prevalence, sensitivity, specificity---to compute the **posterior probability** for your patient.
+- Consensus view: You will hear about these things even if there are better alternatives (which we have covered), so they should be included.
+
+Two such topics from "Stat 101" (e.g. "AP Statistics"):
+
+1. Hypothesis testing, more properly called "Null Hypothesis Testing." (NHT)
+    a. general logic and calculation procedures for the *p-value*.
+    b. named statistical "tests," e.g., t-test (three varieties!), p-test, z-test, chi-squared test, ANOVA (which is genuinely useful but not often in Stat 101).
+
+2. Classical framework for statistical theory: **population** and **population parameters** vs samples and sample statistics.
+    a. Classical dogma: Probability does not apply to population parameters. They are what they are, even if we don't know what they are.
+    b. Classical definition of **statistical inference**: "*The process of using a sample to infer the properties of a population.*" 
+    c. The classical framework is like Aristotle's Physics: "Everything moves to its rightful place. The rightful place for heavy objects is as close to the Earth as possible."
     
-```{r echo=FALSE, warning=FALSE}
-library(ggmosaic)
-med_test_graph()
-```
-Calculation: 
-- A = prior probability $\times$ sensitivity
-- B = (1 - prior probability) $\times$ (1-specificity)
-- consequently: **posterior probability** = A / (A + B)
+## Introducing Hypothesis testing
 
-Example from above graph:
-- A = 10% $\times$ 90% = 9%
-- B = 90% $\times$ 15.5% = 14%
-- consequently: **posterior probability** = 9 / (9 + 14) = 39%
-
-## Translating to more general terms
-
-- Diseased vs. Healthy $\longrightarrow$ H_a_ vs. H_0_ a.k.a. "Alternative" vs "Null"
-- Sensitivity $\longrightarrow$ Likelihood_a_ = p(obs | H_a_) = ${\cal L}_a(\text{obs})$
-- (1-specificity) $\longrightarrow$ Likelihood_0 = p(obs | H_0_) = ${\cal L}_0(\text{obs})$
-
-In this framework, we can simplify the iconic graphic a lot:
-
-```{r echo=FALSE}
-hypothesis_compete_graph(prior=.15, like1=0.8, like2=0.3)
-```
-
-
-Another formula for the posterior probability:
-
-$$\underbrace{odds(H_a | \text{obs})}_{\Large\text{posterior for } H_a} = \underbrace{\left[\frac{{\cal L}_a(\text{obs})}{{\cal L}_0(\text{obs})} \right]}_{\Large\text{Likelihood ratio}}\ \times\ \underbrace{odds(H_a)}_{\Large\text{prior for } H_a}$$
-
-## [Class activity](Woodpeckers.html)
-
-## Null hypothesis testing
+1926: Fisher introduces "significance testing" in ["The Arrangement of Field Experiments"](fisher-agriculture.pdf) *Journal of the Ministry of Agriculture of Great Britain* **33**:503-513
 
 The **Null hypothesis** is usually taken to be a statement like these:
 
@@ -69,26 +39,9 @@ The **Null hypothesis** is usually taken to be a statement like these:
 - "There is no connection between the response and explanatory variables."
 - Setting: You are working with two groups, each of which has a mean (or proportion) of some response variable. "There is no difference between the group means (or proportions)."
 
-The Bayesian framework is an excellent way to update a prior for either the Alternative hypothesis or a Null hypothesis. (The priors correspond one to the other: p(Alternative) = 1-p(Null).) There are even ways to put the model-fitting process into a Bayesian framework so that we get a posterior probability distribution on the effect size.
+Conducting a hypothesis test means to calculate from the data something called a p-value that is a number between 0 and 1.
 
-But sometimes we don't have everything we need.
-
-1. The classical formulation of statistics holds that a hypothesis should be fixed, there's no such thing as a prior or posterior for a hypothesis. 
-
-2. The early formulations of "null hypothesis testing" did not include any role for an Alternative hypothesis. The mathematics of the Alternative were introduced in the late 1930s, but it was half a century before this started to be a standard part of teaching statistics. (And even then, it plays just a rump role in Stat 101.)
-
-What does this leave us with?
-
-$$\require{cancel}\cancel{\underbrace{odds(H_a | \text{obs})}_{\Large\text{posterior for } H_a}} = \underbrace{\left[\frac{\cancel{{\cal L}_a(\text{obs})}}{{\cal L}_0(\text{obs})} \right]}_{\Large\cancel{\text{Likelihood ratio}}}\ \times\ \cancel{\underbrace{odds(H_a)}_{\Large\text{prior for } H_a}}$$
-The **only** component that's left is ${\cal L}_0(\text{obs})$.
-
-## The p-value
-
-If "obs" is bad news for the Null hypothesis, then ${\cal L}_0(\text{obs})$ will be small.
-
-But there is a situation where it might be small for other reasons: if there are lots of possible values for an observation, the probability of any specific one is going to tend to be small.
-
-Patch for this problem: Include in the likelihood not just the observation itself, but any other observations that would be even more compellingly "bad" for the Null hypothesis. 
+- In our framework from Lessons 34 and 35, a p-value is a **likelihood**: the probability of what we observed (e.g. a 10% increase in yield) given the Null hypothesis. Fisher suggested in his early paper, looking at previous years' data "with uniform treatment" (no manure), the p-value is the fraction of years that produced a disparity of 10% or greater.
 
 ---------
 
@@ -116,6 +69,104 @@ We need a definition for "small p-value."
 Suppose the Null is that "nothing interesting is going on" (e.g. `nkids` doesn't factor into adult height). Then, "rejecting the Null" is practically synonymous with "something interesting is going on."
 
 Researchers calculate p-values. They usually hope for a small p-value, since this indicates that something interesting is going on, perhaps suitably interesting to be worth publishing.
+
+
+
+
+## Review of Lesson 35
+
+We considered the development and application of a screening test. 
+
+* Development (the "science" part of the work)
+    1. Gather 1000 subjects of whom about 50% have the condition and the rest don't.
+    2. Apply the test to all the subjects getting a positive or negative result for each.
+    3. Calculate **sensitivity** and **specificity**.
+        - The fraction of the diseased subjects who get a positive test is the **sensitivity** of the test.
+        - The fraction of the healthy subjects who get a negative test is the **specificity** of the test.
+        
+This results in information reported in the following graph:
+
+```{r echo=FALSE, warning=FALSE}
+library(ggmosaic)
+med_test_graph(prevalence=0.15, sensitivity=0.8, specificity=0.7, n=10000)
+```
+
+
+
+
+## Translating to more general terms
+
+
+```{r echo=FALSE}
+#| column: margin
+#| fig-cap: "Turning the graph from Lesson 35 upside-down to bring it into a mainstream graphical format."
+#| label: fig-upside-down-sensitivity
+knitr::include_graphics("screening-upside-down.png")
+```
+
+- Diseased vs. Healthy $\longrightarrow$ H_a_ vs. H_0_ a.k.a. "Alternative" vs "Null"
+- Sensitivity $\longrightarrow$ Likelihood_a_ = p(obs | H_a_) = ${\cal L}_a(\text{obs})$
+- (1-specificity) $\longrightarrow$ Likelihood_0 = p(obs | H_0_) = ${\cal L}_0(\text{obs})$
+
+In this framework, we can simplify the iconic graphic a lot:
+
+```{r echo=FALSE}
+hypothesis_compete_graph(prior=.15, like1=0.8, like2=0.3)
+```
+
+
+
+
+ 
+* Application
+    1. Apply the test to your patient, getting a positive or negative result.
+    2. Look up the **prevalence** of the disease in the relevant population. This is the **prior probability** for your patient.
+    3. Do the arithmetic to combine the three numbers---prevalence, sensitivity, specificity---to compute the **posterior probability** for your patient.
+    
+
+Calculation: 
+- A = prior probability $\times$ sensitivity
+- B = (1 - prior probability) $\times$ (1-specificity)
+- consequently: **posterior probability** = A / (A + B)
+
+Example from above graph:
+- A = 10% $\times$ 90% = 9%
+- B = 90% $\times$ 15.5% = 14%
+- consequently: **posterior probability** = 9 / (9 + 14) = 39%
+
+
+
+Another formula for the posterior probability:
+
+$$\underbrace{odds(H_a | \text{obs})}_{\Large\text{posterior for } H_a} = \underbrace{\left[\frac{{\cal L}_a(\text{obs})}{{\cal L}_0(\text{obs})} \right]}_{\Large\text{Likelihood ratio}}\ \times\ \underbrace{odds(H_a)}_{\Large\text{prior for } H_a}$$
+
+## [Class activity](Woodpeckers.html)
+
+## Null hypothesis testing and Bayesian inference
+
+
+The Bayesian framework is an excellent way to update a prior for either the Alternative hypothesis or a Null hypothesis. (The priors correspond one to the other: p(Alternative) = 1-p(Null).) There are even ways to put the model-fitting process into a Bayesian framework so that we get a posterior probability distribution on the effect size.
+
+But sometimes we don't have everything we need.
+
+1. The classical formulation of statistics holds that a hypothesis should be fixed, there's no such thing as a prior or posterior for a hypothesis. 
+
+2. The early formulations of "null hypothesis testing" did not include any role for an Alternative hypothesis. The mathematics of the Alternative were introduced in the late 1930s, but it was half a century before this started to be a standard part of teaching statistics. (And even then, it plays just a rump role in Stat 101.)
+
+What does this leave us with?
+
+$$\require{cancel}\cancel{\underbrace{odds(H_a | \text{obs})}_{\Large\text{posterior for } H_a}} = \underbrace{\left[\frac{\cancel{{\cal L}_a(\text{obs})}}{{\cal L}_0(\text{obs})} \right]}_{\Large\cancel{\text{Likelihood ratio}}}\ \times\ \cancel{\underbrace{odds(H_a)}_{\Large\text{prior for } H_a}}$$
+The **only** component that's left is ${\cal L}_0(\text{obs})$.
+
+## The p-value
+
+If "obs" is bad news for the Null hypothesis, then ${\cal L}_0(\text{obs})$ will be small.
+
+But there is a situation where it might be small for other reasons: if there are lots of possible values for an observation, the probability of any specific one is going to tend to be small.
+
+Patch for this problem: Include in the likelihood not just the observation itself, but any other observations that would be even more compellingly "bad" for the Null hypothesis. 
+
+
 
 ::: {.callout-note}
 ## p-value fallacies
