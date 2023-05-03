@@ -1,0 +1,52 @@
+# Class Activity: Confidence Levels
+
+```{r include=FALSE}
+library(math300)
+```
+
+You and your group partners should collectively
+
+i. Choose a data frame from among those we have been using. (You can use the command `data(package="math300")` or `data(package="mosaicData")` to get a list that includes many of the examples we have been using.) In selecting your data frame, make sure it has at least one numerical variable as well as another variable that can be numerical or categorical with two levels.
+ii. State a model specification with i) a numerical response variable and ii) an explanatory variable that is either numerical or categorical with two levels. Add in whatever covariates you like.
+
+Then you will fit a linear regression model, calculate the confidence intervals, and focus on the confidence interval that corresponds to your explanatory variable.
+
+::: {.callout-note}
+## Example
+
+Data frame: The `Galton` data frame that we have used so often in class, which records the adult heights of children along with other variables.
+
+Model specification: `height` as the response variable and `nkids` as the explanatory variable. Suppose we include `mother`, `father`, and `sex` as covariates.
+
+Model fitting and summary:
+
+```{r digits = 2}
+lm(height ~ nkids + mother + father + sex, data=Galton) |>
+  conf_interval(show_p = TRUE)
+```
+The confidence interval that we will example is the one on the explanatory variable, `nkids` in this example. That interval is [-0.1 to +0.01], so it includes zero.
+:::
+
+
+
+Now that you have your data frame and model specification, we're going to play around a bit.
+
+The `conf_intervals()` function can take two arguments. We're using `show_p=TRUE` because we are going to be putting the p-value in the context of the confidence interval. There is also an argument for setting the confidence level, e.g. `level=0.8`.
+
+1. What is the default confidence level, that is, the level used when you omit the `level=` argument? [Hint: Try some different levels until you have one that duplicates the confidence interval found under the default.]
+
+2. Calculate the top-to-bottom length of the interval on your explanatory variable for a few different  of confidence levels in the wide range (say, from 0.5 to 0.999). On paper, fill in this table:
+
+Confidence level | top of CI | bottom of CI | length of CI
+----------|-------|------|------
+0.5 | | | 
+  | | |
+  | | |
+  | | |
+0.999 | | | 
+
+Describe the relationship shown by your table between the confidence level and the bottom-to-top length of the confidence interval.
+
+3. Each time you calculate a confidence interval, whatever level is used, a p-value is reported. Confirm that the p-value remains unchanged; it does not depend on the level.
+
+4. Take the p-value on your coefficient from (3). Calculate yet another confidence interval, this time using as the confidence level 1-p. (Example: If your p-value is 0.21, then use 0.79 for the confidence level.) Is 0 inside or outside this particular confidence interval?

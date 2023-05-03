@@ -5,6 +5,7 @@ author: "Jane Doe"
 
 ```{r include=FALSE}
 library(math300)
+library(mosaicCalc)
 ```
 
 We have been constructing and using **confidence intervals** since Lesson 23. Recall that each **coefficient** of a model has its own confidence interval.

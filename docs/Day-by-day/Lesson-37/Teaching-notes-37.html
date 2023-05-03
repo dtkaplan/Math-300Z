@@ -22,6 +22,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -61,6 +124,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -143,6 +207,204 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="review-of-lesson-36" class="level2">
 <h2 class="anchored" data-anchor-id="review-of-lesson-36">Review of Lesson 36</h2>
+<p>We introduced hypothesis testing. This is a simple procedure that results in one of two possible outcomes: “reject the Null” or “fail to reject the Null.”</p>
+<p>“The Null” refers to the “<strong>Null hypothesis</strong>.” Like all hypotheses, the Null might or might not be true. The point of the Null is to play the role of a devil’s advocate claiming, “your results are nothing new” or “there is no relationship of interest.”</p>
+<p>In the regression framework, the operational definition of the Null is that the coefficient of interest would be found to be zero if a sufficient amount of data were collected. Or, in terms of the devil’s advocate: Anything non-zero is the result of sampling variation resulting from too small a sample.</p>
+<p>The hypothesis testing calculation is simple regarding the relationship between the response variable and the explanatory variable of interest: Find a p-value on the coefficient for the explanatory variable. Model summary software does this automatically; you just have to ask for the p-value to be reported.</p>
+<p>With the p-value in hand, you check whether <span class="math inline">\(p &lt; 0.05\)</span>. If so, “reject the Null.” Otherwise, “fail to reject the Null.”</p>
+<p>In Lesson 38, we will show some of the ways that p-values are misleading or abused in order for you to avoid being misled.</p>
+<p>Our agenda today, Lesson 37, is:</p>
+<ol type="1">
+<li>Show that the hypothesis testing conclusions—reject or fail to reject—can be deduced simply from the confidence interval on the coefficient of interest.</li>
+<li>Notwithstanding (1), show you a general way to implement the calculation of a p-value. This might give you better insight to what hypothesis testing is about.</li>
+<li>Generalize hypothesis testing to a broader context where multiple coefficients might be simultaneously of interest.</li>
+</ol>
+</section>
+<section id="using-a-confidence-interval-to-implement-hypothesis-testing" class="level2">
+<h2 class="anchored" data-anchor-id="using-a-confidence-interval-to-implement-hypothesis-testing">Using a confidence interval to implement hypothesis testing</h2>
+<p>DAGs represent the question of connections between variables in a graphical way, as an arrow between nodes. A DAG is a hypothesis. Very often in drawing a DAG we have a choice between inserting an arrow or leaving it out: a binary choice.</p>
+<p>For instance, consider this DAG showing a confounder C for the relationship between X and Y:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Teaching-notes-37_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The Null hypothesis in this situation is that there is no direct link between <code>x</code> and <code>y</code>.</p>
+<p>We can measure the effect size of X on Y adjusting for the confounder C with the model specification <code>y ~ x + c</code>. For instance,</p>
+<div class="cell" data-digits="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(abc_dag, <span class="at">size=</span><span class="dv">50</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x <span class="sc">+</span> c, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>(<span class="at">show_p=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  term          .lwr   .coef  .upr      p.value
+  &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;
+1 (Intercept) -0.356 -0.0549 0.246 0.716       
+2 x           -0.508 -0.186  0.136 0.250       
+3 c            0.846  1.22   1.59  0.0000000347</code></pre>
+</div>
+</div>
+<p>In discussing whether the data support the (direct) link between <code>x</code> and <code>y</code>, we look toward the confidence interval on the <code>x</code> coefficient: [-0.51 to +0.14]. This interval includes zero, so we say that “the data offer no evidence to support the link.” In the language of NHT, noticing that <span class="math inline">\(p = 0.25\)</span>, we “fail to reject the Null.”</p>
+<p>Would it also be correct to say that “the data refute the existence of a link,” that is that the data point to “accept the Null?” No.&nbsp;There might in reality be a link but we have not collected enough data to discern it. As the saying goes:</p>
+<blockquote class="blockquote">
+<p><em>Absence of evidence is not evidence of absence.</em></p>
+</blockquote>
+<p>The formalism of NHT helps to keep our thinking straight. The only two valid conclusions are “fail to reject the Null” or “reject the Null.” “Accept the Null” is not an allowed conclusion.</p>
+<p>The choice between the two valid conclusions—reject or fail to reject the Null—can be made directly from the confidence interval, without a p-value.</p>
+<ul>
+<li>Confidence interval includes zero: fail to reject the Null</li>
+<li>Confidence interval excludes zero: reject the Null</li>
+</ul>
+<p>To simplify the introduction and use of confidence intervals, we did not worry about setting a parameter that goes into calculating a confidence interval: the <strong>confidence level</strong>. The justification for this omission is two-fold:</p>
+<ol type="i">
+<li>almost always people use a confidence level of 95% so you rarely have occasion to deal with other confidence levels.</li>
+<li>when discussing the possibilities for different confidence levels it’s natural to wonder what is the “physical” meaning of the level.</li>
+</ol>
+<p>But now we’re going to introduce confidence levels, but only for the purpose of helping to understand p-values. Some simple facts:</p>
+<ul>
+<li>the confidence level is always between 0 and 100%.</li>
+<li>a 0% level leads to an interval that has no length.</li>
+<li>a 100% level leads to an interval that has full length, e.g.&nbsp;between <span class="math inline">\(-\infty\)</span> and <span class="math inline">\(\infty\)</span> when the response variable is numerical.</li>
+<li>the higher the confidence level used for a given model coefficient, the longer the corresponding interval.</li>
+</ul>
+<p><a href="confidence-levels.html">Class activity</a></p>
+</section>
+<section id="p-values-via-shuffling" class="level2">
+<h2 class="anchored" data-anchor-id="p-values-via-shuffling">P-values via shuffling</h2>
+<p>Abstractly, the p-value calculation works like this:</p>
+<ol type="1">
+<li>Fit your model and note, for later comparison to the many trials in (3), the coefficient of interest or R2().</li>
+</ol>
+<p>For example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> nkids <span class="sc">+</span> mother <span class="sc">+</span> father, <span class="at">data=</span>Galton) <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  term          .lwr  .coef    .upr
+  &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept) 15.8   24.4   33.0   
+2 nkids       -0.195 -0.111 -0.0280
+3 mother       0.186  0.282  0.378 
+4 father       0.270  0.361  0.452 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> nkids <span class="sc">+</span> mother <span class="sc">+</span> father, <span class="at">data=</span>Galton) <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    n k  Rsquared        F     adjR2 p df.num df.denom
+1 898 3 0.1156864 38.98454 0.1127189 0      3      894</code></pre>
+</div>
+</div>
+<p>The coefficient on <code>nkids</code> is -0.111 and R<sup>2</sup> is 0.116.</p>
+<ol start="2" type="1">
+<li>Fit the model as in (1), but wrap <code>shuffle()</code> around the explanatory variable of interest. That will randomize the order of entries in just the explanatory variable, leaving all other variables’ entries in their original order.</li>
+</ol>
+<p>For example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> <span class="fu">shuffle</span>(nkids) <span class="sc">+</span> mother <span class="sc">+</span> father, <span class="at">data=</span>Galton) <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  term             .lwr   .coef     .upr
+  &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)    14.1   22.6    31.0    
+2 shuffle(nkids) -0.160 -0.0770  0.00561
+3 mother          0.191  0.287   0.384  
+4 father          0.290  0.379   0.469  </code></pre>
+</div>
+</div>
+<p>The coefficient on the shuffled variable will (almost certainly) be different from the coefficient on the original variable in (1).</p>
+<ol start="3" type="1">
+<li>Take many trials in which you generate data according to (2) and fit the model as in (1). Record the coefficients you get across the trials.</li>
+</ol>
+<p>We’ve talked about repeating random trials before but you are not expected to be able to generate the code to do so. Here it is:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="ot">&lt;-</span> mosaic<span class="sc">::</span><span class="fu">do</span>(<span class="dv">1000</span>) <span class="sc">*</span> {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Insert here the lm/conf_interval code you used in (2), e.g.</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lm</span>(height <span class="sc">~</span> <span class="fu">shuffle</span>(nkids) <span class="sc">+</span> mother <span class="sc">+</span> father, <span class="at">data=</span>Galton) <span class="sc">|&gt;</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">conf_interval</span>() </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  } <span class="sc">|&gt;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"shuffle"</span>, term)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(.coef)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="4" type="1">
+<li>Count the fraction of the time the coefficients in (3) have a magnitude as large or the same as the coefficient from (1). That fraction is your p-value.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_value =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(.coef) <span class="sc">&gt;</span> <span class="fu">abs</span>(<span class="sc">-</span><span class="fl">0.111</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  p_value
+1   0.008</code></pre>
+</div>
+</div>
+<p>If you were doing this with R<sup>2</sup>, the calculations would be</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>R2Trials <span class="ot">&lt;-</span> mosaic<span class="sc">::</span><span class="fu">do</span>(<span class="dv">1000</span>) <span class="sc">*</span> {</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Insert here the lm/conf_interval code you used in (2), e.g.</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lm</span>(height <span class="sc">~</span> <span class="fu">shuffle</span>(nkids) <span class="sc">+</span> mother <span class="sc">+</span> father, <span class="at">data=</span>Galton) <span class="sc">|&gt;</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">R2</span>() </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  } <span class="sc">|&gt;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Rsquared)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>R2Trials <span class="sc">|&gt;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_value =</span> <span class="fu">mean</span>(Rsquared <span class="sc">&gt;</span> <span class="fl">0.116</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  p_value
+1   0.004</code></pre>
+</div>
+</div>
+</section>
+<section id="anova-deals-with-sets-of-coefficients" class="level2">
+<h2 class="anchored" data-anchor-id="anova-deals-with-sets-of-coefficients">ANOVA deals with sets of coefficients</h2>
+<p>It sometimes happens that the explanatory variable of interest is categorical with more than two levels. A case in point: the <code>Framingham</code> data where <code>education</code> has four levels: “some HS”, “HS grad”, “some college”, and “college_grad”.</p>
+<p>Here’s a model looking at the connection between age and education (with smoking status as a covariate):</p>
+<div class="cell" data-digits="2">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(age <span class="sc">~</span> education <span class="sc">+</span> currentSmoker, <span class="at">data=</span>Framingham) <span class="sc">|&gt;</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>(<span class="at">show_p=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+  term                    .lwr  .coef    .upr  p.value
+  &lt;chr&gt;                  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)           49.1   49.9   50.7    0       
+2 educationHS grad      -1.64  -0.777  0.0840 7.69e- 2
+3 educationsome college -0.486  0.467  1.42   3.37e- 1
+4 educationsome HS       2.83   3.66   4.49   6.76e-18
+5 currentSmokersmoker   -3.92  -3.42  -2.92   1.28e-40</code></pre>
+</div>
+</div>
+<p>Notice that the baseline level for the <code>education</code> variable is <code>college grad</code>. Each of the other three levels gets a coefficient, a confidence interval, and a p-value.</p>
+<p>Which of these are we to use to test the Null hypothesis that <code>education</code> is unrelated to <code>age</code>? The smallest? The biggest? The average of all three?</p>
+<p>Since the question is about <code>education</code> as a whole, we want a method that produces a single summary stat for the entire variable, rather than different stats for different levels of the variable. R<sup>2</sup> does this for us.</p>
+<div class="cell" data-digits="2">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(age <span class="sc">~</span> education <span class="sc">+</span> currentSmoker, <span class="at">data=</span>Framingham) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     n k   Rsquared        F      adjR2 p df.num df.denom
+1 4133 4 0.09851066 112.7723 0.09763712 0      4     4128</code></pre>
+</div>
+</div>
+<p>There is a single p-value for the whole model.</p>
+<p>If <code>education</code> had been the only explanatory variable, the p-value from R<sup>2</sup> would be solely about <code>education</code>. Such a test, like this,</p>
+<div class="cell" data-digits="2">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(age <span class="sc">~</span> education, <span class="at">data=</span>Framingham) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     n k   Rsquared        F      adjR2 p df.num df.denom
+1 4133 3 0.05876712 85.93319 0.05808325 0      3     4129</code></pre>
+</div>
+</div>
+<p>A NHT test in such circumstances is called “analysis of variance” or “ANOVA” for short. It is a very widely used test and amounts to asking whether the means of the multiple groups (as defined by the explanatory variable) are different from one another.</p>
+<p>ANOVA can also be applied to models with covariates. The idea is to look at a succession of nested models, e.g.&nbsp;<code>age ~ education</code> and <code>age ~ education + currentSmoker</code>. Each model will produce an R<sup>2</sup>, which will get larger as more terms are added to the model.</p>
+<p>The ANOVA report tells how much each explanatory variable contributes to the R<sup>2</sup> of the overall model. That individual contribution (<code>sumsq</code>) is compared to how much remains unexplained—1 - R<sup>2</sup>—from the overall model. The individual contribution is scaled by the number of model coefficients associated with that explanatory variable, with the idea that more coefficients means less contribution (<code>sumsq</code>) per coefficient, or in the language of ANOVA, less contribution per “degree of freedom.”</p>
+<div class="cell" data-digits="2">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(age <span class="sc">~</span> education <span class="sc">+</span> currentSmoker, <span class="at">data=</span>Framingham) <span class="sc">|&gt;</span> <span class="fu">anova_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+  term             df   sumsq  meansq statistic   p.value
+  &lt;chr&gt;         &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1 education         3  17799.  5933.       89.7  3.14e-56
+2 currentSmoker     1  12038. 12038.      182.   1.28e-40
+3 Residuals      4128 273045.    66.1      NA   NA       </code></pre>
+</div>
+</div>
 
 
 </section>

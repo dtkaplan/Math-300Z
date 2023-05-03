@@ -237,8 +237,106 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p>Focus on cases where CONFIDENCE INTERVAL JUST BARELY TOUCHES ZERO, p-value is about 0.05</p>
+<section id="example-system-failure" class="level2">
+<h2 class="anchored" data-anchor-id="example-system-failure">Example: System failure</h2>
+<p>How safe was the Challenger? Make this an exercise in 36 as well.</p>
+<p>Two hypotheses for the Challenger lift-off:</p>
+<ol type="1">
+<li>The temperature is an issue.</li>
+<li>The temperature is not an issue.</li>
+</ol>
+<p>Analyze the O-ring data under each of the hypotheses:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(incidents <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data=</span>Orings, <span class="at">family=</span>poisson)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># link function is the logarithm</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>Vals1 <span class="ot">&lt;-</span> <span class="fu">model_eval</span>(mod1, <span class="at">skeleton=</span><span class="cn">TRUE</span>, <span class="at">interval=</span><span class="st">"none"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># the value for lambda, according to the model, is 0.417</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>Orings<span class="sc">$</span>lambda_mod1 <span class="ot">&lt;-</span> <span class="fl">0.417</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>L1 <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">sum</span>(<span class="fu">with</span>(Orings, <span class="fu">dpois</span>(incidents, lambda_mod1, <span class="at">log=</span><span class="cn">TRUE</span>))))</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(incidents <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> temp, <span class="at">data=</span>Orings, <span class="at">family=</span>poisson)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>Vals <span class="ot">&lt;-</span> <span class="fu">model_eval</span>(mod2, <span class="at">interval=</span><span class="st">"none"</span>, <span class="at">temp=</span>Orings<span class="sc">$</span>temp)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Sensitivity test</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>mod2a <span class="ot">&lt;-</span> <span class="fu">glm</span>(incidents <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> temp, <span class="at">data =</span> Orings <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">incidents =</span> <span class="fu">ifelse</span>(incidents<span class="sc">==</span><span class="dv">3</span>, <span class="dv">2</span>, incidents)), <span class="at">family=</span>poisson)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>mod2b <span class="ot">&lt;-</span> <span class="fu">glm</span>(incidents <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> temp, <span class="at">data =</span> Orings <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">incidents =</span> <span class="fu">ifelse</span>(incidents<span class="sc">==</span><span class="dv">3</span>, <span class="dv">4</span>, incidents)), <span class="at">family=</span>poisson)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>Orings<span class="sc">$</span>lambda_mod2 <span class="ot">&lt;-</span> Vals<span class="sc">$</span>.output</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>L2 <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">sum</span>(<span class="fu">with</span>(Orings, <span class="fu">dpois</span>(incidents, lambda_mod2, <span class="at">log=</span><span class="cn">TRUE</span>))))</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co"># At 30 deg F, what's the rate of O-ring failure</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="fu">model_eval</span>(mod2, <span class="at">interval=</span><span class="st">"none"</span>, <span class="at">temp=</span><span class="dv">30</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  temp  .output
+1   30 22.65492</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Failures <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">dpois</span>(x, <span class="at">lambda=</span><span class="fl">22.6</span>))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_line</span>(y <span class="sc">~</span> x, <span class="at">data=</span>Failures)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Worksheet-36_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>If prior is that there’s a 10% chance (odds=1/9) that temperature is a problem, log posterior is likelihood ratio times log prior.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>post_odds <span class="ot">=</span> L2<span class="sc">/</span>L1 <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span><span class="dv">9</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>post_odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> post_odds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8312646</code></pre>
+</div>
+</div>
+</section>
+<section id="how-safe-is-a-new-plane" class="level2">
+<h2 class="anchored" data-anchor-id="how-safe-is-a-new-plane">How safe is a new plane?</h2>
+<p>Risk of an accident</p>
+<p>Prior: Mostly near zero, but let’s spread 10% of the prior from zero to one.</p>
+<p>Likelihood: (1-risk) if there is no accident. (risk) if there is an accident.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>prior <span class="ot">&lt;-</span> <span class="fu">makeFun</span>(<span class="fu">dbeta</span>(risk, <span class="fl">1.2</span>, <span class="dv">6</span> ) <span class="sc">~</span> risk)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># n is number of accident-free flights, p is number of accidents</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>posterior <span class="ot">&lt;-</span> <span class="fu">makeFun</span>((<span class="dv">1</span><span class="sc">-</span>risk)<span class="sc">^</span>n <span class="sc">*</span> risk<span class="sc">^</span>p <span class="sc">*</span> <span class="fu">prior</span>(risk) <span class="sc">~</span> risk <span class="sc">+</span> n <span class="sc">+</span> p)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">slice_plot</span>(<span class="fu">prior</span>(risk) <span class="sc">~</span> risk, <span class="fu">bounds</span>(<span class="at">risk=</span><span class="dv">0</span><span class="sc">:</span><span class="dv">1</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Worksheet-36_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_plot</span>(<span class="fu">posterior</span>(risk, <span class="at">n=</span><span class="dv">300</span>, <span class="at">p=</span><span class="dv">1</span>) <span class="sc">~</span> risk, <span class="fu">bounds</span>(<span class="at">risk=</span><span class="dv">0</span><span class="sc">:</span>.<span class="dv">03</span>), <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">|&gt;</span> <span class="fu">gf_vline</span>(<span class="at">xintercept=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">301</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `geom_vline()`: Ignoring `mapping` because `xintercept` was provided.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="Worksheet-36_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="null-hypothesis-testing" class="level2">
+<h2 class="anchored" data-anchor-id="null-hypothesis-testing">Null hypothesis testing</h2>
+<p>Now we will move to a form of statistical inference that is highly controversial: called variously “significance testing,” “null hypothesis testing,” “null hypothesis significance testing,” or even simply “hypothesis testing.” (I’ll call it NHT, short for “null hypothesis testing.”) Part of the controversy stems from basic misunderstandings that lead people often to overestimate the importance of their research findings. Another part of the controversy comes from the fact that the assumptions that shape the mathematical justification for the method are not always met in practice. There are many ways to game the analysis to increase the chances of an impressive-looking result that are standard research practices.</p>
+<p>We will spend the next three classes on NHT, almost a sixth of our class time for the part of Math 300 where we have been using the <em>Lessons</em> book. In many introductory statistics classes and textbooks, about a quarter of the <em>entire</em> course is devoted to what they call “hypothesis testing,” mostly in the form of variety of statistical “tests” applicable to different common situations.</p>
+<p>The language of NHT, especially the terms “null hypothesis” and “p-value,” is so widely used in reporting statistical results that you must know the basics. But, I have to be careful, since I don’t want to imply that NHT deserves to be so widely used. Indeed, in almost all the situations covered by introductory statistics courses confidence intervals provide an alternative to NHT that tells you everything worthwhile about the NHT result but is less subject to mis-use.</p>
+<p>My job is:</p>
+<ol type="1">
+<li>to introduce you to the nomenclature of NHT so that you can know what people are talking about,</li>
+<li>to show you that part of NHT that can better be handled by using confidence intervals.</li>
+<li>to show situations where confidence intervals aren’t applicable and therefore NHT—properly used—is appropriate.</li>
+<li>to show you some of the signs of the mis-use of hypothesis testing, to help you avoid being fooled.</li>
+</ol>
+<p>A little bit of history can help you see how the unhappy situation surrounding NHT and what the textbooks call “hypothesis testing” came about.</p>
+<ul>
+<li>1890-1905 Karl Pearson introduces the chi-squared “goodness of fit” test and the term p-value.</li>
+<li>1908 William Sealy Gosset introduces what we call the “t distribution,” which came to be at the core of most textbook hypothesis tests.</li>
+<li>1910-1930 Ronald A. Fisher introduces the term “null hypothesis” and “significance testing” and a technique still of much use today, “analysis of variance” (ANOVA).</li>
+<li>1935-40 Jerzy Neyman introduces confidence intervals and, with Karl Pearson’s son—the “alternative hypothesis” and “power.” But Fisher, a hugely influential person, wrongly declares that these are garbage.</li>
+<li>1962 Ronald Fisher dies.</li>
+<li>1960s and 70s. It becomes more widely appreciated that Neyman-Pearson hypothesis testing is a reasonable framework and the alternative hypothesis and power become essential concepts in the professional design of studies.</li>
+<li>1970s textbook authors create an almost incoherent amalgam of Fisher’s framework and Neyman-Pearson, where the “alternative hypothesis” is a pale shadow of the richer concept that is actually useful in the design of studies.</li>
+<li>1970s onward: statisticians call more and more loudly for de-emphasizing NHT. This is continuing up to the present.</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

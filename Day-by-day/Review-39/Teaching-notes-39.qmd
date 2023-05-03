@@ -1,0 +1,54 @@
+---
+title: "Instructor Teaching Notes for Lesson 39"
+subtitle: "Math300Z"
+author: "Daniel Kaplan"
+date: "Revised 04/17/2023"
+---
+
+
+```{r include=FALSE}
+library(math300)
+```
+
+## Many statistical tests?
+
+Students in Stat 101 are introduced to many differently named statistical tests. Such as the one-sample p-test, two-sample p-test, one-sample t-test, paired t-test, two-sample t-tests, and simple regression test (and sometimes ANOVA, "non-parametric" versions" of the tests and the "chi-squared test." Since most researchers studied statistics in the Stat 101 style, they will use these names. But they are all equivalent to regression.[Logistic regression handles the most common setting for the chi-squared test.]
+
+Students who take Stat 101 have to learn which test applies in which circumstance. To help them, flow-charts are available, like this one where the lozenges are the named tests.
+
+::: {.column-page-right}
+![](highlighted-flowchart.png)
+
+[Source](http://1.bp.blogspot.com/_2xiu9sB2sUM/Sb6W67TtNDI/AAAAAAAAAaU/YU5QIpviw54/s1600/page1.jpg)
+:::
+
+There are **three** groups of blocks:
+
+i. Unhighlighted
+ii. <span style="background:rgba(0,0,255,.2);">Blue highlight</span>
+iii. <span style="background:rgba(255,0,0,.2);">Red highlight</span>
+
+
+Our flowchart is simpler. Ignore entirely the unhighlighted blocks. Then replace blue and red as indicated below. 
+
+1. Select the response variable, explanatory variable of interest (let's call it "EVI") and covariates (as appropriate).^[Covariates not covered in Stat 101.]
+
+2. Check whether any of the numerical variables in (1) is seriously non-normal.
+    i. <span style="background:rgba(0,0,255,.2);">If so, apply a rank transformation (or box-cox).</span>
+    
+3. <span style="background:rgba(255,0,0,.2);">Fit regression model using specification from (1).</span>
+    i. If *response* is two-level categorical, convert to zero-one variable. Use `glm()`.^[`z ~ x` not covered in Stat 101.] 
+    ii. If there are no explanatory variables, use `response ~ 1` and look at the intercept coefficient.
+    iii. If cases are paired, reduce pair to a single difference. More generally, use pair ID among the covariates.^[Not covered in 300Z.] [NEED BLOG POST.]
+    
+4. <span style="background:rgba(255,0,0,.2);">Select a summary method, depending on type of the EVI</span>:
+    i. Numerical or two-level categorical: Use `conf_interval()` and look at the confidence interval for the EVI.^[Stat 101 uses the p-value.]
+    ii. Multi-level categorical: Use `anova_summary()`.^[Barely reached in this year's 300Z, and typically the same is true in Stat 101.] [NEED BLOG POST]
+
+
+## Confounding
+
+Have Col. Horton tell the study of the concern about high numbers of NJPs (non-judicial proceedings for minor offenses) in the Global Strike Command. They were higher than in other commands.
+
+But, stratifying by job category, it was found that the excess was attributable to the "police" job category, which had a much higher NJP rate than other categories. This is true across the Air Force. But there is a much larger proportion of police in the Global Strike Command than in other commands.  Simpson's paradox!
+

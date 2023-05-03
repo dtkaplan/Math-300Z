@@ -32,11 +32,150 @@ Our agenda today, Lesson 37, is:
 
 ## Using a confidence interval to implement hypothesis testing
 
+DAGs represent the question of connections between variables in a graphical way, as an arrow between nodes. A DAG is a hypothesis. Very often in drawing a DAG we have a choice between inserting an arrow or leaving it out: a binary choice.
+
+For instance, consider this DAG showing a confounder C for the relationship between X and Y: 
+
+```{r echo=FALSE}
+abc_dag <- dag_make(
+  c ~ exo(2),
+  x ~ c + exo(), 
+  y ~ c - 0.01*x + exo()
+)
+dag_draw(abc_dag)
+```
+
+The Null hypothesis in this situation is that there is no direct link between `x` and `y`. 
+
+We can measure the effect size of X on Y adjusting for the confounder C with the model specification `y ~ x + c`. For instance,
+
+```{r digits=2}
+set.seed(101)
+Samp <- sample(abc_dag, size=50)
+lm(y ~ x + c, data=Samp) |> conf_interval(show_p=TRUE)
+```
+
+In discussing whether the data support the (direct) link between `x` and `y`, we look toward the confidence interval on the `x` coefficient: [-0.51 to +0.14]. This interval includes zero, so we say that "the data offer no evidence to support the link." In the language of NHT, noticing that $p = 0.25$, we "fail to reject the Null." 
+
+Would it also be correct to say that "the data refute the existence of a link," that is that the data point to "accept the Null?" No. There might in reality be a link but we have not collected enough data to discern it. As the saying goes:
+
+> *Absence of evidence is not evidence of absence.*
+
+The formalism of NHT helps to keep our thinking straight. The only two valid conclusions are "fail to reject the Null" or "reject the Null." "Accept the Null" is not an allowed conclusion.
+
+The choice between the two valid conclusions---reject or fail to reject the Null---can be made directly from the confidence interval, without a p-value.
+
+- Confidence interval includes zero: fail to reject the Null
+- Confidence interval excludes zero: reject the Null
+
+To simplify the introduction and use of confidence intervals, we did not worry about setting a parameter that goes into calculating a confidence interval: the **confidence level**. The justification for this omission is two-fold:
+
+i. almost always people use a confidence level of 95% so you rarely have occasion to deal with other confidence levels. 
+ii. when discussing the possibilities for different confidence levels it's natural to wonder what is the "physical" meaning of the level.
+
+But now we're going to introduce confidence levels, but only for the purpose of helping to understand p-values. Some simple facts:
+
+- the confidence level is always between 0 and 100%. 
+- a 0% level leads to an interval that has no length.
+- a 100% level leads to an interval that has full length, e.g. between $-\infty$ and $\infty$ when the response variable is numerical.
+- the higher the confidence level used for a given model coefficient, the longer the corresponding interval. 
+
+[Class activity](confidence-levels.html)
 
 ## P-values via shuffling
 
+Abstractly, the p-value calculation works like this:
 
+1. Fit your model and note, for later comparison to the many trials in (3), the coefficient of interest or R2().
+
+For example:
+```{r}
+lm(height ~ nkids + mother + father, data=Galton) |> 
+  conf_interval()
+lm(height ~ nkids + mother + father, data=Galton) |> 
+  R2()
+
+```
+The coefficient on `nkids` is -0.111 and R^2^ is 0.116. 
+
+2. Fit the model as in (1), but wrap `shuffle()` around the explanatory variable of interest. That will randomize the order of entries in just the explanatory variable, leaving all other variables' entries in their original order.
+
+For example:
+```{r}
+lm(height ~ shuffle(nkids) + mother + father, data=Galton) |> 
+  conf_interval()
+```
+
+The coefficient on the shuffled variable will (almost certainly) be different from the coefficient on the original variable in (1).
+
+
+3. Take many trials in which you generate data according to (2) and fit the model as in (1). Record the coefficients you get across the trials.
+
+We've talked about repeating random trials before but you are not expected to be able to generate the code to do so. Here it is:
+
+```{r}
+Trials <- mosaic::do(1000) * {
+  # Insert here the lm/conf_interval code you used in (2), e.g.
+    lm(height ~ shuffle(nkids) + mother + father, data=Galton) |> 
+      conf_interval() 
+  } |>
+    filter(grepl("shuffle", term)) |> 
+    select(.coef)
+```
+
+4. Count the fraction of the time the coefficients in (3) have a magnitude as large or the same as the coefficient from (1). That fraction is your p-value.
+
+```{r}
+Trials |>
+  summarize(p_value = mean(abs(.coef) > abs(-0.111)))
+```
+If you were doing this with R^2^, the calculations would be
+
+```{r}
+R2Trials <- mosaic::do(1000) * {
+  # Insert here the lm/conf_interval code you used in (2), e.g.
+    lm(height ~ shuffle(nkids) + mother + father, data=Galton) |> 
+      R2() 
+  } |>
+    select(Rsquared)
+R2Trials |>
+  summarize(p_value = mean(Rsquared > 0.116))
+```
+            
 ## ANOVA deals with sets of coefficients
 
+It sometimes happens that the explanatory variable of interest is categorical with more than two levels. A case in point: the `Framingham` data where `education` has four levels: "some HS", "HS grad", "some college", and "college_grad".
 
+Here's a model looking at the connection between age and education (with smoking status as a covariate):
+
+```{r digits=2}
+lm(age ~ education + currentSmoker, data=Framingham) |> 
+  conf_interval(show_p=TRUE)
+```
+
+Notice that the baseline level for the `education` variable is `college grad`. Each of the other three levels gets a coefficient, a confidence interval, and a p-value.
+
+Which of these are we to use to test the Null hypothesis that `education` is unrelated to `age`? The smallest? The biggest? The average of all three?
+
+Since the question is about `education` as a whole, we want a method that produces a single summary stat for the entire variable, rather than different stats for different levels of the variable. R^2^ does this for us. 
+```{r digits=2}
+lm(age ~ education + currentSmoker, data=Framingham) |> R2()
+```
+There is a single p-value for the whole model. 
+
+If `education` had been the only explanatory variable, the p-value from R^2^ would be solely about `education`. Such a test, like this,
+
+```{r digits=2}
+lm(age ~ education, data=Framingham) |> R2()
+```
+
+A NHT test in such circumstances is called "analysis of variance" or "ANOVA" for short. It is a very widely used test and amounts to asking whether the means of the multiple groups (as defined by the explanatory variable) are different from one another.
+
+ANOVA can also be applied to models with covariates. The idea is to look at a succession of nested models, e.g. `age ~ education` and `age ~ education + currentSmoker`. Each model will produce an R^2^, which will get larger as more terms are added to the model. 
+
+The ANOVA report tells how much each explanatory variable contributes to the R^2^ of the overall model. That individual contribution (`sumsq`) is compared to how much remains unexplained---1 - R^2^---from the overall model. The individual contribution is scaled by the number of model coefficients associated with that explanatory variable, with the idea that more coefficients means less contribution (`sumsq`) per coefficient, or in the language of ANOVA, less contribution per "degree of freedom."
+
+```{r digits=2}
+lm(age ~ education + currentSmoker, data=Framingham) |> anova_summary()
+```
 
