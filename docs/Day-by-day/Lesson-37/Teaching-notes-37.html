@@ -173,7 +173,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -234,14 +234,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell" data-digits="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(abc_dag, <span class="at">size=</span><span class="dv">50</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x <span class="sc">+</span> c, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>(<span class="at">show_p=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x <span class="sc">+</span> c, <span class="at">data=</span>Samp) <span class="sc">|&gt;</span> <span class="fu">conf_interval</span>(<span class="at">level=</span><span class="fl">0.75</span>, <span class="at">show_p=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
-  term          .lwr   .coef  .upr      p.value
-  &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;
-1 (Intercept) -0.356 -0.0549 0.246 0.716       
-2 x           -0.508 -0.186  0.136 0.250       
-3 c            0.846  1.22   1.59  0.0000000347</code></pre>
+  term          .lwr   .coef        .upr      p.value
+  &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
+1 (Intercept) -0.229 -0.0549  0.119      0.716       
+2 x           -0.373 -0.186  -0.00000364 0.250       
+3 c            1.00   1.22    1.43       0.0000000347</code></pre>
 </div>
 </div>
 <p>In discussing whether the data support the (direct) link between <code>x</code> and <code>y</code>, we look toward the confidence interval on the <code>x</code> coefficient: [-0.51 to +0.14]. This interval includes zero, so we say that “the data offer no evidence to support the link.” In the language of NHT, noticing that <span class="math inline">\(p = 0.25\)</span>, we “fail to reject the Null.”</p>
@@ -269,16 +269,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p><a href="confidence-levels.html">Class activity</a></p>
 </section>
-<section id="p-values-via-shuffling" class="level2">
+<section id="p-values-via-shuffling" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="p-values-via-shuffling">P-values via shuffling</h2>
+<p>The simple operation of <strong>shuffling</strong> provides a route to creating data that respects the Null hypothesis.</p>
+<div class="page-columns page-full">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(age <span class="sc">~</span> smoker, <span class="at">data=</span>Whickham)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod, <span class="at">interval=</span><span class="st">"confidence"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>Whickham <span class="ot">&lt;-</span> Whickham <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">rsmoke =</span> <span class="fu">shuffle</span>(smoker))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(age <span class="sc">~</span> rsmoke, <span class="at">data=</span>Whickham)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">model_plot</span>(mod2, <span class="at">interval=</span><span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell column-page-right quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="Teaching-notes-37_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="Teaching-notes-37_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
 <p>Abstractly, the p-value calculation works like this:</p>
 <ol type="1">
 <li>Fit your model and note, for later comparison to the many trials in (3), the coefficient of interest or R2().</li>
 </ol>
 <p>For example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> nkids <span class="sc">+</span> mother <span class="sc">+</span> father, <span class="at">data=</span>Galton) <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> nkids <span class="sc">+</span> mother <span class="sc">+</span> father, <span class="at">data=</span>Galton) <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 4
   term          .lwr  .coef    .upr
@@ -288,8 +309,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 3 mother       0.186  0.282  0.378 
 4 father       0.270  0.361  0.452 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> nkids <span class="sc">+</span> mother <span class="sc">+</span> father, <span class="at">data=</span>Galton) <span class="sc">|&gt;</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> nkids <span class="sc">+</span> mother <span class="sc">+</span> father, <span class="at">data=</span>Galton) <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    n k  Rsquared        F     adjR2 p df.num df.denom
 1 898 3 0.1156864 38.98454 0.1127189 0      3      894</code></pre>
@@ -301,16 +322,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <p>For example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> <span class="fu">shuffle</span>(nkids) <span class="sc">+</span> mother <span class="sc">+</span> father, <span class="at">data=</span>Galton) <span class="sc">|&gt;</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(height <span class="sc">~</span> <span class="fu">shuffle</span>(nkids) <span class="sc">+</span> mother <span class="sc">+</span> father, <span class="at">data=</span>Galton) <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 4
-  term             .lwr   .coef     .upr
-  &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
-1 (Intercept)    14.1   22.6    31.0    
-2 shuffle(nkids) -0.160 -0.0770  0.00561
-3 mother          0.191  0.287   0.384  
-4 father          0.290  0.379   0.469  </code></pre>
+  term              .lwr    .coef    .upr
+  &lt;chr&gt;            &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+1 (Intercept)    13.9    22.4     30.8   
+2 shuffle(nkids) -0.0899 -0.00716  0.0756
+3 mother          0.186   0.283    0.379 
+4 father          0.290   0.380    0.470 </code></pre>
 </div>
 </div>
 <p>The coefficient on the shuffled variable will (almost certainly) be different from the coefficient on the original variable in (1).</p>
@@ -319,38 +340,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <p>We’ve talked about repeating random trials before but you are not expected to be able to generate the code to do so. Here it is:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="ot">&lt;-</span> mosaic<span class="sc">::</span><span class="fu">do</span>(<span class="dv">1000</span>) <span class="sc">*</span> {</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Insert here the lm/conf_interval code you used in (2), e.g.</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lm</span>(height <span class="sc">~</span> <span class="fu">shuffle</span>(nkids) <span class="sc">+</span> mother <span class="sc">+</span> father, <span class="at">data=</span>Galton) <span class="sc">|&gt;</span> </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">conf_interval</span>() </span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  } <span class="sc">|&gt;</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"shuffle"</span>, term)) <span class="sc">|&gt;</span> </span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(.coef)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="ot">&lt;-</span> mosaic<span class="sc">::</span><span class="fu">do</span>(<span class="dv">1000</span>) <span class="sc">*</span> {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Insert here the lm/conf_interval code you used in (2), e.g.</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lm</span>(height <span class="sc">~</span> <span class="fu">shuffle</span>(nkids) <span class="sc">+</span> mother <span class="sc">+</span> father, <span class="at">data=</span>Galton) <span class="sc">|&gt;</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">conf_interval</span>() </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  } <span class="sc">|&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"shuffle"</span>, term)) <span class="sc">|&gt;</span> </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(.coef)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="4" type="1">
 <li>Count the fraction of the time the coefficients in (3) have a magnitude as large or the same as the coefficient from (1). That fraction is your p-value.</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_value =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(.coef) <span class="sc">&gt;</span> <span class="fu">abs</span>(<span class="sc">-</span><span class="fl">0.111</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Trials <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_value =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(.coef) <span class="sc">&gt;</span> <span class="fu">abs</span>(<span class="sc">-</span><span class="fl">0.111</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  p_value
-1   0.008</code></pre>
+1   0.013</code></pre>
 </div>
 </div>
 <p>If you were doing this with R<sup>2</sup>, the calculations would be</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>R2Trials <span class="ot">&lt;-</span> mosaic<span class="sc">::</span><span class="fu">do</span>(<span class="dv">1000</span>) <span class="sc">*</span> {</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Insert here the lm/conf_interval code you used in (2), e.g.</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lm</span>(height <span class="sc">~</span> <span class="fu">shuffle</span>(nkids) <span class="sc">+</span> mother <span class="sc">+</span> father, <span class="at">data=</span>Galton) <span class="sc">|&gt;</span> </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">R2</span>() </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  } <span class="sc">|&gt;</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Rsquared)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>R2Trials <span class="sc">|&gt;</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_value =</span> <span class="fu">mean</span>(Rsquared <span class="sc">&gt;</span> <span class="fl">0.116</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>R2Trials <span class="ot">&lt;-</span> mosaic<span class="sc">::</span><span class="fu">do</span>(<span class="dv">1000</span>) <span class="sc">*</span> {</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Insert here the lm/conf_interval code you used in (2), e.g.</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lm</span>(height <span class="sc">~</span> <span class="fu">shuffle</span>(nkids) <span class="sc">+</span> mother <span class="sc">+</span> father, <span class="at">data=</span>Galton) <span class="sc">|&gt;</span> </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">R2</span>() </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  } <span class="sc">|&gt;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Rsquared)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>R2Trials <span class="sc">|&gt;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">p_value =</span> <span class="fu">mean</span>(Rsquared <span class="sc">&gt;</span> <span class="fl">0.116</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  p_value
-1   0.004</code></pre>
+1   0.007</code></pre>
 </div>
 </div>
 </section>
@@ -359,8 +380,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>It sometimes happens that the explanatory variable of interest is categorical with more than two levels. A case in point: the <code>Framingham</code> data where <code>education</code> has four levels: “some HS”, “HS grad”, “some college”, and “college_grad”.</p>
 <p>Here’s a model looking at the connection between age and education (with smoking status as a covariate):</p>
 <div class="cell" data-digits="2">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(age <span class="sc">~</span> education <span class="sc">+</span> currentSmoker, <span class="at">data=</span>Framingham) <span class="sc">|&gt;</span> </span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>(<span class="at">show_p=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(age <span class="sc">~</span> education <span class="sc">+</span> currentSmoker, <span class="at">data=</span>Framingham) <span class="sc">|&gt;</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">conf_interval</span>(<span class="at">show_p=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 5
   term                    .lwr  .coef    .upr  p.value
@@ -376,7 +397,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Which of these are we to use to test the Null hypothesis that <code>education</code> is unrelated to <code>age</code>? The smallest? The biggest? The average of all three?</p>
 <p>Since the question is about <code>education</code> as a whole, we want a method that produces a single summary stat for the entire variable, rather than different stats for different levels of the variable. R<sup>2</sup> does this for us.</p>
 <div class="cell" data-digits="2">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(age <span class="sc">~</span> education <span class="sc">+</span> currentSmoker, <span class="at">data=</span>Framingham) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(age <span class="sc">~</span> education <span class="sc">+</span> currentSmoker, <span class="at">data=</span>Framingham) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     n k   Rsquared        F      adjR2 p df.num df.denom
 1 4133 4 0.09851066 112.7723 0.09763712 0      4     4128</code></pre>
@@ -385,7 +406,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>There is a single p-value for the whole model.</p>
 <p>If <code>education</code> had been the only explanatory variable, the p-value from R<sup>2</sup> would be solely about <code>education</code>. Such a test, like this,</p>
 <div class="cell" data-digits="2">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(age <span class="sc">~</span> education, <span class="at">data=</span>Framingham) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(age <span class="sc">~</span> education, <span class="at">data=</span>Framingham) <span class="sc">|&gt;</span> <span class="fu">R2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     n k   Rsquared        F      adjR2 p df.num df.denom
 1 4133 3 0.05876712 85.93319 0.05808325 0      3     4129</code></pre>
@@ -395,7 +416,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>ANOVA can also be applied to models with covariates. The idea is to look at a succession of nested models, e.g.&nbsp;<code>age ~ education</code> and <code>age ~ education + currentSmoker</code>. Each model will produce an R<sup>2</sup>, which will get larger as more terms are added to the model.</p>
 <p>The ANOVA report tells how much each explanatory variable contributes to the R<sup>2</sup> of the overall model. That individual contribution (<code>sumsq</code>) is compared to how much remains unexplained—1 - R<sup>2</sup>—from the overall model. The individual contribution is scaled by the number of model coefficients associated with that explanatory variable, with the idea that more coefficients means less contribution (<code>sumsq</code>) per coefficient, or in the language of ANOVA, less contribution per “degree of freedom.”</p>
 <div class="cell" data-digits="2">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(age <span class="sc">~</span> education <span class="sc">+</span> currentSmoker, <span class="at">data=</span>Framingham) <span class="sc">|&gt;</span> <span class="fu">anova_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(age <span class="sc">~</span> education <span class="sc">+</span> currentSmoker, <span class="at">data=</span>Framingham) <span class="sc">|&gt;</span> <span class="fu">anova_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 6
   term             df   sumsq  meansq statistic   p.value

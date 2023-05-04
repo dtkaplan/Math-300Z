@@ -65,7 +65,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -107,9 +107,11 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -141,8 +143,185 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="review-of-lesson-37" class="level2">
-<h2 class="anchored" data-anchor-id="review-of-lesson-37">Review of Lesson 37</h2>
+<section id="putting-multiple-coefficients-together" class="level2">
+<h2 class="anchored" data-anchor-id="putting-multiple-coefficients-together">Putting multiple coefficients together</h2>
+<p><a href="../../Worksheets/Worksheet-37.html">See Lesson 37 worksheet</a></p>
+</section>
+<section id="mis-interpreting-p-values" class="level2">
+<h2 class="anchored" data-anchor-id="mis-interpreting-p-values">Mis-interpreting p-values</h2>
+<ol type="1">
+<li>A small p-value constitutes definitive support for a claim.</li>
+</ol>
+<p><em>A p-value doesn’t replace careful choice of covariates and causal analysis (e.g.&nbsp;with DAGs).</em></p>
+<ol start="2" type="1">
+<li>A tiny p-value is strong evidence.</li>
+</ol>
+<p><em>The sampling distribution on p-values has a long tail.</em></p>
+<div class="cell" data-hash="Teaching-notes-38_cache/html/fig-dag01-p-value_83631e7bcaba3b192b634d6d84b4fa76">
+<div class="cell-output-display">
+<div id="fig-dag01-p-value" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Teaching-notes-38_files/figure-html/fig-dag01-p-value-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Many trials of the p-value from the model <code>y ~ x</code> using data from <code>dag01</code>. As the sample size becomes larger, the p-value becomes very small. There is also a lot of sampling variation.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="3" type="1">
+<li>A p-value tells about the strength of the effect, e.g.&nbsp;“strongly correlated.”</li>
+</ol>
+<ul>
+<li>An effect size (and its confidence interval) is the measure of the strength of an effect. p-values can be very small just by chance and depend strongly on the sample size.*</li>
+</ul>
+<ol start="4" type="1">
+<li>Disproving the Null hypothesis is important.</li>
+</ol>
+<p><em>The Null is <strong>convenient</strong>, not important. It’s easy to do calculations under the Null (e.g., shuffling). The Null is merely part of a screening test aimed to weed out claims not even vaguely supported by the evidence.</em></p>
+<p><em>A non-zero effect size can nonetheless be trivial, uninteresting, and useless. Even a trivial effect size can dramatically increase the chances that p will be less than 0.05.</em></p>
+<ol start="5" type="1">
+<li>Using p &lt; 0.05 is a pretty reliable safeguard against researchers fooling themselves.</li>
+</ol>
+<p><em>0.05 is only relevant when the analysis has been pre-planned before the data were collected. (This avoids changing the analysis in order to get a better p-value.) Testing multiple hypotheses substantially increases the odds of finding p &lt; 0.05 in one of them.</em></p>
+<ol start="6" type="1">
+<li>A p-value reflects the probability that the Null is true.</li>
+</ol>
+<p><em>No.&nbsp;The p-value is a likelihood p(obs | Null), not p(Null | obs).</em></p>
+<p>But this misbelief is more pernicious than just a simple confusion about conditional hypotheses. Remember Fisher’s comment (1926):</p>
+<blockquote class="blockquote">
+<p>“<em>Personally, the writer prefers to set a low standard of significance at the 5 per cent. point, and ignore entirely all results which fail to reach this level. A scientific fact should be regarded as experimentally established only if a properly designed experiment <strong>rarely fails</strong> to give this level of significance.</em>”</p>
+</blockquote>
+<p>Fisher was talking about conducting many <strong>replications</strong> of an “experiment.” The “p is the prob. that the Null is true” seems to translate into “my small p means that if I did replicate the work, I would be very unlikely to get a large p-value.”</p>
+<ol start="7" type="1">
+<li>The Alternative hypothesis plays a role in hypothesis testing, so the p-value in part reflects the Alternative.</li>
+</ol>
+<p><em>The Alternative plays a role in proper study design, and is a good reference point for interpreting the confidence intervals found from the data. But, despite the claims in introductory textbooks, p-value has no relationship to the alternative.</em></p>
+<p>[For instructors …] Using a one-tailed test does divide the p-value by 2 compared to a two-tailed test. But using one tail only provides too much room for abuse and ought to be regarded with skepticism.</p>
+<ol start="8" type="1">
+<li>Hypothesis testing reflects the relative costs of the two kinds of mistakes: false-positives (“Type I error”) and false-negatives (“Type II error”) and therefore is suitable for informing decision making.</li>
+</ol>
+<p><em>There is no loss-function in the hypothesis-testing framework so it’s not suited for decision-making. Contributing to this lack of suitability is the lack of posterior probabilities inherent in hypothesis testing.</em></p>
+</section>
+<section id="a-significant-story" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="a-significant-story">A significant story?</h2>
+<div class="cell page-columns page-full">
+<div class="cell-output-display column-page-right">
+<p><img src="economist-1.png" class="img-fluid" width="284"></p>
+</div>
+<div class="cell-output-display column-page-right">
+<p><img src="red-flag.png" class="img-fluid" width="397"></p>
+</div>
+</div>
+<div class="cell page-columns page-full">
+<div class="cell-output-display column-page-right">
+<div id="fig-lena-graph" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Lena-graph.png" class="img-fluid figure-img" width="646"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: Changes in language measures with COVID</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>Only the lowest SES group showed statistically discernible differences pre- vs.&nbsp;post-COVID.</p>
+</div></div><div class="cell">
+<div class="cell-output-display">
+<div id="fig-lena-text" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Lena-text.png" class="img-fluid figure-img" width="812"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3: <strong>?(caption)</strong></figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>“Growing body of evidence” is just blather. They found two studies, both of which are described as showing <strong>significant</strong> decreases in the various scores. Let’s look at those two studies (one of which is a pre-print) to see how “significant” they are.</p>
+</div><div class="">
+<p>The study didn’t see any difference between the covid-exposed and non-exposed groups. So they switched to comparing against a historical cohort.</p>
+</div></div>
+<div class="cell page-columns page-full">
+<div class="cell-output-display column-page-right">
+<div id="fig-jama-pediatrics" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Jama-pediatrics.png" class="img-fluid figure-img" width="631"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;4: The <em>JAMA Pediatrics</em> paper referred to in the LENA report.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>The confidence intervals for the COVID babies touch the average over all the pre-covid years. So lower scores have not been discerned. But close!</p>
+<p>The gray horizontal bar through the graphs puts the COVID babies on the edge of something. But that bar is just a decoration with no statistical meaning. (It’s almost as broad as the individual confidence intervals, so it’s not the CI on the average across the years.)</p>
+</div></div><div class="cell">
+<div class="cell-output-display">
+<div id="fig-bars-over-time" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="medrxiv-F1.jpg" class="img-fluid figure-img" width="640"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;5: Confidence intervals on the composite scores over the years. The COVID babies (in box) end to have lower scores.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>Note that in every panel there are three or four COVID (red) points that are low outliers. The “days of age” indicates that the points are the same babies/measurements in each panel. The score is exactly the same for these babies within each panel. Might this have been a measurement or recording blunder? These points account for the difference in the last bars in <a href="#fig-bars-over-time">Figure&nbsp;5</a>.</p>
+</div></div><div class="cell">
+<div class="cell-output-display">
+<div id="fig-motor-skills" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="medrxiv-F4.jpg" class="img-fluid figure-img" width="640"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;6: The raw data behind the conclusion that COVID babies had diminished motor and language skills.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The “red-flag” is based on the association between vocal scores and IQ from the 1992 Hart &amp; Risley paper.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>IQ is associated with the same parenting skills that SES is connected to. Are the parenting skills contributing to IQ or is the SES?</p>
+<p>Each correlation is a relationship between just two variables, unadjusted for the others in the table or for variables not in the table.</p>
+</div></div><div class="cell">
+<div class="cell-output-display">
+<div id="fig-hart-risley" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Hart-Risley-correlations.png" class="img-fluid figure-img" width="592"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;7: Correlations measured among the 15 variables recorded in the study. Some are triple starred!</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="adjusting-for-parents-educational-beha" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="adjusting-for-parents-educational-beha">Adjusting for parent’s educational beha</h2>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>Rindermann &amp; Baumeister (2015) “Parents’ SES vs.&nbsp;parental educational behavior and children’s development: A reanalysis of the Hart and Risley study”, <em>Learning and Individual Differences</em> <strong>37</strong></p>
+</div></div><p>Abstract: In their seminal study “Meaningful differences in the everyday experience of young American children”, Hart and Risley (1995) showed a close relationship between differences in family environment and children’s development. The conventional conclusion was that children’s cognitive development (measured by psychometric intelligence and verbal ability tests) depends on parental socioeconomic status (SES), especially on wealth. We reanalyzed their data and show that the quality of education given by parents is crucial (βPEB=.58) and not the diffuse aggregate measure of SES (βSES=.11). Additionally, we compare their sample with a similar but larger sample (Hoff, 2003) showing the same pattern of results. Possible causal factors (associated environmental and genetic factors) are discussed. <a href="https://www.sciencedirect.com/science/article/abs/pii/S1041608014002507">link</a></p>
+<p><img src="path-analysis.jpg" class="img-fluid"></p>
+<p>A more detailed DAG:</p>
+<div class="cell page-columns page-full">
+<div class="cell-output-display column-page-right">
+<p><img src="bigger-path-diagram.png" class="img-fluid" width="318"></p>
+</div>
+</div>
+</section>
+<section id="recommendations" class="level2">
+<h2 class="anchored" data-anchor-id="recommendations">Recommendations</h2>
+<ol type="1">
+<li><p>Use confidence intervals whenever the issue is a single coefficient.</p></li>
+<li><p>Don’t take the word “significant” seriously. To avoid fooling yourself or others, use “discernible.”</p></li>
+</ol>
+</section>
+<section id="hypothesis-testing-haikus" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesis-testing-haikus">Hypothesis testing haikus</h2>
+<p>“Don’t ever accept.</p>
+<p>Nulls, you may only reject …</p>
+<p>or fail trying.”</p>
+<p>Chance explanation?</p>
+<p>The value is too extreme.</p>
+<p>That’s significant — Nyaradzo Mvududu</p>
 
 
 </section>

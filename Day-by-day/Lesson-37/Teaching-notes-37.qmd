@@ -52,7 +52,7 @@ We can measure the effect size of X on Y adjusting for the confounder C with the
 ```{r digits=2}
 set.seed(101)
 Samp <- sample(abc_dag, size=50)
-lm(y ~ x + c, data=Samp) |> conf_interval(show_p=TRUE)
+lm(y ~ x + c, data=Samp) |> conf_interval(level=0.75, show_p=TRUE)
 ```
 
 In discussing whether the data support the (direct) link between `x` and `y`, we look toward the confidence interval on the `x` coefficient: [-0.51 to +0.14]. This interval includes zero, so we say that "the data offer no evidence to support the link." In the language of NHT, noticing that $p = 0.25$, we "fail to reject the Null." 
@@ -83,6 +83,20 @@ But now we're going to introduce confidence levels, but only for the purpose of 
 [Class activity](confidence-levels.html)
 
 ## P-values via shuffling
+
+The simple operation of **shuffling** provides a route to creating data that respects the Null hypothesis.
+
+```{r}
+#| code-fold: true
+#| layout-ncol: 2
+#| column: page-right
+
+mod <- lm(age ~ smoker, data=Whickham)
+model_plot(mod, interval="confidence")
+Whickham <- Whickham |> mutate(rsmoke = shuffle(smoker))
+mod2 <- lm(age ~ rsmoke, data=Whickham)
+model_plot(mod2, interval="confidence")
+```
 
 Abstractly, the p-value calculation works like this:
 
